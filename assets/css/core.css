@@ -526,10 +526,7 @@ a.data-filter.filter-active:hover {
     padding: 10px 10px 5px;
 }
 .rcl-subtab-menu .rcl-subtab-button {
-    display: inline-block;
-    margin-bottom: 5px;
-    margin-right: 5px;
-    padding: 7px;
+    
 }
 /*end*/
 
@@ -1465,7 +1462,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 }
 .rcl-form .submit-box a,
 .rcl-form .submit-box input[type="submit"] {
-    
+
 }
 
 @media screen and (max-width:375px) {

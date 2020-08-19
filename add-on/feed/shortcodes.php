@@ -18,9 +18,9 @@ function rcl_get_feed_list( $atts = array() ) {
 	global $wpdb, $user_ID, $rcl_feed;
 
 	if ( ! $user_ID ) {
-		return '<p class="aligncenter rcl-feed-notice">'
-			. __( 'Login or register to view the latest publications and comments from users for which you have subscribed.', 'wp-recall' )
-			. '</p>';
+		return rcl_get_notice( [
+			'text' => __( 'Login or register to view the latest publications and comments from users for which you have subscribed.', 'wp-recall' )
+			] );
 	}
 
 	add_filter( 'rcl_rating_user_can', 'rcl_feed_unset_can_vote', 10 );
@@ -36,7 +36,7 @@ function rcl_get_feed_list( $atts = array() ) {
 
 		$rclnavi = new Rcl_PageNavi(
 			'rcl-feed', $list->count_feed(), array(
-			'in_page' => $list->query['number']
+			'in_page' => 30
 			)
 		);
 
@@ -48,8 +48,9 @@ function rcl_get_feed_list( $atts = array() ) {
 	$feedsdata = $list->get_feed();
 
 	if ( ! $feedsdata ) {
-		$content .= '<p class="feed_not_news" align="center">' . __( 'No news found', 'wp-recall' ) . '</p>';
-		return $content;
+		return $content . rcl_get_notice( [
+				'text' => __( 'No news found.', 'wp-recall' )
+			] );
 	}
 
 	$load = ($rclnavi->in_page) ? 'data-load="' . $list->load . '"' : '';

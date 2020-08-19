@@ -22,8 +22,12 @@ function pfm_add_feed_filter( $filter ) {
 	return $filter;
 }
 
-add_action( 'rcl_init_feed_pfm_forum_content', 'pfm_init_feed' );
-function pfm_init_feed() {
+add_action( 'rcl_feed_pfm_forum_args', 'pfm_init_feed', 10 );
+function pfm_init_feed( $args ) {
+
+	$PostsQuery = new PrimePosts();
+
+	$args['table'] = $PostsQuery->query['table'];
 
 	class PrimeFeed extends Rcl_Feed_List {
 		function __construct() {
@@ -51,22 +55,23 @@ function pfm_init_feed() {
 		function setup_forum_query( $query ) {
 			global $wpdb, $user_ID;
 
-			$PostsQuery = new PrimePosts();
-
-			$this->set_query( array(
-				'table'				 => $PostsQuery->query['table'],
-				'user_id__not_in'	 => $user_ID
-			) );
+			$this->query['select'] = [
+				'pfm_posts.post_id',
+				'pfm_posts.post_content',
+				'pfm_posts.user_id',
+				'pfm_posts.post_date',
+				"pfm_topics.topic_name",
+				"pfm_topics.topic_slug",
+				"pfm_forums.forum_slug"
+			];
 
 			$this->query['join'][]	 = "INNER JOIN " . RCL_PREF . "pforum_topics AS pfm_topics ON pfm_posts.topic_id=pfm_topics.topic_id";
 			$this->query['join'][]	 = "INNER JOIN " . RCL_PREF . "pforums AS pfm_forums ON pfm_topics.forum_id=pfm_forums.forum_id";
 			$this->query['where'][]	 = "pfm_topics.user_id = '$user_ID'";
+			$this->query['where'][]	 = "pfm_posts.user_id != '$user_ID'";
 
-			$this->query['select'][] = "pfm_topics.topic_name,"
-				. "pfm_topics.topic_slug,"
-				. "pfm_forums.forum_slug";
-
-			$this->query['orderby'] = "pfm_posts.post_id";
+			$this->query['orderby']	 = "pfm_posts.post_id";
+			$this->query['order']	 = "DESC";
 
 			return $this->query;
 		}
@@ -74,4 +79,6 @@ function pfm_init_feed() {
 	}
 
 	$PrimeFeed = new PrimeFeed();
+
+	return $args;
 }

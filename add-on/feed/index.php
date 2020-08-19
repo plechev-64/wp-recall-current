@@ -243,12 +243,10 @@ function rcl_feed_progress() {
 	$content = '';
 
 	if ( ! $feedsdata ) {
-		$content .= '<p align="center">' . __( 'News no more', 'wp-recall' ) . '</p>';
-
-		$result['content']	 = $content;
-		$result['code']		 = 0;
-
-		wp_send_json( $result );
+		wp_send_json( [
+			'content'	 => rcl_get_notice( ['text' => __( 'News no more', 'wp-recall' ) ] ),
+			'code'		 => 0
+		] );
 	}
 
 	foreach ( $feedsdata as $rcl_feed ) {

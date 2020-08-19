@@ -103,7 +103,7 @@ class Rcl_Query extends Rcl_Old_Query {
 			'select'	 => array( $operator . '(' . $this->table['as'] . '.' . $field_name . ')' ),
 			'join'		 => $query['join'],
 			'where'		 => $query['where'],
-			'groupby'	 => $query['groupby']
+			'groupby'	 => isset( $query['groupby'] ) ? $query['groupby'] : null
 			) );
 
 		if ( $cache ) {
