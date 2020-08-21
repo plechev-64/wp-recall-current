@@ -249,6 +249,7 @@ function rcl_tab_profile_content( $master_id ) {
 		. rcl_get_button( array(
 			'label'		 => __( 'Update profile', 'wp-recall' ),
 			'id'		 => 'cpsubmit',
+			'icon'		 => 'fa-check-circle',
 			'onclick'	 => 'return rcl_check_profile_form()? rcl_submit_form(this): false;'
 		) )
 		. '<input type="hidden" value="1" name="submit_user_profile" />

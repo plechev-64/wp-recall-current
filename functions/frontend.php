@@ -521,11 +521,11 @@ function rcl_message_post_moderation( $content ) {
 		return $content;
 
 	if ( $post->post_status == 'pending' ) {
-		$content = '<h3 class="pending-message">' . __( 'Publication pending approval!', 'wp-recall' ) . '</h3>' . $content;
+		$content = rcl_get_notice( ['text' => __( 'Publication pending approval!', 'wp-recall' ), 'type' => 'error' ] ) . $content;
 	}
 
 	if ( $post->post_status == 'draft' ) {
-		$content = '<h3 class="pending-message">' . __( 'Draft of a post', 'wp-recall' ) . '</h3>' . $content;
+		$content = rcl_get_notice( ['text' => __( 'Draft of a post!', 'wp-recall' ), 'type' => 'error' ] ) . $content;
 	}
 
 	return $content;
@@ -599,7 +599,7 @@ function rcl_user_black_list_button( $office_id ) {
 		'class'		 => 'rcl-manage-blacklist',
 		'icon'		 => 'fa-bug',
 		'onclick'	 => 'rcl_manage_user_black_list(this,' . $office_id . ');return false;'
-	] );
+		] );
 
 	return $button;
 }

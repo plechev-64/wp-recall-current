@@ -359,20 +359,24 @@ class Rcl_Query extends Rcl_Old_Query {
 	}
 
 	function groupby( $groupby ) {
-		$this->query['groupby'] = $groupby;
+
+		$this->query['groupby'] = count( explode( '.', $groupby ) ) > 1 ? $groupby : $this->table['as'] . '.' . $groupby;
+
 		return $this;
 	}
 
-	function orderby( $orderby, $order = false, $currentAs = true ) {
-
-		$as = $currentAs ? $this->table['as'] . '.' : '';
+	function orderby( $orderby, $order = false ) {
 
 		if ( is_array( $orderby ) ) {
 			foreach ( $orderby as $by => $order ) {
-				$this->query['orderby'][$as . $by] = $order;
+
+				$by = count( explode( '.', $by ) ) > 1 ? $by : $this->table['as'] . '.' . $by;
+
+				$this->query['orderby'][$by] = $order;
 			}
 		} else {
-			$this->query['orderby'] = $as . $orderby;
+
+			$this->query['orderby'] = count( explode( '.', $orderby ) ) > 1 ? $orderby : $this->table['as'] . '.' . $orderby;
 
 			if ( $order )
 				$this->order( $order );

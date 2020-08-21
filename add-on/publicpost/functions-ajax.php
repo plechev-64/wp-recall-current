@@ -228,9 +228,7 @@ function rcl_preview_post() {
 
 	$preview .= $post_content;
 
-	$preview .= '<div class="rcl-notice-preview">
-                    <p>' . __( 'If everything is correct – publish it! If not, you can go back to editing.', 'wp-recall' ) . '</p>
-            </div>';
+	$preview .= rcl_get_notice( ['text' => __( 'If everything is correct – publish it! If not, you can go back to editing.', 'wp-recall' ) ] );
 
 	$log['content'] = $preview;
 
