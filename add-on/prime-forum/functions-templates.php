@@ -418,7 +418,7 @@ function pfm_get_icon( $icon_class = 'fa-folder' ) {
 		return apply_filters( 'pfm_topic_icon', $defaultIcon );
 	}
 
-	if ( $PrimeGroup && $PrimeForum || $PrimeForum->parent_id ) {
+	if ( $PrimeGroup && $PrimeForum || (isset( $PrimeForum->parent_id ) && $PrimeForum->parent_id) ) {
 		return apply_filters( 'pfm_forum_icon', $defaultIcon );
 	}
 

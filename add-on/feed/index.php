@@ -6,13 +6,18 @@ require_once 'addon-core.php';
 require_once 'shortcodes.php';
 
 if ( ! is_admin() ):
-	add_action( 'rcl_enqueue_scripts', 'rcl_feed_scripts', 10 );
+	add_action( 'rcl_enqueue_scripts', 'rcl_feed_scripts_office', 10 );
 endif;
-function rcl_feed_scripts() {
-	if ( is_user_logged_in() ) {
-		rcl_enqueue_style( 'rcl-feed', rcl_addon_url( 'style.css', __FILE__ ) );
-		rcl_enqueue_script( 'rcl-feed', rcl_addon_url( 'js/scripts.js', __FILE__ ) );
+function rcl_feed_scripts_office() {
+	global $user_ID;
+	if ( $user_ID || rcl_is_office() ) {
+		rcl_feed_scripts_init();
 	}
+}
+
+function rcl_feed_scripts_init() {
+	rcl_enqueue_style( 'rcl-feed', rcl_addon_url( 'style.css', __FILE__ ) );
+	rcl_enqueue_script( 'rcl-feed', rcl_addon_url( 'js/scripts.js', __FILE__ ) );
 }
 
 add_action( 'init', 'rcl_add_block_feed_button' );

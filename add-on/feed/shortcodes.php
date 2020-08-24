@@ -23,6 +23,8 @@ function rcl_get_feed_list( $atts = array() ) {
 			] );
 	}
 
+	rcl_feed_scripts_init();
+
 	add_filter( 'rcl_rating_user_can', 'rcl_feed_unset_can_vote', 10 );
 
 	if ( ! $atts )

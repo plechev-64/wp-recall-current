@@ -184,7 +184,7 @@ function pfm_the_last_topic() {
 function pfm_the_last_post() {
 	global $PrimeForum, $PrimeTopic, $PrimeQuery;
 
-	if ( pfm_is_home() || pfm_is_group() || $PrimeForum->parent_id && ! $PrimeTopic ) {
+	if ( pfm_is_home() || pfm_is_group() || (isset( $PrimeForum->parent_id ) && $PrimeForum->parent_id && ! $PrimeTopic) ) {
 		$lastPost = $PrimeQuery->search_forum_last_post( $PrimeForum->forum_id );
 	} else {
 		$lastPost = $PrimeQuery->search_topic_last_post( $PrimeTopic->topic_id );
