@@ -34,6 +34,7 @@ $f_reg = ($typeform == 'register') ? 'style="display:block;"' : '';
 				'label'		 => __( 'Signup', 'wp-recall' ),
 				'submit'	 => true,
 				'icon'		 => 'fa-book',
+				'size'		 => 'medium',
 				'fullwidth'	 => true
 			) );
 			?>

@@ -25,6 +25,7 @@
 					'label'		 => __( 'Get New Password', 'wp-recall' ),
 					'submit'	 => true,
 					'fullwidth'	 => true,
+					'size'		 => 'medium',
 					'icon'		 => 'fa-envelope',
 					'class'		 => 'link-tab-form'
 				) );
