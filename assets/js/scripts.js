@@ -247,11 +247,14 @@ function passwordStrength( password ) {
 	document.getElementById( "passwordStrength" ).className = "strength" + score;
 }
 
-function rcl_manage_user_black_list( e, user_id ) {
+function rcl_manage_user_black_list( e, user_id, confirmText ) {
 
 	var class_i = jQuery( e ).children( 'i' ).attr( 'class' );
 
 	if ( class_i == 'rcli fa-refresh fa-spin' )
+		return false;
+
+	if ( !confirm( confirmText ) )
 		return false;
 
 	jQuery( e ).children( 'i' ).attr( 'class', 'rcli fa-refresh fa-spin' );

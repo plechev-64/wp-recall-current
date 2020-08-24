@@ -598,7 +598,7 @@ function rcl_user_black_list_button( $office_id ) {
 		'label'		 => $title,
 		'class'		 => 'rcl-manage-blacklist',
 		'icon'		 => 'fa-bug',
-		'onclick'	 => 'rcl_manage_user_black_list(this,' . $office_id . ');return false;'
+		'onclick'	 => 'rcl_manage_user_black_list(this,' . $office_id . ',"' . __( 'Are you sure?', 'wp-recall' ) . '");return false;'
 		] );
 
 	return $button;

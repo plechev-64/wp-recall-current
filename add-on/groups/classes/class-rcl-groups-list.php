@@ -17,7 +17,7 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 
 		$this->init_properties( $args );
 
-		$this->set_query( $args );
+		$this->parse( $args );
 
 		$this->setup_termdata();
 
@@ -83,7 +83,7 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 
 		$groups_ids = RQ::tbl( new Rcl_Groups_Users_Query() )->parse( array(
 				'user_id'	 => $this->user_id,
-				'fields'	 => array( 'group_id' )
+				'select'	 => array( 'group_id' )
 			) )->get_col();
 
 		if ( $groups_ids )
@@ -169,16 +169,28 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 
 		$filters = apply_filters( 'rcl_groups_filter', $filters );
 
+		if ( rcl_is_office() ) {
+			$url = (isset( $_POST['tab_url'] )) ? $_POST['tab_url'] : rcl_get_user_url( $user_LK );
+		} else {
+			$url = get_permalink( $post->ID );
+		}
+
 		if ( $filters ) {
 			$content .= '<div class="rcl-data-filters">' . __( 'Filter by', 'wp-recall' ) . ': ';
 
 			foreach ( $filters as $key => $name ) {
 
+				$args = array(
+					'groups-filter' => $key ? $key : false
+				);
+
+				if ( isset( $_GET['tab'] ) ) {
+					$args['tab'] = $_GET['tab'];
+				}
+
 				$content .= rcl_get_button( array(
 					'label'	 => $name,
-					'href'	 => add_query_arg( array(
-						'groups-filter' => $key ? $key : false
-						), isset( $_POST['tab_url'] ) ? $_POST['tab_url'] : null  ),
+					'href'	 => add_query_arg( $args, $url ),
 					'class'	 => 'data-filter',
 					'status' => $this->orderby == $key ? 'disabled' : null
 					) );
