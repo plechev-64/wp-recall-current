@@ -53,22 +53,18 @@ class PrimeLastPosts {
 			$tIDs[] = $topic->topic_id;
 		}
 
-		$args = array(
-			'select'		 => array(
-				'topic_id',
-				'post_id',
-				'post_content',
-				'user_id'
-			),
-			'topic_id__in'	 => $tIDs,
-			'orderby'		 => 'post_date'
-		);
-
-		$args = apply_filters( 'pfm_last_posts_query_args', $args );
-
-		$posts = RQ::tbl( new PrimePosts() )
-			->parse( apply_filters( 'pfm_last_posts_query_args', $args ) )
-			->get_results();
+		return RQ::tbl( new PrimePosts() )
+				->parse( apply_filters( 'pfm_last_posts_query_args', array(
+					'select'		 => array(
+						'topic_id',
+						'post_id',
+						'post_content',
+						'user_id'
+					),
+					'topic_id__in'	 => $tIDs,
+					'orderby'		 => 'post_date'
+				) ) )
+				->get_results();
 	}
 
 	function string_trim( $string, $length ) {
