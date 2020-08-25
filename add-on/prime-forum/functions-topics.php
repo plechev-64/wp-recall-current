@@ -200,15 +200,13 @@ function pfm_add_topic_form_custom_meta( $topic_id ) {
 	if ( ! $topic )
 		return false;
 
-	if ( isset( $_REQUEST['pfm-data'] ) ) {
-
-		$pfmData = $_REQUEST['pfm-data'];
+	if ( isset( $_REQUEST['pfm-action'] ) ) {
 
 		$actions = array(
 			'topic_migrate'
 		);
 
-		if ( in_array( $pfmData['action'], $actions ) )
+		if ( in_array( $_REQUEST['pfm-action'], $actions ) )
 			return false;
 	}
 
