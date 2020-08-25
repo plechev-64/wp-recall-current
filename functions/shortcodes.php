@@ -23,6 +23,14 @@ add_shortcode( 'userlist', 'rcl_get_userlist' );
 function rcl_get_userlist( $atts ) {
 	global $rcl_user, $rcl_users_set, $user_ID;
 
+	if ( isset( $atts['include'] ) ) {
+		$atts['ID__in'] = array_map( 'trim', explode( ',', $atts['include'] ) );
+	}
+
+	if ( isset( $atts['exclude'] ) ) {
+		$atts['ID__not_in'] = array_map( 'trim', explode( ',', $atts['exclude'] ) );
+	}
+
 	require_once RCL_PATH . 'classes/class-rcl-users-list.php';
 
 	$users = new Rcl_Users_List( $atts );

@@ -16,19 +16,22 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 	function __construct( $args = array() ) {
 
+		if ( ! $args )
+			$args = array();
+
 		parent::__construct();
 
 		if ( $args )
 			$this->init_properties( $args );
 
-		$args['fields'] = array(
+		$args['select'] = array(
 			'ID',
 			'display_name',
 			'user_nicename'
 		);
 
-		$this->set_query( $args );
-
+		$this->parse( $args );
+		print_r( $this->get_sql() );
 		$this->data = ($this->data) ? array_map( 'trim', explode( ',', $this->data ) ) : array();
 
 		if ( isset( $_GET['usergroup'] ) )

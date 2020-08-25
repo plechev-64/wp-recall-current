@@ -457,6 +457,8 @@ class Rcl_Query extends Rcl_Old_Query {
 			} else {
 				$sql[] = "ORDER BY " . $query['orderby'] . " " . $query['order'];
 			}
+		} else {
+			$sql[] = "ORDER BY " . $this->table['as'] . "." . $this->table['cols'][0] . " " . (isset( $query['order'] ) ? $query['order'] : 'DESC');
 		}
 
 		if ( isset( $query['number'] ) && $query['number'] ) {

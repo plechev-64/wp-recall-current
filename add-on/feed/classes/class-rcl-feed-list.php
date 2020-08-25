@@ -171,7 +171,7 @@ class Rcl_Feed_List extends Rcl_Query {
 			$authors_feed = array_unique( array_merge( $usersFeed1, $usersFeed2 ) );
 		}
 
-		$this->table = array(
+		parent::__construct( array(
 			'name'	 => $wpdb->posts,
 			'as'	 => 'wp_posts',
 			'cols'	 => array(
@@ -185,7 +185,7 @@ class Rcl_Feed_List extends Rcl_Query {
 				'post_status',
 				'post_type'
 			)
-		);
+		) );
 
 		$defaults = array(
 			'post_status'			 => 'publish',
@@ -241,7 +241,7 @@ class Rcl_Feed_List extends Rcl_Query {
 	function setup_comments_query( $query, $args ) {
 		global $wpdb;
 
-		$this->table = $this->get_comments_table();
+		parent::__construct( $this->get_comments_table() );
 
 		$defaults = array(
 			'comment_approved'	 => 1,
@@ -275,7 +275,7 @@ class Rcl_Feed_List extends Rcl_Query {
 	function setup_answers_query( $query, $args ) {
 		global $wpdb;
 
-		$this->table = $this->get_comments_table();
+		parent::__construct( $this->get_comments_table() );
 
 		$defaults = array(
 			'comment_approved'		 => 1,
