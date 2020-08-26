@@ -4,6 +4,7 @@ if ( ! defined( 'RCL_PRECISION' ) ) {
 }
 
 require_once 'classes/class-rcl-users-balance.php';
+require_once "classes/class-rcl-payments.php";
 require_once "classes/class-rcl-payment.php";
 require_once "shortcodes.php";
 

@@ -175,8 +175,6 @@ class Rcl_Payments_History extends WP_List_Table {
 
 	function get_data() {
 
-		include_once untrailingslashit( dirname( plugin_dir_path( __FILE__ ) ) ) . '/class-rcl-payments.php';
-
 		$payments = new Rcl_Payments();
 
 		$payments->set_query( array(

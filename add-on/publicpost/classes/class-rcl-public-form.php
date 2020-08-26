@@ -222,7 +222,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		$errorContent = '';
 
 		foreach ( $this->get_errors() as $error ) {
-			$errorContent .= '<p align="center" class="rcl-public-notice">' . $error . '</p>';
+			$errorContent .= rcl_get_notice( ['text' => $error, 'class' => 'rcl-public-notice' ] );
 		}
 
 		return $errorContent;

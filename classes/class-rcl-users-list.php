@@ -31,7 +31,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		);
 
 		$this->parse( $args );
-		print_r( $this->get_sql() );
+
 		$this->data = ($this->data) ? array_map( 'trim', explode( ',', $this->data ) ) : array();
 
 		if ( isset( $_GET['usergroup'] ) )

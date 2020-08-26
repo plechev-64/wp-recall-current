@@ -19,7 +19,8 @@ function rcl_get_feed_list( $atts = array() ) {
 
 	if ( ! $user_ID ) {
 		return rcl_get_notice( [
-			'text' => __( 'Login or register to view the latest publications and comments from users for which you have subscribed.', 'wp-recall' )
+			'class'	 => 'rcl-feed-notice',
+			'text'	 => __( 'Login or register to view the latest publications and comments from users for which you have subscribed.', 'wp-recall' )
 			] );
 	}
 

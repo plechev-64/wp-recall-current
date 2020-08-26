@@ -697,7 +697,7 @@ function pfm_get_manager_item_delete_form( $fields ) {
 	$content .= '<div class="form-field fields-submit">';
 	$content .= '<input type="submit" class="button-primary" value="' . __( 'Confirm the deletion', 'wp-recall' ) . '">';
 	$content .= '</div>';
-	$content .= wp_nonce_field( 'pfm-action', '_wpnonce', true, false );
+	$content .= wp_nonce_field( 'pfm-nonce', '_wpnonce', true, false );
 	$content .= '</form>';
 	$content .= '</div>';
 
