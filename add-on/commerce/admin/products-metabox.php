@@ -13,7 +13,7 @@ function rcl_products_fields() {
 function rcl_metabox_products( $post ) {
 	global $rmag_options;
 
-	wp_enqueue_script( 'jquery-core' );
+	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery-ui-sortable' );
 
 	$PrVars = new Rcl_Product_Variations( array( 'product_id' => $post->ID ) );

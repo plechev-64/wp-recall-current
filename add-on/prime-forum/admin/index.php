@@ -339,7 +339,7 @@ function pfm_flush_rewrite_rules() {
 
 function pfm_page_forums() {
 
-	wp_enqueue_script( 'jquery-core' );
+	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery-ui-dialog' );
 	wp_enqueue_style( 'wp-jquery-ui-dialog' );
 	?>

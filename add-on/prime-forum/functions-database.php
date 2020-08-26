@@ -377,7 +377,7 @@ function pfm_add_topic( $args, $postdata = array() ) {
 	}
 
 	$topic = array(
-		'topic_name'	 => $args['topic_name'],
+		'topic_name'	 => htmlspecialchars( $args['topic_name'] ),
 		'topic_slug'	 => $args['topic_slug'],
 		'forum_id'		 => $args['forum_id'],
 		'user_id'		 => $args['user_id'],
@@ -472,6 +472,10 @@ function pfm_update_topic( $args ) {
 		} else {
 			$args['topic_slug'] = str_replace( array( ' ' ), '-', $args['topic_slug'] );
 		}
+	}
+
+	if ( isset( $args['topic_name'] ) && $args['topic_name'] ) {
+		$args['topic_name'] = htmlspecialchars( $args['topic_name'] );
 	}
 
 	$result = $wpdb->update(

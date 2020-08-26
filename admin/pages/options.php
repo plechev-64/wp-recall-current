@@ -4,7 +4,7 @@ global $rcl_options;
 
 rcl_font_awesome_style();
 
-wp_enqueue_script( 'jquery-core' );
+wp_enqueue_script( 'jquery' );
 wp_enqueue_script( 'jquery-ui-dialog' );
 wp_enqueue_style( 'wp-jquery-ui-dialog' );
 

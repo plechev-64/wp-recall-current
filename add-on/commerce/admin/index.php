@@ -7,7 +7,7 @@ require_once 'class-rcl-history-orders.php';
 add_action( 'admin_init', 'rcl_commerce_admin_scripts' );
 function rcl_commerce_admin_scripts() {
 
-	wp_enqueue_script( 'jquery-core' );
+	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'rcl_commerce_admin_scripts', rcl_addon_url( 'admin/assets/scripts.js', __FILE__ ) );
 	wp_enqueue_style( 'rcl_commerce_style', rcl_addon_url( 'style.css', __FILE__ ) );
 	wp_enqueue_style( 'rcl_commerce_admin_style', rcl_addon_url( 'admin/assets/style.css', __FILE__ ) );

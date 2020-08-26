@@ -478,7 +478,7 @@ class Rcl_Custom_Fields {
 	function get_type_color( $field ) {
 
 		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script( 'jquery-core' );
+		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'wp-color-picker' );
 
 		$content = '<input type="text" ' . $this->get_class( $field ) . ' name="' . $field['name'] . '" id="' . $this->field_id . '" value="' . $this->value . '"/>';

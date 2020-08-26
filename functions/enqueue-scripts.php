@@ -1,23 +1,23 @@
 <?php
 
 function rcl_sortable_scripts() {
-	wp_enqueue_script( 'jquery-core' );
+	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery-ui-sortable' );
 }
 
 function rcl_resizable_scripts() {
-	wp_enqueue_script( 'jquery-core' );
+	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery-ui-resizable' );
 }
 
 function rcl_multiselect_scripts() {
-	wp_enqueue_script( 'jquery-core' );
+	wp_enqueue_script( 'jquery' );
 	rcl_enqueue_style( 'f-select', RCL_URL . 'assets/js/fselect/fSelect.css' );
 	wp_enqueue_script( 'f-select', RCL_URL . 'assets/js/fselect/fSelect.js' );
 }
 
 function rcl_slider_scripts() {
-	wp_enqueue_script( 'jquery-core' );
+	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery-ui-core' );
 	wp_enqueue_script( 'jquery-ui-slider' );
 	wp_enqueue_script( 'jquery-touch-punch' );
@@ -25,14 +25,14 @@ function rcl_slider_scripts() {
 
 function rcl_datepicker_scripts() {
 	wp_enqueue_style( 'jquery-ui-datepicker', RCL_URL . 'assets/js/datepicker/style.css' );
-	wp_enqueue_script( 'jquery-core' );
+	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery-ui-core' );
 	wp_enqueue_script( 'jquery-ui-datepicker' );
 }
 
 function rcl_image_slider_scripts() {
 	rcl_enqueue_style( 'jssor-slider', RCL_URL . 'assets/css/slider.css' );
-	wp_enqueue_script( 'jquery-core' );
+	wp_enqueue_script( 'jquery' );
 	rcl_enqueue_script( 'jssor-slider', RCL_URL . 'assets/js/jssor.slider/js/jssor.slider.min.js' );
 }
 
@@ -59,7 +59,7 @@ function rcl_fileupload_scripts() {
 
 function rcl_crop_scripts() {
 	wp_enqueue_style( 'jcrop' );
-	wp_enqueue_script( 'jquery-core' );
+	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jcrop' );
 }
 
@@ -77,14 +77,14 @@ function rcl_animate_css() {
 
 add_action( 'login_enqueue_scripts', 'rcl_enqueue_wp_form_scripts', 1 );
 function rcl_enqueue_wp_form_scripts() {
-	wp_enqueue_script( 'jquery-core' );
-	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery-core' ) );
-	wp_enqueue_script( 'rcl-primary-scripts', RCL_URL . 'assets/js/scripts.js', array( 'jquery-core' ) );
+	wp_enqueue_script( 'jquery' );
+	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ) );
+	wp_enqueue_script( 'rcl-primary-scripts', RCL_URL . 'assets/js/scripts.js', array( 'jquery' ) );
 
 	if ( ! is_user_logged_in() ) {
 		wp_enqueue_style( 'rcl-regform-style', RCL_URL . 'assets/css/regform.css' );
 	}
-	wp_localize_script( 'jquery-core', 'Rcl', rcl_get_localize_data() );
+	wp_localize_script( 'rcl-core-scripts', 'Rcl', rcl_get_localize_data() );
 }
 
 function rcl_frontend_scripts() {
@@ -105,7 +105,7 @@ function rcl_frontend_scripts() {
 		rcl_enqueue_style( 'rcl-bar', RCL_URL . 'assets/css/recallbar.css' );
 	}
 
-	wp_enqueue_script( 'jquery-core' );
+	wp_enqueue_script( 'jquery' );
 
 	if ( rcl_is_office() ) {
 		rcl_dialog_scripts();
@@ -114,7 +114,7 @@ function rcl_frontend_scripts() {
 		}
 	}
 
-	rcl_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js' );
+	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ) );
 	rcl_enqueue_script( 'rcl-primary-scripts', RCL_URL . 'assets/js/scripts.js' );
 
 	$locData = rcl_get_localize_data();
@@ -133,7 +133,7 @@ function rcl_frontend_scripts() {
 	$locData['post_ID']		 = (isset( $post->ID ) && $post->ID) ? ( int ) $post->ID : ( int ) 0;
 	$locData['office_ID']	 = ($user_LK) ? ( int ) $user_LK : ( int ) 0;
 
-	wp_localize_script( 'jquery-core', 'Rcl', $locData );
+	wp_localize_script( 'rcl-core-scripts', 'Rcl', $locData );
 }
 
 function rcl_get_localize_data() {
@@ -175,12 +175,11 @@ function rcl_get_localize_data() {
 }
 
 function rcl_admin_scrips() {
-
-	wp_localize_script( 'jquery-core', 'Rcl', rcl_get_localize_data() );
-
 	wp_enqueue_style( 'rcl-admin-style', RCL_URL . 'admin/assets/style.css' );
 	wp_enqueue_style( 'wp-color-picker' );
-	wp_enqueue_script( 'jquery-core' );
-	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery-core' ) );
+	wp_enqueue_script( 'jquery' );
+	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ) );
 	wp_enqueue_script( 'rcl-admin-scripts', RCL_URL . 'admin/assets/scripts.js', array( 'wp-color-picker' ), VER_RCL );
+
+	wp_localize_script( 'rcl-core-scripts', 'Rcl', rcl_get_localize_data() );
 }

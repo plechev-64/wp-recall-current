@@ -4,7 +4,7 @@ require_once 'addon-settings.php';
 
 add_action( 'admin_head', 'rcl_add_admin_rating_scripts' );
 function rcl_add_admin_rating_scripts() {
-	wp_enqueue_script( 'jquery-core' );
+	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'rcl_admin_rating_scripts', plugins_url( 'js/scripts.js', __FILE__ ) );
 }
 
