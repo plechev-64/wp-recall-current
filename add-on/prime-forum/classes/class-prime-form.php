@@ -1,6 +1,6 @@
 <?php
 
-class PrimeForm extends Rcl_Custom_Fields {
+class PrimeForm extends Rcl_Fields {
 
 	public $forum_id;
 	public $topic_id;
@@ -8,7 +8,7 @@ class PrimeForm extends Rcl_Custom_Fields {
 	public $onclick;
 	public $action;
 	public $submit;
-	public $fields;
+	public $custom_fields;
 	public $forum_list		 = false;
 	public $values			 = array();
 	public $exclude_fields	 = array();
@@ -34,7 +34,11 @@ class PrimeForm extends Rcl_Custom_Fields {
 		if ( $this->post_id )
 			add_filter( 'pfm_form_fields', array( $this, 'add_post_field' ) );
 
-		$this->fields = wp_unslash( $this->setup_fields() );
+		$fields = $this->get_form_fields();
+
+		parent::__construct( $fields );
+
+		//$this->fields = wp_unslash($this->setup_fields());
 	}
 
 	function init_properties( $args ) {
@@ -81,7 +85,7 @@ class PrimeForm extends Rcl_Custom_Fields {
 		return $fields;
 	}
 
-	function setup_fields() {
+	function get_form_fields() {
 		global $user_ID;
 
 		$fields = array();
@@ -126,12 +130,12 @@ class PrimeForm extends Rcl_Custom_Fields {
 
 		$fields = apply_filters( 'pfm_form_fields', $fields, $this->action );
 
-		if ( $this->fields )
-			$fields = array_merge( $fields, $this->fields );
+		if ( $this->custom_fields )
+			$fields = array_merge( $fields, $this->custom_fields );
 
 		$fields[] = apply_filters( 'pfm_form_content_field', array(
 			'type'		 => 'editor',
-			'editor-id'	 => 'action_' . $this->action,
+			'editor_id'	 => 'editor-action_' . $this->action,
 			//'tinymce' => true,
 			'slug'		 => 'post_content',
 			'title'		 => __( 'Message text', 'wp-recall' ),
@@ -146,6 +150,10 @@ class PrimeForm extends Rcl_Custom_Fields {
 					unset( $fields[$k] );
 				}
 			}
+		}
+
+		foreach ( $fields as $field ) {
+			$this->add_field( $field['slug'], $field );
 		}
 
 		return $fields;
@@ -194,21 +202,20 @@ class PrimeForm extends Rcl_Custom_Fields {
 		$content .= apply_filters( 'pfm_form_top', '', $this );
 		$content .= '</div>';
 
-		foreach ( $this->fields as $field ) {
+		foreach ( $this->fields as $field_id => $field ) {
 
-			$value = (isset( $this->values[$field['slug']] )) ? $this->values[$field['slug']] : false;
+			if ( ! $field->value )
+				$field->value = (isset( $this->values[$field->slug] )) ? $this->values[$field->slug] : false;
 
-			$required = (isset( $field['required'] ) && $field['required'] == 1) ? '<span class="required">*</span>' : '';
+			$content .= '<div id="field-' . $field->slug . '" class="form-field rcl-option">';
 
-			$content .= '<div id="field-' . $field['slug'] . '" class="form-field rcl-option">';
-
-			if ( isset( $field['title'] ) ) {
+			if ( $field->title ) {
 				$content .= '<h3 class="field-title">';
-				$content .= $this->get_title( $field ) . ' ' . $required;
+				$content .= $field->title . ($field->required ? ' <span class="required">*</span>' : '');
 				$content .= '</h3>';
 			}
 
-			$content .= $this->get_input( $field, $value );
+			$content .= $field->get_field_input();
 
 			$content .= '</div>';
 		}

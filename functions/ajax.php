@@ -8,6 +8,10 @@ function rcl_ajax_action( $function_name, $guest_access = false ) {
 		add_action( 'wp_ajax_nopriv_' . $function_name, $function_name );
 }
 
+function rcl_is_ajax() {
+	return (defined( 'DOING_AJAX' ) && DOING_AJAX || isset( $GLOBALS['wp']->query_vars['rest_route'] ));
+}
+
 //загрузка вкладки ЛК через AJAX
 rcl_ajax_action( 'rcl_ajax_tab', true );
 function rcl_ajax_tab() {

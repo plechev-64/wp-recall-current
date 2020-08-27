@@ -902,10 +902,12 @@ function RclForm( form ) {
 
 				var value = false;
 
-				if ( field.attr( 'type' ) == 'checkbox' && field.is( ":checked" ) ) {
-					value = true;
-				} else if ( field.attr( 'type' ) == 'radio' && jQuery( 'input[name="' + field.attr( 'name' ) + '"]:checked' ).val() ) {
-					value = true;
+				if ( field.attr( 'type' ) == 'checkbox' ) {
+					if ( field.is( ":checked" ) )
+						value = true;
+				} else if ( field.attr( 'type' ) == 'radio' ) {
+					if ( jQuery( 'input[name="' + field.attr( 'name' ) + '"]:checked' ).val() )
+						value = true;
 				} else {
 					if ( field.val() )
 						value = true;

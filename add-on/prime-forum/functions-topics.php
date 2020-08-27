@@ -76,15 +76,13 @@ function pfm_get_topic_meta_box( $topic_id ) {
 	if ( ! $fields )
 		return false;
 
-	$CF = new Rcl_Custom_Fields();
-
 	$content = '';
 
 	foreach ( $fields as $field ) {
 
-		$value = pfm_get_topic_meta( $topic_id, $field['slug'] );
+		$field['value'] = pfm_get_topic_meta( $topic_id, $field['slug'] );
 
-		$content .= $CF->get_field_value( $field, $value );
+		$content .= Rcl_Field::setup( $field )->get_field_value( true );
 	}
 
 	if ( ! $content )

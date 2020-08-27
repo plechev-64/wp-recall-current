@@ -3,12 +3,12 @@
   Plugin Name: WP-Recall
   Plugin URI: http://codeseller.ru/?p=69
   Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-  Version: 16.21.9
+  Version: 16.22.0
   Author: Plechev Andrey
   Author URI: http://codeseller.ru/
   Text Domain: wp-recall
   Domain Path: /languages
-  GitHub Plugin URI: https://github.com/plechev-64/wp-recall
+  GitHub Plugin URI: https://github.com/plechev-64/wp-recall-current
   License: GPLv2 or later (license.txt)
  */
 
@@ -16,14 +16,11 @@
 
 final class WP_Recall {
 
-	public $version				 = '16.21.9';
+	public $version				 = '16.22.0';
 	public $child_addons		 = array();
 	public $need_update			 = false;
-	public $exclude_addons		 = false;
+	public $fields				 = array();
 	protected static $_instance	 = null;
-	public $session				 = null; //На данный момент не используется, нужно будет все сессии сюда пихать
-	public $query				 = null; //На данный момент не используется. В дальнейшем можно будет использовать для кастомных запросов
-	public $customer			 = null; //Тут будет хранится вся информация о пользователях (авторезированых и не авторезированных)
 
 	/*
 	 * Основной экземпляр класса WP_Recall
@@ -61,8 +58,6 @@ final class WP_Recall {
 	 * Конструктор нашего WP_Recall
 	 */
 	public function __construct() {
-
-		$this->exclude_addons = $this->get_exclude_addons();
 
 		add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ), 10 );
 
@@ -148,7 +143,31 @@ final class WP_Recall {
 
 		require_once 'classes/class-rcl-query-tables.php';
 
-		/* require_once 'classes/class-rcl-query.php'; */
+		require_once 'classes/fields/class-rcl-field-abstract.php';
+		require_once 'classes/fields/class-rcl-field.php';
+		require_once 'classes/fields/class-rcl-fields.php';
+		require_once 'classes/fields/types/class-rcl-field-agree.php';
+		require_once 'classes/fields/types/class-rcl-field-checkbox.php';
+		require_once 'classes/fields/types/class-rcl-field-color.php';
+		require_once 'classes/fields/types/class-rcl-field-custom.php';
+		require_once 'classes/fields/types/class-rcl-field-date.php';
+		require_once 'classes/fields/types/class-rcl-field-dynamic.php';
+		require_once 'classes/fields/types/class-rcl-field-editor.php';
+		require_once 'classes/fields/types/class-rcl-field-file.php';
+		require_once 'classes/fields/types/class-rcl-field-select.php';
+		require_once 'classes/fields/types/class-rcl-field-multiselect.php';
+		require_once 'classes/fields/types/class-rcl-field-radio.php';
+		require_once 'classes/fields/types/class-rcl-field-range.php';
+		require_once 'classes/fields/types/class-rcl-field-runner.php';
+		require_once 'classes/fields/types/class-rcl-field-text.php';
+		require_once 'classes/fields/types/class-rcl-field-tel.php';
+		require_once 'classes/fields/types/class-rcl-field-number.php';
+		require_once 'classes/fields/types/class-rcl-field-textarea.php';
+		//require_once 'classes/fields/types/class-rcl-field-uploader.php';
+		require_once 'classes/fields/types/class-rcl-field-hidden.php';
+
+		require_once 'classes/class-rcl-form.php';
+		require_once 'classes/class-rcl-walker.php';
 		require_once 'classes/class-rcl-includer.php';
 		require_once 'classes/class-rcl-pagenavi.php';
 		require_once 'classes/class-rcl-install.php';
@@ -213,6 +232,8 @@ final class WP_Recall {
 		global $user_ID;
 
 		do_action( 'wp_recall_before_init' );
+
+		$this->fields_init();
 
 		if ( ! $user_ID ) {
 
@@ -303,6 +324,104 @@ final class WP_Recall {
 		}
 	}
 
+	function fields_init() {
+
+		$this->fields = apply_filters( 'rcl_fields', array(
+			'text'			 => array(
+				'label'	 => __( 'Text', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Text'
+			),
+			'time'			 => array(
+				'label'	 => __( 'Time', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Text'
+			),
+			'hidden'		 => array(
+				'label'	 => __( 'Скрытое поле', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Hidden'
+			),
+			'password'		 => array(
+				'label'	 => __( 'Password', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Text'
+			),
+			'url'			 => array(
+				'label'	 => __( 'Url', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Text'
+			),
+			'textarea'		 => array(
+				'label'	 => __( 'Multiline text area', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_TextArea'
+			),
+			'select'		 => array(
+				'label'	 => __( 'Select', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Select'
+			),
+			'multiselect'	 => array(
+				'label'	 => __( 'MultiSelect', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_MultiSelect'
+			),
+			'checkbox'		 => array(
+				'label'	 => __( 'Checkbox', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Checkbox'
+			),
+			'radio'			 => array(
+				'label'	 => __( 'Radiobutton', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Radio'
+			),
+			'email'			 => array(
+				'label'	 => __( 'E-mail', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Text'
+			),
+			'tel'			 => array(
+				'label'	 => __( 'Phone', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Tel'
+			),
+			'number'		 => array(
+				'label'	 => __( 'Number', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Number'
+			),
+			'date'			 => array(
+				'label'	 => __( 'Date', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Date'
+			),
+			'agree'			 => array(
+				'label'	 => __( 'Agreement', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Agree'
+			),
+			'file'			 => array(
+				'label'	 => __( 'File', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_File'
+			),
+			'dynamic'		 => array(
+				'label'	 => __( 'Dynamic', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Dynamic'
+			),
+			'runner'		 => array(
+				'label'	 => __( 'Runner', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Runner'
+			),
+			'range'			 => array(
+				'label'	 => __( 'Range', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Range'
+			),
+			'color'			 => array(
+				'label'	 => __( 'Color', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Color'
+			),
+			'custom'		 => array(
+				'label'	 => __( 'Произвольный контент', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Custom'
+			),
+			'editor'		 => array(
+				'label'	 => __( 'Текстовый редактор', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Editor'
+			),
+			/* 'uploader'		 => array(
+			  'label'	 => __( 'Файловый загрузчик', 'wp-recall' ),
+			  'class'	 => 'Rcl_Field_Uploader'
+			  ) */
+			) );
+	}
+
 	function include_addons() {
 		global $active_addons, $rcl_template;
 
@@ -313,14 +432,6 @@ final class WP_Recall {
 		}
 
 		$active_addons = get_site_option( 'rcl_active_addons' );
-
-		if ( $active_addons && $this->exclude_addons ) {
-			foreach ( $active_addons as $addon => $data ) {
-				if ( in_array( $addon, $this->exclude_addons ) ) {
-					unset( $active_addons[$addon] );
-				}
-			}
-		}
 
 		$rcl_template = get_site_option( 'rcl_active_template' );
 
@@ -422,27 +533,6 @@ final class WP_Recall {
 		return false;
 	}
 
-	function get_exclude_addons() {
-		return isset( $_COOKIE['rcl_exclude_addons'] ) ? ( array ) json_decode( $_COOKIE['rcl_exclude_addons'] ) : array();
-	}
-
-	function get_exclude_addon( $key ) {
-		return $this->exclude_addons[$key];
-	}
-
-	function set_exclude_addon( $key, $addon_id ) {
-		$this->exclude_addons[$key] = $addon_id;
-		setcookie( 'rcl_exclude_addons', json_encode( $this->exclude_addons ), time() + 31104000, '/' );
-	}
-
-	function unset_exclude_addon( $key ) {
-		if ( ! isset( $this->exclude_addons[$key] ) )
-			return false;
-		unset( $this->exclude_addons[$key] );
-		setcookie( 'rcl_exclude_addons', json_encode( $this->exclude_addons ), time() + 31104000, '/' );
-		return true;
-	}
-
 	public function load_plugin_textdomain() {
 		load_plugin_textdomain( 'wp-recall', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
@@ -505,7 +595,7 @@ function wp_recall() {
 
 	<div id="rcl-office" <?php rcl_office_class(); ?> data-account="<?php echo $user_LK; ?>">
 
-		<?php rcl_notice(); ?>
+		<?php do_action( 'rcl_area_notice' ); ?>
 
 		<?php rcl_include_template_office(); ?>
 

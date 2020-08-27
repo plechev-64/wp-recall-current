@@ -92,8 +92,6 @@ function rcl_get_custom_fields_profile( $user ) {
 
 	$fields = apply_filters( 'rcl_admin_profile_fields', rcl_get_profile_fields( $args ), $user );
 
-	$CF = new Rcl_Custom_Fields();
-
 	if ( $fields ) {
 
 		$content = '<h3>' . __( 'Custom Profile Fields', 'wp-recall' ) . ':</h3>
@@ -110,18 +108,25 @@ function rcl_get_custom_fields_profile( $user ) {
 			if ( ! isset( $field['value_in_key'] ) )
 				$field['value_in_key'] = true;
 
-			$value = get_the_author_meta( $field['slug'], $user->ID );
+			if ( ! isset( $field['value'] ) )
+				$field['value'] = get_the_author_meta( $field['slug'], $user->ID );
+
+			$fieldObject = Rcl_Field::setup( $field );
 
 			$content .= '<tr class="rcl-custom-field">';
-			$content .= '<th><label>' . $CF->get_title( $field ) . ':</label></th>';
-			$content .= '<td>' . $CF->get_input( $field, $value ) . '</td>';
+			$content .= '<th><label>' . $fieldObject->get_title() . ':</label></th>';
+			$content .= '<td>' . $fieldObject->get_field_input() . '</td>';
 			$content .= '</tr>';
 		}
 
 		$content .= '</table>';
 
 		foreach ( $hiddens as $field ) {
-			$content .= $CF->get_input( $field, get_the_author_meta( $field['slug'], $user->ID ) );
+
+			if ( ! isset( $field['value'] ) )
+				$field['value'] = get_the_author_meta( $field['slug'], $user->ID );
+
+			$content .= Rcl_Field::setup( $field )->get_field_input();
 		}
 
 		echo $content;

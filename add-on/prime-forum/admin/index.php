@@ -439,8 +439,6 @@ function pfm_admin_role_field( $user ) {
 		)
 	);
 
-	$cf = new Rcl_Custom_Fields();
-
 	if ( $fields ) {
 
 		$content = '<h3>' . __( 'Role of the user on the forum', 'wp-recall' ) . ':</h3>
@@ -448,8 +446,10 @@ function pfm_admin_role_field( $user ) {
 
 		foreach ( $fields as $field ) {
 
-			$content .= '<tr><th><label>' . $cf->get_title( $field ) . ':</label></th>';
-			$content .= '<td>' . $cf->get_input( $field, $PrimeUser->user_role ) . '</td>';
+			$fieldObject = Rcl_Field::setup( $field );
+
+			$content .= '<tr><th><label>' . $fieldObject->get_title() . ':</label></th>';
+			$content .= '<td>' . $fieldObject->get_field_input() . '</td>';
 			$content .= '</tr>';
 		}
 
@@ -672,24 +672,22 @@ function pfm_ajax_get_manager_item_delete_form() {
 
 function pfm_get_manager_item_delete_form( $fields ) {
 
-	$CF = new Rcl_Custom_Fields();
-
 	$content = '<div id="manager-deleted-form" class="rcl-custom-fields-box">';
 	$content .= '<form method="post">';
 
 	foreach ( $fields as $field ) {
 
-		$required = ($field['required'] == 1) ? '<span class="required">*</span>' : '';
+		$fieldObject = Rcl_Field::setup( $field );
 
 		$content .= '<div id="field-' . $field['slug'] . '" class="form-field rcl-custom-field">';
 
 		if ( isset( $field['title'] ) ) {
 			$content .= '<label>';
-			$content .= $CF->get_title( $field ) . ' ' . $required;
+			$content .= $fieldObject->get_title();
 			$content .= '</label>';
 		}
 
-		$content .= $CF->get_input( $field );
+		$content .= $fieldObject->get_field_input();
 
 		$content .= '</div>';
 	}

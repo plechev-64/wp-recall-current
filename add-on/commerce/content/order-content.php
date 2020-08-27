@@ -126,8 +126,6 @@ function rcl_add_order_details() {
 	if ( ! $rclOrder->order_details )
 		return false;
 
-	$CF = new Rcl_Custom_Fields();
-
 	$content = '<div class="rcl-order-details order-before-box">';
 
 	$content .= '<span class="title-before-box">' . __( 'Order data', 'wp-recall' ) . '</span>';
@@ -148,7 +146,9 @@ function rcl_add_order_details() {
 
 		foreach ( $rclOrder->order_details as $data ) {
 
-			$content .= $CF->get_field_value( $data, $data['value'], true );
+			$fieldObject = Rcl_Field::setup( $data );
+
+			$content .= $fieldObject->get_field_value( true );
 		}
 	} else {
 		//поддержка заказов созданных ранее версии 16.0

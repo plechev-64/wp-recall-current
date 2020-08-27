@@ -193,8 +193,6 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 		$profile_fields = stripslashes_deep( $profile_fields );
 
-		$cf = new Rcl_Custom_Fields();
-
 		$slugs	 = array();
 		$fields	 = array();
 

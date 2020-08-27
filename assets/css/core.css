@@ -526,7 +526,7 @@ a.data-filter.filter-active:hover {
     padding: 10px 10px 5px;
 }
 .rcl-subtab-menu .rcl-subtab-button {
-    
+
 }
 /*end*/
 
@@ -675,6 +675,25 @@ a.data-filter.filter-active:hover {
 /*---------------------------
   19. RCL Custom fields API
 -----------------------------*/
+.rcl-field{
+	margin: 5px 0;
+	width: 100%;
+}
+.rcl-field .rcl-field-title{
+	font-weight: bold;
+    margin: 0 5px 0 0;
+}
+.rcl-field-notice {
+    align-items: center;
+    clear: both;
+    color: #797979;
+    display: flex;
+    font-size: .85em;
+    margin: 5px 0 0;
+}
+.rcl-field-notice .rcli {
+    margin-right: 5px;
+}
 .rcl-cf-title {
     font-weight: bold;
     margin: 0 3px 0 0;
@@ -749,17 +768,6 @@ a.data-filter.filter-active:hover {
     margin-right: 5px;
     cursor: pointer;
     color: #4c8cbd;
-}
-.rcl-field-input .rcl-field-notice {
-    align-items: center;
-    clear: both;
-    color: #797979;
-    display: flex;
-    font-size: .85em;
-    margin: 5px 0 0;
-}
-.rcl-field-input .rcl-field-notice .rcli {
-    margin-right: 5px;
 }
 .type-multiselect-input .hidden {
     display: none !important;
@@ -1369,96 +1377,96 @@ body .ssi-modalOuter .ssi-modalTitle {
   29. RCL Form
 ---------------------*/
 .rcl-form {
-    border-collapse: collapse;
-    border-spacing: 0;
-    border: none;
-    box-sizing: border-box;
-    font-size: 14px;
-    line-height: normal;
-    margin: 0 0 12px;
-    text-align: left;
-    width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	border: none;
+	box-sizing: border-box;
+	font-size: 14px;
+	line-height: normal;
+	margin: 0 0 12px;
+	text-align: left;
+	width: 100%;
 }
 .rcl-form table {
-    line-height: normal;
-    width: 100%;
+	line-height: normal;
+	width: 100%;
 }
 .rcl-form tr {
-    background: #fff;
+	background: #fff;
 }
 .rcl-form th,
 .rcl-form td {
-    border: 1px solid #eaeaea;
-    box-sizing: border-box;
-    line-height: normal;
-    padding: 8px;
-    text-align: left;
-    text-transform: none;                       /*++Twenty14++*/
-    vertical-align: middle;
+	border: 1px solid #eaeaea;
+	box-sizing: border-box;
+	line-height: normal;
+	padding: 8px;
+	text-align: left;
+	text-transform: none; /* ++Twenty14++ */
+	vertical-align: middle;
 }
 .rcl-form th:first-child,
 .rcl-form td:first-child {
-    padding-left: 8px;                          /*++Twenty17++*/
+	padding-left: 8px; /* ++Twenty17++ */
 }
 .rcl-form tr th {
-    overflow: hidden;
+	overflow: hidden;
 }
 .rcl-form tr:nth-child(1) th {
-    background-color: #f5f5f5;
-    font-size: 14px;
-    font-weight: bold;
+	background-color: #f5f5f5;
+	font-size: 14px;
+	font-weight: bold;
 }
 .rcl-form input[disabled] {
-    background-color: #eee;
-    opacity: 0.6;
+	background-color: #eee;
+	opacity: 0.6;
 }
 .rcl-form .block-label input[type="checkbox"] {
-    margin: 0 6px 0 0;
+	margin: 0 6px 0 0;
 }
 .rcl-form .block-label input[type="radio"] {
-    border: 1px solid #d1d1d1;
-    color: #b1b1b1;
-    float: none;
-    font-size: 13px;
-    padding: 8px 12px;
-    width: auto;
+	border: 1px solid #d1d1d1;
+	color: #b1b1b1;
+	float: none;
+	font-size: 13px;
+	padding: 8px 12px;
+	width: auto;
 }
 .rcl-form label a {
-    color: rgb(76, 140, 189);
-    display: inline;
-    font-weight: bold;
-    margin: 0;
-    padding: 0 1px 0 0;
+	color: rgb(76, 140, 189);
+	display: inline;
+	font-weight: bold;
+	margin: 0;
+	padding: 0 1px 0 0;
 }
 .rcl-form label a:hover,
 .rcl-form td span a:hover {
-    color: #000;
-    text-decoration: underline;
+	color: #000;
+	text-decoration: underline;
 }
 .rcl-form td a:hover {
-    color: #000;
+	color: #000;
 }
 .rcl-form td a:hover i {
-    color: rgb(229, 57, 53);
+	color: rgb(229, 57, 53);
 }
 .rcl-form .aligncenter {
-    text-align: center;
+	text-align: center;
 }
 .rcl-form .form-field {
-    margin: 15px 0;
+	margin: 15px 0;
 }
 .rcl-form .form-field .field-title {
-    display: block;
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 1;
-    margin-bottom: 5px;
+	display: block;
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 1;
+	margin-bottom: 5px;
 }
 .rcl-form .submit-box {
-    background: #f2f2f2;
-    overflow: hidden;
-    padding: 5px;
-    text-align: right;
+	background: #f2f2f2;
+	overflow: hidden;
+	padding: 5px;
+	text-align: right;
 }
 .rcl-form .submit-box a,
 .rcl-form .submit-box input[type="submit"] {
@@ -1466,19 +1474,19 @@ body .ssi-modalOuter .ssi-modalTitle {
 }
 
 @media screen and (max-width:375px) {
-    .rcl-form tr th {
-        -webkit-hyphens: auto;
+	.rcl-form tr th {
+		-webkit-hyphens: auto;
 		hyphens: auto;
-        word-wrap: break-word;
-    }
-    .rcl-form td a {
-        font-size: 13px;
-        margin: 3px 0;
-        width: 83px;
-    }
-    .rcl-form .file-field-upload {
-        width: 205px;
-    }
+		word-wrap: break-word;
+	}
+	.rcl-form td a {
+		font-size: 13px;
+		margin: 3px 0;
+		width: 83px;
+	}
+	.rcl-form .file-field-upload {
+		width: 205px;
+	}
 }
 /*end*/
 

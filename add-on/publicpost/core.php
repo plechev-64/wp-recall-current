@@ -8,11 +8,11 @@ function rcl_get_custom_post_meta( $post_id ) {
 		$show_custom_field	 = '';
 		$cf					 = new Rcl_Custom_Fields();
 		foreach ( $get_fields as $custom_field ) {
-			$custom_field	 = apply_filters( 'rcl_custom_post_meta', $custom_field );
+			$custom_field			 = apply_filters( 'rcl_custom_post_meta', $custom_field );
 			if ( ! $custom_field || ! isset( $custom_field['slug'] ) || ! $custom_field['slug'] )
 				continue;
-			$p_meta			 = get_post_meta( $post_id, $custom_field['slug'], true );
-			$show_custom_field .= $cf->get_field_value( $custom_field, $p_meta );
+			$custom_field['value']	 = get_post_meta( $post_id, $custom_field['slug'], true );
+			$show_custom_field .= Rcl_Field::setup( $custom_field )->get_field_value();
 		}
 
 		return $show_custom_field;
@@ -121,8 +121,6 @@ function rcl_get_custom_fields_edit_box( $post_id, $post_type = false, $form_id 
 	if ( ! $fields )
 		return false;
 
-	$CF = new Rcl_Custom_Fields();
-
 	$content = '<div class="rcl-custom-fields-box">';
 
 	foreach ( $fields as $key => $field ) {
@@ -130,15 +128,17 @@ function rcl_get_custom_fields_edit_box( $post_id, $post_type = false, $form_id 
 		if ( $key === 'options' || ! isset( $field['slug'] ) )
 			continue;
 
-		$star		 = ($field['required'] == 1) ? '<span class="required">*</span> ' : '';
-		$postmeta	 = ($post_id) ? get_post_meta( $post_id, $field['slug'], 1 ) : '';
+		$star			 = ($field['required'] == 1) ? '<span class="required">*</span> ' : '';
+		$field['value']	 = ($post_id) ? get_post_meta( $post_id, $field['slug'], 1 ) : '';
+
+		$fieldObject = Rcl_Field::setup( $field );
 
 		$content .= '<div class="rcl-custom-field">';
 
-		$content .= '<label>' . $CF->get_title( $field ) . $star . '</label>';
+		$content .= '<label>' . $fieldObject->get_title() . '</label>';
 
 		$content .= '<div class="field-value">';
-		$content .= $CF->get_input( $field, $postmeta );
+		$content .= $fieldObject->get_field_input();
 		$content .= '</div>';
 
 		$content .= '</div>';
