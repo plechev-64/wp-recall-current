@@ -21,6 +21,7 @@ class Rcl_Field_Abstract {
 	public $value		 = null;
 	public $default		 = null;
 	public $notice;
+	public $filter;
 	public $input_id;
 	public $input_name;
 	public $parent;
@@ -132,15 +133,13 @@ class Rcl_Field_Abstract {
 		if ( ! $this->type )
 			return false;
 
-		$classes = array( 'rcl-field-core type-' . $this->type . '-input', 'rcl-field-' . $this->id );
+		$classes = array( 'type-' . $this->type . '-input' );
 
-		if ( $this->type != 'custom' ) {
-			$classes[] = 'rcl-field-input';
-		}
+		//if ( $this->type != 'custom' ) {
+		$classes[] = 'rcl-field-input';
+		//}
 
 		$inputField = $this->get_input();
-
-		$inputField .= $this->get_notice();
 
 		if ( $this->icon ) {
 			//$inputField .= '<i class="rcli '.$this->icon.' field-icon"></i>';
@@ -155,8 +154,11 @@ class Rcl_Field_Abstract {
 			$inputField .= '<script>rcl_init_field_maxlength("' . $this->input_id . '");</script>';
 		}
 
-		$content = '<div class="' . implode( ' ', $classes ) . '">'
+		$content = '<div id="rcl-field-' . $this->id . '" class="' . implode( ' ', $classes ) . '">'
+			. '<div class="rcl-field-core">'
 			. $inputField
+			. '</div>'
+			. $this->get_notice()
 			. '</div>';
 
 		return $content;
@@ -261,32 +263,47 @@ class Rcl_Field_Abstract {
 		if ( ! isset( $this->value ) || $this->value == '' )
 			return false;
 
-		return $value;
+		return $this->value;
 	}
 
 	function get_field_value( $title = false ) {
 
-		$value = $this->get_value();
-
-		if ( ! $value || ! $this->type )
+		if ( ! $value = $this->get_value() || ! $this->type )
 			return false;
 
-		$content = '<div class="rcl-field">';
+		$content = '<div class="rcl-field type-' . $this->type . '-value">';
 
 		//$content .= $this->get_icon();
 
 		if ( $title )
-			$content .= $this->get_title() . '<span class="title-colon">: </span>';
+			$content .= '<span class="rcl-field-title">'
+				. $this->title
+				. '</span>'
+				. '<span class="title-colon">: </span>';
 
-		$content .= '<span class="rcl-field-value type-' . $this->type . '-value">';
+		$content .= '<span class="rcl-field-value">';
 
-		$content .= $value;
+		$content .= $this->filter ? $this->get_filter_value() : $value;
 
 		$content .= '</span>';
 
 		$content .= '</div>';
 
 		return $content;
+	}
+
+	function get_filter_value() {
+		return $this->get_value();
+	}
+
+	function get_filter_url( $val = false ) {
+		if ( ! rcl_get_option( 'users_page_rcl' ) )
+			return false;
+
+		if ( ! $val )
+			$val = $this->value;
+
+		return rcl_format_url( get_permalink( rcl_get_option( 'users_page_rcl' ) ) ) . 'usergroup=' . $this->slug . ':' . urlencode( $val );
 	}
 
 }

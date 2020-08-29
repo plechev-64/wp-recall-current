@@ -97,10 +97,10 @@ function rcl_init_ajax_tab() {
 					rcl_update_history_url( url );
 
 					if ( !subtab_id ) {
-						jQuery( '.rcl-tab-button .recall-button' ).removeClass( 'active' ).removeClass( 'rcl-bttn__disabled' );
+						jQuery( '.rcl-tab-button .recall-button' ).removeClass( 'active' ).removeClass( 'rcl-bttn__active' );
 					}
 
-					e.addClass( 'active' ).addClass( 'rcl-bttn__disabled' );
+					e.addClass( 'active' ).addClass( 'rcl-bttn__active' );
 
 					var box_id = '#lk-content';
 

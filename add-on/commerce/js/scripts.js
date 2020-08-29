@@ -100,7 +100,8 @@ function rcl_variations_loop( loopData ) {
 				return;
 
 			if ( type == 'checkbox' ) {
-				if ( input.attr( 'checked' ) == 'checked' ) {
+
+				if ( input.is( ':checked' ) ) {
 					Rcl.Variations[product_id][i].price += varPrice;
 				} else {
 					Rcl.Variations[product_id][i].price -= varPrice;

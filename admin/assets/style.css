@@ -253,53 +253,6 @@ div.rcl_preloader i.rcli::before {
 /* END bom helper */
 
 
-/* START checkbox stylization */
-.rcl-checkbox-box {
-    background-color: #f5f5f5;
-    border: 1px solid #e5e5e5;
-    display: inline-block;
-    line-height: 1;
-    margin: 3px 4px 3px 0;
-    position: relative;
-}
-.rcl-checkbox-box input[type="checkbox"] {
-    opacity: 0;
-    position: absolute;
-    z-index: -1;
-}
-.rcl-checkbox-box input[type="checkbox"]:checked + label.block-label::before {
-    color: rgb(76, 140, 189);
-    content: "\f147";
-    font-family: dashicons;
-    font-size: 22px;
-    left: 3px;
-    position: absolute;
-    top: 4px;
-    z-index: 3;
-}
-.rcl-checkbox-box label.block-label::after {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    content: "";
-    display: block;
-    height: 20px;
-    left: 5px;
-    padding: 0 2px;
-    position: absolute;
-    top: 4px;
-    width: 20px;
-}
-.rcl-checkbox-box label.block-label {
-    display: inline-block;
-    font-weight: normal;
-    line-height: normal;
-    margin: 0;
-    padding: 5px 5px 5px 30px;
-}
-/* END checkbox stylization */
-
-
 .left-sidebar .submit-block {
     margin-top: 50px;
     width: 238px;
@@ -722,6 +675,7 @@ div.rcl_preloader i.rcli::before {
     padding: 2px;
     position: absolute;
     top: 4px;
+	right: 33px
 }
 .rcl-custom-fields-box .rcl-custom-field a .fa-minus::before {
     color: rgb(229, 57, 53);
@@ -813,44 +767,6 @@ div.rcl_preloader i.rcli::before {
 }
 .rcl-custom-fields-box .rcl-custom-field .type-editor-input textarea {
     height: 150px;
-}
-.rcl-field-core {
-    position: relative;
-}
-.rcl-field-input.type-text-input .maxlength {
-    height: 100%;
-}
-.rcl-field-input .maxlength {
-    align-items: center;
-    background-color: #e5e5e5;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    display: flex;
-    font-weight: bold;
-    justify-content: center;
-    max-height: 100%;
-    min-width: 30px;
-    padding: 2px 5px;
-    position: absolute;
-    right: 0;
-    text-align: center;
-    top: 0;
-    z-index: 10;
-}
-.type-multiselect-input .hidden {
-    display: none!important;
-}
-.type-multiselect-input .fs-wrap {
-    max-width: 400px;
-    width: 100%;
-}
-.type-multiselect-input .fs-dropdown {
-    box-shadow: 4px 3px 3px 0 #929292;
-    max-width: 400px;
-    width: 100%;
-}
-.type-multiselect-input .fs-wrap.multiple .fs-option.selected .fs-checkbox i {
-    background-color: #888;
 }
 /* END custom fields box */
 
@@ -954,58 +870,6 @@ span.ruble-symbol {
     display:block;
 }
 
-/*бегунок*/
-.rcl-runner,
-.rcl-range {
-    padding: 10px;
-}
-.rcl-runner .rcl-runner-value,
-.rcl-range .rcl-range-value {
-    display: inline-block;
-    font-size: 18px;
-    font-weight: bold;
-    min-width: 115px;
-    padding-left: 15px;
-    padding-right: 15px;
-    vertical-align: middle;
-}
-.rcl-runner .rcl-runner-box,
-.rcl-range .rcl-range-box {
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 5px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2) inset,
-		0 0 1px 1px rgba(0, 0, 0, 0.2) inset;
-    display: inline-block;
-    height: 10px;
-    margin: 0;
-    max-width: 500px;
-    position: relative;
-    text-align: left;
-    vertical-align: middle;
-    width: 100%;
-}
-.rcl-runner .rcl-runner-box .ui-slider-handle,
-.rcl-range .rcl-range-box .ui-slider-handle {
-    background: -webkit-linear-gradient(top, #fff, #ddd);
-    background: linear-gradient(to bottom, #fff, #ddd);
-    border-radius: 50%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4),
-		0 8px 6px rgba(0, 0, 0, 0.1);
-    cursor: ew-resize;
-    height: 18px;
-    margin-left: -.6em;
-    position: absolute;
-    top: -4px;
-    -ms-touch-action: none;
-    touch-action: none;
-    width: 18px;
-    z-index: 1;
-}
-.rcl-runner .rcl-runner-box .ui-slider-handle:focus,
-.rcl-range .rcl-range-box .ui-slider-handle:focus {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
-    outline: none;
-}
 .rcl-repository-list .addon-box {
     overflow:hidden;
     position:relative;
@@ -1181,6 +1045,108 @@ span.ruble-symbol {
     font-size: 15px;
     padding: 7px 10px;
 }
+
+/* new options*/
+.rcl-children-field{
+	display: none;
+}
+.rcl-children-fields.active{
+	display: block;
+}
+.rcl-option-extend-switch{
+	padding: 10px;
+	display: block;
+	border: 1px solid #ccc;
+	background: #fcc;
+	margin-bottom: 20px;
+}
+
+.rcl-options{
+
+}
+
+.rcl-options .extend-options{
+	border-left: 5px solid #ff8181!important;
+	padding: 5px;
+}
+
+.rcl-options.hide-extends-options .extend-options{
+	display: none;
+}
+
+.rcl-options .rcl-menu{
+	width: 250px;
+	float: left;
+}
+.rcl-options .rcl-menu > a{
+	width: 100%;
+	font-size: 16px;
+}
+.rcl-options .rcl-menu > a{
+	padding: 5px 0;
+	display: flex;
+	white-space: unset;
+}
+.rcl-options .rcl-menu a > i{
+
+}
+.rcl-options .rcl-menu .rcl-bttn__active{
+	background: #b6b6b6;
+	color: #fff;
+}
+
+.rcl-options .options-form-boxes{
+	overflow: hidden;
+}
+
+.rcl-options .options-box{
+	padding: 5px;
+	margin-left: 10px;
+	border: 1px solid #ccc;
+	width: 550px;
+	display: none;
+	overflow-y: auto;
+	max-height: 800px;
+}
+
+.rcl-options .options-box.active{
+	display: block;
+}
+
+.rcl-options .options-group{
+	padding: 5px;
+	border: 1px solid #ccc;
+	margin-bottom: 10px;
+}
+
+.rcl-options .group-title{
+	background: #ccc;
+	display: block;
+	padding: 10px;
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+.rcl-options .rcl-option{
+	margin-bottom: 10px;
+	position:relative;
+}
+.rcl-options .rcl-field-help{
+	position: absolute;
+    top: 0;
+    right: 0;
+	display: block;
+}
+.rcl-options .rcl-field-help > i{
+	padding: 0 9px;
+    font-size: 16px;
+}
+.rcl-options .rcl-field-help .help-content{
+	min-width: 300px;
+}
+.rcl-options .rcl-option .rcl-field-title{
+	font-weight: bold;
+}
+/*****/
 
 @media screen and (max-width:800px) {
     .rcl-addon-details #ssi-modalWrapper {

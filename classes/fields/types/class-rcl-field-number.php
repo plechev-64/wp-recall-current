@@ -60,4 +60,8 @@ class Rcl_Field_Number extends Rcl_Field_Abstract {
 		return '<input type="' . $this->type . '" ' . $this->get_min() . ' ' . $this->get_max() . ' ' . $this->get_required() . ' ' . $this->get_placeholder() . ' ' . $this->get_class() . ' name="' . $this->input_name . '" id="' . $this->input_id . '" value=\'' . $this->value . '\'/>';
 	}
 
+	function get_filter_value() {
+		return '<a href="' . $this->get_filter_url() . '" target="_blank">' . $this->value . '</a>';
+	}
+
 }

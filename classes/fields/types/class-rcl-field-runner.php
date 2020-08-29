@@ -108,4 +108,14 @@ class Rcl_Field_Runner extends Rcl_Field_Abstract {
 		return $this->value;
 	}
 
+	function get_filter_value() {
+		$value = '<a href="' . $this->get_filter_url() . '" target="_blank">' . $this->value . '</a>';
+
+		if ( $this->unit ) {
+			$value .= $this->unit;
+		}
+
+		return $value;
+	}
+
 }

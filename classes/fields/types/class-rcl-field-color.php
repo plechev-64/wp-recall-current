@@ -19,7 +19,7 @@ class Rcl_Field_Color extends Rcl_Field_Abstract {
 	function get_input() {
 
 		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script( 'jquery-core' );
+		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'wp-color-picker' );
 
 		$content = '<input type="text" ' . $this->get_class() . ' name="' . $this->input_name . '" id="' . $this->input_id . '" value="' . $this->value . '"/>';

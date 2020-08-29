@@ -86,4 +86,19 @@ class Rcl_Field_MultiSelect extends Rcl_Field_Abstract {
 		return implode( ', ', $this->value );
 	}
 
+	function get_filter_value() {
+
+		$links = array();
+
+		foreach ( $this->value as $val ) {
+
+			if ( ! $val )
+				continue;
+
+			$links[] = '<a href="' . $this->get_filter_url( $val ) . '" target="_blank">' . $val . '</a>';
+		}
+
+		return implode( ', ', $links );
+	}
+
 }

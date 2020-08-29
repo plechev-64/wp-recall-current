@@ -205,10 +205,12 @@ class Rcl_EditPost {
 			'post_content'	 => (isset( $_POST['post_content'] )) ? $_POST['post_content'] : ''
 		);
 
-		if ( $this->post_id )
+		if ( $this->post_id ) {
 			$postdata['ID']			 = $this->post_id;
-		else
+			$postdata['post_author'] = $this->post->post_author;
+		} else {
 			$postdata['post_author'] = $user_ID;
+		}
 
 		$postdata = apply_filters( 'pre_update_postdata_rcl', $postdata, $this );
 

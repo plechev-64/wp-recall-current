@@ -36,7 +36,7 @@ function rcl_admin_groups_page_content( $content ) {
 							'slug'		 => 'groups-host-page',
 							'content'	 => wp_dropdown_pages( array(
 								'selected'			 => rcl_get_option( 'group-page' ),
-								'name'				 => 'global[group-page]',
+								'name'				 => 'rcl_global_options[group-page]',
 								'show_option_none'	 => '<span style="color:red">' . __( 'Not selected', 'wp-recall' ) . '</span>',
 								'echo'				 => 0
 							) ),

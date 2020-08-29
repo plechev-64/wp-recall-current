@@ -178,7 +178,7 @@ function rcl_setup_tabs() {
 			if ( ! isset( $rcl_tab['icon'] ) )
 				$rcl_tab['icon'] = 'fa-cog';
 
-			if ( $rcl_tab['content'] ) {
+			if ( isset( $rcl_tab['content'] ) && $rcl_tab['content'] ) {
 				foreach ( $rcl_tab['content'] as $s => $subtab ) {
 					if ( ! isset( $rcl_tab['content'][$s]['id'] ) )
 						$rcl_tabs[$k]['content'][$s]['id'] = $rcl_tab['id'];

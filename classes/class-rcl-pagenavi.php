@@ -225,7 +225,7 @@ class Rcl_PageNavi {
 				} else if ( $type == 'current' ) {
 					$html = rcl_get_button( [
 						'label'	 => $data,
-						'status' => 'disabled',
+						'status' => 'active',
 						'data'	 => array(
 							'page' => $data
 						)

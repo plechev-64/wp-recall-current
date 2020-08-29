@@ -76,7 +76,7 @@ function rcl_show_custom_fields_profile( $master_id ) {
 			if ( ! $field )
 				continue;
 			$slug	 = isset( $field['name'] ) ? $field['name'] : $field['slug'];
-			if ( isset( $field['public_value'] ) && $field['public_value'] == 1 ) {
+			if ( isset( $field['req'] ) && $field['req'] == 1 ) {
 				$field['value'] = get_the_author_meta( $slug, $master_id );
 				$content .= Rcl_Field::setup( $field )->get_field_value( true );
 			}
@@ -217,7 +217,7 @@ function rcl_tab_profile_content( $master_id ) {
 		$Table->add_row( array(
 			$fieldObject->get_title(),
 			$fieldObject->get_field_input()
-			), array( 'id' => array( 'profile-field-' . $slug ) ) );
+			), apply_filters( 'rcl_profile_row_attrs', array( 'id' => 'profile-field-' . $slug ), $field ) );
 	}
 
 	$content .= $Table->get_table();

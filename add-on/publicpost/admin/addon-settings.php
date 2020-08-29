@@ -37,7 +37,7 @@ function rcl_get_publics_options_page( $content ) {
 				'title'		 => __( 'Publishing and editing', 'wp-recall' ),
 				'content'	 => wp_dropdown_pages( array(
 					'selected'			 => rcl_get_option( 'public_form_page_rcl' ),
-					'name'				 => 'global[public_form_page_rcl]',
+					'name'				 => 'rcl_global_options[public_form_page_rcl]',
 					'show_option_none'	 => '<span style="color:red">' . __( 'Not selected', 'wp-recall' ) . '</span>',
 					'echo'				 => 0
 				) ),
@@ -148,7 +148,7 @@ function rcl_get_publics_options_page( $content ) {
 							'title'		 => __( 'Redirect to', 'wp-recall' ),
 							'content'	 => wp_dropdown_pages( array(
 								'selected'			 => rcl_get_option( 'guest_post_redirect' ),
-								'name'				 => 'global[guest_post_redirect]',
+								'name'				 => 'rcl_global_options[guest_post_redirect]',
 								'show_option_none'	 => __( 'Not selected', 'wp-recall' ),
 								'echo'				 => 0 )
 							),

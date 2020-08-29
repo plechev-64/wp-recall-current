@@ -25,7 +25,7 @@ class Rcl_Cart_Constructor {
 
 			if ( ($user_ID && $rclOrder->user_id != $user_ID) || ! $rclOrder || empty( $rclOrder ) ) {
 
-				$content .= '<p>' . __( 'Shopping cart is not available', 'wp-recall' ) . '.</p>';
+				$content .= rcl_get_notice( ['text' => __( 'Shopping cart is not available', 'wp-recall' ) ] );
 			} else {
 
 				$content .= rcl_get_include_template( 'order.php', __FILE__ );
@@ -36,7 +36,7 @@ class Rcl_Cart_Constructor {
 
 			if ( ! $Cart->products_amount ) {
 
-				$content .= '<p>' . __( 'Your shopping cart is empty', 'wp-recall' ) . '.</p>';
+				$content .= rcl_get_notice( ['text' => __( 'Your shopping cart is empty', 'wp-recall' ) ] );
 			} else {
 
 				$content .= rcl_get_include_template( 'cart.php', __FILE__, array(

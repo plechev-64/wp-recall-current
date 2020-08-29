@@ -74,4 +74,8 @@ class Rcl_Field_Text extends Rcl_Field_Abstract {
 		return $this->value;
 	}
 
+	function get_filter_value() {
+		return '<a href="' . $this->get_filter_url() . '" target="_blank">' . $this->value . '</a>';
+	}
+
 }

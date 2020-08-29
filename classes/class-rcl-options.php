@@ -17,6 +17,10 @@ class Rcl_Options extends Rcl_Custom_Fields {
 
 	function options( $title, $conts ) {
 
+		global $rclOldOptionData;
+
+		$rclOldOptionData[$this->key]['title'] = $title;
+
 		$return = '';
 
 		if ( $title ) {
@@ -228,6 +232,12 @@ class Rcl_Options extends Rcl_Custom_Fields {
 	}
 
 	function options_box( $titleBox, $fields ) {
+		global $rclOldOptionData;
+
+		$rclOldOptionData[$this->key]['groups'][] = array(
+			'title'		 => $titleBox,
+			'options'	 => $fields
+		);
 
 		$content = '<div class="option-block rcl-custom-fields-box">';
 

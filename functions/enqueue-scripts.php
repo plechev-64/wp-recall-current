@@ -139,9 +139,6 @@ function rcl_frontend_scripts() {
 function rcl_get_localize_data() {
 	global $user_ID;
 
-	if ( ! doing_action( 'wp_head' ) && ! doing_action( 'admin_init' ) )
-		return false;
-
 	$local = array(
 		'save'		 => __( 'Save', 'wp-recall' ),
 		'close'		 => __( 'Close', 'wp-recall' ),
@@ -175,6 +172,7 @@ function rcl_get_localize_data() {
 }
 
 function rcl_admin_scrips() {
+	rcl_enqueue_style( 'rcl-core', RCL_URL . 'assets/css/core.css' );
 	wp_enqueue_style( 'rcl-admin-style', RCL_URL . 'admin/assets/style.css' );
 	wp_enqueue_style( 'wp-color-picker' );
 	wp_enqueue_script( 'jquery' );

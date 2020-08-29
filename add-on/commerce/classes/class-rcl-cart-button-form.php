@@ -143,7 +143,7 @@ class Rcl_Cart_Button_Form {
 				'label'	 => __( 'Not available', 'wp-recall' ),
 				'icon'	 => 'fa-refresh',
 				'class'	 => 'outsale-product',
-				'status' => 'disabled'
+				'status' => 'active'
 				) );
 		}
 

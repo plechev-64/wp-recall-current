@@ -4,6 +4,32 @@ jQuery( function( $ ) {
 
 	rcl_init_cookie();
 
+	if ( jQuery( '.rcl-options-manager' ).size() ) {
+
+		var viewBox = false;
+		if ( viewBox = rcl_url_params['rcl-options-box'] ) {
+			$( '#' + viewBox + '-options-box' ).addClass( 'active' );
+		} else {
+			jQuery( '.rcl-options-manager .options-box' ).first().addClass( 'active' );
+		}
+
+	}
+
+	/* показ дочерних полей */
+	$( ".rcl-parent-field" ).find( "input, select" ).each( function() {
+		var parent_id = $( this ).attr( 'id' );
+		var parent_val = $( this ).val();
+		$( '[data-parent="' + parent_id + '"][data-parent-value="' + parent_val + '"]' ).show();
+	} );
+
+	$( '.rcl-parent-field select, .rcl-parent-field input' ).change( function() {
+		var parent_id = $( this ).attr( 'id' );
+		var parent_val = $( this ).val();
+		$( '[data-parent="' + parent_id + '"]' ).hide();
+		$( '[data-parent="' + parent_id + '"][data-parent-value="' + parent_val + '"]' ).show();
+	} );
+	/***/
+
 	if ( rcl_url_params['rcl-addon-options'] ) {
 		$( '.wrap-recall-options' ).hide();
 		$( '#recall .title-option' ).removeClass( 'active' );
@@ -169,6 +195,25 @@ jQuery( function( $ ) {
 	} );
 
 } );
+
+function rcl_onclick_options_label( e ) {
+
+	var label = jQuery( e );
+
+	var viewBox = label.data( 'options' );
+
+	if ( jQuery( '#' + viewBox + '-options-box' ).hasClass( 'active' ) )
+		return false;
+
+	jQuery( '.rcl-options .options-box' ).removeClass( 'active' );
+	jQuery( '.rcl-options .rcl-menu > a' ).removeClass( 'rcl-bttn__active' );
+
+	jQuery( '#' + viewBox + '-options-box' ).addClass( 'active' );
+	jQuery( e ).addClass( 'rcl-bttn__active' );
+
+	rcl_update_history_url( label.attr( 'href' ) );
+
+}
 
 function rcl_get_details_addon( props, e ) {
 
@@ -359,7 +404,7 @@ function rcl_get_new_custom_field() {
 function rcl_enable_extend_options( e ) {
 	var extend = e.checked ? 1 : 0;
 	jQuery.cookie( 'rcl_extends', extend );
-	var options = jQuery( '#rcl-options-form .extend-options' );
+	var options = jQuery( '.rcl-options-form .extend-options' );
 	if ( extend )
 		options.show();
 	else
@@ -368,10 +413,11 @@ function rcl_enable_extend_options( e ) {
 
 function rcl_update_options() {
 
-	rcl_preloader_show( '#rcl-options-form > div:last-child' );
+	rcl_preloader_show( jQuery( '.rcl-options-form' ) );
 
 	rcl_ajax( {
-		data: 'action=rcl_update_options&' + jQuery( '#rcl-options-form' ).serialize()
+		/*rest: {action: 'usp_update_options'},*/
+		data: 'action=rcl_update_options&' + jQuery( '.rcl-options-form' ).serialize()
 	} );
 
 	return false;

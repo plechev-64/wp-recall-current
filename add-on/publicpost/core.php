@@ -12,7 +12,7 @@ function rcl_get_custom_post_meta( $post_id ) {
 			if ( ! $custom_field || ! isset( $custom_field['slug'] ) || ! $custom_field['slug'] )
 				continue;
 			$custom_field['value']	 = get_post_meta( $post_id, $custom_field['slug'], true );
-			$show_custom_field .= Rcl_Field::setup( $custom_field )->get_field_value();
+			$show_custom_field .= Rcl_Field::setup( $custom_field )->get_field_value( 'title' );
 		}
 
 		return $show_custom_field;

@@ -68,7 +68,7 @@ class Rcl_Sub_Tabs {
 				'class'	 => implode( ' ', $classes ),
 				'label'	 => $tab['name'],
 				'href'	 => $this->url_string( $master_id, $tab['id'] ),
-				'status' => $this->active_tab == $tab['id'] ? 'disabled' : false
+				'status' => $this->active_tab == $tab['id'] ? 'active' : false
 			);
 
 			if ( isset( $tab['icon'] ) ) {

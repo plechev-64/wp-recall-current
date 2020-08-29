@@ -134,13 +134,8 @@ function rcl_postmeta_update( $post_id ) {
 
 rcl_ajax_action( 'rcl_update_options', false );
 function rcl_update_options() {
-	global $rcl_options;
 
-	if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'update-options-rcl' ) ) {
-		wp_send_json( array(
-			'error' => __( 'Error', 'wp-recall' )
-		) );
-	}
+	rcl_verify_ajax_nonce();
 
 	$POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
 
@@ -149,33 +144,22 @@ function rcl_update_options() {
 		$v = trim( $v );
 	} );
 
-	if ( $POST['global']['login_form_recall'] == 1 && ! isset( $POST['global']['page_login_form_recall'] ) ) {
-		$POST['global']['page_login_form_recall'] = wp_insert_post( array( 'post_title' => __( 'Login and register', 'wp-recall' ), 'post_content' => '[loginform]', 'post_status' => 'publish', 'post_author' => 1, 'post_type' => 'page', 'post_name' => 'login-form' ) );
-	}
+	foreach ( $POST as $option_name => $values ) {
 
-	foreach ( ( array ) $POST['global'] as $key => $value ) {
-		$value			 = apply_filters( 'rcl_global_option_value', $value, $key );
-		$options[$key]	 = $value;
-	}
+		if ( ! is_array( $values ) )
+			continue;
 
-	if ( isset( $rcl_options['users_page_rcl'] ) )
-		$options['users_page_rcl'] = $rcl_options['users_page_rcl'];
+		$values = apply_filters( $option_name . '_pre_update', $values );
 
-	$options = apply_filters( 'rcl_pre_update_options', $options );
+		if ( $option_name == 'local' ) {
 
-	update_site_option( 'rcl_global_options', $options );
-
-	if ( isset( $POST['local'] ) ) {
-		foreach ( ( array ) $POST['local'] as $key => $value ) {
-			$value = apply_filters( 'rcl_local_option_value', $value, $key );
-			if ( $value == '' )
-				delete_site_option( $key );
-			else
-				update_site_option( $key, $value );
+			foreach ( $values as $local_name => $value ) {
+				update_site_option( $local_name, $value );
+			}
+		} else {
+			update_site_option( $option_name, $values );
 		}
 	}
-
-	$rcl_options = $options;
 
 	wp_send_json( array(
 		'success' => __( 'Settings saved!', 'wp-recall' )

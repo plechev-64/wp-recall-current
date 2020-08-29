@@ -73,6 +73,10 @@ class Rcl_Field_Agree extends Rcl_Field_Abstract {
 		return false;
 	}
 
+	function get_filter_value() {
+		return '<a href="' . $this->get_filter_url() . '" target="_blank">' . $this->value . '</a>';
+	}
+
 	function get_input() {
 
 		$text = $this->text_confirm ? $this->text_confirm : __( 'I agree with the text of the agreement', 'wp-recall' );

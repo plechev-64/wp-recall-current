@@ -413,6 +413,70 @@ span i.rcli.fa-circle {
     top: -12px;
     width: 0;
 }
+/*new balloon*/
+.rcl-balloon {
+	position: absolute;
+	background: rgb(255, 255, 255);
+	right: 0;
+	top: calc(100% + 1.5em);
+	z-index: 9;
+	padding: 3px 10px;
+	border: 1px solid rgb(0, 0, 0);
+	display:block;
+	opacity: 0;
+	transform: translate3d(0px, 0px, 0px);
+	transition: all 0.2s ease-in-out 0s;
+	visibility: hidden;
+	border-radius: 3px;
+	text-align: left;
+}
+.rcl-balloon::before,
+.rcl-balloon::after{
+	border-width: 0px 10px 10px 10px;
+	border-style: solid;
+	content: "";
+	height: 0;
+	right: 5px;
+	position: absolute;
+	width: 0;
+}
+
+.rcl-balloon::before{
+	border-color: transparent transparent rgb(0, 0, 0) transparent;
+	top: -11px;
+}
+
+.rcl-balloon::after{
+	border-color: transparent transparent rgb(255, 255, 255) transparent;
+	top: -10px;
+}
+.rcl-balloon-hover{
+	position:relative;
+}
+.rcl-balloon-hover:hover .rcl-balloon{
+	cursor: default;
+	opacity: 1;
+	transform: translateY(-18px);
+	visibility: visible;
+}
+.rcl-balloon.position-top{
+	top:auto;
+	bottom: calc(100% - 1em);
+}
+.rcl-balloon.position-top::before,
+.rcl-balloon.position-top::after{
+	border-width: 10px 10px 0px 10px;
+}
+.rcl-balloon.position-top::before{
+	border-color: rgb(0, 0, 0) transparent transparent transparent;
+	bottom: -11px;
+	top:auto;
+}
+.rcl-balloon.position-top::after{
+	border-color: rgb(255, 255, 255) transparent transparent transparent;
+	bottom: -10px;
+	top:auto;
+}
 /*end*/
 
 
@@ -911,6 +975,17 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
     font-size: 12px;
     line-height: 1;
     padding: 2px;
+}
+.rcl-field-input input[type="checkbox"]:checked + label.block-label::before,
+.rcl-field-input input[type="radio"]:checked + label.block-label::before{
+	background: #4C8CBD;
+}
+.rcl-field-input .checkbox-display-block{
+	display: block;
+}
+.rcl-field-input .checkbox-display-block .block-label{
+	border: none;
+	display: block;
 }
 /*end*/
 

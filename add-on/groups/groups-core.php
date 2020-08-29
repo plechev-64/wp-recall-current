@@ -459,7 +459,7 @@ function rcl_get_group_users( $group_id ) {
 
 		$class = 'data-filter';
 		if ( $role == $users_role )
-			$class .= ' filter-active';
+			$class .= ' rcl-bttn__active';
 
 		$content .= rcl_get_group_link( 'rcl_get_group_users', $data['role_name'], array( 'value' => $role, 'class' => $class ) );
 	}

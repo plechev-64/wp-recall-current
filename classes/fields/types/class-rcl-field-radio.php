@@ -97,4 +97,8 @@ class Rcl_Field_Radio extends Rcl_Field_Abstract {
 		return $content;
 	}
 
+	function get_filter_value() {
+		return '<a href="' . $this->get_filter_url() . '" target="_blank">' . $this->value . '</a>';
+	}
+
 }

@@ -74,7 +74,7 @@ function rcl_user_meta() {
 
 		if ( $rcl_user->profile_fields ) {
 			echo '<div class="user-profile-fields">';
-			foreach ( $rcl_user->profile_fields as $field ) {
+			foreach ( $rcl_user->profile_fields as $k => $field ) {
 				echo Rcl_Field::setup( $field )->get_field_value( 'title' );
 			}
 			echo '</div>';

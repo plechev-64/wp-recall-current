@@ -533,6 +533,9 @@ function rcl_custom_fields_regform( $content ) {
 		$attr			 = (isset( $field['attr'] )) ? '' . $field['attr'] : '';
 		$field['value']	 = isset( $_POST[$field['slug']] ) ? $_POST[$field['slug']] : false;
 
+		unset( $field['class'] );
+		unset( $field['attr'] );
+
 		$fieldObject = Rcl_Field::setup( $field );
 
 		$content .= '<div class="form-block-rcl ' . $class . '" ' . $id . ' ' . $attr . '>';
