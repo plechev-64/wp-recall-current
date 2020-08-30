@@ -125,7 +125,7 @@ class Rcl_Options_Manager {
 		$content .= $this->get_menu();
 
 		$content .= rcl_get_button( array(
-			'label'		 => __( 'Сохранить настройки', 'wp-recall' ),
+			'label'		 => __( 'Save settings', 'wp-recall' ),
 			'onclick'	 => $this->onclick ? $this->onclick : false,
 			'submit'	 => $this->onclick ? false : true,
 			'icon'		 => 'fa-floppy-o',

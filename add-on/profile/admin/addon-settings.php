@@ -4,7 +4,7 @@ add_filter( 'rcl_options', 'rcl_profile_options' );
 function rcl_profile_options( $options ) {
 
 	$options->add_box( 'profile', array(
-		'title'	 => __( 'Настройки профиля', 'wp-recall' ),
+		'title'	 => __( 'Settings profile', 'wp-recall' ),
 		'icon'	 => 'fa-user'
 	) )->add_group( 'general' )->add_options( array(
 		array(

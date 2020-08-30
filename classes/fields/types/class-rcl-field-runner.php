@@ -37,9 +37,9 @@ class Rcl_Field_Runner extends Rcl_Field_Abstract {
 			array(
 				'slug'			 => 'unit',
 				'default'		 => $this->unit,
-				'placeholder'	 => __( 'Например: км. или шт.', 'wp-recall' ),
+				'placeholder'	 => __( 'For example: km or pcs', 'wp-recall' ),
 				'type'			 => 'text',
-				'title'			 => __( 'Единица измерения', 'wp-recall' )
+				'title'			 => __( 'Unit', 'wp-recall' )
 			),
 			array(
 				'slug'		 => 'value_min',

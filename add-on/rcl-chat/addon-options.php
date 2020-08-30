@@ -17,7 +17,8 @@ function rcl_chat_options( $options ) {
 			'value_min'	 => 5,
 			'value_max'	 => 60,
 			'default'	 => 15,
-			'notice'	 => __( 'In seconds. It is recommended to choose at least 10 seconds', 'wp-recall' ),
+			'notice'	 => __( 'In seconds. It is recommended to choose at '
+				. 'least 10 seconds', 'wp-recall' ),
 		),
 		array(
 			'type'		 => 'runner',
@@ -27,18 +28,20 @@ function rcl_chat_options( $options ) {
 			'value_min'	 => 1,
 			'value_max'	 => 20,
 			'default'	 => 10,
-			'notice'	 => __( '"In minutes. The time of user inactivity after which he ceases to receive new messages in chat', 'wp-recall' )
+			'notice'	 => __( '"In minutes. The time of user inactivity '
+				. 'after which he ceases to receive new messages in chat', 'wp-recall' )
 		),
 		array(
 			'type'		 => 'runner',
-			'title'		 => __( 'Антиспам', 'wp-recall' ),
+			'title'		 => __( 'Antispam', 'wp-recall' ),
 			'slug'		 => 'antispam',
 			'group'		 => 'chat',
 			'value_min'	 => 1,
 			'value_max'	 => 20,
 			'default'	 => 5,
-			'notice'	 => __( 'Укажите кол-во пользователей, которым можно отослать непрочитанное приватное сообщение в течении суток. '
-				. 'При превышении отправка сообщений блокируется.', 'wp-recall' )
+			'notice'	 => __( 'Specify a number of users, who other user will '
+				. 'be able to send an unread private message for a day. If its '
+				. 'value is exceeded the sending of messages will be blocked.', 'wp-recall' )
 		),
 		array(
 			'type'		 => 'runner',
@@ -66,7 +69,8 @@ function rcl_chat_options( $options ) {
 			'values' => array(
 				__( 'No', 'wp-recall' ),
 				__( 'Yes', 'wp-recall' ) ),
-			'notice' => __( 'Option is responsible for the incorporation of media content, such as from Youtube or Twitter from the link', 'wp-recall' ),
+			'notice' => __( 'Option is responsible for the incorporation of '
+				. 'media content, such as from Youtube or Twitter from the link', 'wp-recall' ),
 		),
 		array(
 			'type'		 => 'select',
@@ -112,7 +116,8 @@ function rcl_chat_options( $options ) {
 			'slug'		 => 'messages_amount',
 			'group'		 => 'chat',
 			'default'	 => 100,
-			'notice'	 => __( 'The maximum number of messages in the conversation between two users. Default: 100', 'wp-recall' )
+			'notice'	 => __( 'The maximum number of messages in the '
+				. 'conversation between two users. Default: 100', 'wp-recall' )
 		),
 		array(
 			'type'	 => 'select',

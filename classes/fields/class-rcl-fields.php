@@ -296,7 +296,7 @@ class Rcl_Fields extends Rcl_Field {
 			'unique_ids' => false,
 			'action'	 => '',
 			'method'	 => 'post',
-			'submit'	 => __( 'Сохранить', 'wp-recall' ),
+			'submit'	 => __( 'Save', 'wp-recall' ),
 			'nonce_name' => '_wpnonce',
 			'nonce_key'	 => '',
 			'onclick'	 => '',

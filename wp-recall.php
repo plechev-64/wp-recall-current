@@ -336,7 +336,7 @@ final class WP_Recall {
 				'class'	 => 'Rcl_Field_Text'
 			),
 			'hidden'		 => array(
-				'label'	 => __( 'Скрытое поле', 'wp-recall' ),
+				'label'	 => __( 'Hidden field', 'wp-recall' ),
 				'class'	 => 'Rcl_Field_Hidden'
 			),
 			'password'		 => array(
@@ -408,11 +408,11 @@ final class WP_Recall {
 				'class'	 => 'Rcl_Field_Color'
 			),
 			'custom'		 => array(
-				'label'	 => __( 'Произвольный контент', 'wp-recall' ),
+				'label'	 => __( 'Custom content', 'wp-recall' ),
 				'class'	 => 'Rcl_Field_Custom'
 			),
 			'editor'		 => array(
-				'label'	 => __( 'Текстовый редактор', 'wp-recall' ),
+				'label'	 => __( 'Text editor', 'wp-recall' ),
 				'class'	 => 'Rcl_Field_Editor'
 			),
 			/* 'uploader'		 => array(

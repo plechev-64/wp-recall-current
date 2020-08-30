@@ -84,12 +84,12 @@ class Rcl_Field_Checkbox extends Rcl_Field_Abstract {
 			$content .= '<div class="checkbox-manager">';
 
 			$content .= rcl_get_button( array(
-				'label'		 => __( 'Отметить все' ),
+				'label'		 => __( 'To mark all', 'wp-recall' ),
 				'onclick'	 => 'return rcl_check_all_actions_manager("' . $this->input_name . '[]",this);return false;',
 				) );
 
 			$content .= rcl_get_button( array(
-				'label'		 => __( 'Снять все флажки' ),
+				'label'		 => __( 'To delete all marks', 'wp-recall' ),
 				'onclick'	 => 'return rcl_uncheck_all_actions_manager("' . $this->input_name . '[]",this);return false;',
 				) );
 

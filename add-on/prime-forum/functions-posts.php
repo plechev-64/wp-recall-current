@@ -222,14 +222,14 @@ function pfm_send_mail_topic_author( $post_id ) {
 	if ( $actionData )
 		return false;
 
-	$title	 = 'Новый комментарий к вашей теме';
+	$title	 = __( 'New comment on your topic', 'wp-recall' );
 	$to		 = get_the_author_meta( 'user_email', $topic->user_id );
 	$mess	 = '
-    <p>Добавлен новый ответ к вашей теме "' . $topic->topic_name . '".</p>
+    <p>' . __( 'New reply added on your topic', 'wp-recall' ) . ' "' . $topic->topic_name . '".</p>
     <div style="float:left;margin-right:15px;">' . get_avatar( $post->user_id, 60 ) . '</div>
-    <p><b>ответил:</b></p>
+    <p><b>' . __( 'answered', 'wp-recall' ) . ':</b></p>
     <p>' . $post->post_content . '</p>
-    <p><a href="' . pfm_get_post_permalink( $post->post_id ) . '">Ответить на комментарий</a></p>';
+    <p><a href="' . pfm_get_post_permalink( $post->post_id ) . '">' . __( 'To answer on this comment', 'wp-recall' ) . '</a></p>';
 
 	rcl_mail( $to, $title, $mess );
 }

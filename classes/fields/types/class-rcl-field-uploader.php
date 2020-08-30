@@ -62,7 +62,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 				'value_min'	 => 1,
 				'value_max'	 => 100,
 				'value_step' => 1,
-				'title'		 => __( 'Макс. количество файлов', 'wp-recall' ),
+				'title'		 => __( 'Max number of files', 'wp-recall' ),
 			),
 			array(
 				'slug'		 => 'multiple',
@@ -72,7 +72,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 					__( 'Отключено', 'wp-recall' ),
 					__( 'Включено', 'wp-recall' )
 				),
-				'title'		 => __( 'Множественная загрузка', 'wp-recall' ),
+				'title'		 => __( 'Multiple loading', 'wp-recall' ),
 			),
 			array(
 				'slug'		 => 'dropzone',
@@ -89,11 +89,11 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 				'default'	 => $this->mode_output,
 				'type'		 => 'radio',
 				'values'	 => array(
-					'grid'		 => __( 'Плитка', 'wp-recall' ),
-					'list'		 => __( 'Список', 'wp-recall' ),
-					'gallery'	 => __( 'Галлерея', 'wp-recall' )
+					'grid'		 => __( 'Cards', 'wp-recall' ),
+					'list'		 => __( 'List', 'wp-recall' ),
+					'gallery'	 => __( 'Gallery', 'wp-recall' )
 				),
-				'title'		 => __( 'Режим вывода файлов', 'wp-recall' ),
+				'title'		 => __( 'Mode of files output', 'wp-recall' ),
 			),
 			array(
 				'slug'		 => 'fix_editor',

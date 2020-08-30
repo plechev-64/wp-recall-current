@@ -51,7 +51,7 @@ function rcl_type_currency_list( $post_id ) {
 
 function rcl_get_current_type_currency( $post_id ) {
 	global $rmag_options;
-	if ( $rmag_options['multi_cur'] ) {
+	if ( isset( $rmag_options['multi_cur'] ) && $rmag_options['multi_cur'] ) {
 		$type	 = get_post_meta( $post_id, 'type_currency', 1 );
 		$curs	 = array( $rmag_options['primary_cur'], $rmag_options['secondary_cur'] );
 		if ( $type == $curs[0] || $type == $curs[1] )

@@ -59,7 +59,7 @@ class Rcl_Field_File extends Rcl_Field_Abstract {
 				'default'		 => 'zip',
 				'placeholder'	 => 'zip',
 				'title'			 => __( 'Allowed file types', 'wp-recall' ),
-				'notice'		 => __( 'Pазрешенные типы файлов разделяются запятой, например: pdf, zip, jpg. По-умолчанию: zip', 'wp-recall' )
+				'notice'		 => __( 'Allowed file types delimiters a comma, for example: pdf, zip, jpg. By default: zip', 'wp-recall' )
 			)
 		);
 
@@ -109,13 +109,13 @@ class Rcl_Field_File extends Rcl_Field_Abstract {
 		$required	 = ( ! $this->value) ? $this->get_required() : '';
 
 		$input .= '<span id="' . $this->id . '-content" class="file-field-upload">';
-		$input .= '<span onclick="jQuery(\'#' . $this->input_id . '\').val(\'\');" class="file-input-recycle"><i class="rcli fa-refresh"></i> ' . __( 'Отменить выбор файла', 'wp-recall' ) . '</span>';
+		$input .= '<span onclick="jQuery(\'#' . $this->input_id . '\').val(\'\');" class="file-input-recycle"><i class="rcli fa-refresh"></i> ' . __( 'To cancel the choice of file', 'wp-recall' ) . '</span>';
 		$input .= '<input data-slug="' . $this->slug . '" data-size="' . $this->max_size . '" ' . ($extTypes ? 'data-ext="' . implode( ',', $extTypes ) . '"' : '') . ' type="file" ' . $required . ' ' . $accept . ' name="' . $this->input_name . '" ' . $this->get_class() . ' id="' . $this->input_id . '" onchange="rcl_chek_form_field(this)" value=""/> ';
 
 		$input .= '<br>';
 
 		if ( $extTypes )
-			$input .= '<span class="allowed-types">' . __( 'Типы файлов', 'wp-recall' ) . ': ' . ($this->file_types ? $this->file_types : 'zip') . '</span>. ';
+			$input .= '<span class="allowed-types">' . __( 'File types', 'wp-recall' ) . ': ' . ($this->file_types ? $this->file_types : 'zip') . '</span>. ';
 
 		$input .= __( 'Max size', 'wp-recall' ) . ': ' . $this->max_size . 'Kb';
 

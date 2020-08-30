@@ -58,7 +58,7 @@ function rcl_add_data_product_columns( $column_name, $post_id ) {
 		case 'product-price':
 
 			echo '<input type="text" id="price-product-' . $post_id . '" name="price-product" size="4" value="' . get_post_meta( $post_id, 'price-products', 1 ) . '"> ' . rcl_get_current_type_currency( $post_id ) . '
-                <input type="button" class="recall-button edit-price-product" data-product="' . $post_id . '" id="product-' . $post_id . '" value="' . __( 'OK', 'wp-recall' ) . '">';
+                <input type="button" class="button edit-price-product" data-product="' . $post_id . '" id="product-' . $post_id . '" value="' . __( 'OK', 'wp-recall' ) . '">';
 
 			break;
 

@@ -220,9 +220,9 @@ function rcl_delete_notice_author_post( $post_id ) {
 
 	$post = get_post( $post_id );
 
-	$subject	 = 'Ваша публикация удалена.';
-	$textmail	 = '<h3>Публикация "' . $post->post_title . '" была удалена</h3>
-    <p>Примечание модератора: ' . $_POST['reason_content'] . '</p>';
+	$subject	 = __( 'Your post has been deleted', 'wp-recall' );
+	$textmail	 = '<h3>' . __( 'Post', 'wp-recall' ) . ' "' . $post->post_title . '" ' . __( 'has been deleted', 'wp-recall' ) . '</h3>
+    <p>' . __( 'Notice of a moderator', 'wp-recall' ) . ': ' . $_POST['reason_content'] . '</p>';
 	rcl_mail( get_the_author_meta( 'user_email', $post->post_author ), $subject, $textmail );
 }
 

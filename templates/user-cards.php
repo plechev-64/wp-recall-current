@@ -3,14 +3,14 @@ global $rcl_user, $rcl_users_set;
 // если есть вызов в data атрибута comments_count
 $uc_count = '';
 if ( in_array( 'comments_count', $rcl_users_set->data ) ) {
-	$uc_count .= '<div class="u_card_half">Комментариев<br/><span>';
+	$uc_count .= '<div class="u_card_half">' . __( 'Comments', 'wp-recall' ) . '<br/><span>';
 	$uc_count .= isset( $rcl_user->comments_count ) ? $rcl_user->comments_count : '0';
 	$uc_count .= '</span></div>';
 }
 // если есть вызов в data атрибута posts_count
 $up_count = '';
 if ( in_array( 'posts_count', $rcl_users_set->data ) ) {
-	$up_count .= '<div class="u_card_half">Публикаций<br/><span>';
+	$up_count .= '<div class="u_card_half">' . __( 'Posts', 'wp-recall' ) . '<br/><span>';
 	$up_count .= isset( $rcl_user->posts_count ) ? $rcl_user->posts_count : '0';
 	$up_count .= '</span></div>';
 }
@@ -22,7 +22,7 @@ $style = (isset( $rcl_users_set->width )) ? 'style="width:' . $rcl_users_set->wi
 		<?php rcl_user_rayting(); ?>
 		<?php rcl_user_action( 2 ); ?>
         <div class="thumb-user">
-            <a title="Перейти в кабинет пользователя" href="<?php rcl_user_url(); ?>">
+            <a title="<?php _e( 'to go to office of the user', 'wp-recall' ); ?>" href="<?php rcl_user_url(); ?>">
 				<?php rcl_user_avatar( 200 ); ?>
             </a>
         </div>

@@ -7,6 +7,10 @@ class Rcl_Query extends Rcl_Old_Query {
 	public $query		 = array();
 
 	function __construct( $table ) {
+
+		if ( ! isset( $table['as'] ) )
+			$table['as'] = $table['name'];
+
 		$this->table = $table;
 		$this->reset_query();
 	}

@@ -20,8 +20,8 @@ function rcl_user_account_options( $content ) {
 
 	$content .= $opt->option_block(
 		array(
-			$opt->title( 'Валюта сайта' ),
-			$opt->label( 'Основная валюта' ),
+			$opt->title( __( 'Currency of website', 'wp-recall' ) ),
+			$opt->label( 'Promary currency', 'wp-recall' ),
 			$opt->option( 'select', array(
 				'name'		 => 'primary_cur',
 				'options'	 => rcl_get_currency()
@@ -34,7 +34,10 @@ function rcl_user_account_options( $content ) {
 	$pay_options_child	 = apply_filters( 'rcl_pay_child_option', '' );
 	if ( ! $pay_options_child ) {
 		$init_gateway		 = false;
-		$pay_options_child	 = '<p style="color:red;">Похоже ни одного подключения не настроено. Скачайте <a href="https://codeseller.ru/product_tag/platezhnye-sistemy/" target="_blank">одно из доступных дополнений</a> для подключения к платежному агрегатору и настройте его</p>';
+		$pay_options_child	 = rcl_get_notice( [
+			'type'	 => 'error',
+			'text'	 => sprintf( __( 'Perhaps none of a connection is not configured. Download %s for the connection to a payment service and configure this.', 'wp-recall' ), '<a href="https://codeseller.ru/product_tag/platezhnye-sistemy/" target="_blank">' . __( 'one of available addons', 'wp-recall' ) . '</a>' )
+		] );
 	}
 
 	$payment_opt = array( __( 'Payment from user’s personal account', 'wp-recall' ) );

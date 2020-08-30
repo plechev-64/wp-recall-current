@@ -27,7 +27,6 @@ function rcl_get_publics_options_page( $options ) {
 
 	$pageWalker = RQ::tbl( new Rcl_Query( [
 			'name'	 => $wpdb->posts,
-			'as'	 => 'posts',
 			'cols'	 => ['ID', 'post_type', 'post_title' ]
 		] ) )->select( ['ID', 'post_title' ] )->where( ['post_type' => 'page' ] )->limit( -1 )
 		->get_walker();
@@ -75,9 +74,9 @@ function rcl_get_publics_options_page( $options ) {
 					array(
 						'type'	 => 'checkbox',
 						'slug'	 => 'post_types_list',
-						'title'	 => __( 'Тип записи для вывода списка публикаций', 'wp-recall' ),
+						'title'	 => __( 'Type of post for output a list of writes', 'wp-recall' ),
 						'values' => $types,
-						'notice' => __( 'Отметьте тип записи, который будет выводить архив публикаций в этой вкладке. Если не указано ничего, то будут выводиться публикации всех типов.', 'wp-recall' )
+						'notice' => __( 'Select the type of post which will be to output its archive of writes in this tab. If nothing is specified, it will be outputed a writes all types', 'wp-recall' )
 					),
 					array(
 						'type'	 => 'select',
