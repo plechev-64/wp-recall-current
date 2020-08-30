@@ -50,7 +50,7 @@ class Rcl_Field_File extends Rcl_Field_Abstract {
 				'value_step' => 256,
 				'default'	 => 512,
 				'title'		 => __( 'File size', 'wp-recall' ),
-				'notice'	 => __( 'maximum size of uploaded file, KbB (Default - 512)', 'wp-recall' )
+				'notice'	 => __( 'maximum size of uploaded file, Kb (Default - 512)', 'wp-recall' )
 			),
 			array(
 				'slug'			 => 'file_types',

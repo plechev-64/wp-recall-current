@@ -200,7 +200,7 @@ function pfm_page_options() {
 	) );
 
 	$Manager->add_box( 'content', array(
-		'title' => __( 'Forums`s content', 'wp-recall' )
+		'title' => __( 'Content of topic`s', 'wp-recall' )
 	) )->add_group( 'content' )->add_options( array(
 		array(
 			'type'	 => 'select',
@@ -229,7 +229,7 @@ function pfm_page_options() {
 	) );
 
 	$Manager->add_box( 'templates', array(
-		'title' => __( 'Name patterns', 'wp-recall' )
+		'title' => __( 'Names of templates', 'wp-recall' )
 	) )->add_group( 'templates' )->add_options( array(
 		array(
 			'type'		 => 'custom',
@@ -309,11 +309,11 @@ function pfm_page_options() {
 	//support old additional options
 	if ( $moreOptions = apply_filters( 'pfm_options_array', array() ) ) {
 		$Manager->add_box( 'other', array(
-			'title' => __( '', 'wp-recall' )
+			'title' => __( 'Other settings', 'wp-recall' )
 		) )->add_group( 'options' )->add_options( $moreOptions );
 	}
 
-	$content = '<h2>' . __( 'Forum settings PrimeForum', 'wp-recall' ) . '</h2>';
+	$content = '<h2>' . __( 'Settings of PrimeForum', 'wp-recall' ) . '</h2>';
 
 	$content .= $Manager->get_content();
 
