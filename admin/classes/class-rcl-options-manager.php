@@ -61,7 +61,7 @@ class Rcl_Options_Manager {
 			$items = array(
 				'<label class="rcl-option-extend-switch">'
 				. '<input type="checkbox" name="extend_options" ' . checked( $this->extend_options, 1, false ) . ' onclick="return rcl_enable_extend_options(this);" value="1"> '
-				. 'Advanced settings'
+				. __( 'Advanced settings', 'wp-recall' )
 				. '</label>'
 			);
 		}
@@ -76,7 +76,8 @@ class Rcl_Options_Manager {
 				'href'		 => admin_url( 'admin.php?page=' . $this->page_options . '&rcl-options-box=' . $box->box_id ),
 				'onclick'	 => 'rcl_onclick_options_label(this);return false;',
 				'icon'		 => $box->icon,
-				'type'		 => 'simple'
+				'type'		 => 'simple',
+				'status'	 => $box->active ? 'active' : ''
 				) );
 		}
 

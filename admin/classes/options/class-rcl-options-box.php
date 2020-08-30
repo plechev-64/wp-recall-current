@@ -4,9 +4,10 @@ class Rcl_Options_Box {
 
 	public $box_id;
 	public $title;
-	public $icon = 'fa-cog';
+	public $icon	 = 'fa-cog';
 	public $groups;
 	public $option_name;
+	public $active	 = false;
 
 	function __construct( $box_id, $args, $option_name ) {
 
@@ -15,6 +16,12 @@ class Rcl_Options_Box {
 		$this->option_name = $option_name;
 
 		$this->init_properties( $args );
+
+		if ( isset( $_GET['rcl-options-box'] ) ) {
+			$this->active = $this->box_id == $_GET['rcl-options-box'] ? true : false;
+		} else {
+			$this->active = $this->box_id == 'primary' ? true : false;
+		}
 	}
 
 	function init_properties( $args ) {
@@ -38,7 +45,7 @@ class Rcl_Options_Box {
 
 	function get_content() {
 
-		$content = '<div id="' . $this->box_id . '-options-box" class="options-box" data-box="' . $this->box_id . '">';
+		$content = '<div id="' . $this->box_id . '-options-box" class="options-box ' . ($this->active ? 'active' : '') . '" data-box="' . $this->box_id . '">';
 
 		foreach ( $this->groups as $group ) {
 

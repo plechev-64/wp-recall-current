@@ -283,77 +283,74 @@ function rcl_get_usernames( $objects, $name_data ) {
 function rcl_get_list_votes( $args, $votes ) {
 	global $rcl_rating_types, $rcl_options, $wpdb;
 
+	if ( ! $votes )
+		return rcl_get_notice( ['text' => __( 'The changing of rating have not been yet', 'wp-recall' ) ] );
+
 	$list = '<ul class="votes-list">';
 
-	if ( $votes ) {
+	$userslst = array();
 
-		$userslst = array();
+	foreach ( $votes as $vote ) {
+		$userslst[] = $vote->user_id;
+	}
 
-		foreach ( $votes as $vote ) {
-			$userslst[] = $vote->user_id;
+	$display_names = $wpdb->get_results( $wpdb->prepare( "SELECT ID,display_name FROM " . $wpdb->prefix . "users WHERE ID IN (" . rcl_format_in( $userslst ) . ")", $userslst ) );
+
+	if ( $display_names ) {
+		$names = array();
+		foreach ( $display_names as $name ) {
+			$names[$name->ID] = $name->display_name;
+		}
+	}
+
+	foreach ( $votes as $vote ) {
+
+		if ( isset( $rcl_options['rating_temp_' . $vote->rating_type] ) && $args['rating_status'] == 'user' ) {
+
+			$row = $rcl_options['rating_temp_' . $vote->rating_type];
+		} else {
+
+			$row = ($vote->rating_date != '0000-00-00 00:00:00') ? mysql2date( 'd.m.Y', $vote->rating_date ) . ' ' : '';
+			$row .= '%USER% ' . __( 'has voted', 'wp-recall' ) . ': %VALUE%';
 		}
 
-		$display_names = $wpdb->get_results( $wpdb->prepare( "SELECT ID,display_name FROM " . $wpdb->prefix . "users WHERE ID IN (" . rcl_format_in( $userslst ) . ")", $userslst ) );
+		$temps = array(
+			'%USER%',
+			'%VALUE%'
+		);
 
-		if ( $display_names ) {
-			$names = array();
-			foreach ( $display_names as $name ) {
-				$names[$name->ID] = $name->display_name;
-			}
-		}
+		$user_name = (isset( $names[$vote->user_id] )) ? $names[$vote->user_id] : '';
 
-		foreach ( $votes as $vote ) {
+		$reps = array(
+			'<a class="" target="_blank" href="' . rcl_get_user_url( $vote->user_id ) . '">' . $user_name . '</a>',
+			rcl_format_rating( $vote->rating_value )
+		);
 
-			if ( isset( $rcl_options['rating_temp_' . $vote->rating_type] ) && $args['rating_status'] == 'user' ) {
+		$row = str_replace( $temps, $reps, $row );
 
-				$row = $rcl_options['rating_temp_' . $vote->rating_type];
-			} else {
-
-				$row = ($vote->rating_date != '0000-00-00 00:00:00') ? mysql2date( 'd.m.Y', $vote->rating_date ) . ' ' : '';
-				$row .= '%USER% ' . __( 'has voted', 'wp-recall' ) . ': %VALUE%';
-			}
+		if ( $args['rating_status'] == 'user' ) {
 
 			$temps = array(
-				'%USER%',
-				'%VALUE%'
+				'%DATE%',
+				'%COMMENT%',
+				'%POST%'
 			);
 
-			$user_name = (isset( $names[$vote->user_id] )) ? $names[$vote->user_id] : '';
+			$date = ($vote->rating_date != '0000-00-00 00:00:00') ? mysql2date( 'd F Y', $vote->rating_date ) : '';
 
 			$reps = array(
-				'<a class="" target="_blank" href="' . rcl_get_user_url( $vote->user_id ) . '">' . $user_name . '</a>',
-				rcl_format_rating( $vote->rating_value )
+				$date,
+				'<a href="' . get_comment_link( $vote->object_id ) . '">' . __( 'comment', 'wp-recall' ) . '</a>',
+				'<a href="' . get_permalink( $vote->object_id ) . '">' . get_the_title( $vote->object_id ) . '</a>'
 			);
 
 			$row = str_replace( $temps, $reps, $row );
-
-			if ( $args['rating_status'] == 'user' ) {
-
-				$temps = array(
-					'%DATE%',
-					'%COMMENT%',
-					'%POST%'
-				);
-
-				$date = ($vote->rating_date != '0000-00-00 00:00:00') ? mysql2date( 'd F Y', $vote->rating_date ) : '';
-
-				$reps = array(
-					$date,
-					'<a href="' . get_comment_link( $vote->object_id ) . '">' . __( 'comment', 'wp-recall' ) . '</a>',
-					'<a href="' . get_permalink( $vote->object_id ) . '">' . get_the_title( $vote->object_id ) . '</a>'
-				);
-
-				$row = str_replace( $temps, $reps, $row );
-			}
-
-			$row = apply_filters( 'rcl_list_votes', $row, $vote );
-
-			$class = ( $vote->rating_value > 0 ) ? 'fa-thumbs-o-up' : 'fa-thumbs-o-down';
-			$list .= '<li class="vote-type-' . $vote->rating_type . '"><i class="rcli ' . $class . '"></i> ' . $row . '</li>';
 		}
-	} else {
 
-		$list .= '<li><b>' . $rcl_rating_types[$args['rating_type']]['type_name'] . '</b>: ' . __( 'No changes to rating', 'wp-recall' ) . '</li>';
+		$row = apply_filters( 'rcl_list_votes', $row, $vote );
+
+		$class = ( $vote->rating_value > 0 ) ? 'fa-thumbs-o-up' : 'fa-thumbs-o-down';
+		$list .= '<li class="vote-type-' . $vote->rating_type . '"><i class="rcli ' . $class . '"></i> ' . $row . '</li>';
 	}
 
 	$list .= '</ul>';

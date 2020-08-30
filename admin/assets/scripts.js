@@ -4,16 +4,16 @@ jQuery( function( $ ) {
 
 	rcl_init_cookie();
 
-	if ( jQuery( '.rcl-options-manager' ).size() ) {
+	/*if ( jQuery( '.rcl-options-manager' ).size() ) {
 
-		var viewBox = false;
-		if ( viewBox = rcl_url_params['rcl-options-box'] ) {
-			$( '#' + viewBox + '-options-box' ).addClass( 'active' );
-		} else {
-			jQuery( '.rcl-options-manager .options-box' ).first().addClass( 'active' );
-		}
+	 var viewBox = false;
+	 if ( viewBox = rcl_url_params['rcl-options-box'] ) {
+	 $( '#' + viewBox + '-options-box' ).addClass( 'active' );
+	 } else {
+	 jQuery( '.rcl-options-manager .options-box' ).first().addClass( 'active' );
+	 }
 
-	}
+	 }*/
 
 	/* показ дочерних полей */
 	$( ".rcl-parent-field" ).find( "input, select" ).each( function() {

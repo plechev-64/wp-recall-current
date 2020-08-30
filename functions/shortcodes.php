@@ -23,14 +23,6 @@ add_shortcode( 'userlist', 'rcl_get_userlist' );
 function rcl_get_userlist( $atts ) {
 	global $rcl_user, $rcl_users_set, $user_ID;
 
-	if ( isset( $atts['include'] ) ) {
-		$atts['ID__in'] = array_map( 'trim', explode( ',', $atts['include'] ) );
-	}
-
-	if ( isset( $atts['exclude'] ) ) {
-		$atts['ID__not_in'] = array_map( 'trim', explode( ',', $atts['exclude'] ) );
-	}
-
 	require_once RCL_PATH . 'classes/class-rcl-users-list.php';
 
 	$users = new Rcl_Users_List( $atts );
@@ -75,7 +67,7 @@ function rcl_get_userlist( $atts ) {
 	$userlist .= '<div class="rcl-userlist">';
 
 	if ( ! $usersdata ) {
-		$userlist .= '<p align="center">' . __( 'Users not found', 'wp-recall' ) . '</p>';
+		$userlist .= rcl_get_notice( ['text' => __( 'Users not found', 'wp-recall' ) ] );
 	} else {
 
 		if ( ! isset( $atts['number'] ) && $pagenavi->in_page ) {

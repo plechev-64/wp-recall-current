@@ -263,10 +263,8 @@ function rcl_username() {
 }
 
 function rcl_notice() {
-	$notify	 = '';
-	$notify	 = apply_filters( 'notify_lk', $notify );
-	if ( $notify )
-		echo '<div class="notify-lk">' . $notify . '</div>';
+	if ( $notify = apply_filters( 'notify_lk', '' ) )
+		echo rcl_get_notice( ['text' => $notify ] );
 }
 
 //добавляем стили колорпикера и другие в хеадер
@@ -617,7 +615,7 @@ function rcl_check_user_blocked( $rcl_tabs ) {
 }
 
 function rcl_add_user_blocked_notice() {
-	echo '<div class="notify-lk"><div class="warning">' . __( 'The user has restricted access to their page', 'wp-recall' ) . '</div></div>';
+	echo rcl_get_notice( ['text' => __( 'The user has restricted access to their page', 'wp-recall' ), 'type' => 'error' ] );
 }
 
 add_action( 'wp', 'rcl_post_bar_setup', 10 );

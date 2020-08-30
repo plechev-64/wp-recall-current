@@ -19,6 +19,14 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		if ( ! $args )
 			$args = array();
 
+		if ( isset( $args['include'] ) ) {
+			$args['ID__in'] = array_map( 'trim', explode( ',', $args['include'] ) );
+		}
+
+		if ( isset( $args['exclude'] ) ) {
+			$args['ID__not_in'] = array_map( 'trim', explode( ',', $args['exclude'] ) );
+		}
+
 		parent::__construct();
 
 		if ( $args )

@@ -196,6 +196,7 @@ div.rcl_preloader i.rcli::before {
 #rcl-options-form .help-option {
     display: inline-block;
 }
+.rcl-options-form .help-option .dashicons,
 #rcl-options-form .help-option .dashicons {
     color: rgb(76, 140, 189);
     cursor: pointer;

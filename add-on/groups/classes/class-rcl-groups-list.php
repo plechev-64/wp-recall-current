@@ -13,6 +13,14 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 
 	function __construct( $args ) {
 
+		if ( isset( $args['include'] ) ) {
+			$args['ID__in'] = array_map( 'trim', explode( ',', $args['include'] ) );
+		}
+
+		if ( isset( $args['exclude'] ) ) {
+			$args['ID__not_in'] = array_map( 'trim', explode( ',', $args['exclude'] ) );
+		}
+
 		parent::__construct();
 
 		$this->init_properties( $args );

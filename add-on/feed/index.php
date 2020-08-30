@@ -104,42 +104,45 @@ function rcl_followers_tab( $user_id ) {
 
 	$cnt = rcl_feed_count_subscribers( $user_id );
 
-	if ( $cnt ) {
-		add_filter( 'rcl_user_description', 'rcl_add_userlist_follow_button', 90 );
-		add_filter( 'rcl_users_query', 'rcl_feed_subsribers_query_userlist', 10 );
-		$content .= rcl_get_userlist( array(
-			'template'		 => 'rows',
-			'per_page'		 => 20,
-			'orderby'		 => 'user_registered',
-			'filters'		 => 1,
-			'search_form'	 => 0,
-			'data'			 => 'rating_total,description,posts_count,comments_count',
-			'add_uri'		 => array( 'tab' => 'followers' )
-			) );
-	} else
-		$content .= '<p>' . __( 'You do not have any subscribers yet', 'wp-recall' ) . '</p>';
+	if ( ! $cnt )
+		return $content . rcl_get_notice( ['text' => __( 'You do not have any subscribers yet', 'wp-recall' ) ] );
+
+	add_filter( 'rcl_user_description', 'rcl_add_userlist_follow_button', 90 );
+	add_filter( 'rcl_users_query', 'rcl_feed_subsribers_query_userlist', 10 );
+	$content .= rcl_get_userlist( array(
+		'template'		 => 'rows',
+		'per_page'		 => 20,
+		'orderby'		 => 'user_registered',
+		'filters'		 => 1,
+		'search_form'	 => 0,
+		'data'			 => 'rating_total,description,posts_count,comments_count',
+		'add_uri'		 => array( 'tab' => 'followers' )
+		) );
 
 	return $content;
 }
 
 function rcl_subscriptions_tab( $user_id ) {
-	$feeds	 = rcl_feed_count_authors( $user_id );
+
 	$content = '<h3>' . __( 'List of subscriptions', 'wp-recall' ) . '</h3>';
-	if ( $feeds ) {
-		add_filter( 'rcl_user_description', 'rcl_add_userlist_follow_button', 90 );
-		add_filter( 'rcl_users_query', 'rcl_feed_authors_query_userlist', 10 );
-		$content .= rcl_get_userlist( array(
-			'template'		 => 'rows',
-			'orderby'		 => 'user_registered',
-			'per_page'		 => 20,
-			'filters'		 => 1,
-			'search_form'	 => 0,
-			'data'			 => 'rating_total,description,posts_count,comments_count',
-			'add_uri'		 => array( 'tab' => 'subscriptions' )
-			) );
-	} else {
-		$content .= '<p>' . __( 'You do not have any subscriptions', 'wp-recall' ) . '</p>';
-	}
+
+	$feeds = rcl_feed_count_authors( $user_id );
+
+	if ( ! $feeds )
+		return $content . rcl_get_notice( ['text' => __( 'You do not have any subscriptions', 'wp-recall' ) ] );
+
+	add_filter( 'rcl_user_description', 'rcl_add_userlist_follow_button', 90 );
+	add_filter( 'rcl_users_query', 'rcl_feed_authors_query_userlist', 10 );
+	$content .= rcl_get_userlist( array(
+		'template'		 => 'rows',
+		'orderby'		 => 'user_registered',
+		'per_page'		 => 20,
+		'filters'		 => 1,
+		'search_form'	 => 0,
+		'data'			 => 'rating_total,description,posts_count,comments_count',
+		'add_uri'		 => array( 'tab' => 'subscriptions' )
+		) );
+
 	return $content;
 }
 

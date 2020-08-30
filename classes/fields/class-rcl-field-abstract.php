@@ -135,15 +135,15 @@ class Rcl_Field_Abstract {
 
 		$classes = array( 'type-' . $this->type . '-input' );
 
-		//if ( $this->type != 'custom' ) {
+//if ( $this->type != 'custom' ) {
 		$classes[] = 'rcl-field-input';
-		//}
+//}
 
 		$inputField = $this->get_input();
 
 		if ( $this->icon ) {
-			//$inputField .= '<i class="rcli '.$this->icon.' field-icon"></i>';
-			//$classes[] = 'have-icon';
+//$inputField .= '<i class="rcli '.$this->icon.' field-icon"></i>';
+//$classes[] = 'have-icon';
 		}
 
 		if ( ! $this->title && $this->required ) {
@@ -202,14 +202,17 @@ class Rcl_Field_Abstract {
 		if ( ! $this->help )
 			return;
 
-		$content = '<span class="rcl-balloon-hover rcl-field-help">';
-		$content .= '<i class="rcli fa-question-circle-o" aria-hidden="true"></i>';
-		$content .= '<span class="rcl-balloon help-content">';
-		$content .= $this->help;
-		$content .= '</span>';
-		$content .= '</span>';
+		return '<span class="help-option" onclick="return rcl_get_option_help(this);"><i class="dashicons dashicons-editor-help"></i><span class="help-content">' . $this->help . '</span></span>';
 
-		return $content;
+
+		/* $content = '<span class="rcl-balloon-hover rcl-field-help">';
+		  $content .= '<i class="rcli fa-question-circle-o" aria-hidden="true"></i>';
+		  $content .= '<span class="rcl-balloon help-content">';
+		  $content .= $this->help;
+		  $content .= '</span>';
+		  $content .= '</span>';
+
+		  return $content; */
 	}
 
 	function get_childrens() {
@@ -268,7 +271,9 @@ class Rcl_Field_Abstract {
 
 	function get_field_value( $title = false ) {
 
-		if ( ! $value = $this->get_value() || ! $this->type )
+		$value = $this->get_value();
+
+		if ( ! $value || ! $this->type )
 			return false;
 
 		$content = '<div class="rcl-field type-' . $this->type . '-value">';
@@ -297,6 +302,7 @@ class Rcl_Field_Abstract {
 	}
 
 	function get_filter_url( $val = false ) {
+
 		if ( ! rcl_get_option( 'users_page_rcl' ) )
 			return false;
 

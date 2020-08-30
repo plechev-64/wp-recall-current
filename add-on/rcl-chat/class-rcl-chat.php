@@ -465,7 +465,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 			else
 				$notice	 = __( 'Chat history will be displayed here', 'wp-recall' );
 
-			$content .= sprintf( '<span class="anons-message">%s</span>', $notice );
+			$content .= rcl_get_notice( ['text' => $notice ] );
 		}
 
 		$content .= '</div>';

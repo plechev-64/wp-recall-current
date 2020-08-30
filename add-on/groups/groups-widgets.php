@@ -405,7 +405,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
 			<?php }else { ?>
 
-				<p><?php _e( "You do not have any publications", "wp-recall" ); ?></p>
+				<?php echo rcl_get_notice( ['text' => __( "You do not have any publications", "wp-recall" ) ] ); ?>
 
 			<?php } ?>
 
@@ -443,7 +443,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
 			<?php }else { ?>
 
-				<p><?php _e( "You do not have any publications", "wp-recall" ); ?></p>
+				<?php echo rcl_get_notice( ['text' => __( "You do not have any publications", "wp-recall" ) ] ); ?>
 
 			<?php } ?>
 

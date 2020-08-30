@@ -47,8 +47,7 @@ function rcl_get_grouplist( $atts = false ) {
 	$content = $list->get_filters( $count );
 
 	if ( ! $groupsdata ) {
-		$content .= '<p align="center">' . __( 'Groups not found', 'wp-recall' ) . '</p>';
-		return $content;
+		return $content . rcl_get_notice( ['text' => __( 'Groups not found', 'wp-recall' ) ] );
 	}
 
 	$content .= '<div class="rcl-grouplist">';
