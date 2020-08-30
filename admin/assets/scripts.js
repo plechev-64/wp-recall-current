@@ -445,13 +445,11 @@ function rcl_onclick_options_label( e ) {
 
 	rcl_update_history_url( label.attr( 'href' ) );
 
-	if ( jQuery( 'body' ).hasClass( 'mobile' ) ) {
-		jQuery( '.rcl-options .active-menu-item .rcl-bttn__text' ).text( label.children( 'span.rcl-bttn__text' ).text() );
-		jQuery( '.rcl-options .rcl-menu' ).hide();
-	}
+	jQuery( '.rcl-options .active-menu-item .rcl-bttn__text' ).text( label.children( 'span.rcl-bttn__text' ).text() );
+	jQuery( '.rcl-options .rcl-menu' ).removeClass( 'active-menu' );
 
 }
 
 function rcl_show_options_menu( e ) {
-	jQuery( '.rcl-options .rcl-menu' ).show();
+	jQuery( '.rcl-options .rcl-menu' ).addClass( 'active-menu' );
 }

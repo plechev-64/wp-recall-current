@@ -1199,6 +1199,9 @@ span.ruble-symbol {
 	.rcl-options .rcl-menu{
 		display:none;
 	}
+	.rcl-options .rcl-menu.active-menu{
+		display:block;
+	}
 	.rcl-options .rcl-submit-options{
 		position: fixed;
 		bottom: 0;
