@@ -111,8 +111,11 @@ class Rcl_Options_Manager {
 			$content .= rcl_get_button( array(
 				'label'		 => $box->title,
 				'onclick'	 => 'rcl_show_options_menu(this);return false;',
-				'icon'		 => 'fa-navicon',
+				'icon'		 => 'fa-chevron-down', //$box->icon,
+				'icon_align' => 'right',
 				'type'		 => 'clear',
+				'style'		 => 'text-align: center;',
+				'fullwidth'	 => true,
 				'class'		 => array( 'button button-primary button-large active-menu-item' )
 				//'status'	 => $box->active ? 'active' : ''
 				)
@@ -127,6 +130,7 @@ class Rcl_Options_Manager {
 			'submit'	 => $this->onclick ? false : true,
 			'icon'		 => 'fa-floppy-o',
 			'type'		 => 'clear',
+			'style'		 => 'text-align: center;',
 			'class'		 => array( 'button button-primary button-large rcl-submit-options' )
 			) );
 
