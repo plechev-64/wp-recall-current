@@ -55,16 +55,7 @@ class Rcl_Options_Manager {
 		if ( ! $this->boxes )
 			return false;
 
-		$items = array();
-
-		if ( $this->extends ) {
-			$items = array(
-				'<label class="rcl-option-extend-switch">'
-				. '<input type="checkbox" name="extend_options" ' . checked( $this->extend_options, 1, false ) . ' onclick="return rcl_enable_extend_options(this);" value="1"> '
-				. __( 'Advanced settings', 'wp-recall' )
-				. '</label>'
-			);
-		}
+		$items = [ ];
 
 		foreach ( $this->boxes as $box ) {
 
@@ -81,15 +72,6 @@ class Rcl_Options_Manager {
 				) );
 		}
 
-		$items[] = rcl_get_button( array(
-			'label'		 => __( 'Сохранить настройки', 'wp-recall' ),
-			'onclick'	 => $this->onclick ? $this->onclick : false,
-			'submit'	 => $this->onclick ? false : true,
-			'icon'		 => 'fa-floppy-o',
-			'type'		 => 'clear',
-			'class'		 => array( 'button button-primary button-large' )
-			) );
-
 		$content = '<div class="rcl-menu menu-items">';
 
 		foreach ( $items as $item ) {
@@ -101,27 +83,6 @@ class Rcl_Options_Manager {
 		return $content;
 	}
 
-	/* function get_form(){
-
-	  if(!$this->boxes) return false;
-
-	  $content = '<form method="post" class="rcl-options-form" action="">';
-
-	  $content .= '<input type="hidden" name="option_name" value="rcl_global_options">';
-
-	  $content .= wp_nonce_field('update-options-rcl','_wpnonce',true,false);
-
-	  foreach($this->boxes as $box){
-
-	  $content .= $box->get_content();
-
-	  }
-
-	  $content .= '</form>';
-
-	  return $content;
-
-	  } */
 	function get_content() {
 
 		$content = '<div class="rcl-options-manager rcl-options ' . ($this->extend_options ? 'show-extends-options' : 'hide-extends-options') . '">';
@@ -132,7 +93,44 @@ class Rcl_Options_Manager {
 
 		$content .= wp_nonce_field( $this->nonce, '_wpnonce', true, false );
 
+		$content .= '<div class="options-menu-boxes">';
+
+		if ( $this->extends ) {
+			$content .=
+				'<label class="rcl-option-extend-switch">'
+				. '<input type="checkbox" name="extend_options" ' . checked( $this->extend_options, 1, false ) . ' onclick="return rcl_enable_extend_options(this);" value="1"> '
+				. __( 'Advanced settings', 'wp-recall' )
+				. '</label>';
+		}
+
+		foreach ( $this->boxes as $box ) {
+
+			if ( ! $box->active )
+				continue;
+
+			$content .= rcl_get_button( array(
+				'label'		 => $box->title,
+				'onclick'	 => 'rcl_show_options_menu(this);return false;',
+				'icon'		 => 'fa-navicon',
+				'type'		 => 'clear',
+				'class'		 => array( 'button button-primary button-large active-menu-item' )
+				//'status'	 => $box->active ? 'active' : ''
+				)
+			);
+		}
+
 		$content .= $this->get_menu();
+
+		$content .= rcl_get_button( array(
+			'label'		 => __( 'Сохранить настройки', 'wp-recall' ),
+			'onclick'	 => $this->onclick ? $this->onclick : false,
+			'submit'	 => $this->onclick ? false : true,
+			'icon'		 => 'fa-floppy-o',
+			'type'		 => 'clear',
+			'class'		 => array( 'button button-primary button-large rcl-submit-options' )
+			) );
+
+		$content .= '</div>';
 
 		$content .= '<div class="options-form-boxes">';
 

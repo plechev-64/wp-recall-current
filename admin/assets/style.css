@@ -1063,7 +1063,7 @@ span.ruble-symbol {
 }
 
 .rcl-options{
-
+	margin-right: 10px;
 }
 
 .rcl-options .extend-options{
@@ -1074,12 +1074,14 @@ span.ruble-symbol {
 .rcl-options.hide-extends-options .extend-options{
 	display: none;
 }
-
-.rcl-options .rcl-menu{
+.rcl-options .options-menu-boxes{
+	margin-right: 10px;
+}
+.rcl-options .options-menu-boxes{
 	width: 250px;
 	float: left;
 }
-.rcl-options .rcl-menu > a{
+.rcl-options .options-menu-boxes > a{
 	width: 100%;
 	font-size: 16px;
 }
@@ -1102,12 +1104,13 @@ span.ruble-symbol {
 
 .rcl-options .options-box{
 	padding: 5px;
-	margin-left: 10px;
 	border: 1px solid #ccc;
 	width: 550px;
 	display: none;
 	overflow-y: auto;
 	max-height: 800px;
+	max-width: 100%;
+	box-sizing: border-box;
 }
 
 .rcl-options .options-box.active{
@@ -1147,6 +1150,10 @@ span.ruble-symbol {
 .rcl-options .rcl-option .rcl-field-title{
 	font-weight: bold;
 }
+.rcl-options .active-menu-item{
+	display:none;
+	margin-bottom: 5px;
+}
 /*****/
 
 @media screen and (max-width:800px) {
@@ -1182,6 +1189,22 @@ span.ruble-symbol {
         display: flex;
         margin: 0 10px 0 0;
     }
+	.rcl-options .options-menu-boxes{
+		width: 100%;
+		float: unset;
+	}
+	.rcl-options .active-menu-item{
+		display:block;
+	}
+	.rcl-options .rcl-menu{
+		display:none;
+	}
+	.rcl-options .rcl-submit-options{
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		z-index: 9;
+	}
 }
 
 @media screen and (max-width:375px) {

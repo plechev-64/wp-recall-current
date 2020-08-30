@@ -1048,14 +1048,16 @@ function rcl_edit_group_pre_get_posts( $query ) {
 
 function rcl_close_group_post_content() {
 	global $rcl_group;
-	$content = '<h3 align="center" style="color:red;">' . __( 'Publication unavailable!', 'wp-recall' ) . '</h3>';
-	$content .= '<p align="center" style="color:red;">' . __( 'To view the publication , you must be a member of the group', 'wp-recall' ) . ' "' . $rcl_group->name . '"</p>';
-	return $content;
+	return rcl_get_notice( [
+		'title'	 => __( 'Publication unavailable!', 'wp-recall' ),
+		'text'	 => __( 'To view the publication , you must be a member of the group', 'wp-recall' ) . ' "' . $rcl_group->name . '"',
+		'type'	 => 'error'
+	] );
 }
 
 function rcl_close_group_comments_content( $comments ) {
 	foreach ( $comments as $comment ) {
-		$comment->comment_content = '<p>' . __( '(Comment hidden by privacy settings)', 'wp-recall' ) . '</p>';
+		$comment->comment_content = rcl_get_notice( ['text' => __( '(Comment hidden by privacy settings)', 'wp-recall' ), 'type' => 'error' ] );
 	}
 	return $comments;
 }

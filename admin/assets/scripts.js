@@ -196,25 +196,6 @@ jQuery( function( $ ) {
 
 } );
 
-function rcl_onclick_options_label( e ) {
-
-	var label = jQuery( e );
-
-	var viewBox = label.data( 'options' );
-
-	if ( jQuery( '#' + viewBox + '-options-box' ).hasClass( 'active' ) )
-		return false;
-
-	jQuery( '.rcl-options .options-box' ).removeClass( 'active' );
-	jQuery( '.rcl-options .rcl-menu > a' ).removeClass( 'rcl-bttn__active' );
-
-	jQuery( '#' + viewBox + '-options-box' ).addClass( 'active' );
-	jQuery( e ).addClass( 'rcl-bttn__active' );
-
-	rcl_update_history_url( label.attr( 'href' ) );
-
-}
-
 function rcl_get_details_addon( props, e ) {
 
 	rcl_preloader_show( jQuery( e ).parents( '.addon-box' ) );
@@ -426,7 +407,7 @@ function rcl_update_options() {
 function rcl_get_option_help( elem ) {
 
 	var help = jQuery( elem ).children( '.help-content' );
-	var title_dialog = jQuery( elem ).parents( '.rcl-option' ).children( 'label' ).text();
+	var title_dialog = jQuery( elem ).parents( '.rcl-option' ).children( 'rcl-field-title' ).text();
 
 	var content = help.html();
 	help.dialog( {
@@ -445,4 +426,30 @@ function rcl_get_option_help( elem ) {
 			jQuery( elem ).append( '<span class="help-content">' + content + '</span>' );
 		}
 	} );
+}
+
+function rcl_onclick_options_label( e ) {
+
+	var label = jQuery( e );
+
+	var viewBox = label.data( 'options' );
+
+	if ( jQuery( '#' + viewBox + '-options-box' ).hasClass( 'active' ) )
+		return false;
+
+	jQuery( '.rcl-options .options-box' ).removeClass( 'active' );
+	jQuery( '.rcl-options .rcl-menu > a' ).removeClass( 'rcl-bttn__active' );
+
+	jQuery( '#' + viewBox + '-options-box' ).addClass( 'active' );
+	jQuery( e ).addClass( 'rcl-bttn__active' );
+
+	rcl_update_history_url( label.attr( 'href' ) );
+
+	jQuery( '.rcl-options .active-menu-item .rcl-bttn__text' ).text( label.children( 'span.rcl-bttn__text' ).text() );
+	jQuery( '.rcl-options .rcl-menu' ).hide();
+
+}
+
+function rcl_show_options_menu( e ) {
+	jQuery( '.rcl-options .rcl-menu' ).show();
 }
