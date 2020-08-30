@@ -445,8 +445,10 @@ function rcl_onclick_options_label( e ) {
 
 	rcl_update_history_url( label.attr( 'href' ) );
 
-	jQuery( '.rcl-options .active-menu-item .rcl-bttn__text' ).text( label.children( 'span.rcl-bttn__text' ).text() );
-	jQuery( '.rcl-options .rcl-menu' ).hide();
+	if ( jQuery( 'body' ).hasClass( 'mobile' ) ) {
+		jQuery( '.rcl-options .active-menu-item .rcl-bttn__text' ).text( label.children( 'span.rcl-bttn__text' ).text() );
+		jQuery( '.rcl-options .rcl-menu' ).hide();
+	}
 
 }
 
