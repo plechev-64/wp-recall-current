@@ -1,6 +1,6 @@
 <?php
 
-global $rcl_options;
+global $rcl_options, $wpdb;
 
 require_once RCL_PATH . 'admin/classes/class-rcl-options-manager.php';
 
@@ -14,6 +14,12 @@ wp_enqueue_script( 'jquery-ui-dialog' );
 wp_enqueue_style( 'wp-jquery-ui-dialog' );
 
 $rcl_options = get_site_option( 'rcl_global_options' );
+
+$pages = RQ::tbl( new Rcl_Query( [
+			'name'	 => $wpdb->posts,
+			'cols'	 => ['ID', 'post_type', 'post_title' ]
+		] ) )->select( ['ID', 'post_title' ] )->where( ['post_type' => 'page' ] )->limit( -1 )
+		->get_walker()->get_index_values( 'ID', 'post_title' );
 
 $options = new Rcl_Options_Manager( array(
 	'option_name'	 => 'rcl_global_options',
@@ -47,16 +53,10 @@ $options->add_box( 'primary', array(
 			'childrens'	 => array(
 				1 => array(
 					array(
-						'type'		 => 'custom',
-						'slug'		 => 'lk_page_rcl',
-						'title'		 => __( 'Shortcode host page', 'wp-recall' ),
-						'content'	 => wp_dropdown_pages( array(
-							'selected'			 => $rcl_options['lk_page_rcl'],
-							'name'				 => 'rcl_global_options[lk_page_rcl]',
-							'show_option_none'	 => '<span style="color:red">' . __( 'Not selected', 'wp-recall' ) . '</span>',
-							'echo'				 => 0
-							)
-						)
+						'type'	 => 'select',
+						'slug'	 => 'lk_page_rcl',
+						'title'	 => __( 'Shortcode host page', 'wp-recall' ),
+						'values' => $pages
 					),
 					array(
 						'type'	 => 'text',
@@ -228,14 +228,10 @@ $options->box( 'primary' )->add_group( 'usersign', array(
 		'childrens'	 => array(
 			1 => array(
 				array(
-					'type'		 => 'custom',
-					'title'		 => __( 'ID of the shortcode page [loginform]', 'wp-recall' ),
-					'content'	 => wp_dropdown_pages( array(
-						'selected'			 => isset( $rcl_options['page_login_form_recall'] ) ? $rcl_options['page_login_form_recall'] : '',
-						'name'				 => 'rcl_global_options[page_login_form_recall]',
-						'show_option_none'	 => __( 'Not selected', 'wp-recall' ),
-						'echo'				 => 0 )
-					)
+					'type'	 => 'select',
+					'slug'	 => 'page_login_form_recall',
+					'title'	 => __( 'ID of the shortcode page [loginform]', 'wp-recall' ),
+					'values' => $pages
 				)
 			)
 		)

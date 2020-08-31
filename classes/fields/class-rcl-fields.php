@@ -24,6 +24,8 @@ class Rcl_Fields extends Rcl_Field {
 
 		if ( $fields ) {
 
+			$this->fields = array();
+
 			foreach ( $fields as $field ) {
 				if ( ! isset( $field['slug'] ) )
 					continue;

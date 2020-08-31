@@ -88,7 +88,7 @@ class PrimeForm extends Rcl_Fields {
 	function get_form_fields() {
 		global $user_ID;
 
-		$fields = array();
+		$fields = $this->fields;
 
 		if ( $this->forum_list ) {
 
