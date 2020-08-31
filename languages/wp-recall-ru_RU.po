@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2020-08-30 20:21+0400\n"
+"POT-Creation-Date: 2020-08-31 10:28+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -5445,7 +5445,8 @@ msgid "File types"
 msgstr "Типы файлов"
 
 #: classes/fields/types/class-rcl-field-range.php:41
-msgid "For example: km или pcs"
+#: classes/fields/types/class-rcl-field-runner.php:40
+msgid "For example: km or pcs"
 msgstr "Например: км или шт"
 
 #: classes/fields/types/class-rcl-field-range.php:43
@@ -5456,10 +5457,6 @@ msgstr "Единица измерения"
 #: classes/fields/types/class-rcl-field-range.php:70
 msgid "Manual input"
 msgstr "Ручной ввод"
-
-#: classes/fields/types/class-rcl-field-runner.php:40
-msgid "For example: km or pcs"
-msgstr "Например: км или шт"
 
 #: classes/fields/types/class-rcl-field-uploader.php:65
 msgid "Max number of files"
@@ -6019,7 +6016,7 @@ msgstr "Регистрация"
 
 #: templates/user-cards.php:25
 msgid "to go to office of the user"
-msgstr "Перейти к кабинет пользователя"
+msgstr "Перейти в кабинет пользователя"
 
 #: wp-recall.php:36 wp-recall.php:40
 msgid "Are you cheating, bastard?"
@@ -6036,6 +6033,9 @@ msgstr "Произвольный контент"
 #: wp-recall.php:415
 msgid "Text editor"
 msgstr "Текстовый редактор"
+
+#~ msgid "For example: km или pcs"
+#~ msgstr "Например: км или шт"
 
 #~ msgid "No news found"
 #~ msgstr "Новости не найдены"

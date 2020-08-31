@@ -1996,7 +1996,7 @@ body .rcl-bttn:not(.rcl-bttn__type-clear):last-child {
 	padding: .45em .6em;
 }
 .rcl-wrap__wiget .rcl-bttn__type-clear:hover {
-	background-color: rgba(237, 237, 237, 0.6);
+	background-color: #e7edf0;
 	box-shadow: none;
 }
 .rcl-wrap__wiget .rcl-bttn__ava {

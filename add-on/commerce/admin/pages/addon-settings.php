@@ -41,7 +41,7 @@ function rcl_commerce_options() {
 				'slug'		 => 'checkout_page',
 				'content'	 => wp_dropdown_pages( array(
 					'selected'			 => $rcl_options['basket_page_rmag'],
-					'name'				 => 'rcl_global_options[basket_page_rmag]',
+					'name'				 => 'global[basket_page_rmag]',
 					'show_option_none'	 => __( 'Not selected', 'wp-recall' ),
 					'echo'				 => 0
 				) ),

@@ -900,6 +900,9 @@ function RclForm( form ) {
 				if ( !field.is( ":required" ) )
 					return required;
 
+				if ( field.is( ":disabled" ) )
+					return required;
+
 				var value = false;
 
 				if ( field.attr( 'type' ) == 'checkbox' ) {

@@ -38,7 +38,7 @@ class Rcl_Field_Range extends Rcl_Field_Abstract {
 			array(
 				'slug'			 => 'unit',
 				'default'		 => $this->unit,
-				'placeholder'	 => __( 'For example: km или pcs', 'wp-recall' ),
+				'placeholder'	 => __( 'For example: km or pcs', 'wp-recall' ),
 				'type'			 => 'text',
 				'title'			 => __( 'Unit', 'wp-recall' )
 			),
