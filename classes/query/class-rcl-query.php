@@ -324,7 +324,12 @@ class Rcl_Query extends Rcl_Old_Query {
 
 	function join( $joinProps, $joinQuery ) {
 
-		$joinType = isset( $joinProps[2] ) ? $joinProps[2] : 'INNER';
+		if ( is_array( $joinProps ) ) {
+			$joinType = isset( $joinProps[2] ) ? $joinProps[2] : 'INNER';
+		} else { //if colnames of join is the same you can convey a colname as a string
+			$joinType	 = 'INNER';
+			$joinProps	 = [$joinProps, $joinProps ];
+		}
 
 		$this->query['join'][] = $joinType . " JOIN " . $joinQuery->table['name'] . " AS " . $joinQuery->table['as'] . " ON " . $this->table['as'] . "." . $joinProps[0] . " = " . $joinQuery->table['as'] . "." . $joinProps[1];
 

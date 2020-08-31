@@ -143,7 +143,7 @@ function rcl_chat_delete_userdata( $user_id ) {
 			'chat_id',
 			'chat_status'
 		] )
-		->join( ['chat_id', 'chat_id' ], RQ::tbl( new Rcl_Chat_Users_Query() )->where( ['user_id' => $user_id ] ) )
+		->join( 'chat_id', RQ::tbl( new Rcl_Chat_Users_Query() )->where( ['user_id' => $user_id ] ) )
 		->number( -1 )
 		->get_results();
 

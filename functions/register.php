@@ -535,6 +535,7 @@ function rcl_custom_fields_regform( $content ) {
 
 		unset( $field['class'] );
 		unset( $field['attr'] );
+		unset( $field['id'] );
 
 		$fieldObject = Rcl_Field::setup( $field );
 

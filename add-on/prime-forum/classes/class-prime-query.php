@@ -226,8 +226,7 @@ class PrimeQuery {
 				'join' => array(
 					array(
 						['forum_id', 'forum_id' ],
-						$this->forums_query->join(
-							['group_id', 'group_id' ], $this->groups_query->select( true )
+						$this->forums_query->join( 'group_id', $this->groups_query->select( true )
 						)
 					),
 					array(

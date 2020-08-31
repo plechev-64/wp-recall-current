@@ -247,8 +247,7 @@ function rcl_chat_noread_messages_amount( $user_id ) {
 function rcl_chat_get_important_messages( $user_id, $limit ) {
 
 	$messagesData = RQ::tbl( new Rcl_Chat_Messages_Query() )
-		->join(
-			['message_id', 'message_id' ], RQ::tbl( new Rcl_Chat_Messagemeta_Query() )
+		->join( 'message_id', RQ::tbl( new Rcl_Chat_Messagemeta_Query() )
 			->where( ['meta_key' => 'important:' . $user_id ] )
 		)
 		->orderby( 'message_time' )
@@ -261,8 +260,7 @@ function rcl_chat_get_important_messages( $user_id, $limit ) {
 function rcl_chat_count_important_messages( $user_id ) {
 
 	return RQ::tbl( new Rcl_Chat_Messages_Query() )
-			->join(
-				['message_id', 'message_id' ], RQ::tbl( new Rcl_Chat_Messagemeta_Query() )
+			->join( 'message_id', RQ::tbl( new Rcl_Chat_Messagemeta_Query() )
 				->where( ['meta_key' => 'important:' . $user_id ] )
 			)
 			->get_count();

@@ -158,8 +158,7 @@ function pfm_get_topic_permalink( $topic_id, $args = false ) {
 			$slugs = RQ::tbl( new PrimeTopics() )
 					->select( ['topic_slug' ] )
 					->where( ['topic_id' => $topic_id ] )
-					->join(
-						['forum_id', 'forum_id' ], RQ::tbl( new PrimeForums() )
+					->join( 'forum_id', RQ::tbl( new PrimeForums() )
 						->select( ['forum_slug' ] )
 					)->get_results();
 
@@ -225,7 +224,7 @@ function pfm_get_post_page_number( $post_id, $args = false ) {
 
 		$data = $PostsQuery->select( ['post_index' ] )
 			->where( ['post_id' => $post_id ] )
-			->join( ['topic_id', 'topic_id' ], RQ::tbl( new PrimeTopics() )->select( ['post_count' ] ) )
+			->join( 'topic_id', RQ::tbl( new PrimeTopics() )->select( ['post_count' ] ) )
 			->get_results();
 
 		$post_count	 = $data[0]->post_count;
@@ -234,7 +233,7 @@ function pfm_get_post_page_number( $post_id, $args = false ) {
 
 		$post_count = $PostsQuery->select( false )
 			->where( ['post_id' => $post_id ] )
-			->join( ['topic_id', 'topic_id' ], RQ::tbl( new PrimeTopics() )->select( ['post_count' ] ) )
+			->join( 'topic_id', RQ::tbl( new PrimeTopics() )->select( ['post_count' ] ) )
 			->get_var();
 	} else {
 
