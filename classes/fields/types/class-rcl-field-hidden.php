@@ -66,9 +66,8 @@ class Rcl_Field_Hidden extends Rcl_Field_Abstract {
 	}
 
 	function get_input() {
-		if ( $this->value ) {
-			return '<input type="' . $this->type . '" ' . $this->get_pattern() . ' ' . $this->get_maxlength() . ' ' . $this->get_required() . ' ' . $this->get_placeholder() . ' ' . $this->get_class() . ' name="' . $this->input_name . '" id="' . $this->input_id . '" value=\'' . $this->value . '\'/>';
-		} else if ( $this->values && is_array( $this->values ) ) {
+
+		if ( $this->values && is_array( $this->values ) ) {
 
 			$content = '';
 			foreach ( $this->values as $value ) {
@@ -77,6 +76,8 @@ class Rcl_Field_Hidden extends Rcl_Field_Abstract {
 
 			return $content;
 		}
+
+		return '<input type="' . $this->type . '" ' . $this->get_pattern() . ' ' . $this->get_maxlength() . ' ' . $this->get_required() . ' ' . $this->get_placeholder() . ' ' . $this->get_class() . ' name="' . $this->input_name . '" id="' . $this->input_id . '" value=\'' . $this->value . '\'/>';
 	}
 
 }
