@@ -38,8 +38,10 @@ class Rcl_Field_Abstract {
 
 	function __construct( $args ) {
 
+		$this->rand = rand( 0, 1000 );
+
 		if ( ! isset( $args['slug'] ) )
-			return false;
+			$args['slug'] = md5( $this->rand );
 
 		if ( isset( $args['name'] ) )
 			$args['input_name'] = $args['name'];
@@ -50,8 +52,6 @@ class Rcl_Field_Abstract {
 		$this->id = $args['slug'];
 
 		$this->init_properties( $args );
-
-		$this->rand = rand( 0, 1000 );
 
 		if ( ! $this->input_name )
 			$this->input_name = $this->id;

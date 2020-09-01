@@ -78,8 +78,8 @@ function rcl_animate_css() {
 add_action( 'login_enqueue_scripts', 'rcl_enqueue_wp_form_scripts', 1 );
 function rcl_enqueue_wp_form_scripts() {
 	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ) );
-	wp_enqueue_script( 'rcl-primary-scripts', RCL_URL . 'assets/js/scripts.js', array( 'jquery' ) );
+	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ), VER_RCL );
+	wp_enqueue_script( 'rcl-primary-scripts', RCL_URL . 'assets/js/scripts.js', array( 'jquery' ), VER_RCL );
 
 	if ( ! is_user_logged_in() ) {
 		wp_enqueue_style( 'rcl-regform-style', RCL_URL . 'assets/css/regform.css' );

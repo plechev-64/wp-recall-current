@@ -56,7 +56,6 @@ class Rcl_Options_Group {
 		$optionValues = get_site_option( $this->option_name );
 
 		foreach ( $options as $option ) {
-
 			$this->add_option( $option );
 		}
 	}

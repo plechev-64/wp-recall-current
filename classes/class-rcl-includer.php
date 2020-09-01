@@ -42,7 +42,7 @@ class Rcl_Includer {
 
 			//Если минификация не используется, то подключаем файлы как обычно
 			if ( ! $this->is_minify ) {
-				wp_enqueue_style( $key, $url );
+				wp_enqueue_style( $key, $url, false, VER_RCL );
 				continue;
 			}
 
@@ -64,7 +64,7 @@ class Rcl_Includer {
 			$this->create_file( $filename, 'css' );
 		}
 
-		wp_enqueue_style( 'rcl-' . $this->place, RCL_UPLOAD_URL . 'css/' . $filename );
+		wp_enqueue_style( 'rcl-' . $this->place, RCL_UPLOAD_URL . 'css/' . $filename, false, VER_RCL );
 	}
 
 	function include_scripts() {
@@ -392,7 +392,7 @@ function rcl_enqueue_script( $id, $url, $parents = array(), $in_footer = false )
 
 	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) ) {
 
-		wp_enqueue_script( $id, $url, $parents, false, $in_footer );
+		wp_enqueue_script( $id, $url, $parents, VER_RCL, $in_footer );
 
 		return;
 	}

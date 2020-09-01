@@ -37,7 +37,6 @@ class Rcl_Options_Manager {
 	}
 
 	function isset_box( $box_id ) {
-
 		return isset( $this->boxes[$box_id] );
 	}
 
@@ -84,6 +83,13 @@ class Rcl_Options_Manager {
 	}
 
 	function get_content() {
+
+		if ( ! isset( $_GET['rcl-options-box'] ) ) {
+			foreach ( $this->boxes as $id => $box ) {
+				$this->boxes[$id]->active = true;
+				break;
+			}
+		}
 
 		$content = '<div class="rcl-options-manager rcl-options ' . ($this->extend_options ? 'show-extends-options' : 'hide-extends-options') . '">';
 

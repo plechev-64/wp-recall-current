@@ -19,8 +19,6 @@ class Rcl_Options_Box {
 
 		if ( isset( $_GET['rcl-options-box'] ) ) {
 			$this->active = $this->box_id == $_GET['rcl-options-box'] ? true : false;
-		} else {
-			$this->active = $this->box_id == 'primary' ? true : false;
 		}
 	}
 
@@ -39,8 +37,23 @@ class Rcl_Options_Box {
 		return $this->group( $group_id );
 	}
 
+	function isset_group( $group_id ) {
+		return isset( $this->groups[$group_id] );
+	}
+
 	function group( $group_id ) {
 		return $this->groups[$group_id];
+	}
+
+	function add_options( $options ) {
+
+		if ( ! $this->isset_group( 'general' ) ) {
+			$this->add_group( 'general', [
+				'title' => __( 'General settings', 'wp-recall' )
+			] );
+		}
+
+		$this->group( 'general' )->add_options( $options );
 	}
 
 	function get_content() {
