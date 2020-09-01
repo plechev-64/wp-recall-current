@@ -62,10 +62,7 @@ class Rcl_Options_Group {
 
 	function add_option( $option ) {
 
-		if ( ! isset( $option['slug'] ) )
-			return false;
-
-		$option_id	 = $option['slug'];
+		$option_id	 = isset( $option['slug'] ) ? $option['slug'] : md5( current_time( 'mysql' ) );
 		$default	 = isset( $option['default'] ) ? $option['default'] : false;
 		$group		 = isset( $option['group'] ) && $option['group'] ? $option['group'] : false;
 		$local		 = isset( $option['local'] ) && $option['local'] ? true : false;
