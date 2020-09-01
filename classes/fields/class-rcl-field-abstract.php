@@ -39,7 +39,7 @@ class Rcl_Field_Abstract {
 	function __construct( $args ) {
 
 		if ( ! isset( $args['slug'] ) ) {
-			if ( $args['custom'] ) {
+			if ( $args['type'] == 'custom' ) {
 				$args['slug'] = md5( current_time( 'mysql' ) );
 			} else {
 				return false;
