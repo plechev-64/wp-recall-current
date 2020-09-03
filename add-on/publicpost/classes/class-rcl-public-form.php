@@ -439,7 +439,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 						'options'		 => $field->get_prop( 'post-editor' )
 						) );
 
-					$contentField .= $field->get_notice();
+					$contentField = $field->get_notice();
 				}
 
 				if ( $field_id == 'post_excerpt' ) {
@@ -485,7 +485,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 					$field->set_prop( 'value', $imagIds );
 
-					$contentField .= $field->get_field_input();
+					$contentField = $field->get_field_input();
 				}
 
 				if ( $field_id == 'post_uploader' ) {
@@ -521,27 +521,9 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 							->get_col();
 					}
 
-					$contentField .= $uploader->get_gallery( $imagIds );
+					$contentField = $uploader->get_gallery( $imagIds );
 
 					$contentField .= $uploader->get_uploader();
-
-					/* $postUploder = new Rcl_Uploader_Public_Form( array(
-					  'post_parent'	 => $this->post_id,
-					  'form_id'		 => intval( $this->form_id ),
-					  'post_type'		 => $this->post_type,
-					  'fix_editor'	 => $field->get_prop( 'fix_editor' ),
-					  'file_types'	 => $field->get_prop( 'file_types' ),
-					  'max_size'		 => $field->get_prop( 'max_size' ),
-					  'max_files'		 => $field->get_prop( 'max_files' ),
-					  'required'		 => $field->get_prop( 'required' ),
-					  'dropzone'		 => $field->get_prop( 'dropzone' ),
-					  'multiple'		 => $field->get_prop( 'multiple' ),
-					  'mode_output'	 => $field->get_prop( 'mode_output' ),
-					  ) );
-
-					  $contentField = $postUploder->get_form_uploader();
-
-					  $contentField .= $field->get_notice(); */
 				}
 			} else {
 

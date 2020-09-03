@@ -3,8 +3,6 @@
 require_once 'classes/class-rcl-form-fields.php';
 require_once 'classes/class-rcl-edit-terms-list.php';
 require_once 'classes/class-rcl-list-terms.php';
-require_once 'classes/class-rcl-public-form-uploader.php';
-require_once 'classes/class-rcl-uploader-post-thumbnail.php';
 require_once 'classes/class-rcl-public-form-fields.php';
 require_once 'classes/class-rcl-public-form.php';
 require_once 'classes/class-rcl-post-list.php';
