@@ -157,9 +157,8 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 
 	$post = get_post( $post_id );
 
-	$formFields = new Rcl_Public_Form_Fields( array(
-		'post_type'	 => $post->post_type,
-		'form_id'	 => $id_form
+	$formFields = new Rcl_Public_Form_Fields( $post->post_type, array(
+		'form_id' => $id_form
 		) );
 
 	$fields = $formFields->get_custom_fields();
@@ -168,23 +167,19 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 
 		$POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
 
-		foreach ( $fields as $field ) {
+		foreach ( $fields as $field_id => $field ) {
 
-			$slug	 = $field['slug'];
-			$value	 = isset( $POST[$slug] ) ? $POST[$slug] : false;
+			$value = isset( $POST[$field_id] ) ? $POST[$field_id] : false;
 
-			if ( $field['type'] == 'checkbox' ) {
+			if ( $field->type == 'checkbox' ) {
 				$vals = array();
 
-				if ( isset( $field['field_select'] ) )
-					$field['values'] = rcl_edit_old_option_fields( $field['field_select'], $field['type'] );
-
-				$count_field = count( $field['values'] );
+				$count_field = count( $field->values );
 
 				if ( $value && is_array( $value ) ) {
 					foreach ( $value as $val ) {
 						for ( $a = 0; $a < $count_field; $a ++ ) {
-							if ( $field['values'][$a] == $val ) {
+							if ( $field->values[$a] == $val ) {
 								$vals[] = $val;
 							}
 						}
@@ -192,23 +187,35 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 				}
 
 				if ( $vals ) {
-					update_post_meta( $post_id, $slug, $vals );
+					update_post_meta( $post_id, $field_id, $vals );
 				} else {
-					delete_post_meta( $post_id, $slug );
+					delete_post_meta( $post_id, $field_id );
 				}
-			} else if ( $field['type'] == 'file' ) {
+			} else if ( $field->type == 'file' ) {
 
 				$attach_id = rcl_upload_meta_file( $field, $post->post_author, $post_id );
 
 				if ( $attach_id )
-					update_post_meta( $post_id, $slug, $attach_id );
+					update_post_meta( $post_id, $field_id, $attach_id );
 			}else {
 
-				if ( $value ) {
-					update_post_meta( $post_id, $slug, $value );
+				if ( $field->type == 'editor' ) {
+					$value = isset( $_POST[$field_id] ) ? $_POST[$field_id] : false;
+				}
+
+				if ( $value || $value == 0 ) {
+					update_post_meta( $post_id, $field_id, $value );
 				} else {
-					if ( get_post_meta( $post_id, $slug, 1 ) )
-						delete_post_meta( $post_id, $slug );
+					if ( get_post_meta( $post_id, $field_id, 1 ) )
+						delete_post_meta( $post_id, $field_id );
+				}
+			}
+
+			if ( $field->type == 'uploader' && $value ) {
+				//удаляем записи из временной библиотеки
+
+				foreach ( $value as $attach_id ) {
+					rcl_delete_temp_media( $attach_id );
 				}
 			}
 		}

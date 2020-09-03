@@ -1,6 +1,6 @@
 <?php
 
-class PrimeManager extends Rcl_Custom_Fields_Manager {
+class PrimeManager extends Rcl_Fields_Manager {
 
 	public $forum_groups;
 	public $forums;
@@ -17,7 +17,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager {
 			'number'	 => -1
 			) );
 
-		$this->group_id = (isset( $_GET['group-id'] )) ? intval( $_GET['group-id'] ) : 0;
+		$this->group_id = isset( $_GET['group-id'] ) ? intval( $_GET['group-id'] ) : 0;
 
 		if ( $this->forum_groups && ! $this->group_id ) {
 			$this->group_id = $this->forum_groups[0]->group_id;
@@ -34,6 +34,8 @@ class PrimeManager extends Rcl_Custom_Fields_Manager {
 
 			$this->current_group = pfm_get_group( $this->group_id );
 		}
+
+		$this->switch_type = false;
 	}
 
 	function get_form_group() {
@@ -64,19 +66,17 @@ class PrimeManager extends Rcl_Custom_Fields_Manager {
 
 		foreach ( $fields as $field ) {
 
-			//$value = isset($adsOptions[$option['slug']])? $adsOptions[$option['slug']]: false;
-
-			$required = (isset( $field['required'] ) && $field['required'] == 1) ? '<span class="required">*</span>' : '';
+			$fieldObject = $this::setup( $field );
 
 			$content .= '<div id="field-' . $field['slug'] . '" class="form-field rcl-custom-field">';
 
 			if ( isset( $field['title'] ) ) {
 				$content .= '<label>';
-				$content .= $this->get_title( $field ) . ' ' . $required;
+				$content .= $fieldObject->get_title();
 				$content .= '</label>';
 			}
 
-			$content .= $this->get_input( $field );
+			$content .= $fieldObject->get_field_input();
 
 			$content .= '</div>';
 		}
@@ -98,18 +98,21 @@ class PrimeManager extends Rcl_Custom_Fields_Manager {
 			array(
 				'type'		 => 'text',
 				'slug'		 => 'group_name',
+				'input_name' => 'group_name',
 				'title'		 => __( 'Name of the group of forums', 'wp-recall' ),
 				'required'	 => 1
 			),
 			array(
-				'type'	 => 'text',
-				'slug'	 => 'group_slug',
-				'title'	 => __( 'Slug of the group', 'wp-recall' )
+				'type'		 => 'text',
+				'slug'		 => 'group_slug',
+				'input_name' => 'group_slug',
+				'title'		 => __( 'Slug of the group', 'wp-recall' )
 			),
 			array(
-				'type'	 => 'textarea',
-				'slug'	 => 'group_desc',
-				'title'	 => __( 'Description of the group', 'wp-recall' )
+				'type'		 => 'textarea',
+				'slug'		 => 'group_desc',
+				'input_name' => 'group_desc',
+				'title'		 => __( 'Description of the group', 'wp-recall' )
 			)
 		);
 
@@ -133,6 +136,7 @@ class PrimeManager extends Rcl_Custom_Fields_Manager {
 			array(
 				'type'		 => 'select',
 				'slug'		 => 'group_id',
+				'input_name' => 'group_id',
 				'title'		 => __( 'Forum group', 'wp-recall' ),
 				'required'	 => 1,
 				'default'	 => $this->group_id,
@@ -141,28 +145,32 @@ class PrimeManager extends Rcl_Custom_Fields_Manager {
 			array(
 				'type'		 => 'text',
 				'slug'		 => 'forum_name',
+				'input_name' => 'forum_name',
 				'title'		 => __( 'Name of the forum', 'wp-recall' ),
 				'required'	 => 1
 			),
 			array(
-				'type'	 => 'text',
-				'slug'	 => 'forum_slug',
-				'title'	 => __( 'Slug of the forum', 'wp-recall' )
+				'type'		 => 'text',
+				'slug'		 => 'forum_slug',
+				'input_name' => 'forum_slug',
+				'title'		 => __( 'Slug of the forum', 'wp-recall' )
 			),
 			array(
-				'type'	 => 'select',
-				'slug'	 => 'forum_closed',
-				'title'	 => __( 'Forum status', 'wp-recall' ),
-				'values' => array(
+				'type'		 => 'select',
+				'slug'		 => 'forum_closed',
+				'input_name' => 'forum_closed',
+				'title'		 => __( 'Forum status', 'wp-recall' ),
+				'values'	 => array(
 					__( 'Open forum', 'wp-recall' ),
 					__( 'Closed forum', 'wp-recall' )
 				),
-				'notice' => __( 'It is impossible to publish new topics and messages in a closed forum', 'wp-recall' )
+				'notice'	 => __( 'It is impossible to publish new topics and messages in a closed forum', 'wp-recall' )
 			),
 			array(
-				'type'	 => 'textarea',
-				'slug'	 => 'forum_desc',
-				'title'	 => __( 'Description of the forum', 'wp-recall' )
+				'type'		 => 'textarea',
+				'slug'		 => 'forum_desc',
+				'input_name' => 'forum_desc',
+				'title'		 => __( 'Description of the forum', 'wp-recall' )
 			)
 		);
 
@@ -195,16 +203,17 @@ class PrimeManager extends Rcl_Custom_Fields_Manager {
 
 		foreach ( $this->forum_groups as $group ) {
 
-			$this->fields[] = array(
-				'type'			 => 'groups',
-				'type_id'		 => 'group_id',
-				'slug'			 => $group->group_id,
-				'group_name'	 => $group->group_name,
-				'title'			 => $group->group_name,
-				'group_slug'	 => $group->group_slug,
-				'group_desc'	 => $group->group_desc,
-				'options-field'	 => $this->get_options_group( $group )
-			);
+			$this->add_field( array(
+				'type'		 => 'custom',
+				'item'		 => 'groups',
+				'type_id'	 => 'group_id',
+				'slug'		 => $group->group_id,
+				'group_name' => $group->group_name,
+				'title'		 => $group->group_name,
+				'group_slug' => $group->group_slug,
+				'group_desc' => $group->group_desc,
+				'options'	 => $this->get_options_group( $group )
+			) );
 		}
 
 		$content .= '<div id="pfm-groups-list">';
@@ -216,6 +225,19 @@ class PrimeManager extends Rcl_Custom_Fields_Manager {
 		$content .= $this->sortable_script( 'groups' );
 
 		$content .= '</div>';
+
+		return $content;
+	}
+
+	function loop( $field_ids = null ) {
+
+		$content = '';
+
+		foreach ( $this->fields as $field_id => $field ) {
+			if ( isset( $field_ids ) && ! in_array( $field_id, $field_ids ) )
+				continue;
+			$content .= $this->get_field_manager( $field_id );
+		}
 
 		return $content;
 	}
@@ -236,8 +258,9 @@ class PrimeManager extends Rcl_Custom_Fields_Manager {
 
 		foreach ( $this->forums as $forum ) {
 
-			$this->fields[] = array(
-				'type'			 => 'forums',
+			$this->add_field( array(
+				'type'			 => 'custom',
+				'item'			 => 'forums',
 				'type_id'		 => 'forum_id',
 				'slug'			 => $forum->forum_id,
 				'title'			 => $forum->forum_name,
@@ -247,8 +270,8 @@ class PrimeManager extends Rcl_Custom_Fields_Manager {
 				'forum_closed'	 => $forum->forum_closed,
 				'group_id'		 => $forum->group_id,
 				'parent_id'		 => $forum->parent_id,
-				'options-field'	 => $this->get_options_forum( $forum )
-			);
+				'options'		 => $this->get_options_forum( $forum )
+			) );
 		}
 
 		$content .= '<div id="pfm-forums-list">';
@@ -267,10 +290,10 @@ class PrimeManager extends Rcl_Custom_Fields_Manager {
 	function get_children_fields( $parent_id ) {
 
 		$childrens = array();
-		foreach ( $this->fields as $field ) {
-			if ( $field['parent_id'] != $parent_id )
+		foreach ( $this->fields as $field_id => $field ) {
+			if ( $field->parent_id != $parent_id )
 				continue;
-			$childrens[] = $field;
+			$childrens[] = $field_id;
 		}
 
 		return $childrens;
@@ -315,62 +338,60 @@ class PrimeManager extends Rcl_Custom_Fields_Manager {
 		return $this->get_input( $option, $value );
 	}
 
-	function field( $args ) {
+	function get_field_manager( $field_id, $default = false ) {
 
-		$this->field = $args;
+		$field = $this->get_field( $field_id );
 
 		$this->status = true;
 
 		$classes = array( 'rcl-custom-field' );
 
-		if ( $this->field['type'] == 'groups' && $this->group_id == $this->field['slug'] ) {
+		if ( $field->item == 'groups' && $this->group_id == $field->id ) {
 			$classes[] = 'active-group';
 		}
 
-		if ( isset( $this->field['class'] ) )
-			$classes[] = $this->field['class'];
+		if ( isset( $field->class ) )
+			$classes[] = $field->class;
 
-		$title = ($this->field['type'] == 'groups') ? $this->field['slug'] . ': ' . $this->field['title'] : $this->field['title'];
+		$title = ($field->item == 'groups') ? $field->id . ': ' . $field->title : $field->title;
 
-		$content = '<li id="field-' . $this->field['slug'] . '" data-parent="' . $this->field['parent_id'] . '" data-slug="' . $this->field['slug'] . '" data-type="' . $this->field['type'] . '" class="' . implode( ' ', $classes ) . '">
-            <div class="field-header">
-                <span class="field-type type-' . $this->field['type'] . '"></span>
-                <span class="field-title">' . $title . '</span>
-                <span class="field-controls">
-                    <a class="field-trash field-control" href="#" title="' . __( 'Delete', 'wp-recall' ) . '" onclick="pfm_delete_manager_item(this); return false;"></a>
-                    <a class="field-edit field-control" href="#" title="' . __( 'Edit', 'wp-recall' ) . '"></a>';
+		$content = '<li id="field-' . $field->id . '" data-parent="' . $field->parent_id . '" data-slug="' . $field->id . '" data-type="' . $field->item . '" class="' . implode( ' ', $classes ) . '">
+			<div class="field-header">
+				<span class="field-type type-' . $field->item . '"></span>
+				<span class="field-title">' . $title . '</span>
+				<span class="field-controls">
+					<a class="field-trash field-control" href="#" title="' . __( 'Delete', 'wp-recall' ) . '" onclick="pfm_delete_manager_item(this); return false;"></a>
+					<a class="field-edit field-control" href="#" title="' . __( 'Edit', 'wp-recall' ) . '"></a>';
 
-		if ( $this->field['type'] == 'groups' )
-			$content .= '<a class="get-forums field-control" href="' . admin_url( 'admin.php?page=pfm-forums&group-id=' . $this->field['slug'] ) . '" title="' . __( 'Get forums', 'wp-recall' ) . '"></a>';
+		if ( $field->item == 'groups' )
+			$content .= '<a class="get-forums field-control" href="' . admin_url( 'admin.php?page=pfm-forums&group-id=' . $field->id ) . '" title="' . __( 'Get forums', 'wp-recall' ) . '"></a>';
 
 		$content .= '</span>
-            </div>
-            <div class="field-settings">';
+			</div>
+			<div class="field-settings">';
 
 		$content .= '<form method="post">';
 
 		$content .= '<div class="options-custom-field">';
-		$content .= $this->get_options();
+		$content .= $this->get_field_options_box( $field_id );
 		$content .= '</div>';
 
 		$content .= '<div class="form-buttons">';
 		$content .= '<input type="submit" class="button-primary" value="' . __( 'Save changes', 'wp-recall' ) . '">';
-		$content .= '<input type="hidden" name="' . $this->field['type_id'] . '" value="' . $this->field['slug'] . '">';
+		$content .= '<input type="hidden" name="' . $field->type_id . '" value="' . $field->id . '">';
 		$content .= '</div>';
 
 		$content .= '</form>';
 
 		$content .= '</div>';
 
-		if ( $this->field['type'] == 'forums' ) {
+		if ( $field->item == 'forums' ) {
 			$content .= '<ul class="rcl-sortable-fields children-box">';
-			$content .= $this->loop( $this->get_children_fields( $this->field['slug'] ) );
+			$content .= $this->loop( $this->get_children_fields( $field->id ) );
 			$content .= '</ul>';
 		}
 
 		$content .= '</li>';
-
-		$this->field = false;
 
 		return $content;
 	}
@@ -378,49 +399,49 @@ class PrimeManager extends Rcl_Custom_Fields_Manager {
 	function sortable_script( $typeList ) {
 
 		return '<script>
-                jQuery(function(){
-                    jQuery(".' . $typeList . '-list .rcl-sortable-fields").sortable({
-                        handle: ".field-header",
-                        cursor: "move",
-                        /*containment: "parent",*/
-                        connectWith: ".' . $typeList . '-list .rcl-sortable-fields",
-                        placeholder: "ui-sortable-placeholder",
-                        distance: 15,
-                        start: function(ev, ui) {
+				jQuery(function(){
+					jQuery(".' . $typeList . '-list .rcl-sortable-fields").sortable({
+						handle: ".field-header",
+						cursor: "move",
+						/*containment: "parent",*/
+						connectWith: ".' . $typeList . '-list .rcl-sortable-fields",
+						placeholder: "ui-sortable-placeholder",
+						distance: 15,
+						start: function(ev, ui) {
 
-                            var field = jQuery(ui.item[0]);
+							var field = jQuery(ui.item[0]);
 
-                            field.parents("#pfm-' . $typeList . '-list > ul").find(".rcl-custom-field").each(function(a,b){
-                                if(field.attr("id") == jQuery(this).attr("id")) return;
-                                jQuery(this).children(".children-box").addClass("must-receive");
-                            });
+							field.parents("#pfm-' . $typeList . '-list > ul").find(".rcl-custom-field").each(function(a,b){
+								if(field.attr("id") == jQuery(this).attr("id")) return;
+								jQuery(this).children(".children-box").addClass("must-receive");
+							});
 
-                            field.parent().addClass("list-receive");
+							field.parent().addClass("list-receive");
 
-                        },
-                        stop: function(ev, ui) {
+						},
+						stop: function(ev, ui) {
 
-                            var field = jQuery(ui.item[0]);
+							var field = jQuery(ui.item[0]);
 
-                            field.parents("#pfm-' . $typeList . '-list > ul").find(".children-box").removeClass("must-receive");
+							field.parents("#pfm-' . $typeList . '-list > ul").find(".children-box").removeClass("must-receive");
 
-                            var parentUl = field.parent("ul");
+							var parentUl = field.parent("ul");
 
-                            parentUl.removeClass("list-receive");
+							parentUl.removeClass("list-receive");
 
-                            var parentID = 0;
-                            if(parentUl.hasClass("children-box")){
-                                var parentID = parentUl.parent("li").data("slug");
-                            }
+							var parentID = 0;
+							if(parentUl.hasClass("children-box")){
+								var parentID = parentUl.parent("li").data("slug");
+							}
 
-                            field.attr("data-parent",parentID);
+							field.attr("data-parent",parentID);
 
-                            pfm_manager_save_sort("' . $typeList . '");
+							pfm_manager_save_sort("' . $typeList . '");
 
-                        }
-                    });
-                });
-            </script>';
+						}
+					});
+				});
+			</script>';
 	}
 
 }

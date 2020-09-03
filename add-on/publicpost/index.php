@@ -4,6 +4,7 @@ require_once 'classes/class-rcl-form-fields.php';
 require_once 'classes/class-rcl-edit-terms-list.php';
 require_once 'classes/class-rcl-list-terms.php';
 require_once 'classes/class-rcl-public-form-uploader.php';
+require_once 'classes/class-rcl-uploader-post-thumbnail.php';
 require_once 'classes/class-rcl-public-form-fields.php';
 require_once 'classes/class-rcl-public-form.php';
 require_once 'classes/class-rcl-post-list.php';
@@ -65,44 +66,34 @@ add_filter( 'the_content', 'rcl_post_gallery', 10 );
 function rcl_post_gallery( $content ) {
 	global $post;
 
-	if ( get_post_meta( $post->ID, 'recall_slider', 1 ) != 1 || ! is_single() || $post->post_type == 'products' )
+	if ( ! is_single() || $post->post_type == 'products' )
 		return $content;
 
-	$args = array(
-		'post_parent'	 => $post->ID,
-		'post_type'		 => 'attachment',
-		'numberposts'	 => -1,
-		'post_status'	 => 'any',
-		'post_mime_type' => 'image'
-	);
+	$oldSlider	 = get_post_meta( $post->ID, 'recall_slider', 1 );
+	$gallery	 = get_post_meta( $post->ID, 'rcl_post_gallery', 1 );
 
-	$childrens = get_children( $args );
+	if ( ! $gallery && $oldSlider ) {
 
-	if ( $childrens ) {
-		$attach_ids = array();
-		foreach ( ( array ) $childrens as $children ) {
-			$attach_ids[] = $children->ID;
+		$args		 = array(
+			'post_parent'	 => $post->ID,
+			'post_type'		 => 'attachment',
+			'numberposts'	 => -1,
+			'post_status'	 => 'any',
+			'post_mime_type' => 'image'
+		);
+		$childrens	 = get_children( $args );
+		if ( $childrens ) {
+			$gallery = array();
+			foreach ( ( array ) $childrens as $children ) {
+				$gallery[] = $children->ID;
+			}
 		}
-
-		$content = rcl_get_image_gallery( array(
-				'id'			 => 'rcl-post-gallery-' . $post->ID,
-				'center_align'	 => true,
-				'attach_ids'	 => $attach_ids,
-				//'width' => 500,
-				'height'		 => 350,
-				'slides'		 => array(
-					'slide'	 => 'large',
-					'full'	 => 'large'
-				),
-				'navigator'		 => array(
-					'thumbnails' => array(
-						'width'	 => 50,
-						'height' => 50,
-						'arrows' => true
-					)
-				)
-			) ) . $content;
 	}
+
+	if ( ! $gallery )
+		return $content;
+
+	$content = rcl_get_post_gallery( $post->ID, $gallery ) . $content;
 
 	return $content;
 }
@@ -512,4 +503,113 @@ function rcl_send_mail_about_new_post( $post_id, $postData, $update ) {
 	$textm .= '<p>' . __( 'Don\'t forget to check this write, probably it is waiting for your moderation.' ) . '</p>';
 
 	rcl_mail( $email, $title, $textm );
+}
+
+add_filter( 'rcl_uploader_manager_items', 'rcl_add_post_uploader_image_buttons', 10, 3 );
+function rcl_add_post_uploader_image_buttons( $items, $attachment_id, $uploader ) {
+	//print_r( $uploader );
+	if ( ! in_array( $uploader->uploader_id, array( 'post_uploader', 'post_thumbnail' ) ) )
+		return $items;
+
+	$isImage = wp_attachment_is_image( $attachment_id );
+
+	$formFields = new Rcl_Public_Form_Fields( $uploader->post_type, array(
+		'form_id' => $uploader->form_id
+		) );
+
+	if ( $isImage && $uploader->uploader_id == 'post_uploader' && $formFields->is_active_field( 'post_thumbnail' ) ) {
+
+		$items[] = array(
+			'icon'		 => 'fa-image',
+			'title'		 => __( 'Назначить миниатюрой', 'wp-recall' ),
+			'onclick'	 => 'rcl_set_post_thumbnail(' . $attachment_id . ',' . $uploader->post_parent . ',this);return false;'
+		);
+	}
+
+	//$addToClick = true;
+	$addGallery = true;
+
+	if ( $formFields->is_active_field( 'post_uploader' ) ) {
+
+		$field = $formFields->get_field( 'post_uploader' );
+
+		//if($field->isset_prop('add-to-click'))
+		//$addToClick = $field->get_prop('add-to-click');
+
+		if ( $field->isset_prop( 'gallery' ) )
+			$addGallery = $field->get_prop( 'gallery' );
+	}
+
+	/* if($addToClick){
+
+	  $fileSrc = 0;
+
+	  if($isImage){
+
+	  $size = ($default = rcl_get_option('public_form_thumb'))? $default: 'large';
+
+	  $fileHtml = wp_get_attachment_image( $attachment_id, $size, false, array('srcset' => ' ') );
+
+	  $fullSrc = wp_get_attachment_image_src( $attachment_id, 'full' );
+	  $fileSrc = $fullSrc[0];
+
+	  }else{
+
+	  $_post = get_post( $attachment_id );
+
+	  $fileHtml = $_post->post_title;
+
+	  $fileSrc = wp_get_attachment_url( $attachment_id );
+
+	  }
+
+	  $items[] = array(
+	  'icon' => 'fa-newspaper-o',
+	  'title' => __('Добавить в редактор', 'wp-recall'),
+	  'onclick' => 'rcl_add_attachment_in_editor('.$attachment_id.',"contentarea-'.$uploader->post_type.'",this);return false;',
+	  'data' => array(
+	  'html' => $fileHtml,
+	  'src' => $fileSrc
+	  )
+	  );
+
+	  } */
+
+	if ( $isImage && $addGallery ) {
+
+		$postGallery	 = get_post_meta( $uploader->post_parent, 'rcl_post_gallery', 1 );
+		$valueGallery	 = ($postGallery && in_array( $attachment_id, $postGallery )) ? $attachment_id : '';
+
+		$items[] = array(
+			'icon'		 => ($postGallery && in_array( $attachment_id, $postGallery )) ? 'fa-toggle-on' : 'fa-toggle-off',
+			'class'		 => 'rcl-switch-gallery-button-' . $attachment_id,
+			'title'		 => __( 'Вывести в галерее', 'wp-recall' ),
+			'content'	 => '<input type="hidden" id="rcl-post-gallery-attachment-' . $attachment_id . '" name="rcl-post-gallery[]" value="' . $valueGallery . '">',
+			'onclick'	 => 'rcl_switch_attachment_in_gallery(' . $attachment_id . ',this);return false;'
+		);
+	}
+
+	return $items;
+}
+
+function rcl_get_post_gallery( $gallery_id, $attachment_ids ) {
+
+	return rcl_get_image_gallery( array(
+		'id'			 => 'rcl-post-gallery-' . $gallery_id,
+		'center_align'	 => true,
+		'attach_ids'	 => $attachment_ids,
+		//'width' => 500,
+		'height'		 => 350,
+		'slides'		 => array(
+			'slide'	 => 'large',
+			'full'	 => 'large'
+		),
+		'navigator'		 => array(
+			'thumbnails' => array(
+				'width'	 => 50,
+				'height' => 50,
+				'arrows' => true
+			)
+		)
+		) );
 }

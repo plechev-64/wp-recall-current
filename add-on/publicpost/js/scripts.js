@@ -4,6 +4,37 @@ var rcl_public_form = {
 
 jQuery( document ).ready( function( $ ) {
 
+	if ( RclUploaders.isset( 'post_thumbnail' ) ) {
+
+		RclUploaders.get( 'post_thumbnail' ).appendInGallery = function( file ) {
+			if ( file.html ) {
+				console.log( file.html );
+				jQuery( '#rcl-upload-gallery-' + this.uploader_id ).html( '' ).html( file.html ).last().animateCss( 'flipInX' );
+				jQuery( '#rcl-upload-gallery-post_uploader' ).append( file.html );
+				jQuery( '#rcl-upload-gallery-post_uploader div' ).last().animateCss( 'flipInX' );
+				/*jQuery( '#post-thumbnail' ).val( file['id'] );*/
+			}
+		};
+
+		if ( RclUploaders.isset( 'post_uploader' ) ) {
+
+			RclUploaders.get( 'post_thumbnail' ).filterErrors = function( errors, files, uploader ) {
+
+				var postUploader = RclUploaders.get( 'post_uploader' );
+
+				var inGalleryNow = jQuery( '#rcl-upload-gallery-post_uploader .gallery-attachment' ).length + 1;
+
+				if ( inGalleryNow > postUploader.options.max_files ) {
+					errors.push( 'В основной галерее максимальное количество файлов. Макс: ' + postUploader.options.max_files );
+				}
+
+				return errors;
+			};
+
+		}
+
+	}
+
 	$( '.rcl-public-form #insert-media-button' ).click( function( e ) {
 
 		var editor = $( this ).data( 'editor' );
@@ -200,7 +231,7 @@ function rcl_preview( e ) {
 
 	rcl_preloader_show( formblock );
 
-	var iframe = jQuery( "#contentarea-" + post_type + "_ifr" ).contents().find( "#tinymce" ).html();
+	var iframe = jQuery( "#post_content_ifr" ).contents().find( "#tinymce" ).html();
 	if ( iframe ) {
 		tinyMCE.triggerSave();
 		formblock.find( 'textarea[name="post_content"]' ).html( iframe );
@@ -304,7 +335,7 @@ function rcl_publish( e ) {
 
 	rcl_preloader_show( formblock );
 
-	var iframe = jQuery( "#contentarea-" + post_type + "_ifr" ).contents().find( "#tinymce" ).html();
+	var iframe = jQuery( "#post_content_ifr" ).contents().find( "#tinymce" ).html();
 	if ( iframe ) {
 		tinyMCE.triggerSave();
 		formblock.find( 'textarea[name="post_content"]' ).html( iframe );
@@ -510,13 +541,36 @@ function rcl_init_thumbnail_uploader( e, options ) {
 
 }
 
-function rcl_add_image_in_form( e, content ) {
+function rcl_set_post_thumbnail( attach_id, parent_id, e ) {
 
-	var post_type = jQuery( e ).parents( "form" ).data( "post_type" );
+	rcl_preloader_show( jQuery( '.gallery-attachment-' + attach_id ) );
 
-	jQuery( "#contentarea-" + post_type ).insertAtCaret( content + "&nbsp;" );
+	rcl_ajax( {
+		data: {
+			action: 'rcl_set_post_thumbnail',
+			thumbnail_id: attach_id,
+			parent_id: parent_id,
+			form_id: jQuery( 'form.rcl-public-form input[name="form_id"]' ).val(),
+			post_type: jQuery( 'form.rcl-public-form input[name="post_type"]' ).val()
+		},
+		success: function( result ) {
+			jQuery( '#rcl-upload-gallery-post_thumbnail' ).html( result.html ).animateCss( 'flipInX' );
+			/*jQuery( '#post-thumbnail' ).val( attach_id );*/
+		}
+	} );
 
-	tinyMCE.execCommand( "mceInsertContent", false, content );
+}
 
-	return false;
+function rcl_switch_attachment_in_gallery( attachment_id, e ) {
+
+	var button = jQuery( '.rcl-switch-gallery-button-' + attachment_id );
+
+	if ( button.children( 'i' ).hasClass( 'fa-toggle-off' ) ) {
+		button.children( 'input' ).val( attachment_id );
+	} else {
+		button.children( 'input' ).val( '' );
+	}
+
+	button.children( 'i' ).toggleClass( 'fa-toggle-off fa-toggle-on' );
+
 }

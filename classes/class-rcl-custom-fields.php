@@ -30,11 +30,6 @@ class Rcl_Custom_Fields {
 
 		$this->rand = rand( 0, 100 );
 
-		if ( isset( $field['field_select'] ) ) {
-
-			$field['values'] = rcl_edit_old_option_fields( $field['field_select'], $field['type'] );
-		}
-
 		if ( isset( $field['requared'] ) )
 			$field['required'] = $field['requared'];
 
@@ -236,9 +231,6 @@ class Rcl_Custom_Fields {
 
 		rcl_multiselect_scripts();
 
-		if ( isset( $field['field_select'] ) )
-			$field['values'] = rcl_edit_old_option_fields( $field['field_select'], $field['type'] );
-
 		if ( ! $field['values'] )
 			return false;
 
@@ -308,9 +300,6 @@ class Rcl_Custom_Fields {
 	}
 
 	function get_type_radio( $field ) {
-
-		if ( isset( $field['field_select'] ) )
-			$field['values'] = rcl_edit_old_option_fields( $field['field_select'], $field['type'] );
 
 		if ( ! $field['values'] )
 			return false;

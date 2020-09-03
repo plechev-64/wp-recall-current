@@ -100,12 +100,12 @@ class Rcl_EditPost {
 
 	function update_thumbnail( $postdata ) {
 
-		$thumbnail_id = (isset( $_POST['post-thumbnail'] )) ? $_POST['post-thumbnail'] : 0;
+		$thumbnail_id = (isset( $_POST['post_thumbnail'] )) ? $_POST['post_thumbnail'][0] : 0;
 
 		if ( ! $this->update )
 			return $this->rcl_add_attachments_in_temps( $postdata );
 
-		$currentThID = get_post_meta( $this->post_id, '_thumbnail_id' );
+		$currentThID = get_post_meta( $this->post_id, '_thumbnail_id', 1 );
 
 		if ( $thumbnail_id ) {
 
@@ -113,6 +113,8 @@ class Rcl_EditPost {
 				return false;
 
 			update_post_meta( $this->post_id, '_thumbnail_id', $thumbnail_id );
+
+			rcl_delete_temp_media( $thumbnail_id );
 		}else {
 
 			if ( $currentThID )
@@ -122,37 +124,62 @@ class Rcl_EditPost {
 
 	function rcl_add_attachments_in_temps( $postdata ) {
 
-		$user_id	 = $postdata['post_author'];
-		$temps		 = get_site_option( 'rcl_tempgallery' );
-		$temp_gal	 = (isset( $temps[$user_id] )) ? $temps[$user_id] : 0;
+		$user_id = $postdata['post_author'];
 
-		if ( $temp_gal ) {
+		$temps = rcl_get_temp_media( array(
+			'user_id'			 => $user_id,
+			'uploader_id__in'	 => array( 'post_uploader', 'post_thumbnail' )
+			) );
 
-			$thumbnail_id = (isset( $_POST['post-thumbnail'] )) ? $_POST['post-thumbnail'] : 0;
+		if ( $temps ) {
 
-			foreach ( $temp_gal as $key => $gal ) {
+			$thumbnail_id = isset( $_POST['post_thumbnail'] ) ? $_POST['post_thumbnail'][0] : 0;
 
-				if ( $thumbnail_id && $thumbnail_id == $gal['ID'] )
-					add_post_meta( $this->post_id, '_thumbnail_id', $gal['ID'] );
+			foreach ( $temps as $temp ) {
 
-				$post_upd = array(
-					'ID'			 => $gal['ID'],
+				if ( $thumbnail_id && $thumbnail_id == $temp->media_id )
+					add_post_meta( $this->post_id, '_thumbnail_id', $temp->media_id );
+
+				$attachData = array(
+					'ID'			 => $temp->media_id,
 					'post_parent'	 => $this->post_id,
 					'post_author'	 => $user_id
 				);
 
-				wp_update_post( $post_upd );
+				wp_update_post( $attachData );
+
+				rcl_delete_temp_media( $temp->media_id );
 			}
 
 			if ( $_POST['add-gallery-rcl'] == 1 )
 				add_post_meta( $this->post_id, 'recall_slider', 1 );
-
-			unset( $temps[$user_id] );
-
-			update_site_option( 'rcl_tempgallery', $temps );
 		}
 
-		return $temp_gal;
+		return $temps;
+	}
+
+	function update_post_gallery( $postdata ) {
+
+		$postGallery = isset( $_POST['rcl-post-gallery'] ) ? $_POST['rcl-post-gallery'] : false;
+
+		$gallery = array();
+
+		if ( $postGallery ) {
+			$postGallery = array_unique( $postGallery );
+			foreach ( $postGallery as $attachment_id ) {
+				$attachment_id	 = intval( $attachment_id );
+				if ( $attachment_id )
+					$gallery[]		 = $attachment_id;
+			}
+		}
+
+		if ( $gallery ) {
+			update_post_meta( $this->post_id, 'rcl_post_gallery', $gallery );
+		} else {
+			delete_post_meta( $this->post_id, 'rcl_post_gallery' );
+		}
+
+		delete_post_meta( $this->post_id, 'recall_slider' );
 	}
 
 	function get_status_post( $moderation ) {
@@ -205,6 +232,10 @@ class Rcl_EditPost {
 			'post_content'	 => (isset( $_POST['post_content'] )) ? $_POST['post_content'] : ''
 		);
 
+		if ( ! $post || ! $post->post_name ) {
+			$postdata['post_name'] = sanitize_title( $postdata['post_title'] );
+		}
+
 		if ( $this->post_id ) {
 			$postdata['ID']			 = $this->post_id;
 			$postdata['post_author'] = $this->post->post_author;
@@ -224,18 +255,30 @@ class Rcl_EditPost {
 		}
 
 		if ( ! $this->post_id ) {
+
 			$this->post_id = wp_insert_post( $postdata );
 
-			if ( ! $this->post_id )
+			if ( ! $this->post_id ) {
 				$this->error( __( 'Error publishing!', 'wp-recall' ) . ' Error 101' );
+			} else {
 
-			if ( $formID > 1 )
-				add_post_meta( $this->post_id, 'publicform-id', $formID );
+				if ( $formID > 1 )
+					add_post_meta( $this->post_id, 'publicform-id', $formID );
+
+				$post_name = wp_unique_post_slug( $postdata['post_name'], $this->post_id, 'publish', $postdata['post_type'], 0 );
+
+				wp_update_post( [
+					'ID'		 => $this->post_id,
+					'post_name'	 => $post_name
+				] );
+			}
 		}else {
 			wp_update_post( $postdata );
 		}
 
 		$this->update_thumbnail( $postdata );
+
+		$this->update_post_gallery( $postdata );
 
 		if ( isset( $_POST['add-gallery-rcl'] ) && $_POST['add-gallery-rcl'] == 1 )
 			update_post_meta( $this->post_id, 'recall_slider', 1 );
@@ -244,7 +287,12 @@ class Rcl_EditPost {
 
 		rcl_update_post_custom_fields( $this->post_id, $formID );
 
-		do_action( 'update_post_rcl', $this->post_id, $postdata, $this->update );
+		do_action( 'update_post_rcl', $this->post_id, $postdata, $this->update, $this );
+
+		if ( isset( $_POST['save-as-draft'] ) ) {
+			wp_redirect( get_permalink( rcl_get_option( 'public_form_page_rcl' ) ) . '?draft=saved&rcl-post-edit=' . $this->post_id );
+			exit;
+		}
 
 		if ( $postdata['post_status'] == 'pending' ) {
 			if ( $user_ID )

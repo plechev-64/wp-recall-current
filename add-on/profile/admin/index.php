@@ -37,22 +37,13 @@ function rcl_edit_profile_field_options( $options, $field, $type ) {
 
 function rcl_profile_fields_manager() {
 
-	rcl_sortable_scripts();
-
-	$Manager = new Rcl_Profile_Fields( 'profile', array(
-		'custom-slug'	 => 1,
-		'meta_delete'	 => true
-		) );
-
-	$Manager->init_profile_manager_filters();
+	$Manager = new Rcl_Profile_Fields_Manager();
 
 	$content = '<h2>' . __( 'Manage profile fields', 'wp-recall' ) . '</h2>';
 
 	$content .= '<p>' . __( 'On this page you can create custom fields of the user profile, as well as to manage already created fields', 'wp-recall' ) . '</p>';
 
-	$content .= $Manager->active_fields_box();
-
-	$content .= $Manager->inactive_fields_box();
+	$content .= $Manager->get_manager();
 
 	echo $content;
 }
@@ -131,4 +122,11 @@ function rcl_get_custom_fields_profile( $user ) {
 
 		echo $content;
 	}
+}
+
+add_action( 'rcl_fields_update', 'rcl_update_users_page_option', 10, 2 );
+function rcl_update_users_page_option( $fields, $manager_id ) {
+	if ( $manager_id != 'profile' || ! isset( $_POST['users_page'] ) )
+		return false;
+	rcl_update_option( 'users_page', $_POST['users_page'] );
 }

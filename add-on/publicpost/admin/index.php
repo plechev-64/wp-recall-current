@@ -13,27 +13,25 @@ function rcl_admin_page_publicform() {
 }
 
 function rcl_public_form_manager() {
-	global $wpdb;
 
 	$post_type	 = (isset( $_GET['post-type'] )) ? $_GET['post-type'] : 'post';
 	$form_id	 = (isset( $_GET['form-id'] )) ? $_GET['form-id'] : 1;
 
 	$shortCode = 'public-form post_type="' . $post_type . '"';
 
-	if ( $post_type == 'post' && $form_id > 1 ) {
+	if ( $form_id > 1 ) {
 		$shortCode .= ' form_id="' . $form_id . '"';
 	}
 
-	rcl_sortable_scripts();
-
-	$formManager = new Rcl_Public_Form_Manager( array(
-		'post_type'	 => $post_type,
-		'form_id'	 => $form_id
+	$formManager = new Rcl_Public_Form_Manager( $post_type, array(
+		'form_id' => $form_id
 		) );
 
 	$content = '<h2>' . __( 'Manage publication forms', 'wp-recall' ) . '</h2>';
 
 	$content .= '<p>' . __( 'On this page you can manage the creation of publications for registered record types. Create custom fields for the form of publication of various types and manage', 'wp-recall' ) . '</p>';
+
+	$content .= '<div id="rcl-public-form-manager">';
 
 	$content .= $formManager->form_navi();
 
@@ -41,9 +39,9 @@ function rcl_public_form_manager() {
 	$content .= '<p>' . __( 'Use shortcode for publication form', 'wp-recall' ) . ' [' . $shortCode . ']</p>';
 	$content .= '</div>';
 
-	$content .= $formManager->active_fields_box();
+	$content .= $formManager->get_manager();
 
-	$content .= $formManager->inactive_fields_box();
+	$content .= '</div>';
 
 	echo $content;
 }

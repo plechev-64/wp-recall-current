@@ -163,9 +163,6 @@ function rcl_get_register_user( $errors ) {
 
 				if ( $field['type'] == 'checkbox' ) {
 
-					if ( isset( $field['field_select'] ) )
-						$field['values'] = rcl_edit_old_option_fields( $field['field_select'], $field['type'] );
-
 					$count_field = count( $field['values'] );
 
 					for ( $a = 0; $a < $count_field; $a ++ ) {

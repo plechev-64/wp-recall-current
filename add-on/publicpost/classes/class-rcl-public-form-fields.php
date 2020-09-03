@@ -1,75 +1,86 @@
 <?php
 
-class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager {
+class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 
 	public $taxonomies;
-	public $form_id = 1;
+	public $post_type	 = 'post';
+	public $form_id		 = 1;
 
-	function __construct( $args = false ) {
+	function __construct( $post_type, $args = false ) {
 
-		$this->post_type = (isset( $args['post_type'] )) ? $args['post_type'] : 'post';
-		$this->form_id	 = (isset( $args['form_id'] ) && $args['form_id']) ? $args['form_id'] : 1;
+		/* old support */
+		if ( is_array( $post_type ) ) {
+			$args		 = $post_type;
+			$post_type	 = $args['post_type'];
+		}
+		/**/
 
-		parent::__construct( $this->post_type, array(
-			'id'			 => $this->form_id,
-			'custom-slug'	 => 1,
-			'terms'			 => 1,
-			'meta_delete'	 => true
-			)
-		);
-
-		$this->taxonomies = get_object_taxonomies( $this->post_type, 'objects' );
+		$this->post_type	 = $post_type;
+		$this->form_id		 = (isset( $args['form_id'] ) && $args['form_id']) ? $args['form_id'] : 1;
+		$this->taxonomies	 = get_object_taxonomies( $this->post_type, 'objects' );
 
 		if ( $this->post_type == 'post' ) {
 			unset( $this->taxonomies['post_format'] );
 		}
 
-		add_filter( 'rcl_default_custom_fields', array( $this, 'add_default_public_form_fields' ) );
-		add_filter( 'rcl_custom_field_options', array( $this, 'edit_field_options' ), 10, 3 );
+		$this->setup_public_form_fields();
 
-		$this->fields = $this->get_fields();
+		add_filter( 'rcl_field_options', array( $this, 'edit_field_options' ), 10, 3 );
+
+		if ( $customFields = $this->get_custom_fields() ) {
+			foreach ( $customFields as $field_id => $field ) {
+				if ( isset( $field->value_in_key ) )
+					continue;
+
+				$this->get_field( $field_id )->set_prop( 'value_in_key', true );
+			}
+		}
 	}
 
-	function get_fields() {
-		global $user_ID;
+	function setup_public_form_fields() {
+		global $wpdb;
 
-		$fields = $this->fields;
+		$manager_id = $this->post_type . '_' . $this->form_id;
 
-		if ( ! $fields )
-			$fields = array();
+		parent::__construct( $manager_id, array(
+			'sortable'			 => true,
+			'structure_edit'	 => true,
+			'meta_delete'		 => array(
+				$wpdb->postmeta => 'meta_key'
+			),
+			'default_fields'	 => $this->get_default_public_form_fields(),
+			'default_is_null'	 => true,
+			'field_options'		 => array(
+				array(
+					'slug'	 => 'notice',
+					'type'	 => 'textarea',
+					'title'	 => __( 'field description', 'wp-recall' )
+				),
+				array(
+					'slug'	 => 'required',
+					'type'	 => 'radio',
+					'title'	 => __( 'required field', 'wp-recall' ),
+					'values' => array(
+						__( 'No', 'wp-recall' ),
+						__( 'Yes', 'wp-recall' )
+					)
+				)
+			)
+			)
+		);
 
-		if ( ! isset( $fields['options']['user-edit'] ) || ! $fields['options']['user-edit'] ) {
-
-			$fields = array_merge( $this->get_default_public_form_fields(), $fields );
-		}
-
-		if ( isset( $fields['options'] ) ) {
-
-			$this->fields_options = $fields['options'];
-
-			unset( $fields['options'] );
-		}
-
-		foreach ( $fields as $k => $field ) {
-
-			if ( ! isset( $field['value_in_key'] ) )
-				$fields[$k]['value_in_key'] = true;
-		}
-
-		return $fields;
-	}
-
-	function add_default_public_form_fields( $fields ) {
-		return array_merge( $fields, $this->get_default_public_form_fields() );
+		$this->setup_default_fields();
 	}
 
 	function get_default_public_form_fields() {
 
-		$fields[] = array(
-			'slug'		 => 'post_title',
-			'maxlength'	 => 100,
-			'title'		 => __( 'Title', 'wp-recall' ),
-			'type'		 => 'text'
+		$fields = array(
+			array(
+				'slug'		 => 'post_title',
+				'maxlength'	 => 100,
+				'title'		 => __( 'Title', 'wp-recall' ),
+				'type'		 => 'text'
+			)
 		);
 
 		if ( $this->taxonomies ) {
@@ -89,14 +100,14 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager {
 
 						$options = array(
 							array(
-								'type'	 => 'number',
 								'slug'	 => 'number-select',
+								'type'	 => 'number',
 								'title'	 => __( 'Amount to choose', 'wp-recall' ),
 								'notice' => __( 'only when output through select', 'wp-recall' )
 							),
 							array(
-								'type'	 => 'select',
 								'slug'	 => 'type-select',
+								'type'	 => 'select',
 								'title'	 => __( 'Output option', 'wp-recall' ),
 								'values' => array(
 									'select'		 => __( 'Select', 'wp-recall' ),
@@ -105,8 +116,8 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager {
 								)
 							),
 							array(
-								'type'	 => 'select',
 								'slug'	 => 'only-child',
+								'type'	 => 'select',
 								'title'	 => __( 'Only child terms', 'wp-recall' ),
 								'notice' => __( 'Attach only the selected child terms to the post, ignoring parents', 'wp-recall' ),
 								'values' => array(
@@ -118,10 +129,10 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager {
 					}
 
 					$fields[] = array(
-						'slug'			 => 'taxonomy-' . $taxonomy,
-						'title'			 => $label,
-						'type'			 => 'select',
-						'options-field'	 => $options
+						'slug'		 => 'taxonomy-' . $taxonomy,
+						'title'		 => $label,
+						'type'		 => 'select',
+						'options'	 => $options
 					);
 				}
 			}
@@ -140,10 +151,10 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager {
 			'type'			 => 'textarea',
 			'required'		 => 1,
 			'post-editor'	 => array( 'html', 'editor' ),
-			'options-field'	 => array(
+			'options'		 => array(
 				array(
-					'type'	 => 'checkbox',
 					'slug'	 => 'post-editor',
+					'type'	 => 'checkbox',
 					'title'	 => __( 'Editor settings', 'wp-recall' ),
 					'values' => array(
 						'media'	 => __( 'Media loader', 'wp-recall' ),
@@ -155,76 +166,100 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager {
 		);
 
 		$fields[] = array(
-			'slug'			 => 'post_uploader',
-			'title'			 => __( 'WP-Recall media loader', 'wp-recall' ),
-			'type'			 => 'custom',
-			'ext-types'		 => 'png, gif, jpg',
-			'options-field'	 => array(
+			'slug'		 => 'post_uploader',
+			'title'		 => __( 'WP-Recall media loader', 'wp-recall' ),
+			'type'		 => 'uploader',
+			'file_types' => 'png, gif, jpg',
+			'fix_editor' => 'post_content',
+			'options'	 => array(
+				/* array(
+				  'slug'		 => 'file_types',
+				  'default'	 => 'png, gif, jpg',
+				  'type'		 => 'text',
+				  'title'		 => __( 'Valid file extensions', 'wp-recall' ),
+				  'notice'	 => __( 'Separated by comma, for example: jpg, zip, pdf. By default: png, gif, jpg', 'wp-recall' )
+				  ),
+				  array(
+				  'slug'		 => 'max_size',
+				  'type'		 => 'runner',
+				  'value_min'	 => 256,
+				  'value_max'	 => 5120,
+				  'value_step' => 256,
+				  'default'	 => 512,
+				  'title'		 => __( 'The maximum file size, KB', 'wp-recall' ),
+				  'notice'	 => __( 'Maximum file size in megabytes. By default, 512KB', 'wp-recall' )
+				  ),
+				  array(
+				  'slug'		 => 'max_files',
+				  'type'		 => 'runner',
+				  'value_min'	 => 1,
+				  'value_max'	 => 50,
+				  'value_step' => 1,
+				  'default'	 => 10,
+				  'title'		 => __( 'Number of files', 'wp-recall' ),
+				  'notice'	 => __( 'By default, 10', 'wp-recall' )
+				  ), */
 				array(
-					'type'	 => 'text',
-					'slug'	 => 'ext-types',
-					'title'	 => __( 'Valid file extensions', 'wp-recall' ),
-					'notice' => __( 'Separated by comma, for example: jpg, zip, pdf. By default: png, gif, jpg', 'wp-recall' )
-				),
-				array(
+					'slug'		 => 'fix_editor',
 					'type'		 => 'radio',
-					'slug'		 => 'add-to-click',
-					'title'		 => __( 'The Adding of image in this form by click.', 'wp-recall' ),
+					'title'		 => __( 'Вставка изображения в редактор', 'wp-recall' ),
 					'values'	 => array(
 						__( 'Disabled', 'wp-recall' ),
-						__( 'Enabled', 'wp-recall' )
+						'post_content' => __( 'Enabled', 'wp-recall' )
 					),
-					'default'	 => 1
+					'default'	 => 'post_content'
 				),
 				array(
-					'type'		 => 'radio',
 					'slug'		 => 'gallery',
-					'title'		 => __( 'To offer an output of images in a gallery.', 'wp-recall' ),
+					'type'		 => 'radio',
+					'title'		 => __( 'Предлагать вывод изображений в галерее', 'wp-recall' ),
 					'values'	 => array(
 						__( 'Disabled', 'wp-recall' ),
 						__( 'Enabled', 'wp-recall' )
 					),
 					'default'	 => 1
 				),
-				array(
-					'type'		 => 'runner',
-					'value_min'	 => 1,
-					'value_max'	 => 10,
-					'value_step' => 1,
-					'default'	 => 2,
-					'slug'		 => 'size-files',
-					'title'		 => __( 'The maximum file size, Mb', 'wp-recall' ),
-					'notice'	 => __( 'Maximum file size in megabytes. By default, 2MB', 'wp-recall' )
-				),
-				array(
-					'type'		 => 'runner',
-					'value_min'	 => 1,
-					'value_max'	 => 50,
-					'value_step' => 1,
-					'default'	 => 10,
-					'slug'		 => 'max-files',
-					'title'		 => __( 'Number of files', 'wp-recall' ),
-					'notice'	 => __( 'By default, 10', 'wp-recall' )
-				)
+			/* array(
+			  'slug'	 => 'fix_editor',
+			  'type'	 => 'hidden',
+			  'value'	 => 'post_content',
+			  ), */
 			)
 		);
 
 		if ( post_type_supports( $this->post_type, 'thumbnail' ) ) {
 
 			$fields[] = array(
-				'slug'			 => 'post_thumbnail',
-				'title'			 => __( 'Thumbnail of the publication', 'wp-recall' ),
-				'type'			 => 'custom',
-				'options-field'	 => array(
+				'slug'		 => 'post_thumbnail',
+				'title'		 => __( 'Thumbnail of the publication', 'wp-recall' ),
+				'type'		 => 'uploader',
+				'file_types' => 'png, gif, jpg',
+				'fix_editor' => 'post_content',
+				'options'	 => array(
 					array(
-						'type'		 => 'runner',
-						'value_min'	 => 1,
-						'value_max'	 => 10,
-						'value_step' => 1,
-						'default'	 => 2,
-						'slug'		 => 'size-files',
-						'title'		 => __( 'The maximum file size, Mb', 'wp-recall' ),
-						'notice'	 => __( 'Maximum file size in megabytes. By default, 2MB', 'wp-recall' )
+						'slug'	 => 'file_types',
+						'type'	 => 'hidden',
+						'value'	 => 'png, gif, jpg'
+					),
+					array(
+						'slug'	 => 'max_files',
+						'type'	 => 'hidden',
+						'value'	 => 2
+					),
+					array(
+						'slug'	 => 'multiple',
+						'type'	 => 'hidden',
+						'value'	 => 0
+					),
+					array(
+						'slug'		 => 'fix_editor',
+						'type'		 => 'radio',
+						'title'		 => __( 'Вставка изображения в редактор', 'wp-recall' ),
+						'values'	 => array(
+							__( 'Disabled', 'wp-recall' ),
+							'post_content' => __( 'Enabled', 'wp-recall' )
+						),
+						'default'	 => 'post_content'
 					)
 				)
 			);
@@ -244,28 +279,19 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager {
 						'type'			 => 'checkbox',
 						'number-tags'	 => 20,
 						'input-tags'	 => 1,
-						'options-field'	 => array(
+						'options'		 => array(
 							array(
-								'type'	 => 'number',
 								'slug'	 => 'number-tags',
+								'type'	 => 'number',
 								'title'	 => __( 'Maximum output', 'wp-recall' )
 							),
 							array(
-								'type'	 => 'select',
 								'slug'	 => 'input-tags',
+								'type'	 => 'select',
 								'title'	 => __( 'New values entry field', 'wp-recall' ),
 								'values' => array(
 									__( 'Disable', 'wp-recall' ),
 									__( 'Enable', 'wp-recall' )
-								)
-							),
-							array(
-								'type'	 => 'radio',
-								'slug'	 => 'type-tags',
-								'title'	 => __( 'Type of select', 'wp-recall' ),
-								'values' => array(
-									__( 'Multiple select', 'wp-recall' ),
-									__( 'The Select of an one value', 'wp-recall' )
 								)
 							)
 						)
@@ -279,52 +305,32 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager {
 		return $fields;
 	}
 
-	function edit_field_options( $options, $field, $type ) {
+	function edit_field_options( $options, $field, $manager_id ) {
 
-		if ( ! isset( $field['slug'] ) || $type != $this->post_type )
-			return $options;
+		if ( in_array( $field->id, ['post_content', 'post_uploader', 'post_thumbnail' ] ) ) {
 
-		if ( $field['slug'] == 'post_uploader' || $field['slug'] == 'post_content' ) {
+			unset( $options['placeholder'] );
+			unset( $options['maxlength'] );
 
-			foreach ( $options as $k => $option ) {
+			if ( $field->id == 'post_uploader' ) {
+				unset( $options['required'] );
+			}
 
-				if ( $option['slug'] == 'placeholder' ) {
-					unset( $options[$k] );
-				}
-
-				if ( $option['slug'] == 'maxlength' ) {
-					unset( $options[$k] );
-				}
-
-				if ( $field['slug'] == 'post_uploader' && $option['slug'] == 'required' ) {
-					unset( $options[$k] );
-				}
+			if ( $field->id == 'post_thumbnail' ) {
+				unset( $options['required'] );
 			}
 		}
 
-		if ( $this->is_taxonomy_field( $field['slug'] ) ) {
+		if ( $this->is_taxonomy_field( $field->id ) ) {
 
-			foreach ( $options as $k => $option ) {
+			unset( $options['empty_first'] );
 
-				if ( $field['slug'] == 'taxonomy-groups' ) {
+			if ( $field->id == 'taxonomy-groups' ) {
 
-					if ( $option['slug'] == 'required' ) {
-						unset( $options[$k] );
-					}
-
-					if ( $option['slug'] == 'values' ) {
-						unset( $options[$k] );
-					}
-				} else {
-
-					if ( $option['slug'] == 'values' ) {
-						$options[$k]['title'] = __( 'Specify term_ID to be selected', 'wp-recall' );
-					}
-				}
-
-				if ( $option['slug'] == 'empty-first' ) {
-					unset( $options[$k] );
-				}
+				unset( $options['required'] );
+				unset( $options['values'] );
+			} else if ( isset( $options['values'] ) ) {
+				$options['values']['title'] = __( 'Specify term_ID to be selected', 'wp-recall' );
 			}
 		}
 
@@ -336,29 +342,29 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager {
 		if ( ! $this->fields )
 			return false;
 
-		$defaultSlugs = $this->get_default_slugs();
+		$defaultSlugs = $this->get_default_ids();
 
 		$customFields = array();
 
-		foreach ( $this->fields as $k => $field ) {
+		foreach ( $this->fields as $field_id => $field ) {
 
-			if ( in_array( $field['slug'], $defaultSlugs ) )
+			if ( in_array( $field_id, $defaultSlugs ) )
 				continue;
 
-			$customFields[] = $field;
+			$customFields[$field_id] = $field;
 		}
 
 		return $customFields;
 	}
 
-	function is_taxonomy_field( $slug ) {
+	function is_taxonomy_field( $field_id ) {
 
 		if ( ! $this->taxonomies )
 			return false;
 
 		foreach ( $this->taxonomies as $taxname => $object ) {
 
-			if ( $slug == 'taxonomy-' . $taxname )
+			if ( $field_id == 'taxonomy-' . $taxname )
 				return $taxname;
 		}
 
@@ -376,7 +382,7 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager {
 		return false;
 	}
 
-	function get_default_slugs() {
+	function get_default_ids() {
 
 		$defaulFields = $this->get_default_fields();
 
@@ -391,17 +397,17 @@ class Rcl_Public_Form_Fields extends Rcl_Custom_Fields_Manager {
 			'post_thumbnail'
 		);
 
-		$slugs = array();
+		$ids = array();
 
-		foreach ( $defaulFields as $field ) {
+		foreach ( $defaulFields as $field_id => $field ) {
 
-			if ( in_array( $field['slug'], $default ) || $this->is_taxonomy_field( $field['slug'] ) ) {
+			if ( in_array( $field_id, $default ) || $this->is_taxonomy_field( $field_id ) ) {
 
-				$slugs[] = $field['slug'];
+				$ids[] = $field_id;
 			}
 		}
 
-		return $slugs;
+		return $ids;
 	}
 
 }

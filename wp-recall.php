@@ -3,7 +3,7 @@
   Plugin Name: WP-Recall
   Plugin URI: http://codeseller.ru/?p=69
   Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-  Version: 16.22.10
+  Version: 16.23.0
   Author: Plechev Andrey
   Author URI: http://codeseller.ru/
   Text Domain: wp-recall
@@ -16,7 +16,7 @@
 
 final class WP_Recall {
 
-	public $version				 = '16.22.10';
+	public $version				 = '16.23.0';
 	public $child_addons		 = array();
 	public $need_update			 = false;
 	public $fields				 = array();
@@ -146,6 +146,7 @@ final class WP_Recall {
 		require_once 'classes/fields/class-rcl-field-abstract.php';
 		require_once 'classes/fields/class-rcl-field.php';
 		require_once 'classes/fields/class-rcl-fields.php';
+		require_once 'classes/fields/class-rcl-fields-manager.php';
 		require_once 'classes/fields/types/class-rcl-field-agree.php';
 		require_once 'classes/fields/types/class-rcl-field-checkbox.php';
 		require_once 'classes/fields/types/class-rcl-field-color.php';
@@ -163,7 +164,7 @@ final class WP_Recall {
 		require_once 'classes/fields/types/class-rcl-field-tel.php';
 		require_once 'classes/fields/types/class-rcl-field-number.php';
 		require_once 'classes/fields/types/class-rcl-field-textarea.php';
-		//require_once 'classes/fields/types/class-rcl-field-uploader.php';
+		require_once 'classes/fields/types/class-rcl-field-uploader.php';
 		require_once 'classes/fields/types/class-rcl-field-hidden.php';
 
 		require_once 'classes/class-rcl-form.php';
@@ -174,6 +175,7 @@ final class WP_Recall {
 		require_once 'classes/class-rcl-log.php';
 		require_once 'classes/class-rcl-table.php';
 		require_once 'classes/class-rcl-button.php';
+		require_once 'classes/class-rcl-uploader.php';
 
 		require_once 'functions/activate.php';
 		require_once 'functions/ajax.php';
@@ -184,6 +186,7 @@ final class WP_Recall {
 		require_once 'functions/cron.php';
 		require_once 'functions/loginform.php';
 		require_once 'functions/currency.php';
+		require_once 'functions/functions-media.php';
 		require_once 'functions/deprecated.php';
 		require_once 'functions/shortcodes.php';
 
@@ -415,10 +418,10 @@ final class WP_Recall {
 				'label'	 => __( 'Text editor', 'wp-recall' ),
 				'class'	 => 'Rcl_Field_Editor'
 			),
-			/* 'uploader'		 => array(
-			  'label'	 => __( 'Файловый загрузчик', 'wp-recall' ),
-			  'class'	 => 'Rcl_Field_Uploader'
-			  ) */
+			'uploader'		 => array(
+				'label'	 => __( 'Files uploader', 'wp-recall' ),
+				'class'	 => 'Rcl_Field_Uploader'
+			)
 			) );
 	}
 

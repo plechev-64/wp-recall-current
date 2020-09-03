@@ -58,8 +58,6 @@ class RCL_Install {
 
 		$collate = '';
 
-		$user_action_table = RCL_PREF . 'user_action';
-
 		if ( $wpdb->has_cap( 'collation' ) ) {
 			if ( ! empty( $wpdb->charset ) ) {
 				$collate .= "DEFAULT CHARACTER SET $wpdb->charset";
@@ -69,13 +67,23 @@ class RCL_Install {
 			}
 		}
 
-		return "
-        CREATE TABLE IF NOT EXISTS `" . $user_action_table . "` (
-            ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-            user BIGINT(20) UNSIGNED NOT NULL,
-            time_action DATETIME NOT NULL,
-            UNIQUE KEY id (id)
-        ) $collate";
+		return array( "
+			CREATE TABLE IF NOT EXISTS `" . RCL_PREF . "user_action` (
+				ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+				user BIGINT(20) UNSIGNED NOT NULL,
+				time_action DATETIME NOT NULL,
+				UNIQUE KEY id (id)
+			) $collate",
+			"CREATE TABLE IF NOT EXISTS `" . RCL_PREF . "temp_media` (
+				media_id BIGINT(20) UNSIGNED NOT NULL,
+				user_id BIGINT(20) UNSIGNED NOT NULL,
+				session_id VARCHAR(200) NOT NULL,
+				uploader_id VARCHAR(200) NOT NULL,
+				upload_date DATETIME NOT NULL,
+				UNIQUE KEY  media_id (media_id),
+				KEY upload_date (upload_date)
+			) $collate"
+		);
 	}
 
 	private static function create_pages() {

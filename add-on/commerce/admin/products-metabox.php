@@ -62,9 +62,6 @@ function rcl_metabox_products( $post ) {
 
 			$content .= '<div class="variation-values">';
 
-			if ( isset( $variation['field_select'] ) )
-				$variation['values'] = rcl_edit_old_option_fields( $variation['field_select'], $variation['type'] );
-
 			foreach ( $variation['values'] as $k => $value ) {
 
 				$productVal = $PrVars->get_product_variation_value( $variation['slug'], $value );

@@ -14,6 +14,7 @@
 class Rcl_Field_Hidden extends Rcl_Field_Abstract {
 
 	public $required;
+	public $values = array();
 	public $placeholder;
 	public $maxlength;
 	public $pattern;

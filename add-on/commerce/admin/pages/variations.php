@@ -1,30 +1,24 @@
 <?php
 
-global $wpdb;
-
-rcl_sortable_scripts();
-
-$f_edit = new Rcl_Custom_Fields_Manager(
-	'products-variations', array(
-	//'sortable'=>false,
-	//'meta-key'=>false,
-	'custom-slug'	 => 1,
+$Manager = new Rcl_Fields_Manager( 'products-variations', array(
+	'switch_type'	 => true,
 	'types'			 => array(
 		'select',
 		'checkbox',
 		'radio'
+	),
+	'field_options'	 => array(
+		array(
+			'type'	 => 'textarea',
+			'slug'	 => 'notice',
+			'title'	 => __( 'field description', 'wp-recall' )
+		)
 	)
 	) );
 
 $content = '<h2>' . __( 'Products variations management', 'wp-recall' ) . '</h2>';
 
-$content .= $f_edit->manager_form( array(
-	array(
-		'type'	 => 'textarea',
-		'slug'	 => 'notice',
-		'title'	 => __( 'field description', 'wp-recall' )
-	)
-	) );
+$content .= $Manager->get_manager();
 
 echo $content;
 

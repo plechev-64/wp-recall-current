@@ -49,22 +49,6 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$fields = stripslashes_deep( get_site_option( $name_option ) );
 
-		if ( $fields ) {
-
-			foreach ( $fields as $k => $field ) {
-
-				if ( isset( $field['field_select'] ) ) {
-
-					$field['field_select'] = rcl_edit_old_option_fields( $field['field_select'], $field['type'] );
-
-					if ( is_array( $field['field_select'] ) ) {
-
-						$fields[$k]['values'] = $field['field_select'];
-					}
-				}
-			}
-		}
-
 		$this->fields = apply_filters( 'rcl_custom_fields', $fields, $this->post_type );
 	}
 

@@ -14,12 +14,13 @@
 class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 
 	public $required;
-	public $file_types	 = 'jpg, jpeg, png';
-	public $max_size	 = 512;
-	public $max_files	 = 5;
-	public $multiple	 = 0;
-	public $dropzone	 = 0;
-	public $mode_output	 = 'grid';
+	public $file_types		 = 'jpg, jpeg, png';
+	public $max_size		 = 512;
+	public $max_files		 = 5;
+	public $multiple		 = 0;
+	public $dropzone		 = 0;
+	public $mode_output		 = 'grid';
+	public $uploader_props	 = array();
 
 	function __construct( $args ) {
 		parent::__construct( $args );
@@ -89,9 +90,9 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 				'default'	 => $this->mode_output,
 				'type'		 => 'radio',
 				'values'	 => array(
-					'grid'		 => __( 'Cards', 'wp-recall' ),
-					'list'		 => __( 'List', 'wp-recall' ),
-					'gallery'	 => __( 'Gallery', 'wp-recall' )
+					'grid'	 => __( 'Cards', 'wp-recall' ),
+					'list'	 => __( 'List', 'wp-recall' ),
+				//'gallery'	 => __( 'Gallery', 'wp-recall' )
 				),
 				'title'		 => __( 'Mode of files output', 'wp-recall' ),
 			),
@@ -107,13 +108,10 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 		return $options;
 	}
 
-	function get_input() {
+	function get_uploader_props() {
 		global $user_ID;
 
-		//if($this->fix_editor)
-		//add_filter('rcl_uploader_manager_items', array($this, 'add_uploader_buttons'), 10, 3);
-
-		$uploader = new Rcl_Uploader( 'field_' . $this->id, array(
+		return wp_parse_args( $this->uploader_props, array(
 			'temp_media'	 => true,
 			'fix_editor'	 => $this->fix_editor,
 			'required'		 => intval( $this->required ),
@@ -138,6 +136,15 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 			  )
 			  ) */
 			) );
+	}
+
+	function get_uploader() {
+		return new Rcl_Uploader( $this->id, $this->get_uploader_props() );
+	}
+
+	function get_input() {
+
+		$uploader = $this->get_uploader();
 
 		$content = '';
 

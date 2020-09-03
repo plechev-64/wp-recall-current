@@ -453,19 +453,6 @@ function rcl_cache_add( $string, $content, $force = false ) {
 	return false;
 }
 
-//кроп изображений
-function rcl_crop( $filesource, $width, $height, $file ) {
-
-	$image = wp_get_image_editor( $filesource );
-
-	if ( ! is_wp_error( $image ) ) {
-		$image->resize( $width, $height, true );
-		$image->save( $file );
-	}
-
-	return $image;
-}
-
 if ( ! function_exists( 'get_called_class' ) ) :
 	function get_called_class() {
 		$arr		 = array();
@@ -945,7 +932,7 @@ function rcl_get_button( $args, $depr_url = false, $depr_args = false ) {
 		return $bttn->get_button();
 	}
 
-	//deprecated_argument( __FUNCTION__, '16.21.0' );
+	_deprecated_argument( __FUNCTION__, '16.21.0' );
 
 	$button = '<a href="' . $depr_url . '" ';
 	if ( isset( $depr_args['attr'] ) && $depr_args['attr'] )
@@ -1074,9 +1061,6 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 
 		foreach ( $profileFields as $field ) {
 
-			if ( isset( $field['field_select'] ) )
-				$field['values'] = $field['field_select'];
-
 			$field = apply_filters( 'rcl_pre_update_profile_field', $field, $user_id );
 
 			if ( ! $field || ! $field['slug'] )
@@ -1173,6 +1157,14 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 						delete_user_meta( $user_id, $slug, $value );
 				}
 			}
+
+			if ( $field['type'] == 'uploader' && $value ) {
+				//удаляем записи из временной библиотеки
+
+				foreach ( $value as $attach_id ) {
+					rcl_delete_temp_media( $attach_id );
+				}
+			}
 		}
 	}
 
@@ -1200,11 +1192,6 @@ function rcl_get_profile_fields( $args = false ) {
 			if ( isset( $args['exclude'] ) && in_array( $field['slug'], $args['exclude'] ) ) {
 
 				continue;
-			}
-
-			if ( isset( $field['field_select'] ) ) {
-
-				$field['field_select'] = rcl_edit_old_option_fields( $field['field_select'] );
 			}
 
 			$profileFields[] = $field;
@@ -1361,12 +1348,6 @@ function rcl_delete_user_action( $user_id ) {
 add_action( 'delete_user', 'rcl_delete_user_avatar', 10 );
 function rcl_delete_user_avatar( $user_id ) {
 	array_map( "unlink", glob( RCL_UPLOAD_URL . 'avatars/' . $user_id . '-*.jpg' ) );
-}
-
-function rcl_get_image_gallery( $args ) {
-	require_once 'classes/class-rcl-image-gallery.php';
-	$gallery = new Rcl_Image_Gallery( $args );
-	return $gallery->get_gallery();
 }
 
 function rcl_is_gutenberg() {

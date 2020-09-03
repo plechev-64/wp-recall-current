@@ -163,6 +163,13 @@ function pfm_update_topic_custom_fields( $topic_id ) {
 						pfm_delete_topic_meta( $topic_id, $slug );
 				}
 			}
+
+			if ( $field['type'] == 'uploader' && $value ) {
+
+				foreach ( $value as $attach_id ) {
+					rcl_delete_temp_media( $attach_id );
+				}
+			}
 		}
 	}
 }

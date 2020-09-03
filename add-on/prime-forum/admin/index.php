@@ -72,7 +72,7 @@ function pfm_page_topic_form() {
 
 	$content .= $formManager->form_navi();
 
-	$content .= $formManager->active_fields_box();
+	$content .= $formManager->get_manager();
 
 	echo $content;
 }
