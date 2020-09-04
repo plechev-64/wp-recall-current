@@ -1197,8 +1197,7 @@ span.ruble-symbol {
 
 }
 .rcl-fields-manager .rcl-manager-groups .rcl-manager-group-options{
-	/*padding: 10px;*/
-	/*max-width: 350px;*/
+	background: #99a8ff;
 	display: flex;
 }
 .rcl-fields-manager .rcl-manager-groups .rcl-manager-group-options .rcl-field{
@@ -1219,7 +1218,7 @@ span.ruble-symbol {
 	border: 1px solid #ddd;
 	display: flex;
 	overflow: hidden;
-	padding: 5px;
+	padding: 0 5px;
 }
 .rcl-fields-manager .manager-field-header.ui-sortable-handle{
 	cursor:move;
@@ -1530,17 +1529,13 @@ span.ruble-symbol {
 	cursor: move;
 }
 .rcl-fields-manager .manager-group > .rcl-areas-manager{
-	position: absolute;
-	/* font-size: 25px; */
-	right: -1px;
-	top: 0;
-	/* background: #e2e2e2; */
-	border-left: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-	border-right: 1px solid #ccc;
+	display: flex;
+    justify-content: space-between;
+	background: #99a8ff;
 }
 .rcl-fields-manager .manager-group > .rcl-areas-manager a{
-
+    margin: 0;
+	background: #fff;
 }
 .rcl-fields-manager .manager-field.settings-edit{
 	position: fixed;
@@ -1610,6 +1605,15 @@ span.ruble-symbol {
 	height: 100%;
 	align-items: center;
 	background: rgba(255,255,255,0.5);
+}
+.rcl-fields-manager .group-manager-button{
+
+}
+.rcl-fields-manager .group-manager-button.add-area i{
+	color: green;
+}
+.rcl-fields-manager .group-manager-button.group-delete i{
+	color: red;
 }
 /****/
 

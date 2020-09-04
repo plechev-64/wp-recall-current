@@ -54,36 +54,24 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 		$this->init_properties( $args );
 
+		if ( $this->sortable )
+			rcl_sortable_scripts();
+
+		if ( $this->structure_edit )
+			rcl_resizable_scripts();
+
 		if ( ! $this->option_name )
 			$this->option_name = 'rcl_fields_' . $this->manager_id;
-
-		//if ( $this->sortable )
-		rcl_sortable_scripts();
-
-		rcl_resizable_scripts();
-
-		/* if($this->fields){
-		  $this->setup_fields($this->fields);
-		  }else{
-		  $this->setup_active_fields();
-		  } */
 
 		$fields = apply_filters( 'rcl_custom_fields', $this->get_active_fields(), $this->manager_id );
 
 		parent::__construct( $fields, $this->get_structure() );
 
-		/* if($this->default_fields){
-		  $this->setup_default_fields();
-		  } */
-
-		//if($this->manager_id && !$this->fields)
 		$this->setup_active_fields();
-		//do_action( 'rcl_fields_manager_' . $manager_id, $this );
 
 		if ( $this->template_fields ) {
 			$this->setup_template_fields();
 		}
-		//print_r( $this );
 	}
 
 	function init_properties( $args ) {
@@ -354,7 +342,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 		$group = wp_parse_args( $group, array(
 			'title'	 => '',
-			'id'	 => 'group-' . rand( 100, 10000 ),
+			'id'	 => 'section-' . rand( 100, 10000 ),
 			'type'	 => 0,
 			'areas'	 => array(
 				array(
@@ -373,25 +361,25 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 			$fields = array(
 				'group-id'		 => array(
-					'slug'		 => 'group-id',
-					'type'		 => 'text',
-					'input_name' => 'structure-groups[' . $this->group_id . '][id]',
-					'title'		 => 'ID группы',
-					'value'		 => $this->group_id
+					'slug'			 => 'group-id',
+					'type'			 => 'text',
+					'input_name'	 => 'structure-groups[' . $this->group_id . '][id]',
+					'placeholder'	 => 'ID секции',
+					'value'			 => $this->group_id
 				),
 				'group-title'	 => array(
-					'slug'		 => 'group-title',
-					'type'		 => 'text',
-					'input_name' => 'structure-groups[' . $this->group_id . '][title]',
-					'title'		 => __( 'Наименование группы', 'wp-recall' ),
-					'value'		 => $group['title']
+					'slug'			 => 'group-title',
+					'type'			 => 'text',
+					'input_name'	 => 'structure-groups[' . $this->group_id . '][title]',
+					'placeholder'	 => __( 'Наименование секции', 'wp-recall' ),
+					'value'			 => $group['title']
 				),
 				'group-notice'	 => array(
-					'slug'		 => 'group-notice',
-					'type'		 => 'textarea',
-					'input_name' => 'structure-groups[' . $this->group_id . '][notice]',
-					'title'		 => __( 'Пояснение к заполнению', 'wp-recall' ),
-					'value'		 => isset( $group['notice'] ) ? $group['notice'] : ''
+					'slug'			 => 'group-notice',
+					'type'			 => 'text',
+					'input_name'	 => 'structure-groups[' . $this->group_id . '][notice]',
+					'placeholder'	 => __( 'Пояснение к заполнению', 'wp-recall' ),
+					'value'			 => isset( $group['notice'] ) ? $group['notice'] : ''
 				)
 			);
 
@@ -402,9 +390,27 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			$content .= '</div>';
 
 			$content .= '<div class="rcl-areas-manager">';
-			$content .= '<a href="#" onclick="rcl_manager_get_new_area(this);return false"><i class="rcli fa-plus-square-o" aria-hidden="true"></i> ' . __( 'Добавить область', 'wp-recall' ) . '</a>';
-			if ( count( $this->structure ) > 1 )
-				$content .= '<a href="#" onclick="rcl_remove_manager_group(\'' . __( 'Вы уверены?', 'wp-recall' ) . '\',this);return false"><i class="rcli fa-remove" aria-hidden="true"></i> ' . __( 'Удалить группу', 'wp-recall' ) . '</a>';
+
+			//if ( count( $this->structure ) > 1 ) {
+			$content .= rcl_get_button( [
+				'size'		 => 'medium',
+				'type'		 => 'clear',
+				'label'		 => __( 'Удалить секцию', 'wp-recall' ),
+				'icon'		 => 'fa-remove',
+				'class'		 => 'group-manager-button group-delete',
+				'onclick'	 => 'rcl_remove_manager_group("' . __( 'Вы уверены?', 'wp-recall' ) . '",this);return false;',
+				] );
+			//}
+
+			$content .= rcl_get_button( [
+				'size'		 => 'medium',
+				'type'		 => 'clear',
+				'label'		 => __( 'Добавить группу полей', 'wp-recall' ),
+				'icon'		 => 'fa-plus',
+				'class'		 => 'group-manager-button add-area',
+				'onclick'	 => 'rcl_manager_get_new_area(this);return false;',
+				] );
+
 			$content .= '</div>';
 		}
 
@@ -413,8 +419,6 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		foreach ( $group['areas'] as $area ) {
 			$content .= $this->get_active_area( $area );
 		}
-
-		//$content .= '<div class="ui-sortable-area-placeholder"></div>';
 
 		$content .= '</div>';
 		$content .= '</div>';
@@ -450,12 +454,12 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		if ( $this->structure_edit ) {
 
 			$content .= '<div class="rcl-areas-manager">';
-			$content .= '<a href="#" onclick="rcl_remove_manager_area(\'' . __( 'Вы уверены?', 'wp-recall' ) . '\',this);return false"><i class="rcli fa-remove" aria-hidden="true"></i> ' . __( 'Удалить область', 'wp-recall' ) . '</a>';
+			$content .= '<a href="#" onclick="rcl_remove_manager_area(\'' . __( 'Вы уверены?', 'wp-recall' ) . '\',this);return false"><i class="rcli fa-remove" aria-hidden="true"></i> ' . __( 'Удалить группу полей', 'wp-recall' ) . '</a>';
 
 			if ( $this->sortable )
 				$content .= '<span class="area-move left-align"><i class="rcli fa-arrows" aria-hidden="true"></i></span>';
 			if ( $this->create_field ) {
-				$content .= '<a href="#" onclick="rcl_manager_get_new_field(this);return false;" title="' . __( 'Добавить поле', 'wp-recall' ) . '" class="add-field left-align"><i class="rcli fa-plus-square" aria-hidden="true"></i> ' . __( 'Новое поле', 'wp-recall' ) . '</a>';
+				$content .= '<a href="#" onclick="rcl_manager_get_new_field(this);return false;" title="' . __( 'Добавить поле', 'wp-recall' ) . '" class="add-field left-align"><i class="rcli fa-plus-square" aria-hidden="true"></i> ' . __( 'Добавить поле', 'wp-recall' ) . '</a>';
 			}
 			$content .= '</div>';
 		}
@@ -506,7 +510,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		$content = "<div class=submit-box>";
 
 		if ( $this->structure_edit )
-			$content .= "<input type=button onclick='rcl_manager_get_new_group(this);' class='add-field-button button-secondary right' value='+ " . __( 'Добавить группу областей', 'wp-recall' ) . "'>";
+			$content .= "<input type=button onclick='rcl_manager_get_new_group(this);' class='add-field-button button-secondary right' value='+ " . __( 'Добавить секцию', 'wp-recall' ) . "'>";
 
 		$content .= "<input class='button button-primary' type=submit value='" . __( 'Save', 'wp-recall' ) . "' name='rcl_save_custom_fields'>";
 

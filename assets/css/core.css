@@ -2207,7 +2207,7 @@ body .rcl-bttn.rcl-uploader-button{
 	display: inline;
 }
 body .rcl-upload-gallery .attachment-manager > a{
-
+	margin: 0!important;
 }
 body .rcl-upload-gallery .attachment-manager > .rcl-bttn .rcl-bttn__ico{
 	padding: 5px;
@@ -2223,7 +2223,7 @@ body .rcl-upload-gallery .attachment-manager > .rcl-bttn .rcl-bttn__ico{
 	height: auto;
 }
 .rcl-upload-gallery.mode-list .attachment-manager{
-	width: 150px;
+	width: 165px;
 	text-align: right;
 	position: static;
 }
