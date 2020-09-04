@@ -58,7 +58,7 @@ jQuery( document ).ready( function( $ ) {
 		return false;
 	} );
 
-	jQuery( 'form[name="public_post"] input[name="edit-post-rcl"],form[name="public_post"] input[name="add_new_task"]' ).click( function() {
+	jQuery( 'form[name="public_post"] input[name="rcl-edit-post"],form[name="public_post"] input[name="add_new_task"]' ).click( function() {
 		var error = 0;
 		jQuery( 'form[name="public_post"]' ).find( ':input' ).each( function() {
 			for ( var i = 0; i < field.length; i++ ) {

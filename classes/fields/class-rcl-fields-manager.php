@@ -359,34 +359,18 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 			$content .= '<input type="hidden" name="structure[][group_id]" value="' . $this->group_id . '">';
 
-			$fields = array(
-				'group-id'		 => array(
-					'slug'			 => 'group-id',
-					'type'			 => 'text',
-					'input_name'	 => 'structure-groups[' . $this->group_id . '][id]',
-					'placeholder'	 => 'ID секции',
-					'value'			 => $this->group_id
-				),
-				'group-title'	 => array(
+			$content .= '<div class="group-header">';
+
+			$content .= '<div class="group-primary-settings">';
+
+			$content .= '<div class="group-title-field">';
+			$content .= $this::setup( array(
 					'slug'			 => 'group-title',
 					'type'			 => 'text',
 					'input_name'	 => 'structure-groups[' . $this->group_id . '][title]',
 					'placeholder'	 => __( 'Наименование секции', 'wp-recall' ),
 					'value'			 => $group['title']
-				),
-				'group-notice'	 => array(
-					'slug'			 => 'group-notice',
-					'type'			 => 'text',
-					'input_name'	 => 'structure-groups[' . $this->group_id . '][notice]',
-					'placeholder'	 => __( 'Пояснение к заполнению', 'wp-recall' ),
-					'value'			 => isset( $group['notice'] ) ? $group['notice'] : ''
-				)
-			);
-
-			$content .= '<div class="rcl-manager-group-options">';
-			foreach ( $fields as $field ) {
-				$content .= $this::setup( $field )->get_field_html();
-			}
+				) )->get_field_html();
 			$content .= '</div>';
 
 			$content .= '<div class="rcl-areas-manager">';
@@ -395,7 +379,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			$content .= rcl_get_button( [
 				'size'		 => 'medium',
 				'type'		 => 'clear',
-				'label'		 => __( 'Удалить секцию', 'wp-recall' ),
+				'title'		 => __( 'Удалить секцию', 'wp-recall' ),
 				'icon'		 => 'fa-trash',
 				'class'		 => 'group-manager-button group-delete',
 				'onclick'	 => 'rcl_remove_manager_group("' . __( 'Вы уверены?', 'wp-recall' ) . '",this);return false;',
@@ -405,11 +389,48 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			$content .= rcl_get_button( [
 				'size'		 => 'medium',
 				'type'		 => 'clear',
+				'title'		 => __( 'Настройки секции', 'wp-recall' ),
+				'icon'		 => 'fa-sliders',
+				'class'		 => 'group-manager-button group-settings',
+				'onclick'	 => 'rcl_switch_view_settings_manager_group(this);return false;',
+				] );
+
+			$content .= rcl_get_button( [
+				'size'		 => 'medium',
+				'type'		 => 'clear',
 				'label'		 => __( 'Добавить группу полей', 'wp-recall' ),
 				'icon'		 => 'fa-plus',
 				'class'		 => 'group-manager-button add-area',
 				'onclick'	 => 'rcl_manager_get_new_area(this);return false;',
 				] );
+
+			$content .= '</div>';
+
+			$content .= '</div>';
+
+			$fields = array(
+				'group-id'		 => array(
+					'slug'		 => 'group-id',
+					'type'		 => 'text',
+					'input_name' => 'structure-groups[' . $this->group_id . '][id]',
+					'title'		 => 'ID секции',
+					'required'	 => true,
+					'value'		 => $this->group_id
+				),
+				'group-notice'	 => array(
+					'slug'		 => 'group-notice',
+					'type'		 => 'text',
+					'input_name' => 'structure-groups[' . $this->group_id . '][notice]',
+					'title'		 => __( 'Пояснение к секции', 'wp-recall' ),
+					'value'		 => isset( $group['notice'] ) ? $group['notice'] : ''
+				)
+			);
+
+			$content .= '<div class="manager-group-settings">';
+			foreach ( $fields as $field ) {
+				$content .= $this::setup( $field )->get_field_html();
+			}
+			$content .= '</div>';
 
 			$content .= '</div>';
 		}
@@ -454,7 +475,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		if ( $this->structure_edit ) {
 
 			$content .= '<div class="rcl-areas-manager">';
-			$content .= '<a href="#" onclick="rcl_remove_manager_area(\'' . __( 'Вы уверены?', 'wp-recall' ) . '\',this);return false"><i class="rcli fa-trash" aria-hidden="true"></i> ' . __( 'Удалить группу полей', 'wp-recall' ) . '</a>';
+			$content .= '<a href="#" title="' . __( 'Удалить группу полей', 'wp-recall' ) . '"onclick="rcl_remove_manager_area(\'' . __( 'Вы уверены?', 'wp-recall' ) . '\',this);return false"><i class="rcli fa-trash" aria-hidden="true"></i></a>';
 
 			if ( $this->sortable )
 				$content .= '<span class="area-move left-align"><i class="rcli fa-arrows" aria-hidden="true"></i></span>';

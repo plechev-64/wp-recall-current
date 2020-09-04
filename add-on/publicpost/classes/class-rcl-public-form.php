@@ -437,7 +437,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 						if ( $this->post_id ) {
 
-							$imagIds = array( get_post_meta( $this->post_id, '_thumbnail_id', 1 ) );
+							$imagIds	 = $thumbnail	 = get_post_meta( $this->post_id, '_thumbnail_id', 1 ) ? array( $thumbnail ) : array();
 						} else {
 
 							$imagIds = RQ::tbl( new Rcl_Temp_Media() )
@@ -451,7 +451,9 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 								->get_col();
 						}
 
-						$field->set_prop( 'value', $imagIds );
+						if ( $imagIds ) {
+							$field->set_prop( 'value', $imagIds );
+						}
 
 						$contentField = $field->get_field_input();
 					}
@@ -835,8 +837,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 					'submit' => true,
 					'label'	 => __( 'Delete post', 'wp-recall' ),
 					'icon'	 => 'fa-trash'
-				) ) . '
-							<input type="hidden" name="rcl-delete-post" value="1">
+				) ) . '<input type="hidden" name="rcl-delete-post" value="1">
 							<input type="hidden" name="post_id" value="' . $this->post_id . '">
 							</form>
 						</div>
@@ -885,7 +886,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 		foreach ( $reasons as $reason ) {
 			$content .= rcl_get_button( array(
-				'onclick'	 => 'document.getElementById(\'reason_content\').value=\'' . $reason['content'] . '\'',
+				'onclick'	 => 'document.getElementById("reason_content").value="' . $reason['content'] . '"',
 				'label'		 => $reason['value'],
 				'class'		 => 'reason-delete'
 				) );

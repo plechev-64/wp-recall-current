@@ -172,10 +172,17 @@ function rcl_clear_temps_gallery() {
 	update_site_option( 'rcl_tempgallery', $temps );
 }
 
+add_action( 'init', 'rcl_delete_post_activate' );
+function rcl_delete_post_activate() {
+	if ( isset( $_POST['rcl-delete-post'] ) && wp_verify_nonce( $_POST['_wpnonce'], 'rcl-delete-post' ) ) {
+		add_action( 'wp', 'rcl_delete_post' );
+	}
+}
+
 function rcl_delete_post() {
 	global $user_ID;
 
-	$post_id = intval( $_POST['post-rcl'] );
+	$post_id = intval( $_POST['post_id'] );
 
 	$post = get_post( $post_id );
 

@@ -483,6 +483,10 @@ function rcl_manager_field_switch( e ) {
 	jQuery( e ).parents( '.manager-field-header' ).next( '.manager-field-settings' ).slideToggle();
 }
 
+function rcl_switch_view_settings_manager_group( e ) {
+	jQuery( e ).parents( '.group-primary-settings' ).next( '.manager-group-settings' ).slideToggle();
+}
+
 function rcl_init_manager_sortable() {
 
 	jQuery( ".rcl-fields-manager .fields-box" ).sortable( {
@@ -820,6 +824,8 @@ function rcl_manager_get_custom_field_options( e ) {
 
 				boxField.attr( 'data-type', typeField );
 
+				rcl_init_iconpicker();
+
 			}
 
 		}
@@ -845,6 +851,7 @@ function rcl_manager_get_new_field( e ) {
 
 			if ( data['content'] ) {
 				area.find( '.fields-box' ).append( data['content'] );
+				area.find( '.fields-box' ).last().find( '.rcl-field-core input' ).focus();
 				rcl_init_iconpicker();
 			}
 

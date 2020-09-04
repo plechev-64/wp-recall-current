@@ -94,9 +94,9 @@ class Rcl_Field_Range extends Rcl_Field_Abstract {
 			$content .= '<input type="number" min="' . $this->value_min . '" max="' . $this->value_max . '" class="rcl-range-max range-value" data-index="1" name="' . $this->input_name . '[]" value="' . $valMax . '">';
 			$content .= '</span>';
 		} else {
-			$content .= '<span class="rcl-range-value no-input"><span>' . (implode( ' - ', array( $valMin, $valMax ) )) . '</span>';
 			$content .= '<input type="hidden" class="rcl-range-min" name="' . $this->input_name . '[]" value="' . $this->value_min . '">';
 			$content .= '<input type="hidden" class="rcl-range-max" name="' . $this->input_name . '[]" value="' . $this->value_max . '">';
+			$content .= '<span class="rcl-range-value no-input"><span>' . (implode( ' - ', array( $valMin, $valMax ) )) . '</span>';
 		}
 
 		if ( $this->unit )
@@ -134,8 +134,8 @@ class Rcl_Field_Range extends Rcl_Field_Abstract {
 		$maxValue	 = $this->value[1];
 
 		if ( $this->unit ) {
-			$minValue .= $this->unit;
-			$maxValue .= $this->unit;
+			$minValue .= ' ' . $this->unit;
+			$maxValue .= ' ' . $this->unit;
 		}
 
 		return __( 'from', 'wp-recall' ) . ' ' . $minValue . ' ' . __( 'for', 'wp-recall' ) . ' ' . $maxValue;

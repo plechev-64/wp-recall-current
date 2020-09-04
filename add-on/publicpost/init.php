@@ -8,13 +8,6 @@ function rcl_deleted_post_notice() {
 		} );
 }
 
-add_action( 'init', 'rcl_delete_post_activate' );
-function rcl_delete_post_activate() {
-	if ( isset( $_POST['delete-post-rcl'] ) && wp_verify_nonce( $_POST['_wpnonce'], 'delete-post-rcl' ) ) {
-		add_action( 'wp', 'rcl_delete_post' );
-	}
-}
-
 add_filter( 'rcl_init_js_variables', 'rcl_init_js_public_variables', 10 );
 function rcl_init_js_public_variables( $data ) {
 

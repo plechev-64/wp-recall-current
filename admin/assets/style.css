@@ -1196,17 +1196,33 @@ span.ruble-symbol {
 .rcl-fields-manager .rcl-manager-groups{
 
 }
-.rcl-fields-manager .rcl-manager-groups .rcl-manager-group-options{
-	background: #99a8ff;
-	display: flex;
+.rcl-fields-manager .rcl-manager-groups .manager-group-settings{
+	width: 50%;
 }
-.rcl-fields-manager .rcl-manager-groups .rcl-manager-group-options .rcl-field{
-	margin: 5px;
+.rcl-fields-manager .rcl-manager-groups .manager-group-settings .rcl-field{
+
 }
 .rcl-fields-manager.structure-edit .manager-group{
 	border: 1px solid #ccc;
 	margin: 10px 0 0 0;
 	position:relative;
+}
+.rcl-fields-manager.structure-edit .group-header{
+	padding: 10px;
+	background: #bec6f0;
+}
+.rcl-fields-manager.structure-edit .group-header .group-primary-settings{
+	display: flex;
+	justify-content: space-between;
+}
+.rcl-fields-manager.structure-edit .group-header .group-title-field{
+	width: 50%;
+}
+.rcl-fields-manager.structure-edit .group-header .group-title-field .rcl-field{
+	margin: 0;
+}
+.rcl-fields-manager.structure-edit .manager-group-settings{
+	display: none;
 }
 .rcl-fields-manager .manager-field{
 	margin: 5px;
@@ -1504,12 +1520,11 @@ span.ruble-symbol {
 	/*max-width: 400px;*/
 }
 .rcl-fields-manager .rcl-areas-manager{
-	background: #fff;
 	padding: 0px;
 	position: relative;
 	overflow: hidden;
 	font-size: 18px;
-	margin-bottom: 5px;
+	background: #fff;
 }
 .rcl-fields-manager .rcl-areas-manager a{
 	color: #777777;
@@ -1529,9 +1544,7 @@ span.ruble-symbol {
 	cursor: move;
 }
 .rcl-fields-manager .manager-group > .rcl-areas-manager{
-	display: flex;
-    justify-content: space-between;
-	background: #99a8ff;
+
 }
 .rcl-fields-manager .manager-group > .rcl-areas-manager a{
     margin: 0;
@@ -1614,6 +1627,9 @@ span.ruble-symbol {
 }
 .rcl-fields-manager .group-manager-button.group-delete i{
 	color: red;
+}
+.rcl-fields-manager .group-manager-button.group-settings i{
+	color: #0073aa;
 }
 /****/
 

@@ -608,7 +608,7 @@ function rcl_manager_update_data_fields() {
 
 		foreach ( $strArray as $group_id => $group ) {
 
-			if ( $group['id'] && $group_id != $group['id'] ) {
+			if ( isset( $group['id'] ) && $group_id != $group['id'] ) {
 				$group_id = $group['id'];
 			}
 
