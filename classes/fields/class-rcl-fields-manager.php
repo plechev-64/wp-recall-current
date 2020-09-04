@@ -57,8 +57,8 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		if ( $this->sortable )
 			rcl_sortable_scripts();
 
-		if ( $this->structure_edit )
-			rcl_resizable_scripts();
+		//if ( $this->structure_edit )
+		rcl_resizable_scripts();
 
 		if ( ! $this->option_name )
 			$this->option_name = 'rcl_fields_' . $this->manager_id;

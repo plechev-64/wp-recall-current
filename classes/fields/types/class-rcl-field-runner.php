@@ -102,7 +102,7 @@ class Rcl_Field_Runner extends Rcl_Field_Abstract {
 			return false;
 
 		if ( $this->unit ) {
-			$this->value .= $this->unit;
+			$this->value .= ' ' . $this->unit;
 		}
 
 		return $this->value;
@@ -112,7 +112,7 @@ class Rcl_Field_Runner extends Rcl_Field_Abstract {
 		$value = '<a href="' . $this->get_filter_url() . '" target="_blank">' . $this->value . '</a>';
 
 		if ( $this->unit ) {
-			$value .= $this->unit;
+			$value .= ' ' . $this->unit;
 		}
 
 		return $value;

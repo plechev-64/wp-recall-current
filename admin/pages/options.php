@@ -18,7 +18,10 @@ $rcl_options = get_site_option( 'rcl_global_options' );
 $pages = RQ::tbl( new Rcl_Query( [
 			'name'	 => $wpdb->posts,
 			'cols'	 => ['ID', 'post_type', 'post_title' ]
-		] ) )->select( ['ID', 'post_title' ] )->where( ['post_type' => 'page' ] )->limit( -1 )
+		] ) )->select( ['ID', 'post_title' ] )
+		->where( ['post_type' => 'page' ] )
+		->limit( -1 )
+		->orderby( 'post_title', 'ASC' )
 		->get_walker()->get_index_values( 'ID', 'post_title' );
 
 $options = new Rcl_Options_Manager( array(

@@ -101,6 +101,7 @@ class Rcl_Field_Range extends Rcl_Field_Abstract {
 
 		if ( $this->unit )
 			$content .= ' ' . $this->unit;
+
 		$content .= '</span>';
 
 		$content .= '<div class="rcl-range-box"></div>';

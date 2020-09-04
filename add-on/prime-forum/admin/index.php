@@ -84,9 +84,11 @@ function pfm_page_options() {
 
 	$pageWalker = RQ::tbl( new Rcl_Query( [
 			'name'	 => $wpdb->posts,
-			'as'	 => 'posts',
 			'cols'	 => ['ID', 'post_type', 'post_title' ]
-		] ) )->select( ['ID', 'post_title' ] )->where( ['post_type' => 'page' ] )->limit( -1 )
+		] ) )->select( ['ID', 'post_title' ] )
+		->where( ['post_type' => 'page' ] )
+		->limit( -1 )
+		->orderby( 'post_title', 'ASC' )
 		->get_walker();
 
 	$Manager = new Rcl_Options_Manager( array(

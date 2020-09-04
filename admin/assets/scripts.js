@@ -868,6 +868,8 @@ function rcl_manager_update_fields( newManagerId ) {
 
 	rcl_preloader_show( jQuery( '.rcl-fields-manager' ) );
 
+	tinyMCE.triggerSave();
+
 	rcl_ajax( {
 		/*rest: {action: 'rcl_update_fields'},*/
 		data: 'action=rcl_manager_update_fields_by_ajax&copy=' + newManagerId + '&' + jQuery( '.rcl-fields-manager-form' ).serialize()

@@ -28,7 +28,10 @@ function rcl_get_publics_options_page( $options ) {
 	$pageWalker = RQ::tbl( new Rcl_Query( [
 			'name'	 => $wpdb->posts,
 			'cols'	 => ['ID', 'post_type', 'post_title' ]
-		] ) )->select( ['ID', 'post_title' ] )->where( ['post_type' => 'page' ] )->limit( -1 )
+		] ) )->select( ['ID', 'post_title' ] )
+		->where( ['post_type' => 'page' ] )
+		->limit( -1 )
+		->orderby( 'post_title', 'ASC' )
 		->get_walker();
 
 	$options->add_box( 'publicpost', array(

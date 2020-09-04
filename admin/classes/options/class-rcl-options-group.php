@@ -63,7 +63,7 @@ class Rcl_Options_Group {
 	function add_option( $option ) {
 
 		if ( ! isset( $option['slug'] ) ) {
-			if ( $option['type'] == 'custom' ) {
+			if ( isset( $option['type'] ) && $option['type'] == 'custom' ) {
 				$option['slug'] = md5( current_time( 'mysql' ) );
 			} else {
 				return false;
