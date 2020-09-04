@@ -43,10 +43,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 			$this->post		 = get_post( $this->post_id );
 			$this->post_type = $this->post->post_type;
-
-			//if ( $this->post_type == 'post' ) {
-			$this->form_id = get_post_meta( $this->post_id, 'publicform-id', 1 );
-			//}
+			$this->form_id	 = get_post_meta( $this->post_id, 'publicform-id', 1 );
 		}
 
 		if ( ! $this->form_id )
@@ -75,12 +72,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		if ( $this->user_can['publish'] && ! $user_ID )
 			add_filter( 'rcl_public_form_fields', array( $this, 'add_guest_fields' ), 10 );
 
-		//$this->fields = $this->get_public_fields();
-
 		$this->form_object = $this->get_object_form();
-
-		//if($this->is_active_field('post_thumbnail'))
-		//add_filter('rcl_post_attachment_html','rcl_add_attachment_thumbnail_button', 10, 3);
 
 		do_action( 'rcl_pre_get_public_form', $this );
 	}
@@ -108,37 +100,12 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		$dataForm['post_content']	 = ($this->post_id) ? $this->post->post_content : '';
 		$dataForm['post_excerpt']	 = ($this->post_id) ? $this->post->post_excerpt : '';
 		$dataForm['post_title']		 = ($this->post_id) ? $this->post->post_title : '';
-		/* $dataForm['file_types'] = 'jpg, png, gif';
-		  $dataForm['max_size'] = 2;
-		  $dataForm['max_files'] = 10; */
-
-		/* foreach($this->fields as $field_id => $field){
-
-		  if($field_id == 'post_uploader'){
-
-		  if($field->isset_prop('file_types'))
-		  $dataForm['file_types'] = $field->get_prop('file_types');
-
-		  if($field->isset_prop('max_size'))
-		  $dataForm['max_size'] = $field->get_prop('file_types');
-
-		  if($field->isset_prop('max_files'))
-		  $dataForm['max_files'] = $field->get_prop('file_types');
-
-		  break;
-		  }
-
-		  } */
 
 		$dataForm = ( object ) $dataForm;
 
 		return $dataForm;
 	}
 
-	/* function get_public_fields() {
-
-	  return apply_filters( 'rcl_public_form_fields', $this->fields, $this->get_object_form(), $this );
-	  } */
 	function add_guest_fields( $fields ) {
 
 		$guestFields = array(
@@ -366,34 +333,32 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 				'attrs'	 => array(
 					'target' => '_blank'
 				),
-				//'class'		 => array( 'public-form-button' ),
 				'id'	 => 'rcl-view-post',
 				'icon'	 => 'fa-share'
 			);
 		}
 
-		if ( $this->options['draft'] && $this->user_can['draft'] )
+		if ( $this->options['draft'] && $this->user_can['draft'] ) {
 			$buttons['draft'] = array(
 				'onclick'	 => 'rcl_save_draft(this); return false;',
 				'label'		 => __( 'Save as Draft', 'wp-recall' ),
-				//'class'		 => array( 'public-form-button' ),
 				'id'		 => 'rcl-draft-post',
 				'icon'		 => 'fa-shield'
 			);
+		}
 
-		if ( $this->options['preview'] )
+		if ( $this->options['preview'] ) {
 			$buttons['preview'] = array(
 				'onclick'	 => 'rcl_preview(this); return false;',
 				'label'		 => __( 'Preview', 'wp-recall' ),
-				//'class'		 => array( 'public-form-button' ),
 				'id'		 => 'rcl-preview-post',
 				'icon'		 => 'fa-eye'
 			);
+		}
 
 		$buttons['publish'] = array(
 			'onclick'	 => 'rcl_publish(this); return false;',
 			'label'		 => __( 'Publish', 'wp-recall' ),
-			//'class'		 => array( 'public-form-button' ),
 			'id'		 => 'rcl-publish-post',
 			'icon'		 => 'fa-print'
 		);
@@ -439,7 +404,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 						'options'		 => $field->get_prop( 'post-editor' )
 						) );
 
-					$contentField = $field->get_notice();
+					$contentField .= $field->get_notice();
 				}
 
 				if ( $field_id == 'post_excerpt' ) {
@@ -456,74 +421,78 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 					$contentField = $field->get_field_input( esc_textarea( $dataPost->post_title ) );
 				}
 
-				if ( $field_id == 'post_thumbnail' ) {
+				if ( $field->type == 'uploader' ) {
 
-					$field->set_prop( 'uploader_props', array(
-						'post_parent'	 => $this->post_id,
-						'form_id'		 => intval( $this->form_id ),
-						'post_type'		 => $this->post_type,
-						'auto_upload'	 => true,
-						'crop'			 => true
-					) );
+					if ( $field_id == 'post_thumbnail' ) {
 
-					if ( $this->post_id ) {
-						global $wpdb;
+						$field->set_prop( 'uploader_props', array(
+							'post_parent'	 => $this->post_id,
+							'form_id'		 => intval( $this->form_id ),
+							'post_type'		 => $this->post_type,
+							'auto_upload'	 => true,
+							'crop'			 => true
+						) );
 
-						$imagIds = array( get_post_meta( $this->post_id, '_thumbnail_id', 1 ) );
-					} else {
+						$uploader = $field->get_uploader();
 
-						$imagIds = RQ::tbl( new Rcl_Temp_Media() )
-							->select( ['media_id' ] )
-							->where( [
-								'user_id'			 => $uploader->user_id ? $uploader->user_id : 0,
-								'session_id'		 => $uploader->user_id ? '' : $_COOKIE['PHPSESSID'],
-								'uploader_id__in'	 => array( 'post_thumbnail' )
-							] )
-							->limit( -1 )
-							->get_col();
+						if ( $this->post_id ) {
+
+							$imagIds = array( get_post_meta( $this->post_id, '_thumbnail_id', 1 ) );
+						} else {
+
+							$imagIds = RQ::tbl( new Rcl_Temp_Media() )
+								->select( ['media_id' ] )
+								->where( [
+									'user_id'			 => $uploader->user_id ? $uploader->user_id : 0,
+									'session_id'		 => $uploader->user_id ? '' : $_COOKIE['PHPSESSID'],
+									'uploader_id__in'	 => array( 'post_thumbnail' )
+								] )
+								->limit( -1 )
+								->get_col();
+						}
+
+						$field->set_prop( 'value', $imagIds );
+
+						$contentField = $field->get_field_input();
 					}
 
-					$field->set_prop( 'value', $imagIds );
+					if ( $field_id == 'post_uploader' ) {
 
-					$contentField = $field->get_field_input();
-				}
+						$field->set_prop( 'uploader_props', array(
+							'post_parent'	 => $this->post_id,
+							'form_id'		 => intval( $this->form_id ),
+							'post_type'		 => $this->post_type
+						) );
 
-				if ( $field_id == 'post_uploader' ) {
+						$uploader = $field->get_uploader();
 
-					$field->set_prop( 'uploader_props', array(
-						'post_parent'	 => $this->post_id,
-						'form_id'		 => intval( $this->form_id ),
-						'post_type'		 => $this->post_type
-					) );
+						if ( $this->post_id ) {
+							global $wpdb;
 
-					$uploader = $field->get_uploader();
+							$imagIds = RQ::tbl( new Rcl_Query( [
+									'name'	 => $wpdb->posts,
+									'cols'	 => ['ID', 'post_parent', 'post_type', 'post_status' ]
+								] ) )->select( ['ID' ] )->where( [
+									'post_parent'	 => $this->post_id,
+									'post_type'		 => 'attachment',
+								] )->limit( -1 )->get_col();
+						} else {
 
-					if ( $this->post_id ) {
-						global $wpdb;
+							$imagIds = RQ::tbl( new Rcl_Temp_Media() )
+								->select( ['media_id' ] )
+								->where( [
+									'user_id'			 => $uploader->user_id ? $uploader->user_id : 0,
+									'session_id'		 => $uploader->user_id ? '' : $_COOKIE['PHPSESSID'],
+									'uploader_id__in'	 => array( 'post_uploader', 'post_thumbnail' )
+								] )
+								->limit( -1 )
+								->get_col();
+						}
 
-						$imagIds = RQ::tbl( new Rcl_Query( [
-								'name'	 => $wpdb->posts,
-								'cols'	 => ['ID', 'post_parent', 'post_type', 'post_status' ]
-							] ) )->select( ['ID' ] )->where( [
-								'post_parent'	 => $this->post_id,
-								'post_type'		 => 'attachment',
-							] )->limit( -1 )->get_col();
-					} else {
+						$contentField = $uploader->get_gallery( $imagIds );
 
-						$imagIds = RQ::tbl( new Rcl_Temp_Media() )
-							->select( ['media_id' ] )
-							->where( [
-								'user_id'			 => $uploader->user_id ? $uploader->user_id : 0,
-								'session_id'		 => $uploader->user_id ? '' : $_COOKIE['PHPSESSID'],
-								'uploader_id__in'	 => array( 'post_uploader', 'post_thumbnail' )
-							] )
-							->limit( -1 )
-							->get_col();
+						$contentField .= $uploader->get_uploader();
 					}
-
-					$contentField = $uploader->get_gallery( $imagIds );
-
-					$contentField .= $uploader->get_uploader();
 				}
 			} else {
 
@@ -549,26 +518,6 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		return $content;
 	}
 
-	/* function get_thumbnail_box( $field_id ) {
-
-	  $field = $this->get_field( $field_id );
-
-	  //$thumbnail_id = ($this->post_id)? get_post_thumbnail_id( $this->post_id ): 0;
-
-	  $postUploder = new Rcl_Uploader_Post_Thumbnail( array(
-	  'form_id'		 => $this->form_id,
-	  'fix_editor'	 => 'post_content',
-	  'post_type'		 => $this->post_type,
-	  'post_parent'	 => $this->post_id,
-	  'max_size'		 => ($maxSize		 = intval( $field->get_prop( 'max_size' ) )) ? $maxSize : 512,
-	  'required'		 => intval( $field->get_prop( 'required' ) )
-	  ) );
-
-	  $content = $postUploder->get_thumbnail_uploader();
-	  //$content .= '<input class="post-thumbnail" type="hidden" name="post-thumbnail" value="'.$thumbnail_id.'">';
-
-	  return $content;
-	  } */
 	function get_terms_list( $taxonomy, $field_id ) {
 
 		$field = $this->get_field( $field_id );
@@ -954,9 +903,6 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		. 'post_type:"' . $obj->post_type . '",'
 		. 'post_id:"' . $obj->post_id . '",'
 		. 'post_status:"' . $obj->post_status . '",'
-		//. 'file_types:"'.$obj->file_types.'",'
-		//. 'max_size:"'.$obj->max_size.'",'
-		//. 'max_files:"'.$obj->max_files.'",'
 		. 'form_id:"' . $this->form_id . '"'
 		. '});</script>';
 	}

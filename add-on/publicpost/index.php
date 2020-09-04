@@ -11,7 +11,6 @@ require_once 'core.php';
 require_once 'shortcodes.php';
 require_once 'functions-ajax.php';
 require_once 'init.php';
-require_once 'upload-file.php';
 
 if ( is_admin() ) {
 	require_once 'classes/class-rcl-public-form-manager.php';
@@ -292,9 +291,8 @@ function rcl_add_taxonomy_in_postdata( $postdata, $data ) {
 
 	if ( isset( $_POST['cats'] ) && $_POST['cats'] ) {
 
-		$FormFields = new Rcl_Public_Form_Fields( array(
-			'post_type'	 => $data->post_type,
-			'form_id'	 => $_POST['form_id']
+		$FormFields = new Rcl_Public_Form_Fields( $data->post_type, array(
+			'form_id' => $_POST['form_id']
 			) );
 
 		foreach ( $_POST['cats'] as $taxonomy => $terms ) {
@@ -302,7 +300,7 @@ function rcl_add_taxonomy_in_postdata( $postdata, $data ) {
 			if ( ! isset( $FormFields->taxonomies[$taxonomy] ) )
 				continue;
 
-			if ( ! $FormFields->get_field_option( 'taxonomy-' . $taxonomy, 'only-child' ) ) {
+			if ( ! $FormFields->get_field_prop( 'taxonomy-' . $taxonomy, 'only-child' ) ) {
 
 				$allCats = get_terms( $taxonomy );
 
@@ -505,7 +503,7 @@ function rcl_send_mail_about_new_post( $post_id, $postData, $update ) {
 
 add_filter( 'rcl_uploader_manager_items', 'rcl_add_post_uploader_image_buttons', 10, 3 );
 function rcl_add_post_uploader_image_buttons( $items, $attachment_id, $uploader ) {
-	//print_r( $uploader );
+
 	if ( ! in_array( $uploader->uploader_id, array( 'post_uploader', 'post_thumbnail' ) ) )
 		return $items;
 
@@ -524,56 +522,17 @@ function rcl_add_post_uploader_image_buttons( $items, $attachment_id, $uploader 
 		);
 	}
 
-	//$addToClick = true;
 	$addGallery = true;
 
 	if ( $formFields->is_active_field( 'post_uploader' ) ) {
 
 		$field = $formFields->get_field( 'post_uploader' );
 
-		//if($field->isset_prop('add-to-click'))
-		//$addToClick = $field->get_prop('add-to-click');
-
 		if ( $field->isset_prop( 'gallery' ) )
 			$addGallery = $field->get_prop( 'gallery' );
 	}
 
-	/* if($addToClick){
-
-	  $fileSrc = 0;
-
-	  if($isImage){
-
-	  $size = ($default = rcl_get_option('public_form_thumb'))? $default: 'large';
-
-	  $fileHtml = wp_get_attachment_image( $attachment_id, $size, false, array('srcset' => ' ') );
-
-	  $fullSrc = wp_get_attachment_image_src( $attachment_id, 'full' );
-	  $fileSrc = $fullSrc[0];
-
-	  }else{
-
-	  $_post = get_post( $attachment_id );
-
-	  $fileHtml = $_post->post_title;
-
-	  $fileSrc = wp_get_attachment_url( $attachment_id );
-
-	  }
-
-	  $items[] = array(
-	  'icon' => 'fa-newspaper-o',
-	  'title' => __('Добавить в редактор', 'wp-recall'),
-	  'onclick' => 'rcl_add_attachment_in_editor('.$attachment_id.',"contentarea-'.$uploader->post_type.'",this);return false;',
-	  'data' => array(
-	  'html' => $fileHtml,
-	  'src' => $fileSrc
-	  )
-	  );
-
-	  } */
-
-	if ( $isImage && $addGallery ) {
+	if ( $uploader->uploader_id != 'post_thumbnail' && $isImage && $addGallery ) {
 
 		$postGallery	 = get_post_meta( $uploader->post_parent, 'rcl_post_gallery', 1 );
 		$valueGallery	 = ($postGallery && in_array( $attachment_id, $postGallery )) ? $attachment_id : '';

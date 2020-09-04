@@ -653,7 +653,7 @@ function rcl_manager_update_data_fields() {
 	do_action( 'rcl_fields_update', $fields, $manager_id );
 
 	$args = array(
-		'success' => __( 'Settings saved!', 'rcl' )
+		'success' => __( 'Settings saved!', 'wp-recall' )
 	);
 
 	if ( $isset_new ) {

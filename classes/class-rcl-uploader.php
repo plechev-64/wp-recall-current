@@ -408,9 +408,13 @@ class Rcl_Uploader {
 				wp_send_json( array( 'error' => __( 'Forbidden file extension. Allowed:', 'wp-recall' ) . ' ' . implode( ', ', $this->file_types ) ) );
 			}
 
-			$file['name'] = rcl_sanitize_string( str_replace( '.' . $file['ext'], '', $file['name'] ) ) . '.' . $filetype['ext'];
+			$pathInfo = pathinfo( basename( $file['name'] ) );
 
-			$image = wp_handle_upload( apply_filters( 'rcl_pre_upload_file_data', $file ), array( 'test_form' => FALSE ) );
+			$file['name'] = rcl_sanitize_string( $pathInfo['filename'] ) . '.' . $filetype['ext'];
+
+			$file = apply_filters( 'rcl_pre_upload_file_data', $file );
+
+			$image = wp_handle_upload( $file, array( 'test_form' => FALSE ) );
 
 			if ( $image['file'] ) {
 
@@ -425,8 +429,6 @@ class Rcl_Uploader {
 
 					$this->resize_image( $image['file'] );
 				}
-
-				$pathInfo = pathinfo( basename( $image['file'] ) );
 
 				$attachment = array(
 					'post_mime_type' => $image['type'],

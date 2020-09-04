@@ -2,7 +2,7 @@
 
 global $rclOrder;
 
-$order_id = $_GET['order-id'];
+$order_id = intval( $_GET['order-id'] );
 
 $rclOrder = rcl_get_order( $order_id );
 

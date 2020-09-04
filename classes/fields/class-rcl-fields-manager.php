@@ -527,8 +527,6 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 		$content = '<div class="rcl-service-fields rcl-default-fields fields-box">';
 
-		//$content .= '<div class="ui-sortable-placeholder"></div>';
-
 		foreach ( $this->default_fields as $field_id => $field ) {
 
 			if ( $this->is_active_field( $field_id ) )

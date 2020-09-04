@@ -197,14 +197,10 @@ function rcl_ajax_delete_attachment() {
 		}
 	} else {
 
-		$user_id = ($user_ID) ? $user_ID : $_COOKIE['PHPSESSID'];
-
-		$gallery = get_site_option( 'rcl_temporary_gallery' );
-
-		$user_gallery = $gallery[$user_id];
+		$media = RQ::tbl( new Rcl_Temp_Media() )->where( ['media_id' => $attachment_id ] )->get_row();
 
 		if ( ! $user_ID ) {
-			if ( ! $user_gallery || ! in_array( $attachment_id, $user_gallery ) ) {
+			if ( $media->session_id != $_COOKIE['PHPSESSID'] ) {
 				wp_send_json( array(
 					'error' => __( 'Вы не можете удалить этот файл!', 'wp-recall' )
 				) );
@@ -217,30 +213,10 @@ function rcl_ajax_delete_attachment() {
 			}
 		}
 
-		if ( $user_gallery ) {
-
-			foreach ( $user_gallery as $k => $id ) {
-				if ( $id == $attachment_id )
-					unset( $user_gallery[$k] );
-			}
-
-			if ( $user_gallery )
-				$gallery[$user_id] = $user_gallery;
-			else
-				unset( $gallery[$user_id] );
-		}
-
-		update_site_option( 'rcl_temporary_gallery', $gallery );
+		rcl_delete_temp_media( $attachment_id );
 	}
 
-	$result = wp_delete_post( $attachment_id );
-
-	if ( ! $result ) {
-
-		/* wp_send_json(array(
-		  'error' => __('Deletion failed!','rcl-public')
-		  )); */
-	}
+	wp_delete_attachment( $attachment_id, true );
 
 	wp_send_json( array(
 		'success' => __( 'Файл успешно удален!', 'wp-recall' )

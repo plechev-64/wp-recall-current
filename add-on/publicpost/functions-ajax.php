@@ -271,9 +271,9 @@ function rcl_preview_post() {
 
 	$preview = apply_filters( 'rcl_preview_post_content', $post_content );
 
-	$preview .= '<div class="rcl-notice-preview">
-					<p>' . __( 'If everything is correct – publish it! If not, you can go back to editing.', 'wp-recall' ) . '</p>
-			</div>';
+	$preview .= rcl_get_notice( [
+		'text' => __( 'If everything is correct – publish it! If not, you can go back to editing.', 'wp-recall' )
+	] );
 
 	wp_send_json( array(
 		'title'		 => $postdata['post_title'],
@@ -325,7 +325,7 @@ function rcl_upload_post_thumbnail( $uploads, $uploader ) {
 
 		rcl_add_temp_media( array(
 			'media_id'		 => $thumbnail_id,
-			'uploader_id'	 => $this->uploader_id
+			'uploader_id'	 => $uploader->uploader_id
 		) );
 	}
 

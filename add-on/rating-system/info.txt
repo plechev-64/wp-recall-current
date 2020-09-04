@@ -3,4 +3,4 @@ Version: 3.1.0;
 Support Core: 16.0.0;
 Description: Рейтинговая система для wp-recall;
 Author: Плечев Андрей;
-Url: http://codeseller.ru;
+Url: https://codeseller.ru;

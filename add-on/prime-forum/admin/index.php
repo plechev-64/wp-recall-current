@@ -95,7 +95,7 @@ function pfm_page_options() {
 		) );
 
 	$Manager->add_box( 'primary', array(
-		'title'	 => __( 'General settings', 'rcl' ),
+		'title'	 => __( 'General settings', 'wp-recall' ),
 		'icon'	 => 'fa-cogs'
 	) )->add_group( 'primary' )->add_options( array(
 		array(
@@ -372,7 +372,7 @@ function pfm_page_themes() {
             <input class="button" type="submit" value="' . __( 'Save', 'wp-recall' ) . '" name="save-rcl-key">
             ' . wp_nonce_field( 'add-rcl-key', '_wpnonce', true, false ) . '
         </form>
-        <p class="install-help">' . __( 'Required to update the templates here. Get it  in  your account online <a href="http://codeseller.ru/" target="_blank">http://codeseller.ru</a>', 'wp-recall' ) . '</p>';
+        <p class="install-help">' . __( 'Required to update the templates here. Get it  in  your account online <a href="https://codeseller.ru/" target="_blank">https://codeseller.ru</a>', 'wp-recall' ) . '</p>';
 
 	echo '</div>';
 

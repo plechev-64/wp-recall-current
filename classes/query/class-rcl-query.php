@@ -237,44 +237,44 @@ class Rcl_Query extends Rcl_Old_Query {
 				if ( $data === 'is_null' ) {
 					$this->query['where'][] = $this->table['as'] . ".$col_name IS NULL";
 				} else if ( strpos( $data, '.' ) !== false ) {
-					$this->query['where'][] = $this->table['as'] . ".$col_name = $data";
+					$this->query['where'][] = $this->table['as'] . ".$col_name = '" . esc_sql( $data ) . "'";
 				} else {
-					$this->query['where'][] = $this->table['as'] . ".$col_name = " . (is_object( $data ) ? "(" . $data->limit( 0 )->get_sql() . ")" : "'" . $data . "'");
+					$this->query['where'][] = $this->table['as'] . ".$col_name = " . (is_object( $data ) ? "(" . $data->limit( 0 )->get_sql() . ")" : "'" . esc_sql( $data ) . "'");
 				}
 			} else if ( isset( $where[$col_name . '__in'] ) && $where[$col_name . '__in'] ) {
 
 				$data = $where[$col_name . '__in'];
 
-				$this->query['where'][] = $this->table['as'] . ".$col_name IN (" . (is_object( $data ) ? $data->limit( 0 )->get_sql() : $this->get_string_in( $data ) ) . ")";
+				$this->query['where'][] = $this->table['as'] . ".$col_name IN (" . (is_object( $data ) ? $data->limit( 0 )->get_sql() : $this->get_string_in( esc_sql( $data ) ) ) . ")";
 			} else if ( isset( $where[$col_name . '__not_in'] ) && $where[$col_name . '__not_in'] ) {
 
 				$data = $where[$col_name . '__not_in'];
 
-				$this->query['where'][] = $this->table['as'] . ".$col_name NOT IN (" . (is_object( $data ) ? $data->limit( 0 )->get_sql() : $this->get_string_in( $data ) ) . ")";
+				$this->query['where'][] = $this->table['as'] . ".$col_name NOT IN (" . (is_object( $data ) ? $data->limit( 0 )->get_sql() : $this->get_string_in( esc_sql( $data ) ) ) . ")";
 			} else if ( isset( $where[$col_name . '__between'] ) && $where[$col_name . '__between'] ) {
 
-				$data = $where[$col_name . '__between'];
+				$data = esc_sql( $where[$col_name . '__between'] );
 
 				$this->query['where'][] = "(" . $this->table['as'] . '.' . $col_name . " BETWEEN IFNULL(" . $data[0] . ", 0) AND '" . $data[1] . "')";
 			} else if ( isset( $where[$col_name . '__like'] ) && $where[$col_name . '__like'] ) {
 
 				$data = $where[$col_name . '__like'];
 
-				$this->query['where'][] = $this->table['as'] . ".$col_name LIKE '%" . $data . "%'";
+				$this->query['where'][] = $this->table['as'] . ".$col_name LIKE '%" . esc_sql( $data ) . "%'";
 			} else if ( isset( $where[$col_name . '__to'] ) ) {
 
 				$data = $where[$col_name . '__to'];
 
 				$colName = is_numeric( $data ) ? "CAST(" . $this->table['as'] . ".$col_name AS DECIMAL)" : $this->table['as'] . "." . $col_name;
 
-				$this->query['where'][] = $colName . " <= '" . $data . "'";
+				$this->query['where'][] = $colName . " <= '" . esc_sql( $data ) . "'";
 			} else if ( isset( $where[$col_name . '__from'] ) ) {
 
 				$data = $where[$col_name . '__from'];
 
 				$colName = is_numeric( $data ) ? "CAST(" . $this->table['as'] . ".$col_name AS DECIMAL)" : $this->table['as'] . "." . $col_name;
 
-				$this->query['where'][] = $colName . " >= '" . $data . "'";
+				$this->query['where'][] = $colName . " >= '" . esc_sql( $data ) . "'";
 			} else if ( isset( $where[$col_name . '__is'] ) ) {
 
 				$data = $where[$col_name . '__is'];
@@ -313,6 +313,7 @@ class Rcl_Query extends Rcl_Old_Query {
 
 		$array = array();
 		foreach ( $vars as $var ) {
+
 			if ( is_numeric( $var ) )
 				$array[] = $var;
 			else

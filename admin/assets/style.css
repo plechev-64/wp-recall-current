@@ -405,9 +405,6 @@ div.rcl_preloader i.rcli::before {
 }
 .rcl-custom-fields-navi i {
     color: #008000;
-    font: 22px dashicons;
-    margin: 0 3px 0 0;
-    vertical-align: middle;
 }
 .rcl-custom-fields-navi .fa-plus::before {
     content: "\f502";

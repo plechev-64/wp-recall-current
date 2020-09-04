@@ -8,11 +8,9 @@ jQuery( document ).ready( function( $ ) {
 
 		RclUploaders.get( 'post_thumbnail' ).appendInGallery = function( file ) {
 			if ( file.html ) {
-				console.log( file.html );
 				jQuery( '#rcl-upload-gallery-' + this.uploader_id ).html( '' ).html( file.html ).last().animateCss( 'flipInX' );
 				jQuery( '#rcl-upload-gallery-post_uploader' ).append( file.html );
 				jQuery( '#rcl-upload-gallery-post_uploader div' ).last().animateCss( 'flipInX' );
-				/*jQuery( '#post-thumbnail' ).val( file['id'] );*/
 			}
 		};
 
@@ -555,7 +553,6 @@ function rcl_set_post_thumbnail( attach_id, parent_id, e ) {
 		},
 		success: function( result ) {
 			jQuery( '#rcl-upload-gallery-post_thumbnail' ).html( result.html ).animateCss( 'flipInX' );
-			/*jQuery( '#post-thumbnail' ).val( attach_id );*/
 		}
 	} );
 

@@ -172,33 +172,6 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 			'file_types' => 'png, gif, jpg',
 			'fix_editor' => 'post_content',
 			'options'	 => array(
-				/* array(
-				  'slug'		 => 'file_types',
-				  'default'	 => 'png, gif, jpg',
-				  'type'		 => 'text',
-				  'title'		 => __( 'Valid file extensions', 'wp-recall' ),
-				  'notice'	 => __( 'Separated by comma, for example: jpg, zip, pdf. By default: png, gif, jpg', 'wp-recall' )
-				  ),
-				  array(
-				  'slug'		 => 'max_size',
-				  'type'		 => 'runner',
-				  'value_min'	 => 256,
-				  'value_max'	 => 5120,
-				  'value_step' => 256,
-				  'default'	 => 512,
-				  'title'		 => __( 'The maximum file size, KB', 'wp-recall' ),
-				  'notice'	 => __( 'Maximum file size in megabytes. By default, 512KB', 'wp-recall' )
-				  ),
-				  array(
-				  'slug'		 => 'max_files',
-				  'type'		 => 'runner',
-				  'value_min'	 => 1,
-				  'value_max'	 => 50,
-				  'value_step' => 1,
-				  'default'	 => 10,
-				  'title'		 => __( 'Number of files', 'wp-recall' ),
-				  'notice'	 => __( 'By default, 10', 'wp-recall' )
-				  ), */
 				array(
 					'slug'		 => 'fix_editor',
 					'type'		 => 'radio',
@@ -218,12 +191,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 						__( 'Enabled', 'wp-recall' )
 					),
 					'default'	 => 1
-				),
-			/* array(
-			  'slug'	 => 'fix_editor',
-			  'type'	 => 'hidden',
-			  'value'	 => 'post_content',
-			  ), */
+				)
 			)
 		);
 

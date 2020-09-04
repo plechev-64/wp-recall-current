@@ -35,9 +35,7 @@ function rcl_public_form_manager() {
 
 	$content .= $formManager->form_navi();
 
-	$content .= '<div class="rcl-custom-fields-navi">';
-	$content .= '<p>' . __( 'Use shortcode for publication form', 'wp-recall' ) . ' [' . $shortCode . ']</p>';
-	$content .= '</div>';
+	$content .= rcl_get_notice( ['text' => __( 'Use shortcode for publication form', 'wp-recall' ) . ' [' . $shortCode . ']' ] );
 
 	$content .= $formManager->get_manager();
 

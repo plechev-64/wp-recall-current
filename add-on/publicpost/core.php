@@ -123,22 +123,20 @@ function rcl_get_custom_fields_edit_box( $post_id, $post_type = false, $form_id 
 
 	$content = '<div class="rcl-custom-fields-box">';
 
-	foreach ( $fields as $key => $field ) {
+	foreach ( $fields as $field_id => $field ) {
 
-		if ( $key === 'options' || ! isset( $field['slug'] ) )
+		if ( ! isset( $field->slug ) )
 			continue;
 
-		$star			 = ($field['required'] == 1) ? '<span class="required">*</span> ' : '';
-		$field['value']	 = ($post_id) ? get_post_meta( $post_id, $field['slug'], 1 ) : '';
-
-		$fieldObject = Rcl_Field::setup( $field );
+		if ( ! isset( $field->value ) )
+			$field->value = ($post_id) ? get_post_meta( $post_id, $field->slug, 1 ) : '';
 
 		$content .= '<div class="rcl-custom-field">';
 
-		$content .= '<label>' . $fieldObject->get_title() . '</label>';
+		$content .= '<label>' . $field->get_title() . '</label>';
 
 		$content .= '<div class="field-value">';
-		$content .= $fieldObject->get_field_input();
+		$content .= $field->get_field_input();
 		$content .= '</div>';
 
 		$content .= '</div>';
