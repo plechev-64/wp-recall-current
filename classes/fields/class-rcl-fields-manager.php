@@ -396,7 +396,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 				'size'		 => 'medium',
 				'type'		 => 'clear',
 				'label'		 => __( 'Удалить секцию', 'wp-recall' ),
-				'icon'		 => 'fa-remove',
+				'icon'		 => 'fa-trash',
 				'class'		 => 'group-manager-button group-delete',
 				'onclick'	 => 'rcl_remove_manager_group("' . __( 'Вы уверены?', 'wp-recall' ) . '",this);return false;',
 				] );
@@ -454,13 +454,13 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		if ( $this->structure_edit ) {
 
 			$content .= '<div class="rcl-areas-manager">';
-			$content .= '<a href="#" onclick="rcl_remove_manager_area(\'' . __( 'Вы уверены?', 'wp-recall' ) . '\',this);return false"><i class="rcli fa-remove" aria-hidden="true"></i> ' . __( 'Удалить группу полей', 'wp-recall' ) . '</a>';
+			$content .= '<a href="#" onclick="rcl_remove_manager_area(\'' . __( 'Вы уверены?', 'wp-recall' ) . '\',this);return false"><i class="rcli fa-trash" aria-hidden="true"></i> ' . __( 'Удалить группу полей', 'wp-recall' ) . '</a>';
 
 			if ( $this->sortable )
 				$content .= '<span class="area-move left-align"><i class="rcli fa-arrows" aria-hidden="true"></i></span>';
-			if ( $this->create_field ) {
-				$content .= '<a href="#" onclick="rcl_manager_get_new_field(this);return false;" title="' . __( 'Добавить поле', 'wp-recall' ) . '" class="add-field left-align"><i class="rcli fa-plus-square" aria-hidden="true"></i> ' . __( 'Добавить поле', 'wp-recall' ) . '</a>';
-			}
+			/* if ( $this->create_field ) {
+			  $content .= '<a href="#" onclick="rcl_manager_get_new_field(this);return false;" title="' . __( 'Добавить поле', 'wp-recall' ) . '" class="add-field left-align"><i class="rcli fa-plus-square" aria-hidden="true"></i> ' . __( 'Добавить поле', 'wp-recall' ) . '</a>';
+			  } */
 			$content .= '</div>';
 		}
 
@@ -493,7 +493,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 		$content .= "<div class=submit-box>";
 
-		if ( $this->create_field && ! $this->structure_edit )
+		if ( $this->create_field )
 			$content .= "<input type=button onclick='rcl_manager_get_new_field(this);' class='add-field-button button-secondary right' value='+ " . __( 'Add field', 'wp-recall' ) . "'>";
 
 		$content .= "</div>";

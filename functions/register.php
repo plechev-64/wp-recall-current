@@ -551,7 +551,9 @@ function rcl_custom_fields_regform( $content ) {
 	}
 
 	foreach ( $hiddens as $field ) {
-		$content .= $CF->get_input( $field, (isset( $_POST[$field['slug']] )) ? $_POST[$field['slug']] : false  );
+		$field['value']	 = isset( $_POST[$field['slug']] ) ? $_POST[$field['slug']] : false;
+		$fieldObject	 = Rcl_Field::setup( $field );
+		$content .= $fieldObject->get_field_input();
 	}
 
 	return $content;

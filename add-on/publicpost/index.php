@@ -532,7 +532,7 @@ function rcl_add_post_uploader_image_buttons( $items, $attachment_id, $uploader 
 			$addGallery = $field->get_prop( 'gallery' );
 	}
 
-	if ( $uploader->uploader_id != 'post_thumbnail' && $isImage && $addGallery ) {
+	if ( $isImage && $addGallery ) {
 
 		$postGallery	 = get_post_meta( $uploader->post_parent, 'rcl_post_gallery', 1 );
 		$valueGallery	 = ($postGallery && in_array( $attachment_id, $postGallery )) ? $attachment_id : '';
