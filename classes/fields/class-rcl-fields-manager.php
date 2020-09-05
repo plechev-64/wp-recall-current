@@ -325,7 +325,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		if ( ! $fields )
 			return false;
 
-		$content .= '<div class="rcl-manager-options">';
+		$content = '<div class="rcl-manager-options">';
 		foreach ( $fields as $field ) {
 			$content .= $this::setup( $field )->get_field_html();
 		}
