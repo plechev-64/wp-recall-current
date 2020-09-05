@@ -21,6 +21,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 	public $multiple		 = 1;
 	public $dropzone		 = 0;
 	public $mode_output		 = 'grid';
+	public $temp_media		 = true;
 	public $uploader_props	 = array();
 
 	function __construct( $args ) {
@@ -113,7 +114,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 		global $user_ID;
 
 		return wp_parse_args( $this->uploader_props, array(
-			'temp_media'	 => true,
+			'temp_media'	 => $this->temp_media,
 			'fix_editor'	 => $this->fix_editor,
 			'required'		 => intval( $this->required ),
 			'user_id'		 => $user_ID,

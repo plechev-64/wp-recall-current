@@ -1410,14 +1410,14 @@ function rcl_get_pages_ids() {
 
 	$pages = RQ::tbl( new Rcl_Query( [
 				'name'	 => $wpdb->posts,
-				'cols'	 => ['ID', 'post_type', 'post_title' ]
+				'cols'	 => ['ID', 'post_type', 'post_title', 'post_status' ]
 			] ) )->select( ['ID', 'post_title' ] )
-			->where( ['post_type' => 'page' ] )
+			->where( ['post_type' => 'page', 'post_status' => 'publish' ] )
 			->limit( -1 )
 			->orderby( 'post_title', 'ASC' )
 			->get_walker()->get_index_values( 'ID', 'post_title' );
 
-	array_unshift( $pages, __( 'Not selected', 'wp-recall' ) );
+	$pages = array( __( 'Not selected', 'wp-recall' ) ) + $pages;
 
 	return $pages;
 }
