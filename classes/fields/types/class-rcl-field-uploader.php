@@ -18,7 +18,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 	public $file_types		 = 'jpg, jpeg, png';
 	public $max_size		 = 512;
 	public $max_files		 = 5;
-	public $multiple		 = 0;
+	public $multiple		 = 1;
 	public $dropzone		 = 0;
 	public $mode_output		 = 'grid';
 	public $uploader_props	 = array();
@@ -66,16 +66,16 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 				'value_step' => 1,
 				'title'		 => __( 'Max number of files', 'wp-recall' ),
 			),
-			array(
-				'slug'		 => 'multiple',
-				'default'	 => $this->multiple,
-				'type'		 => 'radio',
-				'values'	 => array(
-					__( 'Отключено', 'wp-recall' ),
-					__( 'Включено', 'wp-recall' )
-				),
-				'title'		 => __( 'Multiple loading', 'wp-recall' ),
-			),
+			/* array(
+			  'slug'		 => 'multiple',
+			  'default'	 => $this->multiple,
+			  'type'		 => 'radio',
+			  'values'	 => array(
+			  __( 'Отключено', 'wp-recall' ),
+			  __( 'Включено', 'wp-recall' )
+			  ),
+			  'title'		 => __( 'Multiple loading', 'wp-recall' ),
+			  ), */
 			array(
 				'slug'		 => 'dropzone',
 				'default'	 => $this->dropzone,

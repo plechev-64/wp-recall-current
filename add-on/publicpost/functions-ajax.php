@@ -273,7 +273,7 @@ function rcl_preview_post() {
 
 	$preview .= rcl_get_notice( [
 		'text' => __( 'If everything is correct – publish it! If not, you can go back to editing.', 'wp-recall' )
-	] );
+		] );
 
 	wp_send_json( array(
 		'title'		 => $postdata['post_title'],
@@ -316,7 +316,7 @@ function rcl_upload_post_thumbnail( $uploads, $uploader ) {
 	if ( $uploader->uploader_id != 'post_thumbnail' )
 		return false;
 
-	$thumbnail_id = $uploads[0]['id'];
+	$thumbnail_id = $uploads['id'];
 
 	if ( $uploader->post_parent ) {
 

@@ -31,6 +31,7 @@ function rcl_add_cover_uploader_button() {
 	if ( rcl_is_office( $user_ID ) ) {
 
 		$uploder = new Rcl_Uploader( 'rcl_cover', array(
+			'multiple'		 => false,
 			'crop'			 => array(
 				'ratio' => 0
 			),
@@ -55,7 +56,7 @@ function rcl_add_cover_uploader_button() {
 }
 
 add_action( 'rcl_upload', 'rcl_cover_upload', 10, 2 );
-function rcl_cover_upload( $uploads, $class ) {
+function rcl_cover_upload( $upload, $class ) {
 	global $user_ID;
 
 	if ( $class->uploader_id != 'rcl_cover' )
@@ -65,7 +66,7 @@ function rcl_cover_upload( $uploads, $class ) {
 
 	wp_delete_attachment( $oldCoverId );
 
-	update_user_meta( $user_ID, 'rcl_cover', $uploads[0]['id'] );
+	update_user_meta( $user_ID, 'rcl_cover', $upload['id'] );
 
 	do_action( 'rcl_cover_upload' );
 }

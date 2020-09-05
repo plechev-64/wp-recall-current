@@ -1388,11 +1388,18 @@ function RclUploader( props ) {
 
 		var uploader = this;
 
-		jQuery.each( data.result['uploads'], function( index, file ) {
+		if ( this.options.multiple ) {
+			jQuery.each( data.result['uploads'], function( index, file ) {
 
-			uploader.appendInGallery( file, uploader );
+				uploader.appendInGallery( file, uploader );
 
-		} );
+			} );
+		} else {
+
+			jQuery( '#rcl-upload-gallery-' + this.uploader_id ).html( '' );
+
+			uploader.appendInGallery( data.result.uploads, uploader );
+		}
 
 		this.afterDone( e, data );
 

@@ -8,7 +8,6 @@ jQuery( document ).ready( function( $ ) {
 
 		RclUploaders.get( 'post_thumbnail' ).appendInGallery = function( file ) {
 			if ( file.html ) {
-				jQuery( '#rcl-upload-gallery-' + this.uploader_id ).html( '' ).html( file.html ).last().animateCss( 'flipInX' );
 				jQuery( '#rcl-upload-gallery-post_uploader' ).append( file.html );
 				jQuery( '#rcl-upload-gallery-post_uploader div' ).last().animateCss( 'flipInX' );
 			}

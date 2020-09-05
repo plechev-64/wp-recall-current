@@ -161,9 +161,17 @@ function rcl_update_options() {
 		}
 	}
 
+	do_action( 'rcl_update_options' );
+
 	wp_send_json( array(
 		'success' => __( 'Settings saved!', 'wp-recall' )
 	) );
+}
+
+add_action( 'rcl_update_options', 'rcl_delete_temp_default_avatar', 10 );
+function rcl_delete_temp_default_avatar() {
+	if ( isset( $_POST['rcl_global_options']['default_avatar'] ) )
+		rcl_delete_temp_media( $_POST['rcl_global_options']['default_avatar'] );
 }
 
 function wp_enqueue_theme_rcl( $url ) {

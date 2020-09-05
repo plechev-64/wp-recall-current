@@ -127,10 +127,8 @@ $options->box( 'primary' )->add_group( 'design', array(
 	),
 	array(
 		'type'		 => 'uploader',
+		'multiple'	 => false,
 		'crop'		 => 1,
-		'max_files'	 => 1,
-		'value_step' => 256,
-		'default'	 => 1024,
 		'slug'		 => 'default_avatar',
 		'title'		 => __( 'Default avatar', 'wp-recall' )
 	),

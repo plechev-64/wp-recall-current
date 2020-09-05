@@ -429,7 +429,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 							'post_parent'	 => $this->post_id,
 							'form_id'		 => intval( $this->form_id ),
 							'post_type'		 => $this->post_type,
-							'auto_upload'	 => true,
+							'multiple'		 => false,
 							'crop'			 => true
 						) );
 
@@ -437,22 +437,22 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 						if ( $this->post_id ) {
 
-							$imagIds	 = $thumbnail	 = get_post_meta( $this->post_id, '_thumbnail_id', 1 ) ? array( $thumbnail ) : array();
+							$thumbnail_id = get_post_meta( $this->post_id, '_thumbnail_id', 1 );
 						} else {
 
-							$imagIds = RQ::tbl( new Rcl_Temp_Media() )
+							$thumbnail_id = RQ::tbl( new Rcl_Temp_Media() )
 								->select( ['media_id' ] )
 								->where( [
 									'user_id'			 => $uploader->user_id ? $uploader->user_id : 0,
 									'session_id'		 => $uploader->user_id ? '' : $_COOKIE['PHPSESSID'],
 									'uploader_id__in'	 => array( 'post_thumbnail' )
 								] )
-								->limit( -1 )
-								->get_col();
+								->limit( 1 )
+								->get_var();
 						}
 
-						if ( $imagIds ) {
-							$field->set_prop( 'value', $imagIds );
+						if ( $thumbnail_id ) {
+							$field->set_prop( 'value', $thumbnail_id );
 						}
 
 						$contentField = $field->get_field_input();
@@ -477,18 +477,17 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 								] ) )->select( ['ID' ] )->where( [
 									'post_parent'	 => $this->post_id,
 									'post_type'		 => 'attachment',
-								] )->limit( -1 )->get_col();
+								] )->limit( -1 )->order( 'ASC' )->get_col();
 						} else {
 
 							$imagIds = RQ::tbl( new Rcl_Temp_Media() )
-								->select( ['media_id' ] )
-								->where( [
-									'user_id'			 => $uploader->user_id ? $uploader->user_id : 0,
-									'session_id'		 => $uploader->user_id ? '' : $_COOKIE['PHPSESSID'],
-									'uploader_id__in'	 => array( 'post_uploader', 'post_thumbnail' )
-								] )
-								->limit( -1 )
-								->get_col();
+									->select( ['media_id' ] )
+									->where( [
+										'user_id'			 => $uploader->user_id ? $uploader->user_id : 0,
+										'session_id'		 => $uploader->user_id ? '' : $_COOKIE['PHPSESSID'],
+										'uploader_id__in'	 => array( 'post_uploader', 'post_thumbnail' )
+									] )
+									->limit( -1 )->order( 'ASC' )->get_col();
 						}
 
 						$contentField = $uploader->get_gallery( $imagIds );

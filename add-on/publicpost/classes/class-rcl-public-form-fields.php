@@ -169,6 +169,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 			'slug'		 => 'post_uploader',
 			'title'		 => __( 'WP-Recall media loader', 'wp-recall' ),
 			'type'		 => 'uploader',
+			'multiple'	 => 1,
 			'file_types' => 'png, gif, jpg',
 			'fix_editor' => 'post_content',
 			'options'	 => array(
@@ -181,6 +182,11 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 						'post_content' => __( 'Enabled', 'wp-recall' )
 					),
 					'default'	 => 'post_content'
+				),
+				array(
+					'slug'	 => 'multiple',
+					'type'	 => 'hidden',
+					'value'	 => 1
 				),
 				array(
 					'slug'		 => 'gallery',

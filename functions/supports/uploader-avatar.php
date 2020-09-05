@@ -34,6 +34,7 @@ function rcl_button_avatar_upload( $icons ) {
 		return false;
 
 	$uploder = new Rcl_Uploader( 'rcl_avatar', array(
+		'multiple'		 => false,
 		'crop'			 => 1,
 		'image_sizes'	 => array(
 			array(
@@ -106,7 +107,7 @@ function rcl_avatar_upload( $uploads, $class ) {
 
 	wp_delete_attachment( $oldAvatarId );
 
-	update_user_meta( $user_ID, 'rcl_avatar', $uploads[0]['id'] );
+	update_user_meta( $user_ID, 'rcl_avatar', $uploads['id'] );
 
 	do_action( 'rcl_avatar_upload' );
 }

@@ -160,7 +160,7 @@ class Rcl_Uploader {
 		//rcl_fileupload_scripts();
 		//rcl_crop_scripts();
 
-		return '<input id="rcl-uploader-input-' . $this->uploader_id . '" class="uploader-input" data-uploader_id="' . $this->uploader_id . '" name="' . $this->input_name . '[]" type="file" accept="' . implode( ', ', $this->accept ) . '" ' . ($this->multiple ? 'multiple' : '') . '>'
+		return '<input id="rcl-uploader-input-' . $this->uploader_id . '" class="uploader-input" data-uploader_id="' . $this->uploader_id . '" name="' . ($this->multiple ? $this->input_name . '[]' : $this->input_name) . '" type="file" accept="' . implode( ', ', $this->accept ) . '" ' . ($this->multiple ? 'multiple' : '') . '>'
 			. '<script>rcl_init_uploader(' . json_encode( $this ) . ');</script>';
 	}
 
@@ -243,10 +243,14 @@ class Rcl_Uploader {
 
 		$content = '<div id="rcl-upload-gallery-' . $this->uploader_id . '" class="rcl-upload-gallery mode-' . $this->mode_output . ' ' . ($this->manager_balloon ? 'balloon-manager' : 'simple-manager') . '">';
 
-		if ( $imagIds && is_array( $imagIds ) ) {
+		if ( $imagIds ) {
 			//$content .= '<div class="ui-sortable-placeholder"></div>';
-			foreach ( $imagIds as $imagId ) {
-				$content .= $this->gallery_attachment( $imagId );
+			if ( is_array( $imagIds ) ) {
+				foreach ( $imagIds as $imagId ) {
+					$content .= $this->gallery_attachment( $imagId );
+				}
+			} else {
+				$content .= $this->gallery_attachment( $imagIds );
 			}
 		}
 
@@ -284,7 +288,8 @@ class Rcl_Uploader {
 		$content .= $this->get_attachment_manager( $attach_id );
 
 		if ( $this->input_attach ) {
-			$content .= '<input type="hidden" name="' . $this->input_attach . '[]" value="' . $attach_id . '">';
+			$input_attach = $this->multiple ? $this->input_attach . '[]' : $this->input_attach;
+			$content .= '<input type="hidden" name="' . $input_attach . '" value="' . $attach_id . '">';
 		}
 
 		$content .= '</div>';
@@ -395,77 +400,30 @@ class Rcl_Uploader {
 
 		do_action( 'rcl_pre_upload', $this );
 
-		$files = array();
-		foreach ( $_FILES[$this->input_name] as $nameProp => $values ) {
-			foreach ( $values as $k => $value ) {
-				$files[$k][$nameProp] = $value;
-			}
-		}
+		if ( $this->multiple ) {
 
-		$uploads = array();
-		foreach ( $files as $file ) {
-
-			$filetype = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'] );
-
-			if ( ! in_array( $filetype['ext'], $this->file_types ) ) {
-				wp_send_json( array( 'error' => __( 'Forbidden file extension. Allowed:', 'wp-recall' ) . ' ' . implode( ', ', $this->file_types ) ) );
+			$files = array();
+			foreach ( $_FILES[$this->input_name] as $nameProp => $values ) {
+				foreach ( $values as $k => $value ) {
+					$files[$k][$nameProp] = $value;
+				}
 			}
 
-			$pathInfo = pathinfo( basename( $file['name'] ) );
-
-			$file['name'] = rcl_sanitize_string( $pathInfo['filename'] ) . '.' . $filetype['ext'];
-
-			$file = apply_filters( 'rcl_pre_upload_file_data', $file );
-
-			$image = wp_handle_upload( $file, array( 'test_form' => FALSE ) );
-
-			if ( $image['file'] ) {
-
-				$this->setup_image_sizes( $image['file'] );
-
-				if ( $this->crop ) {
-
-					$this->crop_image( $image['file'] );
-				}
-
-				if ( $this->resize ) {
-
-					$this->resize_image( $image['file'] );
-				}
-
-				$attachment = array(
-					'post_mime_type' => $image['type'],
-					'post_title'	 => $pathInfo['filename'],
-					'post_content'	 => '',
-					'guid'			 => $image['url'],
-					'post_parent'	 => $this->post_parent,
-					'post_author'	 => $this->user_id,
-					'post_status'	 => 'inherit'
-				);
-
-				if ( ! $this->user_id ) {
-					$attachment['post_content'] = $_COOKIE['PHPSESSID'];
-				}
-
-				$attach_id = wp_insert_attachment( $attachment, $image['file'], $this->post_parent );
-
-				$attach_data = wp_generate_attachment_metadata( $attach_id, $image['file'] );
-
-				wp_update_attachment_metadata( $attach_id, $attach_data );
-
-				if ( $this->temp_media ) {
-					rcl_add_temp_media( array(
-						'media_id'		 => $attach_id,
-						'uploader_id'	 => $this->uploader_id
-					) );
-				}
-
-				$uploads[] = array(
-					'id'	 => $attach_id,
-					'src'	 => $this->get_src( $attach_id, 'full' ),
-					'html'	 => $this->gallery_attachment( $attach_id )
-				);
+			$uploads = array();
+			foreach ( $files as $file ) {
+				$uploads[] = $this->file_upload_process( $file );
 			}
+		} else {
+
+			if ( $this->temp_media ) {
+				rcl_delete_temp_media_by_args( array(
+					'uploader_id'	 => $this->uploader_id,
+					'user_id'		 => $this->user_id ? $this->user_id : 0,
+					'session_id'	 => $this->user_id ? '' : $_COOKIE['PHPSESSID'],
+				) );
+			}
+
+			$uploads = $this->file_upload_process( $_FILES[$this->input_name] );
 		}
 
 		$this->after_upload( $uploads );
@@ -473,6 +431,71 @@ class Rcl_Uploader {
 		do_action( 'rcl_upload', $uploads, $this );
 
 		return $uploads;
+	}
+
+	function file_upload_process( $file ) {
+
+		$filetype = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'] );
+
+		if ( ! in_array( $filetype['ext'], $this->file_types ) ) {
+			wp_send_json( array( 'error' => __( 'Forbidden file extension. Allowed:', 'wp-recall' ) . ' ' . implode( ', ', $this->file_types ) ) );
+		}
+
+		$pathInfo = pathinfo( basename( $file['name'] ) );
+
+		$file['name'] = rcl_sanitize_string( $pathInfo['filename'] ) . '.' . $filetype['ext'];
+
+		$file = apply_filters( 'rcl_pre_upload_file_data', $file );
+
+		$image = wp_handle_upload( $file, array( 'test_form' => FALSE ) );
+
+		if ( ! $image['file'] )
+			return false;
+
+		$this->setup_image_sizes( $image['file'] );
+
+		if ( $this->crop ) {
+
+			$this->crop_image( $image['file'] );
+		}
+
+		if ( $this->resize ) {
+
+			$this->resize_image( $image['file'] );
+		}
+
+		$attachment = array(
+			'post_mime_type' => $image['type'],
+			'post_title'	 => $pathInfo['filename'],
+			'post_content'	 => '',
+			'guid'			 => $image['url'],
+			'post_parent'	 => $this->post_parent,
+			'post_author'	 => $this->user_id,
+			'post_status'	 => 'inherit'
+		);
+
+		if ( ! $this->user_id ) {
+			$attachment['post_content'] = $_COOKIE['PHPSESSID'];
+		}
+
+		$attach_id = wp_insert_attachment( $attachment, $image['file'], $this->post_parent );
+
+		$attach_data = wp_generate_attachment_metadata( $attach_id, $image['file'] );
+
+		wp_update_attachment_metadata( $attach_id, $attach_data );
+
+		if ( $this->temp_media ) {
+			rcl_add_temp_media( array(
+				'media_id'		 => $attach_id,
+				'uploader_id'	 => $this->uploader_id
+			) );
+		}
+
+		return array(
+			'id'	 => $attach_id,
+			'src'	 => $this->get_src( $attach_id, 'full' ),
+			'html'	 => $this->gallery_attachment( $attach_id )
+		);
 	}
 
 	function setup_image_sizes( $image_src ) {

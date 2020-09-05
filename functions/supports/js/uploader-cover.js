@@ -2,7 +2,7 @@ jQuery( function( $ ) {
 
 	RclUploaders.get( 'rcl_cover' ).afterDone = function( e, data ) {
 
-		jQuery( '#lk-conteyner' ).css( 'background-image', 'url(' + data.result.uploads[0].src + ')' ).animateCss( 'fadeIn' );
+		jQuery( '#lk-conteyner' ).css( 'background-image', 'url(' + data.result.uploads.src + ')' ).animateCss( 'fadeIn' );
 
 		rcl_notice( 'Изображение загружено', 'success', 10000 );
 
