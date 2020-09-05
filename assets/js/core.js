@@ -1343,15 +1343,12 @@ function RclUploader( props ) {
 			return false;
 		}
 
-		if ( options.crop != 0 && options.multiple == 0 ) {
-
-			return this.crop( e, data );
-		}
-
-		if ( options.auto_upload == 1 ) {
+		if ( options.auto_upload == 1 || typeof jQuery.Jcrop == 'undefined' ) {
 			data.process().done( function() {
 				data.submit();
 			} );
+		} else if ( options.crop != 0 && options.multiple == 0 ) {
+			return this.crop( e, data );
 		}
 
 	};

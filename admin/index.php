@@ -677,6 +677,10 @@ function rcl_manager_update_data_fields() {
 		$args['reload'] = true;
 	}
 
+	if ( $isset_new ) {
+		$args['reload'] = true;
+	}
+
 	do_action( 'rcl_fields_update', $fields, $manager_id );
 
 	return $args;
