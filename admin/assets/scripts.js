@@ -745,14 +745,14 @@ function rcl_manager_field_edit( e ) {
 
 }
 
-function rcl_manager_field_delete( e ) {
+function rcl_manager_field_delete( field_id, meta_delete, e ) {
 
 	var field = jQuery( e ).parents( '.manager-field' );
 
-	if ( field.hasClass( 'must-meta-delete' ) ) {
+	if ( meta_delete ) {
 
 		if ( confirm( jQuery( '#rcl-manager-confirm-delete' ).text() ) ) {
-			jQuery( '.rcl-fields-manager-form' ).append( '<input type="hidden" name="deleted[]" value="' + field.data( 'id' ) + '">' );
+			jQuery( '.rcl-fields-manager-form .submit-box' ).append( '<input type="hidden" name="deleted_fields[]" value="' + field_id + '">' );
 		}
 
 	}

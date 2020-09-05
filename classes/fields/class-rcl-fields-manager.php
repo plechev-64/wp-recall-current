@@ -536,8 +536,11 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		$content .= "<input class='button button-primary' type=submit value='" . __( 'Save', 'wp-recall' ) . "' name='rcl_save_custom_fields'>";
 
 		if ( $this->meta_delete ) {
-			$content .= "<input type=hidden id=rcl-deleted-fields name=rcl_deleted_custom_fields value=''>"
-				. "<div id='field-delete-confirm' style='display:none;'>" . __( 'To remove the data added to this field?', 'wp-recall' ) . "</div>";
+			foreach ( $this->meta_delete as $table_name => $colname ) {
+				$content .= "<input type=hidden name=delete_table_data[$table_name] value='$colname'>";
+			}
+
+			$content .= "<div id='field-delete-confirm' style='display:none;'>" . __( 'To remove the data added to this field?', 'wp-recall' ) . "</div>";
 		}
 
 		$content .= "</div>";
@@ -688,7 +691,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			$buttons['delete'] = array(
 				'icon'		 => 'fa-trash',
 				'class'		 => 'control-delete',
-				'onclick'	 => 'rcl_manager_field_delete(this);return false;',
+				'onclick'	 => 'rcl_manager_field_delete("' . $field_id . '", ' . ($this->meta_delete ? 1 : 0) . ', this);return false;',
 			);
 		}
 

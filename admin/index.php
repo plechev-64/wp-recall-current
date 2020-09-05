@@ -529,6 +529,7 @@ function rcl_manager_update_fields_by_post() {
 }
 
 function rcl_manager_update_data_fields() {
+	global $wpdb;
 
 	$copy		 = $_POST['copy'];
 	$manager_id	 = $_POST['manager_id'];
@@ -645,19 +646,23 @@ function rcl_manager_update_data_fields() {
 
 	update_site_option( $option_name, $fields );
 
+	$args = array(
+		'success' => __( 'Settings saved!', 'wp-recall' )
+	);
+
 	if ( $structure )
 		update_site_option( 'rcl_fields_' . $manager_id . '_structure', $structure );
 	else
 		delete_site_option( 'rcl_fields_' . $manager_id . '_structure' );
 
-	do_action( 'rcl_fields_update', $fields, $manager_id );
+	if ( isset( $_POST['deleted_fields'] ) && $_POST['deleted_fields'] ) {
+		if ( isset( $_POST['delete_table_data'] ) ) {
+			foreach ( $_POST['delete_table_data'] as $table_name => $colname ) {
+				$wpdb->query( "DELETE FROM $table_name WHERE $colname IN ('" . implode( "','", $_POST['deleted_fields'] ) . "')" );
+			}
 
-	$args = array(
-		'success' => __( 'Settings saved!', 'wp-recall' )
-	);
-
-	if ( $isset_new ) {
-		$args['reload'] = true;
+			$args['reload'] = true;
+		}
 	}
 
 	if ( $copy ) {
@@ -671,6 +676,8 @@ function rcl_manager_update_data_fields() {
 
 		$args['reload'] = true;
 	}
+
+	do_action( 'rcl_fields_update', $fields, $manager_id );
 
 	return $args;
 }

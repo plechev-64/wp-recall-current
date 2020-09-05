@@ -107,6 +107,13 @@ class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager {
 			unset( $options['filter'] );
 		}
 
+		if ( $field->type == 'uploader' ) {
+			unset( $options['filter'] );
+			unset( $options['public_value'] );
+			unset( $options['required'] );
+			unset( $options['admin'] );
+		}
+
 		return $options;
 	}
 
