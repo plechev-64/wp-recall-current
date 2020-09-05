@@ -127,7 +127,7 @@ function rcl_exchange_admins_profile_fields( $input_html, $field ) {
 	if ( ! rcl_is_office( $user_ID ) )
 		return $input_html;
 
-	if ( $field->admin && ! rcl_is_user_role( $user_ID, array( 'administrator' ) ) ) {
+	if ( isset( $field->admin ) && $field->admin && ! rcl_is_user_role( $user_ID, array( 'administrator' ) ) ) {
 		$value = get_user_meta( $user_LK, $field->slug, 1 );
 		if ( $value ) {
 			$field->set_prop( 'value', $value );
