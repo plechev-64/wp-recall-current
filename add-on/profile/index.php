@@ -120,6 +120,24 @@ function rcl_edit_profile() {
 	exit;
 }
 
+add_filter( 'rcl_field_input_html', 'rcl_exchange_admins_profile_fields', 10, 2 );
+function rcl_exchange_admins_profile_fields( $input_html, $field ) {
+	global $user_ID, $user_LK;
+
+	if ( ! rcl_is_office( $user_ID ) )
+		return $input_html;
+
+	if ( $field->admin && ! rcl_is_user_role( $user_ID, array( 'administrator' ) ) ) {
+		$value = get_user_meta( $user_LK, $field->slug, 1 );
+		if ( $value ) {
+			$field->set_prop( 'value', $value );
+			return $field->get_field_value();
+		}
+	}
+
+	return $input_html;
+}
+
 add_filter( 'rcl_profile_fields', 'rcl_add_office_profile_fields', 10 );
 function rcl_add_office_profile_fields( $fields ) {
 	global $userdata;

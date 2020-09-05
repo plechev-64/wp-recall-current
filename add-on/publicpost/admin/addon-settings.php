@@ -25,14 +25,7 @@ function rcl_get_publics_options_page( $options ) {
 		$types[$post_type->name] = $post_type->label;
 	}
 
-	$pageWalker = RQ::tbl( new Rcl_Query( [
-			'name'	 => $wpdb->posts,
-			'cols'	 => ['ID', 'post_type', 'post_title' ]
-		] ) )->select( ['ID', 'post_title' ] )
-		->where( ['post_type' => 'page' ] )
-		->limit( -1 )
-		->orderby( 'post_title', 'ASC' )
-		->get_walker();
+	$pages = rcl_get_pages_ids();
 
 	$options->add_box( 'publicpost', array(
 		'title'	 => __( 'Publication settings', 'wp-recall' ),
@@ -44,7 +37,7 @@ function rcl_get_publics_options_page( $options ) {
 			'type'	 => 'select',
 			'slug'	 => 'public_form_page_rcl',
 			'title'	 => __( 'Publishing and editing', 'wp-recall' ),
-			'values' => $pageWalker->items ? $pageWalker->get_index_values( 'ID', 'post_title' ) : array( __( 'Pages not found', 'wp-recall' ) ),
+			'values' => $pages,
 			'notice' => __( 'You are required to publish a links to managing publications, you must specify the page with the shortcode [public-form]', 'wp-recall' )
 		),
 		array(
@@ -152,7 +145,7 @@ function rcl_get_publics_options_page( $options ) {
 						'type'		 => 'select',
 						'slug'		 => 'guest_post_redirect',
 						'title'		 => __( 'Redirect to', 'wp-recall' ),
-						'content'	 => $pageWalker->items ? $pageWalker->get_index_values( 'ID', 'post_title' ) : array( __( 'Pages not found', 'wp-recall' ) ),
+						'content'	 => $pages,
 						'notice'	 => __( 'Select the page to which the visitors will be redirected after a successful publication, if email authorization is included in the registration precess', 'wp-recall' )
 					)
 				)

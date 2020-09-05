@@ -144,7 +144,7 @@ class Rcl_Field_Abstract {
 		$classes[] = 'rcl-field-input';
 //}
 
-		$inputField = $this->get_input();
+		$inputField = apply_filters( 'rcl_field_input_html', $this->get_input(), $this );
 
 		if ( $this->icon ) {
 //$inputField .= '<i class="rcli '.$this->icon.' field-icon"></i>';
@@ -303,18 +303,18 @@ class Rcl_Field_Abstract {
 	}
 
 	function get_filter_value() {
-		return $this->get_value();
+		return '<a href="' . $this->get_filter_url() . '">' . $this->get_value() . '</a>';
 	}
 
 	function get_filter_url( $val = false ) {
 
-		if ( ! rcl_get_option( 'users_page_rcl' ) )
+		if ( ! rcl_get_option( 'users_page' ) )
 			return false;
 
 		if ( ! $val )
 			$val = $this->value;
 
-		return rcl_format_url( get_permalink( rcl_get_option( 'users_page_rcl' ) ) ) . 'usergroup=' . $this->slug . ':' . urlencode( $val );
+		return rcl_format_url( get_permalink( rcl_get_option( 'users_page' ) ) ) . 'usergroup=' . $this->slug . ':' . urlencode( $val );
 	}
 
 }

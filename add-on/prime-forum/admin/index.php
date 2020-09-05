@@ -82,14 +82,7 @@ function pfm_page_options() {
 
 	require_once RCL_PATH . 'admin/classes/class-rcl-options-manager.php';
 
-	$pageWalker = RQ::tbl( new Rcl_Query( [
-			'name'	 => $wpdb->posts,
-			'cols'	 => ['ID', 'post_type', 'post_title' ]
-		] ) )->select( ['ID', 'post_title' ] )
-		->where( ['post_type' => 'page' ] )
-		->limit( -1 )
-		->orderby( 'post_title', 'ASC' )
-		->get_walker();
+	$pages = rcl_get_pages_ids();
 
 	$Manager = new Rcl_Options_Manager( array(
 		'option_name'	 => 'rcl_pforum_options',
@@ -105,7 +98,7 @@ function pfm_page_options() {
 			'slug'	 => 'home-page',
 			'title'	 => __( 'Forum page', 'wp-recall' ),
 			'notice' => __( 'Select the needed page from the list and place the [prime-forum] shortcode on it', 'wp-recall' ),
-			'values' => $pageWalker->items ? $pageWalker->get_index_values( 'ID', 'post_title' ) : array( __( 'Pages not found', 'wp-recall' ) )
+			'values' => $pages
 		),
 		array(
 			'type'	 => 'select',

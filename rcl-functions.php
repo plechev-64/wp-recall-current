@@ -1398,3 +1398,22 @@ function rcl_get_notice( $args ) {
 	$Notice = new Rcl_Notice( $args );
 	return $Notice->get_notice();
 }
+
+//getting array of pages IDs and titles
+//for using in settings: ID => post_title
+function rcl_get_pages_ids() {
+	global $wpdb;
+
+	$pages = RQ::tbl( new Rcl_Query( [
+				'name'	 => $wpdb->posts,
+				'cols'	 => ['ID', 'post_type', 'post_title' ]
+			] ) )->select( ['ID', 'post_title' ] )
+			->where( ['post_type' => 'page' ] )
+			->limit( -1 )
+			->orderby( 'post_title', 'ASC' )
+			->get_walker()->get_index_values( 'ID', 'post_title' );
+
+	array_unshift( $pages, __( 'Not selected', 'wp-recall' ) );
+
+	return $pages;
+}
