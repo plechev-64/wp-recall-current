@@ -115,6 +115,7 @@ function rcl_get_custom_fields_profile( $user ) {
 	}
 }
 
+//save users page option in global array of options
 add_action( 'rcl_fields_update', 'rcl_update_users_page_option', 10, 2 );
 function rcl_update_users_page_option( $fields, $manager_id ) {
 	if ( $manager_id != 'profile' || ! isset( $_POST['users_page_rcl'] ) )
@@ -122,6 +123,7 @@ function rcl_update_users_page_option( $fields, $manager_id ) {
 	rcl_update_option( 'users_page_rcl', $_POST['users_page_rcl'] );
 }
 
+//add users page value in the time of saving global options of plugin
 add_filter( 'rcl_global_options_pre_update', 'rcl_add_options_users_page_value', 10 );
 function rcl_add_options_users_page_value( $values ) {
 	$values['users_page_rcl'] = rcl_get_option( 'users_page_rcl', 0 );

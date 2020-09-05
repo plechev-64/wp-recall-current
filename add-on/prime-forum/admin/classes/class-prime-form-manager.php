@@ -16,7 +16,10 @@ class Prime_Form_Manager extends Rcl_Fields_Manager {
 			$form_slug	 = 'pfm_group_' . $this->group_id;
 
 		parent::__construct( $form_slug, array(
-			'field_options' => array(
+			'meta_delete'	 => array(
+				RCL_PREF . "pforum_meta" => 'meta_key'
+			),
+			'field_options'	 => array(
 				array(
 					'type'	 => 'textarea',
 					'slug'	 => 'notice',
