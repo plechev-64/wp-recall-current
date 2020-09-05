@@ -120,13 +120,13 @@ class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager {
 	function get_manager_options_form_fields() {
 
 		$fields = array(
-			'users_page' => array(
+			'users_page_rcl' => array(
 				'type'		 => 'custom',
 				'title'		 => __( 'Users page', 'wp-recall' ),
 				'notice'	 => __( 'This page is required to filter users by value of profile fields', 'wp-recall' ),
 				'content'	 => wp_dropdown_pages( array(
-					'selected'			 => rcl_get_option( 'users_page' ),
-					'name'				 => 'users_page',
+					'selected'			 => rcl_get_option( 'users_page_rcl' ),
+					'name'				 => 'users_page_rcl',
 					'show_option_none'	 => __( 'Not selected', 'wp-recall' ),
 					'echo'				 => 0
 					)

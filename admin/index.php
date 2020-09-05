@@ -644,6 +644,8 @@ function rcl_manager_update_data_fields() {
 		$structure = $endStructure;
 	}
 
+	$fields = apply_filters( 'rcl_pre_update_manager_fields', $fields, $manager_id );
+
 	update_site_option( $option_name, $fields );
 
 	$args = array(

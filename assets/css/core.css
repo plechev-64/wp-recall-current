@@ -877,10 +877,10 @@ a.data-filter.filter-active:hover {
     background-color: #fff;
     text-decoration: none !important;
 }
-.type-dynamic-input a:hover .fa-minus {
+.type-dynamic-input a .fa-minus {
     color: rgb(229, 57, 53);
 }
-.type-dynamic-input a:hover .fa-plus {
+.type-dynamic-input a .fa-plus {
     color: #008000;
 }
 div.rcl-custom-fields .rcl-field-value .fa-upload {

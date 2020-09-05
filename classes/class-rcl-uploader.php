@@ -283,8 +283,9 @@ class Rcl_Uploader {
 
 		$content .= $this->get_attachment_manager( $attach_id );
 
-		if ( $this->input_attach )
+		if ( $this->input_attach ) {
 			$content .= '<input type="hidden" name="' . $this->input_attach . '[]" value="' . $attach_id . '">';
+		}
 
 		$content .= '</div>';
 

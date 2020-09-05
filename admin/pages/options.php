@@ -126,6 +126,15 @@ $options->box( 'primary' )->add_group( 'design', array(
 			__( 'Left', 'wp-recall' ) )
 	),
 	array(
+		'type'		 => 'uploader',
+		'crop'		 => 1,
+		'max_files'	 => 1,
+		'value_step' => 256,
+		'default'	 => 1024,
+		'slug'		 => 'default_avatar',
+		'title'		 => __( 'Default avatar', 'wp-recall' )
+	),
+	array(
 		'type'		 => 'runner',
 		'value_min'	 => 0,
 		'value_max'	 => 5120,

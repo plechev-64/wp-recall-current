@@ -308,13 +308,13 @@ class Rcl_Field_Abstract {
 
 	function get_filter_url( $val = false ) {
 
-		if ( ! rcl_get_option( 'users_page' ) )
+		if ( ! rcl_get_option( 'users_page_rcl' ) )
 			return false;
 
 		if ( ! $val )
 			$val = $this->value;
 
-		return rcl_format_url( get_permalink( rcl_get_option( 'users_page' ) ) ) . 'usergroup=' . $this->slug . ':' . urlencode( $val );
+		return rcl_format_url( get_permalink( rcl_get_option( 'users_page_rcl' ) ) ) . 'usergroup=' . $this->slug . ':' . urlencode( $val );
 	}
 
 }

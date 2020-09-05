@@ -607,6 +607,11 @@ function rcl_avatar_data_replacement( $args, $id_or_email ) {
 		if ( ! $avatar_data )
 			$avatar_data = get_user_meta( $user_id, 'rcl_avatar', 1 );
 
+		if ( ! $avatar_data ) {
+			$avatars	 = rcl_get_option( 'default_avatar', false );
+			$avatar_data = isset( $avatars[0] ) && $avatars[0] ? $avatars[0] : false;
+		}
+
 		if ( $avatar_data ) {
 
 			$url = false;

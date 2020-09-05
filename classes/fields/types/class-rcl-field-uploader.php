@@ -14,6 +14,7 @@
 class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 
 	public $required;
+	public $fix_editor;
 	public $file_types		 = 'jpg, jpeg, png';
 	public $max_size		 = 512;
 	public $max_files		 = 5;
@@ -126,7 +127,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 			'file_types'	 => array_map( 'trim', explode( ',', $this->file_types ) ),
 			'max_files'		 => $this->max_files,
 			'crop'			 => $this->multiple ? false : true,
-			'input_attach'	 => $this->id,
+			'input_attach'	 => $this->input_name,
 			'mode_output'	 => $this->mode_output
 			/* 'image_sizes' => array(
 			  array(

@@ -7,15 +7,6 @@ function rcl_profile_admin_menu() {
 	add_submenu_page( 'manage-wprecall', __( 'Profile fields', 'wp-recall' ), __( 'Profile fields', 'wp-recall' ), 'manage_options', 'manage-userfield', 'rcl_profile_fields_manager' );
 }
 
-add_action( 'rcl_update_custom_fields', 'rcl_update_page_users', 10 );
-function rcl_update_page_users() {
-
-	if ( ! isset( $_POST['users_page_rcl'] ) )
-		return false;
-
-	rcl_update_option( 'users_page_rcl', $_POST['users_page_rcl'] );
-}
-
 add_filter( 'rcl_custom_field_options', 'rcl_edit_profile_field_options', 10, 3 );
 function rcl_edit_profile_field_options( $options, $field, $type ) {
 
@@ -126,7 +117,13 @@ function rcl_get_custom_fields_profile( $user ) {
 
 add_action( 'rcl_fields_update', 'rcl_update_users_page_option', 10, 2 );
 function rcl_update_users_page_option( $fields, $manager_id ) {
-	if ( $manager_id != 'profile' || ! isset( $_POST['users_page'] ) )
+	if ( $manager_id != 'profile' || ! isset( $_POST['users_page_rcl'] ) )
 		return false;
-	rcl_update_option( 'users_page', $_POST['users_page'] );
+	rcl_update_option( 'users_page_rcl', $_POST['users_page_rcl'] );
+}
+
+add_filter( 'rcl_global_options_pre_update', 'rcl_add_options_users_page_value', 10 );
+function rcl_add_options_users_page_value( $values ) {
+	$values['users_page_rcl'] = rcl_get_option( 'users_page_rcl', 0 );
+	return $values;
 }
