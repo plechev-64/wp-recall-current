@@ -51,7 +51,7 @@ class Rcl_Field_Editor extends Rcl_Field_Abstract {
 			array(
 				'slug'	 => 'media_button',
 				'type'	 => 'radio',
-				'title'	 => __( 'Media loader', 'wp-recall' ),
+				'title'	 => __( 'Media uploader WordPress', 'wp-recall' ),
 				'values' => array(
 					__( 'Disabled', 'wp-recall' ),
 					__( 'Enabled', 'wp-recall' )

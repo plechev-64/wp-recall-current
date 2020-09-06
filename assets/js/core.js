@@ -1641,16 +1641,18 @@ function rcl_add_attachment_in_editor( attach_id, editor_name, e ) {
 	if ( src )
 		image = '<a href="' + src + '">' + image + '</a>';
 
-	jQuery( "#" + editor_name ).insertAtCaret( image + "&nbsp;" );
+	jQuery( "textarea[name=" + editor_name + "]" ).insertAtCaret( image + "&nbsp;" );
 
-	var editor_id = jQuery( 'textarea[name="' + editor_name + '"]' ).attr( 'id' );
+	//var editor_id = jQuery( 'textarea[name="' + editor_name + '"]' ).attr( 'id' );
 
-	tinyMCE.editors.forEach( function( editor ) {
-		console.log( [ editor, editor.targetElm, editor_name ] );
-		if ( editor.targetElm.name.length === editor_name.length ) {
-			editor.execCommand( 'mceInsertContent', false, image );
-		}
-	} );
+	if ( typeof tinyMCE != 'undefined' ) {
+		tinyMCE.editors.forEach( function( editor ) {
+			console.log( [ editor, editor.targetElm, editor_name ] );
+			if ( editor.targetElm.name.length === editor_name.length ) {
+				editor.execCommand( 'mceInsertContent', false, image );
+			}
+		} );
+	}
 
 	return false;
 }

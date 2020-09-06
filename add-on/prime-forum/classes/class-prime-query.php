@@ -60,14 +60,12 @@ class PrimeQuery {
 		} else {
 
 			$vars = array(
-				'pfm-group'	 => get_site_option( 'permalink_structure' ) != '' ? esc_url( get_query_var( 'pfm-group' ) ) : intval( get_query_var( 'pfm-group' ) ),
-				'pfm-forum'	 => get_query_var( 'page' ) ? get_query_var( 'page' ) : (
-					get_site_option( 'permalink_structure' ) != '' ? esc_url( get_query_var( 'pfm-forum' ) ) : intval( get_query_var( 'pfm-forum' ) )
-					),
-				'pfm-topic'	 => get_site_option( 'permalink_structure' ) != '' ? esc_url( get_query_var( 'pfm-topic' ) ) : intval( get_query_var( 'pfm-topic' ) ),
+				'pfm-group'	 => get_site_option( 'permalink_structure' ) != '' ? wp_slash( strip_tags( get_query_var( 'pfm-group' ) ) ) : intval( get_query_var( 'pfm-group' ) ),
+				'pfm-forum'	 => get_site_option( 'permalink_structure' ) != '' ? wp_slash( strip_tags( get_query_var( 'pfm-forum' ) ) ) : intval( get_query_var( 'pfm-forum' ) ),
+				'pfm-topic'	 => get_site_option( 'permalink_structure' ) != '' ? wp_slash( strip_tags( get_query_var( 'pfm-topic' ) ) ) : intval( get_query_var( 'pfm-topic' ) ),
 				'pfm-page'	 => intval( get_query_var( 'pfm-page' ) ),
 				'pfm-author' => isset( $_GET['pfm-author'] ) ? intval( $_GET['pfm-author'] ) : '',
-				'pfm-search' => isset( $_GET['fs'] ) ? esc_url( $_GET['fs'] ) : ''
+				'pfm-search' => isset( $_GET['fs'] ) ? wp_slash( strip_tags( $_GET['fs'] ) ) : ''
 			);
 		}
 

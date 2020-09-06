@@ -216,7 +216,7 @@ function pfm_the_search_form() {
 	?>
 
 	<form action="<?php echo pfm_get_home_url() ?>">
-		<input name="fs" value="<?php echo ($PrimeQuery->vars['pfm-search']) ? $PrimeQuery->vars['pfm-search'] : ''; ?>" placeholder="<?php _e( 'Search the forum', 'wp-recall' ); ?>" type="text">
+		<input name="fs" value="<?php echo ($PrimeQuery->vars['pfm-search']) ? htmlspecialchars( $PrimeQuery->vars['pfm-search'] ) : ''; ?>" placeholder="<?php _e( 'Search the forum', 'wp-recall' ); ?>" type="text">
 		<?php if ( pfm_is_search() ): ?>
 
 			<?php if ( $PrimeQuery->vars['pfm-group'] ): ?>

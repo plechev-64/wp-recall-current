@@ -269,7 +269,8 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 			$buttons[] = [
 				'href'	 => admin_url( 'admin.php?page=manage-public-form&post-type=' . $this->post_type . '&form-id=' . $this->form_id ),
 				'label'	 => __( 'Edit this form', 'wp-recall' ),
-				'icon'	 => 'fa-list'
+				'icon'	 => 'fa-list',
+				'type'	 => 'clear'
 			];
 		}
 
@@ -277,7 +278,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 		if ( $buttons ) {
 
-			$content .= '<div id="rcl-public-form-top-manager">';
+			$content .= '<div id="rcl-public-form-top-manager" class="rcl-wrap rcl-wrap__right">';
 
 			foreach ( $buttons as $button ) {
 				$content .= rcl_get_button( $button );
