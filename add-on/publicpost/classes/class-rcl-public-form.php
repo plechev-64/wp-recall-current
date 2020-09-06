@@ -736,7 +736,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 			'id'			 => 'rcl-tags-' . $taxonomy,
 			'name'			 => 'tags[' . $taxonomy . ']',
 			'placeholder'	 => $this->taxonomies[$taxonomy]->labels->new_item_name,
-			'label'			 => '<span>' . $this->taxonomies[$taxonomy]->labels->add_new_item . '</span><br><small>' . $this->taxonomies[$taxonomy]->labels->name . ' ' . __( 'разделяются нажатием на кнопку Enter', 'wp-recall' ) . '</small>'
+			'label'			 => '<span>' . $this->taxonomies[$taxonomy]->labels->add_new_item . '</span><br><small>' . $this->taxonomies[$taxonomy]->labels->name . ' ' . __( 'It separates by push of Enter button', 'wp-recall' ) . '</small>'
 		);
 
 		$fields = rcl_form_field( $args );

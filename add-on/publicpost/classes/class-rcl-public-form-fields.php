@@ -194,7 +194,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 				array(
 					'slug'		 => 'gallery',
 					'type'		 => 'radio',
-					'title'		 => __( 'To offer an output of images in a gallery', 'wp-recall' ),
+					'title'		 => __( 'Offer an output of images in a gallery', 'wp-recall' ),
 					'values'	 => array(
 						__( 'Disabled', 'wp-recall' ),
 						__( 'Enabled', 'wp-recall' )

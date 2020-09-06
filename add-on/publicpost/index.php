@@ -500,10 +500,10 @@ function rcl_send_mail_about_new_post( $post_id, $postData, $update ) {
 	$title	 = __( 'New write', 'wp-recall' );
 	$email	 = get_site_option( 'admin_email' );
 
-	$textm = '<p>' . sprintf( __( 'An user added new write on the website "%s"!', 'wp-recall' ), get_bloginfo( 'name' ) ) . '</p>';
+	$textm = '<p>' . sprintf( __( 'An user added new write on the website "%s"', 'wp-recall' ), get_bloginfo( 'name' ) ) . '.</p>';
 	$textm .= '<p>' . __( 'The name of the write', 'wp-recall' ) . ': <a href="' . get_permalink( $post_id ) . '">' . get_the_title( $post_id ) . '</a>' . '</p>';
 	$textm .= '<p>' . __( 'The author of the write', 'wp-recall' ) . ': <a href="' . rcl_get_user_url( $postData['post_author'] ) . '">' . get_the_author_meta( 'display_name', $postData['post_author'] ) . '</a>' . '</p>';
-	$textm .= '<p>' . __( 'Don\'t forget to check this write, probably it is waiting for your moderation.' ) . '</p>';
+	$textm .= '<p>' . __( 'Don\'t forget to check this write, probably it is waiting for your moderation', 'wp-recall' ) . '.</p>';
 
 	rcl_mail( $email, $title, $textm );
 }

@@ -67,23 +67,13 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 				'value_step' => 1,
 				'title'		 => __( 'Max number of files', 'wp-recall' ),
 			),
-			/* array(
-			  'slug'		 => 'multiple',
-			  'default'	 => $this->multiple,
-			  'type'		 => 'radio',
-			  'values'	 => array(
-			  __( 'Отключено', 'wp-recall' ),
-			  __( 'Включено', 'wp-recall' )
-			  ),
-			  'title'		 => __( 'Multiple loading', 'wp-recall' ),
-			  ), */
 			array(
 				'slug'		 => 'dropzone',
 				'default'	 => $this->dropzone,
 				'type'		 => 'radio',
 				'values'	 => array(
-					__( 'Отключено', 'wp-recall' ),
-					__( 'Включено', 'wp-recall' )
+					__( 'Disabled', 'wp-recall' ),
+					__( 'Enabled', 'wp-recall' )
 				),
 				'title'		 => __( 'Dropzone', 'wp-recall' ),
 			),
