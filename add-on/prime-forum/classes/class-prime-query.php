@@ -61,7 +61,7 @@ class PrimeQuery {
 
 			$vars = array(
 				'pfm-group'	 => strip_tags( get_query_var( 'pfm-group' ) ),
-				'pfm-forum'	 => strip_tags( (get_query_var( 'page' )) ? get_query_var( 'page' ) : get_query_var( 'pfm-forum' ) ),
+				'pfm-forum'	 => strip_tags( (get_query_var( 'page' )) ? get_query_var( 'page' ) : get_query_var( 'pfm-forum' )  ),
 				'pfm-topic'	 => strip_tags( get_query_var( 'pfm-topic' ) ),
 				'pfm-page'	 => strip_tags( get_query_var( 'pfm-page' ) ),
 				'pfm-author' => isset( $_GET['pfm-author'] ) ? intval( $_GET['pfm-author'] ) : '',
@@ -287,13 +287,13 @@ class PrimeQuery {
 			);
 
 			if ( $this->vars['pfm-forum'] ) {
-				$args['forum_id'] = $this->vars['pfm-forum'];
+				$args['forum_id'] = intval( $this->vars['pfm-forum'] );
 			}
 
 			if ( $this->vars['pfm-group'] ) {
 				$args['join'][] = array(
 					['forum_id', 'forum_id' ],
-					$this->forums_query->where( ['group_id' => $this->vars['pfm-group'] ] )
+					$this->forums_query->where( ['group_id' => intval( $this->vars['pfm-group'] ) ] )
 				);
 			}
 		}if ( $this->is_author ) {
