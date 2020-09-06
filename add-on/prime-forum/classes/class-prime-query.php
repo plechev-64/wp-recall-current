@@ -60,12 +60,12 @@ class PrimeQuery {
 		} else {
 
 			$vars = array(
-				'pfm-group'	 => get_query_var( 'pfm-group' ),
-				'pfm-forum'	 => (get_query_var( 'page' )) ? get_query_var( 'page' ) : get_query_var( 'pfm-forum' ),
-				'pfm-topic'	 => get_query_var( 'pfm-topic' ),
-				'pfm-page'	 => get_query_var( 'pfm-page' ),
+				'pfm-group'	 => strip_tags( get_query_var( 'pfm-group' ) ),
+				'pfm-forum'	 => strip_tags( (get_query_var( 'page' )) ? get_query_var( 'page' ) : get_query_var( 'pfm-forum' ) ),
+				'pfm-topic'	 => strip_tags( get_query_var( 'pfm-topic' ) ),
+				'pfm-page'	 => strip_tags( get_query_var( 'pfm-page' ) ),
 				'pfm-author' => isset( $_GET['pfm-author'] ) ? intval( $_GET['pfm-author'] ) : '',
-				'pfm-search' => isset( $_GET['fs'] ) ? esc_sql( $_GET['fs'] ) : ''
+				'pfm-search' => isset( $_GET['fs'] ) ? esc_sql( strip_tags( $_GET['fs'] ) ) : ''
 			);
 		}
 
