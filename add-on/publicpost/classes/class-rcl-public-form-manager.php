@@ -75,7 +75,7 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields {
 
 		$actionButtons = array(
 			array(
-				'label'		 => __( 'Дублировать', 'wp-recall' ),
+				'label'		 => __( 'Copy', 'wp-recall' ),
 				'icon'		 => 'fa-copy',
 				'onclick'	 => 'rcl_manager_copy_fields("' . $this->post_type . '_' . ($form_id + 1) . '");'
 			)

@@ -254,25 +254,25 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		$content = '<div class="rcl-fields-manager ' . ($this->structure_edit ? 'structure-edit' : 'structure-simple') . '">';
 
 		if ( $this->meta_delete ) {
-			$content .= '<span style="display:none" id="rcl-manager-confirm-delete">' . __( 'Удалить данные добавленные этим полем?', 'wp-recall' ) . '</span>';
+			$content .= '<span style="display:none" id="rcl-manager-confirm-delete">' . __( 'To delete a data adding this field?', 'wp-recall' ) . '</span>';
 		}
 
 		if ( $this->template_fields ) {
 			$content .= '<div class="rcl-manager-box service-box">';
-			$content .= '<span class="manager-title">' . __( 'Шаблоны', 'wp-recall' ) . '</span>';
+			$content .= '<span class="manager-title">' . __( 'Templates', 'wp-recall' ) . '</span>';
 			$content .= $this->get_service_box();
 			$content .= '</div>';
 		}
 
 		if ( $this->default_fields && $this->default_box ) {
 			$content .= '<div class="rcl-manager-box default-box">';
-			$content .= '<span class="manager-title">' . __( 'Неактивные поля', 'wp-recall' ) . '</span>';
+			$content .= '<span class="manager-title">' . __( 'Inactive fields', 'wp-recall' ) . '</span>';
 			$content .= $this->get_default_box();
 			$content .= '</div>';
 		}
 
 		$content .= '<div class="rcl-manager-box rcl-custom-fields-box">';
-		$content .= '<span class="manager-title">' . __( 'Активные поля', 'wp-recall' ) . '</span>';
+		$content .= '<span class="manager-title">' . __( 'Active fields', 'wp-recall' ) . '</span>';
 		$content .= '<form method="post" action="" class="rcl-fields-manager-form" ' . ($this->onsubmit ? 'onsubmit="' . $this->onsubmit . '();return false;"' : '') . '>';
 
 		$content .= $this->get_manager_options_form();
@@ -368,7 +368,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 					'slug'			 => 'group-title',
 					'type'			 => 'text',
 					'input_name'	 => 'structure-groups[' . $this->group_id . '][title]',
-					'placeholder'	 => __( 'Наименование секции', 'wp-recall' ),
+					'placeholder'	 => __( 'Name of the section', 'wp-recall' ),
 					'value'			 => $group['title']
 				) )->get_field_html();
 			$content .= '</div>';
@@ -379,17 +379,17 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			$content .= rcl_get_button( [
 				'size'		 => 'medium',
 				'type'		 => 'clear',
-				'title'		 => __( 'Удалить секцию', 'wp-recall' ),
+				'title'		 => __( 'Delete section', 'wp-recall' ),
 				'icon'		 => 'fa-trash',
 				'class'		 => 'group-manager-button group-delete',
-				'onclick'	 => 'rcl_remove_manager_group("' . __( 'Вы уверены?', 'wp-recall' ) . '",this);return false;',
+				'onclick'	 => 'rcl_remove_manager_group("' . __( 'Are you sure?', 'wp-recall' ) . '",this);return false;',
 				] );
 			//}
 
 			$content .= rcl_get_button( [
 				'size'		 => 'medium',
 				'type'		 => 'clear',
-				'title'		 => __( 'Настройки секции', 'wp-recall' ),
+				'title'		 => __( 'Settings of section', 'wp-recall' ),
 				'icon'		 => 'fa-sliders',
 				'class'		 => 'group-manager-button group-settings',
 				'onclick'	 => 'rcl_switch_view_settings_manager_group(this);return false;',
@@ -398,7 +398,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			$content .= rcl_get_button( [
 				'size'		 => 'medium',
 				'type'		 => 'clear',
-				'label'		 => __( 'Добавить группу полей', 'wp-recall' ),
+				'label'		 => __( 'Add a group of fields', 'wp-recall' ),
 				'icon'		 => 'fa-plus',
 				'class'		 => 'group-manager-button add-area',
 				'onclick'	 => 'rcl_manager_get_new_area(this);return false;',
@@ -421,7 +421,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 					'slug'		 => 'group-notice',
 					'type'		 => 'text',
 					'input_name' => 'structure-groups[' . $this->group_id . '][notice]',
-					'title'		 => __( 'Пояснение к секции', 'wp-recall' ),
+					'title'		 => __( 'A note of this section', 'wp-recall' ),
 					'value'		 => isset( $group['notice'] ) ? $group['notice'] : ''
 				)
 			);
@@ -475,7 +475,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		if ( $this->structure_edit ) {
 
 			$content .= '<div class="rcl-areas-manager">';
-			$content .= '<a href="#" title="' . __( 'Удалить группу полей', 'wp-recall' ) . '"onclick="rcl_remove_manager_area(\'' . __( 'Вы уверены?', 'wp-recall' ) . '\',this);return false"><i class="rcli fa-trash" aria-hidden="true"></i></a>';
+			$content .= '<a href="#" title="' . __( 'Delete group of fields', 'wp-recall' ) . '"onclick="rcl_remove_manager_area(\'' . __( 'Are you sure?', 'wp-recall' ) . '\',this);return false"><i class="rcli fa-trash" aria-hidden="true"></i></a>';
 
 			if ( $this->sortable )
 				$content .= '<span class="area-move left-align"><i class="rcli fa-arrows" aria-hidden="true"></i></span>';
@@ -531,7 +531,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		$content = "<div class=submit-box>";
 
 		if ( $this->structure_edit )
-			$content .= "<input type=button onclick='rcl_manager_get_new_group(this);' class='add-field-button button-secondary right' value='+ " . __( 'Добавить секцию', 'wp-recall' ) . "'>";
+			$content .= "<input type=button onclick='rcl_manager_get_new_group(this);' class='add-field-button button-secondary right' value='+ " . __( 'Add new section', 'wp-recall' ) . "'>";
 
 		$content .= "<input class='button button-primary' type=submit value='" . __( 'Save', 'wp-recall' ) . "' name='rcl_save_custom_fields'>";
 
@@ -652,14 +652,14 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			$content .= $this::setup( array(
 					'slug'			 => 'title',
 					'type'			 => 'text',
-					'placeholder'	 => __( 'Укажите заголовок нового поля', 'wp-recall' ),
+					'placeholder'	 => __( 'Point a title of new field', 'wp-recall' ),
 					'input_name'	 => 'fields[' . $field_id . '][title]'
 				) )->get_field_html();
 		} else {
 			$content .= $this::setup( array(
 					'slug'			 => 'title',
 					'type'			 => 'text',
-					'placeholder'	 => __( 'Укажите заголовок поля', 'wp-recall' ),
+					'placeholder'	 => __( 'Point a title of this field', 'wp-recall' ),
 					'input_name'	 => 'fields[' . $field_id . '][title]',
 					'value'			 => $field->title
 				) )->get_field_html();
@@ -795,7 +795,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 					$options['type'] = array(
 						'slug'	 => 'type',
 						'type'	 => 'select',
-						'title'	 => __( 'Тип поля', 'wp-recall' ),
+						'title'	 => __( 'Type of field', 'wp-recall' ),
 						'values' => $typeList
 					);
 				}

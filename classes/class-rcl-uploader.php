@@ -189,7 +189,7 @@ class Rcl_Uploader {
 
 		$content = '<div id="rcl-dropzone-' . $this->uploader_id . '" class="rcl-dropzone">
 				<div class="dropzone-upload-area">
-					' . __( 'Добавить файлы в очередь загрузки', 'wp-recall' ) . '
+					' . __( 'Add files in a queue of downloads', 'wp-recall' ) . '
 				</div>
 			</div>';
 
@@ -340,7 +340,7 @@ class Rcl_Uploader {
 
 		$items[] = array(
 			'icon'		 => 'fa-newspaper-o',
-			'title'		 => __( 'Добавить в редактор', 'wp-recall' ),
+			'title'		 => __( 'Add to the editor', 'wp-recall' ),
 			'onclick'	 => 'rcl_add_attachment_in_editor(' . $attachment_id . ',"' . $this->fix_editor . '",this);return false;',
 			'data'		 => array(
 				'html'	 => $fileHtml,
@@ -356,7 +356,7 @@ class Rcl_Uploader {
 		$items = array(
 			array(
 				'icon'		 => 'fa-trash',
-				'title'		 => __( 'Удалить файл', 'wp-recall' ),
+				'title'		 => __( 'Delete the file', 'wp-recall' ),
 				'onclick'	 => 'rcl_delete_attachment(' . $attach_id . ',' . $this->post_parent . ',this);return false;'
 			)
 		);

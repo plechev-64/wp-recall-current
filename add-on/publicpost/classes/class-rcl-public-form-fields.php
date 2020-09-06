@@ -23,9 +23,12 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 			unset( $this->taxonomies['post_format'] );
 		}
 
+		add_filter( 'rcl_custom_fields', array( $this, 'fix_old_fields' ), 10, 2 );
+
 		$this->setup_public_form_fields();
 
 		add_filter( 'rcl_field_options', array( $this, 'edit_field_options' ), 10, 3 );
+
 
 		if ( $customFields = $this->get_custom_fields() ) {
 			foreach ( $customFields as $field_id => $field ) {
@@ -176,7 +179,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 				array(
 					'slug'		 => 'fix_editor',
 					'type'		 => 'radio',
-					'title'		 => __( 'Вставка изображения в редактор', 'wp-recall' ),
+					'title'		 => __( 'Adding of an image to the text editor', 'wp-recall' ),
 					'values'	 => array(
 						__( 'Disabled', 'wp-recall' ),
 						'post_content' => __( 'Enabled', 'wp-recall' )
@@ -191,7 +194,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 				array(
 					'slug'		 => 'gallery',
 					'type'		 => 'radio',
-					'title'		 => __( 'Предлагать вывод изображений в галерее', 'wp-recall' ),
+					'title'		 => __( 'To offer an output of images in a gallery', 'wp-recall' ),
 					'values'	 => array(
 						__( 'Disabled', 'wp-recall' ),
 						__( 'Enabled', 'wp-recall' )
@@ -228,7 +231,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 					array(
 						'slug'		 => 'fix_editor',
 						'type'		 => 'radio',
-						'title'		 => __( 'Вставка изображения в редактор', 'wp-recall' ),
+						'title'		 => __( 'Adding of an image to the text editor', 'wp-recall' ),
 						'values'	 => array(
 							__( 'Disabled', 'wp-recall' ),
 							'post_content' => __( 'Enabled', 'wp-recall' )
@@ -382,6 +385,20 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 		}
 
 		return $ids;
+	}
+
+	function fix_old_fields( $fields ) {
+
+		if ( ! $fields )
+			return $fields;
+
+		foreach ( $fields as $k => $field ) {
+			if ( in_array( $field['slug'], ['post_uploader', 'post_thumbnail' ] ) && $field['type'] == 'custom' ) {
+				$fields[$k]['type'] = 'uploader';
+			}
+		}
+
+		return $fields;
 	}
 
 }

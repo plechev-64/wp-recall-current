@@ -228,7 +228,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		if ( isset( $_GET['draft'] ) && $_GET['draft'] == 'saved' ) {
 			$content .= rcl_get_notice( array(
 				'type'	 => 'success',
-				'text'	 => __( 'Черновик успешно сохранен!', 'wp-recall' )
+				'text'	 => __( 'The draft has been saved successfully!', 'wp-recall' )
 				) );
 		}
 
@@ -329,7 +329,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		if ( $this->post_id ) {
 			$buttons['gotopost'] = array(
 				'href'	 => $this->post->post_status != 'publish' ? get_bloginfo( 'wpurl' ) . '/?p=' . $this->post_id . '&preview=true' : get_permalink( $this->post_id ),
-				'label'	 => __( 'Перейти к записи', 'wp-recall' ),
+				'label'	 => __( 'Go to the post', 'wp-recall' ),
 				'attrs'	 => array(
 					'target' => '_blank'
 				),

@@ -80,7 +80,7 @@ $content .= '<h4>' . __( 'RCLKEY', 'wp-recall' ) . '</h4>
     <input class="button" type="submit" value="' . __( 'Save', 'wp-recall' ) . '" name="save-rcl-key">
     ' . wp_nonce_field( 'add-rcl-key', '_wpnonce', true, false ) . '
 </form>
-<p class="install-help">' . __( 'The key is required to update the add-ons here. You can get it in your personal account online <a href="https://codeseller.ru/" target="_blank">https://codeseller.ru</a>', 'wp-recall' ) . '</p>';
+<p class="install-help">' . __( 'The key is required to update the add-ons here. You can get it in your personal account of website', 'wp-recall' ) . ' <a href="https://codeseller.ru/" target="_blank">https://codeseller.ru</a></p>';
 
 $content .= '</div>';
 

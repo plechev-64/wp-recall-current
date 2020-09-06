@@ -184,7 +184,7 @@ function rcl_ajax_delete_attachment() {
 
 	if ( ! $attachment_id ) {
 		wp_send_json( array(
-			'error' => __( 'Переданы неверные данные!', 'wp-recall' )
+			'error' => __( 'The data has been wrong!', 'wp-recall' )
 		) );
 	}
 
@@ -192,7 +192,7 @@ function rcl_ajax_delete_attachment() {
 
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			wp_send_json( array(
-				'error' => __( 'Вы не можете удалить этот файл!', 'wp-recall' )
+				'error' => __( 'You can`t delete this file!', 'wp-recall' )
 			) );
 		}
 	} else {
@@ -202,13 +202,13 @@ function rcl_ajax_delete_attachment() {
 		if ( ! $user_ID ) {
 			if ( $media->session_id != $_COOKIE['PHPSESSID'] ) {
 				wp_send_json( array(
-					'error' => __( 'Вы не можете удалить этот файл!', 'wp-recall' )
+					'error' => __( 'You can`t delete this file!', 'wp-recall' )
 				) );
 			}
 		} else {
 			if ( ! current_user_can( 'edit_post', $attachment_id ) ) {
 				wp_send_json( array(
-					'error' => __( 'Вы не можете удалить этот файл!', 'wp-recall' )
+					'error' => __( 'You can`t delete this file!', 'wp-recall' )
 				) );
 			}
 		}
@@ -219,7 +219,7 @@ function rcl_ajax_delete_attachment() {
 	wp_delete_attachment( $attachment_id, true );
 
 	wp_send_json( array(
-		'success' => __( 'Файл успешно удален!', 'wp-recall' )
+		'success' => __( 'The file has been successfully deleted!', 'wp-recall' )
 	) );
 }
 

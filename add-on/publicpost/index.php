@@ -524,7 +524,7 @@ function rcl_add_post_uploader_image_buttons( $items, $attachment_id, $uploader 
 
 		$items[] = array(
 			'icon'		 => 'fa-image',
-			'title'		 => __( 'Назначить миниатюрой', 'wp-recall' ),
+			'title'		 => __( 'Appoint a thumbnail', 'wp-recall' ),
 			'onclick'	 => 'rcl_set_post_thumbnail(' . $attachment_id . ',' . $uploader->post_parent . ',this);return false;'
 		);
 	}
@@ -547,7 +547,7 @@ function rcl_add_post_uploader_image_buttons( $items, $attachment_id, $uploader 
 		$items[] = array(
 			'icon'		 => ($postGallery && in_array( $attachment_id, $postGallery )) ? 'fa-toggle-on' : 'fa-toggle-off',
 			'class'		 => 'rcl-switch-gallery-button-' . $attachment_id,
-			'title'		 => __( 'Вывести в галерее', 'wp-recall' ),
+			'title'		 => __( 'Output in a gallery', 'wp-recall' ),
 			'content'	 => '<input type="hidden" id="rcl-post-gallery-attachment-' . $attachment_id . '" name="rcl-post-gallery[]" value="' . $valueGallery . '">',
 			'onclick'	 => 'rcl_switch_attachment_in_gallery(' . $attachment_id . ',this);return false;'
 		);

@@ -419,7 +419,7 @@ final class WP_Recall {
 				'class'	 => 'Rcl_Field_Editor'
 			),
 			'uploader'		 => array(
-				'label'	 => __( 'Files uploader', 'wp-recall' ),
+				'label'	 => __( 'File uploader', 'wp-recall' ),
 				'class'	 => 'Rcl_Field_Uploader'
 			)
 			) );

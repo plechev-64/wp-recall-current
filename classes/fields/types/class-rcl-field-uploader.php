@@ -102,8 +102,8 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 				'slug'		 => 'fix_editor',
 				'default'	 => $this->fix_editor,
 				'type'		 => 'text',
-				'title'		 => __( 'ID прикрепленного редактора', 'wp-recall' ),
-				'notice'	 => __( 'Можно закрепить загрузчик за одним из имеющихся текстовых редакторов, указав его ID', 'wp-recall' ),
+				'title'		 => __( 'ID of an attaching editor', 'wp-recall' ),
+				'notice'	 => __( 'You can attach this uploader for one of text editors, pointing its ID', 'wp-recall' ),
 			)
 		);
 
