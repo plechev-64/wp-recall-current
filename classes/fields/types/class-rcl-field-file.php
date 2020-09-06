@@ -37,8 +37,7 @@ class Rcl_Field_File extends Rcl_Field_Abstract {
 				'default'		 => 'fa-file',
 				'placeholder'	 => 'fa-file',
 				'type'			 => 'text',
-				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' ),
-				'notice'		 => __( 'Source', 'wp-recall' ) . ' <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">http://fontawesome.io/</a>'
+				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' )
 			),
 			array(
 				'slug'		 => 'max_size',

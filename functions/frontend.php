@@ -68,6 +68,7 @@ function rcl_user_rayting() {
 add_action( 'rcl_user_description', 'rcl_user_meta', 30 );
 function rcl_user_meta() {
 	global $rcl_user, $rcl_users_set;
+
 	if ( false !== array_search( 'profile_fields', $rcl_users_set->data ) || isset( $rcl_user->profile_fields ) ) {
 		if ( ! isset( $rcl_user->profile_fields ) )
 			$rcl_user->profile_fields = array();
@@ -398,6 +399,51 @@ function rcl_api_button_inline_size( $styles ) {
 			font-size: ' . 2 * $size . 'px;
 		}
 	';
+
+	return $styles;
+}
+
+// css variable
+// Основные цвета WP-Recall переведем в css переменные
+// для удобства: hex и rgb значения - чтобы потом самим css генерировать как прозрачность текста (rgba)
+add_filter( 'rcl_inline_styles', 'rcl_css_variable', 10, 2 );
+function rcl_css_variable( $styles, $rgb ) {
+	$rcl_color = rcl_get_option( 'primary-color', '#4c8cbd' );
+
+	list($r, $g, $b) = $rgb;
+
+	// темнее rgb
+	$rd	 = round( $r * 0.45 );
+	$gd	 = round( $g * 0.45 );
+	$bd	 = round( $b * 0.45 );
+
+	// ярче rgb
+	$rl	 = round( $r * 1.4 );
+	$gl	 = round( $g * 1.4 );
+	$bl	 = round( $b * 1.4 );
+
+	// инверт rgb
+	$rf	 = round( 0.75 * (255 - $r) );
+	$gf	 = round( 0.75 * (255 - $g) );
+	$bf	 = round( 0.75 * (255 - $b) );
+
+	// https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color
+	$text_color	 = '#fff';
+	$threshold	 = apply_filters( 'rcl_text_color_threshold', 150 );
+	if ( ($r * 0.299 + $g * 0.587 + $b * 0.114) > $threshold ) {
+		$text_color = '#000';
+	}
+
+	$styles .= '
+:root{
+--rclText: ' . $text_color . ';
+--rclHex:' . $rcl_color . ';
+--rclRgb:' . $r . ',' . $g . ',' . $b . ';
+--rclRgbDark:' . $rd . ',' . $gd . ',' . $bd . ';
+--rclRgbLight:' . $rl . ',' . $gl . ',' . $bl . ';
+--rclRgbFlip:' . $rf . ',' . $gf . ',' . $bf . ';
+}
+';
 
 	return $styles;
 }

@@ -30,8 +30,7 @@ class Rcl_Field_TextArea extends Rcl_Field_Abstract {
 				'placeholder'	 => 'fa-comment',
 				'class'			 => 'rcl-iconpicker',
 				'type'			 => 'text',
-				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' ),
-				'notice'		 => __( 'Source', 'wp-recall' ) . ' <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">http://fontawesome.io/</a>'
+				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' )
 			),
 			array(
 				'slug'		 => 'placeholder',

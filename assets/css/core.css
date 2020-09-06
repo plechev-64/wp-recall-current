@@ -92,6 +92,9 @@ img.aligncenter {
     top: 0;
     z-index: 999;
 }
+body .rcl-bttn.rcl-bttn__type-primary {
+    color: var(--rclText) !important;
+}
 /*end*/
 
 
@@ -784,6 +787,9 @@ a.data-filter.filter-active:hover {
     outline: 0;
     padding: 5px 10px;
     width: 100%;
+}
+.rcl-field-input input:invalid {
+	border-color: red !important;
 }
 .rcl-field-input input:focus:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
 .rcl-field-input textarea:focus {
