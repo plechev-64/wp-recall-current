@@ -21,7 +21,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 	public $multiple		 = 1;
 	public $dropzone		 = 0;
 	public $mode_output		 = 'grid';
-	public $temp_media		 = true;
+	public $temp_media		 = 0;
 	public $uploader_props	 = array();
 
 	function __construct( $args ) {

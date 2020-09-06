@@ -302,8 +302,18 @@ function rcl_set_post_thumbnail() {
 		update_post_meta( $parent_id, '_thumbnail_id', $thumbnail_id );
 	}
 
+	$field = $formFields->get_field( 'post_thumbnail' );
+
+	$field->set_prop( 'uploader_props', array(
+		'post_parent'	 => $parent_id,
+		'form_id'		 => $form_id,
+		'post_type'		 => $post_type,
+		'multiple'		 => false,
+		'crop'			 => true
+	) );
+
 	$result = array(
-		'html'	 => $formFields->get_field( 'post_thumbnail' )->get_uploader()->gallery_attachment( $thumbnail_id ),
+		'html'	 => $field->get_uploader()->gallery_attachment( $thumbnail_id ),
 		'id'	 => $thumbnail_id
 	);
 

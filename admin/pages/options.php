@@ -127,6 +127,7 @@ $options->box( 'primary' )->add_group( 'design', array(
 	),
 	array(
 		'type'		 => 'uploader',
+		'temp_media' => 1,
 		'multiple'	 => false,
 		'crop'		 => 1,
 		'slug'		 => 'default_avatar',

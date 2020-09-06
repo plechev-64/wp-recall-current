@@ -173,6 +173,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 			'title'		 => __( 'WP-Recall media loader', 'wp-recall' ),
 			'type'		 => 'uploader',
 			'multiple'	 => 1,
+			'temp_media' => 1,
 			'file_types' => 'png, gif, jpg',
 			'fix_editor' => 'post_content',
 			'options'	 => array(
@@ -188,6 +189,11 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 				),
 				array(
 					'slug'	 => 'multiple',
+					'type'	 => 'hidden',
+					'value'	 => 1
+				),
+				array(
+					'slug'	 => 'temp_media',
 					'type'	 => 'hidden',
 					'value'	 => 1
 				),
@@ -210,6 +216,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 				'slug'		 => 'post_thumbnail',
 				'title'		 => __( 'Thumbnail of the publication', 'wp-recall' ),
 				'type'		 => 'uploader',
+				'temp_media' => 1,
 				'file_types' => 'png, gif, jpg',
 				'fix_editor' => 'post_content',
 				'options'	 => array(
@@ -227,6 +234,11 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 						'slug'	 => 'multiple',
 						'type'	 => 'hidden',
 						'value'	 => 0
+					),
+					array(
+						'slug'	 => 'temp_media',
+						'type'	 => 'hidden',
+						'value'	 => 1
 					),
 					array(
 						'slug'		 => 'fix_editor',
@@ -393,7 +405,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 			return $fields;
 
 		foreach ( $fields as $k => $field ) {
-			if ( in_array( $field['slug'], ['post_uploader', 'post_thumbnail' ] ) && $field['type'] == 'custom' ) {
+			if ( isset( $field['slug'] ) && in_array( $field['slug'], ['post_uploader', 'post_thumbnail' ] ) && $field['type'] == 'custom' ) {
 				$fields[$k]['type'] = 'uploader';
 			}
 		}

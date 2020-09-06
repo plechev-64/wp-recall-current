@@ -54,8 +54,8 @@ function rcl_button_avatar_upload( $icons ) {
 			)
 		),
 		'resize'		 => array( 600, 600 ),
-		'min_height'	 => 300,
-		'min_width'		 => 300,
+		'min_height'	 => 150,
+		'min_width'		 => 150,
 		'max_size'		 => rcl_get_option( 'avatar_weight', 1024 )
 		) );
 
