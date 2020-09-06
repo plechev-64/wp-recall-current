@@ -160,7 +160,9 @@ class Rcl_Uploader {
 		//rcl_fileupload_scripts();
 		//rcl_crop_scripts();
 
-		return '<input id="rcl-uploader-input-' . $this->uploader_id . '" class="uploader-input" data-uploader_id="' . $this->uploader_id . '" name="' . ($this->multiple ? $this->input_name . '[]' : $this->input_name) . '" type="file" accept="' . implode( ', ', $this->accept ) . '" ' . ($this->multiple ? 'multiple' : '') . '>'
+		return '<input id="rcl-uploader-input-' . $this->uploader_id . '" class="uploader-input" '
+			. 'data-uploader_id="' . $this->uploader_id . '" name="' . ($this->multiple ? $this->input_name . '[]' : $this->input_name) . '" '
+			. 'type="file" accept="' . implode( ', ', $this->accept ) . '" ' . ($this->multiple ? 'multiple' : '') . '>'
 			. '<script>rcl_init_uploader(' . json_encode( $this ) . ');</script>';
 	}
 

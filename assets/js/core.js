@@ -1219,7 +1219,8 @@ function RclUploader( props ) {
 			loadImageMaxFileSize: this.options.max_size * 1024,
 			autoUpload: this.options.auto_upload,
 			singleFileUploads: false,
-			limitMultiFileUploads: this.options.max_files,
+			/*limitMultiFileUploads: this.options.max_files,*/
+			maxNumberOfFiles: this.options.max_files,
 			imageMinWidth: this.options.min_width,
 			imageMinHeight: this.options.min_height,
 			imageMaxWidth: 1920,

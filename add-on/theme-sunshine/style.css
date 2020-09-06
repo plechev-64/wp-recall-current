@@ -216,6 +216,9 @@
 .cab_content_blk #lk-content {
     width: 99%;
 }
+#lk-content + .rcl-notice {
+	flex-shrink: 0;
+}
 .cab_sidebar {
     border-left: 1px solid #e5e5e5;
     flex-shrink: 0;

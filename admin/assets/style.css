@@ -615,7 +615,7 @@ div.rcl_preloader i.rcli::before {
     line-height: normal;
 }
 .rcl-custom-fields-box .rcl-custom-field .fa-info::before {
-    content: "\f534";
+    /*content: "\f534";*/
 }
 /*.rcl-field-core a:not(.iconpicker-item) i:not(.mce-ico) {
     font-family: dashicons;

@@ -131,8 +131,13 @@ add_filter( 'pfm_check_forum_errors', 'pfm_check_access_global_view', 10 );
 function pfm_check_access_global_view( $errors ) {
 	global $PrimeUser;
 
-	if ( ! $PrimeUser->is_can( 'forum_view' ) )
+	if ( ! $PrimeUser->is_can( 'forum_view' ) ) {
 		$errors['error'][] = __( 'You are not allowed to view contents of the forum', 'wp-recall' );
+
+		if ( $PrimeUser->is_role( 'ban' ) ) {
+			$errors['error'][] = __( 'We are sorry but you was banned on this forum', 'wp-recall' );
+		}
+	}
 
 	return $errors;
 }
