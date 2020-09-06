@@ -198,11 +198,11 @@ class PrimeQuery {
 
 			if ( '' != get_site_option( 'permalink_structure' ) ) {
 				$args = array(
-					'group_slug' => $this->vars['pfm-group']
+					'group_slug' => esc_sql( $this->vars['pfm-group'] )
 				);
 			} else {
 				$args = array(
-					'group_id' => $this->vars['pfm-group']
+					'group_id' => intval( $this->vars['pfm-group'] )
 				);
 			}
 		} else if ( $this->is_forum ) {
@@ -216,9 +216,9 @@ class PrimeQuery {
 			);
 
 			if ( '' != get_site_option( 'permalink_structure' ) ) {
-				$args['forum_slug'] = $this->vars['pfm-forum'];
+				$args['forum_slug'] = esc_sql( $this->vars['pfm-forum'] );
 			} else {
-				$args['forum_id'] = $this->vars['pfm-forum'];
+				$args['forum_id'] = intval( $this->vars['pfm-forum'] );
 			}
 		} else if ( $this->is_topic ) {
 
@@ -236,11 +236,11 @@ class PrimeQuery {
 			);
 
 			if ( '' != get_site_option( 'permalink_structure' ) ) {
-				$args['topic_slug'] = $this->vars['pfm-topic'];
-				$args['join'][0][1]->where( ['forum_slug' => $this->vars['pfm-forum'] ] );
+				$args['topic_slug'] = esc_sql( $this->vars['pfm-topic'] );
+				$args['join'][0][1]->where( ['forum_slug' => esc_sql( $this->vars['pfm-forum'] ) ] );
 			} else {
-				$args['topic_id'] = $this->vars['pfm-topic'];
-				$args['join'][0][1]->where( ['forum_id' => $this->vars['pfm-forum'] ] );
+				$args['topic_id'] = intval( $this->vars['pfm-topic'] );
+				$args['join'][0][1]->where( ['forum_id' => intval( $this->vars['pfm-forum'] ) ] );
 			}
 		}
 
