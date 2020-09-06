@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wp-recall\n"
-"POT-Creation-Date: 2020-09-06 11:40+0400\n"
+"POT-Creation-Date: 2020-09-06 16:27+0400\n"
 "PO-Revision-Date: 2020-09-06 11:12+0400\n"
 "Last-Translator: \n"
 "Language-Team: https//:codeseller.ru\n"
@@ -63,7 +63,7 @@ msgstr ""
 #: add-on/groups/classes/class-rcl-groups-list.php:158
 #: add-on/groups/groups-init.php:14 add-on/groups/groups-init.php:49
 #: add-on/prime-forum/functions-templates.php:304
-#: add-on/user-balance/admin/index.php:126 functions/frontend.php:167
+#: add-on/user-balance/admin/index.php:126 functions/frontend.php:168
 msgid "Search"
 msgstr ""
 
@@ -479,7 +479,7 @@ msgstr ""
 
 #: add-on/commerce/admin/pages/addon-settings.php:45
 #: add-on/groups/admin/index.php:39
-#: add-on/profile/classes/class-rcl-profile-fields.php:130
+#: add-on/profile/classes/class-rcl-profile-fields.php:129
 #: add-on/publicpost/classes/class-rcl-list-terms.php:56
 #: add-on/publicpost/classes/class-rcl-list-terms.php:85
 #: add-on/user-balance/admin/addon-settings.php:86
@@ -509,17 +509,17 @@ msgstr ""
 #: add-on/prime-forum/admin/index.php:295 add-on/profile/index.php:153
 #: add-on/publicpost/admin/addon-settings.php:48
 #: add-on/publicpost/admin/addon-settings.php:67
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:184
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:199
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:236
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:185
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:205
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:248
 #: add-on/rating-system/admin/addon-settings.php:165
-#: admin/pages/options.php:105 admin/pages/options.php:169
-#: admin/pages/options.php:203 admin/pages/options.php:212
-#: admin/pages/options.php:275 admin/pages/options.php:281
-#: admin/pages/options.php:293
-#: classes/fields/types/class-rcl-field-editor.php:47
-#: classes/fields/types/class-rcl-field-editor.php:57
-#: classes/fields/types/class-rcl-field-uploader.php:75
+#: admin/pages/options.php:105 admin/pages/options.php:170
+#: admin/pages/options.php:204 admin/pages/options.php:213
+#: admin/pages/options.php:276 admin/pages/options.php:282
+#: admin/pages/options.php:294
+#: classes/fields/types/class-rcl-field-editor.php:46
+#: classes/fields/types/class-rcl-field-editor.php:56
+#: classes/fields/types/class-rcl-field-uploader.php:74
 msgid "Disabled"
 msgstr ""
 
@@ -530,15 +530,15 @@ msgstr ""
 #: add-on/prime-forum/admin/index.php:296 add-on/profile/index.php:154
 #: add-on/publicpost/admin/addon-settings.php:49
 #: add-on/publicpost/admin/addon-settings.php:67
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:185
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:200
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:237
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:186
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:206
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:249
 #: add-on/rating-system/admin/addon-settings.php:165
-#: admin/pages/options.php:106 admin/pages/options.php:170
-#: admin/pages/options.php:204 admin/pages/options.php:213
-#: admin/pages/options.php:293
-#: classes/fields/types/class-rcl-field-editor.php:58
-#: classes/fields/types/class-rcl-field-uploader.php:76
+#: admin/pages/options.php:106 admin/pages/options.php:171
+#: admin/pages/options.php:205 admin/pages/options.php:214
+#: admin/pages/options.php:294
+#: classes/fields/types/class-rcl-field-editor.php:57
+#: classes/fields/types/class-rcl-field-uploader.php:75
 msgid "Enabled"
 msgstr ""
 
@@ -1166,7 +1166,7 @@ msgstr ""
 
 #: add-on/feed/classes/class-rcl-feed-list.php:357
 #: add-on/rating-system/index.php:36 classes/class-rcl-users-list.php:517
-#: functions/frontend.php:91 templates/user-cards.php:6
+#: functions/frontend.php:92 templates/user-cards.php:6
 msgid "Comments"
 msgstr ""
 
@@ -1313,13 +1313,13 @@ msgstr ""
 msgid "Max size of the group avatars"
 msgstr ""
 
-#: add-on/groups/admin/index.php:76 admin/pages/options.php:143
-#: admin/pages/options.php:154
+#: add-on/groups/admin/index.php:76 admin/pages/options.php:144
+#: admin/pages/options.php:155
 msgid "Set the image upload limit in kb, by default"
 msgstr ""
 
-#: add-on/groups/admin/index.php:77 admin/pages/options.php:144
-#: admin/pages/options.php:155
+#: add-on/groups/admin/index.php:77 admin/pages/options.php:145
+#: admin/pages/options.php:156
 msgid "If 0 is specified, download is disallowed."
 msgstr ""
 
@@ -1543,7 +1543,7 @@ msgstr ""
 
 #: add-on/groups/groups-widgets.php:128
 #: add-on/rating-system/admin/addon-settings.php:25 admin/pages/options.php:92
-#: admin/pages/options.php:195 rcl-widgets.php:40 rcl-widgets.php:107
+#: admin/pages/options.php:196 rcl-widgets.php:40 rcl-widgets.php:107
 msgid "All users"
 msgstr ""
 
@@ -2403,7 +2403,7 @@ msgstr ""
 #: add-on/publicpost/classes/class-rcl-public-form.php:846
 #: add-on/publicpost/core.php:319
 #: classes/fields/class-rcl-fields-manager.php:385
-#: classes/fields/class-rcl-fields-manager.php:478 functions/frontend.php:598
+#: classes/fields/class-rcl-fields-manager.php:478 functions/frontend.php:644
 msgid "Are you sure?"
 msgstr ""
 
@@ -2603,6 +2603,10 @@ msgstr ""
 msgid "You are not allowed to view contents of the forum"
 msgstr ""
 
+#: add-on/prime-forum/functions-capabilities.php:138
+msgid "We are sorry but you was banned on this forum"
+msgstr ""
+
 #: add-on/prime-forum/functions-compatibility.php:20
 msgid "The answers on the forum"
 msgstr ""
@@ -2684,7 +2688,7 @@ msgstr ""
 
 #: add-on/prime-forum/functions-query.php:208
 #: classes/class-rcl-custom-fields.php:586
-#: classes/fields/types/class-rcl-field-range.php:142
+#: classes/fields/types/class-rcl-field-range.php:141
 msgid "from"
 msgstr ""
 
@@ -2923,11 +2927,11 @@ msgstr ""
 msgid "Filter users by this field"
 msgstr ""
 
-#: add-on/profile/classes/class-rcl-profile-fields.php:125
+#: add-on/profile/classes/class-rcl-profile-fields.php:124
 msgid "Users page"
 msgstr ""
 
-#: add-on/profile/classes/class-rcl-profile-fields.php:126
+#: add-on/profile/classes/class-rcl-profile-fields.php:125
 msgid "This page is required to filter users by value of profile fields"
 msgstr ""
 
@@ -3266,18 +3270,18 @@ msgid "Attach only the selected child terms to the post, ignoring parents"
 msgstr ""
 
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:127
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:270
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:282
 #: add-on/rating-system/admin/addon-settings.php:44
 #: add-on/rating-system/admin/addon-settings.php:112
-#: classes/fields/types/class-rcl-field-range.php:72
+#: classes/fields/types/class-rcl-field-range.php:71
 msgid "Disable"
 msgstr ""
 
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:128
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:271
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:283
 #: add-on/rating-system/admin/addon-settings.php:45
 #: add-on/rating-system/admin/addon-settings.php:113
-#: classes/fields/types/class-rcl-field-range.php:73
+#: classes/fields/types/class-rcl-field-range.php:72
 msgid "Enable"
 msgstr ""
 
@@ -3294,7 +3298,7 @@ msgid "Editor settings"
 msgstr ""
 
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:163
-#: classes/fields/types/class-rcl-field-editor.php:55
+#: classes/fields/types/class-rcl-field-editor.php:54
 msgid "Media loader"
 msgstr ""
 
@@ -3310,28 +3314,28 @@ msgstr ""
 msgid "WP-Recall media loader"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:182
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:234
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:183
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:246
 msgid "Adding of an image to the text editor"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:197
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:203
 msgid "Offer an output of images in a gallery"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:211
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:217
 msgid "Thumbnail of the publication"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:263
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:275
 msgid "Maximum output"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:268
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:280
 msgid "New values entry field"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form-fields.php:310
+#: add-on/publicpost/classes/class-rcl-public-form-fields.php:322
 msgid "Specify term_ID to be selected"
 msgstr ""
 
@@ -3807,7 +3811,7 @@ msgstr ""
 msgid "Your activity has sings of spam!"
 msgstr ""
 
-#: add-on/rcl-chat/actions_ajax.php:270 classes/class-rcl-uploader.php:441
+#: add-on/rcl-chat/actions_ajax.php:270 classes/class-rcl-uploader.php:443
 msgid "Forbidden file extension. Allowed:"
 msgstr ""
 
@@ -3892,8 +3896,8 @@ msgstr ""
 
 #: add-on/rcl-chat/addon-options.php:88
 #: classes/class-rcl-custom-fields-manager.php:299
-#: classes/fields/types/class-rcl-field-file.php:61
-#: classes/fields/types/class-rcl-field-uploader.php:58
+#: classes/fields/types/class-rcl-field-file.php:60
+#: classes/fields/types/class-rcl-field-uploader.php:57
 msgid "Allowed file types"
 msgstr ""
 
@@ -4049,7 +4053,7 @@ msgstr ""
 msgid "Not set attributes: chat_room"
 msgstr ""
 
-#: add-on/user-balance/admin/addon-settings.php:13 admin/pages/options.php:248
+#: add-on/user-balance/admin/addon-settings.php:13 admin/pages/options.php:249
 msgid "Not used"
 msgstr ""
 
@@ -4397,23 +4401,6 @@ msgid "Example, fa-user"
 msgstr ""
 
 #: admin/classes/class-rcl-tabs-manager.php:29
-#: classes/fields/types/class-rcl-field-agree.php:40
-#: classes/fields/types/class-rcl-field-checkbox.php:36
-#: classes/fields/types/class-rcl-field-date.php:33
-#: classes/fields/types/class-rcl-field-dynamic.php:33
-#: classes/fields/types/class-rcl-field-editor.php:40
-#: classes/fields/types/class-rcl-field-file.php:41
-#: classes/fields/types/class-rcl-field-hidden.php:37
-#: classes/fields/types/class-rcl-field-multiselect.php:34
-#: classes/fields/types/class-rcl-field-number.php:36
-#: classes/fields/types/class-rcl-field-radio.php:44
-#: classes/fields/types/class-rcl-field-range.php:36
-#: classes/fields/types/class-rcl-field-runner.php:35
-#: classes/fields/types/class-rcl-field-select.php:41
-#: classes/fields/types/class-rcl-field-tel.php:36
-#: classes/fields/types/class-rcl-field-text.php:36
-#: classes/fields/types/class-rcl-field-textarea.php:34
-#: classes/fields/types/class-rcl-field-uploader.php:41
 msgid "Source"
 msgstr ""
 
@@ -4643,157 +4630,157 @@ msgstr ""
 msgid "Top"
 msgstr ""
 
-#: admin/pages/options.php:133
+#: admin/pages/options.php:134
 msgid "Default avatar"
 msgstr ""
 
-#: admin/pages/options.php:142
+#: admin/pages/options.php:143
 msgid "Max weight of avatars"
 msgstr ""
 
-#: admin/pages/options.php:153
+#: admin/pages/options.php:154
 msgid "Max weight of cover"
 msgstr ""
 
-#: admin/pages/options.php:160
+#: admin/pages/options.php:161
 msgid "Caching"
 msgstr ""
 
-#: admin/pages/options.php:166
+#: admin/pages/options.php:167
 msgid "Cache"
 msgstr ""
 
-#: admin/pages/options.php:167
+#: admin/pages/options.php:168
 msgid ""
 "Use the functionality of the caching WP-Recall plugin. <a href=\"https://"
 "codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/\" "
 "target=\"_blank\">read More</a>"
 msgstr ""
 
-#: admin/pages/options.php:183
+#: admin/pages/options.php:184
 msgid "Time cache (seconds)"
 msgstr ""
 
-#: admin/pages/options.php:184 admin/pages/options.php:306
+#: admin/pages/options.php:185 admin/pages/options.php:307
 msgid "Default"
 msgstr ""
 
-#: admin/pages/options.php:193
+#: admin/pages/options.php:194
 msgid "Cache output"
 msgstr ""
 
-#: admin/pages/options.php:196
+#: admin/pages/options.php:197
 msgid "Only guests"
 msgstr ""
 
-#: admin/pages/options.php:201
+#: admin/pages/options.php:202
 msgid "Minimization of file styles"
 msgstr ""
 
-#: admin/pages/options.php:205
+#: admin/pages/options.php:206
 msgid ""
 "Minimization of file styles only works in correlation with WP-Recall style "
 "files and add-ons that support this feature"
 msgstr ""
 
-#: admin/pages/options.php:210
+#: admin/pages/options.php:211
 msgid "Minimization of scripts"
 msgstr ""
 
-#: admin/pages/options.php:218
+#: admin/pages/options.php:219
 msgid "Login and register"
 msgstr ""
 
-#: admin/pages/options.php:223
+#: admin/pages/options.php:224
 msgid "The order of output the form of login and registration"
 msgstr ""
 
-#: admin/pages/options.php:225
+#: admin/pages/options.php:226
 msgid "Floating form"
 msgstr ""
 
-#: admin/pages/options.php:226
+#: admin/pages/options.php:227
 msgid "On a separate page"
 msgstr ""
 
-#: admin/pages/options.php:227
+#: admin/pages/options.php:228
 msgid "Wordpress Forms"
 msgstr ""
 
-#: admin/pages/options.php:228
+#: admin/pages/options.php:229
 msgid "Widget form"
 msgstr ""
 
-#: admin/pages/options.php:229
+#: admin/pages/options.php:230
 msgid ""
 "The form of login and registration of the plugin can be outputed with help "
 "of widget \"Control panel\" and a shortcode [loginform], but you can use the "
 "standart login form of WordPress also"
 msgstr ""
 
-#: admin/pages/options.php:236
+#: admin/pages/options.php:237
 msgid "ID of the shortcode page [loginform]"
 msgstr ""
 
-#: admin/pages/options.php:245
+#: admin/pages/options.php:246
 msgid ""
 "If you are using the registration confirmation, after registration, the user "
 "will need to confirm your email by clicking on the link in the sent email"
 msgstr ""
 
-#: admin/pages/options.php:246
+#: admin/pages/options.php:247
 msgid "Registration confirmation by the user"
 msgstr ""
 
-#: admin/pages/options.php:249
+#: admin/pages/options.php:250
 msgid "Used"
 msgstr ""
 
-#: admin/pages/options.php:254
+#: admin/pages/options.php:255
 msgid "Redirect user after login"
 msgstr ""
 
-#: admin/pages/options.php:256
+#: admin/pages/options.php:257
 msgid "The user profile"
 msgstr ""
 
-#: admin/pages/options.php:257
+#: admin/pages/options.php:258
 msgid "Current page"
 msgstr ""
 
-#: admin/pages/options.php:258
+#: admin/pages/options.php:259
 msgid "Arbitrary URL"
 msgstr ""
 
-#: admin/pages/options.php:265
+#: admin/pages/options.php:266
 msgid "URL"
 msgstr ""
 
-#: admin/pages/options.php:266
+#: admin/pages/options.php:267
 msgid "Enter your URL below, if you select an arbitrary URL after login"
 msgstr ""
 
-#: admin/pages/options.php:274
+#: admin/pages/options.php:275
 msgid "repeat password field"
 msgstr ""
 
-#: admin/pages/options.php:275 admin/pages/options.php:281
+#: admin/pages/options.php:276 admin/pages/options.php:282
 msgid "Displaye"
 msgstr ""
 
-#: admin/pages/options.php:280
+#: admin/pages/options.php:281
 msgid "Indicator of password complexity"
 msgstr ""
 
-#: admin/pages/options.php:286 rcl-functions.php:399
+#: admin/pages/options.php:287 rcl-functions.php:399
 msgid "Recallbar"
 msgstr ""
 
-#: admin/pages/options.php:291
+#: admin/pages/options.php:292
 msgid "Output of recallbar panel"
 msgstr ""
 
-#: admin/pages/options.php:292
+#: admin/pages/options.php:293
 msgid ""
 "Recallbar – is he top panel WP-Recall plugin through which the plugin and "
 "its add-ons can output their data and the administrator can make his menu, "
@@ -4801,15 +4788,15 @@ msgid ""
 "management menu of the website</a>"
 msgstr ""
 
-#: admin/pages/options.php:305 wp-recall.php:410
+#: admin/pages/options.php:306 wp-recall.php:410
 msgid "Color"
 msgstr ""
 
-#: admin/pages/options.php:306
+#: admin/pages/options.php:307
 msgid "Primary colors of WP-Recall"
 msgstr ""
 
-#: admin/pages/options.php:340
+#: admin/pages/options.php:341
 msgid "Configure WP-Recall plugin and add-ons"
 msgstr ""
 
@@ -4903,7 +4890,7 @@ msgid "Url"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:70
-#: classes/fields/types/class-rcl-field-agree.php:60 wp-recall.php:390
+#: classes/fields/types/class-rcl-field-agree.php:59 wp-recall.php:390
 msgid "Agreement"
 msgstr ""
 
@@ -4958,8 +4945,8 @@ msgid "Field type"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:292
-#: classes/fields/types/class-rcl-field-file.php:52
-#: classes/fields/types/class-rcl-field-uploader.php:51
+#: classes/fields/types/class-rcl-field-file.php:51
+#: classes/fields/types/class-rcl-field-uploader.php:50
 msgid "File size"
 msgstr ""
 
@@ -4968,126 +4955,126 @@ msgid "maximum size of uploaded file, MB (Default - 2)"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:300
-#: classes/fields/types/class-rcl-field-uploader.php:59
+#: classes/fields/types/class-rcl-field-uploader.php:58
 msgid "allowed types of files are divided by comma, for example: pdf, zip, jpg"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:307
-#: classes/fields/types/class-rcl-field-agree.php:46
+#: classes/fields/types/class-rcl-field-agree.php:45
 msgid "Agreement URL"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:313
-#: classes/fields/types/class-rcl-field-agree.php:52
+#: classes/fields/types/class-rcl-field-agree.php:51
 msgid "Consent confirmation text"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:320
-#: classes/fields/types/class-rcl-field-editor.php:45
+#: classes/fields/types/class-rcl-field-editor.php:44
 msgid "TinyMCE"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:321
-#: classes/fields/types/class-rcl-field-editor.php:48
+#: classes/fields/types/class-rcl-field-editor.php:47
 msgid "Using TinyMCE"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:322
-#: classes/fields/types/class-rcl-field-editor.php:50
+#: classes/fields/types/class-rcl-field-editor.php:49
 msgid "May not load with AJAX"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:329
 #: classes/class-rcl-custom-fields-manager.php:408
-#: classes/fields/types/class-rcl-field-number.php:48
-#: classes/fields/types/class-rcl-field-range.php:49
-#: classes/fields/types/class-rcl-field-runner.php:48
+#: classes/fields/types/class-rcl-field-number.php:47
+#: classes/fields/types/class-rcl-field-range.php:48
+#: classes/fields/types/class-rcl-field-runner.php:47
 msgid "Min"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:336
 #: classes/class-rcl-custom-fields-manager.php:414
-#: classes/fields/types/class-rcl-field-number.php:54
-#: classes/fields/types/class-rcl-field-range.php:56
-#: classes/fields/types/class-rcl-field-runner.php:54
+#: classes/fields/types/class-rcl-field-number.php:53
+#: classes/fields/types/class-rcl-field-range.php:55
+#: classes/fields/types/class-rcl-field-runner.php:53
 msgid "Max"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:343
-#: classes/fields/types/class-rcl-field-range.php:63
-#: classes/fields/types/class-rcl-field-runner.php:60
+#: classes/fields/types/class-rcl-field-range.php:62
+#: classes/fields/types/class-rcl-field-runner.php:59
 msgid "Step"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:353
-#: classes/fields/types/class-rcl-field-radio.php:50
-#: classes/fields/types/class-rcl-field-select.php:47
+#: classes/fields/types/class-rcl-field-radio.php:49
+#: classes/fields/types/class-rcl-field-select.php:46
 msgid "First value"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:354
-#: classes/fields/types/class-rcl-field-radio.php:51
-#: classes/fields/types/class-rcl-field-select.php:48
+#: classes/fields/types/class-rcl-field-radio.php:50
+#: classes/fields/types/class-rcl-field-select.php:47
 msgid "Name of the first blank value, for example: \"Not selected\""
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:361
-#: classes/fields/types/class-rcl-field-checkbox.php:42
-#: classes/fields/types/class-rcl-field-multiselect.php:40
-#: classes/fields/types/class-rcl-field-radio.php:57
-#: classes/fields/types/class-rcl-field-select.php:54
+#: classes/fields/types/class-rcl-field-checkbox.php:41
+#: classes/fields/types/class-rcl-field-multiselect.php:39
+#: classes/fields/types/class-rcl-field-radio.php:56
+#: classes/fields/types/class-rcl-field-select.php:53
 msgid "Specify options"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:362
-#: classes/fields/types/class-rcl-field-checkbox.php:43
-#: classes/fields/types/class-rcl-field-multiselect.php:41
-#: classes/fields/types/class-rcl-field-radio.php:58
-#: classes/fields/types/class-rcl-field-select.php:55
+#: classes/fields/types/class-rcl-field-checkbox.php:42
+#: classes/fields/types/class-rcl-field-multiselect.php:40
+#: classes/fields/types/class-rcl-field-radio.php:57
+#: classes/fields/types/class-rcl-field-select.php:54
 msgid "specify each option in a separate field"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:372
-#: classes/fields/types/class-rcl-field-date.php:39
-#: classes/fields/types/class-rcl-field-dynamic.php:39
-#: classes/fields/types/class-rcl-field-hidden.php:43
-#: classes/fields/types/class-rcl-field-number.php:42
-#: classes/fields/types/class-rcl-field-tel.php:42
-#: classes/fields/types/class-rcl-field-text.php:42
-#: classes/fields/types/class-rcl-field-textarea.php:40
+#: classes/fields/types/class-rcl-field-date.php:38
+#: classes/fields/types/class-rcl-field-dynamic.php:38
+#: classes/fields/types/class-rcl-field-hidden.php:42
+#: classes/fields/types/class-rcl-field-number.php:41
+#: classes/fields/types/class-rcl-field-tel.php:41
+#: classes/fields/types/class-rcl-field-text.php:41
+#: classes/fields/types/class-rcl-field-textarea.php:39
 msgid "Placeholder"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:380
-#: classes/fields/types/class-rcl-field-tel.php:54
+#: classes/fields/types/class-rcl-field-tel.php:53
 msgid "Phone mask"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:381
-#: classes/fields/types/class-rcl-field-tel.php:55
+#: classes/fields/types/class-rcl-field-tel.php:54
 msgid ""
 "Example: 8\\([0-9]{3}\\)[0-9]{3}-[0-9]{2}-[0-9]{2} Result: 8(900)123-45-67"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:391
-#: classes/fields/types/class-rcl-field-hidden.php:56
-#: classes/fields/types/class-rcl-field-text.php:55
+#: classes/fields/types/class-rcl-field-hidden.php:55
+#: classes/fields/types/class-rcl-field-text.php:54
 msgid "Pattern"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:398
-#: classes/fields/types/class-rcl-field-hidden.php:49
-#: classes/fields/types/class-rcl-field-tel.php:48
-#: classes/fields/types/class-rcl-field-text.php:48
-#: classes/fields/types/class-rcl-field-textarea.php:46
+#: classes/fields/types/class-rcl-field-hidden.php:48
+#: classes/fields/types/class-rcl-field-tel.php:47
+#: classes/fields/types/class-rcl-field-text.php:47
+#: classes/fields/types/class-rcl-field-textarea.php:45
 msgid "Maxlength"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:399
-#: classes/fields/types/class-rcl-field-hidden.php:50
-#: classes/fields/types/class-rcl-field-tel.php:49
-#: classes/fields/types/class-rcl-field-text.php:49
-#: classes/fields/types/class-rcl-field-textarea.php:47
+#: classes/fields/types/class-rcl-field-hidden.php:49
+#: classes/fields/types/class-rcl-field-tel.php:48
+#: classes/fields/types/class-rcl-field-text.php:48
+#: classes/fields/types/class-rcl-field-textarea.php:46
 msgid "maximum number of symbols per field"
 msgstr ""
 
@@ -5101,7 +5088,7 @@ msgid "Inactive fields"
 msgstr ""
 
 #: classes/class-rcl-custom-fields.php:157
-#: classes/fields/types/class-rcl-field-file.php:97
+#: classes/fields/types/class-rcl-field-file.php:96
 msgid "delete"
 msgstr ""
 
@@ -5110,22 +5097,22 @@ msgid "Allowed extensions"
 msgstr ""
 
 #: classes/class-rcl-custom-fields.php:182
-#: classes/fields/types/class-rcl-field-file.php:120
+#: classes/fields/types/class-rcl-field-file.php:119
 msgid "Max size"
 msgstr ""
 
 #: classes/class-rcl-custom-fields.php:490
-#: classes/fields/types/class-rcl-field-agree.php:82
+#: classes/fields/types/class-rcl-field-agree.php:81
 msgid "I agree with the text of the agreement"
 msgstr ""
 
 #: classes/class-rcl-custom-fields.php:534
-#: classes/fields/types/class-rcl-field-date.php:50
+#: classes/fields/types/class-rcl-field-date.php:49
 msgid "Use the format"
 msgstr ""
 
 #: classes/class-rcl-custom-fields.php:586
-#: classes/fields/types/class-rcl-field-range.php:142
+#: classes/fields/types/class-rcl-field-range.php:141
 msgid "for"
 msgstr ""
 
@@ -5134,7 +5121,7 @@ msgid "Upload the downloaded file"
 msgstr ""
 
 #: classes/class-rcl-custom-fields.php:619
-#: classes/fields/types/class-rcl-field-agree.php:71
+#: classes/fields/types/class-rcl-field-agree.php:70
 msgid "Accepted"
 msgstr ""
 
@@ -5172,19 +5159,19 @@ msgstr ""
 msgid "Types of files"
 msgstr ""
 
-#: classes/class-rcl-uploader.php:170
+#: classes/class-rcl-uploader.php:172
 msgid "Upload file"
 msgstr ""
 
-#: classes/class-rcl-uploader.php:192
+#: classes/class-rcl-uploader.php:194
 msgid "Add files in a queue of downloads"
 msgstr ""
 
-#: classes/class-rcl-uploader.php:343
+#: classes/class-rcl-uploader.php:345
 msgid "Add to the editor"
 msgstr ""
 
-#: classes/class-rcl-uploader.php:359
+#: classes/class-rcl-uploader.php:361
 msgid "Delete the file"
 msgstr ""
 
@@ -5196,7 +5183,7 @@ msgstr ""
 msgid "Activity"
 msgstr ""
 
-#: classes/class-rcl-users-list.php:518 functions/frontend.php:140
+#: classes/class-rcl-users-list.php:518 functions/frontend.php:141
 #: functions/loginform.php:68 functions/loginform.php:86
 #: functions/loginform.php:115 templates/form-register.php:9
 #: templates/form-remember.php:6 templates/form-sign.php:11
@@ -5256,72 +5243,72 @@ msgstr ""
 msgid "Type of field"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-checkbox.php:87
+#: classes/fields/types/class-rcl-field-checkbox.php:86
 msgid "To mark all"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-checkbox.php:92
+#: classes/fields/types/class-rcl-field-checkbox.php:91
 msgid "To delete all marks"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-file.php:53
-#: classes/fields/types/class-rcl-field-uploader.php:52
+#: classes/fields/types/class-rcl-field-file.php:52
+#: classes/fields/types/class-rcl-field-uploader.php:51
 msgid "maximum size of uploaded file, Kb (Default - 512)"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-file.php:62
+#: classes/fields/types/class-rcl-field-file.php:61
 msgid ""
 "Allowed file types delimiters a comma, for example: pdf, zip, jpg. By "
 "default: zip"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-file.php:112
+#: classes/fields/types/class-rcl-field-file.php:111
 msgid "To cancel the choice of file"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-file.php:118
+#: classes/fields/types/class-rcl-field-file.php:117
 msgid "File types"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-range.php:41
-#: classes/fields/types/class-rcl-field-runner.php:40
+#: classes/fields/types/class-rcl-field-range.php:40
+#: classes/fields/types/class-rcl-field-runner.php:39
 msgid "For example: km or pcs"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-range.php:43
-#: classes/fields/types/class-rcl-field-runner.php:42
+#: classes/fields/types/class-rcl-field-range.php:42
+#: classes/fields/types/class-rcl-field-runner.php:41
 msgid "Unit"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-range.php:70
+#: classes/fields/types/class-rcl-field-range.php:69
 msgid "Manual input"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-uploader.php:68
+#: classes/fields/types/class-rcl-field-uploader.php:67
 msgid "Max number of files"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-uploader.php:78
+#: classes/fields/types/class-rcl-field-uploader.php:77
 msgid "Dropzone"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-uploader.php:85
+#: classes/fields/types/class-rcl-field-uploader.php:84
 msgid "Cards"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-uploader.php:86
+#: classes/fields/types/class-rcl-field-uploader.php:85
 msgid "List"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-uploader.php:89
+#: classes/fields/types/class-rcl-field-uploader.php:88
 msgid "Mode of files output"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-uploader.php:95
+#: classes/fields/types/class-rcl-field-uploader.php:94
 msgid "ID of an attaching editor"
 msgstr ""
 
-#: classes/fields/types/class-rcl-field-uploader.php:96
+#: classes/fields/types/class-rcl-field-uploader.php:95
 msgid "You can attach this uploader for one of text editors, pointing its ID"
 msgstr ""
 
@@ -5367,11 +5354,11 @@ msgstr ""
 msgid "Unable to obtain content of the requested tab"
 msgstr ""
 
-#: functions/ajax.php:114 functions/frontend.php:592
+#: functions/ajax.php:114 functions/frontend.php:638
 msgid "Unblock"
 msgstr ""
 
-#: functions/ajax.php:114 functions/frontend.php:592
+#: functions/ajax.php:114 functions/frontend.php:638
 msgid "Blacklist"
 msgstr ""
 
@@ -5497,48 +5484,48 @@ msgstr ""
 msgid "Invalid file type"
 msgstr ""
 
-#: functions/frontend.php:101
+#: functions/frontend.php:102
 msgid "Publics"
 msgstr ""
 
-#: functions/frontend.php:115 functions/frontend.php:191
-#: functions/frontend.php:472 rcl-functions.php:880
+#: functions/frontend.php:116 functions/frontend.php:192
+#: functions/frontend.php:518 rcl-functions.php:880
 msgid "offline"
 msgstr ""
 
-#: functions/frontend.php:160
+#: functions/frontend.php:161
 msgid "Search users"
 msgstr ""
 
-#: functions/frontend.php:163
+#: functions/frontend.php:164
 msgid "by name"
 msgstr ""
 
-#: functions/frontend.php:164
+#: functions/frontend.php:165
 msgid "by login"
 msgstr ""
 
-#: functions/frontend.php:193
+#: functions/frontend.php:194
 msgid "online"
 msgstr ""
 
-#: functions/frontend.php:420
+#: functions/frontend.php:466
 msgid "Publication author"
 msgstr ""
 
-#: functions/frontend.php:510
+#: functions/frontend.php:556
 msgid "Congratulations! You have been banned."
 msgstr ""
 
-#: functions/frontend.php:521
+#: functions/frontend.php:567
 msgid "Publication pending approval!"
 msgstr ""
 
-#: functions/frontend.php:525
+#: functions/frontend.php:571
 msgid "Draft of a post!"
 msgstr ""
 
-#: functions/frontend.php:618
+#: functions/frontend.php:664
 msgid "The user has restricted access to their page"
 msgstr ""
 
