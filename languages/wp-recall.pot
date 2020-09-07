@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wp-recall\n"
-"POT-Creation-Date: 2020-09-06 16:27+0400\n"
+"POT-Creation-Date: 2020-09-06 21:33+0400\n"
 "PO-Revision-Date: 2020-09-06 11:12+0400\n"
 "Last-Translator: \n"
 "Language-Team: https//:codeseller.ru\n"
@@ -70,7 +70,7 @@ msgstr ""
 #: add-on/commerce/activate.php:90 add-on/commerce/index.php:49
 #: add-on/groups/groups-init.php:15
 #: add-on/prime-forum/functions-shortcodes.php:105
-#: add-on/publicpost/classes/class-rcl-public-form.php:749
+#: add-on/publicpost/classes/class-rcl-public-form.php:750
 msgid "Not found"
 msgstr ""
 
@@ -2342,7 +2342,7 @@ msgstr ""
 
 #: add-on/prime-forum/classes/class-prime-form.php:237
 #: add-on/prime-forum/functions-actions.php:1092
-#: add-on/publicpost/classes/class-rcl-public-form.php:353
+#: add-on/publicpost/classes/class-rcl-public-form.php:354
 #: add-on/publicpost/init.php:14 functions/enqueue-scripts.php:151
 msgid "Preview"
 msgstr ""
@@ -2399,8 +2399,8 @@ msgstr ""
 
 #: add-on/prime-forum/functions-actions.php:120
 #: add-on/prime-forum/functions-actions.php:191
-#: add-on/publicpost/classes/class-rcl-public-form.php:829
-#: add-on/publicpost/classes/class-rcl-public-form.php:846
+#: add-on/publicpost/classes/class-rcl-public-form.php:830
+#: add-on/publicpost/classes/class-rcl-public-form.php:847
 #: add-on/publicpost/core.php:319
 #: classes/fields/class-rcl-fields-manager.php:385
 #: classes/fields/class-rcl-fields-manager.php:478 functions/frontend.php:644
@@ -3298,7 +3298,6 @@ msgid "Editor settings"
 msgstr ""
 
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:163
-#: classes/fields/types/class-rcl-field-editor.php:54
 msgid "Media loader"
 msgstr ""
 
@@ -3383,63 +3382,63 @@ msgstr ""
 msgid "Edit this form"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:332
+#: add-on/publicpost/classes/class-rcl-public-form.php:333
 msgid "Go to the post"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:344
+#: add-on/publicpost/classes/class-rcl-public-form.php:345
 #: add-on/publicpost/init.php:16
 msgid "Save as Draft"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:361
+#: add-on/publicpost/classes/class-rcl-public-form.php:362
 #: add-on/publicpost/init.php:15
 msgid "Publish"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:739
+#: add-on/publicpost/classes/class-rcl-public-form.php:740
 msgid "It separates by push of Enter button"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:824
-#: add-on/publicpost/classes/class-rcl-public-form.php:837
-#: add-on/publicpost/classes/class-rcl-public-form.php:850
+#: add-on/publicpost/classes/class-rcl-public-form.php:825
+#: add-on/publicpost/classes/class-rcl-public-form.php:838
+#: add-on/publicpost/classes/class-rcl-public-form.php:851
 msgid "Delete post"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:832
+#: add-on/publicpost/classes/class-rcl-public-form.php:833
 msgid "or enter your own"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:834
+#: add-on/publicpost/classes/class-rcl-public-form.php:835
 msgid "Without notice"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:866
+#: add-on/publicpost/classes/class-rcl-public-form.php:867
 msgid "Does not correspond the topic"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:867
+#: add-on/publicpost/classes/class-rcl-public-form.php:868
 msgid "The publication does not correspond to the site topic"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:870
+#: add-on/publicpost/classes/class-rcl-public-form.php:871
 msgid "Not completed"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:871
+#: add-on/publicpost/classes/class-rcl-public-form.php:872
 msgid "Publication does not correspond the rules"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:874
+#: add-on/publicpost/classes/class-rcl-public-form.php:875
 msgid "Advertising/Spam"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:875
+#: add-on/publicpost/classes/class-rcl-public-form.php:876
 msgid "Publication labeled as advertising or spam"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:884
+#: add-on/publicpost/classes/class-rcl-public-form.php:885
 msgid "Use blank notice"
 msgstr ""
 
@@ -5249,6 +5248,10 @@ msgstr ""
 
 #: classes/fields/types/class-rcl-field-checkbox.php:91
 msgid "To delete all marks"
+msgstr ""
+
+#: classes/fields/types/class-rcl-field-editor.php:54
+msgid "Media uploader WordPress"
 msgstr ""
 
 #: classes/fields/types/class-rcl-field-file.php:52

@@ -415,7 +415,7 @@ function rcl_init_ajax_editor( id, options ) {
 
 	QTags._buttonsInit();
 
-	if ( options.tinymce ) {
+	if ( options.tinymce && typeof tinyMCEPreInit != 'undefined' ) {
 
 		tinyMCEPreInit.qtInit[id] = qt_options;
 
@@ -1093,6 +1093,20 @@ function RclForm( form ) {
 		rcl_ajax( sendData );
 
 	};
+
+}
+
+function rcl_chek_form_field( e ) {
+
+	var field = jQuery( e );
+
+	var rclFormFactory = new RclForm( field.parents( 'form' ) );
+
+	var result = rclFormFactory.validate( {
+		check_fields: [ field.data( 'slug' ) ]
+	} );
+
+	return result;
 
 }
 

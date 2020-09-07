@@ -89,7 +89,10 @@ function rcl_add_cover_inline_styles( $styles ) {
 
 	$cover = get_user_meta( $user_LK, 'rcl_cover', 1 );
 
-	$cover_url = is_numeric( $cover ) ? wp_get_attachment_image_url( $cover, 'large' ) : $cover;
+	if ( ! $cover )
+		$cover = rcl_get_option( 'default_cover', 0 );
+
+	$cover_url = $cover && is_numeric( $cover ) ? wp_get_attachment_image_url( $cover, 'large' ) : $cover;
 
 	if ( ! $cover_url )
 		$cover_url = rcl_addon_url( 'img/default-cover.jpg', __FILE__ );

@@ -197,9 +197,15 @@
 }
 #prime-forum .prime-forum-item .rcl-pager .pager-item > span,
 #prime-forum .prime-forum-item .rcl-pager .pager-item > a {
+    padding: 0;
+    font-size: 12px;
+}
+#prime-forum .prime-forum-item .rcl-pager .pager-item > a {
     background: none;
+    color: #4c8cbd;
+}
+#prime-forum .prime-forum-item .rcl-pager .pager-item > a span{
     margin: 0;
-    padding: 2px 7px;
 }
 #prime-forum .prime-forum-item .prime-manager ul {
     background: rgba(255, 255, 255, 0.8);

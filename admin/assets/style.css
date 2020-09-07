@@ -1359,7 +1359,9 @@ span.ruble-symbol {
 .rcl-fields-manager .manager-field[data-type="range"] .field-icon::before {
 	content: "\f108";
 }
-
+.rcl-fields-manager i.fa-trash{
+	color:red;
+}
 .rcl-fields-manager .ui-sortable-placeholder {
 	background: #ccc;
 	border: 2px dashed #aaa;

@@ -181,12 +181,6 @@
     width: 68%;
     width: calc(100% - 265px);
 }
-.cab_footer .cab_bttn a {
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(125, 125, 125, 0.4);
-    color: #ccc;
-    display: block;
-}
 .cab_footer .cab_bttn a:hover {
     background: rgba(0, 0, 0, 0.4);
     opacity: 0.8;

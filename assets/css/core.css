@@ -92,7 +92,7 @@ img.aligncenter {
     top: 0;
     z-index: 999;
 }
-body .rcl-bttn.rcl-bttn__type-primary {
+body:not(.wp-admin) .rcl-bttn.rcl-bttn__type-primary {
     color: var(--rclText) !important;
 }
 /*end*/
@@ -1056,39 +1056,18 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
 /*-----------------------
   22. RCL pagenavi API
 -------------------------*/
-.rcl-navi,
 .rcl-pager {
     box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
     box-sizing: border-box;
     clear: both;
-    display: inline-block;
-    font-size: 20px;
-    font-weight: bold;
-    line-height: 1.4;
-    margin: 10px 0.5%;
     padding: 6px 5px;
-    width: 99%;
+	margin: 10px 0;
 }
-.rcl-navi a,
-.rcl-navi span,
-.rcl-pager .pager-item span,
-.rcl-pager .pager-item a {
-    display: inline-block;
-    margin: 0 4px;
-    padding: 2px 9px;
+.rcl-pager .rcl-page-navi > span{
+	margin: 0 2px;
 }
-.rcl-navi span {
-    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.4);
-}
-.rcl-navi a:link,
-.rcl-pager .pager-item a:link {                         /*++hueman++ добавил :link для перевеса*/
-    border: none;                                       /*++Twenty15++*/
-    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
-    text-decoration: none;
-}
-.rcl-navi a:hover,
-.rcl-pager .pager-item a:hover {
-    box-shadow: 0 0 1px 2px rgb(219, 219, 219);
+.rcl-pager .rcl-page-navi > span a.rcl-bttn{
+	margin: 0;
 }
 /*end*/
 

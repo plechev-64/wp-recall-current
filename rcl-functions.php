@@ -1004,6 +1004,8 @@ function rcl_template_support( $support ) {
 			break;
 		case 'cover-uploader':
 
+			add_filter( 'rcl_options', 'rcl_add_cover_options', 10 );
+
 			if ( rcl_get_option( 'cover_weight', 1024 ) > 0 )
 				include_once 'functions/supports/uploader-cover.php';
 

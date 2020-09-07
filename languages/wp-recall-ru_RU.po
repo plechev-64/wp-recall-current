@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2020-09-06 16:08+0400\n"
+"POT-Creation-Date: 2020-09-07 01:26+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -77,7 +77,7 @@ msgstr "Поиск"
 #: add-on/commerce/activate.php:90 add-on/commerce/index.php:49
 #: add-on/groups/groups-init.php:15
 #: add-on/prime-forum/functions-shortcodes.php:105
-#: add-on/publicpost/classes/class-rcl-public-form.php:749
+#: add-on/publicpost/classes/class-rcl-public-form.php:750
 msgid "Not found"
 msgstr "Не найдено"
 
@@ -497,7 +497,7 @@ msgstr "Страница оформления заказа"
 #: add-on/user-balance/admin/addon-settings.php:86
 #: add-on/user-balance/admin/addon-settings.php:93
 #: add-on/user-balance/admin/addon-settings.php:100
-#: add-on/user-balance/admin/addon-settings.php:107 rcl-functions.php:1420
+#: add-on/user-balance/admin/addon-settings.php:107 rcl-functions.php:1422
 #: rcl-widgets.php:68 rcl-widgets.php:130
 msgid "Not selected"
 msgstr "Не выбрано"
@@ -525,9 +525,9 @@ msgstr "Регистрация при оформлении"
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:205
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:248
 #: add-on/rating-system/admin/addon-settings.php:165
-#: admin/pages/options.php:105 admin/pages/options.php:170
-#: admin/pages/options.php:204 admin/pages/options.php:213
-#: admin/pages/options.php:276 admin/pages/options.php:282
+#: admin/pages/options.php:174 admin/pages/options.php:180
+#: admin/pages/options.php:192 admin/pages/options.php:219
+#: admin/pages/options.php:253 admin/pages/options.php:262
 #: admin/pages/options.php:294
 #: classes/fields/types/class-rcl-field-editor.php:46
 #: classes/fields/types/class-rcl-field-editor.php:56
@@ -546,9 +546,9 @@ msgstr "Отключено"
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:206
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:249
 #: add-on/rating-system/admin/addon-settings.php:165
-#: admin/pages/options.php:106 admin/pages/options.php:171
-#: admin/pages/options.php:205 admin/pages/options.php:214
-#: admin/pages/options.php:294
+#: admin/pages/options.php:192 admin/pages/options.php:220
+#: admin/pages/options.php:254 admin/pages/options.php:263
+#: admin/pages/options.php:295
 #: classes/fields/types/class-rcl-field-editor.php:57
 #: classes/fields/types/class-rcl-field-uploader.php:75
 msgid "Enabled"
@@ -1297,24 +1297,24 @@ msgstr "Создание групп разрешено"
 
 #: add-on/groups/admin/index.php:52
 #: add-on/publicpost/admin/addon-settings.php:137
-#: add-on/rating-system/admin/addon-settings.php:29 admin/pages/options.php:88
+#: add-on/rating-system/admin/addon-settings.php:29 admin/pages/options.php:276
 msgid "only Administrators"
 msgstr "Только администраторам"
 
 #: add-on/groups/admin/index.php:53
 #: add-on/publicpost/admin/addon-settings.php:138
-#: add-on/rating-system/admin/addon-settings.php:28 admin/pages/options.php:89
+#: add-on/rating-system/admin/addon-settings.php:28 admin/pages/options.php:277
 msgid "Editors and higher"
 msgstr "Редакторам и старше"
 
 #: add-on/groups/admin/index.php:54
 #: add-on/publicpost/admin/addon-settings.php:139
-#: add-on/rating-system/admin/addon-settings.php:27 admin/pages/options.php:90
+#: add-on/rating-system/admin/addon-settings.php:27 admin/pages/options.php:278
 msgid "Authors and higher"
 msgstr "Авторам и старше"
 
 #: add-on/groups/admin/index.php:55
-#: add-on/rating-system/admin/addon-settings.php:26 admin/pages/options.php:91
+#: add-on/rating-system/admin/addon-settings.php:26 admin/pages/options.php:279
 msgid "Participants and higher"
 msgstr "Участникам и старше"
 
@@ -1346,15 +1346,15 @@ msgstr ""
 msgid "Max size of the group avatars"
 msgstr "Максимальный размер аватарки группы"
 
-#: add-on/groups/admin/index.php:76 admin/pages/options.php:144
-#: admin/pages/options.php:155
+#: add-on/groups/admin/index.php:76 admin/index.php:200
+#: admin/pages/options.php:112
 msgid "Set the image upload limit in kb, by default"
 msgstr ""
 "Установите ограничение для загружаемого изображения в килобайтах, по-"
 "умолчанию"
 
-#: add-on/groups/admin/index.php:77 admin/pages/options.php:145
-#: admin/pages/options.php:156
+#: add-on/groups/admin/index.php:77 admin/index.php:201
+#: admin/pages/options.php:113
 msgid "If 0 is specified, download is disallowed."
 msgstr "Если указан 0, то загрузка запрещена"
 
@@ -1579,8 +1579,8 @@ msgid "Apply for membership"
 msgstr "Заявка на доступ"
 
 #: add-on/groups/groups-widgets.php:128
-#: add-on/rating-system/admin/addon-settings.php:25 admin/pages/options.php:92
-#: admin/pages/options.php:196 rcl-widgets.php:40 rcl-widgets.php:107
+#: add-on/rating-system/admin/addon-settings.php:25 admin/pages/options.php:245
+#: admin/pages/options.php:280 rcl-widgets.php:40 rcl-widgets.php:107
 msgid "All users"
 msgstr "Все пользователи"
 
@@ -2412,7 +2412,7 @@ msgstr "Текст сообщения"
 
 #: add-on/prime-forum/classes/class-prime-form.php:237
 #: add-on/prime-forum/functions-actions.php:1092
-#: add-on/publicpost/classes/class-rcl-public-form.php:353
+#: add-on/publicpost/classes/class-rcl-public-form.php:354
 #: add-on/publicpost/init.php:14 functions/enqueue-scripts.php:151
 msgid "Preview"
 msgstr "Предпросмотр"
@@ -2469,8 +2469,8 @@ msgstr "Удалить сообщение"
 
 #: add-on/prime-forum/functions-actions.php:120
 #: add-on/prime-forum/functions-actions.php:191
-#: add-on/publicpost/classes/class-rcl-public-form.php:829
-#: add-on/publicpost/classes/class-rcl-public-form.php:846
+#: add-on/publicpost/classes/class-rcl-public-form.php:830
+#: add-on/publicpost/classes/class-rcl-public-form.php:847
 #: add-on/publicpost/core.php:319
 #: classes/fields/class-rcl-fields-manager.php:385
 #: classes/fields/class-rcl-fields-manager.php:478 functions/frontend.php:644
@@ -2721,7 +2721,7 @@ msgstr "Редакции сообщения"
 msgid "The reason"
 msgstr "Причина"
 
-#: add-on/prime-forum/functions-post-content.php:244 rcl-functions.php:1333
+#: add-on/prime-forum/functions-post-content.php:244 rcl-functions.php:1335
 msgid "not specified"
 msgstr "не указано"
 
@@ -3397,7 +3397,6 @@ msgid "Editor settings"
 msgstr "Настройки редактора"
 
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:163
-#: classes/fields/types/class-rcl-field-editor.php:54
 msgid "Media loader"
 msgstr "Медиазагрузчик"
 
@@ -3483,63 +3482,63 @@ msgstr "Файл был успешно сохранен!"
 msgid "Edit this form"
 msgstr "Редактировать эту форму"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:332
+#: add-on/publicpost/classes/class-rcl-public-form.php:333
 msgid "Go to the post"
 msgstr "Перейти к записи"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:344
+#: add-on/publicpost/classes/class-rcl-public-form.php:345
 #: add-on/publicpost/init.php:16
 msgid "Save as Draft"
 msgstr "Сохранить как черновик"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:361
+#: add-on/publicpost/classes/class-rcl-public-form.php:362
 #: add-on/publicpost/init.php:15
 msgid "Publish"
 msgstr "Публиковать"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:739
+#: add-on/publicpost/classes/class-rcl-public-form.php:740
 msgid "It separates by push of Enter button"
 msgstr "разделяются по нажатию по кнопке Enter"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:824
-#: add-on/publicpost/classes/class-rcl-public-form.php:837
-#: add-on/publicpost/classes/class-rcl-public-form.php:850
+#: add-on/publicpost/classes/class-rcl-public-form.php:825
+#: add-on/publicpost/classes/class-rcl-public-form.php:838
+#: add-on/publicpost/classes/class-rcl-public-form.php:851
 msgid "Delete post"
 msgstr "Удалить публикацию"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:832
+#: add-on/publicpost/classes/class-rcl-public-form.php:833
 msgid "or enter your own"
 msgstr "или введите свое"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:834
+#: add-on/publicpost/classes/class-rcl-public-form.php:835
 msgid "Without notice"
 msgstr "Без уведомления"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:866
+#: add-on/publicpost/classes/class-rcl-public-form.php:867
 msgid "Does not correspond the topic"
 msgstr "Н/с тематике сайта"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:867
+#: add-on/publicpost/classes/class-rcl-public-form.php:868
 msgid "The publication does not correspond to the site topic"
 msgstr "Публикация не соответствует тематике сайта"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:870
+#: add-on/publicpost/classes/class-rcl-public-form.php:871
 msgid "Not completed"
 msgstr "Не оформлен"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:871
+#: add-on/publicpost/classes/class-rcl-public-form.php:872
 msgid "Publication does not correspond the rules"
 msgstr "Публикация не оформлена согласно правил"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:874
+#: add-on/publicpost/classes/class-rcl-public-form.php:875
 msgid "Advertising/Spam"
 msgstr "Реклама/Спам"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:875
+#: add-on/publicpost/classes/class-rcl-public-form.php:876
 msgid "Publication labeled as advertising or spam"
 msgstr "Публикация помечена как реклама или спам"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:884
+#: add-on/publicpost/classes/class-rcl-public-form.php:885
 msgid "Use blank notice"
 msgstr "Используйте заготовку уведомления"
 
@@ -4068,7 +4067,7 @@ msgstr "Место вывода"
 msgid "Right"
 msgstr "Справа"
 
-#: add-on/rcl-chat/addon-options.php:147 admin/pages/options.php:126
+#: add-on/rcl-chat/addon-options.php:147 admin/pages/options.php:94
 msgid "Left"
 msgstr "Слева"
 
@@ -4174,7 +4173,7 @@ msgstr "Важных сообщений пока нет"
 msgid "Not set attributes: chat_room"
 msgstr "Не указан атрибут: chat_room"
 
-#: add-on/user-balance/admin/addon-settings.php:13 admin/pages/options.php:249
+#: add-on/user-balance/admin/addon-settings.php:13 admin/pages/options.php:148
 msgid "Not used"
 msgstr "Не используется"
 
@@ -4581,11 +4580,19 @@ msgstr "Область \"Counters\""
 msgid "Output images via WP-Recall gallery?"
 msgstr "Вывести изображения через галерею изображений WP-Recall?"
 
-#: admin/index.php:167 admin/index.php:660
+#: admin/index.php:167 admin/index.php:691
 msgid "Settings saved!"
 msgstr "Настройки сохранены!"
 
-#: admin/index.php:396
+#: admin/index.php:190
+msgid "Default cover"
+msgstr "Обложка по-умолчанию"
+
+#: admin/index.php:199
+msgid "Max weight of cover"
+msgstr "Максимальный размер обложки"
+
+#: admin/index.php:427
 #, php-format
 msgid ""
 "If you liked plugin %sWP-Recall%s, please vote for it in repository %s★★★★★"
@@ -4743,124 +4750,54 @@ msgid ""
 msgstr "По-умолчанию 10 минут."
 
 #: admin/pages/options.php:80
-msgid "Access to the console"
-msgstr "Доступ в консоль сайта"
-
-#: admin/pages/options.php:86
-msgid "Access to the console is allowed"
-msgstr "Доступ к консоли сайта разрешен"
-
-#: admin/pages/options.php:98
-msgid "Logging mode"
-msgstr "Режим логирования"
-
-#: admin/pages/options.php:103
-msgid "Write background events and errors to the log-file"
-msgstr "Запись в лог-файл фоновых событий и ошибок работы"
-
-#: admin/pages/options.php:112
 msgid "Design"
 msgstr "Оформление"
 
-#: admin/pages/options.php:117
+#: admin/pages/options.php:85
 msgid "Primary color"
 msgstr "Основной цвет"
 
-#: admin/pages/options.php:123
+#: admin/pages/options.php:91
 msgid "The location of the section buttons"
 msgstr "Размещение кнопок вывода вкладок"
 
-#: admin/pages/options.php:125
+#: admin/pages/options.php:93
 msgid "Top"
 msgstr "Сверху"
 
-#: admin/pages/options.php:134
+#: admin/pages/options.php:102
 msgid "Default avatar"
 msgstr "Аватар по-умолчанию"
 
-#: admin/pages/options.php:143
+#: admin/pages/options.php:111
 msgid "Max weight of avatars"
 msgstr "Максимальный размер аватарки"
 
-#: admin/pages/options.php:154
-msgid "Max weight of cover"
-msgstr "Максимальный размер обложки"
-
-#: admin/pages/options.php:161
-msgid "Caching"
-msgstr "Кеширование"
-
-#: admin/pages/options.php:167
-msgid "Cache"
-msgstr "Кеш"
-
-#: admin/pages/options.php:168
-msgid ""
-"Use the functionality of the caching WP-Recall plugin. <a href=\"https://"
-"codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/\" "
-"target=\"_blank\">read More</a>"
-msgstr ""
-"Используется функционал кеширования от плагина WP-Recall. <a href=\"https://"
-"codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/\" "
-"target=\"_blank\">Подробнее</a>"
-
-#: admin/pages/options.php:184
-msgid "Time cache (seconds)"
-msgstr "Время жизни кеша (в секундах)"
-
-#: admin/pages/options.php:185 admin/pages/options.php:307
-msgid "Default"
-msgstr "По-умолчанию"
-
-#: admin/pages/options.php:194
-msgid "Cache output"
-msgstr "Вывод кеша"
-
-#: admin/pages/options.php:197
-msgid "Only guests"
-msgstr "Только гостям"
-
-#: admin/pages/options.php:202
-msgid "Minimization of file styles"
-msgstr "Минимизация стилевых файлов"
-
-#: admin/pages/options.php:206
-msgid ""
-"Minimization of file styles only works in correlation with WP-Recall style "
-"files and add-ons that support this feature"
-msgstr ""
-"Минимизация стилевых файлов работает только со стилевыми файлами WP-Recall и "
-"его дополнениями, которые поддерживают эту возможность"
-
-#: admin/pages/options.php:211
-msgid "Minimization of scripts"
-msgstr "Минимизация скриптов"
-
-#: admin/pages/options.php:219
+#: admin/pages/options.php:118
 msgid "Login and register"
 msgstr "Вход и регистрация"
 
-#: admin/pages/options.php:224
+#: admin/pages/options.php:123
 msgid "The order of output the form of login and registration"
 msgstr "Порядок вывода формы входа и регистрации"
 
-#: admin/pages/options.php:226
+#: admin/pages/options.php:125
 msgid "Floating form"
 msgstr "Всплывающая форма"
 
-#: admin/pages/options.php:227
+#: admin/pages/options.php:126
 msgid "On a separate page"
 msgstr "На отдельной странице"
 
-#: admin/pages/options.php:228
+#: admin/pages/options.php:127
 msgid "Wordpress Forms"
 msgstr "Формы Wordpress"
 
-#: admin/pages/options.php:229
+#: admin/pages/options.php:128
 msgid "Widget form"
 msgstr "Форма в виджете"
 
-#: admin/pages/options.php:230
+#: admin/pages/options.php:129
 msgid ""
 "The form of login and registration of the plugin can be outputed with help "
 "of widget \"Control panel\" and a shortcode [loginform], but you can use the "
@@ -4870,11 +4807,11 @@ msgstr ""
 "\"Панель управления\" и шорткода [loginform], но вы также можете "
 "использовать стандартную форму входа WordPress"
 
-#: admin/pages/options.php:237
+#: admin/pages/options.php:136
 msgid "ID of the shortcode page [loginform]"
 msgstr "Идентификатор страницы с шорткодом [loginform]"
 
-#: admin/pages/options.php:246
+#: admin/pages/options.php:145
 msgid ""
 "If you are using the registration confirmation, after registration, the user "
 "will need to confirm your email by clicking on the link in the sent email"
@@ -4883,59 +4820,59 @@ msgstr ""
 "будет необходимо подтвердить свой email, перейдя по ссылке в присланном "
 "письме"
 
-#: admin/pages/options.php:247
+#: admin/pages/options.php:146
 msgid "Registration confirmation by the user"
 msgstr "Подтверждение регистрации пользователя"
 
-#: admin/pages/options.php:250
+#: admin/pages/options.php:149
 msgid "Used"
 msgstr "Используется"
 
-#: admin/pages/options.php:255
+#: admin/pages/options.php:154
 msgid "Redirect user after login"
 msgstr "Перенаправление после авторизации"
 
-#: admin/pages/options.php:257
+#: admin/pages/options.php:156
 msgid "The user profile"
 msgstr "Профиль пользователя"
 
-#: admin/pages/options.php:258
+#: admin/pages/options.php:157
 msgid "Current page"
 msgstr "Текущая страница"
 
-#: admin/pages/options.php:259
+#: admin/pages/options.php:158
 msgid "Arbitrary URL"
 msgstr "Произвольный URL"
 
-#: admin/pages/options.php:266
+#: admin/pages/options.php:164
 msgid "URL"
 msgstr "URL"
 
-#: admin/pages/options.php:267
+#: admin/pages/options.php:165
 msgid "Enter your URL below, if you select an arbitrary URL after login"
 msgstr "Введите URL, если выбран произвольный URL после авторизации"
 
-#: admin/pages/options.php:275
+#: admin/pages/options.php:173
 msgid "repeat password field"
 msgstr "Поле повтора пароля"
 
-#: admin/pages/options.php:276 admin/pages/options.php:282
+#: admin/pages/options.php:174 admin/pages/options.php:180
 msgid "Displaye"
 msgstr "Отображать"
 
-#: admin/pages/options.php:281
+#: admin/pages/options.php:179
 msgid "Indicator of password complexity"
 msgstr "Индикатор сложности пароля"
 
-#: admin/pages/options.php:287 rcl-functions.php:399
+#: admin/pages/options.php:185 rcl-functions.php:399
 msgid "Recallbar"
 msgstr "Recallbar"
 
-#: admin/pages/options.php:292
+#: admin/pages/options.php:190
 msgid "Output of recallbar panel"
 msgstr "Вывод панели recallbar"
 
-#: admin/pages/options.php:293
+#: admin/pages/options.php:191
 msgid ""
 "Recallbar – is he top panel WP-Recall plugin through which the plugin and "
 "its add-ons can output their data and the administrator can make his menu, "
@@ -4947,15 +4884,81 @@ msgstr ""
 "сформировав его на <a href=\"/wp-admin/nav-menus.php\" target=\"_blank"
 "\">странице управления меню сайта</a>"
 
-#: admin/pages/options.php:306 wp-recall.php:410
+#: admin/pages/options.php:204 wp-recall.php:410
 msgid "Color"
 msgstr "Цвет"
 
-#: admin/pages/options.php:307
+#: admin/pages/options.php:205 admin/pages/options.php:234
+msgid "Default"
+msgstr "По-умолчанию"
+
+#: admin/pages/options.php:205
 msgid "Primary colors of WP-Recall"
 msgstr "Основные цвета WP-Recall"
 
-#: admin/pages/options.php:341
+#: admin/pages/options.php:210
+msgid "Caching"
+msgstr "Кеширование"
+
+#: admin/pages/options.php:216
+msgid "Cache"
+msgstr "Кеш"
+
+#: admin/pages/options.php:217
+msgid ""
+"Use the functionality of the caching WP-Recall plugin. <a href=\"https://"
+"codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/\" "
+"target=\"_blank\">read More</a>"
+msgstr ""
+"Используется функционал кеширования от плагина WP-Recall. <a href=\"https://"
+"codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/\" "
+"target=\"_blank\">Подробнее</a>"
+
+#: admin/pages/options.php:233
+msgid "Time cache (seconds)"
+msgstr "Время жизни кеша (в секундах)"
+
+#: admin/pages/options.php:243
+msgid "Cache output"
+msgstr "Вывод кеша"
+
+#: admin/pages/options.php:246
+msgid "Only guests"
+msgstr "Только гостям"
+
+#: admin/pages/options.php:251
+msgid "Minimization of file styles"
+msgstr "Минимизация стилевых файлов"
+
+#: admin/pages/options.php:255
+msgid ""
+"Minimization of file styles only works in correlation with WP-Recall style "
+"files and add-ons that support this feature"
+msgstr ""
+"Минимизация стилевых файлов работает только со стилевыми файлами WP-Recall и "
+"его дополнениями, которые поддерживают эту возможность"
+
+#: admin/pages/options.php:260
+msgid "Minimization of scripts"
+msgstr "Минимизация скриптов"
+
+#: admin/pages/options.php:268
+msgid "Access to the console"
+msgstr "Доступ в консоль сайта"
+
+#: admin/pages/options.php:274
+msgid "Access to the console is allowed"
+msgstr "Доступ к консоли сайта разрешен"
+
+#: admin/pages/options.php:286
+msgid "Logging mode"
+msgstr "Режим логирования"
+
+#: admin/pages/options.php:292
+msgid "Write background events and errors to the log-file"
+msgstr "Запись в лог-файл фоновых событий и ошибок работы"
+
+#: admin/pages/options.php:330
 msgid "Configure WP-Recall plugin and add-ons"
 msgstr "Настройка плагина WP-Recall и его дополнений"
 
@@ -5418,6 +5421,10 @@ msgstr "Пометить все"
 #: classes/fields/types/class-rcl-field-checkbox.php:91
 msgid "To delete all marks"
 msgstr "Убрать все метки"
+
+#: classes/fields/types/class-rcl-field-editor.php:54
+msgid "Media uploader WordPress"
+msgstr "Медиазагрузчик WordPress"
 
 #: classes/fields/types/class-rcl-field-file.php:52
 #: classes/fields/types/class-rcl-field-uploader.php:51

@@ -655,6 +655,9 @@ function rcl_upload_meta_file( $field, $user_id, $post_id = 0 ) {
 	require_once(ABSPATH . "wp-admin" . '/includes/file.php');
 	require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
+	if ( is_array( $field ) )
+		$field = Rcl_Field::setup( $field );
+
 	$slug	 = $field->slug;
 	$maxsize = $field->max_size;
 

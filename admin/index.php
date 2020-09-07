@@ -168,10 +168,41 @@ function rcl_update_options() {
 	) );
 }
 
-add_action( 'rcl_update_options', 'rcl_delete_temp_default_avatar', 10 );
-function rcl_delete_temp_default_avatar() {
+add_action( 'rcl_update_options', 'rcl_delete_temp_default_avatar_cover', 10 );
+function rcl_delete_temp_default_avatar_cover() {
+
 	if ( isset( $_POST['rcl_global_options']['default_avatar'] ) )
 		rcl_delete_temp_media( $_POST['rcl_global_options']['default_avatar'] );
+
+	if ( isset( $_POST['rcl_global_options']['default_cover'] ) )
+		rcl_delete_temp_media( $_POST['rcl_global_options']['default_cover'] );
+}
+
+function rcl_add_cover_options( $options ) {
+
+	$options->box( 'primary' )->group( 'design' )->add_options( [
+		array(
+			'type'		 => 'uploader',
+			'temp_media' => 1,
+			'multiple'	 => false,
+			'crop'		 => 1,
+			'slug'		 => 'default_cover',
+			'title'		 => __( 'Default cover', 'wp-recall' )
+		),
+		array(
+			'type'		 => 'runner',
+			'value_min'	 => 0,
+			'value_max'	 => 5120,
+			'value_step' => 256,
+			'default'	 => 1024,
+			'slug'		 => 'cover_weight',
+			'title'		 => __( 'Max weight of cover', 'wp-recall' ) . ', Kb',
+			'notice'	 => __( 'Set the image upload limit in kb, by default', 'wp-recall' ) . ' 1024Kb' .
+			'. ' . __( 'If 0 is specified, download is disallowed.', 'wp-recall' )
+		)
+	] );
+
+	return $options;
 }
 
 function wp_enqueue_theme_rcl( $url ) {

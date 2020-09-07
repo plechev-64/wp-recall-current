@@ -76,38 +76,6 @@ $options->add_box( 'primary', array(
 	) )
 ) );
 
-$options->box( 'primary' )->add_group( 'access_console', array(
-	'title' => __( 'Access to the console', 'wp-recall' ),
-) )->add_options( array(
-	array(
-		'type'		 => 'select',
-		'default'	 => 7,
-		'slug'		 => 'consol_access_rcl',
-		'title'		 => __( 'Access to the console is allowed', 'wp-recall' ),
-		'values'	 => array(
-			10	 => __( 'only Administrators', 'wp-recall' ),
-			7	 => __( 'Editors and higher', 'wp-recall' ),
-			2	 => __( 'Authors and higher', 'wp-recall' ),
-			1	 => __( 'Participants and higher', 'wp-recall' ),
-			0	 => __( 'All users', 'wp-recall' )
-		)
-	)
-) );
-
-$options->box( 'primary' )->add_group( 'logging', array(
-	'title' => __( 'Logging mode', 'wp-recall' ),
-) )->add_options( array(
-	array(
-		'type'	 => 'select',
-		'slug'	 => 'rcl-log',
-		'title'	 => __( 'Write background events and errors to the log-file', 'wp-recall' ),
-		'values' => array(
-			__( 'Disabled', 'wp-recall' ),
-			__( 'Enabled', 'wp-recall' )
-		)
-	)
-) );
-
 $options->box( 'primary' )->add_group( 'design', array(
 	'title' => __( 'Design', 'wp-recall' ),
 ) )->add_options( array(
@@ -143,17 +111,98 @@ $options->box( 'primary' )->add_group( 'design', array(
 		'title'		 => __( 'Max weight of avatars', 'wp-recall' ) . ', Kb',
 		'notice'	 => __( 'Set the image upload limit in kb, by default', 'wp-recall' ) . ' 1024Kb' .
 		'. ' . __( 'If 0 is specified, download is disallowed.', 'wp-recall' )
+	)
+) );
+
+$options->box( 'primary' )->add_group( 'usersign', array(
+	'title' => __( 'Login and register', 'wp-recall' ),
+) )->add_options( array(
+	array(
+		'type'		 => 'select',
+		'slug'		 => 'login_form_recall',
+		'title'		 => __( 'The order of output the form of login and registration', 'wp-recall' ),
+		'values'	 => array(
+			__( 'Floating form', 'wp-recall' ),
+			__( 'On a separate page', 'wp-recall' ),
+			__( 'Wordpress Forms', 'wp-recall' ),
+			__( 'Widget form', 'wp-recall' ) ),
+		'notice'	 => __( 'The form of login and registration of the plugin can be outputed with help of widget "Control panel" '
+			. 'and a shortcode [loginform], but you can use the standart login form of WordPress also', 'wp-recall' ),
+		'childrens'	 => array(
+			1 => array(
+				array(
+					'type'	 => 'select',
+					'slug'	 => 'page_login_form_recall',
+					'title'	 => __( 'ID of the shortcode page [loginform]', 'wp-recall' ),
+					'values' => $pages
+				)
+			)
+		)
 	),
 	array(
-		'type'		 => 'runner',
-		'value_min'	 => 0,
-		'value_max'	 => 5120,
-		'value_step' => 256,
-		'default'	 => 1024,
-		'slug'		 => 'cover_weight',
-		'title'		 => __( 'Max weight of cover', 'wp-recall' ) . ', Kb',
-		'notice'	 => __( 'Set the image upload limit in kb, by default', 'wp-recall' ) . ' 1024Kb' .
-		'. ' . __( 'If 0 is specified, download is disallowed.', 'wp-recall' )
+		'type'	 => 'select',
+		'slug'	 => 'confirm_register_recall',
+		'help'	 => __( 'If you are using the registration confirmation, after registration, the user will need to confirm your email by clicking on the link in the sent email', 'wp-recall' ),
+		'title'	 => __( 'Registration confirmation by the user', 'wp-recall' ),
+		'values' => array(
+			__( 'Not used', 'wp-recall' ),
+			__( 'Used', 'wp-recall' ) )
+	),
+	array(
+		'type'		 => 'select',
+		'slug'		 => 'authorize_page',
+		'title'		 => __( 'Redirect user after login', 'wp-recall' ),
+		'values'	 => array(
+			__( 'The user profile', 'wp-recall' ),
+			__( 'Current page', 'wp-recall' ),
+			__( 'Arbitrary URL', 'wp-recall' ) ),
+		'childrens'	 => array(
+			2 => array(
+				array(
+					'type'	 => 'text',
+					'slug'	 => 'custom_authorize_page',
+					'title'	 => __( 'URL', 'wp-recall' ),
+					'notice' => __( 'Enter your URL below, if you select an arbitrary URL after login', 'wp-recall' )
+				)
+			)
+		)
+	),
+	array(
+		'type'	 => 'select',
+		'slug'	 => 'repeat_pass',
+		'title'	 => __( 'repeat password field', 'wp-recall' ),
+		'values' => array( __( 'Disabled', 'wp-recall' ), __( 'Displaye', 'wp-recall' ) )
+	),
+	array(
+		'type'	 => 'select',
+		'slug'	 => 'difficulty_parole',
+		'title'	 => __( 'Indicator of password complexity', 'wp-recall' ),
+		'values' => array( __( 'Disabled', 'wp-recall' ), __( 'Displaye', 'wp-recall' ) )
+	)
+) );
+
+$options->box( 'primary' )->add_group( 'recallbar', array(
+	'title' => __( 'Recallbar', 'wp-recall' )
+) )->add_options( array(
+	array(
+		'type'		 => 'select',
+		'slug'		 => 'view_recallbar',
+		'title'		 => __( 'Output of recallbar panel', 'wp-recall' ),
+		'help'		 => __( 'Recallbar – is he top panel WP-Recall plugin through which the plugin and its add-ons can output their data and the administrator can make his menu, forming it on <a href="/wp-admin/nav-menus.php" target="_blank">page management menu of the website</a>', 'wp-recall' ),
+		'values'	 => array( __( 'Disabled', 'wp-recall' ), __( 'Enabled', 'wp-recall' ) ),
+		'childrens'	 => array(
+			'rcb_color'
+		)
+	),
+	array(
+		'parent' => array(
+			'id'	 => 'view_recallbar',
+			'value'	 => 1
+		),
+		'type'	 => 'select',
+		'slug'	 => 'rcb_color',
+		'title'	 => __( 'Color', 'wp-recall' ),
+		'values' => array( __( 'Default', 'wp-recall' ), __( 'Primary colors of WP-Recall', 'wp-recall' ) )
 	)
 ) );
 
@@ -215,96 +264,36 @@ $options->box( 'primary' )->add_group( 'caching', array(
 	)
 ) );
 
-$options->box( 'primary' )->add_group( 'usersign', array(
-	'title' => __( 'Login and register', 'wp-recall' ),
+$options->box( 'primary' )->add_group( 'access_console', array(
+	'title' => __( 'Access to the console', 'wp-recall' ),
 ) )->add_options( array(
 	array(
 		'type'		 => 'select',
-		'slug'		 => 'login_form_recall',
-		'title'		 => __( 'The order of output the form of login and registration', 'wp-recall' ),
+		'default'	 => 7,
+		'slug'		 => 'consol_access_rcl',
+		'title'		 => __( 'Access to the console is allowed', 'wp-recall' ),
 		'values'	 => array(
-			__( 'Floating form', 'wp-recall' ),
-			__( 'On a separate page', 'wp-recall' ),
-			__( 'Wordpress Forms', 'wp-recall' ),
-			__( 'Widget form', 'wp-recall' ) ),
-		'notice'	 => __( 'The form of login and registration of the plugin can be outputed with help of widget "Control panel" '
-			. 'and a shortcode [loginform], but you can use the standart login form of WordPress also', 'wp-recall' ),
-		'childrens'	 => array(
-			1 => array(
-				array(
-					'type'	 => 'select',
-					'slug'	 => 'page_login_form_recall',
-					'title'	 => __( 'ID of the shortcode page [loginform]', 'wp-recall' ),
-					'values' => $pages
-				)
-			)
+			10	 => __( 'only Administrators', 'wp-recall' ),
+			7	 => __( 'Editors and higher', 'wp-recall' ),
+			2	 => __( 'Authors and higher', 'wp-recall' ),
+			1	 => __( 'Participants and higher', 'wp-recall' ),
+			0	 => __( 'All users', 'wp-recall' )
 		)
-	),
-	array(
-		'type'	 => 'select',
-		'slug'	 => 'confirm_register_recall',
-		'help'	 => __( 'If you are using the registration confirmation, after registration, the user will need to confirm your email by clicking on the link in the sent email', 'wp-recall' ),
-		'title'	 => __( 'Registration confirmation by the user', 'wp-recall' ),
-		'values' => array(
-			__( 'Not used', 'wp-recall' ),
-			__( 'Used', 'wp-recall' ) )
-	),
-	array(
-		'type'		 => 'select',
-		'slug'		 => 'authorize_page',
-		'title'		 => __( 'Redirect user after login', 'wp-recall' ),
-		'values'	 => array(
-			__( 'The user profile', 'wp-recall' ),
-			__( 'Current page', 'wp-recall' ),
-			__( 'Arbitrary URL', 'wp-recall' ) ),
-		'childrens'	 => array(
-			2 => array(
-				array(
-					'extend' => true,
-					'type'	 => 'text',
-					'slug'	 => 'custom_authorize_page',
-					'title'	 => __( 'URL', 'wp-recall' ),
-					'notice' => __( 'Enter your URL below, if you select an arbitrary URL after login', 'wp-recall' )
-				)
-			)
-		)
-	),
-	array(
-		'type'	 => 'select',
-		'slug'	 => 'repeat_pass',
-		'title'	 => __( 'repeat password field', 'wp-recall' ),
-		'values' => array( __( 'Disabled', 'wp-recall' ), __( 'Displaye', 'wp-recall' ) )
-	),
-	array(
-		'type'	 => 'select',
-		'slug'	 => 'difficulty_parole',
-		'title'	 => __( 'Indicator of password complexity', 'wp-recall' ),
-		'values' => array( __( 'Disabled', 'wp-recall' ), __( 'Displaye', 'wp-recall' ) )
 	)
 ) );
 
-$options->box( 'primary' )->add_group( 'recallbar', array(
-	'title' => __( 'Recallbar', 'wp-recall' )
+$options->box( 'primary' )->add_group( 'logging', array(
+	'title'	 => __( 'Logging mode', 'wp-recall' ),
+	'extend' => true
 ) )->add_options( array(
 	array(
-		'type'		 => 'select',
-		'slug'		 => 'view_recallbar',
-		'title'		 => __( 'Output of recallbar panel', 'wp-recall' ),
-		'help'		 => __( 'Recallbar – is he top panel WP-Recall plugin through which the plugin and its add-ons can output their data and the administrator can make his menu, forming it on <a href="/wp-admin/nav-menus.php" target="_blank">page management menu of the website</a>', 'wp-recall' ),
-		'values'	 => array( __( 'Disabled', 'wp-recall' ), __( 'Enabled', 'wp-recall' ) ),
-		'childrens'	 => array(
-			'rcb_color'
-		)
-	),
-	array(
-		'parent' => array(
-			'id'	 => 'view_recallbar',
-			'value'	 => 1
-		),
 		'type'	 => 'select',
-		'slug'	 => 'rcb_color',
-		'title'	 => __( 'Color', 'wp-recall' ),
-		'values' => array( __( 'Default', 'wp-recall' ), __( 'Primary colors of WP-Recall', 'wp-recall' ) )
+		'slug'	 => 'rcl-log',
+		'title'	 => __( 'Write background events and errors to the log-file', 'wp-recall' ),
+		'values' => array(
+			__( 'Disabled', 'wp-recall' ),
+			__( 'Enabled', 'wp-recall' )
+		)
 	)
 ) );
 

@@ -263,10 +263,12 @@ class Rcl_Uploader {
 
 	function gallery_attachment( $attach_id ) {
 
-		if ( ! get_post_type( $attach_id ) )
+		$attach = get_post( $attach_id );
+
+		if ( ! $attach )
 			return false;
 
-		$is_image = wp_attachment_is_image( $attach_id ) ? true : false;
+		$is_image = wp_attachment_is( 'image', $attach ) ? true : false;
 
 		if ( $is_image ) {
 
