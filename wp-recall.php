@@ -154,7 +154,6 @@ final class WP_Recall {
 		require_once 'classes/fields/types/class-rcl-field-date.php';
 		require_once 'classes/fields/types/class-rcl-field-dynamic.php';
 		require_once 'classes/fields/types/class-rcl-field-editor.php';
-		require_once 'classes/fields/types/class-rcl-field-file.php';
 		require_once 'classes/fields/types/class-rcl-field-select.php';
 		require_once 'classes/fields/types/class-rcl-field-multiselect.php';
 		require_once 'classes/fields/types/class-rcl-field-radio.php';
@@ -165,6 +164,7 @@ final class WP_Recall {
 		require_once 'classes/fields/types/class-rcl-field-number.php';
 		require_once 'classes/fields/types/class-rcl-field-textarea.php';
 		require_once 'classes/fields/types/class-rcl-field-uploader.php';
+		require_once 'classes/fields/types/class-rcl-field-file.php';
 		require_once 'classes/fields/types/class-rcl-field-hidden.php';
 
 		require_once 'classes/class-rcl-form.php';

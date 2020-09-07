@@ -1076,6 +1076,16 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 
 			$value = (isset( $_POST[$slug] )) ? $_POST[$slug] : false;
 
+			if ( $field['type'] == 'file' ) {
+
+				$attach_id = get_user_meta( $user_id, $slug, 1 );
+
+				if ( $attach_id && $value != $attach_id ) {
+					wp_delete_attachment( $attach_id );
+					delete_user_meta( $user_id, $slug );
+				}
+			}
+
 			if ( $field['type'] != 'editor' ) {
 
 				if ( is_array( $value ) ) {
@@ -1146,13 +1156,7 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 				} else {
 					delete_user_meta( $user_id, $slug );
 				}
-			} else if ( $field['type'] == 'file' ) {
-
-				$attach_id = rcl_upload_meta_file( $field, $user_id );
-
-				if ( $attach_id )
-					update_user_meta( $user_id, $slug, $attach_id );
-			}else {
+			} else {
 
 				if ( $value ) {
 
@@ -1164,7 +1168,7 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 				}
 			}
 
-			if ( $field['type'] == 'uploader' && $value ) {
+			if ( $value && in_array( $field['type'], ['uploader', 'file' ] ) ) {
 				//удаляем записи из временной библиотеки
 
 				foreach ( $value as $attach_id ) {

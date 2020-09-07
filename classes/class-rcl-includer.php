@@ -247,10 +247,11 @@ class Rcl_Includer {
 		$wp_scripts = wp_scripts();
 
 		$remove = array(
-			'jquery'
+			'jquery', 'jquery-core'
 		);
 
 		$scriptsArray = array();
+
 		foreach ( $wp_scripts->queue as $k => $script_id ) {
 
 			if ( in_array( $script_id, $remove ) )
@@ -267,8 +268,9 @@ class Rcl_Includer {
 
 		ob_start();
 
-		$wp_scripts->do_items( $scriptsArray );
-
+		//print_r( $wp_scripts->queue );
+		//$wp_scripts->do_items( $scriptsArray );
+		wp_print_scripts( $scriptsArray );
 		$scripts = ob_get_contents();
 
 		ob_end_clean();

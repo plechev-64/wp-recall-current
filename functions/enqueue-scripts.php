@@ -51,15 +51,16 @@ function rcl_webcam_scripts() {
 }
 
 function rcl_fileupload_scripts() {
-	rcl_enqueue_script( 'jquery-ui-widget', RCL_URL . 'assets/js/fileupload/js/vendor/jquery.ui.widget.js', array(), true );
 
-	rcl_enqueue_script( 'load-image', RCL_URL . 'assets/js/fileupload/js/load-image.all.min.js', array(), true );
-	rcl_enqueue_script( 'canvas-to-blob', RCL_URL . 'assets/js/fileupload/js/canvas-to-blob.min.js', array(), true );
+	wp_enqueue_script( 'jquery' );
+	wp_enqueue_script( 'jquery-ui-core' );
+	wp_enqueue_script( 'jquery-ui-widget' );
 
 	rcl_enqueue_script( 'jquery-iframe-transport', RCL_URL . 'assets/js/fileupload/js/jquery.iframe-transport.js', array(), true );
 	rcl_enqueue_script( 'jquery-fileupload', RCL_URL . 'assets/js/fileupload/js/jquery.fileupload.js', array(), true );
 	rcl_enqueue_script( 'jquery-fileupload-process', RCL_URL . 'assets/js/fileupload/js/jquery.fileupload-process.js', array(), true );
 	rcl_enqueue_script( 'jquery-fileupload-image', RCL_URL . 'assets/js/fileupload/js/jquery.fileupload-image.js', array(), true );
+	//rcl_enqueue_script( 'jquery-fileupload-ui', RCL_URL . 'assets/js/fileupload/js/jquery.fileupload-ui.js', array(), true );
 }
 
 function rcl_crop_scripts() {

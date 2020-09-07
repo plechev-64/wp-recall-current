@@ -143,26 +143,26 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 
 			ob_start();
 
-			global $wp_scripts, $wp_styles;
+			/* global $wp_scripts, $wp_styles;
 
-			$wp_scripts->do_items( array(
-				'rcl-core-scripts',
-				'jquery-ui-widget',
-				'load-image',
-				'canvas-to-blob',
-				'jquery-iframe-transport',
-				'jquery-fileupload',
-				'jquery-fileupload-process',
-				'jquery-fileupload-image',
-				'rcl-uploader-scripts',
-				'jquery-ui-sortable'
-			) );
+			  $wp_scripts->do_items( array(
+			  //'jquery-ui-core',
+			  'fileupload-ui-widget',
+			  //'jquery-ui-widget',
+			  'jquery-ui-sortable',
+			  'rcl-core-scripts',
+			  'jquery-iframe-transport',
+			  'jquery-fileupload',
+			  'jquery-fileupload-process',
+			  'jquery-fileupload-image',
+			  'rcl-uploader-scripts',
+			  ) );
 
-			$wp_styles->do_items( array(
-				'rcl-uploader-style'
-			) );
+			  $wp_styles->do_items( array(
+			  'rcl-uploader-style'
+			  ) );
 
-			$content .= ob_get_contents();
+			  $content .= ob_get_contents(); */
 
 			ob_end_clean();
 		}

@@ -173,10 +173,7 @@ function rcl_get_register_user( $errors ) {
 							break;
 						}
 					}
-				} else if ( $field['type'] == 'file' ) {
-					if ( ! isset( $_FILES[$slug] ) )
-						$required = false;
-				}else {
+				} else {
 					if ( ! $_POST[$slug] )
 						$required = false;
 				}

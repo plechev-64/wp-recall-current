@@ -97,10 +97,7 @@ class Rcl_Create_Order {
 
 		foreach ( $Cart->fields as $field ) {
 
-			if ( $field['type'] == 'file' ) {
-
-				$value = rcl_upload_meta_file( $field, $this->user_id );
-			} else if ( $field['type'] == 'agree' ) {
+			if ( $field['type'] == 'agree' ) {
 
 				$value = (isset( $_POST[$field['slug']] ) && $_POST[$field['slug']]) ? 'Принято' : false;
 			} else {

@@ -1323,7 +1323,7 @@ function RclUploader( props ) {
 
 		} );
 
-		if ( inGalleryNow > options.max_files ) {
+		if ( options.multiple && inGalleryNow > options.max_files ) {
 			errors.push( 'Превышено количество загруженных файлов. Макс: ' + options.max_files );
 		}
 
@@ -1358,15 +1358,15 @@ function RclUploader( props ) {
 			return false;
 		}
 
-		if ( options.crop != 0 && options.multiple == 0 && typeof jQuery.Jcrop != 'undefined' ) {
+		if ( parseInt( options.crop ) != 0 && parseInt( options.multiple ) == 0 && typeof jQuery.Jcrop != 'undefined' ) {
 			return this.crop( e, data );
 		}
 
-		if ( options.auto_upload == 1 ) {
-			data.process().done( function() {
-				data.submit();
-			} );
-		}
+		/*if ( options.auto_upload == 1 ) {*/
+		data.process().done( function() {
+			data.submit();
+		} );
+		/*}*/
 
 	};
 

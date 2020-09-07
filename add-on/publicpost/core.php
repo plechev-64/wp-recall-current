@@ -169,6 +169,16 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 
 			$value = isset( $POST[$field_id] ) ? $POST[$field_id] : false;
 
+			if ( $field->type == 'file' ) {
+
+				$attach_id = get_post_meta( $post_id, $field_id, 1 );
+
+				if ( $value != $attach_id ) {
+					wp_delete_attachment( $attach_id );
+					delete_post_meta( $post_id, $field_id );
+				}
+			}
+
 			if ( $field->type == 'checkbox' ) {
 				$vals = array();
 
@@ -189,13 +199,7 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 				} else {
 					delete_post_meta( $post_id, $field_id );
 				}
-			} else if ( $field->type == 'file' ) {
-
-				$attach_id = rcl_upload_meta_file( $field, $post->post_author, $post_id );
-
-				if ( $attach_id )
-					update_post_meta( $post_id, $field_id, $attach_id );
-			}else {
+			} else {
 
 				if ( $field->type == 'editor' ) {
 					$value = isset( $_POST[$field_id] ) ? $_POST[$field_id] : false;
@@ -209,7 +213,7 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 				}
 			}
 
-			if ( $field->type == 'uploader' && $value ) {
+			if ( $value && in_array( $field->type, ['uploader', 'file' ] ) ) {
 				//удаляем записи из временной библиотеки
 
 				foreach ( $value as $attach_id ) {

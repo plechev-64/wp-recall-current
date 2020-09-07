@@ -128,6 +128,16 @@ function pfm_update_topic_custom_fields( $topic_id ) {
 			$slug	 = $field['slug'];
 			$value	 = isset( $POST[$slug] ) ? $POST[$slug] : false;
 
+			if ( $field['type'] == 'file' ) {
+
+				$attach_id = pfm_get_topic_meta( $topic_id, $slug, 1 );
+
+				if ( $value != $attach_id ) {
+					wp_delete_attachment( $attach_id );
+					pfm_delete_topic_meta( $topic_id, $slug );
+				}
+			}
+
 			if ( $field['type'] == 'checkbox' ) {
 				$vals = array();
 
@@ -148,13 +158,7 @@ function pfm_update_topic_custom_fields( $topic_id ) {
 				} else {
 					pfm_delete_topic_meta( $topic_id, $slug );
 				}
-			} else if ( $field['type'] == 'file' ) {
-
-				$attach_id = rcl_upload_meta_file( $field, $topic->user_id, 0 );
-
-				if ( $attach_id )
-					pfm_update_topic_meta( $topic_id, $slug, $attach_id );
-			}else {
+			} else {
 
 				if ( $value ) {
 					pfm_update_topic_meta( $topic_id, $slug, $value );
@@ -164,7 +168,7 @@ function pfm_update_topic_custom_fields( $topic_id ) {
 				}
 			}
 
-			if ( $field['type'] == 'uploader' && $value ) {
+			if ( $value && in_array( $field['type'], ['uploader', 'file' ] ) ) {
 
 				foreach ( $value as $attach_id ) {
 					rcl_delete_temp_media( $attach_id );
