@@ -36,6 +36,7 @@ function rcl_button_avatar_upload( $icons ) {
 	$uploder = new Rcl_Uploader( 'rcl_avatar', array(
 		'multiple'		 => 0,
 		'crop'			 => 1,
+		'filename'		 => 'rcl-user-avatar-' . $user_ID,
 		'image_sizes'	 => array(
 			array(
 				'height' => 70,

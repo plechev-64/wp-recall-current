@@ -1,4 +1,13 @@
 <?php
+add_action( 'wp_head', 'rcl_register_avatar_sizes', 10 );
+function rcl_register_avatar_sizes() {
+
+	$sizes = [70, 150, 300 ];
+	foreach ( $sizes as $k => $size ) {
+		add_image_size( 'rcl-avatar-' . $size, $size, $size, 1 );
+	}
+}
+
 add_action( 'rcl_area_tabs', 'rcl_apply_filters_area_tabs', 10 );
 function rcl_apply_filters_area_tabs() {
 

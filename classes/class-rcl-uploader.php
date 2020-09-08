@@ -37,6 +37,7 @@ class Rcl_Uploader {
 	public $mode_output		 = 'grid';
 	public $manager_balloon	 = false;
 	public $class_name		 = '';
+	public $filename		 = '';
 	protected $accept		 = array( 'image/*' );
 
 	function __construct( $uploader_id, $args = false ) {
@@ -450,7 +451,7 @@ class Rcl_Uploader {
 
 		$pathInfo = pathinfo( basename( $file['name'] ) );
 
-		$file['name'] = rcl_sanitize_string( $pathInfo['filename'] ) . '.' . $filetype['ext'];
+		$file['name'] = $this->filename ? $this->filename . '.' . $filetype['ext'] : rcl_sanitize_string( $pathInfo['filename'] ) . '.' . $filetype['ext'];
 
 		$file = apply_filters( 'rcl_pre_upload_file_data', $file );
 

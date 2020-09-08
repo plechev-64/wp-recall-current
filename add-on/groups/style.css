@@ -383,14 +383,6 @@ div p.post-group-meta {
 .group-request .group-user-option select {
     width: 100px;
 }
-.group-dialog .group-request .apply-request,
-.group-dialog .group-request .success {
-    display: inline-block;
-    float: right;
-    margin: 1px 2px;
-    padding: 7px;
-    width: initial;
-}
 #widgets-options,
 #group-options {
     background-color: #f5f5f5;

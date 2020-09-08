@@ -169,6 +169,10 @@ function rcl_upload() {
 		wp_send_json( array(
 			'uploads' => $files
 		) );
+	} else {
+		wp_send_json( array(
+			'error' => __( 'Something has been wrong', 'wp-recall' )
+		) );
 	}
 }
 

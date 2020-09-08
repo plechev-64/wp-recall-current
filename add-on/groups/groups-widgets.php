@@ -81,13 +81,13 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 
 						if ( $requests && false !== array_search( $user_ID, $requests ) ) {
 
-							echo '<h3 class="title-widget">' . __( 'The access request has been sent', 'wp-recall' ) . '</h3>';
+							echo rcl_get_notice( ['text' => __( 'The access request has been sent', 'wp-recall' ) ] );
 						} else {
 
 							echo '<form method="post">'
 							. rcl_get_button( array(
-								'icon'	 => 'fa-check',
-								'label'	 => __( 'Apply for membership', 'wp-recall' ),
+								'icon'	 => 'fa-paper-plane',
+								'label'	 => __( 'The request of access', 'wp-recall' ),
 								'submit' => true
 							) )
 							. '<input type="hidden" name="group-submit" value="1">'
@@ -351,7 +351,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
 			if ( ! $user_ID ) {
 				echo rcl_get_notice( [
-					'text' => __( 'Login and give a request to receive an access of the group', 'wp-recall' ),
+					'text' => __( 'Login and send a request to receive an access of the group', 'wp-recall' ),
 				] );
 			}
 

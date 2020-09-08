@@ -480,24 +480,14 @@ function rcl_group_add_thumb_buttons( $content ) {
 		'group_id'		 => $rcl_group->term_id,
 		'image_sizes'	 => array(
 			array(
-				'height' => 150,
-				'width'	 => 150,
-				'crop'	 => 1
-			),
-			array(
 				'height' => 300,
 				'width'	 => 300,
 				'crop'	 => 1
-			),
-			array(
-				'height' => 600,
-				'width'	 => 600,
-				'crop'	 => 1
 			)
 		),
-		'resize'		 => array( 600, 600 ),
-		'min_height'	 => 150,
-		'min_width'		 => 150,
+		'resize'		 => array( 300, 300 ),
+		'min_height'	 => 300,
+		'min_width'		 => 300,
 		'max_size'		 => rcl_get_option( 'group_avatar_weight', 1024 )
 		) );
 

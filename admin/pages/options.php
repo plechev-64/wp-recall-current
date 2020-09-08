@@ -98,6 +98,7 @@ $options->box( 'primary' )->add_group( 'design', array(
 		'temp_media' => 1,
 		'multiple'	 => 0,
 		'crop'		 => 1,
+		'filename'	 => 'rcl-default-avatar',
 		'slug'		 => 'default_avatar',
 		'title'		 => __( 'Default avatar', 'wp-recall' )
 	),

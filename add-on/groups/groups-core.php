@@ -1005,7 +1005,7 @@ function rcl_edit_group_pre_get_posts( $query ) {
 			$query->set( 'posts_per_page', 1 );
 		}
 
-		if ( $rcl_group->admin_id == $user_ID )
+		if ( $rcl_group->admin_id == $user_ID || rcl_is_user_role( $user_ID, ['administrator' ] ) )
 			return $query;
 
 		if ( ! isset( $rcl_group->current_user ) && $user_ID )

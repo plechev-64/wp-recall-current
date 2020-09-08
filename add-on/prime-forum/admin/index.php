@@ -417,10 +417,11 @@ function pfm_admin_role_field( $user ) {
 
 	$fields = array(
 		array(
-			'type'	 => 'select',
-			'title'	 => __( 'Current role', 'wp-recall' ),
-			'slug'	 => 'pfm_role',
-			'values' => $values
+			'type'		 => 'select',
+			'title'		 => __( 'Current role', 'wp-recall' ),
+			'slug'		 => 'pfm_role',
+			'default'	 => $PrimeUser->user_role,
+			'values'	 => $values
 		)
 	);
 

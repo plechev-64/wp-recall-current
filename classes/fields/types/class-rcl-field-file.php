@@ -15,6 +15,7 @@ class Rcl_Field_File extends Rcl_Field_Uploader {
 
 	public $mode_output	 = 'list';
 	public $multiple	 = 0;
+	public $filename	 = '';
 
 	function __construct( $args ) {
 
@@ -73,6 +74,7 @@ class Rcl_Field_File extends Rcl_Field_Uploader {
 			'file_types'	 => array_map( 'trim', explode( ',', $this->file_types ) ),
 			'max_files'		 => 1,
 			'crop'			 => $this->crop,
+			'filename'		 => $this->filename,
 			'input_attach'	 => $this->input_name,
 			'mode_output'	 => 'list'
 			) );

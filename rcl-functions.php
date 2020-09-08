@@ -616,7 +616,7 @@ function rcl_avatar_data_replacement( $args, $id_or_email ) {
 			$url = false;
 
 			if ( is_numeric( $avatar_data ) ) {
-				$image_attributes	 = wp_get_attachment_image_src( $avatar_data );
+				$image_attributes	 = wp_get_attachment_image_src( $avatar_data, array( $size, $size ) );
 				if ( $image_attributes )
 					$url				 = $image_attributes[0];
 			}else if ( is_string( $avatar_data ) ) {

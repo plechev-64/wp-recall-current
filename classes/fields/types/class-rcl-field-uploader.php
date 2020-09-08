@@ -15,6 +15,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 
 	public $required;
 	public $fix_editor;
+	public $filename		 = '';
 	public $file_types		 = 'jpg, jpeg, png';
 	public $crop			 = 0;
 	public $max_size		 = 512;
@@ -110,7 +111,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 			'user_id'		 => $user_ID,
 			'min_width'		 => 200,
 			'min_height'	 => 200,
-			//'resize' => array(500, 500),
+			'filename'		 => $this->filename,
 			'dropzone'		 => $this->dropzone,
 			'multiple'		 => $this->multiple,
 			'max_size'		 => $this->max_size,
