@@ -38,6 +38,11 @@ function rcl_button_avatar_upload( $icons ) {
 		'crop'			 => 1,
 		'image_sizes'	 => array(
 			array(
+				'height' => 70,
+				'width'	 => 70,
+				'crop'	 => 1
+			),
+			array(
 				'height' => 150,
 				'width'	 => 150,
 				'crop'	 => 1
@@ -45,11 +50,6 @@ function rcl_button_avatar_upload( $icons ) {
 			array(
 				'height' => 300,
 				'width'	 => 300,
-				'crop'	 => 1
-			),
-			array(
-				'height' => 600,
-				'width'	 => 600,
 				'crop'	 => 1
 			)
 		),

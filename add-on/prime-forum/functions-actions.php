@@ -249,6 +249,15 @@ function pfm_the_topic_manager() {
 	echo $content;
 }
 
+add_action( 'rcl_init', 'pfm_init_actions_in_office' );
+function pfm_init_actions_in_office() {
+	global $user_ID;
+
+	if ( rcl_is_office( $user_ID ) ) {
+		add_action( 'wp', 'pfm_init_actions', 30 );
+	}
+}
+
 add_action( 'pfm_after_init_query', 'pfm_init_actions', 30 );
 function pfm_init_actions() {
 	global $user_ID;
@@ -385,13 +394,18 @@ function pfm_init_actions() {
 			break;
 		case 'topic_edit': //изменение заголовка топика
 
-			if ( ! pfm_is_can_topic_edit( $_REQUEST['topic_id'] ) || ! $_REQUEST['topic_id'] )
+			if ( ! pfm_is_can_topic_edit( $_REQUEST['topic_id'] ) )
 				return false;
 
 			$topic_id = pfm_update_topic( array(
 				'topic_id'	 => $_REQUEST['topic_id'],
 				'topic_name' => $_REQUEST['topic_name']
 				) );
+
+			if ( rcl_is_office( $user_ID ) ) {
+				wp_redirect( rcl_get_tab_permalink( $user_ID, 'prime-forum' ) );
+				exit;
+			}
 
 			wp_redirect( pfm_get_topic_permalink( $_REQUEST['topic_id'] ) );
 			exit;

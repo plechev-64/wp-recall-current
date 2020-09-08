@@ -190,9 +190,6 @@
 .rcl-public-box .public-form-button:not(:last-child) {
     margin-right: 10px;
 }
-.rcl-public-box .public-form-button > i {
-    margin-right: 10px;
-}
 .rcl-public-form .category-list .child-list-category {
     background: #fff;
     padding: 5px;
@@ -326,7 +323,7 @@ h3.pending-message {
     margin: 5px 10px;
 }
 #rcl-delete-post .reason-delete {
-    
+
 }
 #rcl-delete-post textarea {
     background-color: #fff;

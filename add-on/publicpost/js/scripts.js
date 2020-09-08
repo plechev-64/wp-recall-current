@@ -7,10 +7,11 @@ jQuery( document ).ready( function( $ ) {
 	if ( RclUploaders.isset( 'post_thumbnail' ) ) {
 
 		RclUploaders.get( 'post_thumbnail' ).appendInGallery = function( file ) {
-			if ( file.html ) {
-				jQuery( '#rcl-upload-gallery-post_uploader' ).append( file.html );
-				jQuery( '#rcl-upload-gallery-post_uploader div' ).last().animateCss( 'flipInX' );
-			}
+
+			jQuery( '#rcl-upload-gallery-' + this.uploader_id ).html( '' ).append( file.thumbnail.html ).animateCss( 'flipInX' );
+			jQuery( '#rcl-upload-gallery-post_uploader' ).append( file.postmedia );
+			jQuery( '#rcl-upload-gallery-post_uploader div' ).last().animateCss( 'flipInX' );
+
 		};
 
 		if ( RclUploaders.isset( 'post_uploader' ) ) {

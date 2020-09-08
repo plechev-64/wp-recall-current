@@ -56,6 +56,7 @@ function rcl_fileupload_scripts() {
 	wp_enqueue_script( 'jquery-ui-core' );
 	wp_enqueue_script( 'jquery-ui-widget' );
 
+	rcl_enqueue_script( 'fileupload-load-image-all', RCL_URL . 'assets/js/fileupload/js/load-image.all.min.js', array(), true );
 	rcl_enqueue_script( 'jquery-iframe-transport', RCL_URL . 'assets/js/fileupload/js/jquery.iframe-transport.js', array(), true );
 	rcl_enqueue_script( 'jquery-fileupload', RCL_URL . 'assets/js/fileupload/js/jquery.fileupload.js', array(), true );
 	rcl_enqueue_script( 'jquery-fileupload-process', RCL_URL . 'assets/js/fileupload/js/jquery.fileupload-process.js', array(), true );

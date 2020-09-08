@@ -341,7 +341,14 @@ function rcl_upload_post_thumbnail( $uploads, $uploader ) {
 
 	do_action( 'rcl_upload_post_thumbnail', $thumbnail_id, $uploader );
 
+	$uploader->uploader_id	 = 'post_uploader';
+	$uploader->input_attach	 = 'post_uploader';
+	$uploader->multiple		 = 1;
+
 	wp_send_json( array(
-		'uploads' => $uploads
+		'uploads' => [
+			'thumbnail'	 => $uploads,
+			'postmedia'	 => $uploader->gallery_attachment( $thumbnail_id )
+		]
 	) );
 }

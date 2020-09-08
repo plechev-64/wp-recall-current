@@ -68,6 +68,19 @@ function rcl_insert_order( $args, $products ) {
 		rcl_insert_order_item( $order_id, $product );
 	}
 
+	if ( $order_details = maybe_unserialize( $args['order_details'] ) ) {
+		foreach ( $order_details as $field ) {
+			if ( $field['type'] == 'uploader' ) {
+				foreach ( $field['value'] as $val ) {
+					rcl_delete_temp_media( $val );
+				}
+			}
+			if ( $field['type'] == 'file' ) {
+				rcl_delete_temp_media( $field['value'] );
+			}
+		}
+	}
+
 	do_action( 'rcl_insert_order', $order_id, $products );
 
 	return $order_id;

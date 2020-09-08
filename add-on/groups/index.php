@@ -595,7 +595,7 @@ function rcl_get_group_options( $group_id ) {
 			'values'	 => [
 				1 => __( 'Registration allowed', 'wp-recall' )
 			],
-			'default'	 => rcl_get_group_option( $group_id, 'can_register' )
+			'default'	 => array( 1 => rcl_get_group_option( $group_id, 'can_register' ) )
 		],
 		'default_role'	 => [
 			'type'		 => 'radio',
@@ -656,7 +656,7 @@ function rcl_get_group_requests_content( $group_id ) {
 	$content = '<h3>' . __( 'Requests for access to the group', 'wp-recall' ) . '</h3>';
 
 	if ( ! $requests ) {
-		$content .= '<p>' . __( 'No queries', 'wp-recall' ) . '</p>';
+		$content .= rcl_get_notice( ['text' => __( 'No requests', 'wp-recall' ) ] );
 		return $content;
 	}
 

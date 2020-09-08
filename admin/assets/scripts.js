@@ -17,16 +17,12 @@ jQuery( function( $ ) {
 
 	/* показ дочерних полей */
 	$( ".rcl-parent-field" ).find( "input, select" ).each( function() {
-		var parent_id = $( this ).attr( 'id' );
-		var parent_val = $( this ).val();
-		$( '[data-parent="' + parent_id + '"][data-parent-value="' + parent_val + '"]' ).show();
+		RclOptionsControl.showChildrens( $( this ).attr( 'id' ), $( this ).val() );
 	} );
 
 	$( '.rcl-parent-field select, .rcl-parent-field input' ).change( function() {
-		var parent_id = $( this ).attr( 'id' );
-		var parent_val = $( this ).val();
-		$( '[data-parent="' + parent_id + '"]' ).hide();
-		$( '[data-parent="' + parent_id + '"][data-parent-value="' + parent_val + '"]' ).show();
+		RclOptionsControl.hideChildrens( $( this ).attr( 'id' ) );
+		RclOptionsControl.showChildrens( $( this ).attr( 'id' ), $( this ).val() );
 	} );
 	/***/
 
@@ -195,6 +191,41 @@ jQuery( function( $ ) {
 	} );
 
 } );
+
+var RclOptionsControl = {
+	showChildrens: function( parentId, parentValue ) {
+
+		var childrenBox = jQuery( '[data-parent="' + parentId + '"][data-parent-value="' + parentValue + '"]' );
+
+		childrenBox.show();
+
+		if ( childrenBox.hasClass( 'rcl-parent-field' ) ) {
+
+			childrenBox.find( "input, select" ).each( function() {
+
+				RclOptionsControl.showChildrens( jQuery( this ).attr( 'id' ), jQuery( this ).val() );
+
+			} );
+		}
+
+	},
+	hideChildrens: function( parentId ) {
+
+		var childrenBox = jQuery( '[data-parent="' + parentId + '"]' );
+
+		childrenBox.hide();
+
+		if ( childrenBox.hasClass( 'rcl-parent-field' ) ) {
+
+			childrenBox.find( "input, select" ).each( function() {
+
+				RclOptionsControl.hideChildrens( jQuery( this ).attr( 'id' ) );
+
+			} );
+		}
+	}
+
+};
 
 function rcl_get_details_addon( props, e ) {
 

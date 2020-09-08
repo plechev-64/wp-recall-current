@@ -67,6 +67,7 @@ class Rcl_Field_File extends Rcl_Field_Uploader {
 		return wp_parse_args( $this->uploader_props, array(
 			'user_id'		 => $user_ID,
 			'multiple'		 => 0,
+			'temp_media'	 => 1,
 			'max_size'		 => $this->max_size,
 			'auto_upload'	 => 1,
 			'file_types'	 => array_map( 'trim', explode( ',', $this->file_types ) ),

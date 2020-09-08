@@ -57,7 +57,10 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 
 				echo $before;
 				if ( $rcl_group->current_user == 'banned' ) {
-					echo '<div class="error"><p>' . __( 'You have been banned from the group', 'wp-recall' ) . '</p></div>';
+					echo rcl_get_notice( [
+						'text'	 => __( 'You have been banned from the group', 'wp-recall' ),
+						'type'	 => 'error'
+					] );
 				} else {
 					if ( $rcl_group->group_status == 'open' ) {
 						echo '<form method="post">'
@@ -338,13 +341,20 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
 	function widget( $args, $instance ) {
 
-		global $rcl_group, $post;
+		global $rcl_group, $post, $user_ID;
 
 		extract( $args );
 
 		if ( ! rcl_get_member_group_access_status() ) {
 			echo $before;
 			echo rcl_close_group_post_content();
+
+			if ( ! $user_ID ) {
+				echo rcl_get_notice( [
+					'text' => __( 'Login and give a request to receive an access of the group', 'wp-recall' ),
+				] );
+			}
+
 			echo $after;
 			return;
 		}

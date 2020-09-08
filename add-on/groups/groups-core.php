@@ -963,7 +963,7 @@ function rcl_init_group_data( $query ) {
 
 			foreach ( ( array ) $cur_terms as $cur_term ) {
 
-				if ( $cur_term->parent != 0 )
+				if ( ! is_object( $cur_term ) || $cur_term->parent != 0 )
 					continue;
 
 				$term_id = $cur_term->term_id;
@@ -1008,7 +1008,7 @@ function rcl_edit_group_pre_get_posts( $query ) {
 		if ( $rcl_group->admin_id == $user_ID )
 			return $query;
 
-		if ( ! $rcl_group->current_user && $user_ID )
+		if ( ! isset( $rcl_group->current_user ) && $user_ID )
 			$in_group	 = rcl_get_group_user_status( $user_ID, $rcl_group->term_id );
 		else
 			$in_group	 = $rcl_group->current_user;
@@ -1044,7 +1044,7 @@ function rcl_edit_group_pre_get_posts( $query ) {
 function rcl_get_member_group_access_status() {
 	global $rcl_group, $user_ID;
 
-	if ( $rcl_group->admin_id == $user_ID )
+	if ( $rcl_group->admin_id == $user_ID || rcl_is_user_role( $user_ID, ['administrator' ] ) )
 		return true;
 
 	if ( ! $rcl_group->current_user && $user_ID )
@@ -1068,16 +1068,19 @@ function rcl_get_member_group_access_status() {
 
 function rcl_close_group_post_content() {
 	global $rcl_group;
-	return rcl_get_notice( [
+
+	$content = rcl_get_notice( [
 		'title'	 => __( 'Publication unavailable!', 'wp-recall' ),
 		'text'	 => __( 'To view the publication , you must be a member of the group', 'wp-recall' ) . ' "' . $rcl_group->name . '"',
 		'type'	 => 'error'
 		] );
+
+	return $content;
 }
 
 function rcl_close_group_comments_content( $comments ) {
 	foreach ( $comments as $comment ) {
-		$comment->comment_content = rcl_get_notice( ['text' => __( '(Comment hidden by privacy settings)', 'wp-recall' ), 'type' => 'error' ] );
+		$comment->comment_content = rcl_get_notice( ['text' => __( 'Comment hidden by privacy settings', 'wp-recall' ), 'type' => 'error' ] );
 	}
 	return $comments;
 }

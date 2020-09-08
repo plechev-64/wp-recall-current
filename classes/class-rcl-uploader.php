@@ -475,6 +475,7 @@ class Rcl_Uploader {
 			'post_mime_type' => $image['type'],
 			'post_title'	 => $pathInfo['filename'],
 			'post_content'	 => '',
+			'post_excerpt'	 => 'rcl-uploader:' . $this->uploader_id,
 			'guid'			 => $image['url'],
 			'post_parent'	 => $this->post_parent,
 			'post_author'	 => $this->user_id,

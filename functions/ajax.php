@@ -146,7 +146,7 @@ function rcl_get_smiles_ajax() {
 }
 
 /* new uploader */
-rcl_ajax_action( 'rcl_upload' );
+rcl_ajax_action( 'rcl_upload', true );
 function rcl_upload() {
 
 	rcl_verify_ajax_nonce();

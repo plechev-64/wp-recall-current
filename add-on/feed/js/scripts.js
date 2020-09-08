@@ -40,10 +40,12 @@ jQuery( function( $ ) {
 
 	/* Подписываемся на пользователя */
 	jQuery( 'body' ).on( 'click', '.feed-callback', function() {
+
 		var link = jQuery( this );
+
 		link.removeClass( 'feed-callback' );
-		var class_i = link.children( 'i' ).attr( 'class' );
-		link.children( 'i' ).attr( 'class', 'rcli fa-refresh fa-spin' );
+
+		link.addClass( 'rcl-bttn__loading' );
 
 		var userID = link.data( 'feed' );
 
@@ -71,7 +73,8 @@ jQuery( function( $ ) {
 				}
 
 				link.addClass( 'feed-callback' );
-				link.children( 'i' ).attr( 'class', class_i );
+				link.removeClass( 'rcl-bttn__loading' );
+				;
 			}
 		} );
 

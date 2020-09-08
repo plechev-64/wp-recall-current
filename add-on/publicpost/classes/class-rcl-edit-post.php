@@ -100,7 +100,7 @@ class Rcl_EditPost {
 
 	function update_thumbnail( $postdata ) {
 
-		$thumbnail_id = (isset( $_POST['post_thumbnail'] )) ? $_POST['post_thumbnail'][0] : 0;
+		$thumbnail_id = (isset( $_POST['post_thumbnail'] )) ? $_POST['post_thumbnail'] : 0;
 
 		if ( ! $this->update )
 			return $this->rcl_add_attachments_in_temps( $postdata );
@@ -133,7 +133,7 @@ class Rcl_EditPost {
 
 		if ( $temps ) {
 
-			$thumbnail_id = isset( $_POST['post_thumbnail'] ) ? $_POST['post_thumbnail'][0] : 0;
+			$thumbnail_id = isset( $_POST['post_thumbnail'] ) ? $_POST['post_thumbnail'] : 0;
 
 			foreach ( $temps as $temp ) {
 
@@ -150,9 +150,6 @@ class Rcl_EditPost {
 
 				rcl_delete_temp_media( $temp->media_id );
 			}
-
-			if ( $_POST['add-gallery-rcl'] == 1 )
-				add_post_meta( $this->post_id, 'recall_slider', 1 );
 		}
 
 		return $temps;
