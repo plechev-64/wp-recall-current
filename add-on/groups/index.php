@@ -477,6 +477,7 @@ function rcl_group_add_thumb_buttons( $content ) {
 	$uploder = new Rcl_Uploader( 'rcl_group_avatar', array(
 		'multiple'		 => 0,
 		'crop'			 => 1,
+		'filename'		 => 'rcl-group-avatar-' . $rcl_group->term_id,
 		'group_id'		 => $rcl_group->term_id,
 		'image_sizes'	 => array(
 			array(

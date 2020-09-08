@@ -36,7 +36,12 @@ function rcl_button_avatar_upload( $icons ) {
 	$uploder = new Rcl_Uploader( 'rcl_avatar', array(
 		'multiple'		 => 0,
 		'crop'			 => 1,
-		'filename'		 => 'rcl-user-avatar-' . $user_ID,
+		'filetitle'		 => 'rcl-user-avatar-' . $user_ID,
+		'filename'		 => $user_ID,
+		'dir'			 => [
+			'path'	 => RCL_UPLOAD_PATH . 'avatars/',
+			'url'	 => RCL_UPLOAD_URL . 'avatars/'
+		],
 		'image_sizes'	 => array(
 			array(
 				'height' => 70,
@@ -97,16 +102,23 @@ function rcl_button_avatar_upload( $icons ) {
 	return $icons;
 }
 
-add_action( 'rcl_upload', 'rcl_avatar_upload', 10, 2 );
-function rcl_avatar_upload( $uploads, $class ) {
+add_action( 'rcl_pre_upload', 'rcl_avatar_pre_upload', 10 );
+function rcl_avatar_pre_upload( $uploader ) {
 	global $user_ID;
 
-	if ( $class->uploader_id != 'rcl_avatar' )
+	if ( $uploader->uploader_id != 'rcl_avatar' )
 		return;
 
-	$oldAvatarId = get_user_meta( $user_ID, 'rcl_avatar', 1 );
+	if ( $oldAvatarId = get_user_meta( $user_ID, 'rcl_avatar', 1 ) )
+		wp_delete_attachment( $oldAvatarId );
+}
 
-	wp_delete_attachment( $oldAvatarId );
+add_action( 'rcl_upload', 'rcl_avatar_upload', 10, 2 );
+function rcl_avatar_upload( $uploads, $uploader ) {
+	global $user_ID;
+
+	if ( $uploader->uploader_id != 'rcl_avatar' )
+		return;
 
 	update_user_meta( $user_ID, 'rcl_avatar', $uploads['id'] );
 

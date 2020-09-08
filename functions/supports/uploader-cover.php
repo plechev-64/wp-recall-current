@@ -32,7 +32,12 @@ function rcl_add_cover_uploader_button() {
 
 		$uploder = new Rcl_Uploader( 'rcl_cover', array(
 			'multiple'		 => 0,
-			'filename'		 => 'rcl-user-cover-' . $user_ID,
+			'filetitle'		 => 'rcl-user-cover-' . $user_ID,
+			'filename'		 => $user_ID,
+			'dir'			 => [
+				'path'	 => RCL_UPLOAD_PATH . 'covers/',
+				'url'	 => RCL_UPLOAD_URL . 'covers/'
+			],
 			'crop'			 => array(
 				'ratio' => 0
 			),

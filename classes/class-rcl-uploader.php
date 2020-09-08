@@ -38,6 +38,8 @@ class Rcl_Uploader {
 	public $manager_balloon	 = false;
 	public $class_name		 = '';
 	public $filename		 = '';
+	public $filetitle		 = '';
+	public $dir				 = array();
 	protected $accept		 = array( 'image/*' );
 
 	function __construct( $uploader_id, $args = false ) {
@@ -408,6 +410,10 @@ class Rcl_Uploader {
 
 		do_action( 'rcl_pre_upload', $this );
 
+		if ( $this->dir ) {
+			add_filter( 'upload_dir', [$this, 'edit_upload_dir' ], 10 );
+		}
+
 		if ( $this->multiple ) {
 
 			$files = array();
@@ -474,7 +480,7 @@ class Rcl_Uploader {
 
 		$attachment = array(
 			'post_mime_type' => $image['type'],
-			'post_title'	 => $pathInfo['filename'],
+			'post_title'	 => $this->filetitle ? $this->filetitle : $pathInfo['filename'],
 			'post_content'	 => '',
 			'post_excerpt'	 => 'rcl-uploader:' . $this->uploader_id,
 			'guid'			 => $image['url'],
@@ -578,6 +584,12 @@ class Rcl_Uploader {
 			$image->resize( $this->resize[0], $this->resize[1], false );
 			$image->save( $image_src );
 		}
+	}
+
+	function edit_upload_dir( $param ) {
+		$param['path']	 = untrailingslashit( $this->dir['path'] );
+		$param['url']	 = untrailingslashit( $this->dir['url'] );
+		return $param;
 	}
 
 }

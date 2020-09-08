@@ -16,6 +16,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 	public $required;
 	public $fix_editor;
 	public $filename		 = '';
+	public $filetitle		 = '';
 	public $file_types		 = 'jpg, jpeg, png';
 	public $crop			 = 0;
 	public $max_size		 = 512;
@@ -112,6 +113,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 			'min_width'		 => 200,
 			'min_height'	 => 200,
 			'filename'		 => $this->filename,
+			'filetitle'		 => $this->filetitle,
 			'dropzone'		 => $this->dropzone,
 			'multiple'		 => $this->multiple,
 			'max_size'		 => $this->max_size,
@@ -121,13 +123,6 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 			'crop'			 => $this->multiple ? false : true,
 			'input_attach'	 => $this->input_name,
 			'mode_output'	 => $this->mode_output
-			/* 'image_sizes' => array(
-			  array(
-			  'width' => 150,
-			  'height' => 150,
-			  'crop' => 1
-			  )
-			  ) */
 			) );
 	}
 
