@@ -199,7 +199,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 	function is_errors() {
 		global $wp_errors;
-		if ( $wp_errors->errors )
+		if ( isset( $wp_errors->errors ) && $wp_errors->errors )
 			return true;
 		return false;
 	}
@@ -373,10 +373,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 			. rcl_get_smiles( 'chat-area-' . $this->chat_id );
 
 		if ( $this->file_upload ) {
-			$content .= '<span class="rcl-chat-uploader">'
-				. '<i class="rcli fa-paperclip" aria-hidden="true"></i>'
-				. '<input name="chat-upload" type="file">'
-				. '</span>';
+			$content .= $this->get_uploader();
 		}
 
 		$hiddens = apply_filters( 'rcl_chat_hidden_fields', array(
@@ -410,6 +407,24 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 		$content .= apply_filters( 'rcl_chat_after_form', '', $this->chat );
 
 		return $content;
+	}
+
+	function get_uploader() {
+
+		$chatOptions = rcl_get_option( 'chat', array() );
+
+		$uploder = new Rcl_Uploader( 'rcl_chat_uploader', array(
+			'multiple'	 => 0,
+			'max_files'	 => 1,
+			'crop'		 => 0,
+			'file_types' => isset( $chatOptions['file_types'] ) ? $chatOptions['file_types'] : 'png, jpeg, gif',
+			'max_size'	 => isset( $chatOptions['file_size'] ) ? $chatOptions['file_size'] * 1024 : 1024
+			) );
+
+		return '<span class="rcl-chat-uploader">'
+			. '<i class="rcli fa-paperclip" aria-hidden="true"></i>'
+			. $uploder->get_input()
+			. '</span>';
 	}
 
 	function userslist() {

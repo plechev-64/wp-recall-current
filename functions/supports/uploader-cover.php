@@ -31,7 +31,7 @@ function rcl_add_cover_uploader_button() {
 	if ( rcl_is_office( $user_ID ) ) {
 
 		$uploder = new Rcl_Uploader( 'rcl_cover', array(
-			'multiple'		 => false,
+			'multiple'		 => 0,
 			'crop'			 => array(
 				'ratio' => 0
 			),

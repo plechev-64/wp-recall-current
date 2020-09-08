@@ -213,7 +213,7 @@ add_filter( 'pfm_the_post_content', 'pfm_add_topic_meta_box', 20 );
 function pfm_add_topic_meta_box( $content ) {
 	global $PrimeTopic, $PrimePost;
 
-	if ( $PrimePost->post_index != 1 )
+	if ( isset( $PrimePost->post_index ) && $PrimePost->post_index != 1 )
 		return $content;
 
 	$content = pfm_get_topic_meta_box( $PrimeTopic->topic_id ) . $content;

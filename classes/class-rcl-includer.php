@@ -268,9 +268,8 @@ class Rcl_Includer {
 
 		ob_start();
 
-		//print_r( $wp_scripts->queue );
-		//$wp_scripts->do_items( $scriptsArray );
-		wp_print_scripts( $scriptsArray );
+		$wp_scripts->do_items( $scriptsArray );
+
 		$scripts = ob_get_contents();
 
 		ob_end_clean();

@@ -194,9 +194,7 @@ class PrimeForm extends Rcl_Fields {
 
 	function get_form( $args = false ) {
 
-		$content = '<div id="prime-topic-form-box" class="rcl-form preloader-box">';
-
-		$content .= '<form id="prime-topic-form" method="post" action="">';
+		$content = '<form id="prime-topic-form" method="post" action="">';
 
 		$content .= '<div class="post-form-top">';
 		$content .= apply_filters( 'pfm_form_top', '', $this );
@@ -261,9 +259,96 @@ class PrimeForm extends Rcl_Fields {
 
 		$content .= '</form>';
 
-		$content .= '</div>';
+		$formBox = '<div id="prime-topic-form-box" class="rcl-form preloader-box">';
+
+		if ( rcl_is_ajax() ) {
+			$formBox .= $this->get_ajax_includes();
+		}
+
+		$formBox .= $content;
+
+		$formBox .= '</div>';
+
+		return $formBox;
+	}
+
+	function get_ajax_includes() {
+
+		$content = '';
+
+		$styles = $this->get_ajax_styles();
+
+		if ( $styles )
+			$content .= $styles;
+
+		$scripts = $this->get_ajax_scripts();
+
+		if ( $scripts )
+			$content .= $scripts;
 
 		return $content;
+	}
+
+	function get_ajax_scripts() {
+
+		$wp_scripts = wp_scripts();
+
+		$remove = array(
+			'jquery', 'jquery-core'
+		);
+
+		$scriptsArray = array();
+
+		foreach ( $wp_scripts->queue as $k => $script_id ) {
+
+			if ( in_array( $script_id, $remove ) )
+				continue;
+
+			if ( strpos( $script_id, 'admin' ) !== false )
+				continue;
+
+			$scriptsArray[] = $script_id;
+		}
+
+		if ( ! $scriptsArray )
+			return false;
+
+		ob_start();
+
+		$wp_scripts->do_items( $scriptsArray );
+
+		$scripts = ob_get_contents();
+
+		ob_end_clean();
+
+		return $scripts;
+	}
+
+	function get_ajax_styles() {
+
+		$wp_scripts = wp_styles();
+
+		$scriptsArray = array();
+		foreach ( $wp_scripts->queue as $k => $script_id ) {
+
+			if ( strpos( $script_id, 'admin' ) !== false )
+				continue;
+
+			$scriptsArray[] = $script_id;
+		}
+
+		if ( ! $scriptsArray )
+			return false;
+
+		ob_start();
+
+		$wp_scripts->do_items( $scriptsArray );
+
+		$scripts = ob_get_contents();
+
+		ob_end_clean();
+
+		return $scripts;
 	}
 
 }

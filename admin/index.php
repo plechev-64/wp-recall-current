@@ -184,7 +184,8 @@ function rcl_add_cover_options( $options ) {
 		array(
 			'type'		 => 'uploader',
 			'temp_media' => 1,
-			'multiple'	 => false,
+			'max_size'	 => 5120,
+			'multiple'	 => 0,
 			'crop'		 => 1,
 			'slug'		 => 'default_cover',
 			'title'		 => __( 'Default cover', 'wp-recall' )

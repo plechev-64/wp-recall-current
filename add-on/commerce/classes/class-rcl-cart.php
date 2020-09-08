@@ -135,6 +135,9 @@ class Rcl_Cart {
 
 		foreach ( $this->products as $key => $product ) {
 
+			if ( ! $product || ! is_object( $product ) )
+				continue;
+
 			if ( $product->product_id == $product_id ) {
 
 				if ( ! $productVars )

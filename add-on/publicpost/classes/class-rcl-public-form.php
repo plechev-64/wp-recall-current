@@ -430,8 +430,8 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 							'post_parent'	 => $this->post_id,
 							'form_id'		 => intval( $this->form_id ),
 							'post_type'		 => $this->post_type,
-							'multiple'		 => false,
-							'crop'			 => true
+							'multiple'		 => 0,
+							'crop'			 => 1
 						) );
 
 						$uploader = $field->get_uploader();
@@ -534,7 +534,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 				global $rcl_group;
 
-				if ( $rcl_group->term_id ) {
+				if ( isset( $rcl_group->term_id ) && $rcl_group->term_id ) {
 					$group_id = $rcl_group->term_id;
 				} else if ( $this->post_id ) {
 					$group_id = rcl_get_group_id_by_post( $this->post_id );

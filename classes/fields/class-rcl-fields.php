@@ -372,7 +372,7 @@ class Rcl_Fields extends Rcl_Field {
 		if ( isset( $group['title'] ) && $group['title'] )
 			$content .= '<div class="group-title">' . $group['title'] . '</div>';
 
-		if ( $group['notice'] )
+		if ( isset( $group['notice'] ) && $group['notice'] )
 			$content .= '<div class="group-notice rcl-field-input"><span class="rcl-field-notice"><i class="rcli fa-info" aria-hidden="true"></i> ' . nl2br( $group['notice'] ) . '</span></div>';
 
 		$content .= '<div class="group-areas">';

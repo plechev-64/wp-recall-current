@@ -226,7 +226,7 @@ div p.post-group-meta {
 #rcl-group .search-form-rcl select {
     margin: 0 4px;
 }
-#rcl-group .taxonomy-groups select,
+.rcl-public-form .taxonomy-groups select,
 #rcl-group .search-form-rcl select {
     background-color: #fff;
     border-radius: 0;

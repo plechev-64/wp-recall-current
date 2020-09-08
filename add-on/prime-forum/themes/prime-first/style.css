@@ -530,7 +530,7 @@
     width: 100%;
     word-wrap: break-word;
 }
-#prime-forum .prime-post-content img {
+.prime-post-content img {
     margin: 10px 0;
 }
 #prime-forum .prime-post-content img.wp-smiley {

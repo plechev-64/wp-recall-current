@@ -175,6 +175,7 @@ class Rcl_Group_Widget {
 		$content .= wp_nonce_field( 'group-action-' . $user_ID, '_wpnonce', true, false );
 
 		$content .= rcl_get_button( array(
+			'icon'	 => 'fa-floppy-o',
 			'label'	 => __( 'Save changes', 'wp-recall' ),
 			'submit' => true
 			) );

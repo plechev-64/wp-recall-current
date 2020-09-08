@@ -93,7 +93,7 @@ img.aligncenter {
     z-index: 999;
 }
 body:not(.wp-admin) .rcl-bttn.rcl-bttn__type-primary {
-    color: var(--rclText) !important;
+    color: var(--rclText);
 }
 /*end*/
 

@@ -38,11 +38,13 @@ if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'pfm_scripts', 10 );
 endif;
 function pfm_scripts() {
+	global $user_ID;
 
 	rcl_enqueue_style( 'pfm-style', rcl_addon_url( 'style.css', __FILE__ ) );
 
-	if ( is_prime_forum() )
+	if ( is_prime_forum() || rcl_is_office( $user_ID ) ) {
 		rcl_enqueue_script( 'pfm-scripts', rcl_addon_url( 'js/scripts.js', __FILE__ ) );
+	}
 }
 
 add_action( 'init', 'pfm_init_tab', 10 );

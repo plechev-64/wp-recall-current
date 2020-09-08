@@ -12,8 +12,6 @@ require_once 'groups-widgets.php';
 if ( ! is_admin() || defined( 'DOING_AJAX' ) )
 	require_once 'groups-public.php';
 
-require_once 'upload-avatar.php';
-
 if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'rcl_groups_scripts', 10 );
 endif;
@@ -471,17 +469,60 @@ function rcl_ajax_create_group() {
 
 add_filter( 'rcl_group_thumbnail', 'rcl_group_add_thumb_buttons' );
 function rcl_group_add_thumb_buttons( $content ) {
+	global $rcl_group;
 
 	if ( ! rcl_is_group_can( 'admin' ) || rcl_get_option( 'group_avatar_weight', 1024 ) <= 0 )
 		return $content;
 
+	$uploder = new Rcl_Uploader( 'rcl_group_avatar', array(
+		'multiple'		 => 0,
+		'crop'			 => 1,
+		'group_id'		 => $rcl_group->term_id,
+		'image_sizes'	 => array(
+			array(
+				'height' => 150,
+				'width'	 => 150,
+				'crop'	 => 1
+			),
+			array(
+				'height' => 300,
+				'width'	 => 300,
+				'crop'	 => 1
+			),
+			array(
+				'height' => 600,
+				'width'	 => 600,
+				'crop'	 => 1
+			)
+		),
+		'resize'		 => array( 600, 600 ),
+		'min_height'	 => 150,
+		'min_width'		 => 150,
+		'max_size'		 => rcl_get_option( 'group_avatar_weight', 1024 )
+		) );
+
 	$content .= '<div id="group-avatar-upload">
             <span id="file-upload" class="rcli fa-download">
-                <input type="file" id="groupavatarupload" accept="image/*" name="uploadfile">
+                ' . $uploder->get_input() . '
             </span>
-	</div>
-	<span id="avatar-upload-progress"></span>';
+	</div>';
+
 	return $content;
+}
+
+add_action( 'rcl_upload', 'rcl_group_avatar_upload', 10, 2 );
+function rcl_group_avatar_upload( $uploads, $class ) {
+	global $user_ID;
+
+	if ( $class->uploader_id != 'rcl_group_avatar' )
+		return;
+
+	if ( $avatar_id = rcl_get_group_option( $class->group_id, 'avatar_id' ) )
+		wp_delete_attachment( $avatar_id );
+
+	rcl_update_group_option( $class->group_id, 'avatar_id', $uploads['id'] );
+
+	do_action( 'rcl_group_avatar_upload', $class->group_id, $uploads['id'] );
 }
 
 add_action( 'wp', 'rcl_group_actions' );
@@ -592,9 +633,14 @@ function rcl_get_group_options( $group_id ) {
 
 	$content .= apply_filters( 'rcl_group_options', $form->get_fields_list(), $group_id );
 
-	$content .= '<div class="group-option">'
-		. '<input type="submit" class="recall-button" name="group-submit" value="' . __( 'Save settings', 'wp-recall' ) . '">'
-		. '<input type="hidden" name="group-action" value="update">'
+	$content .= '<div class="group-option">';
+	$content .= rcl_get_button( [
+		'icon'	 => 'fa-floppy-o',
+		'label'	 => __( 'Save settings', 'wp-recall' ),
+		'submit' => true
+		] );
+	$content .= '<input type="hidden" name="group-action" value="update">'
+		. '<input type="hidden" name="group-submit" value="1">'
 		. wp_nonce_field( 'group-action-' . $user_ID, '_wpnonce', true, false )
 		. '</div>'
 		. '</form>'

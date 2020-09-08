@@ -25,7 +25,7 @@ add_shortcode( 'grouplist', 'rcl_get_grouplist' );
 function rcl_get_grouplist( $atts = false ) {
 	global $post, $rcl_group;
 
-	if ( rcl_get_option( 'group-output' ) && $post->ID == rcl_get_option( 'group-page' ) ) {
+	if ( rcl_get_option( 'group-output' ) && $post && $post->ID == rcl_get_option( 'group-page' ) ) {
 		if ( $rcl_group )
 			return rcl_get_single_group();
 	}

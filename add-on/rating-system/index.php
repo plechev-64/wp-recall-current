@@ -498,11 +498,12 @@ function rcl_edit_rating_post() {
 
 	do_action( 'rcl_pre_edit_rating_post', $args );
 
-	if ( $rcl_options['rating_' . $args['rating_status'] . '_limit_' . $args['rating_type']] ) {
+	$rslrt = isset( $rcl_options['rating_' . $args['rating_status'] . '_limit_' . $args['rating_type']] ) ? $rcl_options['rating_' . $args['rating_status'] . '_limit_' . $args['rating_type']] : false;
+
+	if ( $rslrt ) {
 		$timelimit	 = ($rcl_options['rating_' . $args['rating_status'] . '_time_' . $args['rating_type']]) ? $rcl_options['rating_' . $args['rating_status'] . '_time_' . $args['rating_type']] : 3600;
 		$votes		 = rcl_count_votes_time( $args, $timelimit );
-		if ( $votes >= $rcl_options['rating_' . $args['rating_status'] . '_limit_' . $args['rating_type']] ) {
-
+		if ( $votes >= $rslrt ) {
 			wp_send_json( array( 'error' => sprintf( __( 'exceeded the limit of votes for the period - %d seconds', 'wp-recall' ), $timelimit ) ) );
 		}
 	}

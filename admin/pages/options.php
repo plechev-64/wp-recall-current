@@ -96,7 +96,7 @@ $options->box( 'primary' )->add_group( 'design', array(
 	array(
 		'type'		 => 'uploader',
 		'temp_media' => 1,
-		'multiple'	 => false,
+		'multiple'	 => 0,
 		'crop'		 => 1,
 		'slug'		 => 'default_avatar',
 		'title'		 => __( 'Default avatar', 'wp-recall' )

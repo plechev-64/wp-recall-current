@@ -55,11 +55,6 @@ function rcl_get_single_group() {
 
 	rcl_dialog_scripts();
 
-	if ( rcl_is_group_can( 'admin' ) ) {
-		rcl_fileupload_scripts();
-		rcl_enqueue_script( 'groups-image-uploader', rcl_addon_url( 'js/groups-image-uploader.js', __FILE__ ), false, true );
-	}
-
 	$admin = (rcl_is_group_can( 'admin' ) || rcl_check_access_console()) ? 1 : 0;
 
 	$class = ($admin) ? 'class="admin-view"' : '';
@@ -1046,13 +1041,38 @@ function rcl_edit_group_pre_get_posts( $query ) {
 	return $query;
 }
 
+function rcl_get_member_group_access_status() {
+	global $rcl_group, $user_ID;
+
+	if ( $rcl_group->admin_id == $user_ID )
+		return true;
+
+	if ( ! $rcl_group->current_user && $user_ID )
+		$in_group	 = rcl_get_group_user_status( $user_ID, $rcl_group->term_id );
+	else
+		$in_group	 = $rcl_group->current_user;
+
+	if ( $rcl_group->group_status == 'closed' ) {
+
+		if ( ! $in_group || $in_group == 'banned' ) {
+			return false;
+		}
+	} else {
+		if ( $in_group == 'banned' ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 function rcl_close_group_post_content() {
 	global $rcl_group;
 	return rcl_get_notice( [
 		'title'	 => __( 'Publication unavailable!', 'wp-recall' ),
 		'text'	 => __( 'To view the publication , you must be a member of the group', 'wp-recall' ) . ' "' . $rcl_group->name . '"',
 		'type'	 => 'error'
-	] );
+		] );
 }
 
 function rcl_close_group_comments_content( $comments ) {

@@ -1276,8 +1276,7 @@ span.ruble-symbol {
 	/*content: "\f140";*/
 }
 .rcl-fields-manager .control-delete{
-	color: rgba(229, 57, 53, 0.7);
-	/*content: "\f158";*/
+
 }
 .rcl-fields-manager .control-move{
 	font-size: 18px;
@@ -1343,9 +1342,11 @@ span.ruble-symbol {
 .rcl-fields-manager .manager-field[data-type="agree"] .field-icon::before {
 	content: "\f491";
 }
-.rcl-fields-manager .manager-field[data-type="uploader"] .field-icon::before,
-.rcl-fields-manager .manager-field[data-type="file"] .field-icon::before {
+.rcl-fields-manager .manager-field[data-type="uploader"] .field-icon::before{
 	content: "\f501";
+}
+.rcl-fields-manager .manager-field[data-type="file"] .field-icon::before {
+	content: "\f498";
 }
 .rcl-fields-manager .manager-field[data-type="dynamic"] .field-icon::before {
 	content: "\f502";
@@ -1360,7 +1361,7 @@ span.ruble-symbol {
 	content: "\f108";
 }
 .rcl-fields-manager i.fa-trash{
-	color:red;
+	color: rgba(229, 57, 53, 0.7);
 }
 .rcl-fields-manager .ui-sortable-placeholder {
 	background: #ccc;

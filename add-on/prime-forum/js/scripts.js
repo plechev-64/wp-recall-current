@@ -52,6 +52,13 @@ function pfm_getSelectedText() {
 
 function pfm_ajax_action( object, e ) {
 
+	var form = jQuery( e ).parents( 'form' );
+
+	if ( form ) {
+		if ( !rcl_check_form( form ) )
+			return false;
+	}
+
 	if ( object['confirm'] ) {
 		if ( !confirm( object['confirm'] ) )
 			return false;

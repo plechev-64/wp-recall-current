@@ -34,7 +34,7 @@ function rcl_button_avatar_upload( $icons ) {
 		return false;
 
 	$uploder = new Rcl_Uploader( 'rcl_avatar', array(
-		'multiple'		 => false,
+		'multiple'		 => 0,
 		'crop'			 => 1,
 		'image_sizes'	 => array(
 			array(

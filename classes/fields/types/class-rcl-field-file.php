@@ -12,6 +12,10 @@
  * @author Андрей
  */
 class Rcl_Field_File extends Rcl_Field_Uploader {
+
+	public $mode_output	 = 'list';
+	public $multiple	 = 0;
+
 	function __construct( $args ) {
 
 		if ( isset( $args['ext-files'] ) )
@@ -67,7 +71,7 @@ class Rcl_Field_File extends Rcl_Field_Uploader {
 			'auto_upload'	 => 1,
 			'file_types'	 => array_map( 'trim', explode( ',', $this->file_types ) ),
 			'max_files'		 => 1,
-			'crop'			 => 0,
+			'crop'			 => $this->crop,
 			'input_attach'	 => $this->input_name,
 			'mode_output'	 => 'list'
 			) );

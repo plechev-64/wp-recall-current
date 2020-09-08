@@ -256,6 +256,9 @@
     text-align: center;
     width: 100%;
 }
+.userlist.cards-list .thumb-user a {
+	width: 100%;
+}
 .u_card_bottom {
     display: table;
     width: 100%;

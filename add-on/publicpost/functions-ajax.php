@@ -308,8 +308,8 @@ function rcl_set_post_thumbnail() {
 		'post_parent'	 => $parent_id,
 		'form_id'		 => $form_id,
 		'post_type'		 => $post_type,
-		'multiple'		 => false,
-		'crop'			 => true
+		'multiple'		 => 0,
+		'crop'			 => 1
 	) );
 
 	$result = array(

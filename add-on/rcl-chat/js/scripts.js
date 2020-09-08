@@ -17,6 +17,27 @@ jQuery( function( $ ) {
 
 } );
 
+rcl_add_action( 'rcl_uploader_init', 'rcl_chat_uploader_actions_init' );
+function rcl_chat_uploader_actions_init( uploader_id ) {
+
+	if ( uploader_id == 'rcl_chat_uploader' ) {
+
+		RclUploaders.get( uploader_id ).appendInGallery = function( file, uploader ) {
+
+			var form = jQuery( "#rcl-uploader-input-" + uploader.uploader_id ).parents( 'form' );
+
+			var preloader = form.find( '.chat-preloader-file' );
+
+			preloader.html( '<a href="#" class="chat-delete-attachment" onclick="rcl_chat_delete_attachment(this,' + file.attachment_id + ');return false;"><i class="rcli fa-times" aria-hidden="true"></i></a>' + file.icon_html + file.input_html );
+
+			rcl_do_action( 'rcl_chat_upload', file );
+
+		};
+
+	}
+
+}
+
 function rcl_chat_init_sound() {
 
 	var options = {
@@ -95,11 +116,10 @@ function rcl_init_chat( chat ) {
 
 		var user_id = parseInt( Rcl.user_ID );
 
-		if ( user_id ) {
-
-			if ( chat.file_upload )
-				rcl_chat_uploader( chat.token );
-		}
+		/*if ( user_id ) {
+		 if ( chat.file_upload )
+		 rcl_chat_uploader( chat.token );
+		 }*/
 
 		rcl_chat_max_words = chat.max_words;
 		rcl_chat_last_activity[chat.token] = chat.open_chat;
@@ -426,57 +446,6 @@ function rcl_chat_delete_attachment( e, attachment_id ) {
 	} );
 
 	return false;
-}
-
-function rcl_chat_uploader( token ) {
-	jQuery( '.rcl-chat-uploader input[type="file"]' ).fileupload( {
-		dataType: 'json',
-		type: 'POST',
-		url: Rcl.ajaxurl,
-		formData: {
-			action: 'rcl_chat_upload',
-			ajax_nonce: Rcl.nonce
-		},
-		autoUpload: true,
-		progressall: function( e, data ) {
-			//var progress = parseInt(data.loaded / data.total * 100, 10);
-			//jQuery('#upload-box-message .progress-bar').show().css('width',progress+'px');
-		},
-		change: function( e, data ) {
-
-			if ( data.files[0]['size'] > Rcl.chat.file_size * 1024 * 1024 ) {
-				rcl_notice( Rcl.local.upload_size_chat, 'error', 10000 );
-				return false;
-			}
-
-			rcl_preloader_show( '.chat-form > form' );
-
-		},
-		done: function( e, data ) {
-
-			rcl_preloader_hide();
-
-			var form = jQuery( e.target ).parents( 'form' );
-			var preloader = form.find( '.chat-preloader-file' );
-			var uploader = form.find( '.rcl-chat-uploader' );
-
-			var result = data.result;
-
-			if ( result['error'] ) {
-				rcl_notice( result['error'], 'error', 10000 );
-				return false;
-			}
-
-			if ( result['success'] ) {
-				preloader.html( '<a href="#" class="chat-delete-attachment" onclick="rcl_chat_delete_attachment(this,' + result['attachment_id'] + ');return false;"><i class="rcli fa-times" aria-hidden="true"></i></a>' + result['icon_html'] + result['input_html'] );
-				uploader.hide();
-
-				rcl_do_action( 'rcl_chat_upload', data );
-
-			}
-
-		}
-	} );
 }
 
 function rcl_chat_shift_contact_panel() {

@@ -16,6 +16,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 	public $required;
 	public $fix_editor;
 	public $file_types		 = 'jpg, jpeg, png';
+	public $crop			 = 0;
 	public $max_size		 = 512;
 	public $max_files		 = 5;
 	public $multiple		 = 1;
@@ -179,7 +180,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 		if ( ! $this->value )
 			return false;
 
-		$content = '<div id="rcl-gallery-' . $this->id . '" class="rcl-upload-gallery mode-' . $this->mode_output . '">';
+		$attachList = '';
 
 		if ( $this->mode_output == 'gallery' ) {
 
@@ -229,34 +230,57 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 				) );
 		} else {
 
-			foreach ( $this->value as $attach_id ) {
+			$attachIDs = is_array( $this->value ) ? $this->value : array( $this->value );
 
-				$is_image = wp_attachment_is_image( $attach_id ) ? true : false;
+			global $wpdb;
+			$IDs = RQ::tbl( new Rcl_Query( [
+					'name'	 => $wpdb->posts,
+					'cols'	 => ['ID', 'post_type' ]
+				] ) )->select( ['ID' ] )
+				->where( ['post_type' => 'attachment', 'ID__in' => $attachIDs ] )
+				->limit( -1 )
+				->orderby( 'post_title', 'ASC' )
+				->get_col();
 
-				if ( $is_image ) {
-
-					$image = wp_get_attachment_image( $attach_id, 'thumbnail' );
-				} else {
-
-					$image = wp_get_attachment_image( $attach_id, array( 100, 100 ), true );
-				}
-
-				if ( ! $image )
-					return false;
-
-				$url = wp_get_attachment_url( $attach_id );
-
-				$content .= '<div class="gallery-attachment gallery-attachment-' . $attach_id . ' ' . ($is_image ? 'type-image' : 'type-file') . '">';
-
-				$content .= '<a href="' . $url . '" target="_blank">' . $image . '</a>';
-
-				$content .= '<div class="attachment-title">';
-				$content .= '<a href="' . $url . '" target="_blank">' . basename( get_post_field( 'guid', $attach_id ) ) . '</a>';
-				$content .= '</div>';
-
-				$content .= '</div>';
+			foreach ( $IDs as $ID ) {
+				$attachList .= $this->get_single_attachment( $ID );
 			}
 		}
+
+		if ( ! $attachList )
+			return false;
+
+		$content = '<div id="rcl-gallery-' . $this->id . '" class="rcl-upload-gallery mode-' . $this->mode_output . '">';
+		$content .= $attachList;
+		$content .= '</div>';
+
+		return $content;
+	}
+
+	function get_single_attachment( $attach_id ) {
+
+		$is_image = wp_attachment_is_image( $attach_id ) ? true : false;
+
+		if ( $is_image ) {
+
+			$image = wp_get_attachment_image( $attach_id, 'thumbnail' );
+		} else {
+
+			$image = wp_get_attachment_image( $attach_id, array( 100, 100 ), true );
+		}
+
+		if ( ! $image )
+			return false;
+
+		$url = wp_get_attachment_url( $attach_id );
+
+		$content = '<div class="gallery-attachment gallery-attachment-' . $attach_id . ' ' . ($is_image ? 'type-image' : 'type-file') . '">';
+
+		$content .= '<a href="' . $url . '" target="_blank">' . $image . '</a>';
+
+		$content .= '<div class="attachment-title">';
+		$content .= '<a href="' . $url . '" target="_blank">' . basename( get_post_field( 'guid', $attach_id ) ) . '</a>';
+		$content .= '</div>';
 
 		$content .= '</div>';
 

@@ -36,12 +36,12 @@ function rcl_chat_options( $options ) {
 			'title'		 => __( 'Antispam', 'wp-recall' ),
 			'slug'		 => 'antispam',
 			'group'		 => 'chat',
-			'value_min'	 => 1,
+			'value_min'	 => 0,
 			'value_max'	 => 20,
 			'default'	 => 5,
 			'notice'	 => __( 'Specify a number of users, who other user will '
 				. 'be able to send an unread private message for a day. If its '
-				. 'value is exceeded the sending of messages will be blocked.', 'wp-recall' )
+				. 'value is exceeded the sending of messages will be blocked. If zero, this function is disabled', 'wp-recall' )
 		),
 		array(
 			'type'		 => 'runner',

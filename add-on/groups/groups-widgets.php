@@ -41,6 +41,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 
 			echo '<form method="post">'
 			. rcl_get_button( array(
+				'icon'	 => 'fa-sign-out',
 				'label'	 => __( 'Leave group', 'wp-recall' ),
 				'submit' => true
 			) )
@@ -61,6 +62,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 					if ( $rcl_group->group_status == 'open' ) {
 						echo '<form method="post">'
 						. rcl_get_button( array(
+							'icon'	 => 'fa-sign-in',
 							'label'	 => __( 'Join group', 'wp-recall' ),
 							'submit' => true
 						) )
@@ -81,6 +83,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 
 							echo '<form method="post">'
 							. rcl_get_button( array(
+								'icon'	 => 'fa-check',
 								'label'	 => __( 'Apply for membership', 'wp-recall' ),
 								'submit' => true
 							) )
@@ -115,6 +118,9 @@ class Group_Users_Widget extends Rcl_Group_Widget {
 	}
 
 	function widget( $args, $instance ) {
+
+		if ( ! rcl_get_member_group_access_status() )
+			return false;
 
 		global $rcl_group, $user_ID;
 
@@ -218,6 +224,9 @@ class Group_CategoryList_Widget extends Rcl_Group_Widget {
 
 	function widget( $args ) {
 
+		if ( ! rcl_get_member_group_access_status() )
+			return false;
+
 		extract( $args );
 
 		global $rcl_group;
@@ -227,6 +236,7 @@ class Group_CategoryList_Widget extends Rcl_Group_Widget {
 			return false;
 
 		echo $before;
+
 		echo $category;
 		echo $after;
 	}
@@ -331,6 +341,13 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 		global $rcl_group, $post;
 
 		extract( $args );
+
+		if ( ! rcl_get_member_group_access_status() ) {
+			echo $before;
+			echo rcl_close_group_post_content();
+			echo $after;
+			return;
+		}
 
 		$defaults = array(
 			'title'		 => __( 'Group posts', 'wp-recall' ),

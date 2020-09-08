@@ -1274,6 +1274,8 @@ function RclUploader( props ) {
 
 		/*this.initSortable();*/
 
+		rcl_do_action( 'rcl_uploader_init', uploader_id );
+
 	};
 
 	this.initSortable = function() {
@@ -1362,11 +1364,9 @@ function RclUploader( props ) {
 			return this.crop( e, data );
 		}
 
-		/*if ( options.auto_upload == 1 ) {*/
 		data.process().done( function() {
 			data.submit();
 		} );
-		/*}*/
 
 	};
 
@@ -1661,7 +1661,7 @@ function rcl_add_attachment_in_editor( attach_id, editor_name, e ) {
 
 	if ( typeof tinyMCE != 'undefined' ) {
 		tinyMCE.editors.forEach( function( editor ) {
-			console.log( [ editor, editor.targetElm, editor_name ] );
+
 			if ( editor.targetElm.name.length === editor_name.length ) {
 				editor.execCommand( 'mceInsertContent', false, image );
 			}

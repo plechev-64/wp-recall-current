@@ -59,7 +59,6 @@
     font: 14px Georgia,arial;
 }
 .feed-options .feed-callback:hover {
-    background: transparent;
     color: #333;
 }
 .feed-options .feed-callback:hover > span {

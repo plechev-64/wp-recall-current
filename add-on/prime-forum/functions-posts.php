@@ -37,9 +37,12 @@ function pfm_the_post_classes() {
 
 	$classes = array(
 		'prime-post',
-		'prime-post-index-' . $PrimePost->post_index,
 		'author-role-' . $PrimeUser->get_user_role( $PrimePost->user_id )
 	);
+
+	if ( isset( $PrimePost->post_index ) ) {
+		$classes[] = 'prime-post-index-' . $PrimePost->post_index;
+	}
 
 	if ( $PrimeTopic && $PrimePost && $PrimeTopic->user_id == $PrimePost->user_id ) {
 		$classes[] = 'topic-author';
@@ -80,7 +83,7 @@ function pfm_get_forum_post_user_vote( $user_vote, $rating ) {
 	if ( $rating->rating_type == 'forum-post' ) {
 		global $PrimePost;
 		if ( $PrimePost->post_id == $rating->object_id ) {
-			return $PrimePost->user_vote;
+			return isset( $PrimePost->user_vote ) ? $PrimePost->user_vote : false;
 		}
 	}
 

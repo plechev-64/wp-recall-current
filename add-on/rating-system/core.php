@@ -340,8 +340,8 @@ function rcl_get_list_votes( $args, $votes ) {
 
 			$reps = array(
 				$date,
-				'<a href="' . get_comment_link( $vote->object_id ) . '">' . __( 'comment', 'wp-recall' ) . '</a>',
-				'<a href="' . get_permalink( $vote->object_id ) . '">' . get_the_title( $vote->object_id ) . '</a>'
+				$vote->object_id ? '<a href="' . get_comment_link( $vote->object_id ) . '">' . __( 'comment', 'wp-recall' ) . '</a>' : '',
+				$vote->object_id ? '<a href="' . get_permalink( $vote->object_id ) . '">' . get_the_title( $vote->object_id ) . '</a>' : ''
 			);
 
 			$row = str_replace( $temps, $reps, $row );
