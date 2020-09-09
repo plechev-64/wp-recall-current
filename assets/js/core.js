@@ -1303,7 +1303,7 @@ function RclUploader( props ) {
 
 	this.progressall = function( e, data ) {
 		var progress = parseInt( data.loaded / data.total * 100, 10 );
-		jQuery( '#rcl-uploader-progress' ).html( '<div class="progress-bar" style="width:' + progress + '%;">' + progress + '%</div>' );
+		jQuery( '#rcl-uploader-' + this.uploader_id + ' .rcl-uploader-progress' ).html( '<div class="progress-bar" style="width:' + progress + '%;">' + progress + '%</div>' );
 	};
 
 	this.add = function( e, data ) {
@@ -1390,7 +1390,7 @@ function RclUploader( props ) {
 
 		this.animateLoading( false );
 
-		jQuery( '#rcl-uploader-progress' ).empty();
+		jQuery( '#rcl-uploader-' + this.uploader_id + ' .rcl-uploader-progress' ).empty();
 
 		if ( data.result['error'] ) {
 			rcl_notice( data.result['error'], 'error', 10000 );
@@ -1424,9 +1424,9 @@ function RclUploader( props ) {
 
 	this.appendInGallery = function( file ) {
 
-		if ( file['html'] ) {
-			jQuery( '#rcl-upload-gallery-' + this.uploader_id ).append( file['html'] );
-			jQuery( '#rcl-gallery-' + this.uploader_id ).append( file['html'] );
+		if ( file.html ) {
+			jQuery( '#rcl-upload-gallery-' + this.uploader_id ).append( file.html );
+			jQuery( '#rcl-gallery-' + this.uploader_id ).append( file.html );
 			jQuery( '#rcl-upload-gallery-' + this.uploader_id + ' .gallery-attachment' ).last().animateCss( 'flipInX' );
 		}
 	};

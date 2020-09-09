@@ -38,10 +38,7 @@ function rcl_button_avatar_upload( $icons ) {
 		'crop'			 => 1,
 		'filetitle'		 => 'rcl-user-avatar-' . $user_ID,
 		'filename'		 => $user_ID,
-		'dir'			 => [
-			'path'	 => RCL_UPLOAD_PATH . 'avatars/',
-			'url'	 => RCL_UPLOAD_URL . 'avatars/'
-		],
+		'dir'			 => '/uploads/rcl-uploads/avatars',
 		'image_sizes'	 => array(
 			array(
 				'height' => 70,
@@ -59,7 +56,7 @@ function rcl_button_avatar_upload( $icons ) {
 				'crop'	 => 1
 			)
 		),
-		'resize'		 => array( 600, 600 ),
+		'resize'		 => array( 1000, 1000 ),
 		'min_height'	 => 150,
 		'min_width'		 => 150,
 		'max_size'		 => rcl_get_option( 'avatar_weight', 1024 )

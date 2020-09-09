@@ -2,12 +2,12 @@ jQuery( function( $ ) {
 
 	RclUploaders.get( 'rcl_avatar' ).afterDone = function( e, data ) {
 
-		var image = jQuery( '#rcl-avatar .avatar-image img' ).attr( 'srcset', '' ).attr( 'src', data.result.uploads.src );
+		var image = jQuery( '#rcl-avatar .avatar-image img' ).attr( 'srcset', '' ).attr( 'src', data.result.uploads.src.thumbnail );
 		image.load( function() {
 			image.animateCss( 'zoomIn' );
 		} );
 
-		image = jQuery( '#recallbar img.avatar' ).attr( 'srcset', '' ).attr( 'src', data.result.uploads.src );
+		image = jQuery( '#recallbar img.avatar' ).attr( 'srcset', '' ).attr( 'src', data.result.uploads.src.thumbnail );
 		image.load( function() {
 			image.animateCss( 'zoomIn' );
 		} );

@@ -2076,12 +2076,12 @@ body .rcl-bttn:not(.rcl-bttn__type-clear):last-child {
 	margin: 10px 0;
 }
 
-#rcl-uploader-progress{
+.rcl-uploader-progress{
 	background: #ccc;
     border-radius: 3px;
     overflow: hidden;
 }
-#rcl-uploader-progress .progress-bar{
+.rcl-uploader-progress .progress-bar{
 	background: #0080005c;
     height: 20px;
     line-height: 1;

@@ -34,10 +34,7 @@ function rcl_add_cover_uploader_button() {
 			'multiple'		 => 0,
 			'filetitle'		 => 'rcl-user-cover-' . $user_ID,
 			'filename'		 => $user_ID,
-			'dir'			 => [
-				'path'	 => RCL_UPLOAD_PATH . 'covers/',
-				'url'	 => RCL_UPLOAD_URL . 'covers/'
-			],
+			'dir'			 => '/uploads/rcl-uploads/covers',
 			'crop'			 => array(
 				'ratio' => 0
 			),

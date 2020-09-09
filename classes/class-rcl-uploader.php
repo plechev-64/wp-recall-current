@@ -39,7 +39,7 @@ class Rcl_Uploader {
 	public $class_name		 = '';
 	public $filename		 = '';
 	public $filetitle		 = '';
-	public $dir				 = array();
+	public $dir				 = '';
 	protected $accept		 = array( 'image/*' );
 
 	function __construct( $uploader_id, $args = false ) {
@@ -126,7 +126,7 @@ class Rcl_Uploader {
 	}
 
 	function get_progress_bar() {
-		return '<div id="rcl-uploader-progress"></div>';
+		return '<div class="rcl-uploader-progress"></div>';
 	}
 
 	function get_uploader( $args = false ) {
@@ -429,13 +429,13 @@ class Rcl_Uploader {
 			}
 		} else {
 
-			if ( $this->temp_media ) {
-				rcl_delete_temp_media_by_args( array(
-					'uploader_id'	 => $this->uploader_id,
-					'user_id'		 => $this->user_id ? $this->user_id : 0,
-					'session_id'	 => $this->user_id ? '' : $_COOKIE['PHPSESSID'],
-				) );
-			}
+			/* if ( $this->temp_media ) {
+			  rcl_delete_temp_media_by_args( array(
+			  'uploader_id'	 => $this->uploader_id,
+			  'user_id'		 => $this->user_id ? $this->user_id : 0,
+			  'session_id'	 => $this->user_id ? '' : $_COOKIE['PHPSESSID'],
+			  ) );
+			  } */
 
 			$uploads = $this->file_upload_process( $_FILES[$this->input_name] );
 		}
@@ -508,7 +508,10 @@ class Rcl_Uploader {
 
 		return array(
 			'id'	 => $attach_id,
-			'src'	 => $this->get_src( $attach_id, 'full' ),
+			'src'	 => [
+				'full'		 => $this->get_src( $attach_id, 'full' ),
+				'thumbnail'	 => $this->get_src( $attach_id, 'thumbnail' ),
+			],
 			'html'	 => $this->gallery_attachment( $attach_id )
 		);
 	}
@@ -587,8 +590,8 @@ class Rcl_Uploader {
 	}
 
 	function edit_upload_dir( $param ) {
-		$param['path']	 = untrailingslashit( $this->dir['path'] );
-		$param['url']	 = untrailingslashit( $this->dir['url'] );
+		$param['path']	 = WP_CONTENT_DIR . untrailingslashit( $this->dir );
+		$param['url']	 = WP_CONTENT_URL . untrailingslashit( $this->dir );
 		return $param;
 	}
 

@@ -4,7 +4,7 @@ jQuery( function( $ ) {
 
 		RclUploaders.get( 'rcl_group_avatar' ).afterDone = function( e, data ) {
 
-			var image = $( '#rcl-group .group-avatar img' ).attr( 'src', data.result.uploads.src );
+			var image = $( '#rcl-group .group-avatar img' ).attr( 'src', data.result.uploads.src.full );
 			image.load( function() {
 				image.animateCss( 'zoomIn' );
 			} );
