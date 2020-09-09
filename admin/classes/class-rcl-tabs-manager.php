@@ -11,6 +11,14 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 			),
 			'field_options'	 => array(
 				array(
+					'slug'			 => 'icon',
+					'default'		 => 'fa-check-square',
+					'placeholder'	 => 'fa-check-square',
+					'class'			 => 'rcl-iconpicker',
+					'type'			 => 'text',
+					'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' )
+				),
+				array(
 					'type'	 => 'radio',
 					'slug'	 => 'hidden',
 					'title'	 => __( 'Hidden tab', 'wp-recall' ),

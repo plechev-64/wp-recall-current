@@ -27,14 +27,6 @@ class Rcl_Field_Range extends Rcl_Field_Abstract {
 
 		$options = array(
 			array(
-				'slug'			 => 'icon',
-				'default'		 => 'fa-arrows-h',
-				'placeholder'	 => 'fa-arrows-h',
-				'class'			 => 'rcl-iconpicker',
-				'type'			 => 'text',
-				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' )
-			),
-			array(
 				'slug'			 => 'unit',
 				'default'		 => $this->unit,
 				'placeholder'	 => __( 'For example: km or pcs', 'wp-recall' ),

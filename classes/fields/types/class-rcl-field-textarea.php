@@ -25,14 +25,6 @@ class Rcl_Field_TextArea extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'			 => 'icon',
-				'default'		 => 'fa-comment',
-				'placeholder'	 => 'fa-comment',
-				'class'			 => 'rcl-iconpicker',
-				'type'			 => 'text',
-				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' )
-			),
-			array(
 				'slug'		 => 'placeholder',
 				'default'	 => $this->placeholder,
 				'type'		 => 'text',

@@ -32,14 +32,6 @@ class Rcl_Field_Select extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'			 => 'icon',
-				'default'		 => 'fa-list',
-				'placeholder'	 => 'fa-list',
-				'class'			 => 'rcl-iconpicker',
-				'type'			 => 'text',
-				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' )
-			),
-			array(
 				'slug'		 => 'empty_first',
 				'default'	 => $this->empty_first,
 				'type'		 => 'text',

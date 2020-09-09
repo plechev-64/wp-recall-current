@@ -35,14 +35,6 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 
 		$options = array(
 			array(
-				'slug'			 => 'icon',
-				'default'		 => 'fa-file',
-				'placeholder'	 => 'fa-file',
-				'class'			 => 'rcl-iconpicker',
-				'type'			 => 'text',
-				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' )
-			),
-			array(
 				'slug'		 => 'max_size',
 				'default'	 => $this->max_size,
 				'type'		 => 'runner',

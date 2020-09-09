@@ -25,14 +25,6 @@ class Rcl_Field_MultiSelect extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'			 => 'icon',
-				'default'		 => 'fa-list',
-				'placeholder'	 => 'fa-list',
-				'class'			 => 'rcl-iconpicker',
-				'type'			 => 'text',
-				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' )
-			),
-			array(
 				'slug'		 => 'values',
 				'default'	 => $this->values,
 				'type'		 => 'dynamic',

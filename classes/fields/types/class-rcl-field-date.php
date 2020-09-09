@@ -24,14 +24,6 @@ class Rcl_Field_Date extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'			 => 'icon',
-				'default'		 => 'fa-calendar',
-				'placeholder'	 => 'fa-calendar',
-				'class'			 => 'rcl-iconpicker',
-				'type'			 => 'text',
-				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' )
-			),
-			array(
 				'slug'		 => 'placeholder',
 				'default'	 => $this->placeholder,
 				'type'		 => 'text',

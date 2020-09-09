@@ -27,14 +27,6 @@ class Rcl_Field_Checkbox extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'			 => 'icon',
-				'default'		 => 'fa-check-square',
-				'placeholder'	 => 'fa-check-square',
-				'class'			 => 'rcl-iconpicker',
-				'type'			 => 'text',
-				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' )
-			),
-			array(
 				'slug'		 => 'values',
 				'default'	 => $this->values,
 				'type'		 => 'dynamic',

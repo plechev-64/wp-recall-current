@@ -31,14 +31,6 @@ class Rcl_Field_Editor extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'			 => 'icon',
-				'default'		 => 'fa-file-text-o',
-				'placeholder'	 => 'fa-file-text-o',
-				'class'			 => 'rcl-iconpicker',
-				'type'			 => 'text',
-				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' )
-			),
-			array(
 				'slug'	 => 'tinymce',
 				'type'	 => 'radio',
 				'title'	 => __( 'TinyMCE', 'wp-recall' ),

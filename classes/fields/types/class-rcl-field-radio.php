@@ -36,13 +36,6 @@ class Rcl_Field_Radio extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'			 => 'icon',
-				'default'		 => 'fa-dot-circle-o',
-				'placeholder'	 => 'fa-dot-circle-o',
-				'type'			 => 'text',
-				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' )
-			),
-			array(
 				'slug'		 => 'empty_first',
 				'default'	 => $this->empty_first,
 				'type'		 => 'text',
