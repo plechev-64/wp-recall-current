@@ -64,11 +64,12 @@ function rcl_metabox_products( $post ) {
 
 			foreach ( $variation['values'] as $k => $value ) {
 
-				$productVal = $PrVars->get_product_variation_value( $variation['slug'], $value );
+				$productVal	 = $PrVars->get_product_variation_value( $variation['slug'], $value );
+				$varPrice	 = $productVal ? $productVal['price'] : '';
 
 				$content .= '<div class="variation-value">';
 				$content .= '<span class="variation-value-name">' . $value . '</span>';
-				$content .= '<input type="number" name="product-variations[' . $variation['slug'] . '][values][' . $k . '][price]" value="' . $productVal['price'] . '">';
+				$content .= '<input type="number" name="product-variations[' . $variation['slug'] . '][values][' . $k . '][price]" value="' . $varPrice . '">';
 				$content .= '<input type="hidden" name="product-variations[' . $variation['slug'] . '][values][' . $k . '][name]" value="' . $value . '">';
 				$content .= '</div>';
 			}

@@ -439,8 +439,9 @@ div p.post-group-meta {
     border: none;                           /*++Twenty16++*/
     max-width: 300px;
     min-width: 170px;
-    padding: 5px 10px;                      /*++Twenty16++*/
+    padding: 0px 10px;
     width: 58%;
+    margin-right: 5px;             /*++Twenty16++*/
 }
 #rcl-office #create-group input[type="text"]:focus {
     background-color: #fff;

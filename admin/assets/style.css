@@ -1618,9 +1618,6 @@ span.ruble-symbol {
 .rcl-fields-manager .group-manager-button.add-area i{
 	color: green;
 }
-.rcl-fields-manager .group-manager-button.group-delete i{
-	color: red;
-}
 .rcl-fields-manager .group-manager-button.group-settings i{
 	color: #0073aa;
 }

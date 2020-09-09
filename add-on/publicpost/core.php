@@ -213,11 +213,14 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 				}
 			}
 
-			if ( $value && in_array( $field->type, ['uploader', 'file' ] ) ) {
-				//удаляем записи из временной библиотеки
+			if ( $value ) {
 
-				foreach ( $value as $attach_id ) {
-					rcl_delete_temp_media( $attach_id );
+				if ( $field->type == 'uploader' ) {
+					foreach ( $value as $val ) {
+						rcl_delete_temp_media( $val );
+					}
+				} else if ( $field->type == 'file' ) {
+					rcl_delete_temp_media( $value );
 				}
 			}
 		}

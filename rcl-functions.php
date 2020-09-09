@@ -1168,11 +1168,14 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 				}
 			}
 
-			if ( $value && in_array( $field['type'], ['uploader', 'file' ] ) ) {
-				//удаляем записи из временной библиотеки
+			if ( $value ) {
 
-				foreach ( $value as $attach_id ) {
-					rcl_delete_temp_media( $attach_id );
+				if ( $field['type'] == 'uploader' ) {
+					foreach ( $value as $val ) {
+						rcl_delete_temp_media( $val );
+					}
+				} else if ( $field['type'] == 'file' ) {
+					rcl_delete_temp_media( $value );
 				}
 			}
 		}

@@ -355,7 +355,7 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 		$title = ($field->item == 'groups') ? $field->id . ': ' . $field->title : $field->title;
 
-		$content = '<li id="field-' . $field->id . '" data-parent="' . $field->parent_id . '" data-slug="' . $field->id . '" data-type="' . $field->item . '" class="' . implode( ' ', $classes ) . '">
+		$content = '<li id="field-' . $field->id . '" ' . (isset( $field->parent_id ) ? 'data-parent="' . $field->parent_id . '"' : '') . ' data-slug="' . $field->id . '" data-type="' . $field->item . '" class="' . implode( ' ', $classes ) . '">
 			<div class="field-header">
 				<span class="field-type type-' . $field->item . '"></span>
 				<span class="field-title">' . $title . '</span>

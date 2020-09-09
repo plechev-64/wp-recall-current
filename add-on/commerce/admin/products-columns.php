@@ -6,6 +6,7 @@ function rcl_init_product_columns( $columns ) {
 	global $rmag_options;
 
 	$out = array();
+	$i	 = 0;
 	foreach ( $columns as $col => $name ) {
 
 		if ( ++ $i == 2 ) {

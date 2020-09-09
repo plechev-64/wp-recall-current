@@ -924,7 +924,7 @@ function rcl_init_group_data( $query ) {
 
 				$term = get_term_by( 'slug', $group_var, 'groups' );
 
-				$group_id = $term->term_id;
+				$group_id = $term ? $term->term_id : false;
 			} else {
 
 				$group_id = ($group_var) ? $group_var : false;

@@ -446,6 +446,12 @@ function rcl_ajax_create_group() {
 		) );
 	}
 
+	if ( is_numeric( $group_name ) ) {
+		wp_send_json( array(
+			'error' => __( 'Specify the name of new group as string', 'wp-recall' )
+		) );
+	}
+
 	do_action( 'rcl_pre_create_group' );
 
 	$group_id = rcl_create_group( array(

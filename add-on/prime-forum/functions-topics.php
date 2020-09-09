@@ -168,10 +168,14 @@ function pfm_update_topic_custom_fields( $topic_id ) {
 				}
 			}
 
-			if ( $value && in_array( $field['type'], ['uploader', 'file' ] ) ) {
+			if ( $value ) {
 
-				foreach ( $value as $attach_id ) {
-					rcl_delete_temp_media( $attach_id );
+				if ( $field['type'] == 'uploader' ) {
+					foreach ( $value as $val ) {
+						rcl_delete_temp_media( $val );
+					}
+				} else if ( $field['type'] == 'file' ) {
+					rcl_delete_temp_media( $value );
 				}
 			}
 		}
