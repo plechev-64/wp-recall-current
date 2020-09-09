@@ -157,6 +157,7 @@ function rcl_notice_avatar_deleted() {
 }
 
 // disabling caching in chrome
+add_filter( 'get_avatar_data', 'rcl_add_avatar_time_creation', 10, 2 );
 function rcl_add_avatar_time_creation( $args, $id_or_email ) {
 	$dataUrl	 = wp_parse_url( $args['url'] );
 	$ava_path	 = untrailingslashit( ABSPATH ) . $dataUrl['path'];
@@ -165,5 +166,3 @@ function rcl_add_avatar_time_creation( $args, $id_or_email ) {
 	$args['url'] = $args['url'] . '?ver=' . filemtime( $ava_path );
 	return $args;
 }
-
-add_filter( 'get_avatar_data', 'rcl_add_avatar_time_creation', 10, 2 );

@@ -73,8 +73,7 @@ function rcl_get_user_details( $user_id, $args = false ) {
 
 		if ( $avatar ) {
 			if ( is_numeric( $avatar ) ) {
-				$image_attributes	 = wp_get_attachment_image_src( $avatar, 'full' );
-				$url_avatar			 = $image_attributes[0];
+				$url_avatar = get_avatar_url( $user_LK, ['size' => 1000 ] );
 			} else {
 				$url_avatar = $avatar;
 			}
