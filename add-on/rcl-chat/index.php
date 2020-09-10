@@ -265,7 +265,14 @@ function rcl_get_user_contacts_list( $user_id ) {
 	);
 
 	if ( ! $amount ) {
-		return '<p>' . __( 'No contacts yet. Start a chat with another user on his page', 'wp-recall' ) . '</p>';
+
+		$notice = __( 'No contacts yet. Start a chat with another user on his page', 'wp-recall' );
+
+		if ( rcl_get_option( 'users_page_rcl' ) ) {
+			$notice .= '. <a href="' . get_permalink( rcl_get_option( 'users_page_rcl' ) ) . '">' . __( 'Choose from the list of users', 'wp-recall' ) . '</a>.';
+		}
+
+		return apply_filters( 'rcl_chat_no_contacts_notice', $notice, $user_id );
 	}
 
 	rcl_dialog_scripts();

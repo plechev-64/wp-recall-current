@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2020-09-09 20:24+0400\n"
+"POT-Creation-Date: 2020-09-10 08:16+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -2764,7 +2764,7 @@ msgstr "не найдено"
 msgid "from"
 msgstr "от"
 
-#: add-on/prime-forum/functions-query.php:209 add-on/rcl-chat/index.php:304
+#: add-on/prime-forum/functions-query.php:209 add-on/rcl-chat/index.php:311
 #: templates/add-on-card.php:68
 msgid "ago"
 msgstr "назад"
@@ -4145,27 +4145,31 @@ msgstr "Авторизуйтесь, чтобы написать пользова
 msgid "User contacts"
 msgstr "Контакты пользователя"
 
-#: add-on/rcl-chat/index.php:268
+#: add-on/rcl-chat/index.php:269
 msgid "No contacts yet. Start a chat with another user on his page"
 msgstr "Пока контактов нет. Начните переписку на странице другого пользователя"
 
-#: add-on/rcl-chat/index.php:286
+#: add-on/rcl-chat/index.php:272
+msgid "Choose from the list of users"
+msgstr "Выберите из списка пользователей"
+
+#: add-on/rcl-chat/index.php:293
 msgid "Total number of contacts"
 msgstr "Всего контактов"
 
-#: add-on/rcl-chat/index.php:293 add-on/rcl-chat/index.php:428
+#: add-on/rcl-chat/index.php:300 add-on/rcl-chat/index.php:435
 msgid "Delete contact"
 msgstr "Удалить контакт"
 
-#: add-on/rcl-chat/index.php:294
+#: add-on/rcl-chat/index.php:301
 msgid "Open chat in window"
 msgstr "Открыть чат в окне"
 
-#: add-on/rcl-chat/index.php:331
+#: add-on/rcl-chat/index.php:338
 msgid "No important messages yet"
 msgstr "Важных сообщений пока нет"
 
-#: add-on/rcl-chat/index.php:465
+#: add-on/rcl-chat/index.php:472
 msgid "Not set attributes: chat_room"
 msgstr "Не указан атрибут: chat_room"
 
