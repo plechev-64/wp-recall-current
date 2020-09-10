@@ -1,6 +1,6 @@
 /*вывод формы кнопки в корзину*/
 .rcl-cart-form{
-	
+	margin: 0;
 }
 .rcl-cart-box {
     clear: both;

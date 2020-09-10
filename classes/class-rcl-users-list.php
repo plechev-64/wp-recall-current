@@ -208,6 +208,11 @@ class Rcl_Users_List extends Rcl_Users_Query {
 			$custom_field = apply_filters( 'rcl_userslist_custom_field', $custom_field );
 			if ( ! $custom_field )
 				continue;
+
+			if ( isset( $field['req'] ) && $field['req'] ) {
+				$field['public_value'] = $field['req'];
+			}
+
 			if ( isset( $custom_field['public_value'] ) && $custom_field['public_value'] == 1 ) {
 				$fields[]	 = $custom_field;
 				$slugs[]	 = $custom_field['slug'];
