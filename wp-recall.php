@@ -262,6 +262,10 @@ final class WP_Recall {
 			$this->init_frontend_globals();
 		}
 
+		if ( ! rcl_get_option( 'security-key' ) ) {
+			rcl_update_option( 'security-key', wp_generate_password( 20, false ) );
+		}
+
 		do_action( 'rcl_init' );
 	}
 

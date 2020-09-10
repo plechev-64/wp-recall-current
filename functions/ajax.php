@@ -165,7 +165,7 @@ function rcl_upload() {
 	else
 		$uploader	 = new $className( $options );
 
-	if ( md5( json_encode( $uploader ) . rcl_get_security_key() ) != $_POST['sk'] )
+	if ( md5( json_encode( $uploader ) . rcl_get_option( 'security-key' ) ) != $_POST['sk'] )
 		wp_send_json( [
 			'error' => __( 'Error of security', 'wp-recall' )
 		] );

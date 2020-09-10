@@ -82,9 +82,9 @@ $options->box( 'primary' )->add_group( 'security', array(
 ) )->add_options( array(
 	array(
 		'type'		 => 'password',
+		'required'	 => 1,
 		'slug'		 => 'security-key',
-		'title'		 => __( 'The key of security for ajax-requests and other', 'wp-recall' ),
-		'default'	 => rcl_get_security_key()
+		'title'		 => __( 'The key of security for ajax-requests and other', 'wp-recall' )
 	)
 ) );
 

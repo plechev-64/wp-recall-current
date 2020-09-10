@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2020-09-10 14:10+0400\n"
+"POT-Creation-Date: 2020-09-10 15:06+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -258,7 +258,7 @@ msgstr "Статус"
 #: add-on/groups/classes/class-rcl-groups-list.php:173
 #: add-on/publicpost/templates/posts-list.php:17
 #: add-on/user-balance/admin/class-rcl-payments-history.php:81
-#: classes/class-rcl-custom-fields-manager.php:67 wp-recall.php:386
+#: classes/class-rcl-custom-fields-manager.php:67 wp-recall.php:390
 msgid "Date"
 msgstr "Дата"
 
@@ -686,7 +686,7 @@ msgstr "Имя"
 
 #: add-on/commerce/admin/pages/order.php:20 add-on/profile/index.php:161
 #: classes/class-rcl-custom-fields-manager.php:64
-#: templates/form-register.php:24 wp-recall.php:374
+#: templates/form-register.php:24 wp-recall.php:378
 msgid "E-mail"
 msgstr "E-mail"
 
@@ -1004,7 +1004,7 @@ msgid "Login"
 msgstr "Логин"
 
 #: add-on/commerce/core.php:299 functions/register.php:251
-#: functions/register.php:443 templates/form-sign.php:27 wp-recall.php:346
+#: functions/register.php:443 templates/form-sign.php:27 wp-recall.php:350
 msgid "Password"
 msgstr "Пароль"
 
@@ -3342,12 +3342,12 @@ msgid "Output option"
 msgstr "Вариант вывода"
 
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:116
-#: classes/class-rcl-custom-fields-manager.php:60 wp-recall.php:358
+#: classes/class-rcl-custom-fields-manager.php:60 wp-recall.php:362
 msgid "Select"
 msgstr "Выпадающий список"
 
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:117
-#: classes/class-rcl-custom-fields-manager.php:62 wp-recall.php:366
+#: classes/class-rcl-custom-fields-manager.php:62 wp-recall.php:370
 msgid "Checkbox"
 msgstr "Чекбоксы"
 
@@ -4735,7 +4735,7 @@ msgstr "По-умолчанию 10 минут."
 msgid "Security"
 msgstr ""
 
-#: admin/pages/options.php:86
+#: admin/pages/options.php:87
 msgid "The key of security for ajax-requests and other"
 msgstr "Ключ безопасности для ajax-запросов и другого"
 
@@ -4874,7 +4874,7 @@ msgstr ""
 "сформировав его на <a href=\"/wp-admin/nav-menus.php\" target=\"_blank"
 "\">странице управления меню сайта</a>"
 
-#: admin/pages/options.php:218 wp-recall.php:410
+#: admin/pages/options.php:218 wp-recall.php:414
 msgid "Color"
 msgstr "Цвет"
 
@@ -5006,56 +5006,56 @@ msgstr ""
 "произвольным контентом и управлять уже созданными  вкладками в различных "
 "областях личного кабинета"
 
-#: classes/class-rcl-custom-fields-manager.php:58 wp-recall.php:334
+#: classes/class-rcl-custom-fields-manager.php:58 wp-recall.php:338
 msgid "Text"
 msgstr "Текстовое поле"
 
-#: classes/class-rcl-custom-fields-manager.php:59 wp-recall.php:354
+#: classes/class-rcl-custom-fields-manager.php:59 wp-recall.php:358
 msgid "Multiline text area"
 msgstr "Многострочное поле"
 
-#: classes/class-rcl-custom-fields-manager.php:61 wp-recall.php:362
+#: classes/class-rcl-custom-fields-manager.php:61 wp-recall.php:366
 msgid "MultiSelect"
 msgstr "Множественный выбор"
 
-#: classes/class-rcl-custom-fields-manager.php:63 wp-recall.php:370
+#: classes/class-rcl-custom-fields-manager.php:63 wp-recall.php:374
 msgid "Radiobutton"
 msgstr "Радиокнопки"
 
-#: classes/class-rcl-custom-fields-manager.php:65 wp-recall.php:378
+#: classes/class-rcl-custom-fields-manager.php:65 wp-recall.php:382
 msgid "Phone"
 msgstr "Телефон"
 
-#: classes/class-rcl-custom-fields-manager.php:66 wp-recall.php:382
+#: classes/class-rcl-custom-fields-manager.php:66 wp-recall.php:386
 msgid "Number"
 msgstr "Кол-во"
 
-#: classes/class-rcl-custom-fields-manager.php:68 wp-recall.php:338
+#: classes/class-rcl-custom-fields-manager.php:68 wp-recall.php:342
 msgid "Time"
 msgstr "Время"
 
-#: classes/class-rcl-custom-fields-manager.php:69 wp-recall.php:350
+#: classes/class-rcl-custom-fields-manager.php:69 wp-recall.php:354
 msgid "Url"
 msgstr "Ссылка"
 
 #: classes/class-rcl-custom-fields-manager.php:70
-#: classes/fields/types/class-rcl-field-agree.php:59 wp-recall.php:390
+#: classes/fields/types/class-rcl-field-agree.php:59 wp-recall.php:394
 msgid "Agreement"
 msgstr "Соглашение"
 
-#: classes/class-rcl-custom-fields-manager.php:71 wp-recall.php:394
+#: classes/class-rcl-custom-fields-manager.php:71 wp-recall.php:398
 msgid "File"
 msgstr "Файл"
 
-#: classes/class-rcl-custom-fields-manager.php:72 wp-recall.php:398
+#: classes/class-rcl-custom-fields-manager.php:72 wp-recall.php:402
 msgid "Dynamic"
 msgstr "Динамическое"
 
-#: classes/class-rcl-custom-fields-manager.php:73 wp-recall.php:402
+#: classes/class-rcl-custom-fields-manager.php:73 wp-recall.php:406
 msgid "Runner"
 msgstr "Бегунок"
 
-#: classes/class-rcl-custom-fields-manager.php:74 wp-recall.php:406
+#: classes/class-rcl-custom-fields-manager.php:74 wp-recall.php:410
 msgid "Range"
 msgstr "Диапазон"
 
@@ -5517,7 +5517,7 @@ msgstr "Не удалось загрузить смайлы"
 
 #: functions/ajax.php:170
 msgid "Error of security"
-msgstr ""
+msgstr "Ошибка запроса"
 
 #: functions/ajax.php:181
 msgid "Something has been wrong"
@@ -5968,19 +5968,19 @@ msgstr "Перейти в кабинет пользователя"
 msgid "Are you cheating, bastard?"
 msgstr "Читеришь, гадёныш?"
 
-#: wp-recall.php:342
+#: wp-recall.php:346
 msgid "Hidden field"
 msgstr "Скрытое поле"
 
-#: wp-recall.php:414
+#: wp-recall.php:418
 msgid "Custom content"
 msgstr "Произвольный контент"
 
-#: wp-recall.php:418
+#: wp-recall.php:422
 msgid "Text editor"
 msgstr "Текстовый редактор"
 
-#: wp-recall.php:422
+#: wp-recall.php:426
 msgid "File uploader"
 msgstr "Файловый загрузчик"
 
