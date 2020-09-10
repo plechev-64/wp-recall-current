@@ -391,14 +391,10 @@ function rcl_register_author_post( $postdata ) {
 			if ( $user_id ) {
 
 				//переназначаем временный массив изображений от гостя юзеру
-				$temp_id = $_COOKIE['PHPSESSID'];
-				$temps	 = get_site_option( 'rcl_tempgallery' );
-				if ( isset( $temps[$temp_id] ) ) {
-					$temp_gal		 = $temps[$temp_id];
-					unset( $temps[$temp_id] );
-					$temps[$user_id] = $temp_gal;
-					update_site_option( 'rcl_tempgallery', $temps );
-				}
+				rcl_update_temp_media( ['user_id' => $user_id ], [
+					'user_id'	 => 0,
+					'session_id' => isset( $_COOKIE['PHPSESSID'] ) && $_COOKIE['PHPSESSID'] ? $_COOKIE['PHPSESSID'] : 'none'
+				] );
 
 				//Сразу авторизуем пользователя
 				if ( ! rcl_get_option( 'confirm_register_recall' ) ) {

@@ -142,11 +142,11 @@ function rcl_get_publics_options_page( $options ) {
 			'childrens'	 => array(
 				array(
 					array(
-						'type'		 => 'select',
-						'slug'		 => 'guest_post_redirect',
-						'title'		 => __( 'Redirect to', 'wp-recall' ),
-						'content'	 => $pages,
-						'notice'	 => __( 'Select the page to which the visitors will be redirected after a successful publication, if email authorization is included in the registration precess', 'wp-recall' )
+						'type'	 => 'select',
+						'slug'	 => 'guest_post_redirect',
+						'title'	 => __( 'Redirect to', 'wp-recall' ),
+						'values' => $pages,
+						'notice' => __( 'Select the page to which the visitors will be redirected after a successful publication, if email authorization is included in the registration precess', 'wp-recall' )
 					)
 				)
 			)

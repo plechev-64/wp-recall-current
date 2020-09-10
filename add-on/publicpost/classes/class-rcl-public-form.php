@@ -49,13 +49,16 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		if ( ! $this->form_id )
 			$this->form_id = 1;
 
+		$this->setup_user_can();
+
+		if ( $this->user_can['publish'] && ! $user_ID )
+			add_filter( 'rcl_public_form_fields', array( $this, 'add_guest_fields' ), 10 );
+
 		add_filter( 'rcl_custom_fields', array( $this, 'init_public_form_fields_filter' ), 10 );
 
 		parent::__construct( $this->post_type, array(
 			'form_id' => $this->form_id
 		) );
-
-		$this->setup_user_can();
 
 		$this->init_options();
 
@@ -68,9 +71,6 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 			rcl_fileupload_scripts();
 			add_action( 'wp_footer', array( $this, 'init_form_scripts' ), 100 );
 		}
-
-		if ( $this->user_can['publish'] && ! $user_ID )
-			add_filter( 'rcl_public_form_fields', array( $this, 'add_guest_fields' ), 10 );
 
 		$this->form_object = $this->get_object_form();
 
@@ -141,7 +141,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 		$this->user_can['publish'] = true;
 
-		$user_can = rcl_get_option( 'public_access' );
+		$user_can = rcl_get_option( 'user_public_access_recall' );
 
 		if ( $user_can ) {
 
@@ -385,6 +385,9 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		$dataPost = $this->get_object_form();
 
 		$field = $this->get_field( $field_id );
+
+		if ( ! $field )
+			return false;
 
 		$this->current_field = $field;
 

@@ -368,13 +368,41 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 		$content = apply_filters( 'rcl_chat_before_form', '', $this->chat );
 
+		if ( $this->file_upload ) {
+
+			$chatOptions = rcl_get_option( 'chat', array() );
+
+			$uploader = new Rcl_Uploader( 'rcl_chat_uploader', array(
+				'multiple'		 => 0,
+				'max_files'		 => 1,
+				'crop'			 => 0,
+				'temp_media'	 => 1,
+				'mode_output'	 => 'list',
+				'input_attach'	 => 'chat[attachment]',
+				'file_types'	 => isset( $chatOptions['file_types'] ) ? $chatOptions['file_types'] : 'png, jpeg, gif',
+				'max_size'		 => isset( $chatOptions['file_size'] ) ? $chatOptions['file_size'] * 1024 : 1024
+				) );
+		}
+
 		$content .= '<form action="" method="post">'
 			. '<div class="chat-form-media">'
 			. rcl_get_smiles( 'chat-area-' . $this->chat_id );
 
 		if ( $this->file_upload ) {
-			$content .= $this->get_uploader();
+			$content .= '<span class="rcl-chat-uploader">'
+				. '<i class="rcli fa-paperclip" aria-hidden="true"></i>'
+				. $uploader->get_input()
+				. '</span>';
 		}
+
+		$content .= '</div>';
+
+		$content .= '<textarea maxlength="' . $this->max_words . '" onkeyup="rcl_chat_words_count(event,this);" id="chat-area-' . $this->chat_id . '" name="chat[message]"></textarea>';
+
+		if ( $this->file_upload ) {
+			$content .= $uploader->get_gallery();
+		}
+		$content .= '<span class="words-counter">' . $this->max_words . '</span>';
 
 		$hiddens = apply_filters( 'rcl_chat_hidden_fields', array(
 			'chat[token]'		 => $this->chat_token,
@@ -383,10 +411,6 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 			'chat[userslist]'	 => $this->userslist,
 			'chat[file_upload]'	 => $this->file_upload
 			) );
-
-		$content .= '</div>'
-			. '<textarea maxlength="' . $this->max_words . '" onkeyup="rcl_chat_words_count(event,this);" id="chat-area-' . $this->chat_id . '" name="chat[message]"></textarea>'
-			. '<span class="words-counter">' . $this->max_words . '</span>';
 
 		if ( $hiddens ) {
 
@@ -407,24 +431,6 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 		$content .= apply_filters( 'rcl_chat_after_form', '', $this->chat );
 
 		return $content;
-	}
-
-	function get_uploader() {
-
-		$chatOptions = rcl_get_option( 'chat', array() );
-
-		$uploder = new Rcl_Uploader( 'rcl_chat_uploader', array(
-			'multiple'	 => 0,
-			'max_files'	 => 1,
-			'crop'		 => 0,
-			'file_types' => isset( $chatOptions['file_types'] ) ? $chatOptions['file_types'] : 'png, jpeg, gif',
-			'max_size'	 => isset( $chatOptions['file_size'] ) ? $chatOptions['file_size'] * 1024 : 1024
-			) );
-
-		return '<span class="rcl-chat-uploader">'
-			. '<i class="rcli fa-paperclip" aria-hidden="true"></i>'
-			. $uploder->get_input()
-			. '</span>';
 	}
 
 	function userslist() {

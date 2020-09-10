@@ -175,7 +175,7 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 
 				if ( $value != $attach_id ) {
 					wp_delete_attachment( $attach_id );
-					delete_post_meta( $post_id, $field_id );
+					//delete_post_meta( $post_id, $field_id );
 				}
 			}
 
@@ -201,10 +201,6 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 				}
 			} else {
 
-				if ( $field->type == 'editor' ) {
-					$value = isset( $_POST[$field_id] ) ? $_POST[$field_id] : false;
-				}
-
 				if ( $value || $value == 0 ) {
 					update_post_meta( $post_id, $field_id, $value );
 				} else {
@@ -217,8 +213,10 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 
 				if ( $field->type == 'uploader' ) {
 					foreach ( $value as $val ) {
+						print_r( $val );
 						rcl_delete_temp_media( $val );
 					}
+					exit;
 				} else if ( $field->type == 'file' ) {
 					rcl_delete_temp_media( $value );
 				}

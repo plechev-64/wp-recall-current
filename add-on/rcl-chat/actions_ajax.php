@@ -132,6 +132,9 @@ function rcl_chat_add_message() {
 		wp_send_json( $res );
 	}
 
+	if ( $attach )
+		rcl_delete_temp_media( $attach );
+
 	if ( isset( $result['errors'] ) ) {
 		wp_send_json( $result );
 	}
@@ -247,7 +250,7 @@ function rcl_chat_ajax_delete_message() {
 	wp_send_json( $result );
 }
 
-add_action( 'rcl_upload', 'rcl_chat_attach_upload', 10, 2 );
+//add_action( 'rcl_upload', 'rcl_chat_attach_upload', 10, 2 );
 function rcl_chat_attach_upload( $uploads, $class ) {
 
 	if ( $class->uploader_id != 'rcl_chat_uploader' )

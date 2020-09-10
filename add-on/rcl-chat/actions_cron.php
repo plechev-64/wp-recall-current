@@ -55,23 +55,6 @@ function rcl_chat_daily_delete_messages() {
 	}
 }
 
-add_action( 'rcl_cron_daily', 'rcl_chat_delete_unattached_attachments', 20 );
-function rcl_chat_delete_unattached_attachments() {
-	global $wpdb;
-
-	$unattaches = $wpdb->get_col(
-		"SELECT ID FROM $wpdb->posts "
-		. "WHERE post_type='attachment' "
-		. "AND post_excerpt='rcl_chat_attachment:unattached'"
-	);
-
-	if ( ! $unattaches )
-		return;
-
-	foreach ( $unattaches as $attachment_id )
-		wp_delete_attachment( $attachment_id );
-}
-
 add_action( 'rcl_cron_hourly', 'rcl_chat_send_notify_messages', 10 );
 function rcl_chat_send_notify_messages() {
 	global $wpdb;
