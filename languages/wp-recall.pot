@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wp-recall\n"
-"POT-Creation-Date: 2020-09-10 08:15+0400\n"
+"POT-Creation-Date: 2020-09-10 11:42+0400\n"
 "PO-Revision-Date: 2020-09-06 11:12+0400\n"
 "Last-Translator: \n"
 "Language-Team: https//:codeseller.ru\n"
@@ -2135,10 +2135,8 @@ msgstr ""
 msgid "Enter RCLKEY"
 msgstr ""
 
-#: add-on/prime-forum/admin/index.php:370
-msgid ""
-"Required to update the templates here. Get it  in  your account online <a "
-"href=\"https://codeseller.ru/\" target=\"_blank\">https://codeseller.ru</a>"
+#: add-on/prime-forum/admin/index.php:370 admin/pages/themes-manager.php:30
+msgid "Required to update the templates here. Get it  in  your account online"
 msgstr ""
 
 #: add-on/prime-forum/admin/index.php:376 admin/pages/addons-manager.php:61
@@ -4440,7 +4438,7 @@ msgstr ""
 msgid "Output images via WP-Recall gallery?"
 msgstr ""
 
-#: admin/index.php:167 admin/index.php:694
+#: admin/index.php:167 admin/index.php:688
 msgid "Settings saved!"
 msgstr ""
 
@@ -4837,12 +4835,6 @@ msgstr ""
 msgid ""
 "On this page you can create new tabs personal account with arbitrary content "
 "and manage existing tabs in different areas of the personal account"
-msgstr ""
-
-#: admin/pages/themes-manager.php:30
-msgid ""
-"Required to update the templates here. Get it  in  your account online <a "
-"href=\"https://codeseller.ru/\" target=\"_blank\">http://\"codeseller.ru</a>"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:58 wp-recall.php:334

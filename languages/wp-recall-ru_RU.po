@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2020-09-10 08:16+0400\n"
+"POT-Creation-Date: 2020-09-10 11:42+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -2196,14 +2196,11 @@ msgstr "RCLKEY"
 msgid "Enter RCLKEY"
 msgstr "Введите RCLKEY"
 
-#: add-on/prime-forum/admin/index.php:370
-msgid ""
-"Required to update the templates here. Get it  in  your account online <a "
-"href=\"https://codeseller.ru/\" target=\"_blank\">https://codeseller.ru</a>"
+#: add-on/prime-forum/admin/index.php:370 admin/pages/themes-manager.php:30
+msgid "Required to update the templates here. Get it  in  your account online"
 msgstr ""
-"Необходим для обновления шаблонов тут. Получите его в своем личном кабинете "
-"на странице настроек профиля на сайте <a href=\"http://codeseller.ru/\" "
-"target=\"_blank\">http://codeseller.ru</a>"
+"Ключ необходим для обновления дополнений на этой странице. Вы можете "
+"получить его в своем личном кабинете во вкладке профиля на сайте"
 
 #: add-on/prime-forum/admin/index.php:376 admin/pages/addons-manager.php:61
 #: admin/pages/themes-manager.php:36
@@ -4565,7 +4562,7 @@ msgstr "Область \"Counters\""
 msgid "Output images via WP-Recall gallery?"
 msgstr "Вывести изображения через галерею изображений WP-Recall?"
 
-#: admin/index.php:167 admin/index.php:694
+#: admin/index.php:167 admin/index.php:688
 msgid "Settings saved!"
 msgstr "Настройки сохранены!"
 
@@ -5000,15 +4997,6 @@ msgstr ""
 "На этой странице вы можете создавать новые вкладки личного кабинета с "
 "произвольным контентом и управлять уже созданными  вкладками в различных "
 "областях личного кабинета"
-
-#: admin/pages/themes-manager.php:30
-msgid ""
-"Required to update the templates here. Get it  in  your account online <a "
-"href=\"https://codeseller.ru/\" target=\"_blank\">http://\"codeseller.ru</a>"
-msgstr ""
-"Необходим для обновления шаблонов тут. Получите его в своем личном кабинете "
-"на странице настроек профиля на сайте <a href=\"http://codeseller.ru/\" "
-"target=\"_blank\">http://codeseller.ru</a>"
 
 #: classes/class-rcl-custom-fields-manager.php:58 wp-recall.php:334
 msgid "Text"
@@ -5983,6 +5971,24 @@ msgstr "Текстовый редактор"
 #: wp-recall.php:422
 msgid "File uploader"
 msgstr "Файловый загрузчик"
+
+#~ msgid ""
+#~ "Required to update the templates here. Get it  in  your account online <a "
+#~ "href=\"https://codeseller.ru/\" target=\"_blank\">https://codeseller.ru</"
+#~ "a>"
+#~ msgstr ""
+#~ "Необходим для обновления шаблонов тут. Получите его в своем личном "
+#~ "кабинете на странице настроек профиля на сайте <a href=\"http://"
+#~ "codeseller.ru/\" target=\"_blank\">http://codeseller.ru</a>"
+
+#~ msgid ""
+#~ "Required to update the templates here. Get it  in  your account online <a "
+#~ "href=\"https://codeseller.ru/\" target=\"_blank\">http://\"codeseller.ru</"
+#~ "a>"
+#~ msgstr ""
+#~ "Необходим для обновления шаблонов тут. Получите его в своем личном "
+#~ "кабинете на странице настроек профиля на сайте <a href=\"http://"
+#~ "codeseller.ru/\" target=\"_blank\">http://codeseller.ru</a>"
 
 #~ msgid "Apply for membership"
 #~ msgstr "Заявка на доступ"
