@@ -160,10 +160,12 @@ class Rcl_Uploader {
 
 	function get_input() {
 
+		$json = json_encode( $this );
+
 		$content = '<input id="rcl-uploader-input-' . $this->uploader_id . '" class="uploader-input" '
 			. 'data-uploader_id="' . $this->uploader_id . '" name="' . ($this->multiple ? $this->input_name . '[]' : $this->input_name) . '" '
 			. 'type="file" accept="' . implode( ', ', $this->accept ) . '" ' . ($this->multiple ? 'multiple' : '') . '>'
-			. '<script>rcl_init_uploader(' . json_encode( $this ) . ');</script>';
+			. '<script>rcl_init_uploader(' . $json . ', "' . md5( $json . rcl_get_security_key() ) . '");</script>';
 
 		if ( rcl_is_ajax() ) {
 			$content .= '<script>RclUploaders.init();</script>';

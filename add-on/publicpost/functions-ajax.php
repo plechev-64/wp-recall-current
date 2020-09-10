@@ -295,7 +295,7 @@ function rcl_set_post_thumbnail() {
 
 	if ( ! $formFields->is_active_field( 'post_thumbnail' ) )
 		wp_send_json( [
-			'error' => __( 'The field of the thumbnail is inactively!', 'wp-recall' )
+			'error' => __( 'The field of the thumbnail is inactive!', 'wp-recall' )
 		] );
 
 	if ( $parent_id ) {

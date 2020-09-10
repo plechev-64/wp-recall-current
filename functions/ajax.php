@@ -154,7 +154,9 @@ function rcl_upload() {
 	$options = ( array ) json_decode( wp_unslash( $_POST['options'] ) );
 
 	if ( ! isset( $options['class_name'] ) || ! $options['class_name'] )
-		exit;
+		wp_send_json( [
+			'error' => __( 'Error', 'wp-recall' )
+		] );
 
 	$className = $options['class_name'];
 
@@ -162,6 +164,11 @@ function rcl_upload() {
 		$uploader	 = new $className( $options['uploader_id'], $options );
 	else
 		$uploader	 = new $className( $options );
+
+	if ( md5( json_encode( $uploader ) . rcl_get_security_key() ) != $_POST['sk'] )
+		wp_send_json( [
+			'error' => __( 'Error of security', 'wp-recall' )
+		] );
 
 	$files = $uploader->upload();
 

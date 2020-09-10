@@ -1430,3 +1430,8 @@ function rcl_get_pages_ids() {
 
 	return $pages;
 }
+
+function rcl_get_security_key() {
+	global $wpdb;
+	return rcl_get_option( 'security-key', md5( RQ::tbl( new Rcl_Query( ['name' => $wpdb->options, 'cols' => ['option_id' ] ] ) )->get_count( 'option_id', 'cashe' ) ) );
+}

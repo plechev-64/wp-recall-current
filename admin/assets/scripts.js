@@ -427,9 +427,6 @@ function rcl_update_options() {
 
 	rcl_preloader_show( jQuery( '.rcl-options-form' ) );
 
-	if ( typeof tinyMCE != 'undefined' )
-		tinyMCE.triggerSave();
-
 	rcl_ajax( {
 		/*rest: {action: 'usp_update_options'},*/
 		data: 'action=rcl_update_options&' + jQuery( '.rcl-options-form' ).serialize()
@@ -901,9 +898,6 @@ function rcl_manager_update_fields( newManagerId ) {
 	var newManagerId = newManagerId ? newManagerId : 0;
 
 	rcl_preloader_show( jQuery( '.rcl-fields-manager' ) );
-
-	if ( typeof tinyMCE != 'undefined' )
-		tinyMCE.triggerSave();
 
 	rcl_ajax( {
 		/*rest: {action: 'rcl_update_fields'},*/

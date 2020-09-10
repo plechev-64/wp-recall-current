@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2020-09-10 11:42+0400\n"
+"POT-Creation-Date: 2020-09-10 14:10+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -343,7 +343,7 @@ msgstr "Данные сохранены"
 #: add-on/prime-forum/functions-actions.php:1147 add-on/publicpost/core.php:239
 #: add-on/user-balance/index.php:206 admin/pages/repository.php:48
 #: admin/pages/repository.php:60 functions/addons-update.php:157
-#: functions/addons-update.php:212 functions/ajax.php:97
+#: functions/addons-update.php:212 functions/ajax.php:97 functions/ajax.php:158
 #: functions/enqueue-scripts.php:154
 msgid "Error"
 msgstr "Ошибка"
@@ -524,10 +524,10 @@ msgstr "Регистрация при оформлении"
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:205
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:248
 #: add-on/rating-system/admin/addon-settings.php:129
-#: admin/pages/options.php:176 admin/pages/options.php:182
-#: admin/pages/options.php:194 admin/pages/options.php:221
-#: admin/pages/options.php:255 admin/pages/options.php:264
-#: admin/pages/options.php:296
+#: admin/pages/options.php:188 admin/pages/options.php:194
+#: admin/pages/options.php:206 admin/pages/options.php:233
+#: admin/pages/options.php:267 admin/pages/options.php:276
+#: admin/pages/options.php:308
 #: classes/fields/types/class-rcl-field-editor.php:38
 #: classes/fields/types/class-rcl-field-editor.php:48
 #: classes/fields/types/class-rcl-field-uploader.php:69
@@ -545,9 +545,9 @@ msgstr "Отключено"
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:206
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:249
 #: add-on/rating-system/admin/addon-settings.php:129
-#: admin/pages/options.php:194 admin/pages/options.php:222
-#: admin/pages/options.php:256 admin/pages/options.php:265
-#: admin/pages/options.php:297
+#: admin/pages/options.php:206 admin/pages/options.php:234
+#: admin/pages/options.php:268 admin/pages/options.php:277
+#: admin/pages/options.php:309
 #: classes/fields/types/class-rcl-field-editor.php:49
 #: classes/fields/types/class-rcl-field-uploader.php:70
 msgid "Enabled"
@@ -1297,27 +1297,27 @@ msgstr "Создание групп разрешено"
 #: add-on/groups/admin/index.php:52
 #: add-on/publicpost/admin/addon-settings.php:137
 #: add-on/rating-system/admin/addon-settings.php:150
-#: admin/pages/options.php:278
+#: admin/pages/options.php:290
 msgid "only Administrators"
 msgstr "Только администраторам"
 
 #: add-on/groups/admin/index.php:53
 #: add-on/publicpost/admin/addon-settings.php:138
 #: add-on/rating-system/admin/addon-settings.php:149
-#: admin/pages/options.php:279
+#: admin/pages/options.php:291
 msgid "Editors and higher"
 msgstr "Редакторам и старше"
 
 #: add-on/groups/admin/index.php:54
 #: add-on/publicpost/admin/addon-settings.php:139
 #: add-on/rating-system/admin/addon-settings.php:148
-#: admin/pages/options.php:280
+#: admin/pages/options.php:292
 msgid "Authors and higher"
 msgstr "Авторам и старше"
 
 #: add-on/groups/admin/index.php:55
 #: add-on/rating-system/admin/addon-settings.php:147
-#: admin/pages/options.php:281
+#: admin/pages/options.php:293
 msgid "Participants and higher"
 msgstr "Участникам и старше"
 
@@ -1350,14 +1350,14 @@ msgid "Max size of the group avatars"
 msgstr "Максимальный размер аватарки группы"
 
 #: add-on/groups/admin/index.php:76 admin/index.php:203
-#: admin/pages/options.php:114
+#: admin/pages/options.php:126
 msgid "Set the image upload limit in kb, by default"
 msgstr ""
 "Установите ограничение для загружаемого изображения в килобайтах, по-"
 "умолчанию"
 
 #: add-on/groups/admin/index.php:77 admin/index.php:204
-#: admin/pages/options.php:115
+#: admin/pages/options.php:127
 msgid "If 0 is specified, download is disallowed."
 msgstr "Если указан 0, то загрузка запрещена"
 
@@ -1583,7 +1583,7 @@ msgstr "Запрос на доступ"
 
 #: add-on/groups/groups-widgets.php:137
 #: add-on/rating-system/admin/addon-settings.php:146
-#: admin/pages/options.php:247 admin/pages/options.php:282 rcl-widgets.php:40
+#: admin/pages/options.php:259 admin/pages/options.php:294 rcl-widgets.php:40
 #: rcl-widgets.php:107
 msgid "All users"
 msgstr "Все пользователи"
@@ -3473,7 +3473,7 @@ msgstr "Вы не можете редактировать эту публика�
 
 #: add-on/publicpost/classes/class-rcl-public-form.php:231
 msgid "The draft has been saved successfully!"
-msgstr "Файл был успешно сохранен!"
+msgstr "Черновик был успешно сохранен!"
 
 #: add-on/publicpost/classes/class-rcl-public-form.php:271
 msgid "Edit this form"
@@ -3594,7 +3594,7 @@ msgid ""
 msgstr "Если все верно - публикуйте! Если нет, то вернитесь в редактор."
 
 #: add-on/publicpost/functions-ajax.php:298
-msgid "The field of the thumbnail is inactively!"
+msgid "The field of the thumbnail is inactive!"
 msgstr "Поле миниатюры неактивно!"
 
 #: add-on/publicpost/index.php:218
@@ -4060,7 +4060,7 @@ msgstr "Место вывода"
 msgid "Right"
 msgstr "Справа"
 
-#: add-on/rcl-chat/addon-options.php:147 admin/pages/options.php:94
+#: add-on/rcl-chat/addon-options.php:147 admin/pages/options.php:106
 msgid "Left"
 msgstr "Слева"
 
@@ -4170,7 +4170,7 @@ msgstr "Важных сообщений пока нет"
 msgid "Not set attributes: chat_room"
 msgstr "Не указан атрибут: chat_room"
 
-#: add-on/user-balance/admin/addon-settings.php:13 admin/pages/options.php:150
+#: add-on/user-balance/admin/addon-settings.php:13 admin/pages/options.php:162
 msgid "Not used"
 msgstr "Не используется"
 
@@ -4732,54 +4732,62 @@ msgid ""
 msgstr "По-умолчанию 10 минут."
 
 #: admin/pages/options.php:80
+msgid "Security"
+msgstr ""
+
+#: admin/pages/options.php:86
+msgid "The key of security for ajax-requests and other"
+msgstr "Ключ безопасности для ajax-запросов и другого"
+
+#: admin/pages/options.php:92
 msgid "Design"
 msgstr "Оформление"
 
-#: admin/pages/options.php:85
+#: admin/pages/options.php:97
 msgid "Primary color"
 msgstr "Основной цвет"
 
-#: admin/pages/options.php:91
+#: admin/pages/options.php:103
 msgid "The location of the section buttons"
 msgstr "Размещение кнопок вывода вкладок"
 
-#: admin/pages/options.php:93
+#: admin/pages/options.php:105
 msgid "Top"
 msgstr "Сверху"
 
-#: admin/pages/options.php:104
+#: admin/pages/options.php:116
 msgid "Default avatar"
 msgstr "Аватар по-умолчанию"
 
-#: admin/pages/options.php:113
+#: admin/pages/options.php:125
 msgid "Max weight of avatars"
 msgstr "Максимальный размер аватарки"
 
-#: admin/pages/options.php:120
+#: admin/pages/options.php:132
 msgid "Login and register"
 msgstr "Вход и регистрация"
 
-#: admin/pages/options.php:125
+#: admin/pages/options.php:137
 msgid "The order of output the form of login and registration"
 msgstr "Порядок вывода формы входа и регистрации"
 
-#: admin/pages/options.php:127
+#: admin/pages/options.php:139
 msgid "Floating form"
 msgstr "Всплывающая форма"
 
-#: admin/pages/options.php:128
+#: admin/pages/options.php:140
 msgid "On a separate page"
 msgstr "На отдельной странице"
 
-#: admin/pages/options.php:129
+#: admin/pages/options.php:141
 msgid "Wordpress Forms"
 msgstr "Формы Wordpress"
 
-#: admin/pages/options.php:130
+#: admin/pages/options.php:142
 msgid "Widget form"
 msgstr "Форма в виджете"
 
-#: admin/pages/options.php:131
+#: admin/pages/options.php:143
 msgid ""
 "The form of login and registration of the plugin can be outputed with help "
 "of widget \"Control panel\" and a shortcode [loginform], but you can use the "
@@ -4789,11 +4797,11 @@ msgstr ""
 "\"Панель управления\" и шорткода [loginform], но вы также можете "
 "использовать стандартную форму входа WordPress"
 
-#: admin/pages/options.php:138
+#: admin/pages/options.php:150
 msgid "ID of the shortcode page [loginform]"
 msgstr "Идентификатор страницы с шорткодом [loginform]"
 
-#: admin/pages/options.php:147
+#: admin/pages/options.php:159
 msgid ""
 "If you are using the registration confirmation, after registration, the user "
 "will need to confirm your email by clicking on the link in the sent email"
@@ -4802,59 +4810,59 @@ msgstr ""
 "будет необходимо подтвердить свой email, перейдя по ссылке в присланном "
 "письме"
 
-#: admin/pages/options.php:148
+#: admin/pages/options.php:160
 msgid "Registration confirmation by the user"
 msgstr "Подтверждение регистрации пользователя"
 
-#: admin/pages/options.php:151
+#: admin/pages/options.php:163
 msgid "Used"
 msgstr "Используется"
 
-#: admin/pages/options.php:156
+#: admin/pages/options.php:168
 msgid "Redirect user after login"
 msgstr "Перенаправление после авторизации"
 
-#: admin/pages/options.php:158
+#: admin/pages/options.php:170
 msgid "The user profile"
 msgstr "Профиль пользователя"
 
-#: admin/pages/options.php:159
+#: admin/pages/options.php:171
 msgid "Current page"
 msgstr "Текущая страница"
 
-#: admin/pages/options.php:160
+#: admin/pages/options.php:172
 msgid "Arbitrary URL"
 msgstr "Произвольный URL"
 
-#: admin/pages/options.php:166
+#: admin/pages/options.php:178
 msgid "URL"
 msgstr "URL"
 
-#: admin/pages/options.php:167
+#: admin/pages/options.php:179
 msgid "Enter your URL below, if you select an arbitrary URL after login"
 msgstr "Введите URL, если выбран произвольный URL после авторизации"
 
-#: admin/pages/options.php:175
+#: admin/pages/options.php:187
 msgid "repeat password field"
 msgstr "Поле повтора пароля"
 
-#: admin/pages/options.php:176 admin/pages/options.php:182
+#: admin/pages/options.php:188 admin/pages/options.php:194
 msgid "Displaye"
 msgstr "Отображать"
 
-#: admin/pages/options.php:181
+#: admin/pages/options.php:193
 msgid "Indicator of password complexity"
 msgstr "Индикатор сложности пароля"
 
-#: admin/pages/options.php:187 rcl-functions.php:399
+#: admin/pages/options.php:199 rcl-functions.php:399
 msgid "Recallbar"
 msgstr "Recallbar"
 
-#: admin/pages/options.php:192
+#: admin/pages/options.php:204
 msgid "Output of recallbar panel"
 msgstr "Вывод панели recallbar"
 
-#: admin/pages/options.php:193
+#: admin/pages/options.php:205
 msgid ""
 "Recallbar – is he top panel WP-Recall plugin through which the plugin and "
 "its add-ons can output their data and the administrator can make his menu, "
@@ -4866,27 +4874,27 @@ msgstr ""
 "сформировав его на <a href=\"/wp-admin/nav-menus.php\" target=\"_blank"
 "\">странице управления меню сайта</a>"
 
-#: admin/pages/options.php:206 wp-recall.php:410
+#: admin/pages/options.php:218 wp-recall.php:410
 msgid "Color"
 msgstr "Цвет"
 
-#: admin/pages/options.php:207 admin/pages/options.php:236
+#: admin/pages/options.php:219 admin/pages/options.php:248
 msgid "Default"
 msgstr "По-умолчанию"
 
-#: admin/pages/options.php:207
+#: admin/pages/options.php:219
 msgid "Primary colors of WP-Recall"
 msgstr "Основные цвета WP-Recall"
 
-#: admin/pages/options.php:212
+#: admin/pages/options.php:224
 msgid "Caching"
 msgstr "Кеширование"
 
-#: admin/pages/options.php:218
+#: admin/pages/options.php:230
 msgid "Cache"
 msgstr "Кеш"
 
-#: admin/pages/options.php:219
+#: admin/pages/options.php:231
 msgid ""
 "Use the functionality of the caching WP-Recall plugin. <a href=\"https://"
 "codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/\" "
@@ -4896,23 +4904,23 @@ msgstr ""
 "codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/\" "
 "target=\"_blank\">Подробнее</a>"
 
-#: admin/pages/options.php:235
+#: admin/pages/options.php:247
 msgid "Time cache (seconds)"
 msgstr "Время жизни кеша (в секундах)"
 
-#: admin/pages/options.php:245
+#: admin/pages/options.php:257
 msgid "Cache output"
 msgstr "Вывод кеша"
 
-#: admin/pages/options.php:248
+#: admin/pages/options.php:260
 msgid "Only guests"
 msgstr "Только гостям"
 
-#: admin/pages/options.php:253
+#: admin/pages/options.php:265
 msgid "Minimization of file styles"
 msgstr "Минимизация стилевых файлов"
 
-#: admin/pages/options.php:257
+#: admin/pages/options.php:269
 msgid ""
 "Minimization of file styles only works in correlation with WP-Recall style "
 "files and add-ons that support this feature"
@@ -4920,27 +4928,27 @@ msgstr ""
 "Минимизация стилевых файлов работает только со стилевыми файлами WP-Recall и "
 "его дополнениями, которые поддерживают эту возможность"
 
-#: admin/pages/options.php:262
+#: admin/pages/options.php:274
 msgid "Minimization of scripts"
 msgstr "Минимизация скриптов"
 
-#: admin/pages/options.php:270
+#: admin/pages/options.php:282
 msgid "Access to the console"
 msgstr "Доступ в консоль сайта"
 
-#: admin/pages/options.php:276
+#: admin/pages/options.php:288
 msgid "Access to the console is allowed"
 msgstr "Доступ к консоли сайта разрешен"
 
-#: admin/pages/options.php:288
+#: admin/pages/options.php:300
 msgid "Logging mode"
 msgstr "Режим логирования"
 
-#: admin/pages/options.php:294
+#: admin/pages/options.php:306
 msgid "Write background events and errors to the log-file"
 msgstr "Запись в лог-файл фоновых событий и ошибок работы"
 
-#: admin/pages/options.php:332
+#: admin/pages/options.php:344
 msgid "Configure WP-Recall plugin and add-ons"
 msgstr "Настройка плагина WP-Recall и его дополнений"
 
@@ -5302,23 +5310,23 @@ msgstr "Не удалось загрузить контент вкладки"
 msgid "Types of files"
 msgstr "Типы полей"
 
-#: classes/class-rcl-uploader.php:178
+#: classes/class-rcl-uploader.php:180
 msgid "Upload file"
 msgstr "Загрузить файл"
 
-#: classes/class-rcl-uploader.php:200
+#: classes/class-rcl-uploader.php:202
 msgid "Add files in a queue of downloads"
 msgstr "Добавить файлы в очередь загрузки"
 
-#: classes/class-rcl-uploader.php:353
+#: classes/class-rcl-uploader.php:355
 msgid "Add to the editor"
 msgstr "Добавить в редактор"
 
-#: classes/class-rcl-uploader.php:369
+#: classes/class-rcl-uploader.php:371
 msgid "Delete the file"
 msgstr "Удалить файл"
 
-#: classes/class-rcl-uploader.php:455
+#: classes/class-rcl-uploader.php:457
 msgid "Forbidden file extension. Allowed:"
 msgstr "Запрещенное расширение файла. Разрешено:"
 
@@ -5507,19 +5515,23 @@ msgstr "Черный список"
 msgid "Failed to load emoticons"
 msgstr "Не удалось загрузить смайлы"
 
-#: functions/ajax.php:174
+#: functions/ajax.php:170
+msgid "Error of security"
+msgstr ""
+
+#: functions/ajax.php:181
 msgid "Something has been wrong"
 msgstr "Что то пошло не так"
 
-#: functions/ajax.php:191
+#: functions/ajax.php:198
 msgid "The data has been wrong!"
 msgstr "Данные неверны!"
 
-#: functions/ajax.php:199 functions/ajax.php:209 functions/ajax.php:215
+#: functions/ajax.php:206 functions/ajax.php:216 functions/ajax.php:222
 msgid "You can`t delete this file!"
 msgstr "Вы не можете удалить этот файл!"
 
-#: functions/ajax.php:226
+#: functions/ajax.php:233
 msgid "The file has been successfully deleted!"
 msgstr "Файл был успешно удален!"
 

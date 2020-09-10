@@ -589,6 +589,9 @@ function rcl_ajax( prop ) {
 		action = prop.data.action;
 	}
 
+	if ( typeof tinyMCE != 'undefined' )
+		tinyMCE.triggerSave();
+
 	jQuery.ajax( {
 		type: 'POST',
 		data: prop.data,
@@ -1154,9 +1157,9 @@ function RclClassUploaders() {
 
 	};
 
-	this.add = function( props ) {
+	this.add = function( props, sk ) {
 
-		this.uploaders.push( new RclUploader( props ) );
+		this.uploaders.push( new RclUploader( props, sk ) );
 
 	};
 
@@ -1194,7 +1197,7 @@ function RclClassUploaders() {
 
 }
 
-function RclUploader( props ) {
+function RclUploader( props, sk ) {
 
 	this.uploader_id = props.uploader_id;
 	this.input = jQuery( "#rcl-uploader-input-" + this.uploader_id );
@@ -1206,7 +1209,8 @@ function RclUploader( props ) {
 			uploader = this;
 
 		var formData = {
-			options: JSON.stringify( uploader.options )
+			options: JSON.stringify( uploader.options ),
+			sk: sk
 		};
 
 		formData.action = uploader.options.action;
@@ -1562,8 +1566,8 @@ function RclUploader( props ) {
 
 }
 
-function rcl_init_uploader( props ) {
-	RclUploaders.add( props );
+function rcl_init_uploader( props, securityKey ) {
+	RclUploaders.add( props, securityKey );
 }
 
 function rcl_init_dropzone( dropZone ) {

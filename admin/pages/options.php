@@ -76,6 +76,18 @@ $options->add_box( 'primary', array(
 	) )
 ) );
 
+$options->box( 'primary' )->add_group( 'security', array(
+	'title'	 => __( 'Security', 'wp-recall' ),
+	'extend' => true
+) )->add_options( array(
+	array(
+		'type'		 => 'password',
+		'slug'		 => 'security-key',
+		'title'		 => __( 'The key of security for ajax-requests and other', 'wp-recall' ),
+		'default'	 => rcl_get_security_key()
+	)
+) );
+
 $options->box( 'primary' )->add_group( 'design', array(
 	'title' => __( 'Design', 'wp-recall' ),
 ) )->add_options( array(
