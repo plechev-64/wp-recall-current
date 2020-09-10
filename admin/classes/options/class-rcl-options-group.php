@@ -14,7 +14,7 @@ class Rcl_Options_Group {
 
 		$this->option_name = $option_name;
 
-		$this->option_values = get_site_option( $this->option_name );
+		$this->option_values = wp_unslash( get_site_option( $this->option_name ) );
 
 		if ( $args )
 			$this->init_properties( $args );
@@ -39,7 +39,7 @@ class Rcl_Options_Group {
 				}
 			}
 		} else if ( $local ) {
-			return get_site_option( $option );
+			return wp_unslash( get_site_option( $option ) );
 		} else {
 			if ( isset( $this->option_values[$option] ) ) {
 				if ( $this->option_values[$option] || is_numeric( $this->option_values[$option] ) ) {
@@ -52,9 +52,6 @@ class Rcl_Options_Group {
 	}
 
 	function add_options( $options ) {
-
-		$optionValues = get_site_option( $this->option_name );
-
 		foreach ( $options as $option ) {
 			$this->add_option( $option );
 		}
