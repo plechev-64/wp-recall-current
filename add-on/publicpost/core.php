@@ -175,7 +175,6 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 
 				if ( $value != $attach_id ) {
 					wp_delete_attachment( $attach_id );
-					//delete_post_meta( $post_id, $field_id );
 				}
 			}
 
@@ -213,7 +212,6 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 
 				if ( $field->type == 'uploader' ) {
 					foreach ( $value as $val ) {
-						print_r( $val );
 						rcl_delete_temp_media( $val );
 					}
 					exit;
