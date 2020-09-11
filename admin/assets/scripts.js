@@ -4,29 +4,6 @@ jQuery( function( $ ) {
 
 	rcl_init_cookie();
 
-	/*if ( jQuery( '.rcl-options-manager' ).size() ) {
-
-	 var viewBox = false;
-	 if ( viewBox = rcl_url_params['rcl-options-box'] ) {
-	 $( '#' + viewBox + '-options-box' ).addClass( 'active' );
-	 } else {
-	 jQuery( '.rcl-options-manager .options-box' ).first().addClass( 'active' );
-	 }
-
-	 }*/
-
-	/* показ дочерних полей */
-	$( ".rcl-parent-field" ).find( "input, select" ).each( function() {
-		if ( $( this ).is( ":visible" ) )
-			RclOptionsControl.showChildrens( $( this ).attr( 'id' ), $( this ).val() );
-	} );
-
-	$( '.rcl-parent-field select, .rcl-parent-field input' ).change( function() {
-		RclOptionsControl.hideChildrens( $( this ).attr( 'id' ) );
-		RclOptionsControl.showChildrens( $( this ).attr( 'id' ), $( this ).val() );
-	} );
-	/***/
-
 	if ( rcl_url_params['rcl-addon-options'] ) {
 		$( '.wrap-recall-options' ).hide();
 		$( '#recall .title-option' ).removeClass( 'active' );
@@ -191,12 +168,29 @@ jQuery( function( $ ) {
 
 	} );
 
+	/* показ дочерних полей */
+	$( ".rcl-parent-field:not(.rcl-children-field)" ).find( "input, select" ).each( function() {
+		RclOptionsControl.showChildrens( RclOptionsControl.getId( this ), $( this ).val() );
+	} );
+
+	$( '.rcl-parent-field select, .rcl-parent-field input' ).change( function() {
+		RclOptionsControl.hideChildrens( RclOptionsControl.getId( this ) );
+		RclOptionsControl.showChildrens( RclOptionsControl.getId( this ), $( this ).val() );
+	} );
+	/***/
+
 } );
 
 var RclOptionsControl = {
+	getId: function( e ) {
+		return jQuery( e ).attr( 'type' ) == 'radio' && jQuery( e ).is( ":checked" ) ? jQuery( e ).data( 'slug' ) : jQuery( e ).attr( 'id' );
+	},
 	showChildrens: function( parentId, parentValue ) {
 
 		var childrenBox = jQuery( '[data-parent="' + parentId + '"][data-parent-value="' + parentValue + '"]' );
+
+		if ( !childrenBox.size() )
+			return false;
 
 		childrenBox.show();
 
@@ -204,7 +198,7 @@ var RclOptionsControl = {
 
 			childrenBox.find( "input, select" ).each( function() {
 
-				RclOptionsControl.showChildrens( jQuery( this ).attr( 'id' ), jQuery( this ).val() );
+				RclOptionsControl.showChildrens( RclOptionsControl.getId( this ), jQuery( this ).val() );
 
 			} );
 		}
@@ -220,7 +214,7 @@ var RclOptionsControl = {
 
 			childrenBox.find( "input, select" ).each( function() {
 
-				RclOptionsControl.hideChildrens( jQuery( this ).attr( 'id' ) );
+				RclOptionsControl.hideChildrens( RclOptionsControl.getId( this ) );
 
 			} );
 		}
@@ -427,6 +421,9 @@ function rcl_enable_extend_options( e ) {
 function rcl_update_options() {
 
 	rcl_preloader_show( jQuery( '.rcl-options-form' ) );
+
+	if ( typeof tinyMCE != 'undefined' )
+		tinyMCE.triggerSave();
 
 	rcl_ajax( {
 		/*rest: {action: 'usp_update_options'},*/
@@ -899,6 +896,9 @@ function rcl_manager_update_fields( newManagerId ) {
 	var newManagerId = newManagerId ? newManagerId : 0;
 
 	rcl_preloader_show( jQuery( '.rcl-fields-manager' ) );
+
+	if ( typeof tinyMCE != 'undefined' )
+		tinyMCE.triggerSave();
 
 	rcl_ajax( {
 		/*rest: {action: 'rcl_update_fields'},*/

@@ -748,7 +748,6 @@ a.data-filter.filter-active:hover {
 }
 .rcl-field .rcl-field-title{
 	font-weight: bold;
-    margin: 0 5px 0 0;
 }
 .rcl-field-notice {
     align-items: center;
@@ -2259,12 +2258,16 @@ body .rcl-upload-gallery .attachment-manager > .rcl-bttn .rcl-bttn__ico{
 	font-weight:bold;
 	font-size:20px;
 }
-.rcl-content .rcl-content-group .group-areas{
-	display:flex;
+.rcl-content .rcl-content-group .group-areas {
+    display: flex;
+    flex-wrap: wrap;
+    --multiplier: calc( 600px - 100%);
 }
-.rcl-content .rcl-content-area{
-	width:100%;
-	padding: 5px;
-	box-sizing: border-box;
+.rcl-content .rcl-content-area {
+    padding: 5px;
+    box-sizing: border-box;
+    max-width: 100%;
+    flex-grow: 1;
+    flex-basis: calc( var(--multiplier) * 999 );
 }
 /**/

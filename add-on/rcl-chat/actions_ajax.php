@@ -249,24 +249,3 @@ function rcl_chat_ajax_delete_message() {
 
 	wp_send_json( $result );
 }
-
-//add_action( 'rcl_upload', 'rcl_chat_attach_upload', 10, 2 );
-function rcl_chat_attach_upload( $uploads, $class ) {
-
-	if ( $class->uploader_id != 'rcl_chat_uploader' )
-		return;
-
-	wp_update_post( [
-		'ID'			 => $uploads['id'],
-		'post_excerpt'	 => 'rcl_chat_attachment:unattached'
-	] );
-
-	wp_send_json( [
-		'uploads' => [
-			'success'		 => true,
-			'attachment_id'	 => $uploads['id'],
-			'input_html'	 => '<input type="hidden" name="chat[attachment]" value="' . $uploads['id'] . '">',
-			'icon_html'		 => wp_get_attachment_image( $uploads['id'], array( 100, 100 ), true )
-		]
-	] );
-}

@@ -61,7 +61,7 @@ class Rcl_Field_Radio extends Rcl_Field_Abstract {
 
 		if ( $this->empty_first ) {
 			$content .= '<span class="rcl-radio-box">';
-			$content .= '<input type="radio" ' . $this->get_required() . ' ' . checked( $this->value, '', false ) . ' id="' . $this->input_id . '_' . $this->rand . '" name="' . $this->input_name . '" value="' . $this->empty_value . '"> ';
+			$content .= '<input type="radio" ' . $this->get_required() . ' ' . checked( $this->value, '', false ) . ' id="' . $this->input_id . '_' . $this->rand . '" data-slug="' . $this->slug . '" name="' . $this->input_name . '" value="' . $this->empty_value . '"> ';
 			$content .= '<label class="block-label" for="' . $this->input_id . '_' . $this->rand . '">' . $this->empty_first . '</label>';
 			$content .= '</span>';
 		}
@@ -79,7 +79,7 @@ class Rcl_Field_Radio extends Rcl_Field_Abstract {
 			$k = trim( $k );
 
 			$content .= '<span class="rcl-radio-box checkbox-display-' . $this->display . '" data-value="' . $k . '">';
-			$content .= '<input type="radio" ' . $this->get_required() . ' ' . checked( $this->value, $k, false ) . ' ' . $this->get_class() . ' id="' . $this->input_id . '_' . $k . $this->rand . '" name="' . $this->input_name . '" value="' . $k . '"> ';
+			$content .= '<input type="radio" ' . $this->get_required() . ' ' . checked( $this->value, $k, false ) . ' ' . $this->get_class() . ' id="' . $this->input_id . '_' . $k . $this->rand . '" data-slug="' . $this->slug . '" name="' . $this->input_name . '" value="' . $k . '"> ';
 			$content .= '<label class="block-label" for="' . $this->input_id . '_' . $k . $this->rand . '">' . $value . '</label>';
 			$content .= '</span>';
 

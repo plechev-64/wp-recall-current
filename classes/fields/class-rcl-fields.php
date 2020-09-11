@@ -272,7 +272,7 @@ class Rcl_Fields extends Rcl_Field {
 		if ( ! $areaContent )
 			return false;
 
-		$content = '<div class="rcl-content-area" style="width:' . (isset( $area['width'] ) ? $area['width'] : 100) . '%;">';
+		$content = '<div class="rcl-content-area" style="min-width:' . (isset( $area['width'] ) ? $area['width'] : 100) . '%;">';
 		$content .= $areaContent;
 		$content .= '</div>';
 
@@ -400,7 +400,7 @@ class Rcl_Fields extends Rcl_Field {
 		if ( ! $areaContent )
 			return false;
 
-		$content = '<div class="rcl-content-area" style="width:' . (isset( $area['width'] ) ? $area['width'] : 100) . '%;">';
+		$content = '<div class="rcl-content-area" style="min-width:' . (isset( $area['width'] ) ? $area['width'] : 100) . '%;">';
 		$content .= $areaContent;
 		$content .= '</div>';
 

@@ -106,11 +106,6 @@ function rcl_init_chat( chat ) {
 
 		var user_id = parseInt( Rcl.user_ID );
 
-		/*if ( user_id ) {
-		 if ( chat.file_upload )
-		 rcl_chat_uploader( chat.token );
-		 }*/
-
 		rcl_chat_max_words = chat.max_words;
 		rcl_chat_last_activity[chat.token] = chat.open_chat;
 

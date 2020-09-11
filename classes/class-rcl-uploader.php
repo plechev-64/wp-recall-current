@@ -15,7 +15,6 @@ class Rcl_Uploader {
 
 	public $uploader_id		 = '';
 	public $fix_editor		 = false;
-	public $required		 = false;
 	public $action			 = 'rcl_upload';
 	public $temp_media		 = false;
 	public $input_attach	 = false;
@@ -33,7 +32,6 @@ class Rcl_Uploader {
 	public $multiple		 = false;
 	public $crop			 = false;
 	public $image_sizes		 = true;
-	public $files			 = array();
 	public $mode_output		 = 'grid';
 	public $manager_balloon	 = false;
 	public $class_name		 = '';
