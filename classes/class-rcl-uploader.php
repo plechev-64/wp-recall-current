@@ -149,7 +149,7 @@ class Rcl_Uploader {
 		$content .= $this->get_button( $args );
 
 		if ( $args['allowed_types'] )
-			$content .= '<small class="notice">' . __( 'Types of files', 'rcl-public' ) . ': ' . implode( ', ', $this->file_types ) . '</small>';
+			$content .= '<small class="notice">' . __( 'Types of files', 'wp-recall' ) . ': ' . implode( ', ', $this->file_types ) . '</small>';
 
 		$content .= '</div>';
 
@@ -177,7 +177,7 @@ class Rcl_Uploader {
 	function get_button( $args ) {
 
 		$defaults = array(
-			'button_label'	 => __( 'Upload file', 'rcl-public' ),
+			'button_label'	 => __( 'Upload file', 'wp-recall' ),
 			'button_icon'	 => 'fa-upload',
 			'button_type'	 => 'simple'
 		);

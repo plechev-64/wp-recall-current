@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wp-recall\n"
-"POT-Creation-Date: 2020-09-10 11:42+0400\n"
+"POT-Creation-Date: 2020-09-11 12:29+0400\n"
 "PO-Revision-Date: 2020-09-06 11:12+0400\n"
 "Last-Translator: \n"
 "Language-Team: https//:codeseller.ru\n"
@@ -70,7 +70,7 @@ msgstr ""
 #: add-on/commerce/activate.php:90 add-on/commerce/index.php:49
 #: add-on/groups/groups-init.php:15
 #: add-on/prime-forum/functions-shortcodes.php:105
-#: add-on/publicpost/classes/class-rcl-public-form.php:750
+#: add-on/publicpost/classes/class-rcl-public-form.php:753
 msgid "Not found"
 msgstr ""
 
@@ -248,7 +248,7 @@ msgstr ""
 #: add-on/groups/classes/class-rcl-groups-list.php:173
 #: add-on/publicpost/templates/posts-list.php:17
 #: add-on/user-balance/admin/class-rcl-payments-history.php:81
-#: classes/class-rcl-custom-fields-manager.php:67 wp-recall.php:386
+#: classes/class-rcl-custom-fields-manager.php:67 wp-recall.php:390
 msgid "Date"
 msgstr ""
 
@@ -330,10 +330,10 @@ msgstr ""
 #: add-on/commerce/admin/index.php:84 add-on/feed/index.php:191
 #: add-on/feed/index.php:203 add-on/feed/index.php:211
 #: add-on/groups/groups-core.php:803 add-on/groups/groups-core.php:820
-#: add-on/prime-forum/functions-actions.php:1147 add-on/publicpost/core.php:239
+#: add-on/prime-forum/functions-actions.php:1147 add-on/publicpost/core.php:235
 #: add-on/user-balance/index.php:206 admin/pages/repository.php:48
 #: admin/pages/repository.php:60 functions/addons-update.php:157
-#: functions/addons-update.php:212 functions/ajax.php:97
+#: functions/addons-update.php:212 functions/ajax.php:97 functions/ajax.php:158
 #: functions/enqueue-scripts.php:154
 msgid "Error"
 msgstr ""
@@ -505,17 +505,17 @@ msgstr ""
 #: add-on/commerce/admin/pages/addon-settings.php:82
 #: add-on/commerce/admin/pages/addon-settings.php:93
 #: add-on/groups/admin/index.php:25 add-on/prime-forum/admin/index.php:286
-#: add-on/prime-forum/admin/index.php:295 add-on/profile/index.php:153
+#: add-on/prime-forum/admin/index.php:295 add-on/profile/index.php:158
 #: add-on/publicpost/admin/addon-settings.php:48
 #: add-on/publicpost/admin/addon-settings.php:67
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:185
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:205
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:248
 #: add-on/rating-system/admin/addon-settings.php:129
-#: admin/pages/options.php:176 admin/pages/options.php:182
-#: admin/pages/options.php:194 admin/pages/options.php:221
-#: admin/pages/options.php:255 admin/pages/options.php:264
-#: admin/pages/options.php:296
+#: admin/pages/options.php:188 admin/pages/options.php:194
+#: admin/pages/options.php:206 admin/pages/options.php:233
+#: admin/pages/options.php:267 admin/pages/options.php:276
+#: admin/pages/options.php:308
 #: classes/fields/types/class-rcl-field-editor.php:38
 #: classes/fields/types/class-rcl-field-editor.php:48
 #: classes/fields/types/class-rcl-field-uploader.php:69
@@ -526,16 +526,16 @@ msgstr ""
 #: add-on/commerce/admin/pages/addon-settings.php:82
 #: add-on/commerce/admin/pages/addon-settings.php:93
 #: add-on/groups/admin/index.php:26 add-on/prime-forum/admin/index.php:287
-#: add-on/prime-forum/admin/index.php:296 add-on/profile/index.php:154
+#: add-on/prime-forum/admin/index.php:296 add-on/profile/index.php:159
 #: add-on/publicpost/admin/addon-settings.php:49
 #: add-on/publicpost/admin/addon-settings.php:67
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:186
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:206
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:249
 #: add-on/rating-system/admin/addon-settings.php:129
-#: admin/pages/options.php:194 admin/pages/options.php:222
-#: admin/pages/options.php:256 admin/pages/options.php:265
-#: admin/pages/options.php:297
+#: admin/pages/options.php:206 admin/pages/options.php:234
+#: admin/pages/options.php:268 admin/pages/options.php:277
+#: admin/pages/options.php:309
 #: classes/fields/types/class-rcl-field-editor.php:49
 #: classes/fields/types/class-rcl-field-uploader.php:70
 msgid "Enabled"
@@ -669,9 +669,9 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: add-on/commerce/admin/pages/order.php:20 add-on/profile/index.php:161
+#: add-on/commerce/admin/pages/order.php:20 add-on/profile/index.php:166
 #: classes/class-rcl-custom-fields-manager.php:64
-#: templates/form-register.php:24 wp-recall.php:374
+#: templates/form-register.php:24 wp-recall.php:378
 msgid "E-mail"
 msgstr ""
 
@@ -982,7 +982,7 @@ msgid "Login"
 msgstr ""
 
 #: add-on/commerce/core.php:299 functions/register.php:251
-#: functions/register.php:443 templates/form-sign.php:27 wp-recall.php:346
+#: functions/register.php:443 templates/form-sign.php:27 wp-recall.php:350
 msgid "Password"
 msgstr ""
 
@@ -1164,7 +1164,7 @@ msgid "News"
 msgstr ""
 
 #: add-on/feed/classes/class-rcl-feed-list.php:359
-#: add-on/rating-system/index.php:36 classes/class-rcl-users-list.php:517
+#: add-on/rating-system/index.php:36 classes/class-rcl-users-list.php:522
 #: functions/frontend.php:101 templates/user-cards.php:6
 msgid "Comments"
 msgstr ""
@@ -1266,27 +1266,27 @@ msgstr ""
 #: add-on/groups/admin/index.php:52
 #: add-on/publicpost/admin/addon-settings.php:137
 #: add-on/rating-system/admin/addon-settings.php:150
-#: admin/pages/options.php:278
+#: admin/pages/options.php:290
 msgid "only Administrators"
 msgstr ""
 
 #: add-on/groups/admin/index.php:53
 #: add-on/publicpost/admin/addon-settings.php:138
 #: add-on/rating-system/admin/addon-settings.php:149
-#: admin/pages/options.php:279
+#: admin/pages/options.php:291
 msgid "Editors and higher"
 msgstr ""
 
 #: add-on/groups/admin/index.php:54
 #: add-on/publicpost/admin/addon-settings.php:139
 #: add-on/rating-system/admin/addon-settings.php:148
-#: admin/pages/options.php:280
+#: admin/pages/options.php:292
 msgid "Authors and higher"
 msgstr ""
 
 #: add-on/groups/admin/index.php:55
 #: add-on/rating-system/admin/addon-settings.php:147
-#: admin/pages/options.php:281
+#: admin/pages/options.php:293
 msgid "Participants and higher"
 msgstr ""
 
@@ -1317,12 +1317,12 @@ msgid "Max size of the group avatars"
 msgstr ""
 
 #: add-on/groups/admin/index.php:76 admin/index.php:203
-#: admin/pages/options.php:114
+#: admin/pages/options.php:126
 msgid "Set the image upload limit in kb, by default"
 msgstr ""
 
 #: add-on/groups/admin/index.php:77 admin/index.php:204
-#: admin/pages/options.php:115
+#: admin/pages/options.php:127
 msgid "If 0 is specified, download is disallowed."
 msgstr ""
 
@@ -1352,12 +1352,12 @@ msgid "Total number of groups"
 msgstr ""
 
 #: add-on/groups/classes/class-rcl-groups-list.php:174
-#: classes/class-rcl-users-list.php:516
+#: classes/class-rcl-users-list.php:521
 msgid "Publications"
 msgstr ""
 
 #: add-on/groups/classes/class-rcl-groups-list.php:187
-#: classes/class-rcl-users-list.php:526
+#: classes/class-rcl-users-list.php:531
 msgid "Filter by"
 msgstr ""
 
@@ -1546,7 +1546,7 @@ msgstr ""
 
 #: add-on/groups/groups-widgets.php:137
 #: add-on/rating-system/admin/addon-settings.php:146
-#: admin/pages/options.php:247 admin/pages/options.php:282 rcl-widgets.php:40
+#: admin/pages/options.php:259 admin/pages/options.php:294 rcl-widgets.php:40
 #: rcl-widgets.php:107
 msgid "All users"
 msgstr ""
@@ -2334,7 +2334,7 @@ msgid "not published"
 msgstr ""
 
 #: add-on/prime-forum/classes/class-prime-form.php:141
-#: add-on/rcl-chat/actions_cron.php:107
+#: add-on/rcl-chat/actions_cron.php:90
 msgid "Message text"
 msgstr ""
 
@@ -2397,9 +2397,9 @@ msgstr ""
 
 #: add-on/prime-forum/functions-actions.php:120
 #: add-on/prime-forum/functions-actions.php:191
-#: add-on/publicpost/classes/class-rcl-public-form.php:830
-#: add-on/publicpost/classes/class-rcl-public-form.php:847
-#: add-on/publicpost/core.php:326
+#: add-on/publicpost/classes/class-rcl-public-form.php:833
+#: add-on/publicpost/classes/class-rcl-public-form.php:850
+#: add-on/publicpost/core.php:322
 #: classes/fields/class-rcl-fields-manager.php:385
 #: classes/fields/class-rcl-fields-manager.php:478 functions/frontend.php:653
 msgid "Are you sure?"
@@ -2690,7 +2690,7 @@ msgstr ""
 msgid "from"
 msgstr ""
 
-#: add-on/prime-forum/functions-query.php:209 add-on/rcl-chat/index.php:311
+#: add-on/prime-forum/functions-query.php:209 add-on/rcl-chat/index.php:313
 #: templates/add-on-card.php:68
 msgid "ago"
 msgstr ""
@@ -2941,55 +2941,55 @@ msgstr ""
 msgid "Profile settings"
 msgstr ""
 
-#: add-on/profile/index.php:97
+#: add-on/profile/index.php:102
 msgid "Your profile has been updated"
 msgstr ""
 
-#: add-on/profile/index.php:150
+#: add-on/profile/index.php:155
 msgid "Admin toolbar"
 msgstr ""
 
-#: add-on/profile/index.php:168
+#: add-on/profile/index.php:173
 msgid "New password"
 msgstr ""
 
-#: add-on/profile/index.php:171
+#: add-on/profile/index.php:176
 msgid "If you want to change your password - enter a new one"
 msgstr ""
 
-#: add-on/profile/index.php:176
+#: add-on/profile/index.php:181
 msgid "Repeat password"
 msgstr ""
 
-#: add-on/profile/index.php:179
+#: add-on/profile/index.php:184
 msgid "Repeat the new password"
 msgstr ""
 
-#: add-on/profile/index.php:205
+#: add-on/profile/index.php:210
 msgid "User profile"
 msgstr ""
 
-#: add-on/profile/index.php:268
+#: add-on/profile/index.php:273
 msgid "Update profile"
 msgstr ""
 
-#: add-on/profile/index.php:282
+#: add-on/profile/index.php:287
 msgid "Delete your profile"
 msgstr ""
 
-#: add-on/profile/index.php:284
+#: add-on/profile/index.php:289
 msgid "Are you sure? It can’t be restaured!"
 msgstr ""
 
-#: add-on/profile/index.php:327
+#: add-on/profile/index.php:332
 msgid "We are very sorry but your account has been deleted!"
 msgstr ""
 
-#: add-on/profile/index.php:328
+#: add-on/profile/index.php:333
 msgid "Back to main page"
 msgstr ""
 
-#: add-on/profile/index.php:330
+#: add-on/profile/index.php:335
 msgid "Account deletion failed! Go back and try again."
 msgstr ""
 
@@ -3246,12 +3246,12 @@ msgid "Output option"
 msgstr ""
 
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:116
-#: classes/class-rcl-custom-fields-manager.php:60 wp-recall.php:358
+#: classes/class-rcl-custom-fields-manager.php:60 wp-recall.php:362
 msgid "Select"
 msgstr ""
 
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:117
-#: classes/class-rcl-custom-fields-manager.php:62 wp-recall.php:366
+#: classes/class-rcl-custom-fields-manager.php:62 wp-recall.php:370
 msgid "Checkbox"
 msgstr ""
 
@@ -3394,49 +3394,49 @@ msgstr ""
 msgid "Publish"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:740
+#: add-on/publicpost/classes/class-rcl-public-form.php:743
 msgid "It separates by push of Enter button"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:825
-#: add-on/publicpost/classes/class-rcl-public-form.php:838
-#: add-on/publicpost/classes/class-rcl-public-form.php:851
+#: add-on/publicpost/classes/class-rcl-public-form.php:828
+#: add-on/publicpost/classes/class-rcl-public-form.php:841
+#: add-on/publicpost/classes/class-rcl-public-form.php:854
 msgid "Delete post"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:833
+#: add-on/publicpost/classes/class-rcl-public-form.php:836
 msgid "or enter your own"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:835
+#: add-on/publicpost/classes/class-rcl-public-form.php:838
 msgid "Without notice"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:867
+#: add-on/publicpost/classes/class-rcl-public-form.php:870
 msgid "Does not correspond the topic"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:868
+#: add-on/publicpost/classes/class-rcl-public-form.php:871
 msgid "The publication does not correspond to the site topic"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:871
+#: add-on/publicpost/classes/class-rcl-public-form.php:874
 msgid "Not completed"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:872
+#: add-on/publicpost/classes/class-rcl-public-form.php:875
 msgid "Publication does not correspond the rules"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:875
+#: add-on/publicpost/classes/class-rcl-public-form.php:878
 msgid "Advertising/Spam"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:876
+#: add-on/publicpost/classes/class-rcl-public-form.php:879
 msgid "Publication labeled as advertising or spam"
 msgstr ""
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:885
+#: add-on/publicpost/classes/class-rcl-public-form.php:888
 msgid "Use blank notice"
 msgstr ""
 
@@ -3495,7 +3495,7 @@ msgid ""
 msgstr ""
 
 #: add-on/publicpost/functions-ajax.php:298
-msgid "The field of the thumbnail is inactively!"
+msgid "The field of the thumbnail is inactive!"
 msgstr ""
 
 #: add-on/publicpost/index.php:218
@@ -3514,33 +3514,33 @@ msgstr ""
 msgid "Notice of a moderator"
 msgstr ""
 
-#: add-on/publicpost/index.php:500
+#: add-on/publicpost/index.php:496
 msgid "New write"
 msgstr ""
 
-#: add-on/publicpost/index.php:503
+#: add-on/publicpost/index.php:499
 #, php-format
 msgid "An user added new write on the website \"%s\""
 msgstr ""
 
-#: add-on/publicpost/index.php:504
+#: add-on/publicpost/index.php:500
 msgid "The name of the write"
 msgstr ""
 
-#: add-on/publicpost/index.php:505
+#: add-on/publicpost/index.php:501
 msgid "The author of the write"
 msgstr ""
 
-#: add-on/publicpost/index.php:506
+#: add-on/publicpost/index.php:502
 msgid ""
 "Don't forget to check this write, probably it is waiting for your moderation"
 msgstr ""
 
-#: add-on/publicpost/index.php:527
+#: add-on/publicpost/index.php:523
 msgid "Appoint a thumbnail"
 msgstr ""
 
-#: add-on/publicpost/index.php:550
+#: add-on/publicpost/index.php:546
 msgid "Output in a gallery"
 msgstr ""
 
@@ -3808,27 +3808,27 @@ msgstr ""
 msgid "Your activity has sings of spam!"
 msgstr ""
 
-#: add-on/rcl-chat/actions_cron.php:91
+#: add-on/rcl-chat/actions_cron.php:74
 msgid "Send notifications on unread messages"
 msgstr ""
 
-#: add-on/rcl-chat/actions_cron.php:102
+#: add-on/rcl-chat/actions_cron.php:85
 msgid "You were sent a private message"
 msgstr ""
 
-#: add-on/rcl-chat/actions_cron.php:104
+#: add-on/rcl-chat/actions_cron.php:87
 msgid "from the user"
 msgstr ""
 
-#: add-on/rcl-chat/actions_cron.php:110
+#: add-on/rcl-chat/actions_cron.php:93
 msgid "You can read the message by clicking on the link:"
 msgstr ""
 
-#: add-on/rcl-chat/actions_cron.php:114
+#: add-on/rcl-chat/actions_cron.php:97
 msgid "For you"
 msgstr ""
 
-#: add-on/rcl-chat/actions_cron.php:114
+#: add-on/rcl-chat/actions_cron.php:97
 msgid "new messages"
 msgstr ""
 
@@ -3940,7 +3940,7 @@ msgstr ""
 msgid "Right"
 msgstr ""
 
-#: add-on/rcl-chat/addon-options.php:147 admin/pages/options.php:94
+#: add-on/rcl-chat/addon-options.php:147 admin/pages/options.php:106
 msgid "Left"
 msgstr ""
 
@@ -3957,19 +3957,19 @@ msgstr ""
 msgid "To post messages in the chat you need to login"
 msgstr ""
 
-#: add-on/rcl-chat/class-rcl-chat.php:400
+#: add-on/rcl-chat/class-rcl-chat.php:424
 msgid "Send"
 msgstr ""
 
-#: add-on/rcl-chat/class-rcl-chat.php:432
+#: add-on/rcl-chat/class-rcl-chat.php:438
 msgid "In chat"
 msgstr ""
 
-#: add-on/rcl-chat/class-rcl-chat.php:479
+#: add-on/rcl-chat/class-rcl-chat.php:485
 msgid "No important messages in this chat"
 msgstr ""
 
-#: add-on/rcl-chat/class-rcl-chat.php:481
+#: add-on/rcl-chat/class-rcl-chat.php:487
 msgid "Chat history will be displayed here"
 msgstr ""
 
@@ -4030,27 +4030,27 @@ msgstr ""
 msgid "Choose from the list of users"
 msgstr ""
 
-#: add-on/rcl-chat/index.php:293
+#: add-on/rcl-chat/index.php:295
 msgid "Total number of contacts"
 msgstr ""
 
-#: add-on/rcl-chat/index.php:300 add-on/rcl-chat/index.php:435
+#: add-on/rcl-chat/index.php:302 add-on/rcl-chat/index.php:437
 msgid "Delete contact"
 msgstr ""
 
-#: add-on/rcl-chat/index.php:301
+#: add-on/rcl-chat/index.php:303
 msgid "Open chat in window"
 msgstr ""
 
-#: add-on/rcl-chat/index.php:338
+#: add-on/rcl-chat/index.php:340
 msgid "No important messages yet"
 msgstr ""
 
-#: add-on/rcl-chat/index.php:472
+#: add-on/rcl-chat/index.php:474
 msgid "Not set attributes: chat_room"
 msgstr ""
 
-#: add-on/user-balance/admin/addon-settings.php:13 admin/pages/options.php:150
+#: add-on/user-balance/admin/addon-settings.php:13 admin/pages/options.php:162
 msgid "Not used"
 msgstr ""
 
@@ -4589,123 +4589,131 @@ msgid ""
 msgstr ""
 
 #: admin/pages/options.php:80
+msgid "Security"
+msgstr ""
+
+#: admin/pages/options.php:87
+msgid "The key of security for ajax-requests and other"
+msgstr ""
+
+#: admin/pages/options.php:92
 msgid "Design"
 msgstr ""
 
-#: admin/pages/options.php:85
+#: admin/pages/options.php:97
 msgid "Primary color"
 msgstr ""
 
-#: admin/pages/options.php:91
+#: admin/pages/options.php:103
 msgid "The location of the section buttons"
 msgstr ""
 
-#: admin/pages/options.php:93
+#: admin/pages/options.php:105
 msgid "Top"
 msgstr ""
 
-#: admin/pages/options.php:104
+#: admin/pages/options.php:116
 msgid "Default avatar"
 msgstr ""
 
-#: admin/pages/options.php:113
+#: admin/pages/options.php:125
 msgid "Max weight of avatars"
 msgstr ""
 
-#: admin/pages/options.php:120
+#: admin/pages/options.php:132
 msgid "Login and register"
 msgstr ""
 
-#: admin/pages/options.php:125
+#: admin/pages/options.php:137
 msgid "The order of output the form of login and registration"
 msgstr ""
 
-#: admin/pages/options.php:127
+#: admin/pages/options.php:139
 msgid "Floating form"
 msgstr ""
 
-#: admin/pages/options.php:128
+#: admin/pages/options.php:140
 msgid "On a separate page"
 msgstr ""
 
-#: admin/pages/options.php:129
+#: admin/pages/options.php:141
 msgid "Wordpress Forms"
 msgstr ""
 
-#: admin/pages/options.php:130
+#: admin/pages/options.php:142
 msgid "Widget form"
 msgstr ""
 
-#: admin/pages/options.php:131
+#: admin/pages/options.php:143
 msgid ""
 "The form of login and registration of the plugin can be outputed with help "
 "of widget \"Control panel\" and a shortcode [loginform], but you can use the "
 "standart login form of WordPress also"
 msgstr ""
 
-#: admin/pages/options.php:138
+#: admin/pages/options.php:150
 msgid "ID of the shortcode page [loginform]"
 msgstr ""
 
-#: admin/pages/options.php:147
+#: admin/pages/options.php:159
 msgid ""
 "If you are using the registration confirmation, after registration, the user "
 "will need to confirm your email by clicking on the link in the sent email"
 msgstr ""
 
-#: admin/pages/options.php:148
+#: admin/pages/options.php:160
 msgid "Registration confirmation by the user"
 msgstr ""
 
-#: admin/pages/options.php:151
+#: admin/pages/options.php:163
 msgid "Used"
 msgstr ""
 
-#: admin/pages/options.php:156
+#: admin/pages/options.php:168
 msgid "Redirect user after login"
 msgstr ""
 
-#: admin/pages/options.php:158
+#: admin/pages/options.php:170
 msgid "The user profile"
 msgstr ""
 
-#: admin/pages/options.php:159
+#: admin/pages/options.php:171
 msgid "Current page"
 msgstr ""
 
-#: admin/pages/options.php:160
+#: admin/pages/options.php:172
 msgid "Arbitrary URL"
 msgstr ""
 
-#: admin/pages/options.php:166
+#: admin/pages/options.php:178
 msgid "URL"
 msgstr ""
 
-#: admin/pages/options.php:167
+#: admin/pages/options.php:179
 msgid "Enter your URL below, if you select an arbitrary URL after login"
 msgstr ""
 
-#: admin/pages/options.php:175
+#: admin/pages/options.php:187
 msgid "repeat password field"
 msgstr ""
 
-#: admin/pages/options.php:176 admin/pages/options.php:182
+#: admin/pages/options.php:188 admin/pages/options.php:194
 msgid "Displaye"
 msgstr ""
 
-#: admin/pages/options.php:181
+#: admin/pages/options.php:193
 msgid "Indicator of password complexity"
 msgstr ""
 
-#: admin/pages/options.php:187 rcl-functions.php:399
+#: admin/pages/options.php:199 rcl-functions.php:399
 msgid "Recallbar"
 msgstr ""
 
-#: admin/pages/options.php:192
+#: admin/pages/options.php:204
 msgid "Output of recallbar panel"
 msgstr ""
 
-#: admin/pages/options.php:193
+#: admin/pages/options.php:205
 msgid ""
 "Recallbar – is he top panel WP-Recall plugin through which the plugin and "
 "its add-ons can output their data and the administrator can make his menu, "
@@ -4713,76 +4721,76 @@ msgid ""
 "management menu of the website</a>"
 msgstr ""
 
-#: admin/pages/options.php:206 wp-recall.php:410
+#: admin/pages/options.php:218 wp-recall.php:414
 msgid "Color"
 msgstr ""
 
-#: admin/pages/options.php:207 admin/pages/options.php:236
+#: admin/pages/options.php:219 admin/pages/options.php:248
 msgid "Default"
 msgstr ""
 
-#: admin/pages/options.php:207
+#: admin/pages/options.php:219
 msgid "Primary colors of WP-Recall"
 msgstr ""
 
-#: admin/pages/options.php:212
+#: admin/pages/options.php:224
 msgid "Caching"
 msgstr ""
 
-#: admin/pages/options.php:218
+#: admin/pages/options.php:230
 msgid "Cache"
 msgstr ""
 
-#: admin/pages/options.php:219
+#: admin/pages/options.php:231
 msgid ""
 "Use the functionality of the caching WP-Recall plugin. <a href=\"https://"
 "codeseller.ru/post-group/funkcional-keshirovaniya-plagina-wp-recall/\" "
 "target=\"_blank\">read More</a>"
 msgstr ""
 
-#: admin/pages/options.php:235
+#: admin/pages/options.php:247
 msgid "Time cache (seconds)"
 msgstr ""
 
-#: admin/pages/options.php:245
+#: admin/pages/options.php:257
 msgid "Cache output"
 msgstr ""
 
-#: admin/pages/options.php:248
+#: admin/pages/options.php:260
 msgid "Only guests"
 msgstr ""
 
-#: admin/pages/options.php:253
+#: admin/pages/options.php:265
 msgid "Minimization of file styles"
 msgstr ""
 
-#: admin/pages/options.php:257
+#: admin/pages/options.php:269
 msgid ""
 "Minimization of file styles only works in correlation with WP-Recall style "
 "files and add-ons that support this feature"
 msgstr ""
 
-#: admin/pages/options.php:262
+#: admin/pages/options.php:274
 msgid "Minimization of scripts"
 msgstr ""
 
-#: admin/pages/options.php:270
+#: admin/pages/options.php:282
 msgid "Access to the console"
 msgstr ""
 
-#: admin/pages/options.php:276
+#: admin/pages/options.php:288
 msgid "Access to the console is allowed"
 msgstr ""
 
-#: admin/pages/options.php:288
+#: admin/pages/options.php:300
 msgid "Logging mode"
 msgstr ""
 
-#: admin/pages/options.php:294
+#: admin/pages/options.php:306
 msgid "Write background events and errors to the log-file"
 msgstr ""
 
-#: admin/pages/options.php:332
+#: admin/pages/options.php:344
 msgid "Configure WP-Recall plugin and add-ons"
 msgstr ""
 
@@ -4837,56 +4845,56 @@ msgid ""
 "and manage existing tabs in different areas of the personal account"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:58 wp-recall.php:334
+#: classes/class-rcl-custom-fields-manager.php:58 wp-recall.php:338
 msgid "Text"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:59 wp-recall.php:354
+#: classes/class-rcl-custom-fields-manager.php:59 wp-recall.php:358
 msgid "Multiline text area"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:61 wp-recall.php:362
+#: classes/class-rcl-custom-fields-manager.php:61 wp-recall.php:366
 msgid "MultiSelect"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:63 wp-recall.php:370
+#: classes/class-rcl-custom-fields-manager.php:63 wp-recall.php:374
 msgid "Radiobutton"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:65 wp-recall.php:378
+#: classes/class-rcl-custom-fields-manager.php:65 wp-recall.php:382
 msgid "Phone"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:66 wp-recall.php:382
+#: classes/class-rcl-custom-fields-manager.php:66 wp-recall.php:386
 msgid "Number"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:68 wp-recall.php:338
+#: classes/class-rcl-custom-fields-manager.php:68 wp-recall.php:342
 msgid "Time"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:69 wp-recall.php:350
+#: classes/class-rcl-custom-fields-manager.php:69 wp-recall.php:354
 msgid "Url"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:70
-#: classes/fields/types/class-rcl-field-agree.php:59 wp-recall.php:390
+#: classes/fields/types/class-rcl-field-agree.php:59 wp-recall.php:394
 msgid "Agreement"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:71 wp-recall.php:394
+#: classes/class-rcl-custom-fields-manager.php:71 wp-recall.php:398
 msgid "File"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:72 wp-recall.php:398
+#: classes/class-rcl-custom-fields-manager.php:72 wp-recall.php:402
 msgid "Dynamic"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:73 wp-recall.php:402
+#: classes/class-rcl-custom-fields-manager.php:73 wp-recall.php:406
 msgid "Runner"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:74 wp-recall.php:406
+#: classes/class-rcl-custom-fields-manager.php:74 wp-recall.php:410
 msgid "Range"
 msgstr ""
 
@@ -5138,42 +5146,42 @@ msgstr ""
 msgid "Types of files"
 msgstr ""
 
-#: classes/class-rcl-uploader.php:178
+#: classes/class-rcl-uploader.php:180
 msgid "Upload file"
 msgstr ""
 
-#: classes/class-rcl-uploader.php:200
+#: classes/class-rcl-uploader.php:202
 msgid "Add files in a queue of downloads"
 msgstr ""
 
-#: classes/class-rcl-uploader.php:353
+#: classes/class-rcl-uploader.php:355
 msgid "Add to the editor"
 msgstr ""
 
-#: classes/class-rcl-uploader.php:369
+#: classes/class-rcl-uploader.php:371
 msgid "Delete the file"
 msgstr ""
 
-#: classes/class-rcl-uploader.php:455
+#: classes/class-rcl-uploader.php:457
 msgid "Forbidden file extension. Allowed:"
 msgstr ""
 
-#: classes/class-rcl-users-list.php:495
+#: classes/class-rcl-users-list.php:500
 msgid "Total number of users"
 msgstr ""
 
-#: classes/class-rcl-users-list.php:515
+#: classes/class-rcl-users-list.php:520
 msgid "Activity"
 msgstr ""
 
-#: classes/class-rcl-users-list.php:518 functions/frontend.php:150
+#: classes/class-rcl-users-list.php:523 functions/frontend.php:150
 #: functions/loginform.php:68 functions/loginform.php:86
 #: functions/loginform.php:115 templates/form-register.php:9
 #: templates/form-remember.php:6 templates/form-sign.php:11
 msgid "Registration"
 msgstr ""
 
-#: classes/class-rcl-users-list.php:522
+#: classes/class-rcl-users-list.php:527
 msgid "Rated"
 msgstr ""
 
@@ -5339,19 +5347,23 @@ msgstr ""
 msgid "Failed to load emoticons"
 msgstr ""
 
-#: functions/ajax.php:174
+#: functions/ajax.php:170
+msgid "Error of security"
+msgstr ""
+
+#: functions/ajax.php:181
 msgid "Something has been wrong"
 msgstr ""
 
-#: functions/ajax.php:191
+#: functions/ajax.php:198
 msgid "The data has been wrong!"
 msgstr ""
 
-#: functions/ajax.php:199 functions/ajax.php:209 functions/ajax.php:215
+#: functions/ajax.php:206 functions/ajax.php:216 functions/ajax.php:222
 msgid "You can`t delete this file!"
 msgstr ""
 
-#: functions/ajax.php:226
+#: functions/ajax.php:233
 msgid "The file has been successfully deleted!"
 msgstr ""
 
@@ -5776,18 +5788,18 @@ msgstr ""
 msgid "Are you cheating, bastard?"
 msgstr ""
 
-#: wp-recall.php:342
+#: wp-recall.php:346
 msgid "Hidden field"
 msgstr ""
 
-#: wp-recall.php:414
+#: wp-recall.php:418
 msgid "Custom content"
 msgstr ""
 
-#: wp-recall.php:418
+#: wp-recall.php:422
 msgid "Text editor"
 msgstr ""
 
-#: wp-recall.php:422
+#: wp-recall.php:426
 msgid "File uploader"
 msgstr ""

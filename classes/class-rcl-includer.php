@@ -360,12 +360,12 @@ class Rcl_Includer {
 }
 
 //подключаем стилевой файл дополнения
-function rcl_enqueue_style( $id, $url, $footer = false ) {
+function rcl_enqueue_style( $id, $url, $parents = false, $in_footer ) {
 	global $rcl_styles;
 
 	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) ) {
 
-		wp_enqueue_style( $id, $url );
+		wp_enqueue_style( $id, $url, $parents, VER_RCL );
 
 		return;
 	}
@@ -379,7 +379,7 @@ function rcl_enqueue_style( $id, $url, $footer = false ) {
 	}
 
 	//если скрипт выводим в футере
-	if ( $footer || isset( $rcl_styles['header'] ) ) {
+	if ( $in_footer || isset( $rcl_styles['header'] ) ) {
 		//если не обнаружен дубль скрипта в хедере
 		if ( ! isset( $rcl_styles['header'][$id] ) )
 			$rcl_styles['footer'][$id] = $url;
@@ -388,7 +388,7 @@ function rcl_enqueue_style( $id, $url, $footer = false ) {
 	}
 }
 
-function rcl_enqueue_script( $id, $url, $parents = array(), $in_footer = false ) {
+function rcl_enqueue_script( $id, $url, $parents = false, $in_footer = false ) {
 	global $rcl_scripts;
 
 	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) ) {

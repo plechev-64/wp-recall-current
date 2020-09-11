@@ -17,7 +17,8 @@ jQuery( function( $ ) {
 
 	/* показ дочерних полей */
 	$( ".rcl-parent-field" ).find( "input, select" ).each( function() {
-		RclOptionsControl.showChildrens( $( this ).attr( 'id' ), $( this ).val() );
+		if ( $( this ).is( ":visible" ) )
+			RclOptionsControl.showChildrens( $( this ).attr( 'id' ), $( this ).val() );
 	} );
 
 	$( '.rcl-parent-field select, .rcl-parent-field input' ).change( function() {

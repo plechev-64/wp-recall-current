@@ -45,6 +45,12 @@ class Rcl_Query extends Rcl_Old_Query {
 
 		$args = wp_unslash( $args );
 
+		if ( isset( $args['fields'] ) ) {
+			//deprecated
+			$args['select'] = $args['fields'];
+			unset( $args['fields'] );
+		}
+
 		if ( ! isset( $args['select'] ) && ! isset( $args['date'] ) ) {
 			foreach ( $this->table['cols'] as $col_name ) {
 				$this->query['select'][] = $this->table['as'] . '.' . $col_name;

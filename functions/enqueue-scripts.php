@@ -47,7 +47,7 @@ function rcl_dialog_scripts() {
 }
 
 function rcl_webcam_scripts() {
-	rcl_enqueue_script( 'say-cheese', RCL_URL . 'assets/js/say-cheese/say-cheese.js', array(), VER_RCL, true );
+	rcl_enqueue_script( 'say-cheese', RCL_URL . 'assets/js/say-cheese/say-cheese.js', array(), true );
 }
 
 function rcl_fileupload_scripts() {

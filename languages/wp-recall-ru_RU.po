@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2020-09-10 15:06+0400\n"
+"POT-Creation-Date: 2020-09-11 12:28+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -77,7 +77,7 @@ msgstr "Поиск"
 #: add-on/commerce/activate.php:90 add-on/commerce/index.php:49
 #: add-on/groups/groups-init.php:15
 #: add-on/prime-forum/functions-shortcodes.php:105
-#: add-on/publicpost/classes/class-rcl-public-form.php:750
+#: add-on/publicpost/classes/class-rcl-public-form.php:753
 msgid "Not found"
 msgstr "Не найдено"
 
@@ -340,7 +340,7 @@ msgstr "Данные сохранены"
 #: add-on/commerce/admin/index.php:84 add-on/feed/index.php:191
 #: add-on/feed/index.php:203 add-on/feed/index.php:211
 #: add-on/groups/groups-core.php:803 add-on/groups/groups-core.php:820
-#: add-on/prime-forum/functions-actions.php:1147 add-on/publicpost/core.php:239
+#: add-on/prime-forum/functions-actions.php:1147 add-on/publicpost/core.php:235
 #: add-on/user-balance/index.php:206 admin/pages/repository.php:48
 #: admin/pages/repository.php:60 functions/addons-update.php:157
 #: functions/addons-update.php:212 functions/ajax.php:97 functions/ajax.php:158
@@ -517,7 +517,7 @@ msgstr "Регистрация при оформлении"
 #: add-on/commerce/admin/pages/addon-settings.php:82
 #: add-on/commerce/admin/pages/addon-settings.php:93
 #: add-on/groups/admin/index.php:25 add-on/prime-forum/admin/index.php:286
-#: add-on/prime-forum/admin/index.php:295 add-on/profile/index.php:153
+#: add-on/prime-forum/admin/index.php:295 add-on/profile/index.php:158
 #: add-on/publicpost/admin/addon-settings.php:48
 #: add-on/publicpost/admin/addon-settings.php:67
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:185
@@ -538,7 +538,7 @@ msgstr "Отключено"
 #: add-on/commerce/admin/pages/addon-settings.php:82
 #: add-on/commerce/admin/pages/addon-settings.php:93
 #: add-on/groups/admin/index.php:26 add-on/prime-forum/admin/index.php:287
-#: add-on/prime-forum/admin/index.php:296 add-on/profile/index.php:154
+#: add-on/prime-forum/admin/index.php:296 add-on/profile/index.php:159
 #: add-on/publicpost/admin/addon-settings.php:49
 #: add-on/publicpost/admin/addon-settings.php:67
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:186
@@ -684,7 +684,7 @@ msgstr "Данные покупателя"
 msgid "Name"
 msgstr "Имя"
 
-#: add-on/commerce/admin/pages/order.php:20 add-on/profile/index.php:161
+#: add-on/commerce/admin/pages/order.php:20 add-on/profile/index.php:166
 #: classes/class-rcl-custom-fields-manager.php:64
 #: templates/form-register.php:24 wp-recall.php:378
 msgid "E-mail"
@@ -1193,7 +1193,7 @@ msgid "News"
 msgstr "Новости"
 
 #: add-on/feed/classes/class-rcl-feed-list.php:359
-#: add-on/rating-system/index.php:36 classes/class-rcl-users-list.php:517
+#: add-on/rating-system/index.php:36 classes/class-rcl-users-list.php:522
 #: functions/frontend.php:101 templates/user-cards.php:6
 msgid "Comments"
 msgstr "Комментарии"
@@ -1387,12 +1387,12 @@ msgid "Total number of groups"
 msgstr "Всего групп"
 
 #: add-on/groups/classes/class-rcl-groups-list.php:174
-#: classes/class-rcl-users-list.php:516
+#: classes/class-rcl-users-list.php:521
 msgid "Publications"
 msgstr "Публикациям"
 
 #: add-on/groups/classes/class-rcl-groups-list.php:187
-#: classes/class-rcl-users-list.php:526
+#: classes/class-rcl-users-list.php:531
 msgid "Filter by"
 msgstr "Фильтр по"
 
@@ -2403,7 +2403,7 @@ msgid "not published"
 msgstr "не публикуется"
 
 #: add-on/prime-forum/classes/class-prime-form.php:141
-#: add-on/rcl-chat/actions_cron.php:107
+#: add-on/rcl-chat/actions_cron.php:90
 msgid "Message text"
 msgstr "Текст сообщения"
 
@@ -2466,9 +2466,9 @@ msgstr "Удалить сообщение"
 
 #: add-on/prime-forum/functions-actions.php:120
 #: add-on/prime-forum/functions-actions.php:191
-#: add-on/publicpost/classes/class-rcl-public-form.php:830
-#: add-on/publicpost/classes/class-rcl-public-form.php:847
-#: add-on/publicpost/core.php:326
+#: add-on/publicpost/classes/class-rcl-public-form.php:833
+#: add-on/publicpost/classes/class-rcl-public-form.php:850
+#: add-on/publicpost/core.php:322
 #: classes/fields/class-rcl-fields-manager.php:385
 #: classes/fields/class-rcl-fields-manager.php:478 functions/frontend.php:653
 msgid "Are you sure?"
@@ -2761,7 +2761,7 @@ msgstr "не найдено"
 msgid "from"
 msgstr "от"
 
-#: add-on/prime-forum/functions-query.php:209 add-on/rcl-chat/index.php:311
+#: add-on/prime-forum/functions-query.php:209 add-on/rcl-chat/index.php:313
 #: templates/add-on-card.php:68
 msgid "ago"
 msgstr "назад"
@@ -3016,55 +3016,55 @@ msgstr "Повтор пароля не верный!"
 msgid "Profile settings"
 msgstr "Настройки профиля"
 
-#: add-on/profile/index.php:97
+#: add-on/profile/index.php:102
 msgid "Your profile has been updated"
 msgstr "Ваш профиль был обновлен"
 
-#: add-on/profile/index.php:150
+#: add-on/profile/index.php:155
 msgid "Admin toolbar"
 msgstr "Панель администратора"
 
-#: add-on/profile/index.php:168
+#: add-on/profile/index.php:173
 msgid "New password"
 msgstr "Новый пароль"
 
-#: add-on/profile/index.php:171
+#: add-on/profile/index.php:176
 msgid "If you want to change your password - enter a new one"
 msgstr "Если вы хотите сменить пароль - введите новый"
 
-#: add-on/profile/index.php:176
+#: add-on/profile/index.php:181
 msgid "Repeat password"
 msgstr "Повтор пароля"
 
-#: add-on/profile/index.php:179
+#: add-on/profile/index.php:184
 msgid "Repeat the new password"
 msgstr "Повтор нового пароля"
 
-#: add-on/profile/index.php:205
+#: add-on/profile/index.php:210
 msgid "User profile"
 msgstr "Профиль пользователя"
 
-#: add-on/profile/index.php:268
+#: add-on/profile/index.php:273
 msgid "Update profile"
 msgstr "Обновить профиль"
 
-#: add-on/profile/index.php:282
+#: add-on/profile/index.php:287
 msgid "Delete your profile"
 msgstr "Удаление вашего профиля"
 
-#: add-on/profile/index.php:284
+#: add-on/profile/index.php:289
 msgid "Are you sure? It can’t be restaured!"
 msgstr "Вы серьезно? Восстановить не получиться!"
 
-#: add-on/profile/index.php:327
+#: add-on/profile/index.php:332
 msgid "We are very sorry but your account has been deleted!"
 msgstr "Мы сожалеем, но ваш аккаунт был удален!"
 
-#: add-on/profile/index.php:328
+#: add-on/profile/index.php:333
 msgid "Back to main page"
 msgstr "Вернуться на главную"
 
-#: add-on/profile/index.php:330
+#: add-on/profile/index.php:335
 msgid "Account deletion failed! Go back and try again."
 msgstr "Удаление аккаунта не удалось! Вернитесь назад и повторите попытку."
 
@@ -3493,49 +3493,49 @@ msgstr "Сохранить как черновик"
 msgid "Publish"
 msgstr "Публиковать"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:740
+#: add-on/publicpost/classes/class-rcl-public-form.php:743
 msgid "It separates by push of Enter button"
 msgstr "разделяются по нажатию по кнопке Enter"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:825
-#: add-on/publicpost/classes/class-rcl-public-form.php:838
-#: add-on/publicpost/classes/class-rcl-public-form.php:851
+#: add-on/publicpost/classes/class-rcl-public-form.php:828
+#: add-on/publicpost/classes/class-rcl-public-form.php:841
+#: add-on/publicpost/classes/class-rcl-public-form.php:854
 msgid "Delete post"
 msgstr "Удалить публикацию"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:833
+#: add-on/publicpost/classes/class-rcl-public-form.php:836
 msgid "or enter your own"
 msgstr "или введите свое"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:835
+#: add-on/publicpost/classes/class-rcl-public-form.php:838
 msgid "Without notice"
 msgstr "Без уведомления"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:867
+#: add-on/publicpost/classes/class-rcl-public-form.php:870
 msgid "Does not correspond the topic"
 msgstr "Н/с тематике сайта"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:868
+#: add-on/publicpost/classes/class-rcl-public-form.php:871
 msgid "The publication does not correspond to the site topic"
 msgstr "Публикация не соответствует тематике сайта"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:871
+#: add-on/publicpost/classes/class-rcl-public-form.php:874
 msgid "Not completed"
 msgstr "Не оформлен"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:872
+#: add-on/publicpost/classes/class-rcl-public-form.php:875
 msgid "Publication does not correspond the rules"
 msgstr "Публикация не оформлена согласно правил"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:875
+#: add-on/publicpost/classes/class-rcl-public-form.php:878
 msgid "Advertising/Spam"
 msgstr "Реклама/Спам"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:876
+#: add-on/publicpost/classes/class-rcl-public-form.php:879
 msgid "Publication labeled as advertising or spam"
 msgstr "Публикация помечена как реклама или спам"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:885
+#: add-on/publicpost/classes/class-rcl-public-form.php:888
 msgid "Use blank notice"
 msgstr "Используйте заготовку уведомления"
 
@@ -3613,34 +3613,34 @@ msgstr "была удалена"
 msgid "Notice of a moderator"
 msgstr "Замечание модератора"
 
-#: add-on/publicpost/index.php:500
+#: add-on/publicpost/index.php:496
 msgid "New write"
 msgstr "Новая публикация"
 
-#: add-on/publicpost/index.php:503
+#: add-on/publicpost/index.php:499
 #, php-format
 msgid "An user added new write on the website \"%s\""
 msgstr "Пользователь добавил новую публикацию на сайте \"%s\"!"
 
-#: add-on/publicpost/index.php:504
+#: add-on/publicpost/index.php:500
 msgid "The name of the write"
 msgstr "Наименование публикации"
 
-#: add-on/publicpost/index.php:505
+#: add-on/publicpost/index.php:501
 msgid "The author of the write"
 msgstr "Автор публикации"
 
-#: add-on/publicpost/index.php:506
+#: add-on/publicpost/index.php:502
 msgid ""
 "Don't forget to check this write, probably it is waiting for your moderation"
 msgstr ""
 "Не забудьте проверить эту публикацию, возможно, она ожидает вашей модерации"
 
-#: add-on/publicpost/index.php:527
+#: add-on/publicpost/index.php:523
 msgid "Appoint a thumbnail"
 msgstr "Назначить миниатюру"
 
-#: add-on/publicpost/index.php:550
+#: add-on/publicpost/index.php:546
 msgid "Output in a gallery"
 msgstr "Вывести изображения в галерее"
 
@@ -3918,27 +3918,27 @@ msgstr "Вы были заблокированы в чате"
 msgid "Your activity has sings of spam!"
 msgstr "Ваша активность имеет признаки спама!"
 
-#: add-on/rcl-chat/actions_cron.php:91
+#: add-on/rcl-chat/actions_cron.php:74
 msgid "Send notifications on unread messages"
 msgstr "Отправка уведомлений о непрочитанных сообщениях"
 
-#: add-on/rcl-chat/actions_cron.php:102
+#: add-on/rcl-chat/actions_cron.php:85
 msgid "You were sent a private message"
 msgstr "Вам было отправлено сообщение"
 
-#: add-on/rcl-chat/actions_cron.php:104
+#: add-on/rcl-chat/actions_cron.php:87
 msgid "from the user"
 msgstr "от пользователя"
 
-#: add-on/rcl-chat/actions_cron.php:110
+#: add-on/rcl-chat/actions_cron.php:93
 msgid "You can read the message by clicking on the link:"
 msgstr "Вы можете прочитать сообщение перейдя по ссылке:"
 
-#: add-on/rcl-chat/actions_cron.php:114
+#: add-on/rcl-chat/actions_cron.php:97
 msgid "For you"
 msgstr "Для вас"
 
-#: add-on/rcl-chat/actions_cron.php:114
+#: add-on/rcl-chat/actions_cron.php:97
 msgid "new messages"
 msgstr "новых сообщений"
 
@@ -4077,19 +4077,19 @@ msgstr "Чат не был создан"
 msgid "To post messages in the chat you need to login"
 msgstr "Для публикации сообщений в чате необходимо авторизоваться"
 
-#: add-on/rcl-chat/class-rcl-chat.php:400
+#: add-on/rcl-chat/class-rcl-chat.php:424
 msgid "Send"
 msgstr "Отправить"
 
-#: add-on/rcl-chat/class-rcl-chat.php:432
+#: add-on/rcl-chat/class-rcl-chat.php:438
 msgid "In chat"
 msgstr "В чате"
 
-#: add-on/rcl-chat/class-rcl-chat.php:479
+#: add-on/rcl-chat/class-rcl-chat.php:485
 msgid "No important messages in this chat"
 msgstr "Важных сообщений в этом чате нет"
 
-#: add-on/rcl-chat/class-rcl-chat.php:481
+#: add-on/rcl-chat/class-rcl-chat.php:487
 msgid "Chat history will be displayed here"
 msgstr "Здесь будет отображаться история переписки"
 
@@ -4150,23 +4150,23 @@ msgstr "Пока контактов нет. Начните переписку н
 msgid "Choose from the list of users"
 msgstr "Выберите из списка пользователей"
 
-#: add-on/rcl-chat/index.php:293
+#: add-on/rcl-chat/index.php:295
 msgid "Total number of contacts"
 msgstr "Всего контактов"
 
-#: add-on/rcl-chat/index.php:300 add-on/rcl-chat/index.php:435
+#: add-on/rcl-chat/index.php:302 add-on/rcl-chat/index.php:437
 msgid "Delete contact"
 msgstr "Удалить контакт"
 
-#: add-on/rcl-chat/index.php:301
+#: add-on/rcl-chat/index.php:303
 msgid "Open chat in window"
 msgstr "Открыть чат в окне"
 
-#: add-on/rcl-chat/index.php:338
+#: add-on/rcl-chat/index.php:340
 msgid "No important messages yet"
 msgstr "Важных сообщений пока нет"
 
-#: add-on/rcl-chat/index.php:472
+#: add-on/rcl-chat/index.php:474
 msgid "Not set attributes: chat_room"
 msgstr "Не указан атрибут: chat_room"
 
@@ -4733,7 +4733,7 @@ msgstr "По-умолчанию 10 минут."
 
 #: admin/pages/options.php:80
 msgid "Security"
-msgstr ""
+msgstr "Безопасность"
 
 #: admin/pages/options.php:87
 msgid "The key of security for ajax-requests and other"
@@ -5330,22 +5330,22 @@ msgstr "Удалить файл"
 msgid "Forbidden file extension. Allowed:"
 msgstr "Запрещенное расширение файла. Разрешено:"
 
-#: classes/class-rcl-users-list.php:495
+#: classes/class-rcl-users-list.php:500
 msgid "Total number of users"
 msgstr "Всего пользователей"
 
-#: classes/class-rcl-users-list.php:515
+#: classes/class-rcl-users-list.php:520
 msgid "Activity"
 msgstr "Активности"
 
-#: classes/class-rcl-users-list.php:518 functions/frontend.php:150
+#: classes/class-rcl-users-list.php:523 functions/frontend.php:150
 #: functions/loginform.php:68 functions/loginform.php:86
 #: functions/loginform.php:115 templates/form-register.php:9
 #: templates/form-remember.php:6 templates/form-sign.php:11
 msgid "Registration"
 msgstr "Регистрация"
 
-#: classes/class-rcl-users-list.php:522
+#: classes/class-rcl-users-list.php:527
 msgid "Rated"
 msgstr "Рейтингу"
 
