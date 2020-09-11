@@ -360,7 +360,7 @@ class Rcl_Includer {
 }
 
 //подключаем стилевой файл дополнения
-function rcl_enqueue_style( $id, $url, $parents = false, $in_footer ) {
+function rcl_enqueue_style( $id, $url, $parents = false, $in_footer = false ) {
 	global $rcl_styles;
 
 	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) ) {
