@@ -37,8 +37,6 @@ class PrimeForm extends Rcl_Fields {
 		$fields = $this->get_form_fields();
 
 		parent::__construct( $fields );
-
-		//$this->fields = wp_unslash($this->setup_fields());
 	}
 
 	function init_properties( $args ) {
@@ -203,7 +201,7 @@ class PrimeForm extends Rcl_Fields {
 		foreach ( $this->fields as $field_id => $field ) {
 
 			if ( ! $field->value )
-				$field->value = (isset( $this->values[$field->slug] )) ? $this->values[$field->slug] : false;
+				$field->value = (isset( $this->values[$field->slug] )) ? wp_unslash( $this->values[$field->slug] ) : false;
 
 			$content .= '<div id="field-' . $field->slug . '" class="form-field rcl-option">';
 

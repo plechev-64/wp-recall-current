@@ -38,7 +38,7 @@ $options->add_box( 'primary', array(
 		'extend' => true
 	) )->add_options( array(
 		array(
-			'type'		 => 'radio',
+			'type'		 => 'select',
 			'slug'		 => 'view_user_lk_rcl',
 			'title'		 => __( 'Personal Cabinet output', 'wp-recall' ),
 			'values'	 => array(

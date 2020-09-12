@@ -56,8 +56,8 @@ class Rcl_Addons_Manager extends WP_List_Table {
 							continue;
 						if ( isset( $data['custom-manager'] ) )
 							continue;
-						if ( isset( $_POST['s'] ) && $_POST['s'] ) {
-							if ( strpos( strtolower( trim( $data['name'] ) ), strtolower( trim( $_POST['s'] ) ) ) !== false ) {
+						if ( isset( $_GET['s'] ) && $_GET['s'] ) {
+							if ( strpos( strtolower( trim( $data['name'] ) ), strtolower( trim( $_GET['s'] ) ) ) !== false ) {
 								$this->addons_data[$namedir]		 = $data;
 								$this->addons_data[$namedir]['path'] = $addon_dir;
 							}
