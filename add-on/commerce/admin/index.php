@@ -8,9 +8,9 @@ add_action( 'admin_init', 'rcl_commerce_admin_scripts' );
 function rcl_commerce_admin_scripts() {
 
 	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'rcl_commerce_admin_scripts', rcl_addon_url( 'admin/assets/scripts.js', __FILE__ ), false, RCL_VER );
-	wp_enqueue_style( 'rcl_commerce_style', rcl_addon_url( 'style.css', __FILE__ ), false, RCL_VER );
-	wp_enqueue_style( 'rcl_commerce_admin_style', rcl_addon_url( 'admin/assets/style.css', __FILE__ ), false, RCL_VER );
+	wp_enqueue_script( 'rcl_commerce_admin_scripts', rcl_addon_url( 'admin/assets/scripts.js', __FILE__ ), false, VER_RCL );
+	wp_enqueue_style( 'rcl_commerce_style', rcl_addon_url( 'style.css', __FILE__ ), false, VER_RCL );
+	wp_enqueue_style( 'rcl_commerce_admin_style', rcl_addon_url( 'admin/assets/style.css', __FILE__ ), false, VER_RCL );
 
 	if ( isset( $_GET['page'] ) && $_GET['page'] == 'manage-rmag' ) {
 		rcl_datepicker_scripts();

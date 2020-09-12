@@ -4,7 +4,7 @@ require_once "metaboxes.php";
 
 add_action( 'admin_init', 'rcl_admin_scripts', 10 );
 function rcl_admin_scripts() {
-	wp_enqueue_style( 'animate-css', RCL_URL . 'assets/css/animate-css/animate.min.css', false, RCL_VER );
+	wp_enqueue_style( 'animate-css', RCL_URL . 'assets/css/animate-css/animate.min.css', false, VER_RCL );
 }
 
 add_filter( 'rcl_field_options', 'rcl_edit_field_options', 10, 3 );
