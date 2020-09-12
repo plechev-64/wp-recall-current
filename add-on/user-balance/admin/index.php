@@ -5,7 +5,7 @@ require_once 'addon-settings.php';
 add_action( 'admin_head', 'rcl_admin_user_account_scripts' );
 function rcl_admin_user_account_scripts() {
 	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'rcl_admin_user_account_scripts', plugins_url( 'js/scripts.js', __FILE__ ) );
+	wp_enqueue_script( 'rcl_admin_user_account_scripts', plugins_url( 'js/scripts.js', __FILE__ ), false, RCL_VER );
 }
 
 // создаем допколонку для вывода баланса пользователя

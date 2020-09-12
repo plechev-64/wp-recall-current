@@ -148,30 +148,6 @@ function rcl_concat_post_meta( $content ) {
 	return $content;
 }
 
-/* 14.2.0 */
-//очищаем временный массив загруженных изображений к публикациям
-//и удаляем все изображения к неопубликованным записям
-add_action( 'rcl_cron_daily', 'rcl_clear_temps_gallery', 10 );
-function rcl_clear_temps_gallery() {
-
-	$temps = get_site_option( 'rcl_tempgallery' );
-
-	if ( ! $temps )
-		return false;
-
-	foreach ( $temps as $user_id => $usertemps ) {
-		foreach ( $usertemps as $temp ) {
-			$post_id = intval( $temp['ID'] );
-			if ( $post_id )
-				wp_delete_post( $post_id );
-		}
-	}
-
-	$temps = array();
-
-	update_site_option( 'rcl_tempgallery', $temps );
-}
-
 add_action( 'init', 'rcl_delete_post_activate' );
 function rcl_delete_post_activate() {
 	if ( isset( $_POST['rcl-delete-post'] ) && wp_verify_nonce( $_POST['_wpnonce'], 'rcl-delete-post' ) ) {

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2020-09-11 12:28+0400\n"
+"POT-Creation-Date: 2020-09-12 10:50+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -4660,6 +4660,10 @@ msgstr ""
 "Если у вас есь архив дополнения к WP-Recall в формате ZIP, то вы можете "
 "загрузить и установить его здесь."
 
+#: admin/pages/addons-manager.php:84
+msgid "Search by name"
+msgstr "Поиск по имени"
+
 #: admin/pages/dashboard.php:2
 msgid "Dashboard WP-Recall"
 msgstr "Панель управления WP-Recall"
@@ -5306,27 +5310,27 @@ msgstr "Неподтвержденные"
 msgid "Failed to load tab content"
 msgstr "Не удалось загрузить контент вкладки"
 
-#: classes/class-rcl-uploader.php:152
+#: classes/class-rcl-uploader.php:150
 msgid "Types of files"
 msgstr "Типы полей"
 
-#: classes/class-rcl-uploader.php:180
+#: classes/class-rcl-uploader.php:178
 msgid "Upload file"
 msgstr "Загрузить файл"
 
-#: classes/class-rcl-uploader.php:202
+#: classes/class-rcl-uploader.php:200
 msgid "Add files in a queue of downloads"
 msgstr "Добавить файлы в очередь загрузки"
 
-#: classes/class-rcl-uploader.php:355
+#: classes/class-rcl-uploader.php:353
 msgid "Add to the editor"
 msgstr "Добавить в редактор"
 
-#: classes/class-rcl-uploader.php:371
+#: classes/class-rcl-uploader.php:369
 msgid "Delete the file"
 msgstr "Удалить файл"
 
-#: classes/class-rcl-uploader.php:457
+#: classes/class-rcl-uploader.php:455
 msgid "Forbidden file extension. Allowed:"
 msgstr "Запрещенное расширение файла. Разрешено:"
 

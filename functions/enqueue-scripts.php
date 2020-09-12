@@ -1,7 +1,7 @@
 <?php
 
 function rcl_iconpicker() {
-	wp_enqueue_style( 'rcl-iconpicker', RCL_URL . 'assets/rcl-awesome/iconpicker/iconpicker.css' );
+	wp_enqueue_style( 'rcl-iconpicker', RCL_URL . 'assets/rcl-awesome/iconpicker/iconpicker.css', false, RCL_VER );
 	wp_enqueue_script( 'rcl-iconpicker', RCL_URL . 'assets/rcl-awesome/iconpicker/iconpicker.js', array( 'jquery' ), VER_RCL );
 }
 
@@ -17,8 +17,8 @@ function rcl_resizable_scripts() {
 
 function rcl_multiselect_scripts() {
 	wp_enqueue_script( 'jquery' );
-	rcl_enqueue_style( 'f-select', RCL_URL . 'assets/js/fselect/fSelect.css' );
-	wp_enqueue_script( 'f-select', RCL_URL . 'assets/js/fselect/fSelect.js' );
+	rcl_enqueue_style( 'f-select', RCL_URL . 'assets/js/fselect/fSelect.css', false, RCL_VER );
+	wp_enqueue_script( 'f-select', RCL_URL . 'assets/js/fselect/fSelect.js', false, RCL_VER );
 }
 
 function rcl_slider_scripts() {
@@ -29,7 +29,7 @@ function rcl_slider_scripts() {
 }
 
 function rcl_datepicker_scripts() {
-	wp_enqueue_style( 'jquery-ui-datepicker', RCL_URL . 'assets/js/datepicker/style.css' );
+	wp_enqueue_style( 'jquery-ui-datepicker', RCL_URL . 'assets/js/datepicker/style.css', false, RCL_VER );
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery-ui-core' );
 	wp_enqueue_script( 'jquery-ui-datepicker' );
@@ -75,7 +75,7 @@ function rcl_rangyinputs_scripts() {
 }
 
 function rcl_font_awesome_style( $fontAwesome = true ) {
-	wp_enqueue_style( 'rcl-awesome', RCL_URL . 'assets/rcl-awesome/rcl-awesome.min.css' );
+	wp_enqueue_style( 'rcl-awesome', RCL_URL . 'assets/rcl-awesome/rcl-awesome.min.css', false, RCL_VER );
 }
 
 function rcl_animate_css() {
@@ -89,7 +89,7 @@ function rcl_enqueue_wp_form_scripts() {
 	wp_enqueue_script( 'rcl-primary-scripts', RCL_URL . 'assets/js/scripts.js', array( 'jquery' ), VER_RCL );
 
 	if ( ! is_user_logged_in() ) {
-		wp_enqueue_style( 'rcl-regform-style', RCL_URL . 'assets/css/regform.css' );
+		wp_enqueue_style( 'rcl-regform-style', RCL_URL . 'assets/css/regform.css', false, RCL_VER );
 	}
 	wp_localize_script( 'rcl-core-scripts', 'Rcl', rcl_get_localize_data() );
 }
@@ -121,7 +121,7 @@ function rcl_frontend_scripts() {
 		}
 	}
 
-	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ) );
+	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ), RCL_VER );
 	rcl_enqueue_script( 'rcl-primary-scripts', RCL_URL . 'assets/js/scripts.js' );
 
 	$locData = rcl_get_localize_data();
@@ -180,10 +180,10 @@ function rcl_get_localize_data() {
 
 function rcl_admin_scrips() {
 	rcl_enqueue_style( 'rcl-core', RCL_URL . 'assets/css/core.css' );
-	wp_enqueue_style( 'rcl-admin-style', RCL_URL . 'admin/assets/style.css' );
+	wp_enqueue_style( 'rcl-admin-style', RCL_URL . 'admin/assets/style.css', false, RCL_VER );
 	wp_enqueue_style( 'wp-color-picker' );
 	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ) );
+	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ), RCL_VER );
 	wp_enqueue_script( 'rcl-admin-scripts', RCL_URL . 'admin/assets/scripts.js', array( 'wp-color-picker' ), VER_RCL );
 
 	wp_localize_script( 'rcl-core-scripts', 'Rcl', rcl_get_localize_data() );

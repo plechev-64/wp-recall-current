@@ -8,9 +8,9 @@ add_action( 'admin_init', 'rcl_commerce_admin_scripts' );
 function rcl_commerce_admin_scripts() {
 
 	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'rcl_commerce_admin_scripts', rcl_addon_url( 'admin/assets/scripts.js', __FILE__ ) );
-	wp_enqueue_style( 'rcl_commerce_style', rcl_addon_url( 'style.css', __FILE__ ) );
-	wp_enqueue_style( 'rcl_commerce_admin_style', rcl_addon_url( 'admin/assets/style.css', __FILE__ ) );
+	wp_enqueue_script( 'rcl_commerce_admin_scripts', rcl_addon_url( 'admin/assets/scripts.js', __FILE__ ), false, RCL_VER );
+	wp_enqueue_style( 'rcl_commerce_style', rcl_addon_url( 'style.css', __FILE__ ), false, RCL_VER );
+	wp_enqueue_style( 'rcl_commerce_admin_style', rcl_addon_url( 'admin/assets/style.css', __FILE__ ), false, RCL_VER );
 
 	if ( isset( $_GET['page'] ) && $_GET['page'] == 'manage-rmag' ) {
 		rcl_datepicker_scripts();
@@ -365,10 +365,10 @@ function rcl_get_chart_orders( $orders ) {
 	return rcl_get_chart( $chartArgs );
 }
 
-add_filter( 'rcl_custom_field_options', 'rcl_add_cart_profile_field_option', 10, 3 );
-function rcl_add_cart_profile_field_option( $options, $field, $type ) {
+add_filter( 'rcl_field_options', 'rcl_add_cart_profile_field_option', 10, 3 );
+function rcl_add_cart_profile_field_option( $options, $field, $manager_id ) {
 
-	if ( $type != 'profile' )
+	if ( $manager_id != 'profile' )
 		return $options;
 
 	$options[] = array(

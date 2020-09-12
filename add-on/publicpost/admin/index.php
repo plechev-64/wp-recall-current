@@ -4,7 +4,7 @@ require_once 'addon-settings.php';
 
 add_action( 'admin_init', 'rcl_public_admin_scripts' );
 function rcl_public_admin_scripts() {
-	wp_enqueue_style( 'rcl_public_admin_style', rcl_addon_url( 'admin/assets/style.css', __FILE__ ) );
+	wp_enqueue_style( 'rcl_public_admin_style', rcl_addon_url( 'admin/assets/style.css', __FILE__ ), false, RCL_VER );
 }
 
 add_action( 'admin_menu', 'rcl_admin_page_publicform', 30 );

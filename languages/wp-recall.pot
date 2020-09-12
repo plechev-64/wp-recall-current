@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wp-recall\n"
-"POT-Creation-Date: 2020-09-11 12:29+0400\n"
+"POT-Creation-Date: 2020-09-12 10:51+0400\n"
 "PO-Revision-Date: 2020-09-06 11:12+0400\n"
 "Last-Translator: \n"
 "Language-Team: https//:codeseller.ru\n"
@@ -4527,6 +4527,10 @@ msgid ""
 "install it here."
 msgstr ""
 
+#: admin/pages/addons-manager.php:84
+msgid "Search by name"
+msgstr ""
+
 #: admin/pages/dashboard.php:2
 msgid "Dashboard WP-Recall"
 msgstr ""
@@ -5142,27 +5146,27 @@ msgstr ""
 msgid "Failed to load tab content"
 msgstr ""
 
-#: classes/class-rcl-uploader.php:152
+#: classes/class-rcl-uploader.php:150
 msgid "Types of files"
 msgstr ""
 
-#: classes/class-rcl-uploader.php:180
+#: classes/class-rcl-uploader.php:178
 msgid "Upload file"
 msgstr ""
 
-#: classes/class-rcl-uploader.php:202
+#: classes/class-rcl-uploader.php:200
 msgid "Add files in a queue of downloads"
 msgstr ""
 
-#: classes/class-rcl-uploader.php:355
+#: classes/class-rcl-uploader.php:353
 msgid "Add to the editor"
 msgstr ""
 
-#: classes/class-rcl-uploader.php:371
+#: classes/class-rcl-uploader.php:369
 msgid "Delete the file"
 msgstr ""
 
-#: classes/class-rcl-uploader.php:457
+#: classes/class-rcl-uploader.php:455
 msgid "Forbidden file extension. Allowed:"
 msgstr ""
 

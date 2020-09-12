@@ -7,10 +7,10 @@ function rcl_profile_admin_menu() {
 	add_submenu_page( 'manage-wprecall', __( 'Profile fields', 'wp-recall' ), __( 'Profile fields', 'wp-recall' ), 'manage_options', 'manage-userfield', 'rcl_profile_fields_manager' );
 }
 
-add_filter( 'rcl_custom_field_options', 'rcl_edit_profile_field_options', 10, 3 );
-function rcl_edit_profile_field_options( $options, $field, $type ) {
+add_filter( 'rcl_field_options', 'rcl_edit_profile_field_options', 10, 3 );
+function rcl_edit_profile_field_options( $options, $field, $manager_id ) {
 
-	if ( $type != 'profile' || ! rcl_is_register_open() )
+	if ( $manager_id != 'profile' || ! rcl_is_register_open() )
 		return $options;
 
 	$options[] = array(

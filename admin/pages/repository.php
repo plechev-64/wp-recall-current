@@ -6,7 +6,7 @@ $rcl_addons = rcl_get_addons();
 
 rcl_dialog_scripts();
 
-wp_enqueue_style( 'rcl-admin-style', RCL_URL . 'admin/assets/style.css' );
+wp_enqueue_style( 'rcl-admin-style', RCL_URL . 'admin/assets/style.css', false, RCL_VER );
 
 $addonsData = array();
 foreach ( $rcl_addons as $addonID => $addon ) {

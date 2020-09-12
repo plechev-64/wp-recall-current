@@ -864,7 +864,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			}
 		}
 
-		$options = apply_filters( 'rcl_field_options', $options, $field, $this->manager_id );
+		$options = apply_filters( 'rcl_field_options', $options, $field, $this->manager_id, $this );
 
 		return $this->setup_options( $options, $field_id, false );
 	}

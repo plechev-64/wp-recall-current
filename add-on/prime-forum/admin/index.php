@@ -4,8 +4,8 @@ require_once 'classes/class-prime-manager.php';
 
 add_action( 'admin_init', 'pfm_admin_scripts', 10 );
 function pfm_admin_scripts() {
-	wp_enqueue_style( 'pfm-admin-style', rcl_addon_url( 'admin/style.css', __FILE__ ) );
-	wp_enqueue_script( 'pfm-admin-script', rcl_addon_url( 'admin/js/scripts.js', __FILE__ ) );
+	wp_enqueue_style( 'pfm-admin-style', rcl_addon_url( 'admin/style.css', __FILE__ ), false, RCL_VER );
+	wp_enqueue_script( 'pfm-admin-script', rcl_addon_url( 'admin/js/scripts.js', __FILE__ ), false, RCL_VER );
 }
 
 add_action( 'admin_menu', 'pfm_init_admin_menu', 10 );
