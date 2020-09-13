@@ -18,10 +18,7 @@ jQuery( function( $ ) {
 	if ( RclUploaders.isset( 'rcl_chat_uploader' ) ) {
 
 		RclUploaders.get( 'rcl_chat_uploader' ).animateLoading = function( status ) {
-			if ( status )
-				rcl_preloader_show( jQuery( '.rcl-chat .chat-form' ) );
-			else
-				rcl_preloader_hide();
+			status ? rcl_preloader_show( jQuery( '.rcl-chat .chat-form' ) ) : rcl_preloader_hide();
 		};
 
 	}

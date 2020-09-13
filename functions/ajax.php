@@ -173,9 +173,7 @@ function rcl_upload() {
 	$files = $uploader->upload();
 
 	if ( $files ) {
-		wp_send_json( array(
-			'uploads' => $files
-		) );
+		wp_send_json( $files );
 	} else {
 		wp_send_json( array(
 			'error' => __( 'Something has been wrong', 'wp-recall' )

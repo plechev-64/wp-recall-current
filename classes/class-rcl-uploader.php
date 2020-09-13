@@ -509,8 +509,8 @@ class Rcl_Uploader {
 		return array(
 			'id'	 => $attach_id,
 			'src'	 => [
-				'full'		 => $this->get_src( $attach_id, 'full' ),
-				'thumbnail'	 => $this->get_src( $attach_id, 'thumbnail' ),
+				'full'		 => $this->get_src( $attach_id, 'full' ) . '?ver=' . current_time( 'timestamp' ),
+				'thumbnail'	 => $this->get_src( $attach_id, 'thumbnail' ) . '?ver=' . current_time( 'timestamp' ),
 			],
 			'html'	 => $this->gallery_attachment( $attach_id )
 		);

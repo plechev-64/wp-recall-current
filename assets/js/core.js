@@ -1396,19 +1396,19 @@ function RclUploader( props, sk ) {
 
 		jQuery( '#rcl-uploader-' + this.uploader_id + ' .rcl-uploader-progress' ).empty();
 
-		if ( data.result['error'] ) {
-			rcl_notice( data.result['error'], 'error', 10000 );
+		if ( data.result.error ) {
+			rcl_notice( data.result.error, 'error', 10000 );
 			return false;
 		}
 
-		if ( data.result['success'] ) {
-			rcl_notice( data.result['success'], 'success', 10000 );
+		if ( data.result.success ) {
+			rcl_notice( data.result.success, 'success', 10000 );
 		}
 
 		var uploader = this;
 
 		if ( this.options.multiple ) {
-			jQuery.each( data.result['uploads'], function( index, file ) {
+			jQuery.each( data.result, function( index, file ) {
 
 				uploader.appendInGallery( file, uploader );
 
@@ -1417,7 +1417,7 @@ function RclUploader( props, sk ) {
 
 			jQuery( '#rcl-upload-gallery-' + this.uploader_id ).html( '' );
 
-			uploader.appendInGallery( data.result.uploads, uploader );
+			uploader.appendInGallery( data.result, uploader );
 		}
 
 		this.afterDone( e, data );

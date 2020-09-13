@@ -2,7 +2,7 @@ jQuery( function( $ ) {
 
 	RclUploaders.get( 'rcl_cover' ).afterDone = function( e, data ) {
 
-		jQuery( '#lk-conteyner' ).css( 'background-image', 'url(' + data.result.uploads.src.full + ')' ).animateCss( 'fadeIn' );
+		jQuery( '#lk-conteyner' ).css( 'background-image', 'url(' + data.result.src.full + ')' ).animateCss( 'fadeIn' );
 
 		rcl_notice( 'Изображение загружено', 'success', 10000 );
 
@@ -12,10 +12,7 @@ jQuery( function( $ ) {
 
 	RclUploaders.get( 'rcl_cover' ).animateLoading = function( status ) {
 
-		if ( status )
-			rcl_preloader_show( jQuery( '#lk-conteyner' ) );
-		else
-			rcl_preloader_hide();
+		status ? rcl_preloader_show( jQuery( '#lk-conteyner' ) ) : rcl_preloader_hide();
 
 	};
 

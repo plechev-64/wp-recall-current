@@ -345,10 +345,8 @@ function rcl_upload_post_thumbnail( $uploads, $uploader ) {
 	$uploader->input_attach	 = 'post_uploader';
 	$uploader->multiple		 = 1;
 
-	wp_send_json( array(
-		'uploads' => [
-			'thumbnail'	 => $uploads,
-			'postmedia'	 => $uploader->gallery_attachment( $thumbnail_id )
-		]
-	) );
+	wp_send_json( [
+		'thumbnail'	 => $uploads,
+		'postmedia'	 => $uploader->gallery_attachment( $thumbnail_id )
+	] );
 }

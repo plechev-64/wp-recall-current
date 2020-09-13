@@ -109,7 +109,7 @@ class Rcl_Options_Group {
 		if ( ! $this->options )
 			return false;
 
-		$content = '<div id="' . $this->group_id . '-options-group" class="options-group ' . ($this->extend ? 'extend-options' : '') . '" data-group="' . $this->group_id . '">';
+		$content = '<div id="options-group-' . $this->group_id . '" class="options-group ' . ($this->extend ? 'extend-options' : '') . '" data-group="' . $this->group_id . '">';
 
 		if ( $this->title )
 			$content .= '<span class="group-title">' . $this->title . '</span>';
