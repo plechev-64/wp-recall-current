@@ -1312,6 +1312,8 @@ function RclUploader( props, sk ) {
 
 	this.add = function( e, data ) {
 
+		console.log( data );
+
 		var uploader = this;
 		var options = uploader.options;
 
@@ -1365,7 +1367,14 @@ function RclUploader( props, sk ) {
 		}
 
 		if ( parseInt( options.crop ) != 0 && parseInt( options.multiple ) == 0 && typeof jQuery.Jcrop != 'undefined' ) {
-			return this.crop( e, data );
+			if ( jQuery.inArray( data.files[0].type, [
+				'image/png',
+				'image/jpg',
+				'image/jpeg',
+				'image/gif'
+			] ) >= 0 ) {
+				return this.crop( e, data );
+			}
 		}
 
 		data.process().done( function() {

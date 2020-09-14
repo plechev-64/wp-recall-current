@@ -45,6 +45,9 @@
 .userlist:not(.mini-list) .thumb-user a {
     display: inline-block;
 }
+.userlist .thumb-user a {
+    width: 100%;
+}
 .userlist .thumb-user a img {
     border-radius: 0;                               /*++Twenty16++*/
     border: none;
@@ -55,6 +58,7 @@
     margin: 0;
     max-width: 100%;
     padding: 0;
+	width: 100%;
 }
 
 /*списком*/
@@ -257,9 +261,6 @@
 }
 .userlist.cards-list .thumb-user a {
 	width: 100%;
-}
-.userlist.cards-list .thumb-user a img {
-    width: 100%;
 }
 .u_card_bottom {
     display: table;

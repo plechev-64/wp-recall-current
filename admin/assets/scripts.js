@@ -698,9 +698,7 @@ function rcl_remove_manager_area( textConfirm, e ) {
 
 	var countAreas = areasBox.find( '.manager-area' ).length;
 
-	if ( countAreas == 2 ) {
-		areasBox.find( '.manager-area .rcl-areas-manager' ).hide();
-	}
+	areasBox.find( '.manager-area .rcl-areas-manager' ).hide();
 
 	rcl_init_manager_group( areasBox, true );
 

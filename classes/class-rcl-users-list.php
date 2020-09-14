@@ -19,6 +19,10 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		if ( ! $args )
 			$args = array();
 
+		if ( isset( $args['inpage'] ) ) {
+			$args['number'] = $args['inpage'];
+		}
+
 		if ( isset( $args['include'] ) ) {
 			$args['ID__in'] = array_map( 'trim', explode( ',', $args['include'] ) );
 		}
