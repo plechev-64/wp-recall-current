@@ -494,20 +494,19 @@ function rcl_get_author_block() {
 }
 
 function rcl_get_time_user_action( $user_id ) {
-	global $wpdb;
 
-	$expire = (isset( $rcl_options['timeout'] ) && $rcl_options['timeout']) ? $rcl_options['timeout'] : 10;
-
-	$expire *= 60;
-
-	$cachekey	 = json_encode( array( 'rcl_get_time_user_action', $user_id ) );
+	$cachekey	 = json_encode( array( 'rcl_get_time_user_action', ( int ) $user_id ) );
 	$cache		 = wp_cache_get( $cachekey );
 	if ( $cache )
 		return $cache;
 
-	$action = $wpdb->get_var( $wpdb->prepare( "SELECT time_action FROM " . RCL_PREF . "user_action WHERE user='%d'", $user_id ) );
+	$action = RQ::tbl( new Rcl_User_Action() )->select( ['time_action' ] )->where( ['user' => $user_id ] )->get_var();
 
-	wp_cache_add( $cachekey, $action, 'default', $expire );
+	if ( ! $action ) {
+		$action = '0000-00-00 00:00:00';
+	}
+
+	wp_cache_add( $cachekey, $action, 'default', rcl_get_option( 'timeout', 10 ) * 60 );
 
 	return $action;
 }

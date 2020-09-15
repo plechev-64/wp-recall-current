@@ -102,7 +102,7 @@ class Rcl_Query extends Rcl_Old_Query {
 		$this->cache = $cache;
 	}
 
-	function get_operator_data( $operator, $field_name = false, $cache = false ) {
+	function get_operator_data( $operator, $field_name = false, $use_cache = false ) {
 		global $wpdb;
 
 		$field_name = ($field_name) ? $field_name : $this->table['cols'][0];
@@ -116,10 +116,10 @@ class Rcl_Query extends Rcl_Old_Query {
 			'groupby'	 => isset( $query['groupby'] ) ? $query['groupby'] : null
 			) );
 
-		if ( $cache ) {
+		if ( $use_cache ) {
 			$cachekey	 = md5( $sql );
 			$cache		 = wp_cache_get( $cachekey );
-			if ( $cache )
+			if ( $cache !== false )
 				return $cache;
 		}
 
@@ -128,7 +128,7 @@ class Rcl_Query extends Rcl_Old_Query {
 		else
 			$result	 = $wpdb->get_var( $sql );
 
-		if ( $cache )
+		if ( $use_cache )
 			wp_cache_add( $cachekey, $result );
 
 		return $result;
@@ -497,21 +497,18 @@ class Rcl_Query extends Rcl_Old_Query {
 		return $sql;
 	}
 
-	function get_data( $method = 'get_results', $cache = false, $return_as = false ) {
+	function get_data( $method = 'get_results', $use_cache = false, $return_as = false ) {
 		global $wpdb;
 
 		if ( $this->return_as )
 			$return_as = $this->return_as;
 
-		if ( $this->cache )
-			$cache = $this->cache;
-
 		$query = $this->get_query();
 
-		if ( $cache ) {
-			$cachekey	 = json_encode( $query );
+		if ( $use_cache || $this->cache ) {
+			$cachekey	 = md5( json_encode( $query ) );
 			$cache		 = wp_cache_get( $cachekey );
-			if ( $cache )
+			if ( $cache !== false )
 				return $cache;
 		}
 
@@ -523,7 +520,7 @@ class Rcl_Query extends Rcl_Old_Query {
 
 		$data = wp_unslash( $data );
 
-		if ( $cache )
+		if ( $use_cache )
 			wp_cache_add( $cachekey, $data );
 
 		return $data;

@@ -30,7 +30,7 @@ class Rcl_User_Action extends Rcl_Query {
 			'as'	 => $as ? $as : 'rcl_user_action',
 			'cols'	 => array(
 				'ID',
-				'user_id',
+				'user',
 				'time_action'
 			)
 		);

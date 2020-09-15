@@ -361,6 +361,10 @@ class Rcl_Uploader {
 		return $items;
 	}
 
+	function filter_manager_items( $items, $attach_id ) {
+		return $items;
+	}
+
 	function get_attachment_manager( $attach_id ) {
 
 		$items = array(
@@ -378,6 +382,8 @@ class Rcl_Uploader {
 		}
 
 		$manager_items = apply_filters( 'rcl_uploader_manager_items', $items, $attach_id, $this );
+
+		$manager_items = $this->filter_manager_items( $manager_items, $attach_id );
 
 		if ( ! $manager_items )
 			return false;
