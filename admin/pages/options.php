@@ -44,7 +44,9 @@ $options->add_box( 'primary', array(
 			'values'	 => array(
 				__( 'On the author’s archive page', 'wp-recall' ),
 				__( 'Using shortcode [wp-recall]', 'wp-recall' ) ),
-			'help'		 => __( 'Attention! Changing this parameter is not required. Detailed instructions on personal account output using author.php file can be received here <a href="https://codeseller.ru/ustanovka-plagina-wp-recall-na-sajt/" target="_blank">here</a>', 'wp-recall' ),
+			'help'		 => __( 'Attention! Changing this parameter is not required. '
+				. 'Detailed instructions on personal account output using author.php '
+				. 'file can be received here <a href="https://codeseller.ru/post-group/ustanovka-plagina-wp-recall-na-sajt/ " target="_blank">here</a>', 'wp-recall' ),
 			'notice'	 => __( 'If author archive page is selected, the template author.php should contain the code if(function_exists(\'wp_recall\')) wp_recall();', 'wp-recall' ),
 			'childrens'	 => array(
 				1 => array(

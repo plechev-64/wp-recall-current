@@ -432,12 +432,6 @@
     .cab_content .cab_footer {
         text-align: center;
     }
-    .cab_bttn .rcli {
-        display: none;
-    }
-    .cab_bttn i + span {
-        margin: 0;
-    }
     .cab_bttn_lite {
         display: table;
         float: none;

@@ -1134,11 +1134,6 @@ var RclUploaders = [ ];
 
 		RclUploaders.init();
 
-		/*RclUploaders.get('rclUpload').add = function(e, data){
-		 console.log(data);
-		 };*/
-
-
 	} );
 
 } )( jQuery );
@@ -1312,8 +1307,6 @@ function RclUploader( props, sk ) {
 
 	this.add = function( e, data ) {
 
-		console.log( data );
-
 		var uploader = this;
 		var options = uploader.options;
 
@@ -1336,28 +1329,6 @@ function RclUploader( props, sk ) {
 		}
 
 		errors = this.filterErrors( errors, data.files, uploader );
-
-		/*jQuery.each(data.files, function (index, file) {
-
-		 var reader = new FileReader();
-
-		 reader.readAsDataURL(file);
-
-		 reader.onload = (function(theFile) {
-		 var image = new Image();
-		 image.src = theFile.target.result;
-
-		 image.onload = function() {
-
-		 if(this.width < options.min_width || this.height < options.min_height){
-		 console.log(1);
-		 errors.push('Выберите изображение большего размера');
-		 }
-		 };
-
-		 });
-
-		 });*/
 
 		if ( errors.length ) {
 			errors.forEach( function( error, i ) {
