@@ -10,7 +10,7 @@ function pfm_wrap_input_quicktags_editor() {
 		return false;
 
 	QTags.Button.prototype.html = function( idPrefix ) {
-
+		console.log( [ idPrefix ] );
 		var active, on, wp,
 			title = this.title ? ' title="' + pfm_escape( this.title ) + '"' : '',
 			ariaLabel = this.attr && this.attr.ariaLabel ? ' title="' + pfm_escape( this.attr.ariaLabel ) + '"' : '',

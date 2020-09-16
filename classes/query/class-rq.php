@@ -96,15 +96,15 @@ class RQ {
 		return $sql;
 	}
 
-	private function get_data( $method = 'get_results', $cache = false ) {
+	private function get_data( $method = 'get_results', $use_cache = false ) {
 		global $wpdb;
 
 		$sql = $this->get_sql();
 
-		if ( $cache ) {
+		if ( $use_cache ) {
 			$cachekey	 = md5( $sql );
 			$cache		 = wp_cache_get( $cachekey );
-			if ( $cache )
+			if ( $cache !== false )
 				return $cache;
 		}
 
@@ -116,7 +116,7 @@ class RQ {
 
 		$data = wp_unslash( $data );
 
-		if ( $cache )
+		if ( $use_cache )
 			wp_cache_add( $cachekey, $data );
 
 		return $data;

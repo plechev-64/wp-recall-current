@@ -170,7 +170,7 @@ class Rcl_Query extends Rcl_Old_Query {
 		return $this;
 	}
 
-	function select( $select ) {
+	function select( $select = false ) {
 
 		if ( ! $select )
 			return $this;

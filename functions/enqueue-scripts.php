@@ -178,13 +178,15 @@ function rcl_get_localize_data() {
 	return apply_filters( 'rcl_init_js_variables', $data );
 }
 
-function rcl_admin_scrips() {
+function rcl_admin_scripts() {
 	rcl_enqueue_style( 'rcl-core', RCL_URL . 'assets/css/core.css' );
+	wp_enqueue_style( 'animate-css', RCL_URL . 'assets/css/animate-css/animate.min.css', false, VER_RCL );
 	wp_enqueue_style( 'rcl-admin-style', RCL_URL . 'admin/assets/style.css', false, VER_RCL );
 	wp_enqueue_style( 'wp-color-picker' );
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ), VER_RCL );
 	wp_enqueue_script( 'rcl-admin-scripts', RCL_URL . 'admin/assets/scripts.js', array( 'wp-color-picker' ), VER_RCL );
 
-	wp_localize_script( 'rcl-core-scripts', 'Rcl', rcl_get_localize_data() );
+	if ( ! rcl_is_ajax() )
+		wp_localize_script( 'rcl-core-scripts', 'Rcl', rcl_get_localize_data() );
 }

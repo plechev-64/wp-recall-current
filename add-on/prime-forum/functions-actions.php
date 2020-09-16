@@ -436,6 +436,8 @@ function pfm_ajax_action() {
 	if ( ! isset( $PrimeActions[$method] ) )
 		exit;
 
+	rcl_enqueue_script( 'pfm-scripts', rcl_addon_url( 'js/scripts.js', __FILE__ ) );
+
 	$PrimeUser = new PrimeUser();
 
 	$PrimeQuery = new PrimeQuery();
