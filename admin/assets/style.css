@@ -1134,9 +1134,6 @@ span.ruble-symbol {
 .rcl-options .rcl-field-help .help-content{
 	min-width: 300px;
 }
-.rcl-options .rcl-option .rcl-field-title{
-	font-weight: bold;
-}
 .rcl-options .active-menu-item{
 	display:none;
 	margin-bottom: 5px;

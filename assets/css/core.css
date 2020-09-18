@@ -749,7 +749,7 @@ a.data-filter.filter-active:hover {
 .rcl-field .rcl-field-title{
 	font-weight: bold;
 	margin-bottom: 5px;
-    display: block;
+    display: inline-block;
 }
 .rcl-field-notice {
     align-items: center;

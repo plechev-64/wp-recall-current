@@ -22,6 +22,29 @@ class Rcl_Users_Query extends Rcl_Query {
 
 }
 
+class Rcl_Posts_Query extends Rcl_Query {
+	function __construct( $as = false ) {
+		global $wpdb;
+
+		$table = array(
+			'name'	 => $wpdb->posts,
+			'as'	 => $as ? $as : 'wp_posts',
+			'cols'	 => array(
+				'ID',
+				'post_author',
+				'post_status',
+				'post_type',
+				'post_date',
+				'post_title',
+				'post_content'
+			)
+		);
+
+		parent::__construct( $table );
+	}
+
+}
+
 class Rcl_User_Action extends Rcl_Query {
 	function __construct( $as = false ) {
 

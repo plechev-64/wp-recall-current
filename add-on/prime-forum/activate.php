@@ -144,14 +144,13 @@ $PfmOptions = get_site_option( 'rcl_pforum_options' );
 
 if ( ! isset( $PfmOptions['home-page'] ) ) {
 
-	$PfmOptions['home-page'] = wp_insert_post( array(
-		'post_title'	 => __( 'Forum', 'wp-recall' ),
-		'post_content'	 => '[prime-forum]',
-		'post_status'	 => 'publish',
-		'post_author'	 => 1,
-		'post_type'		 => 'page',
-		'post_name'		 => 'forum'
-		) );
+	if ( ! rcl_isset_service_page( 'forum-page' ) ) {
+		$PfmOptions['home-page'] = rcl_create_service_page( 'forum-page', [
+			'post_title'	 => __( 'Forum', 'wp-recall' ),
+			'post_content'	 => '[prime-forum]',
+			'post_name'		 => 'forum'
+			] );
+	}
 
 	update_site_option( 'rcl_pforum_options', $PfmOptions );
 

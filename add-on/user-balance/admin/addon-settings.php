@@ -65,6 +65,48 @@ function rcl_user_account_options( $options ) {
 			'slug'	 => 'submit_choose',
 			'value'	 => $group->get_value( 'submit_choose' ) ? $group->get_value( 'submit_choose' ) : __( 'Continue' ),
 		);
+
+		$groupOptions[] = array(
+			'type'		 => 'custom',
+			'title'		 => __( 'Service page of payment systems', 'wp-recall' ),
+			'slug'		 => 'service-pages-notice',
+			'content'	 => '1. Создайте на своем сайте четыре страницы:<br>
+				- пустую для success<br>
+				- пустую для result<br>
+				- одну с текстом о неудачной оплате (fail)<br>
+				- одну с текстом об удачной оплате<br>
+				Название и URL созданных страниц могут быть произвольными.<br>
+				2. Укажите здесь какие страницы и для чего вы создали. <br>
+				3. В настройках своего аккаунта платежной системы укажите URL страницы для fail, success и result'
+		);
+
+		$groupOptions[] = array(
+			'type'	 => 'select',
+			'title'	 => __( 'The page of RESULT', 'wp-recall' ),
+			'slug'	 => 'page_result_pay',
+			'values' => rcl_get_pages_ids()
+		);
+
+		$groupOptions[] = array(
+			'type'	 => 'select',
+			'title'	 => __( 'The page of SUCCESS', 'wp-recall' ),
+			'slug'	 => 'page_success_pay',
+			'values' => rcl_get_pages_ids()
+		);
+
+		$groupOptions[] = array(
+			'type'	 => 'select',
+			'title'	 => __( 'The page of FAIL', 'wp-recall' ),
+			'slug'	 => 'page_fail_pay',
+			'values' => rcl_get_pages_ids()
+		);
+
+		$groupOptions[] = array(
+			'type'	 => 'select',
+			'title'	 => __( 'The page of a successfully payment', 'wp-recall' ),
+			'slug'	 => 'page_successfully_pay',
+			'values' => rcl_get_pages_ids()
+		);
 	} else {
 
 		$groupOptions[] = array(
@@ -77,48 +119,6 @@ function rcl_user_account_options( $options ) {
 			] )
 		);
 	}
-
-	$groupOptions[] = array(
-		'type'		 => 'custom',
-		'title'		 => __( 'Service page of payment systems', 'wp-recall' ),
-		'slug'		 => 'service-pages-notice',
-		'content'	 => '1. Создайте на своем сайте четыре страницы:<br>
-				- пустую для success<br>
-				- пустую для result<br>
-				- одну с текстом о неудачной оплате (fail)<br>
-				- одну с текстом об удачной оплате<br>
-				Название и URL созданных страниц могут быть произвольными.<br>
-				2. Укажите здесь какие страницы и для чего вы создали. <br>
-				3. В настройках своего аккаунта платежной системы укажите URL страницы для fail, success и result'
-	);
-
-	$groupOptions[] = array(
-		'type'	 => 'select',
-		'title'	 => __( 'The page of RESULT', 'wp-recall' ),
-		'slug'	 => 'page_result_pay',
-		'values' => rcl_get_pages_ids()
-	);
-
-	$groupOptions[] = array(
-		'type'	 => 'select',
-		'title'	 => __( 'The page of SUCCESS', 'wp-recall' ),
-		'slug'	 => 'page_success_pay',
-		'values' => rcl_get_pages_ids()
-	);
-
-	$groupOptions[] = array(
-		'type'	 => 'select',
-		'title'	 => __( 'The page of FAIL', 'wp-recall' ),
-		'slug'	 => 'page_fail_pay',
-		'values' => rcl_get_pages_ids()
-	);
-
-	$groupOptions[] = array(
-		'type'	 => 'select',
-		'title'	 => __( 'The page of a successfully payment', 'wp-recall' ),
-		'slug'	 => 'page_successfully_pay',
-		'values' => rcl_get_pages_ids()
-	);
 
 	$group->add_options( $groupOptions );
 

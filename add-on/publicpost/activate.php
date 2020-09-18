@@ -11,16 +11,15 @@ if ( ! isset( $rcl_options['id_parent_category'] ) )
 if ( ! isset( $rcl_options['user_public_access_recall'] ) )
 	$rcl_options['user_public_access_recall']	 = 2;
 
-if ( ! isset( $rcl_options['public_form_page_rcl'] ) )
-	$rcl_options['public_form_page_rcl'] = wp_insert_post(
-		array(
+if ( ! isset( $rcl_options['public_form_page_rcl'] ) ) {
+	if ( ! rcl_isset_service_page( 'public-editpage' ) ) {
+		$rcl_options['public_form_page_rcl'] = rcl_create_service_page( 'public-editpage', [
 			'post_title'	 => 'Форма публикации',
 			'post_content'	 => '[public-form]',
-			'post_status'	 => 'publish',
-			'post_author'	 => 1,
-			'post_type'		 => 'page',
 			'post_name'		 => 'rcl-postedit'
-		) );
+			] );
+	}
+}
 
 if ( ! isset( $rcl_options['publics_block_rcl'] ) )
 	$rcl_options['publics_block_rcl']		 = 1;

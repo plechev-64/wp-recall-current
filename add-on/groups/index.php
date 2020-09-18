@@ -213,17 +213,6 @@ function rcl_tab_groups_remove_cache( $groupdata ) {
 	}
 }
 
-/* add_action('update_post_rcl','rcl_groups_widget_posts_remove_cache',10,2);
-  function rcl_groups_widget_posts_remove_cache($post_id,$postdata){
-  if($postdata['post_type']!='post-group') return false;
-
-  global $rcl_options;
-  if(isset($rcl_options['use_cache'])&&$rcl_options['use_cache']){
-  $group_id = rcl_get_group_id_by_post($post_id);
-  rcl_delete_file_cache('group-posts-widget:'.$group_id);
-  }
-  } */
-
 add_action( 'init', 'rcl_add_postlist_group', 10 );
 function rcl_add_postlist_group() {
 	rcl_postlist( 'group', 'post-group', __( 'Groups records', 'wp-recall' ), array( 'order' => 40 ) );

@@ -18,9 +18,8 @@ if ( $wpdb->has_cap( 'collation' ) ) {
 	}
 }
 
-$table = RMAG_PREF . "users_balance";
-
-$sql = "CREATE TABLE IF NOT EXISTS " . $table . " (
+$table	 = RMAG_PREF . "users_balance";
+$sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
 		user_id BIGINT(20) UNSIGNED NOT NULL,
 		user_balance VARCHAR (20) NOT NULL,
 		PRIMARY KEY  user_id (user_id)
@@ -28,11 +27,8 @@ $sql = "CREATE TABLE IF NOT EXISTS " . $table . " (
 
 dbDelta( $sql );
 
-$table = RMAG_PREF . "pay_results";
-
-if ( $wpdb->get_var( "show tables like '" . $table . "'" ) != $table ) {
-
-	$sql = "CREATE TABLE IF NOT EXISTS " . $table . " (
+$table	 = RMAG_PREF . "pay_results";
+$sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
 			ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
 			payment_id INT(20) UNSIGNED NOT NULL,
 			user_id BIGINT(20) UNSIGNED NOT NULL,
@@ -45,12 +41,28 @@ if ( $wpdb->get_var( "show tables like '" . $table . "'" ) != $table ) {
 			KEY user_id (user_id)
 		  ) $collate;";
 
-	dbDelta( $sql );
-} else {
+dbDelta( $sql );
 
-	$wpdb->query( "ALTER TABLE `$table` CHANGE `inv_id` `payment_id` INT( 20 ) NOT NULL" );
-	$wpdb->query( "ALTER TABLE `$table` CHANGE `user` `user_id` INT( 20 ) NOT NULL" );
-	$wpdb->query( "ALTER TABLE `$table` CHANGE `count` `pay_amount` VARCHAR( 20 ) NOT NULL" );
-	$wpdb->query( "ALTER TABLE " . $table . " ADD pay_system VARCHAR( 100 ) AFTER time_action" );
-	$wpdb->query( "ALTER TABLE " . $table . " ADD pay_type VARCHAR( 100 ) AFTER time_action" );
+if ( ! rcl_isset_service_page( 'payment-result' ) ) {
+	rcl_update_commerce_option( 'page_result_pay', rcl_create_service_page( 'payment-result', [
+		'post_title' => __( 'result', 'wp-recall' )
+	] ) );
+}
+
+if ( ! rcl_isset_service_page( 'payment-success' ) ) {
+	rcl_update_commerce_option( 'page_success_pay', rcl_create_service_page( 'payment-success', [
+		'post_title' => __( 'success', 'wp-recall' )
+	] ) );
+}
+
+if ( ! rcl_isset_service_page( 'payment-fail' ) ) {
+	rcl_update_commerce_option( 'page_fail_pay', rcl_create_service_page( 'payment-fail', [
+		'post_title' => __( 'The unsuccessfull payment', 'wp-recall' )
+	] ) );
+}
+
+if ( ! rcl_isset_service_page( 'payment-successfully' ) ) {
+	rcl_update_commerce_option( 'page_successfully_pay', rcl_create_service_page( 'payment-successfully', [
+		'post_title' => __( 'The successfully payment', 'wp-recall' )
+	] ) );
 }

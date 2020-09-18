@@ -62,14 +62,13 @@ if ( ! isset( $rcl_options['moderation_public_group'] ) ) {
 	$rcl_options['moderation_public_group']		 = 0;
 	$rcl_options['group-output']				 = 1;
 
-	$rcl_options['group-page'] = wp_insert_post( array(
-		'post_title'	 => __( 'Groups', 'wp-recall' ),
-		'post_content'	 => '[grouplist]',
-		'post_status'	 => 'publish',
-		'post_author'	 => 1,
-		'post_type'		 => 'page',
-		'post_name'		 => 'rcl-groups'
-		) );
+	if ( ! rcl_isset_service_page( 'group-page' ) ) {
+		$rcl_options['group-page'] = rcl_create_service_page( 'group-page', [
+			'post_title'	 => __( 'Groups', 'wp-recall' ),
+			'post_content'	 => '[grouplist]',
+			'post_name'		 => 'group-page'
+			] );
+	}
 
 	update_site_option( 'rcl_global_options', $rcl_options );
 

@@ -167,6 +167,7 @@ final class WP_Recall {
 		require_once 'classes/fields/types/class-rcl-field-file.php';
 		require_once 'classes/fields/types/class-rcl-field-hidden.php';
 
+		require_once 'classes/class-rcl-user.php';
 		require_once 'classes/class-rcl-form.php';
 		require_once 'classes/class-rcl-walker.php';
 		require_once 'classes/class-rcl-includer.php';
@@ -577,6 +578,10 @@ final class WP_Recall {
 			$upload_dir['baseurl'] = str_replace( 'http://', 'https://', $upload_dir['baseurl'] );
 
 		return apply_filters( 'wp_recall_upload_dir', $upload_dir, $this );
+	}
+
+	public function User() {
+		return Rcl_User::instance();
 	}
 
 }

@@ -15,23 +15,29 @@ function rcl_get_payments( $args = false ) {
 	return RQ::tbl( new Rcl_Payments() )->parse( $args )->get_results();
 }
 
-function rcl_payform( $attr ) {
-	return rcl_get_pay_form( $attr );
-}
-
 function rcl_get_user_balance( $user_id = false ) {
 	global $wpdb, $user_ID;
 
 	if ( ! $user_id )
 		$user_id = $user_ID;
 
+	if ( $user_id == $user_ID && isset( RCL()->User()->balance ) ) {
+		return RCL()->User()->balance;
+	}
+
 	$balance = $wpdb->get_var( $wpdb->prepare( "SELECT user_balance FROM " . RMAG_PREF . "users_balance WHERE user_id='%d'", $user_id ) );
 
-	return $balance ? $balance : 0;
+	$userBalance = $balance ? $balance : 0;
+
+	if ( $user_id == $user_ID ) {
+		RCL()->User()->balance = $userBalance;
+	}
+
+	return $userBalance;
 }
 
 function rcl_update_user_balance( $newmoney, $user_id, $comment = '' ) {
-	global $wpdb;
+	global $wpdb, $user_ID;
 
 	$newmoney = rcl_commercial_round( str_replace( ',', '.', $newmoney ) );
 
@@ -50,6 +56,10 @@ function rcl_update_user_balance( $newmoney, $user_id, $comment = '' ) {
 			);
 		}
 
+		if ( $user_id == $user_ID ) {
+			RCL()->User()->balance = $newmoney;
+		}
+
 		return $result;
 	}
 
@@ -57,7 +67,7 @@ function rcl_update_user_balance( $newmoney, $user_id, $comment = '' ) {
 }
 
 function rcl_add_user_balance( $money, $user_id, $comment = '' ) {
-	global $wpdb;
+	global $wpdb, $user_ID;
 
 	$result = $wpdb->insert( RMAG_PREF . 'users_balance', array( 'user_id' => $user_id, 'user_balance' => $money ) );
 
@@ -65,6 +75,10 @@ function rcl_add_user_balance( $money, $user_id, $comment = '' ) {
 		rcl_add_log(
 			'rcl_add_user_balance: ' . __( 'Failed to add user balance', 'wp-recall' ), array( $money, $user_id, $comment )
 		);
+	}
+
+	if ( $user_id == $user_ID ) {
+		RCL()->User()->balance = $money;
 	}
 
 	do_action( 'rcl_add_user_balance', $money, $user_id, $comment );

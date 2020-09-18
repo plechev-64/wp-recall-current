@@ -141,15 +141,20 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 			$content .= '</div>';
 
 			if ( $this->icon && $gateway->icon ) {
-				$styles .= '<style>.rcl-payment-form[data-gateway-id="' . $id . '"] .title-form{'
+				$styles .= '.rcl-payment-form[data-gateway-id="' . $id . '"] .title-form{'
 					. 'background-image:url(' . $gateway->icon . ');'
-					. '}</style>';
+					. '}';
 			}
 
 			$k ++;
 		}
 
-		$content .= $styles;
+		if ( $k == 1 ) {
+			$styles .= '.rcl-payment-form.display-form .title-form .rcli:before {content: none;}';
+		}
+
+		$content .= '<style>' . $styles . '</style>';
+
 		$content .= '</div>';
 
 		return $content;
@@ -178,9 +183,9 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 				$values[$id] = $gateway->label;
 
 				if ( $gateway->icon ) {
-					$styles .= '<style>#rcl-field-gateway_id .rcl-radio-box[data-value="' . $id . '"] .block-label{'
+					$styles .= '#rcl-field-gateway_id .rcl-radio-box[data-value="' . $id . '"] .block-label{'
 						. 'background-image:url(' . $gateway->icon . ');'
-						. '}</style>';
+						. '}';
 				}
 			}
 
@@ -219,7 +224,7 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 			) );
 
 		$content .= '<div class="rcl-payment-form-content"></div>';
-		$content .= $styles;
+		$content .= '<style>' . $styles . '</style>';
 		$content .= '</div>';
 
 		return $content;

@@ -4,6 +4,24 @@ require_once "metaboxes.php";
 
 add_action( 'admin_init', 'rcl_admin_scripts', 10 );
 
+add_filter( 'display_post_states', 'rcl_mark_own_page', 10, 2 );
+function rcl_mark_own_page( $post_states, $post ) {
+
+	if ( $post->post_type === 'page' ) {
+
+		$service_pages = get_site_option( 'rcl_service_pages' );
+
+		if ( ! $service_pages )
+			return $post_states;
+
+		if ( in_array( $post->ID, $service_pages ) ) {
+			$post_states[] = __( 'The page of plugin WP-Recall' );
+		}
+	}
+
+	return $post_states;
+}
+
 add_filter( 'rcl_field_options', 'rcl_edit_field_options', 10, 3 );
 function rcl_edit_field_options( $options, $field, $manager_id ) {
 
