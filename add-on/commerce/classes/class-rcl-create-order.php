@@ -14,9 +14,8 @@ class Rcl_Create_Order {
 	public $is_error		 = 0;
 
 	function __construct() {
-		global $rmag_options;
 
-		$this->buyer_register = (isset( $rmag_options['buyer_register'] )) ? $rmag_options['buyer_register'] : 1;
+		$this->buyer_register = rcl_get_commerce_option( 'buyer_register', 1 );
 
 		$this->init_orderdata();
 	}

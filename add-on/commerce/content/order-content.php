@@ -12,12 +12,12 @@ function rcl_add_order_manager() {
 
 add_action( 'rcl_order_before', 'rcl_add_order_notices', 10 );
 function rcl_add_order_notices() {
-	global $rclOrder, $rmag_options, $user_ID, $rcl_user_URL;
+	global $rclOrder, $user_ID, $rcl_user_URL;
 
 	if ( ! isset( $_GET['order-status'] ) )
 		return false;
 
-	$buyer_register = (isset( $rmag_options['buyer_register'] )) ? $rmag_options['buyer_register'] : 1;
+	$buyer_register = rcl_get_commerce_option( 'buyer_register', 1 );
 
 	$status = intval( $_GET['order-status'] );
 
@@ -77,7 +77,7 @@ function rcl_add_order_notices() {
 if ( ! is_admin() )
 	add_action( 'rcl_order_before', 'rcl_add_order_pay_form', 30 );
 function rcl_add_order_pay_form() {
-	global $user_ID, $rclOrder, $rmag_options;
+	global $user_ID, $rclOrder;
 
 	if ( ! isset( $_GET['order-status'] ) && ! rcl_is_office() )
 		return false;
@@ -87,12 +87,14 @@ function rcl_add_order_pay_form() {
 
 	if ( function_exists( 'rcl_get_pay_form' ) ) {
 
-		$type_pay = $rmag_options['type_order_payment'];
+		$type_pay = rcl_get_commerce_option( 'type_order_payment' );
 
 		$dataPay = array(
 			'baggage_data'	 => array(
 				'order_id' => $rclOrder->order_id
 			),
+			'pay_type'		 => 2,
+			'return_url'	 => rcl_get_tab_permalink( $user_ID, 'orders' ) . '&order-id' . $rclOrder->order_id,
 			'pay_id'		 => $rclOrder->order_id,
 			'user_id'		 => $rclOrder->user_id,
 			'pay_summ'		 => $rclOrder->order_price,

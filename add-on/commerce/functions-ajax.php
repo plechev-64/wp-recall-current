@@ -93,7 +93,7 @@ function rcl_add_to_cart() {
 
 rcl_ajax_action( 'rcl_check_cart_data', true );
 function rcl_check_cart_data() {
-	global $user_ID, $rmag_options;
+	global $user_ID;
 
 	rcl_verify_ajax_nonce();
 
@@ -103,9 +103,7 @@ function rcl_check_cart_data() {
 			wp_send_json( array( 'error' => __( 'Please fill in required fields!', 'wp-recall' ) ) );
 		}
 
-		$buyer_register = (isset( $rmag_options['buyer_register'] )) ? $rmag_options['buyer_register'] : 1;
-
-		if ( $buyer_register ) {
+		if ( rcl_get_commerce_option( 'buyer_register', 1 ) ) {
 
 			$user_email = sanitize_text_field( $_POST['user_email'] );
 

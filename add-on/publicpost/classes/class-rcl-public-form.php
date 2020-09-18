@@ -96,7 +96,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 		$dataForm['post_id']		 = $this->post_id;
 		$dataForm['post_type']		 = $this->post_type;
-		$dataForm['post_status']	 = ($this->post_id) ? $this->post->post_type : 'new';
+		$dataForm['post_status']	 = ($this->post_id) ? $this->post->post_status : 'new';
 		$dataForm['post_content']	 = ($this->post_id) ? $this->post->post_content : '';
 		$dataForm['post_excerpt']	 = ($this->post_id) ? $this->post->post_excerpt : '';
 		$dataForm['post_title']		 = ($this->post_id) ? $this->post->post_title : '';

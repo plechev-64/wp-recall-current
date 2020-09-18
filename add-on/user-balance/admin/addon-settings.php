@@ -1,117 +1,149 @@
 <?php
 
-add_filter( 'admin_options_rmag', 'rcl_user_account_options', 10 );
-function rcl_user_account_options( $content ) {
-	global $rcl_options, $wpdb;
-
-	$rcl_options = get_site_option( 'primary-rmag-options' );
+add_filter( 'rcl_commerce_options', 'rcl_user_account_options', 10 );
+function rcl_user_account_options( $options ) {
+	global $rcl_gateways;
 
 	require_once RCL_PATH . 'classes/class-rcl-options.php';
 
-	$opt = new Rcl_Options( __FILE__ );
-
-	$pay_options = array( __( 'Not used', 'wp-recall' ) );
-
-	$content .= '<span id="title-user-balance" data-addon="user-balance" data-url="' . admin_url( 'admin.php?page=' . $_GET['page'] . '&rcl-addon-options=user-balance' ) . '" class="title-option active">'
-		. '<span class="wp-menu-image dashicons-before dashicons-admin-generic"></span> '
-		. __( 'Payment systems', 'wp-recall' )
-		. '</span>
-	<div id="options-user-balance" style="display:block" class="wrap-recall-options">';
-
-	$content .= $opt->option_block(
-		array(
-			$opt->title( __( 'Currency of website', 'wp-recall' ) ),
-			$opt->label( 'Promary currency', 'wp-recall' ),
-			$opt->option( 'select', array(
-				'name'		 => 'primary_cur',
-				'options'	 => rcl_get_currency()
-				)
-			)
-		)
-	);
-
-	$init_gateway		 = true;
-	$pay_options_child	 = apply_filters( 'rcl_pay_child_option', '' );
-	if ( ! $pay_options_child ) {
-		$init_gateway		 = false;
-		$pay_options_child	 = rcl_get_notice( [
-			'type'	 => 'error',
-			'text'	 => sprintf( __( 'Perhaps none of a connection is not configured. Download %s for the connection to a payment service and configure this.', 'wp-recall' ), '<a href="https://codeseller.ru/product_tag/platezhnye-sistemy/" target="_blank">' . __( 'one of available addons', 'wp-recall' ) . '</a>' )
-			] );
-	}
-
 	$payment_opt = array( __( 'Payment from user’s personal account', 'wp-recall' ) );
 
-	if ( $init_gateway ) {
+	$systems = array();
+	foreach ( rcl_gateways()->gateways as $id => $className ) {
+		if ( $id == 'user_balance' )
+			continue;
+		$systems[$id] = rcl_gateways()->gateway( $id )->label;
+	}
+
+	if ( $systems ) {
 		$payment_opt[]	 = __( 'Payment through payment systems', 'wp-recall' );
 		$payment_opt[]	 = __( 'Offer both options', 'wp-recall' );
 	}
 
-	$content .= $opt->option_block(
+	if ( $options->isset_box( 'shop' ) ) {
+		$options->box( 'shop' )->add_group( 'order-payment', array(
+			'title' => __( 'The payment of an order', 'wp-recall' )
+		) )->add_options( array(
+			array(
+				'type'	 => 'select',
+				'slug'	 => 'type_order_payment',
+				'values' => $payment_opt,
+				'notice' => __( 'If the connection to the payment aggregator not used, apply "Funds from user personal account"!', 'wp-recall' )
+			)
+		) );
+	}
+
+	$group = $options->add_box( 'payments', array(
+			'title' => __( 'Settings of payments', 'wp-recall' )
+		) )->add_group( 'primary', array(
+		'title' => __( 'General settings of payments', 'wp-recall' )
+		) );
+
+	$groupOptions = array(
 		array(
-			$opt->title( __( 'Payment', 'wp-recall' ) ),
-			$opt->label( __( 'Type of payment', 'wp-recall' ) ),
-			$opt->option( 'select', array(
-				'name'		 => 'type_order_payment',
-				'options'	 => $payment_opt
-			) ),
-			$opt->notice( __( 'If the connection to the payment aggregator not used, apply "Funds from user personal account"!', 'wp-recall' ) ),
-			$opt->title( __( 'The connection to payment aggregator', 'wp-recall' ) ),
-			$opt->label( __( 'Applied connection type', 'wp-recall' ) ),
-			$opt->option( 'select', array(
-				'name'		 => 'connect_sale',
-				'parent'	 => true,
-				'options'	 => apply_filters( 'rcl_pay_option', $pay_options )
-			) ),
-			$pay_options_child
+			'type'	 => 'select',
+			'title'	 => __( 'The general currency', 'wp-recall' ),
+			'slug'	 => 'primary_cur',
+			'values' => rcl_get_currency()
 		)
 	);
 
-	if ( $init_gateway ) {
-		$content .= $opt->option_block(
-			array(
-				$opt->title( __( 'Service page of payment systems', 'wp-recall' ) ),
-				$opt->notice( '<p>1. Создайте на своем сайте четыре страницы:</p>
-                    - пустую для success<br>
-                    - пустую для result<br>
-                    - одну с текстом о неудачной оплате (fail)<br>
-                    - одну с текстом об удачной оплате<br>
-                    Название и URL созданных страниц могут быть произвольными.<br>
-                    <p>2. Укажите здесь какие страницы и для чего вы создали. </p>
-                    <p>3. В настройках своего аккаунта платежной системы укажите URL страницы для fail, success и result</p>' ),
-				$opt->label( __( 'RESULT Page', 'wp-recall' ) ),
-				wp_dropdown_pages( array(
-					'selected'			 => isset( $rcl_options['page_result_pay'] ) ? $rcl_options['page_result_pay'] : '',
-					'name'				 => 'global[page_result_pay]',
-					'show_option_none'	 => __( 'Not selected', 'wp-recall' ),
-					'echo'				 => 0 )
-				),
-				$opt->label( __( 'SUCCESS Page', 'wp-recall' ) ),
-				wp_dropdown_pages( array(
-					'selected'			 => isset( $rcl_options['page_success_pay'] ) ? $rcl_options['page_success_pay'] : '',
-					'name'				 => 'global[page_success_pay]',
-					'show_option_none'	 => __( 'Not selected', 'wp-recall' ),
-					'echo'				 => 0 )
-				),
-				$opt->label( __( 'FAIL Page', 'wp-recall' ) ),
-				wp_dropdown_pages( array(
-					'selected'			 => isset( $rcl_options['page_fail_pay'] ) ? $rcl_options['page_fail_pay'] : '',
-					'name'				 => 'global[page_fail_pay]',
-					'show_option_none'	 => __( 'Not selected', 'wp-recall' ),
-					'echo'				 => 0 )
-				),
-				$opt->label( __( 'Successful payment page', 'wp-recall' ) ),
-				wp_dropdown_pages( array(
-					'selected'			 => isset( $rcl_options['page_successfully_pay'] ) ? $rcl_options['page_successfully_pay'] : '',
-					'name'				 => 'global[page_successfully_pay]',
-					'show_option_none'	 => __( 'Not selected', 'wp-recall' ),
-					'echo'				 => 0 )
-				)
-			)
+	if ( $systems ) {
+
+		$groupOptions[] = array(
+			'type'	 => 'checkbox',
+			'title'	 => __( 'The using payments systems', 'wp-recall' ),
+			'slug'	 => 'connect_sale',
+			'values' => $systems,
+			'value'	 => is_array( $group->get_value( 'connect_sale' ) ) ? $group->get_value( 'connect_sale' ) : array( $group->get_value( 'connect_sale' ) ),
+			'notice' => __( 'Applied connection type', 'wp-recall' )
+		);
+
+		$groupOptions[] = array(
+			'type'	 => 'text',
+			'title'	 => __( 'The caption on the button of the confirmation of a way of a payment', 'wp-recall' ),
+			'slug'	 => 'submit_choose',
+			'value'	 => $group->get_value( 'submit_choose' ) ? $group->get_value( 'submit_choose' ) : __( 'Continue' ),
+		);
+	} else {
+
+		$groupOptions[] = array(
+			'type'		 => 'custom',
+			'title'		 => __( 'The using systems of payment', 'wp-recall' ),
+			'slug'		 => 'connect_sale',
+			'content'	 => rcl_get_notice( [
+				'type'	 => 'error',
+				'text'	 => 'Похоже ни одного подключения не настроено. Скачайте <a href="https://codeseller.ru/product_tag/platezhnye-sistemy/" target="_blank">одно из доступных дополнений</a> для подключения к платежному агрегатору и настройте его'
+			] )
 		);
 	}
 
-	$content .= '</div>';
+	$groupOptions[] = array(
+		'type'		 => 'custom',
+		'title'		 => __( 'Service page of payment systems', 'wp-recall' ),
+		'slug'		 => 'service-pages-notice',
+		'content'	 => '1. Создайте на своем сайте четыре страницы:<br>
+				- пустую для success<br>
+				- пустую для result<br>
+				- одну с текстом о неудачной оплате (fail)<br>
+				- одну с текстом об удачной оплате<br>
+				Название и URL созданных страниц могут быть произвольными.<br>
+				2. Укажите здесь какие страницы и для чего вы создали. <br>
+				3. В настройках своего аккаунта платежной системы укажите URL страницы для fail, success и result'
+	);
 
-	return $content;
+	$groupOptions[] = array(
+		'type'	 => 'select',
+		'title'	 => __( 'The page of RESULT', 'wp-recall' ),
+		'slug'	 => 'page_result_pay',
+		'values' => rcl_get_pages_ids()
+	);
+
+	$groupOptions[] = array(
+		'type'	 => 'select',
+		'title'	 => __( 'The page of SUCCESS', 'wp-recall' ),
+		'slug'	 => 'page_success_pay',
+		'values' => rcl_get_pages_ids()
+	);
+
+	$groupOptions[] = array(
+		'type'	 => 'select',
+		'title'	 => __( 'The page of FAIL', 'wp-recall' ),
+		'slug'	 => 'page_fail_pay',
+		'values' => rcl_get_pages_ids()
+	);
+
+	$groupOptions[] = array(
+		'type'	 => 'select',
+		'title'	 => __( 'The page of a successfully payment', 'wp-recall' ),
+		'slug'	 => 'page_successfully_pay',
+		'values' => rcl_get_pages_ids()
+	);
+
+	$group->add_options( $groupOptions );
+
+	/* support old options */
+	global $rclOldOptionData;
+
+	apply_filters( 'rcl_pay_child_option', '' );
+
+	if ( $rclOldOptionData ) {
+
+		foreach ( $rclOldOptionData as $box_id => $box ) {
+
+			foreach ( $box['groups'] as $k => $group ) {
+
+				$options->add_box( $k . '-old-gateway', array(
+					'title' => $group['title']
+				) )->add_group( $k . '-old-gateway', array(
+					'title' => $group['title']
+				) )->add_options( $group['options'] );
+			}
+		}
+	}
+
+	unset( $rclOldOptionData );
+	/*	 * * */
+
+	return $options;
 }

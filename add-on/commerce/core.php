@@ -256,7 +256,7 @@ function rcl_payment_order( $order_id ) {
 
 add_action( 'rcl_create_order', 'rcl_create_order_send_mail', 10, 2 );
 function rcl_create_order_send_mail( $order_id, $register_data ) {
-	global $rclOrder, $rmag_options;
+	global $rclOrder;
 
 	$rclOrder = rcl_get_order( $order_id );
 
@@ -277,9 +277,7 @@ function rcl_create_order_send_mail( $order_id, $register_data ) {
     <p>' . __( 'Link to managing your order', 'wp-recall' ) . ':</p>
     <p>' . admin_url( 'admin.php?page=manage-rmag&order-id=' . $rclOrder->order_id ) . '</p>';
 
-	$admin_email = (isset( $rmag_options['admin_email_magazin_recall'] ) && $rmag_options['admin_email_magazin_recall']) ? $rmag_options['admin_email_magazin_recall'] : get_site_option( 'admin_email' );
-
-	rcl_mail( $admin_email, $subject, $textmail );
+	rcl_mail( rcl_get_commerce_option( 'admin_email_magazin_recall', get_site_option( 'admin_email' ) ), $subject, $textmail );
 
 
 	$email = get_the_author_meta( 'user_email', $rclOrder->user_id );
@@ -332,7 +330,7 @@ function rcl_create_order_send_mail( $order_id, $register_data ) {
 //отправка писем при оплате заказа
 add_action( 'rcl_payment_order', 'rcl_payment_order_send_mail', 10 );
 function rcl_payment_order_send_mail( $order_id ) {
-	global $rclOrder, $rmag_options;
+	global $rclOrder;
 
 	$rclOrder = rcl_get_order( $order_id );
 
@@ -356,9 +354,7 @@ function rcl_payment_order_send_mail( $order_id ) {
     <p>' . __( 'Link for managing the order', 'wp-recall' ) . ':</p>
     <p>' . admin_url( 'admin.php?page=manage-rmag&order-id=' . $order_id ) . '</p>';
 
-	$admin_email = (isset( $rmag_options['admin_email_magazin_recall'] ) && $rmag_options['admin_email_magazin_recall']) ? $rmag_options['admin_email_magazin_recall'] : get_site_option( 'admin_email' );
-
-	rcl_mail( $admin_email, $subject, $textmail );
+	rcl_mail( rcl_get_commerce_option( 'admin_email_magazin_recall', get_site_option( 'admin_email' ) ), $subject, $textmail );
 
 	$email		 = get_the_author_meta( 'user_email', $rclOrder->user_id );
 	$textmail	 = '

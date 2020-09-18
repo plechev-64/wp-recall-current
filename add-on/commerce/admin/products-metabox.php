@@ -11,7 +11,6 @@ function rcl_products_fields() {
 }
 
 function rcl_metabox_products( $post ) {
-	global $rmag_options;
 
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'jquery-ui-sortable' );
@@ -97,7 +96,7 @@ function rcl_metabox_products( $post ) {
 
 	$content .= '</div>';
 
-	if ( $rmag_options['sistem_related_products'] == 1 ):
+	if ( rcl_get_commerce_option( 'sistem_related_products' ) == 1 ):
 
 		$related = get_post_meta( $post->ID, 'related_products_recall', 1 );
 

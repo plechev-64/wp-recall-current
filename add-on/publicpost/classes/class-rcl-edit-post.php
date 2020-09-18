@@ -113,8 +113,6 @@ class Rcl_EditPost {
 				return false;
 
 			update_post_meta( $this->post_id, '_thumbnail_id', $thumbnail_id );
-
-			rcl_delete_temp_media( $thumbnail_id );
 		}else {
 
 			if ( $currentThID )
@@ -147,8 +145,6 @@ class Rcl_EditPost {
 				);
 
 				wp_update_post( $attachData );
-
-				rcl_delete_temp_media( $temp->media_id );
 			}
 		}
 
@@ -283,6 +279,11 @@ class Rcl_EditPost {
 			delete_post_meta( $this->post_id, 'recall_slider' );
 
 		rcl_update_post_custom_fields( $this->post_id, $formID );
+
+		rcl_delete_temp_media_by_args( array(
+			'user_id'			 => $user_ID,
+			'uploader_id__in'	 => array( 'post_uploader', 'post_thumbnail' )
+		) );
 
 		do_action( 'update_post_rcl', $this->post_id, $postdata, $this->update, $this );
 

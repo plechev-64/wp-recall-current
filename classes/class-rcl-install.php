@@ -50,7 +50,9 @@ class RCL_Install {
 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
-		dbDelta( self::get_schema() );
+		foreach ( self::get_schema() as $shema ) {
+			dbDelta( $shema );
+		}
 	}
 
 	private static function get_schema() {

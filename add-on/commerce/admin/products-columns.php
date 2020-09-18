@@ -3,7 +3,6 @@
 // создаем колонки товаров
 add_filter( 'manage_edit-products_columns', 'rcl_init_product_columns', 10 );
 function rcl_init_product_columns( $columns ) {
-	global $rmag_options;
 
 	$out = array();
 	$i	 = 0;

@@ -34,32 +34,32 @@ function rcl_get_currency( $cur = false, $type = 0 ) {
 }
 
 function rcl_type_currency_list( $post_id ) {
-	global $rmag_options;
-	if ( $rmag_options['multi_cur'] ) {
+
+	if ( rcl_get_commerce_option( 'multi_cur' ) ) {
 		$type	 = get_post_meta( $post_id, 'type_currency', 1 );
-		$curs	 = array( $rmag_options['primary_cur'], $rmag_options['secondary_cur'] );
+		$curs	 = array( rcl_get_commerce_option( 'primary_cur' ), rcl_get_commerce_option( 'secondary_cur' ) );
 		$conts	 = '<select name="wprecall[type_currency]">';
 		foreach ( $curs as $cur ) {
 			$conts .= '<option ' . selected( $type, $cur, false ) . ' value="' . $cur . '">' . $cur . '</option>';
 		}
 		$conts .= '</select>';
 	} else {
-		$conts = $rmag_options['primary_cur'];
+		$conts = rcl_get_commerce_option( 'primary_cur' );
 	}
 	echo $conts;
 }
 
 function rcl_get_current_type_currency( $post_id ) {
-	global $rmag_options;
-	if ( isset( $rmag_options['multi_cur'] ) && $rmag_options['multi_cur'] ) {
+
+	if ( rcl_get_commerce_option( 'multi_cur' ) ) {
 		$type	 = get_post_meta( $post_id, 'type_currency', 1 );
-		$curs	 = array( $rmag_options['primary_cur'], $rmag_options['secondary_cur'] );
+		$curs	 = array( rcl_get_commerce_option( 'primary_cur' ), rcl_get_commerce_option( 'secondary_cur' ) );
 		if ( $type == $curs[0] || $type == $curs[1] )
 			$current = $type;
 		else
 			$current = $curs[0];
 	}else {
-		$current = $rmag_options['primary_cur'];
+		$current = rcl_get_commerce_option( 'primary_cur' );
 	}
 	return $current;
 }
@@ -71,9 +71,7 @@ function get_current_currency( $post_id ) {
 
 //Вывод основной валюты сайта
 function rcl_get_primary_currency( $type = 0 ) {
-	global $rmag_options;
-	$cur = (isset( $rmag_options['primary_cur'] )) ? $rmag_options['primary_cur'] : 'RUB';
-	return rcl_get_currency( $cur, $type );
+	return rcl_get_currency( rcl_get_commerce_option( 'primary_cur', 'RUB' ), $type );
 }
 
 function rcl_primary_currency( $type = 0 ) {

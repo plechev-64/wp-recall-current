@@ -2,10 +2,22 @@
 require_once 'class-rcl-payments-history.php';
 require_once 'addon-settings.php';
 
+add_action( 'admin_init', 'rcl_payments_options_init', 10 );
+function rcl_payments_options_init() {
+
+	if ( ! rcl_gateways()->gateways )
+		return false;
+
+	foreach ( rcl_gateways()->gateways as $gateWayID => $className ) {
+
+		rcl_gateways()->gateway( $gateWayID )->options_init();
+	}
+}
+
 add_action( 'admin_head', 'rcl_admin_user_account_scripts' );
 function rcl_admin_user_account_scripts() {
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'rcl_admin_user_account_scripts', plugins_url( 'js/scripts.js', __FILE__ ), false, VER_RCL );
+	wp_enqueue_script( 'jquery-core' );
+	wp_enqueue_script( 'rcl_admin_user_account_scripts', plugins_url( 'js/scripts.js', __FILE__ ) );
 }
 
 // создаем допколонку для вывода баланса пользователя
@@ -59,8 +71,6 @@ function rcl_edit_balance_user() {
 
 	$user_id = intval( $_POST['user'] );
 	$balance = floatval( str_replace( ',', '.', $_POST['balance'] ) );
-
-	do_action( 'rcl_pre_edit_user_balance_by_admin', $user_id, $balance );
 
 	if ( ! $user_id ) {
 		wp_send_json( array( 'error' => __( 'Balance was not changed', 'wp-recall' ) ) );

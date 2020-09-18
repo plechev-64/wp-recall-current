@@ -24,17 +24,18 @@ function rcl_edit_field_options( $options, $field, $manager_id ) {
 
 function rmag_global_options() {
 
-	$content = ' <div id="recall" class="left-sidebar wrap">
-        <form method="post" action="">
-        ' . wp_nonce_field( 'update-options-rmag', '_wpnonce', true, false );
+	require_once RCL_PATH . 'admin/classes/class-rcl-options-manager.php';
 
-	$content = apply_filters( 'admin_options_rmag', $content );
+	$Manager = new Rcl_Options_Manager( array(
+		'option_name'	 => 'primary-rmag-options',
+		'page_options'	 => 'manage-wpm-options',
+		) );
 
-	$content .= '<div class="submit-block">
-                <input type="submit" class="rcl-save-button" name="primary-rmag-options" value="' . __( 'Save settings', 'wp-recall' ) . '" />
-            </div>
-        </form>
-    </div>';
+	$Manager = apply_filters( 'rcl_commerce_options', $Manager );
+
+	$content = '<h2>' . __( 'Настройки Rcl Commerce', 'wp-recall' ) . '</h2>';
+
+	$content .= $Manager->get_content();
 
 	echo $content;
 }

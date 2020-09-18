@@ -29,7 +29,6 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 
 		add_filter( 'rcl_field_options', array( $this, 'edit_field_options' ), 10, 3 );
 
-
 		if ( $customFields = $this->get_custom_fields() ) {
 			foreach ( $customFields as $field_id => $field ) {
 				if ( isset( $field->value_in_key ) )

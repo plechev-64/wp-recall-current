@@ -60,7 +60,7 @@ class Rcl_Field_Radio extends Rcl_Field_Abstract {
 		$content = '';
 
 		if ( $this->empty_first ) {
-			$content .= '<span class="rcl-radio-box">';
+			$content .= '<span class="rcl-radio-box checkbox-display-' . $this->display . '">';
 			$content .= '<input type="radio" ' . $this->get_required() . ' ' . checked( $this->value, '', false ) . ' id="' . $this->input_id . '_' . $this->rand . '" data-slug="' . $this->slug . '" name="' . $this->input_name . '" value="' . $this->empty_value . '"> ';
 			$content .= '<label class="block-label" for="' . $this->input_id . '_' . $this->rand . '">' . $this->empty_first . '</label>';
 			$content .= '</span>';

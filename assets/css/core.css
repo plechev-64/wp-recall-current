@@ -748,6 +748,8 @@ a.data-filter.filter-active:hover {
 }
 .rcl-field .rcl-field-title{
 	font-weight: bold;
+	margin-bottom: 5px;
+    display: block;
 }
 .rcl-field-notice {
     align-items: center;
@@ -941,7 +943,6 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
     border: 1px solid #e2e2e2;
     cursor: pointer;
     display: inline-block;
-    float: left;
     font-family: Verdana,Tahoma,sans-serif; /*если другое семейство - то блоки плывут*/
     font-size: 12px;
     font-weight: normal;

@@ -30,6 +30,11 @@ jQuery( function( $ ) {
 
 } );
 
+function rcl_show_payment_form( id ) {
+	jQuery( '.rcl-payment-forms .rcl-payment-form' ).removeClass( 'display-form' );
+	jQuery( '.rcl-payment-forms .rcl-payment-form[data-gateway-id="' + id + '"]' ).addClass( 'display-form' );
+}
+
 function rcl_pay_order_user_balance( e, data ) {
 
 	rcl_preloader_show( jQuery( '.rcl-payment-buttons' ) );
@@ -46,5 +51,13 @@ function rcl_pay_order_user_balance( e, data ) {
 	} );
 
 	return false;
+
+}
+
+function rcl_switch_view_balance_form( e ) {
+
+	var widget = jQuery( e ).parents( '.rcl-balance-widget' );
+
+	widget.find( '.balance-form' ).slideToggle();
 
 }

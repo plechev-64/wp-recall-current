@@ -110,10 +110,10 @@ class Rcl_Payments_History extends WP_List_Table {
 		global $wpdb, $wp_locale;
 
 		$months = $wpdb->get_results( "
-            SELECT DISTINCT YEAR( time_action ) AS year, MONTH( time_action ) AS month
-            FROM " . RMAG_PREF . "pay_results
-            ORDER BY time_action DESC
-        " );
+			SELECT DISTINCT YEAR( time_action ) AS year, MONTH( time_action ) AS month
+			FROM " . RMAG_PREF . "pay_results
+			ORDER BY time_action DESC
+		" );
 
 		$months = apply_filters( 'months_dropdown_results', $months, $post_type );
 
@@ -126,7 +126,7 @@ class Rcl_Payments_History extends WP_List_Table {
 		?>
 		<label for="filter-by-date" class="screen-reader-text"><?php _e( 'Filter by date' ); ?></label>
 		<select name="m" id="filter-by-date">
-			<option<?php selected( $m, 0 ); ?> value="0"><?php _e( 'All dates' ); ?></option>
+			<option <?php selected( $m, 0 ); ?> value="0"><?php _e( 'All dates' ); ?></option>
 			<?php
 			foreach ( $months as $arc_row ) {
 				if ( 0 == $arc_row->year )
@@ -177,40 +177,30 @@ class Rcl_Payments_History extends WP_List_Table {
 
 		$payments = new Rcl_Payments();
 
-		$payments->set_query( array(
-			'offset' => $this->offset,
-			'number' => $this->per_page
-		) );
+		$tableAs = $payments->table['as'];
 
-		$tableAs = $payments->query['table']['as'];
+		$payments->limit( $this->per_page, $this->offset );
 
 		if ( isset( $_POST['s'] ) ) {
 
-			$payments->query['where'][] = "($tableAs.user_id = '" . $_POST['s'] . "' OR $tableAs.payment_id = '" . $_POST['s'] . "')";
+			$payments->where_string( "($tableAs.user_id = '" . $_POST['s'] . "' OR $tableAs.payment_id = '" . $_POST['s'] . "')" );
 
 			if ( isset( $_GET['m'] ) && $_GET['m'] ) {
-
-				$payments->query['where'][] = "$tableAs.time_action LIKE '" . $_GET['m'] . "-%'";
+				$payments->where( ['time_action__like' => $_GET['m'] . '-' ] );
 			}
 		} else if ( isset( $_GET['m'] ) && $_GET['m'] ) {
-
-			$payments->query['where'][] = "$tableAs.time_action LIKE '" . $_GET['m'] . "-%'";
+			$payments->where( ['time_action__like' => $_GET['m'] . '-' ] );
 		} else if ( isset( $_GET['user_id'] ) ) {
-
-			$payments->query['where'][] = "$tableAs.user_id = '" . $_GET['user_id'] . "'";
+			$payments->where( ['user_id' => $_GET['user_id'] ] );
 		}
 
-		$items = $payments->get_data();
+		$items = $payments->get_results();
 
-		$payments->query['select'] = array(
-			"SUM($tableAs.pay_amount)"
-		);
+		$payments->select( ['sum' => ['pay_amount' ] ] );
 
-		$this->sum = rcl_commercial_round( $payments->get_data( 'get_var' ) );
+		$this->total_items = $payments->get_count();
 
-		//$payments->reset_query();
-
-		$this->total_items = $payments->count();
+		$this->sum = rcl_commercial_round( $payments->get_var() );
 
 		$this->sum_balance = rcl_commercial_round( $this->get_sum_balance() );
 

@@ -21,7 +21,7 @@ function rcl_bar_add_cart() {
 }
 
 function rcl_single_order_tab( $order_id ) {
-	global $user_LK, $rmag_options, $rclOrder;
+	global $user_LK, $rclOrder;
 
 	$rclOrder = rcl_get_order( $order_id );
 
@@ -41,24 +41,20 @@ function rcl_single_order_tab( $order_id ) {
 add_filter( 'the_excerpt', 'rcl_add_cart_button', 15 );
 add_filter( 'the_content', 'rcl_add_cart_button', 15 );
 function rcl_add_cart_button( $content ) {
-	global $post, $rmag_options;
+	global $post;
 
 	if ( $post->post_type != 'products' )
 		return $content;
 
 	if ( doing_filter( 'the_excerpt' ) ) {
 
-		$archiveCart = (isset( $rmag_options['cart_button_archive_page'] )) ? $rmag_options['cart_button_archive_page'] : 1;
-
-		if ( ! $archiveCart )
+		if ( ! rcl_get_commerce_option( 'cart_button_archive_page', 1 ) )
 			return $content;
 	}
 
 	if ( doing_filter( 'the_content' ) ) {
 
-		$productCart = (isset( $rmag_options['cart_button_single_page'] )) ? $rmag_options['cart_button_single_page'] : array( 'top', 'bottom' );
-
-		if ( ! in_array( 'bottom', $productCart ) )
+		if ( ! in_array( 'bottom', rcl_get_commerce_option( 'cart_button_single_page', array( 'top', 'bottom' ) ) ) )
 			return $content;
 	}
 
@@ -119,10 +115,9 @@ function rcl_commerce_actions() {
 	switch ( $action ) {
 
 		case 'new-order':
-			global $rmag_options;
 
-			if ( isset( $rmag_options['basket_page_rmag'] ) )
-				$cart_url = get_permalink( $rmag_options['basket_page_rmag'] );
+			if ( $page_id	 = rcl_get_commerce_option( 'basket_page_rmag' ) )
+				$cart_url	 = get_permalink( $page_id );
 
 			$order_id = rcl_create_order();
 
