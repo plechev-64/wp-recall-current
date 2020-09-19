@@ -65,6 +65,12 @@ class Rcl_Payments_History extends WP_List_Table {
 			case 'pay_system':
 				return $item->pay_system;
 			case 'pay_type':
+				if ( $item->pay_type == 1 )
+					$item->pay_type = 'user-balance';
+
+				if ( $item->pay_type == 2 )
+					$item->pay_type = 'order-payment';
+
 				return $item->pay_type;
 			default:
 				return print_r( $item, true );

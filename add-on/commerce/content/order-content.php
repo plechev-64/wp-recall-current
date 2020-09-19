@@ -93,7 +93,7 @@ function rcl_add_order_pay_form() {
 			'baggage_data'	 => array(
 				'order_id' => $rclOrder->order_id
 			),
-			'pay_type'		 => 2,
+			'pay_type'		 => 'order-payment',
 			'return_url'	 => rcl_get_tab_permalink( $user_ID, 'orders' ) . '&order-id' . $rclOrder->order_id,
 			'pay_id'		 => $rclOrder->order_id,
 			'user_id'		 => $rclOrder->user_id,

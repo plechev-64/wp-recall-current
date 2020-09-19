@@ -16,7 +16,7 @@ function rcl_add_count_user() {
 	if ( $user_ID ) {
 
 		$pay_summ		 = intval( $_POST['pay_summ'] );
-		$pay_type		 = (isset( $_POST['pay_type'] )) ? $_POST['pay_type'] : 1;
+		$pay_type		 = (isset( $_POST['pay_type'] )) ? $_POST['pay_type'] : 'user-balance';
 		$description	 = (isset( $_POST['description'] )) ? $_POST['description'] : '';
 		$merchant_icon	 = (isset( $_POST['merchant_icon'] )) ? $_POST['merchant_icon'] : 1;
 		$submit_value	 = (isset( $_POST['submit_value'] )) ? $_POST['submit_value'] : __( 'Make payment', 'wp-recall' );
@@ -103,7 +103,7 @@ function rcl_load_payment_form() {
 
 	$content .= rcl_get_notice( [
 		'text' => '<b>' . __( 'The sum of payment', 'wp-recall' ) . '</b>: ' . $_POST['pay_summ'] . ' ' . rcl_get_primary_currency( 1 )
-	] );
+		] );
 
 	$content .= $form;
 

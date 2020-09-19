@@ -29,6 +29,10 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 
 		rcl_dialog_scripts();
 
+		if ( isset( $args['pay_type'] ) && $args['pay_type'] == 1 ) {
+			$args['pay_type'] = 'user-balance';
+		}
+
 		parent::__construct( $args );
 
 		if ( $this->pay_systems )

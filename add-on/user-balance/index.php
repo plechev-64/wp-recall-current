@@ -91,7 +91,7 @@ function rcl_success_pay( $dataPay ) {
 add_action( 'rcl_success_pay_system', 'rcl_pay_user_balance', 10 );
 function rcl_pay_user_balance( $data ) {
 
-	if ( $data->pay_type != 1 )
+	if ( $data->pay_type != 'user-balance' )
 		return false;
 
 	$oldcount = rcl_get_user_balance( $data->user_id );

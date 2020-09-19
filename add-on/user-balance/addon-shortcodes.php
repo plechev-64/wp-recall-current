@@ -39,7 +39,7 @@ function rcl_form_user_balance( $args = array() ) {
 
 	$gateWays = new Rcl_Payment_Form( apply_filters( 'rcl_user_balance_form_args', wp_parse_args( $args, array(
 			'ids__not_in'	 => 'user_balance',
-			'pay_type'		 => 1,
+			'pay_type'		 => 'user-balance',
 			'description'	 => __( 'Adding funds to your personal account', 'wp-recall' ) . ' ' . get_the_author_meta( 'user_email', $user_ID )
 		) ) ) );
 
