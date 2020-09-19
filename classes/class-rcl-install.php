@@ -113,8 +113,8 @@ class RCL_Install {
 
 			if ( is_array( $page ) ) {
 
-				if ( ! rcl_isset_service_page( $key ) ) {
-					$rcl_options[$key] = rcl_create_service_page_if_need( $key, [
+				if ( ! rcl_isset_plugin_page( $key ) ) {
+					$rcl_options[$key] = rcl_create_plugin_page_if_need( $key, [
 						'post_title'	 => $page['title'],
 						'post_content'	 => $page['content'],
 						'post_name'		 => $page['name'],

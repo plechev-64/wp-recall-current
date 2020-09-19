@@ -9,12 +9,12 @@ function rcl_mark_own_page( $post_states, $post ) {
 
 	if ( $post->post_type === 'page' ) {
 
-		$service_pages = get_site_option( 'rcl_service_pages' );
+		$plugin_pages = get_site_option( 'rcl_plugin_pages' );
 
-		if ( ! $service_pages )
+		if ( ! $plugin_pages )
 			return $post_states;
 
-		if ( in_array( $post->ID, $service_pages ) ) {
+		if ( in_array( $post->ID, $plugin_pages ) ) {
 			$post_states[] = __( 'The page of plugin WP-Recall' );
 		}
 	}

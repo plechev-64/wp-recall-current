@@ -1465,23 +1465,23 @@ function rcl_get_pages_ids() {
 	return $pages;
 }
 
-function rcl_isset_service_page( $page_id ) {
+function rcl_isset_plugin_page( $page_id ) {
 
-	$service_pages = get_site_option( 'rcl_service_pages' );
+	$plugin_pages = get_site_option( 'rcl_plugin_pages' );
 
-	if ( ! isset( $service_pages[$page_id] ) )
+	if ( ! isset( $plugin_pages[$page_id] ) )
 		return false;
 
 	return RQ::tbl( new Rcl_Posts_Query() )
 			->select( 'ID' )
 			->where( [
-				'ID'			 => $service_pages[$page_id],
+				'ID'			 => $plugin_pages[$page_id],
 				'post_status'	 => 'publish'
 			] )
 			->get_var() ? true : false;
 }
 
-function rcl_create_service_page( $page_id, $args ) {
+function rcl_create_plugin_page( $page_id, $args ) {
 	global $user_ID;
 
 	$ID = wp_insert_post( wp_parse_args( $args, array(
@@ -1493,18 +1493,18 @@ function rcl_create_service_page( $page_id, $args ) {
 	if ( ! $ID )
 		return false;
 
-	$service_pages = get_site_option( 'rcl_service_pages' );
+	$plugin_pages = get_site_option( 'rcl_plugin_pages' );
 
-	$service_pages[$page_id] = $ID;
+	$plugin_pages[$page_id] = $ID;
 
-	update_site_option( 'rcl_service_pages', $service_pages );
+	update_site_option( 'rcl_plugin_pages', $plugin_pages );
 
 	return $ID;
 }
 
-function rcl_create_service_page_if_need( $page_id, $args ) {
-	if ( ! rcl_isset_service_page( $page_id ) ) {
-		return rcl_create_service_page( $page_id, $args );
+function rcl_create_plugin_page_if_need( $page_id, $args ) {
+	if ( ! rcl_isset_plugin_page( $page_id ) ) {
+		return rcl_create_plugin_page( $page_id, $args );
 	}
 	return false;
 }

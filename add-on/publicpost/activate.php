@@ -12,8 +12,8 @@ if ( ! isset( $rcl_options['user_public_access_recall'] ) )
 	$rcl_options['user_public_access_recall']	 = 2;
 
 if ( ! isset( $rcl_options['public_form_page_rcl'] ) ) {
-	if ( ! rcl_isset_service_page( 'public-editpage' ) ) {
-		$rcl_options['public_form_page_rcl'] = rcl_create_service_page( 'public-editpage', [
+	if ( ! rcl_isset_plugin_page( 'public-editpage' ) ) {
+		$rcl_options['public_form_page_rcl'] = rcl_create_plugin_page( 'public-editpage', [
 			'post_title'	 => 'Форма публикации',
 			'post_content'	 => '[public-form]',
 			'post_name'		 => 'rcl-postedit'

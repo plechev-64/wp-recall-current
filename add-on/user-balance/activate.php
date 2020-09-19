@@ -43,26 +43,26 @@ $sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
 
 dbDelta( $sql );
 
-if ( ! rcl_isset_service_page( 'payment-result' ) ) {
-	rcl_update_commerce_option( 'page_result_pay', rcl_create_service_page( 'payment-result', [
+if ( ! rcl_isset_plugin_page( 'payment-result' ) ) {
+	rcl_update_commerce_option( 'page_result_pay', rcl_create_plugin_page( 'payment-result', [
 		'post_title' => __( 'result', 'wp-recall' )
 	] ) );
 }
 
-if ( ! rcl_isset_service_page( 'payment-success' ) ) {
-	rcl_update_commerce_option( 'page_success_pay', rcl_create_service_page( 'payment-success', [
+if ( ! rcl_isset_plugin_page( 'payment-success' ) ) {
+	rcl_update_commerce_option( 'page_success_pay', rcl_create_plugin_page( 'payment-success', [
 		'post_title' => __( 'success', 'wp-recall' )
 	] ) );
 }
 
-if ( ! rcl_isset_service_page( 'payment-fail' ) ) {
-	rcl_update_commerce_option( 'page_fail_pay', rcl_create_service_page( 'payment-fail', [
+if ( ! rcl_isset_plugin_page( 'payment-fail' ) ) {
+	rcl_update_commerce_option( 'page_fail_pay', rcl_create_plugin_page( 'payment-fail', [
 		'post_title' => __( 'The unsuccessfull payment', 'wp-recall' )
 	] ) );
 }
 
-if ( ! rcl_isset_service_page( 'payment-successfully' ) ) {
-	rcl_update_commerce_option( 'page_successfully_pay', rcl_create_service_page( 'payment-successfully', [
+if ( ! rcl_isset_plugin_page( 'payment-successfully' ) ) {
+	rcl_update_commerce_option( 'page_successfully_pay', rcl_create_plugin_page( 'payment-successfully', [
 		'post_title' => __( 'The successfully payment', 'wp-recall' )
 	] ) );
 }

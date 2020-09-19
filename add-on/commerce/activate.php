@@ -201,15 +201,15 @@ if ( ! isset( $rmag_options['basket_page_rmag'] ) ) {
 		)
 	);
 
-	if ( ! rcl_isset_service_page( 'commerce-cart' ) ) {
-		$rmag_options['basket_page_rmag'] = rcl_create_service_page( 'commerce-cart', [
+	if ( ! rcl_isset_plugin_page( 'commerce-cart' ) ) {
+		$rmag_options['basket_page_rmag'] = rcl_create_plugin_page( 'commerce-cart', [
 			'post_title'	 => __( 'Cart', 'wp-recall' ),
 			'post_content'	 => '[basket]',
 			'post_name'		 => 'rcl-cart'
 			] );
 	}
 
-	rcl_create_service_page_if_need( 'commerce-products', [
+	rcl_create_plugin_page_if_need( 'commerce-products', [
 		'post_title'	 => __( 'Products catalog', 'wp-recall' ),
 		'post_content'	 => '<p>' . __( 'Your product catalog will be displayed here. Product catalog is being generated shortcode productlist <a href="https://codeseller.ru/api-rcl/productlist/">(description shortcode)</a>. You can choose another page for display', 'wp-recall' ) . '</p><br/>[productlist]',
 		'post_name'		 => 'productlist'

@@ -62,8 +62,8 @@ if ( ! isset( $rcl_options['moderation_public_group'] ) ) {
 	$rcl_options['moderation_public_group']		 = 0;
 	$rcl_options['group-output']				 = 1;
 
-	if ( ! rcl_isset_service_page( 'group-page' ) ) {
-		$rcl_options['group-page'] = rcl_create_service_page( 'group-page', [
+	if ( ! rcl_isset_plugin_page( 'group-page' ) ) {
+		$rcl_options['group-page'] = rcl_create_plugin_page( 'group-page', [
 			'post_title'	 => __( 'Groups', 'wp-recall' ),
 			'post_content'	 => '[grouplist]',
 			'post_name'		 => 'group-page'

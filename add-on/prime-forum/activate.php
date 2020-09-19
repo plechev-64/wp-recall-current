@@ -144,8 +144,8 @@ $PfmOptions = get_site_option( 'rcl_pforum_options' );
 
 if ( ! isset( $PfmOptions['home-page'] ) ) {
 
-	if ( ! rcl_isset_service_page( 'forum-page' ) ) {
-		$PfmOptions['home-page'] = rcl_create_service_page( 'forum-page', [
+	if ( ! rcl_isset_plugin_page( 'forum-page' ) ) {
+		$PfmOptions['home-page'] = rcl_create_plugin_page( 'forum-page', [
 			'post_title'	 => __( 'Forum', 'wp-recall' ),
 			'post_content'	 => '[prime-forum]',
 			'post_name'		 => 'forum'

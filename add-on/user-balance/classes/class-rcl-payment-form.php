@@ -23,7 +23,6 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 	public $icon		 = 1;
 	public $pre_form	 = 1;
 	public $return_url	 = '';
-	public $onclick		 = ''; //old
 
 	function __construct( $args = array() ) {
 		global $user_ID;
