@@ -61,3 +61,6 @@ $wpdb->query( "DELETE FROM $wpdb->usermeta WHERE meta_key LIKE '%rcl%'" );
 $wpdb->update(
 	$wpdb->prefix . 'usermeta', array( 'meta_value' => 'true' ), array( 'meta_key' => 'show_admin_bar_front' )
 );
+
+//удаляем все страницы плагина
+rcl_delete_plugin_pages();

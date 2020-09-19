@@ -181,6 +181,7 @@ final class WP_Recall {
 		require_once 'functions/activate.php';
 		require_once 'functions/ajax.php';
 		require_once 'functions/files.php';
+		require_once 'functions/plugin-pages.php';
 		require_once 'functions/addons.php';
 		require_once 'functions/addons-update.php';
 		require_once 'functions/enqueue-scripts.php';
