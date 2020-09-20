@@ -286,7 +286,8 @@ function rcl_tab_profile_content( $master_id ) {
 			. rcl_get_button( array(
 				'label'		 => __( 'Delete your profile', 'wp-recall' ),
 				'id'		 => 'delete_acc',
-				'onclick'	 => 'return confirm(\'' . __( 'Are you sure? It can’t be restaured!', 'wp-recall' ) . '\')? rcl_submit_form(this): false;'
+				'icon'		 => 'fa-eraser',
+				'onclick'	 => 'return confirm("' . __( 'Are you sure? It can’t be restaured!', 'wp-recall' ) . '")? rcl_submit_form(this): false;'
 			) )
 			. '<input type="hidden" value="1" name="rcl_delete_user_account"/>
 		</form>';
