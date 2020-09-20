@@ -192,8 +192,6 @@ class Rcl_PageNavi {
 
 		$content = '<div class="' . $class . '">';
 
-		$content .= '<div class="rcl-page-navi">';
-
 		foreach ( $query['output'] as $item ) {
 			foreach ( $item as $type => $data ) {
 				if ( $type == 'page' ) {
@@ -237,8 +235,6 @@ class Rcl_PageNavi {
 				$content .= '<span class="pager-item type-' . $type . '">' . $html . '</span>';
 			}
 		}
-
-		$content .= '</div>';
 
 		$content .= '</div>';
 

@@ -1062,12 +1062,13 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
     clear: both;
     padding: 6px 5px;
 	margin: 10px 0;
+	line-height: 1;
 }
-.rcl-pager .rcl-page-navi > span{
+.rcl-pager > span{
 	margin: 0 2px;
 }
-.rcl-pager .rcl-page-navi > span a.rcl-bttn{
-	margin: 0;
+body .rcl-pager > span a.rcl-bttn{
+	margin: 0!important;
 }
 /*end*/
 

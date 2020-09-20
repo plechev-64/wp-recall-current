@@ -306,7 +306,7 @@ function rcl_chat_words_count( e, elem ) {
 	else if ( counter < 50 )
 		color = 'red';
 
-	jQuery( elem ).next( '.words-counter' ).css( 'color', color ).text( counter );
+	jQuery( elem ).parent( 'form' ).children( '.words-counter' ).css( 'color', color ).text( counter );
 }
 
 function rcl_chat_remove_contact( e, chat_id ) {

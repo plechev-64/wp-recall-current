@@ -386,13 +386,13 @@ class Rcl_Query extends Rcl_Old_Query {
 		if ( is_array( $orderby ) ) {
 			foreach ( $orderby as $by => $order ) {
 
-				$by = count( explode( '.', $by ) ) > 1 ? $by : $this->table['as'] . '.' . $by;
+				$by = count( explode( '.', $by ) ) > 1 ? $by : (in_array( $by, $this->table['cols'] ) ? $this->table['as'] . '.' . $by : $by);
 
 				$this->query['orderby'][$by] = $order;
 			}
 		} else {
 
-			$this->query['orderby'] = count( explode( '.', $orderby ) ) > 1 ? $orderby : $this->table['as'] . '.' . $orderby;
+			$this->query['orderby'] = count( explode( '.', $orderby ) ) > 1 ? $orderby : (in_array( $orderby, $this->table['cols'] ) ? $this->table['as'] . '.' . $orderby : $orderby);
 
 			if ( $order )
 				$this->order( $order );

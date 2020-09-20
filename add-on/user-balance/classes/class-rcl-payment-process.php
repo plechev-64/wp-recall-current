@@ -10,7 +10,7 @@ class Rcl_Payment_Process extends Rcl_Payment_Core {
 
 		parent::__construct();
 
-		$this->post_id = $post->ID;
+		$this->post_id = $post && isset( $post->ID ) ? $post->ID : 0;
 
 		$this->ids = rcl_get_commerce_option( 'connect_sale' );
 
