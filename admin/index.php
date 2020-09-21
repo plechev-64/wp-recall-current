@@ -51,7 +51,7 @@ function rmag_global_options() {
 
 	$Manager = apply_filters( 'rcl_commerce_options', $Manager );
 
-	$content = '<h2>' . __( 'Настройки Rcl Commerce', 'wp-recall' ) . '</h2>';
+	$content = '<h2>' . __( 'Settings of commerce', 'wp-recall' ) . '</h2>';
 
 	$content .= $Manager->get_content();
 

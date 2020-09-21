@@ -328,7 +328,7 @@ class Rcl_Table {
 					}
 				}
 
-				$contentCell = '<input style="width:100%" type="text" ' . $datescript . ' name="' . $name . '" placeholder="' . __( 'Поиск...' ) . '" ' . $onkeyup . ' value="' . $value . '">';
+				$contentCell = '<input style="width:100%" type="text" ' . $datescript . ' name="' . $name . '" placeholder="' . __( 'Search', 'wp-recall' ) . '" ' . $onkeyup . ' value="' . $value . '">';
 			}
 
 			$content .= $this->cell( $idcol, $contentCell, $col, 'search' );

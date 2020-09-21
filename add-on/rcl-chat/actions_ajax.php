@@ -193,8 +193,8 @@ function rcl_chat_important_manager_shift() {
 
 	rcl_verify_ajax_nonce();
 
-	$chat_token			 = $_POST['token'];
-	$status_important	 = $_POST['status_important'];
+	$chat_token			 = wp_slash( $_POST['token'] );
+	$status_important	 = intval( $_POST['status_important'] );
 	$chat_room			 = rcl_chat_token_decode( $chat_token );
 
 	if ( ! rcl_get_chat_by_room( $chat_room ) )

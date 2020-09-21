@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wp-recall\n"
-"POT-Creation-Date: 2020-09-18 11:47+0400\n"
+"POT-Creation-Date: 2020-09-21 13:31+0400\n"
 "PO-Revision-Date: 2020-09-06 11:12+0400\n"
 "Last-Translator: \n"
 "Language-Team: https//:codeseller.ru\n"
@@ -17,7 +17,7 @@ msgstr ""
 "esc_attr_;esc_attr_e;esc_attr_ex\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: add-on/commerce/activate.php:82 add-on/commerce/activate.php:214
+#: add-on/commerce/activate.php:82 add-on/commerce/activate.php:213
 msgid "Products catalog"
 msgstr ""
 
@@ -63,7 +63,8 @@ msgstr ""
 #: add-on/groups/classes/class-rcl-groups-list.php:158
 #: add-on/groups/groups-init.php:14 add-on/groups/groups-init.php:49
 #: add-on/prime-forum/functions-templates.php:304
-#: add-on/user-balance/admin/index.php:136 functions/frontend.php:177
+#: add-on/user-balance/admin/index.php:136 classes/class-rcl-table.php:331
+#: functions/frontend.php:177
 msgid "Search"
 msgstr ""
 
@@ -188,13 +189,13 @@ msgstr ""
 msgid "Add or delete"
 msgstr ""
 
-#: add-on/commerce/activate.php:205
+#: add-on/commerce/activate.php:206
 #: add-on/commerce/admin/pages/addon-settings.php:37
 #: add-on/commerce/functions-frontend.php:12
 msgid "Cart"
 msgstr ""
 
-#: add-on/commerce/activate.php:215
+#: add-on/commerce/activate.php:214
 msgid ""
 "Your product catalog will be displayed here. Product catalog is being "
 "generated shortcode productlist <a href=\"https://codeseller.ru/api-rcl/"
@@ -222,7 +223,7 @@ msgstr ""
 #: add-on/groups/classes/class-rcl-groups-list.php:175
 #: add-on/groups/groups-widgets.php:118 add-on/groups/groups-widgets.php:144
 #: add-on/groups/templates/group-list.php:11
-#: add-on/user-balance/admin/class-rcl-payments-history.php:78
+#: add-on/user-balance/admin/class-rcl-payments-history.php:84
 #: classes/class-rcl-install.php:107
 msgid "Users"
 msgstr ""
@@ -247,8 +248,8 @@ msgstr ""
 #: add-on/commerce/admin/class-rcl-history-orders.php:77
 #: add-on/groups/classes/class-rcl-groups-list.php:173
 #: add-on/publicpost/templates/posts-list.php:17
-#: add-on/user-balance/admin/class-rcl-payments-history.php:81
-#: classes/class-rcl-custom-fields-manager.php:67 wp-recall.php:390
+#: add-on/user-balance/admin/class-rcl-payments-history.php:87
+#: classes/class-rcl-custom-fields-manager.php:67 wp-recall.php:392
 msgid "Date"
 msgstr ""
 
@@ -288,10 +289,10 @@ msgstr ""
 
 #: add-on/commerce/admin/class-rcl-history-orders.php:107
 #: add-on/commerce/admin/class-rcl-history-orders.php:124
-#: add-on/groups/index.php:703
+#: add-on/groups/index.php:692
 #: add-on/prime-forum/admin/classes/class-prime-manager.php:363
 #: add-on/prime-forum/admin/themes-manager.php:165
-#: add-on/user-balance/admin/class-rcl-payments-history.php:98
+#: add-on/user-balance/admin/class-rcl-payments-history.php:104
 #: admin/add-on-manager.php:164 admin/add-on-manager.php:177
 #: admin/templates-manager.php:157
 #: classes/class-rcl-custom-fields-manager.php:499
@@ -525,7 +526,7 @@ msgstr ""
 #: add-on/rating-system/admin/addon-settings.php:158
 #: add-on/rating-system/admin/index.php:15 add-on/rcl-chat/addon-options.php:70
 #: add-on/rcl-chat/addon-options.php:81 add-on/rcl-chat/addon-options.php:136
-#: admin/classes/class-rcl-tabs-manager.php:27 admin/index.php:93
+#: admin/classes/class-rcl-tabs-manager.php:27 admin/index.php:111
 msgid "No"
 msgstr ""
 
@@ -545,7 +546,7 @@ msgstr ""
 #: add-on/rating-system/admin/addon-settings.php:158
 #: add-on/rating-system/admin/index.php:16 add-on/rcl-chat/addon-options.php:71
 #: add-on/rcl-chat/addon-options.php:82 add-on/rcl-chat/addon-options.php:137
-#: admin/classes/class-rcl-tabs-manager.php:28 admin/index.php:94
+#: admin/classes/class-rcl-tabs-manager.php:28 admin/index.php:112
 msgid "Yes"
 msgstr ""
 
@@ -574,7 +575,7 @@ msgstr ""
 #: add-on/commerce/templates/cart.php:51 add-on/commerce/templates/order.php:23
 #: add-on/commerce/templates/order.php:45
 #: add-on/commerce/templates/orders-history.php:12
-#: add-on/user-balance/admin/class-rcl-payments-history.php:80
+#: add-on/user-balance/admin/class-rcl-payments-history.php:86
 msgid "Sum"
 msgstr ""
 
@@ -596,7 +597,7 @@ msgstr ""
 #: add-on/groups/admin/index.php:39
 #: add-on/profile/classes/class-rcl-profile-fields.php:98
 #: add-on/publicpost/classes/class-rcl-list-terms.php:56
-#: add-on/publicpost/classes/class-rcl-list-terms.php:85 rcl-functions.php:1466
+#: add-on/publicpost/classes/class-rcl-list-terms.php:85 rcl-functions.php:1462
 #: rcl-widgets.php:68 rcl-widgets.php:130
 msgid "Not selected"
 msgstr ""
@@ -693,7 +694,7 @@ msgstr ""
 
 #: add-on/commerce/admin/pages/order.php:20 add-on/profile/index.php:166
 #: classes/class-rcl-custom-fields-manager.php:64
-#: templates/form-register.php:24 wp-recall.php:378
+#: templates/form-register.php:24 wp-recall.php:380
 msgid "E-mail"
 msgstr ""
 
@@ -752,8 +753,8 @@ msgstr ""
 msgid "withdrawn from sale"
 msgstr ""
 
-#: add-on/commerce/admin/products-metabox.php:5 admin/index.php:85
-#: admin/index.php:86
+#: add-on/commerce/admin/products-metabox.php:5 admin/index.php:103
+#: admin/index.php:104
 msgid "WP-Recall settings"
 msgstr ""
 
@@ -1004,7 +1005,7 @@ msgid "Login"
 msgstr ""
 
 #: add-on/commerce/core.php:297 functions/register.php:251
-#: functions/register.php:443 templates/form-sign.php:27 wp-recall.php:350
+#: functions/register.php:443 templates/form-sign.php:27 wp-recall.php:352
 msgid "Password"
 msgstr ""
 
@@ -1241,13 +1242,13 @@ msgstr ""
 msgid "No news found."
 msgstr ""
 
-#: add-on/groups/activate.php:66 add-on/groups/groups-init.php:47
+#: add-on/groups/activate.php:67 add-on/groups/groups-init.php:47
 #: add-on/groups/groups-init.php:48 add-on/groups/groups-init.php:61
-#: add-on/groups/index.php:238
+#: add-on/groups/index.php:227
 msgid "Groups"
 msgstr ""
 
-#: add-on/groups/admin/index.php:7 add-on/groups/index.php:629
+#: add-on/groups/admin/index.php:7 add-on/groups/index.php:618
 msgid "Group settings"
 msgstr ""
 
@@ -1338,12 +1339,12 @@ msgstr ""
 msgid "Max size of the group avatars"
 msgstr ""
 
-#: add-on/groups/admin/index.php:76 admin/index.php:201
+#: add-on/groups/admin/index.php:76 admin/index.php:219
 #: admin/pages/options.php:128
 msgid "Set the image upload limit in kb, by default"
 msgstr ""
 
-#: add-on/groups/admin/index.php:77 admin/index.php:202
+#: add-on/groups/admin/index.php:77 admin/index.php:220
 #: admin/pages/options.php:129
 msgid "If 0 is specified, download is disallowed."
 msgstr ""
@@ -1385,7 +1386,7 @@ msgstr ""
 
 #: add-on/groups/groups-core.php:219
 #: add-on/prime-forum/classes/class-prime-roles.php:17
-#: classes/class-rcl-install.php:211
+#: classes/class-rcl-install.php:208
 msgid "Ban"
 msgstr ""
 
@@ -1393,7 +1394,7 @@ msgstr ""
 msgid "Reader"
 msgstr ""
 
-#: add-on/groups/groups-core.php:227 add-on/groups/index.php:604
+#: add-on/groups/groups-core.php:227 add-on/groups/index.php:593
 #: add-on/prime-forum/admin/index.php:755
 #: add-on/prime-forum/admin/themes-manager.php:185
 #: add-on/publicpost/admin/index.php:136 admin/add-on-manager.php:197
@@ -1412,11 +1413,11 @@ msgstr ""
 msgid "Administrator"
 msgstr ""
 
-#: add-on/groups/groups-core.php:328 add-on/groups/index.php:584
+#: add-on/groups/groups-core.php:328 add-on/groups/index.php:573
 msgid "Open group"
 msgstr ""
 
-#: add-on/groups/groups-core.php:330 add-on/groups/index.php:585
+#: add-on/groups/groups-core.php:330 add-on/groups/index.php:574
 msgid "Closed group"
 msgstr ""
 
@@ -1498,7 +1499,7 @@ msgstr ""
 
 #: add-on/groups/groups-init.php:7 add-on/groups/groups-init.php:8
 #: add-on/groups/groups-init.php:18 add-on/groups/index.php:37
-#: add-on/groups/index.php:229
+#: add-on/groups/index.php:218
 msgid "Groups records"
 msgstr ""
 
@@ -1583,7 +1584,7 @@ msgid "Publication form"
 msgstr ""
 
 #: add-on/groups/groups-widgets.php:213 add-on/groups/groups-widgets.php:221
-#: add-on/groups/index.php:373 add-on/groups/index.php:611
+#: add-on/groups/index.php:362 add-on/groups/index.php:600
 msgid "Group categories"
 msgstr ""
 
@@ -1617,117 +1618,117 @@ msgstr ""
 msgid "Display"
 msgstr ""
 
-#: add-on/groups/index.php:245
+#: add-on/groups/index.php:234
 msgid "All groups"
 msgstr ""
 
-#: add-on/groups/index.php:254
+#: add-on/groups/index.php:243
 msgid "Groups created"
 msgstr ""
 
-#: add-on/groups/index.php:290
+#: add-on/groups/index.php:279
 msgid "Enter the name of the new group"
 msgstr ""
 
-#: add-on/groups/index.php:293
+#: add-on/groups/index.php:282
 msgid "Create"
 msgstr ""
 
-#: add-on/groups/index.php:313 add-on/publicpost/admin/index.php:135
+#: add-on/groups/index.php:302 add-on/publicpost/admin/index.php:135
 msgid "Header"
 msgstr ""
 
-#: add-on/groups/index.php:320
+#: add-on/groups/index.php:309
 msgid "Sidebar"
 msgstr ""
 
-#: add-on/groups/index.php:327
+#: add-on/groups/index.php:316
 msgid "Main"
 msgstr ""
 
-#: add-on/groups/index.php:334
+#: add-on/groups/index.php:323
 msgid "Footer"
 msgstr ""
 
-#: add-on/groups/index.php:404
+#: add-on/groups/index.php:393
 msgid "Published in group"
 msgstr ""
 
-#: add-on/groups/index.php:419 add-on/groups/index.php:464
+#: add-on/groups/index.php:408 add-on/groups/index.php:453
 msgid "Group creation failed"
 msgstr ""
 
-#: add-on/groups/index.php:445
+#: add-on/groups/index.php:434
 msgid "Enter the name"
 msgstr ""
 
-#: add-on/groups/index.php:451
+#: add-on/groups/index.php:440
 msgid "Specify the name of new group as string"
 msgstr ""
 
-#: add-on/groups/index.php:471
+#: add-on/groups/index.php:460
 msgid "New group is successfully created!"
 msgstr ""
 
-#: add-on/groups/index.php:569
+#: add-on/groups/index.php:558
 msgid "Group name"
 msgstr ""
 
-#: add-on/groups/index.php:576 add-on/prime-forum/admin/themes-manager.php:148
+#: add-on/groups/index.php:565 add-on/prime-forum/admin/themes-manager.php:148
 #: add-on/publicpost/functions-ajax.php:69 admin/add-on-manager.php:149
 #: admin/templates-manager.php:140
 msgid "Description"
 msgstr ""
 
-#: add-on/groups/index.php:582 add-on/groups/templates/single-group.php:37
+#: add-on/groups/index.php:571 add-on/groups/templates/single-group.php:37
 msgid "Group status"
 msgstr ""
 
-#: add-on/groups/index.php:592
+#: add-on/groups/index.php:581
 msgid "Membership"
 msgstr ""
 
-#: add-on/groups/index.php:594
+#: add-on/groups/index.php:583
 msgid "Registration allowed"
 msgstr ""
 
-#: add-on/groups/index.php:601
+#: add-on/groups/index.php:590
 msgid "New user role"
 msgstr ""
 
-#: add-on/groups/index.php:603
+#: add-on/groups/index.php:592
 msgid "Visitor"
 msgstr ""
 
-#: add-on/groups/index.php:611
+#: add-on/groups/index.php:600
 msgid "separate by commas"
 msgstr ""
 
-#: add-on/groups/index.php:637 admin/classes/class-rcl-options-manager.php:134
+#: add-on/groups/index.php:626 admin/classes/class-rcl-options-manager.php:134
 msgid "Save settings"
 msgstr ""
 
-#: add-on/groups/index.php:654
+#: add-on/groups/index.php:643
 msgid "Requests for access to the group"
 msgstr ""
 
-#: add-on/groups/index.php:657
+#: add-on/groups/index.php:646
 msgid "No requests"
 msgstr ""
 
-#: add-on/groups/index.php:672
+#: add-on/groups/index.php:661
 msgid "Approve request"
 msgstr ""
 
-#: add-on/groups/index.php:680
+#: add-on/groups/index.php:669
 msgid "Reject request"
 msgstr ""
 
-#: add-on/groups/index.php:707
+#: add-on/groups/index.php:696
 msgid "User status"
 msgstr ""
 
-#: add-on/groups/index.php:712 add-on/prime-forum/admin/index.php:367
+#: add-on/groups/index.php:701 add-on/prime-forum/admin/index.php:367
 #: admin/pages/addons-manager.php:52 admin/pages/repository.php:80
 #: admin/pages/themes-manager.php:27
 #: classes/class-rcl-custom-fields-manager.php:125
@@ -1736,42 +1737,42 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: add-on/groups/index.php:744
+#: add-on/groups/index.php:733
 msgid "Request access to the group approved!"
 msgstr ""
 
-#: add-on/groups/index.php:750
+#: add-on/groups/index.php:739
 msgid "Welcome to the group"
 msgstr ""
 
-#: add-on/groups/index.php:750
+#: add-on/groups/index.php:739
 #, php-format
 msgid ""
 "Congratulations , your access request to a private group on \"%s\" website "
 "has been approved"
 msgstr ""
 
-#: add-on/groups/index.php:750
+#: add-on/groups/index.php:739
 msgid "Now you can take part in the life of the group as its full participant."
 msgstr ""
 
-#: add-on/groups/index.php:750
+#: add-on/groups/index.php:739
 msgid "You can visit the group by clicking on the link"
 msgstr ""
 
-#: add-on/groups/index.php:755
+#: add-on/groups/index.php:744
 msgid "Request approved"
 msgstr ""
 
-#: add-on/groups/index.php:758
+#: add-on/groups/index.php:747
 msgid "Request rejected"
 msgstr ""
 
-#: add-on/groups/index.php:759
+#: add-on/groups/index.php:748
 msgid "Access request to the group has been rejected."
 msgstr ""
 
-#: add-on/groups/index.php:760
+#: add-on/groups/index.php:749
 #, php-format
 msgid ""
 "We are sorry, but your request to access a private group \"%s\" on the site "
@@ -1787,7 +1788,7 @@ msgstr ""
 msgid "Posts"
 msgstr ""
 
-#: add-on/prime-forum/activate.php:148
+#: add-on/prime-forum/activate.php:149
 #: add-on/prime-forum/admin/classes/class-prime-form-manager.php:101
 #: add-on/prime-forum/admin/index.php:256
 #: add-on/prime-forum/admin/index.php:262
@@ -2998,19 +2999,19 @@ msgstr ""
 msgid "Delete your profile"
 msgstr ""
 
-#: add-on/profile/index.php:289
+#: add-on/profile/index.php:290
 msgid "Are you sure? It can’t be restaured!"
 msgstr ""
 
-#: add-on/profile/index.php:332
+#: add-on/profile/index.php:333
 msgid "We are very sorry but your account has been deleted!"
 msgstr ""
 
-#: add-on/profile/index.php:333
+#: add-on/profile/index.php:334
 msgid "Back to main page"
 msgstr ""
 
-#: add-on/profile/index.php:335
+#: add-on/profile/index.php:336
 msgid "Account deletion failed! Go back and try again."
 msgstr ""
 
@@ -3267,12 +3268,12 @@ msgid "Output option"
 msgstr ""
 
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:115
-#: classes/class-rcl-custom-fields-manager.php:60 wp-recall.php:362
+#: classes/class-rcl-custom-fields-manager.php:60 wp-recall.php:364
 msgid "Select"
 msgstr ""
 
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:116
-#: classes/class-rcl-custom-fields-manager.php:62 wp-recall.php:370
+#: classes/class-rcl-custom-fields-manager.php:62 wp-recall.php:372
 msgid "Checkbox"
 msgstr ""
 
@@ -4071,6 +4072,22 @@ msgstr ""
 msgid "Not set attributes: chat_room"
 msgstr ""
 
+#: add-on/user-balance/activate.php:48
+msgid "result"
+msgstr ""
+
+#: add-on/user-balance/activate.php:54
+msgid "success"
+msgstr ""
+
+#: add-on/user-balance/activate.php:60
+msgid "The unsuccessfull payment"
+msgstr ""
+
+#: add-on/user-balance/activate.php:66
+msgid "The successfully payment"
+msgstr ""
+
 #: add-on/user-balance/addon-shortcodes.php:43
 msgid "Adding funds to your personal account"
 msgstr ""
@@ -4135,32 +4152,32 @@ msgid "The caption on the button of the confirmation of a way of a payment"
 msgstr ""
 
 #: add-on/user-balance/admin/addon-settings.php:66
-#: add-on/user-balance/classes/class-rcl-payment-form.php:217
+#: add-on/user-balance/classes/class-rcl-payment-form.php:226
 msgid "Continue"
 msgstr ""
 
-#: add-on/user-balance/admin/addon-settings.php:72
-msgid "The using systems of payment"
-msgstr ""
-
-#: add-on/user-balance/admin/addon-settings.php:83
+#: add-on/user-balance/admin/addon-settings.php:71
 msgid "Service page of payment systems"
 msgstr ""
 
-#: add-on/user-balance/admin/addon-settings.php:97
+#: add-on/user-balance/admin/addon-settings.php:85
 msgid "The page of RESULT"
 msgstr ""
 
-#: add-on/user-balance/admin/addon-settings.php:104
+#: add-on/user-balance/admin/addon-settings.php:92
 msgid "The page of SUCCESS"
 msgstr ""
 
-#: add-on/user-balance/admin/addon-settings.php:111
+#: add-on/user-balance/admin/addon-settings.php:99
 msgid "The page of FAIL"
 msgstr ""
 
-#: add-on/user-balance/admin/addon-settings.php:118
+#: add-on/user-balance/admin/addon-settings.php:106
 msgid "The page of a successfully payment"
+msgstr ""
+
+#: add-on/user-balance/admin/addon-settings.php:114
+msgid "The using systems of payment"
 msgstr ""
 
 #: add-on/user-balance/admin/class-rcl-payments-history.php:21
@@ -4175,35 +4192,35 @@ msgstr ""
 msgid "No payments found."
 msgstr ""
 
-#: add-on/user-balance/admin/class-rcl-payments-history.php:79
+#: add-on/user-balance/admin/class-rcl-payments-history.php:85
 msgid "Payments ID"
 msgstr ""
 
-#: add-on/user-balance/admin/class-rcl-payments-history.php:82
+#: add-on/user-balance/admin/class-rcl-payments-history.php:88
 msgid "Payment system"
 msgstr ""
 
-#: add-on/user-balance/admin/class-rcl-payments-history.php:83
+#: add-on/user-balance/admin/class-rcl-payments-history.php:89
 msgid "Payment type"
 msgstr ""
 
-#: add-on/user-balance/admin/class-rcl-payments-history.php:90
+#: add-on/user-balance/admin/class-rcl-payments-history.php:96
 msgid "Delete payment"
 msgstr ""
 
-#: add-on/user-balance/admin/class-rcl-payments-history.php:91
+#: add-on/user-balance/admin/class-rcl-payments-history.php:97
 msgid "All user payments"
 msgstr ""
 
-#: add-on/user-balance/admin/class-rcl-payments-history.php:127
+#: add-on/user-balance/admin/class-rcl-payments-history.php:133
 msgid "Filter by date"
 msgstr ""
 
-#: add-on/user-balance/admin/class-rcl-payments-history.php:129
+#: add-on/user-balance/admin/class-rcl-payments-history.php:135
 msgid "All dates"
 msgstr ""
 
-#: add-on/user-balance/admin/class-rcl-payments-history.php:137
+#: add-on/user-balance/admin/class-rcl-payments-history.php:143
 #, php-format
 msgid "%1$s %2$d"
 msgstr ""
@@ -4299,16 +4316,16 @@ msgstr ""
 msgid "Failed to add user payment"
 msgstr ""
 
-#: add-on/user-balance/classes/class-rcl-payment-form.php:81
+#: add-on/user-balance/classes/class-rcl-payment-form.php:85
 msgid "The payment from"
 msgstr ""
 
-#: add-on/user-balance/classes/class-rcl-payment-form.php:164
+#: add-on/user-balance/classes/class-rcl-payment-form.php:173
 #: add-on/user-balance/functions-ajax.php:105
 msgid "The sum of payment"
 msgstr ""
 
-#: add-on/user-balance/classes/class-rcl-payment-form.php:194
+#: add-on/user-balance/classes/class-rcl-payment-form.php:203
 msgid "The system of payment"
 msgstr ""
 
@@ -4333,19 +4350,19 @@ msgstr ""
 msgid "Insufficient funds in your personal account!<br>Order price: %d %s"
 msgstr ""
 
-#: add-on/user-balance/functions-core.php:49
+#: add-on/user-balance/functions-core.php:55
 msgid "Failed to refresh user balance"
 msgstr ""
 
-#: add-on/user-balance/functions-core.php:66
+#: add-on/user-balance/functions-core.php:76
 msgid "Failed to add user balance"
 msgstr ""
 
-#: add-on/user-balance/functions-core.php:85
+#: add-on/user-balance/functions-core.php:99
 msgid "Your balance"
 msgstr ""
 
-#: add-on/user-balance/functions-core.php:89
+#: add-on/user-balance/functions-core.php:104
 msgid "replenish"
 msgstr ""
 
@@ -4471,27 +4488,31 @@ msgstr ""
 msgid "\"Counters\" area"
 msgstr ""
 
-#: admin/index.php:36
-msgid "Настройки Rcl Commerce"
+#: admin/index.php:18
+msgid "The page of plugin WP-Recall"
 msgstr ""
 
-#: admin/index.php:92
+#: admin/index.php:54
+msgid "Settings of commerce"
+msgstr ""
+
+#: admin/index.php:110
 msgid "Output images via WP-Recall gallery?"
 msgstr ""
 
-#: admin/index.php:165 admin/index.php:686
+#: admin/index.php:183 admin/index.php:704
 msgid "Settings saved!"
 msgstr ""
 
-#: admin/index.php:191
+#: admin/index.php:209
 msgid "Default cover"
 msgstr ""
 
-#: admin/index.php:200
+#: admin/index.php:218
 msgid "Max weight of cover"
 msgstr ""
 
-#: admin/index.php:428
+#: admin/index.php:446
 #, php-format
 msgid ""
 "If you liked plugin %sWP-Recall%s, please vote for it in repository %s★★★★★"
@@ -4770,7 +4791,7 @@ msgid ""
 "management menu of the website</a>"
 msgstr ""
 
-#: admin/pages/options.php:220 wp-recall.php:414
+#: admin/pages/options.php:220 wp-recall.php:416
 msgid "Color"
 msgstr ""
 
@@ -4894,56 +4915,56 @@ msgid ""
 "and manage existing tabs in different areas of the personal account"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:58 wp-recall.php:338
+#: classes/class-rcl-custom-fields-manager.php:58 wp-recall.php:340
 msgid "Text"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:59 wp-recall.php:358
+#: classes/class-rcl-custom-fields-manager.php:59 wp-recall.php:360
 msgid "Multiline text area"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:61 wp-recall.php:366
+#: classes/class-rcl-custom-fields-manager.php:61 wp-recall.php:368
 msgid "MultiSelect"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:63 wp-recall.php:374
+#: classes/class-rcl-custom-fields-manager.php:63 wp-recall.php:376
 msgid "Radiobutton"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:65 wp-recall.php:382
+#: classes/class-rcl-custom-fields-manager.php:65 wp-recall.php:384
 msgid "Phone"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:66 wp-recall.php:386
+#: classes/class-rcl-custom-fields-manager.php:66 wp-recall.php:388
 msgid "Number"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:68 wp-recall.php:342
+#: classes/class-rcl-custom-fields-manager.php:68 wp-recall.php:344
 msgid "Time"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:69 wp-recall.php:354
+#: classes/class-rcl-custom-fields-manager.php:69 wp-recall.php:356
 msgid "Url"
 msgstr ""
 
 #: classes/class-rcl-custom-fields-manager.php:70
-#: classes/fields/types/class-rcl-field-agree.php:59 wp-recall.php:394
+#: classes/fields/types/class-rcl-field-agree.php:59 wp-recall.php:396
 msgid "Agreement"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:71 wp-recall.php:398
+#: classes/class-rcl-custom-fields-manager.php:71 wp-recall.php:400
 msgid "File"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:72 wp-recall.php:402
+#: classes/class-rcl-custom-fields-manager.php:72 wp-recall.php:404
 msgid "Dynamic"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:73 wp-recall.php:406
+#: classes/class-rcl-custom-fields-manager.php:73 wp-recall.php:408
 msgid "Runner"
 msgstr ""
 
-#: classes/class-rcl-custom-fields-manager.php:74 wp-recall.php:410
+#: classes/class-rcl-custom-fields-manager.php:74 wp-recall.php:412
 msgid "Range"
 msgstr ""
 
@@ -5142,7 +5163,7 @@ msgstr ""
 msgid "I agree with the text of the agreement"
 msgstr ""
 
-#: classes/class-rcl-custom-fields.php:534
+#: classes/class-rcl-custom-fields.php:534 classes/class-rcl-table.php:327
 #: classes/fields/types/class-rcl-field-date.php:41
 msgid "Use the format"
 msgstr ""
@@ -5183,7 +5204,7 @@ msgstr ""
 msgid "FEED"
 msgstr ""
 
-#: classes/class-rcl-install.php:203
+#: classes/class-rcl-install.php:200
 msgid "Unconfirmed"
 msgstr ""
 
@@ -5837,18 +5858,18 @@ msgstr ""
 msgid "Are you cheating, bastard?"
 msgstr ""
 
-#: wp-recall.php:346
+#: wp-recall.php:348
 msgid "Hidden field"
 msgstr ""
 
-#: wp-recall.php:418
+#: wp-recall.php:420
 msgid "Custom content"
 msgstr ""
 
-#: wp-recall.php:422
+#: wp-recall.php:424
 msgid "Text editor"
 msgstr ""
 
-#: wp-recall.php:426
+#: wp-recall.php:428
 msgid "File uploader"
 msgstr ""
