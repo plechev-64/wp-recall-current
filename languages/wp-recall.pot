@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: wp-recall\n"
-"POT-Creation-Date: 2020-09-21 13:31+0400\n"
+"POT-Creation-Date: 2020-09-21 15:39+0400\n"
 "PO-Revision-Date: 2020-09-06 11:12+0400\n"
 "Last-Translator: \n"
 "Language-Team: https//:codeseller.ru\n"
@@ -4178,6 +4178,12 @@ msgstr ""
 
 #: add-on/user-balance/admin/addon-settings.php:114
 msgid "The using systems of payment"
+msgstr ""
+
+#: add-on/user-balance/admin/addon-settings.php:142
+msgid ""
+"Attention! You are using the old version payment connection. You need to "
+"update this payment connection."
 msgstr ""
 
 #: add-on/user-balance/admin/class-rcl-payments-history.php:21

@@ -133,6 +133,18 @@ function rcl_user_account_options( $options ) {
 
 			foreach ( $box['groups'] as $k => $group ) {
 
+				$group['options'] = array_merge( [
+					[
+						'type'		 => 'custom',
+						'slug'		 => 'notice',
+						'content'	 => rcl_get_notice( [
+							'type'	 => 'error',
+							'text'	 => __( 'Attention! You are using the old version payment connection. You need to update this payment connection.', 'wp-recall' )
+						] )
+					]
+					], $group['options'] );
+
+
 				$options->add_box( $k . '-old-gateway', array(
 					'title' => $group['title']
 				) )->add_group( $k . '-old-gateway', array(
