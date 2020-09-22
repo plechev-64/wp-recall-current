@@ -129,7 +129,6 @@ function rcl_edit_profile_manager_field_options( $options, $field, $manager_id )
 
 	if ( in_array( $field->type, ['uploader', 'file' ] ) ) {
 		unset( $options['required'] );
-		unset( $options['admin'] );
 	}
 
 	return $options;

@@ -143,16 +143,7 @@ class Rcl_Field_Abstract {
 
 		$classes = array( 'type-' . $this->type . '-input' );
 
-//if ( $this->type != 'custom' ) {
 		$classes[] = 'rcl-field-input';
-//}
-
-		$inputField = apply_filters( 'rcl_field_input_html', $this->get_input(), $this );
-
-		if ( $this->icon ) {
-//$inputField .= '<i class="rcli '.$this->icon.' field-icon"></i>';
-//$classes[] = 'have-icon';
-		}
 
 		if ( ! $this->title && $this->required ) {
 			$inputField .= '<span class="required">*</span>';

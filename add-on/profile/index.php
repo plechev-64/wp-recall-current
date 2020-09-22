@@ -125,24 +125,6 @@ function rcl_edit_profile() {
 	exit;
 }
 
-add_filter( 'rcl_field_input_html', 'rcl_exchange_admins_profile_fields', 10, 2 );
-function rcl_exchange_admins_profile_fields( $input_html, $field ) {
-	global $user_ID, $user_LK;
-
-	if ( ! rcl_is_office( $user_ID ) )
-		return $input_html;
-
-	if ( isset( $field->admin ) && $field->admin && ! rcl_is_user_role( $user_ID, array( 'administrator' ) ) ) {
-		$value = get_user_meta( $user_LK, $field->slug, 1 );
-		if ( $value ) {
-			$field->set_prop( 'value', $value );
-			return $field->get_field_value();
-		}
-	}
-
-	return $input_html;
-}
-
 add_filter( 'rcl_profile_fields', 'rcl_add_office_profile_fields', 10 );
 function rcl_add_office_profile_fields( $fields ) {
 	global $userdata;
@@ -237,9 +219,17 @@ function rcl_tab_profile_content( $master_id ) {
 		if ( $field['slug'] != 'show_admin_bar_front' && ! isset( $field['value_in_key'] ) )
 			$fieldObject->set_prop( 'value_in_key', true );
 
+		$fieldInput = $fieldObject->get_field_input();
+
+		if ( isset( $fieldObject->admin ) && $fieldObject->admin ) {
+			if ( $fieldObject->value ) {
+				$fieldInput = $fieldObject->get_field_value();
+			}
+		}
+
 		$Table->add_row( array(
 			$fieldObject->get_title(),
-			$fieldObject->get_field_input()
+			$fieldInput
 			), apply_filters( 'rcl_profile_row_attrs', array( 'id' => 'profile-field-' . $slug ), $field ) );
 	}
 
