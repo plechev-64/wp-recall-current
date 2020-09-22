@@ -857,6 +857,12 @@ a.data-filter.filter-active:hover {
 .type-dynamic-input .dynamic-values {
     display: block;
 }
+.type-dynamic-input .dynamic-values.ui-sortable a {
+    height: 14px;
+    position: absolute;
+    top: 3px;
+    right: 33px;
+}
 .type-dynamic-input .dynamic-value {
     align-items: center;
     display: flex;
@@ -880,6 +886,7 @@ a.data-filter.filter-active:hover {
     vertical-align: middle;
     width: auto;
 }
+
 .type-dynamic-input .dynamic-value a:hover {
     background-color: #fff;
     text-decoration: none !important;

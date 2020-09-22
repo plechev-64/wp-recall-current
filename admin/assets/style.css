@@ -667,12 +667,6 @@ div.rcl_preloader i.rcli::before {
 .rcl-custom-fields-box .rcl-custom-field .dynamic-value input {
     width: 80%;
 }
-.rcl-field-core .dynamic-values a {
-    height: 14px;
-    position: absolute;
-    top: 3px;
-    right: 33px;
-}
 .rcl-custom-fields-box .rcl-custom-field .half-width {
     display: inline-block;
     float: left;

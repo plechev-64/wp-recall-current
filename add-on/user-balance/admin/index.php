@@ -72,6 +72,8 @@ function rcl_edit_balance_user() {
 	$user_id = intval( $_POST['user'] );
 	$balance = floatval( str_replace( ',', '.', $_POST['balance'] ) );
 
+	do_action( 'rcl_pre_edit_user_balance_by_admin', $user_id, $balance );
+
 	if ( ! $user_id ) {
 		wp_send_json( array( 'error' => __( 'Balance was not changed', 'wp-recall' ) ) );
 	}
