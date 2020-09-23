@@ -153,7 +153,8 @@ function rcl_get_localize_data() {
 		'preview'	 => __( 'Preview', 'wp-recall' ),
 		'error'		 => __( 'Error', 'wp-recall' ),
 		'loading'	 => __( 'Loading', 'wp-recall' ),
-		'upload'	 => __( 'Upload', 'wp-recall' )
+		'upload'	 => __( 'Upload', 'wp-recall' ),
+		'cancel'	 => __( 'Cancel', 'wp-recall' )
 	);
 
 	$data = array(

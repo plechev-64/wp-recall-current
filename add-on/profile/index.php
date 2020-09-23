@@ -221,7 +221,7 @@ function rcl_tab_profile_content( $master_id ) {
 
 		$fieldInput = $fieldObject->get_field_input();
 
-		if ( isset( $fieldObject->admin ) && $fieldObject->admin ) {
+		if ( isset( $fieldObject->admin ) && $fieldObject->admin && ! rcl_is_user_role( $user_ID, 'administrator' ) ) {
 			if ( $fieldObject->value ) {
 				$fieldInput = $fieldObject->get_field_value();
 			}

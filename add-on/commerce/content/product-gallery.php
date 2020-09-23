@@ -18,7 +18,7 @@ function rcl_get_product_gallery( $product_id, $size = 'rcl-product-thumb' ) {
 
 		if ( $attach_ids ) {
 
-			$gallery = array_unique( array_merge( $image_ids, explode( ',', $attach_ids ) ) );
+			$gallery = array_unique( array_merge( $gallery, explode( ',', $attach_ids ) ) );
 		}
 	}
 

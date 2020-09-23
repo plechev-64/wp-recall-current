@@ -1,5 +1,6 @@
 <?php
 
+//deprecated
 function rcl_get_custom_post_meta( $post_id ) {
 
 	$get_fields = rcl_get_custom_fields( $post_id );

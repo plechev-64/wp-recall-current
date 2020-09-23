@@ -723,6 +723,7 @@ function rcl_upload_meta_file( $field, $user_id, $post_id = 0 ) {
 	}
 }
 
+//deprecated
 function rcl_get_custom_fields( $post_id, $post_type = false, $id_form = false ) {
 
 	if ( $post_id ) {

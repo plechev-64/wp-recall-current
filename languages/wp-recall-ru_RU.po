@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2020-09-22 17:45+0400\n"
+"POT-Creation-Date: 2020-09-22 22:21+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -389,7 +389,7 @@ msgstr "Регистрация при оформлении"
 #: add-on/commerce/admin/pages/addon-settings.php:82
 #: add-on/commerce/admin/pages/addon-settings.php:93
 #: add-on/groups/admin/index.php:25 add-on/prime-forum/admin/index.php:286
-#: add-on/prime-forum/admin/index.php:295 add-on/profile/index.php:158
+#: add-on/prime-forum/admin/index.php:295 add-on/profile/index.php:140
 #: add-on/publicpost/admin/addon-settings.php:48
 #: add-on/publicpost/admin/addon-settings.php:67
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:184
@@ -412,7 +412,7 @@ msgstr "Отключено"
 #: add-on/commerce/admin/pages/addon-settings.php:82
 #: add-on/commerce/admin/pages/addon-settings.php:93
 #: add-on/groups/admin/index.php:26 add-on/prime-forum/admin/index.php:287
-#: add-on/prime-forum/admin/index.php:296 add-on/profile/index.php:159
+#: add-on/prime-forum/admin/index.php:296 add-on/profile/index.php:141
 #: add-on/publicpost/admin/addon-settings.php:49
 #: add-on/publicpost/admin/addon-settings.php:67
 #: add-on/publicpost/classes/class-rcl-public-form-fields.php:185
@@ -707,7 +707,7 @@ msgstr "Данные покупателя"
 msgid "Name"
 msgstr "Имя"
 
-#: add-on/commerce/admin/pages/order.php:20 add-on/profile/index.php:166
+#: add-on/commerce/admin/pages/order.php:20 add-on/profile/index.php:148
 #: classes/class-rcl-custom-fields-manager.php:64
 #: templates/form-register.php:24 wp-recall.php:380
 msgid "E-mail"
@@ -3042,51 +3042,51 @@ msgstr "Настройки профиля"
 msgid "Your profile has been updated"
 msgstr "Ваш профиль был обновлен"
 
-#: add-on/profile/index.php:155
+#: add-on/profile/index.php:137
 msgid "Admin toolbar"
 msgstr "Панель администратора"
 
-#: add-on/profile/index.php:173
+#: add-on/profile/index.php:155
 msgid "New password"
 msgstr "Новый пароль"
 
-#: add-on/profile/index.php:176
+#: add-on/profile/index.php:158
 msgid "If you want to change your password - enter a new one"
 msgstr "Если вы хотите сменить пароль - введите новый"
 
-#: add-on/profile/index.php:181
+#: add-on/profile/index.php:163
 msgid "Repeat password"
 msgstr "Повтор пароля"
 
-#: add-on/profile/index.php:184
+#: add-on/profile/index.php:166
 msgid "Repeat the new password"
 msgstr "Повтор нового пароля"
 
-#: add-on/profile/index.php:210
+#: add-on/profile/index.php:192
 msgid "User profile"
 msgstr "Профиль пользователя"
 
-#: add-on/profile/index.php:273
+#: add-on/profile/index.php:263
 msgid "Update profile"
 msgstr "Обновить профиль"
 
-#: add-on/profile/index.php:287
+#: add-on/profile/index.php:277
 msgid "Delete your profile"
 msgstr "Удаление вашего профиля"
 
-#: add-on/profile/index.php:290
+#: add-on/profile/index.php:280
 msgid "Are you sure? It can’t be restaured!"
 msgstr "Вы серьезно? Восстановить не получиться!"
 
-#: add-on/profile/index.php:333
+#: add-on/profile/index.php:323
 msgid "We are very sorry but your account has been deleted!"
 msgstr "Мы сожалеем, но ваш аккаунт был удален!"
 
-#: add-on/profile/index.php:334
+#: add-on/profile/index.php:324
 msgid "Back to main page"
 msgstr "Вернуться на главную"
 
-#: add-on/profile/index.php:336
+#: add-on/profile/index.php:326
 msgid "Account deletion failed! Go back and try again."
 msgstr "Удаление аккаунта не удалось! Вернитесь назад и повторите попытку."
 
@@ -5704,23 +5704,27 @@ msgstr "Загрузка"
 msgid "Upload"
 msgstr "Загрузить"
 
-#: functions/enqueue-scripts.php:172
+#: functions/enqueue-scripts.php:157
+msgid "Cancel"
+msgstr "Отмена"
+
+#: functions/enqueue-scripts.php:173
 msgid "Fill in all required fields"
 msgstr "Заполните все обязательные поля"
 
-#: functions/enqueue-scripts.php:173
+#: functions/enqueue-scripts.php:174
 msgid "Specify the data in the required format"
 msgstr "Укажите данные в требуемом форумате"
 
-#: functions/enqueue-scripts.php:174
+#: functions/enqueue-scripts.php:175
 msgid "Specify a number within the allowed range"
 msgstr "Укажите число в пределах разрешенного диапазона"
 
-#: functions/enqueue-scripts.php:175
+#: functions/enqueue-scripts.php:176
 msgid "File size is exceeded"
 msgstr "Размер файла превышен"
 
-#: functions/enqueue-scripts.php:176
+#: functions/enqueue-scripts.php:177
 msgid "Invalid file type"
 msgstr "Неверный тип файла"
 
@@ -9216,9 +9220,6 @@ msgstr "Файловый загрузчик"
 
 #~ msgid "Consideration"
 #~ msgstr "на рассмотрении"
-
-#~ msgid "cancel"
-#~ msgstr "отмена"
 
 #~ msgid "The number of purse"
 #~ msgstr "Номер кошелька"

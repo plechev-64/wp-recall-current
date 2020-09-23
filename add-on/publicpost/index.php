@@ -138,12 +138,35 @@ function rcl_concat_post_meta( $content ) {
 			return $content;
 	}
 
-	$pm = rcl_get_custom_post_meta( $post->ID );
+	$pm = rcl_get_post_custom_fields_box( $post->ID );
 
 	if ( rcl_get_option( 'pm_place' ) == 1 )
 		$content .= $pm;
 	else
 		$content = $pm . $content;
+
+	return $content;
+}
+
+function rcl_get_post_custom_fields_box( $post_id ) {
+
+	$formFields = new Rcl_Public_Form_Fields( get_post_type( $post_id ), array(
+		'form_id' => get_post_meta( $post_id, 'publicform-id', 1 )
+		) );
+
+	$customFields = $formFields->get_custom_fields();
+
+	if ( ! $customFields )
+		return false;
+
+	$content = '<div class="rcl-custom-fields">';
+
+	foreach ( $customFields as $field_id => $field ) {
+		$field->set_prop( 'value', get_post_meta( $post_id, $field_id, 1 ) );
+		$content .= $field->get_field_value( true );
+	}
+
+	$content .= '</div>';
 
 	return $content;
 }

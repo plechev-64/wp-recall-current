@@ -1563,14 +1563,14 @@ function RclUploader( props, sk ) {
 						className: 'rcl-hand-uploader',
 						buttons: [ {
 								className: 'btn-success',
-								label: 'Загрузить',
+								label: Rcl.local.upload,
 								closeAfter: true,
 								method: function() {
 									data.submit();
 								}
 							}, {
 								className: 'btn-cancel',
-								label: 'Отмена',
+								label: Rcl.local.cancel,
 								closeAfter: true,
 								method: function() {
 									jcrop_api.destroy();
