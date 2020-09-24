@@ -109,10 +109,10 @@ jQuery( function( $ ) {
 			dataType: 'json',
 			url: ajaxurl,
 			success: function( data ) {
-				if ( data['success'] == addon ) {
-					$( '#' + addon + '-update .update-message' ).toggleClass( 'updating-message updated-message' ).html( 'Успешно обновлен!' );
+				if ( data.addon_id == addon ) {
+					$( '#' + addon + '-update .update-message' ).toggleClass( 'updating-message updated-message' ).html( data.success );
 				}
-				if ( data['error'] ) {
+				if ( data.error ) {
 
 					$( '#' + addon + '-update .update-message' ).removeClass( 'updating-message' );
 
@@ -124,7 +124,7 @@ jQuery( function( $ ) {
 								label: Rcl.local.close,
 								closeAfter: true
 							} ],
-						content: data['error']
+						content: data.error
 					};
 
 					ssi_modal.show( ssiOptions );
@@ -266,10 +266,10 @@ function rcl_update_addon( props, e ) {
 		dataType: 'json',
 		url: ajaxurl,
 		success: function( data ) {
-			if ( data['success'] == props.slug ) {
-				button.addClass( 'button-disabled' ).toggleClass( 'updating-message updated-message' ).html( 'Обновлен!' );
+			if ( data.addon_id == props.slug ) {
+				button.addClass( 'button-disabled' ).toggleClass( 'updating-message updated-message' ).html( data.success );
 			}
-			if ( data['error'] ) {
+			if ( data.error ) {
 
 				button.removeClass( 'updating-message' );
 
@@ -281,7 +281,7 @@ function rcl_update_addon( props, e ) {
 							label: Rcl.local.close,
 							closeAfter: true
 						} ],
-					content: data['error']
+					content: data.error
 				};
 
 				ssi_modal.show( ssiOptions );

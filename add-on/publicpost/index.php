@@ -30,6 +30,12 @@ function rcl_autocomplete_scripts() {
 	rcl_enqueue_script( 'magicsuggest', rcl_addon_url( 'js/magicsuggest/magicsuggest-min.js', __FILE__ ) );
 }
 
+add_filter( 'rcl_init_js_variables', 'rcl_public_add_js_locale', 10 );
+function rcl_public_add_js_locale( $data ) {
+	$data['errors']['cats_important'] = __( 'Choose a category', 'wp-recall' );
+	return $data;
+}
+
 //выводим в медиабиблиотеке только медиафайлы текущего автора
 add_action( 'pre_get_posts', 'rcl_restrict_media_library' );
 function rcl_restrict_media_library( $wp_query_obj ) {

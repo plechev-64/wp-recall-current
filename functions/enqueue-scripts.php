@@ -168,12 +168,14 @@ function rcl_get_localize_data() {
 
 	$data['mobile']	 = (wp_is_mobile()) ? ( int ) 1 : ( int ) 0;
 	$data['https']	 = @( ! isset( $_SERVER["HTTPS"] ) || $_SERVER["HTTPS"] != 'on' ) ? ( int ) 0 : ( int ) 1;
-	$data['slider']	 = rcl_get_option( 'slide-pause' ) ? "{auto:true,pause:" . (rcl_get_option( 'slide-pause' ) * 1000) . "}" : "''";
+	//$data['slider']	 = rcl_get_option( 'slide-pause' ) ? "{auto:true,pause:" . (rcl_get_option( 'slide-pause' ) * 1000) . "}" : "''";
 
 	$data['errors']['required']		 = __( 'Fill in all required fields', 'wp-recall' );
 	$data['errors']['pattern']		 = __( 'Specify the data in the required format', 'wp-recall' );
 	$data['errors']['number_range']	 = __( 'Specify a number within the allowed range', 'wp-recall' );
 	$data['errors']['file_max_size'] = __( 'File size is exceeded', 'wp-recall' );
+	$data['errors']['file_min_size'] = __( 'The insufficient size of the image', 'wp-recall' );
+	$data['errors']['file_max_num']	 = __( 'Number of files exceeded', 'wp-recall' );
 	$data['errors']['file_accept']	 = __( 'Invalid file type', 'wp-recall' );
 
 	return apply_filters( 'rcl_init_js_variables', $data );

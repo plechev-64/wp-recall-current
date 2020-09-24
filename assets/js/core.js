@@ -1394,13 +1394,13 @@ function RclUploader( props, sk ) {
 			inGalleryNow++;
 
 			if ( file.size > options.max_size * 1024 ) {
-				errors.push( 'Превышен размер загружаемого файла. Макс: ' + options.max_size + 'Kb' );
+				errors.push( Rcl.errors.file_max_size + '. Max: ' + options.max_size + 'Kb' );
 			}
 
 		} );
 
 		if ( options.multiple && inGalleryNow > options.max_files ) {
-			errors.push( 'Превышено количество загруженных файлов. Макс: ' + options.max_files );
+			errors.push( Rcl.errors.file_max_num + '. Max: ' + options.max_files );
 		}
 
 		errors = this.filterErrors( errors, data.files, uploader );
@@ -1508,7 +1508,7 @@ function RclUploader( props, sk ) {
 			var maxSize = parseInt( uploader.options.max_size );
 
 			if ( file.size > maxSize * 1024 ) {
-				rcl_notice( 'Превышен максимальный размер файла. Макс:' + ' ' + maxSize + 'Kb', 'error', 10000 );
+				rcl_notice( Rcl.errors.file_max_size + '. Max:' + ' ' + maxSize + 'Kb', 'error', 10000 );
 				return false;
 			}
 
@@ -1540,7 +1540,7 @@ function RclUploader( props, sk ) {
 					var width = img.width();
 
 					if ( height < minHeightCrop || width < minWidthCrop ) {
-						rcl_notice( 'Недостаточный размер изображения. Min:' + ' ' + minWidthCrop + '*' + minHeightCrop + ' px', 'error', 10000 );
+						rcl_notice( Rcl.errors.file_min_size + '. Min:' + ' ' + minWidthCrop + '*' + minHeightCrop + ' px', 'error', 10000 );
 						return false;
 					}
 

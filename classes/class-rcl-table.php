@@ -134,7 +134,7 @@ class Rcl_Table {
 	function get_cell_attrs( $idcol, $cellProps = false, $place = false, $contentCell = false ) {
 
 		$attrs = array(
-			'class' => array( 'rcl-table__cell', 'col-' . $idcol )
+			'class' => array( 'rcl-table__cell', 'rcl-table__col-' . $idcol )
 		);
 
 		$attrs['data-col'] = $idcol;

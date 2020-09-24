@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2020-09-22 22:21+0400\n"
+"POT-Creation-Date: 2020-09-24 11:28+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -46,7 +46,7 @@ msgstr "Добавить новый товар"
 #: add-on/groups/groups-init.php:11 add-on/groups/groups-init.php:54
 #: add-on/groups/groups-public.php:62
 #: add-on/prime-forum/admin/classes/class-prime-manager.php:364
-#: add-on/publicpost/core.php:78 add-on/publicpost/index.php:248
+#: add-on/publicpost/core.php:79 add-on/publicpost/index.php:277
 #: add-on/publicpost/init.php:17
 #: classes/class-rcl-custom-fields-manager.php:504
 #: classes/class-rcl-custom-fields-manager.php:611
@@ -798,6 +798,7 @@ msgid "Similar and recommended products"
 msgstr "Похожие и рекомендуемые товары"
 
 #: add-on/commerce/admin/products-metabox.php:113
+#: add-on/publicpost/index.php:35
 msgid "Choose a category"
 msgstr "Выбрать категорию"
 
@@ -1115,18 +1116,18 @@ msgstr "Все заказы"
 msgid "No orders with status \"%s\" yet"
 msgstr "Заказов со статусом %s пока нет"
 
-#: add-on/commerce/index.php:276
+#: add-on/commerce/index.php:278
 msgid ""
 "Your order has been successfully paid! A notification has been sent to the "
 "administration."
 msgstr ""
 "Ваш заказ успешно оплачен! Уведомление было выслано администрации сервиса."
 
-#: add-on/commerce/index.php:293
+#: add-on/commerce/index.php:296
 msgid "See all orders"
 msgstr "Смотреть все заказы"
 
-#: add-on/commerce/index.php:301
+#: add-on/commerce/index.php:304
 msgid "Delete order"
 msgstr "Удалить заказ"
 
@@ -1938,6 +1939,17 @@ msgstr "Группа форумов"
 msgid "Manage forums"
 msgstr "Управление форумами"
 
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:363
+#: add-on/prime-forum/functions-actions.php:120
+#: add-on/prime-forum/functions-actions.php:191
+#: add-on/publicpost/classes/class-rcl-public-form.php:833
+#: add-on/publicpost/classes/class-rcl-public-form.php:850
+#: add-on/publicpost/core.php:322
+#: classes/fields/class-rcl-fields-manager.php:385
+#: classes/fields/class-rcl-fields-manager.php:478 functions/frontend.php:652
+msgid "Are you sure?"
+msgstr "Вы серьезно?"
+
 #: add-on/prime-forum/admin/classes/class-prime-manager.php:367
 msgid "Get forums"
 msgstr "Получить форумы"
@@ -2485,16 +2497,6 @@ msgstr "Быстрый переход на нужный форум"
 #: add-on/prime-forum/functions-actions.php:117
 msgid "Delete message"
 msgstr "Удалить сообщение"
-
-#: add-on/prime-forum/functions-actions.php:120
-#: add-on/prime-forum/functions-actions.php:191
-#: add-on/publicpost/classes/class-rcl-public-form.php:833
-#: add-on/publicpost/classes/class-rcl-public-form.php:850
-#: add-on/publicpost/core.php:322
-#: classes/fields/class-rcl-fields-manager.php:385
-#: classes/fields/class-rcl-fields-manager.php:478 functions/frontend.php:652
-msgid "Are you sure?"
-msgstr "Вы серьезно?"
 
 #: add-on/prime-forum/functions-actions.php:128
 msgid "Transfer to the existing topic"
@@ -3619,50 +3621,50 @@ msgstr "Если все верно - публикуйте! Если нет, то
 msgid "The field of the thumbnail is inactive!"
 msgstr "Поле миниатюры неактивно!"
 
-#: add-on/publicpost/index.php:194
+#: add-on/publicpost/index.php:223
 msgid "Your post has been deleted"
 msgstr "Ваша публикация была удалена"
 
-#: add-on/publicpost/index.php:195
+#: add-on/publicpost/index.php:224
 msgid "Post"
 msgstr "Публикация"
 
-#: add-on/publicpost/index.php:195
+#: add-on/publicpost/index.php:224
 msgid "has been deleted"
 msgstr "была удалена"
 
-#: add-on/publicpost/index.php:196
+#: add-on/publicpost/index.php:225
 msgid "Notice of a moderator"
 msgstr "Замечание модератора"
 
-#: add-on/publicpost/index.php:472
+#: add-on/publicpost/index.php:501
 msgid "New write"
 msgstr "Новая публикация"
 
-#: add-on/publicpost/index.php:475
+#: add-on/publicpost/index.php:504
 #, php-format
 msgid "An user added new write on the website \"%s\""
 msgstr "Пользователь добавил новую публикацию на сайте \"%s\"!"
 
-#: add-on/publicpost/index.php:476
+#: add-on/publicpost/index.php:505
 msgid "The name of the write"
 msgstr "Наименование публикации"
 
-#: add-on/publicpost/index.php:477
+#: add-on/publicpost/index.php:506
 msgid "The author of the write"
 msgstr "Автор публикации"
 
-#: add-on/publicpost/index.php:478
+#: add-on/publicpost/index.php:507
 msgid ""
 "Don't forget to check this write, probably it is waiting for your moderation"
 msgstr ""
 "Не забудьте проверить эту публикацию, возможно, она ожидает вашей модерации"
 
-#: add-on/publicpost/index.php:499
+#: add-on/publicpost/index.php:528
 msgid "Appoint a thumbnail"
 msgstr "Назначить миниатюру"
 
-#: add-on/publicpost/index.php:522
+#: add-on/publicpost/index.php:551
 msgid "Output in a gallery"
 msgstr "Вывести изображения в галерее"
 
@@ -5365,13 +5367,13 @@ msgstr "Размер файла превышен!"
 msgid "Prohibited file type!"
 msgstr "Запрещенный тип файла!"
 
-#: classes/class-rcl-custom-fields.php:762
-#: classes/class-rcl-custom-fields.php:796
-#: classes/class-rcl-custom-fields.php:827
+#: classes/class-rcl-custom-fields.php:763
+#: classes/class-rcl-custom-fields.php:797
+#: classes/class-rcl-custom-fields.php:828
 msgid "File does not exist on the server!"
 msgstr "Файл не найден на сервере!"
 
-#: classes/class-rcl-custom-fields.php:857
+#: classes/class-rcl-custom-fields.php:858
 msgid "File has been deleted"
 msgstr "Файл был удален"
 
@@ -5389,7 +5391,7 @@ msgstr "Не удалось загрузить контент вкладки"
 
 #: classes/class-rcl-uploader.php:150
 msgid "Types of files"
-msgstr "Типы полей"
+msgstr "Типы файлов"
 
 #: classes/class-rcl-uploader.php:178
 msgid "Upload file"
@@ -5564,7 +5566,11 @@ msgstr "Архив не удалось загрузить на сервер!"
 msgid "Update has incorrect title!"
 msgstr "Полученное дополнение не имеет корректного заголовка!"
 
-#: functions/addons-update.php:284
+#: functions/addons-update.php:280
+msgid "Successfully updated"
+msgstr "Успешно обновлено"
+
+#: functions/addons-update.php:285
 msgid "Unable to open update archive!"
 msgstr "Не удалось открыть полученный архив обновления!"
 
@@ -5725,6 +5731,14 @@ msgid "File size is exceeded"
 msgstr "Размер файла превышен"
 
 #: functions/enqueue-scripts.php:177
+msgid "The insufficient size of the image"
+msgstr "Недостаточный размер изображения"
+
+#: functions/enqueue-scripts.php:178
+msgid "Number of files exceeded"
+msgstr "Количество файлов превышено"
+
+#: functions/enqueue-scripts.php:179
 msgid "Invalid file type"
 msgstr "Неверный тип файла"
 
@@ -6194,9 +6208,6 @@ msgstr "Файловый загрузчик"
 #~ msgid "Maximum file size in megabytes. By default, 2MB"
 #~ msgstr "Максимальный размер файла в мегабайтах. По умолчанию, 2Мб"
 
-#~ msgid "Number of files"
-#~ msgstr "Количество файлов"
-
 #~ msgid "By default, 10"
 #~ msgstr "По-умолчанию, 10"
 
@@ -6268,9 +6279,6 @@ msgstr "Файловый загрузчик"
 
 #~ msgid "Avatar successfully uploaded"
 #~ msgstr "Аватар успешно загружен"
-
-#~ msgid "Image successfully uploaded"
-#~ msgstr "Изображение успешно загружено"
 
 #~ msgid "For example: km или pcs"
 #~ msgstr "Например: км или шт"
@@ -9126,9 +9134,6 @@ msgstr "Файловый загрузчик"
 
 #~ msgid "Use"
 #~ msgstr "Использовать"
-
-#~ msgid "The maximum size of images, Mb"
-#~ msgstr "Максимальный размер изображения, МБ"
 
 #~ msgid "The authorized number of images"
 #~ msgstr "Разрешенное кол-во изображений"

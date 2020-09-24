@@ -276,7 +276,8 @@ function rcl_update_addon() {
 		}
 
 		wp_send_json( array(
-			'success' => $addonID
+			'addon_id'	 => $addonID,
+			'success'	 => __( 'Successfully updated', 'wp-recall' )
 		) );
 	} else {
 

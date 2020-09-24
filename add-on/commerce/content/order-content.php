@@ -94,7 +94,7 @@ function rcl_add_order_pay_form() {
 				'order_id' => $rclOrder->order_id
 			),
 			'pay_type'		 => 'order-payment',
-			'return_url'	 => rcl_get_tab_permalink( $user_ID, 'orders' ) . '&order-id' . $rclOrder->order_id,
+			//'return_url'	 => rcl_get_tab_permalink( $user_ID, 'orders' ) . '&order-id' . $rclOrder->order_id,
 			'pay_id'		 => $rclOrder->order_id,
 			'user_id'		 => $rclOrder->user_id,
 			'pay_summ'		 => $rclOrder->order_price,

@@ -23,7 +23,7 @@ jQuery( document ).ready( function( $ ) {
 				var inGalleryNow = jQuery( '#rcl-upload-gallery-post_uploader .gallery-attachment' ).length + 1;
 
 				if ( inGalleryNow > postUploader.options.max_files ) {
-					errors.push( 'В основной галерее максимальное количество файлов. Макс: ' + postUploader.options.max_files );
+					errors.push( Rcl.errors.file_max_num + '. Max: ' + postUploader.options.max_files );
 				}
 
 				return errors;
@@ -365,7 +365,7 @@ function rcl_check_required_fields( form ) {
 			if ( this.form.find( 'input[name="cats[]"]' ).length > 0 ) {
 				if ( form.find( 'input[name="cats[]"]:checked' ).length == 0 ) {
 					this.shake( form.find( 'input[name="cats[]"]' ) );
-					this.addError( 'checkCats', 'Укажите рубрику' );
+					this.addError( 'checkCats', Rcl.errors.cats_important );
 					valid = false;
 				} else {
 					this.noShake( form.find( 'input[name="cats[]"]' ) );

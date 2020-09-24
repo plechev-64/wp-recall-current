@@ -25,9 +25,9 @@ jQuery( document ).ready( function( $ ) {
 
 } );
 
-function pfm_delete_manager_item( e ) {
+function pfm_delete_manager_item( textConfirm, e ) {
 
-	if ( !confirm( 'Вы уверены?' ) )
+	if ( !confirm( textConfirm ) )
 		return false;
 
 	var item = jQuery( e ).parents( '.rcl-custom-field' );
@@ -47,7 +47,6 @@ function pfm_delete_manager_item( e ) {
 				dialogClass: 'rcl-help-dialog',
 				resizable: false,
 				minWidth: 400,
-				title: 'Форма удаления',
 				open: function( e, data ) {
 
 				},

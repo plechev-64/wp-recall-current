@@ -360,7 +360,7 @@ class PrimeManager extends Rcl_Fields_Manager {
 				<span class="field-type type-' . $field->item . '"></span>
 				<span class="field-title">' . $title . '</span>
 				<span class="field-controls">
-					<a class="field-trash field-control" href="#" title="' . __( 'Delete', 'wp-recall' ) . '" onclick="pfm_delete_manager_item(this); return false;"></a>
+					<a class="field-trash field-control" href="#" title="' . __( 'Delete', 'wp-recall' ) . '" onclick="pfm_delete_manager_item(\'' . __( 'Are you sure?', 'wp-recall' ) . '\',this); return false;"></a>
 					<a class="field-edit field-control" href="#" title="' . __( 'Edit', 'wp-recall' ) . '"></a>';
 
 		if ( $field->item == 'groups' )
