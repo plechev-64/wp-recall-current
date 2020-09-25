@@ -677,6 +677,9 @@ function rcl_send_form_data( action, e ) {
 		rcl_preloader_show( jQuery( e ).parents( '.preloader-parent' ) );
 	}
 
+	if ( typeof tinyMCE !== 'undefined' )
+		tinyMCE.triggerSave();
+
 	rcl_ajax( {
 		data: form.serialize() + '&action=' + action
 	} );

@@ -222,7 +222,7 @@ function rcl_order_statuses() {
 		6	 => __( 'Trash', 'wp-recall' )
 	);
 
-	return apply_filters( 'order_statuses', $sts );
+	return apply_filters( 'rcl_order_statuses', $sts );
 }
 
 function rcl_get_status_name_order( $status_id ) {

@@ -74,6 +74,51 @@ function rcl_add_order_notices() {
 	echo $notice;
 }
 
+add_action( 'rcl_order_before', 'rcl_add_order_details', 20 );
+function rcl_add_order_details() {
+	global $rclOrder;
+
+	$content = '<div class="rcl-order-details order-before-box">';
+
+	$content .= '<div class="title-before-box">' . __( 'Order data', 'wp-recall' ) . '</div>';
+
+	$content .= '<div class="content-before-box">';
+
+	$content .= '<p>' . __( 'Order', 'wp-recall' ) . ' №: ' . $rclOrder->order_id . '</p>';
+	$content .= '<p>' . __( 'Order status', 'wp-recall' ) . ': ' . rcl_get_status_name_order( $rclOrder->order_status ) . '</p>';
+	$content .= '<p>' . __( 'Created date', 'wp-recall' ) . ': ' . $rclOrder->order_date . '</p>';
+
+	$content .= '</div>';
+
+	if ( $rclOrder->order_details ) {
+
+		$content .= '<div class="title-before-box">' . __( 'Data specified when placing the order', 'wp-recall' ) . '</div>';
+
+		$content .= '<div class="content-before-box">';
+
+		if ( is_array( $rclOrder->order_details ) ) {
+
+			foreach ( $rclOrder->order_details as $k => $data ) {
+
+				$data['slug'] = $k;
+
+				$fieldObject = Rcl_Field::setup( $data );
+
+				$content .= $fieldObject->get_field_value( true );
+			}
+		} else {
+			//поддержка заказов созданных ранее версии 16.0
+			$content .= $rclOrder->order_details;
+		}
+
+		$content .= '</div>';
+	}
+
+	$content .= '</div>';
+
+	echo $content;
+}
+
 if ( ! is_admin() )
 	add_action( 'rcl_order_before', 'rcl_add_order_pay_form', 30 );
 function rcl_add_order_pay_form() {
@@ -119,50 +164,4 @@ function rcl_add_order_pay_form() {
 
 		echo $content;
 	}
-}
-
-add_action( 'rcl_order_before', 'rcl_add_order_details', 20 );
-function rcl_add_order_details() {
-	global $rclOrder;
-
-	if ( ! $rclOrder->order_details )
-		return false;
-
-	$content = '<div class="rcl-order-details order-before-box">';
-
-	$content .= '<span class="title-before-box">' . __( 'Order data', 'wp-recall' ) . '</span>';
-
-	$content .= '<div class="content-before-box">';
-
-	$content .= '<p>' . __( 'Order', 'wp-recall' ) . ' №: ' . $rclOrder->order_id . '</p>';
-	$content .= '<p>' . __( 'Order status', 'wp-recall' ) . ': ' . rcl_get_status_name_order( $rclOrder->order_status ) . '</p>';
-	$content .= '<p>' . __( 'Created date', 'wp-recall' ) . ': ' . $rclOrder->order_date . '</p>';
-
-	$content .= '</div>';
-
-	$content .= '<span class="title-before-box">' . __( 'Data specified when placing the order', 'wp-recall' ) . '</span>';
-
-	$content .= '<div class="content-before-box">';
-
-	if ( is_array( $rclOrder->order_details ) ) {
-
-		foreach ( $rclOrder->order_details as $k => $data ) {
-
-			$data['slug'] = $k;
-
-			$fieldObject = Rcl_Field::setup( $data );
-
-			$content .= $fieldObject->get_field_value( true );
-		}
-	} else {
-		//поддержка заказов созданных ранее версии 16.0
-
-		$content .= $rclOrder->order_details;
-	}
-
-	$content .= '</div>';
-
-	$content .= '</div>';
-
-	echo $content;
 }

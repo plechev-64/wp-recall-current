@@ -48,6 +48,7 @@ class Rcl_History_Orders extends WP_List_Table {
 	}
 
 	function column_default( $item, $column_name ) {
+
 		switch ( $column_name ) {
 			case 'order_id':
 				return $item->order_id;
@@ -58,7 +59,7 @@ class Rcl_History_Orders extends WP_List_Table {
 			case 'order_price':
 				return $item->order_price;
 			case 'order_status':
-				return rcl_get_status_name_order( $item->order_status );
+				return apply_filters( 'rcl_order_history_status', rcl_get_status_name_order( $item->order_status ), $item->order_id );
 			case 'order_date':
 				return $item->order_date;
 			default:
