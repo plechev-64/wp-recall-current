@@ -138,7 +138,7 @@ function pfm_ajax_action( object, e ) {
 
 			if ( data['dialog'] ) {
 
-				if ( jQuery( '#ssi-modalContent' ).size() )
+				if ( jQuery( '#ssi-modalContent' ).length )
 					ssi_modal.close();
 
 				var ssiOptions = {

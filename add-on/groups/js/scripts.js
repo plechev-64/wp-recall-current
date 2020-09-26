@@ -23,7 +23,7 @@ jQuery( function( $ ) {
 
 		var value = jQuery( this ).data( 'value' );
 
-		if ( jQuery( '#ssi-modalContent' ).size() )
+		if ( jQuery( '#ssi-modalContent' ).length )
 			rcl_preloader_show( jQuery( '#ssi-modalContent' ) );
 		else
 			rcl_preloader_show( jQuery( '#rcl-group' ) );
@@ -48,7 +48,7 @@ jQuery( function( $ ) {
 			var valname = jQuery( this ).parents( '.group-user-option' ).children( '[name*=\'' + name + '\']' ).val();
 		}
 
-		if ( jQuery( '#ssi-modalContent' ).size() )
+		if ( jQuery( '#ssi-modalContent' ).length )
 			rcl_preloader_show( jQuery( '#ssi-modalContent' ) );
 		else
 			rcl_preloader_show( jQuery( '#rcl-group' ) );

@@ -305,7 +305,7 @@ class Rcl_EditPost {
 			wp_send_json( array( 'redirect' => $redirect_url ) );
 		}
 
-		wp_redirect( $redirect_url );
+		header( "Location: $redirect_url", true, 302 );
 		exit;
 	}
 

@@ -189,7 +189,7 @@ var RclOptionsControl = {
 
 		var childrenBox = jQuery( '[data-parent="' + parentId + '"][data-parent-value="' + parentValue + '"]' );
 
-		if ( !childrenBox.size() )
+		if ( !childrenBox.length )
 			return false;
 
 		childrenBox.show();

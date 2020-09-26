@@ -110,7 +110,9 @@ class Rcl_History_Orders extends WP_List_Table {
 
 		unset( $actions[$status[$item->order_status]] );
 
-		return sprintf( '%1$s %2$s', rcl_get_status_name_order( $item->order_status ), $this->row_actions( $actions ) );
+		$status = apply_filters( 'rcl_order_history_status', rcl_get_status_name_order( $item->order_status ), $item->order_id );
+
+		return sprintf( '%1$s %2$s', $status, $this->row_actions( $actions ) );
 	}
 
 	function column_user_id( $item ) {

@@ -211,10 +211,10 @@ function rcl_notice( text, type, time_close ) {
 	var notice_id = rcl_rand( 1, 1000 );
 
 	var html = '<div id="notice-' + notice_id + '" class="notice-window type-' + options.type + '"><a href="#" class="close-notice"><i class="rcli fa-times"></i></a>' + options.text + '</div>';
-	if ( !jQuery( '#rcl-notice' ).size() ) {
+	if ( !jQuery( '#rcl-notice' ).length ) {
 		jQuery( 'body > div' ).last().after( '<div id="rcl-notice">' + html + '</div>' );
 	} else {
-		if ( jQuery( '#rcl-notice > div' ).size() )
+		if ( jQuery( '#rcl-notice > div' ).length )
 			jQuery( '#rcl-notice > div:last-child' ).after( html );
 		else
 			jQuery( '#rcl-notice' ).html( html );
@@ -375,7 +375,7 @@ function rcl_init_field_maxlength( fieldID ) {
 	var field = jQuery( '#' + fieldID );
 	var maxlength = field.attr( 'maxlength' );
 
-	if ( !field.parent().find( '.maxlength' ).size() ) {
+	if ( !field.parent().find( '.maxlength' ).length ) {
 
 		if ( field.val() ) {
 			maxlength = maxlength - field.val().length;
@@ -503,7 +503,7 @@ function rcl_proccess_ajax_return( result ) {
 
 			if ( dialog.content ) {
 
-				if ( jQuery( '#ssi-modalContent' ).size() )
+				if ( jQuery( '#ssi-modalContent' ).length )
 					ssi_modal.close();
 
 				var ssiOptions = {

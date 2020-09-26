@@ -167,7 +167,7 @@ function rcl_delete_thumbnail_attachment( data ) {
 	if ( data['post_type'] != 'attachment' )
 		return false;
 
-	if ( jQuery( '#rcl-thumbnail-post' ).size() ) {
+	if ( jQuery( '#rcl-thumbnail-post' ).length ) {
 
 		var currentThumbId = jQuery( '#rcl-thumbnail-post .thumbnail-id' ).val();
 

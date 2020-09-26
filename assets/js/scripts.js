@@ -455,7 +455,7 @@ function rcl_init_check_url_params() {
 
 	if ( rcl_url_params['tab'] ) {
 
-		if ( !jQuery( "#lk-content" ).size() )
+		if ( !jQuery( "#lk-content" ).length )
 			return false;
 
 		if ( options.scroll == 1 ) {

@@ -162,6 +162,8 @@ function rcl_get_post_custom_fields_box( $post_id ) {
 
 	$customFields = $formFields->get_custom_fields();
 
+	$customFields = apply_filters( 'rcl_post_custom_fields', $customFields, $post_id );
+
 	if ( ! $customFields )
 		return false;
 
