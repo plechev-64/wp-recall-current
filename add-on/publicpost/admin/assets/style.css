@@ -1,3 +1,11 @@
+#rcl-post-fields-admin-box .rcl-form-field{
+	margin-bottom:15px;
+}
+#rcl-post-fields-admin-box .rcl-form-field > label{
+	font-weight: bold;
+	font-size: 16px;
+	margin-bottom:10px;
+}
 .rcl-custom-fields-menu li {
     display: inline-block;
     margin: 0;

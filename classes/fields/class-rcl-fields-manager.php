@@ -313,7 +313,6 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		unset( $props['default_fields'] );
 
 		$content .= "<script>rcl_init_manager_fields(" . json_encode( $props ) . ");</script>";
-		$content .= "<script>jQuery(window).on('load', function() {rcl_init_iconpicker();});</script>";
 
 		return $content;
 	}

@@ -106,6 +106,7 @@ function rcl_edit_postdata() {
 
 function rcl_edit_post() {
 	$edit = new Rcl_EditPost();
+	$edit->update_post();
 }
 
 //выборка меток по введенным значениям

@@ -119,28 +119,27 @@ function rcl_get_custom_fields_edit_box( $post_id, $post_type = false, $form_id 
 
 	$fields = $RclForm->get_custom_fields();
 
+	if ( $RclForm->is_active_field( 'post_uploader' ) ) {
+
+		$postUploader = $RclForm->get_field( 'post_uploader' );
+		$postUploader->set_prop( 'fix_editor', 'content' );
+
+		$fields = $fields ? ['post_uploader' => $postUploader ] + $fields : ['post_uploader' => $postUploader ];
+	}
+
 	if ( ! $fields )
 		return false;
 
-	$content = '<div class="rcl-custom-fields-box">';
+	rcl_publics_scripts();
+
+	$content = '<div id="rcl-post-fields-admin-box">';
 
 	foreach ( $fields as $field_id => $field ) {
 
 		if ( ! isset( $field->slug ) )
 			continue;
 
-		if ( ! isset( $field->value ) )
-			$field->value = ($post_id) ? get_post_meta( $post_id, $field->slug, 1 ) : '';
-
-		$content .= '<div class="rcl-custom-field">';
-
-		$content .= '<label>' . $field->get_title() . '</label>';
-
-		$content .= '<div class="field-value">';
-		$content .= $field->get_field_input();
-		$content .= '</div>';
-
-		$content .= '</div>';
+		$content .= $RclForm->get_field_form( $field_id );
 	}
 
 	$content .= '</div>';
@@ -220,6 +219,24 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 				}
 			}
 		}
+	}
+
+	//support of uploader in admin
+	if ( isset( $_POST['post_uploader'] ) && $_POST['post_uploader'] ) {
+		global $user_ID;
+
+		$editPost = new Rcl_EditPost();
+
+		$editPost->rcl_add_attachments_in_temps( array(
+			'user_id' => $user_ID
+		) );
+
+		$editPost->update_post_gallery();
+
+		rcl_delete_temp_media_by_args( array(
+			'user_id'			 => $user_ID,
+			'uploader_id__in'	 => array( 'post_uploader', 'post_thumbnail' )
+		) );
 	}
 }
 

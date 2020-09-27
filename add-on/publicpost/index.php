@@ -517,13 +517,15 @@ function rcl_add_post_uploader_image_buttons( $items, $attachment_id, $uploader 
 	if ( ! in_array( $uploader->uploader_id, array( 'post_uploader', 'post_thumbnail' ) ) )
 		return $items;
 
+	$is_admin = function_exists( 'get_current_screen' ) && ! wp_doing_ajax() ? 1 : 0;
+
 	$isImage = wp_attachment_is_image( $attachment_id );
 
 	$formFields = new Rcl_Public_Form_Fields( $uploader->post_type, array(
 		'form_id' => $uploader->form_id
 		) );
 
-	if ( $isImage && $uploader->uploader_id == 'post_uploader' && $formFields->is_active_field( 'post_thumbnail' ) ) {
+	if ( ! $is_admin && ! isset( $_POST['is_wp_admin_page'] ) && $isImage && $uploader->uploader_id == 'post_uploader' && $formFields->is_active_field( 'post_thumbnail' ) ) {
 
 		$items[] = array(
 			'icon'		 => 'fa-image',

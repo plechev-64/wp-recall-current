@@ -753,35 +753,6 @@ div.rcl_preloader i.rcli::before {
 /* END custom fields box */
 
 /* START backend publications */
-#custom_fields_editor_post .rcl-custom-field {
-    padding: 5px;
-}
-#custom_fields_editor_post textarea {
-    height: 90px;
-}
-#custom_fields_editor_post .required {
-    color: rgb(229, 57, 53);
-    font: bold 15px/1 Verdana,arial;
-    margin: 0 3px;
-}
-#custom_fields_editor_post .rcl-checkbox-box {
-    background-color: #eee;
-    border: 1px solid #ddd;
-}
-#custom_fields_editor_post .rcl-radio-box {
-    background-color: #eee;
-    border: 1px solid #ddd;
-    display: inline-block;
-    line-height: 1;
-    margin: 3px 5px 3px 0;
-}
-#custom_fields_editor_post .rcl-radio-box label {
-    display: inline-block;
-    height: 16px;
-    line-height: 16px;
-    margin: 0 0 2px;
-    padding: 6px 7px 6px 0;
-}
 .rcl-custom-fields-box .type-file-input {
     background-color: #fff;
     border: 1px solid #e5e5e5;
@@ -798,17 +769,6 @@ div.rcl_preloader i.rcli::before {
     color: rgb(229, 57, 53);
     content: "\f153";
 }
-#custom_fields_editor_post .dynamic-values {
-    background-color: #fff;
-    border: 1px solid #e5e5e5;
-}
-#custom_fields_editor_post .dynamic-values a {
-    right: 4px;
-}
-#custom_fields_editor_post .dynamic-values .dynamic-value input {
-    width: calc(100% - 35px);
-}
-
 .wrap-recall-options .rcl-radio-box {
 	display: inline-flex;
 	align-items: center;

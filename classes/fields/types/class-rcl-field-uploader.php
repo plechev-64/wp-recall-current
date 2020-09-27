@@ -109,10 +109,10 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 			'dropzone'		 => $this->dropzone,
 			'multiple'		 => $this->multiple,
 			'max_size'		 => $this->max_size,
-			'auto_upload'	 => $this->multiple ? true : false,
+			'auto_upload'	 => $this->multiple ? 1 : 0,
 			'file_types'	 => array_map( 'trim', explode( ',', $this->file_types ) ),
 			'max_files'		 => $this->max_files,
-			'crop'			 => $this->multiple ? false : true,
+			'crop'			 => $this->multiple ? 0 : $this->crop,
 			'input_attach'	 => $this->input_name,
 			'mode_output'	 => $this->mode_output
 			) );

@@ -24,9 +24,11 @@ class Rcl_EditPost {
 			$this->post_type = sanitize_text_field( $_POST['post_type'] );
 		}
 
-		if ( isset( $_POST['post_id'] ) && $_POST['post_id'] ) {
+		$post_id = isset( $_POST['post_ID'] ) && $_POST['post_ID'] ? $_POST['post_ID'] : (isset( $_POST['post_id'] ) && $_POST['post_id'] ? $_POST['post_id'] : 0);
 
-			$this->post_id = intval( $_POST['post_id'] );
+		if ( $post_id ) {
+
+			$this->post_id = intval( $post_id );
 
 			$post = get_post( $this->post_id );
 
@@ -45,8 +47,6 @@ class Rcl_EditPost {
 		do_action( 'init_update_post_rcl', $this );
 
 		add_filter( 'pre_update_postdata_rcl', array( &$this, 'add_data_post' ), 5, 2 );
-
-		$this->update_post();
 	}
 
 	function error( $error ) {
@@ -151,7 +151,7 @@ class Rcl_EditPost {
 		return $temps;
 	}
 
-	function update_post_gallery( $postdata ) {
+	function update_post_gallery() {
 
 		$postGallery = isset( $_POST['rcl-post-gallery'] ) ? $_POST['rcl-post-gallery'] : false;
 

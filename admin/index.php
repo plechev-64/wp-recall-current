@@ -195,6 +195,7 @@ function rcl_delete_temp_default_avatar_cover() {
 }
 
 function rcl_add_cover_options( $options ) {
+	rcl_iconpicker();
 
 	$options->box( 'primary' )->group( 'design' )->add_options( [
 		array(
@@ -202,11 +203,11 @@ function rcl_add_cover_options( $options ) {
 			'temp_media' => 1,
 			'max_size'	 => 5120,
 			'multiple'	 => 0,
-			'crop'		 => 1,
+			'crop'		 => ['ratio' => 0 ],
 			'filetitle'	 => 'rcl-default-cover',
 			'filename'	 => 'rcl-default-cover',
 			'slug'		 => 'default_cover',
-			'title'		 => __( 'Default cover', 'wp-recall' )
+			'title'		 => __( 'Default cover', 'wp-recall' ),
 		),
 		array(
 			'type'		 => 'runner',
@@ -218,6 +219,12 @@ function rcl_add_cover_options( $options ) {
 			'title'		 => __( 'Max weight of cover', 'wp-recall' ) . ', Kb',
 			'notice'	 => __( 'Set the image upload limit in kb, by default', 'wp-recall' ) . ' 1024Kb' .
 			'. ' . __( 'If 0 is specified, download is disallowed.', 'wp-recall' )
+		),
+		array(
+			'type'	 => 'text',
+			'slug'	 => 'dfdfdf',
+			'class'	 => 'rcl-iconpicker',
+			'title'	 => __( 'Max weight of cover', 'wp-recall' ) . ', Kb'
 		)
 	] );
 
@@ -466,7 +473,7 @@ function rcl_send_addon_activation_notice( $addon_id, $addon_headers ) {
 
 /* new fields manager functions */
 
-rcl_ajax_action( 'rcl_manager_get_new_field', false, false );
+rcl_ajax_action( 'rcl_manager_get_new_field', false );
 function rcl_manager_get_new_field() {
 
 	$managerProps = $_POST['props'];
@@ -486,7 +493,7 @@ function rcl_manager_get_new_field() {
 	) );
 }
 
-rcl_ajax_action( 'rcl_manager_get_custom_field_options', false, false );
+rcl_ajax_action( 'rcl_manager_get_custom_field_options', false );
 function rcl_manager_get_custom_field_options() {
 
 	$new_type	 = $_POST['newType'];

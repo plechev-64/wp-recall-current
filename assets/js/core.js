@@ -1283,6 +1283,7 @@ function RclUploader( props, sk ) {
 
 		var formData = {
 			options: JSON.stringify( uploader.options ),
+			is_wp_admin_page: typeof adminpage ? 1 : 0,
 			sk: sk
 		};
 
@@ -1718,8 +1719,6 @@ function rcl_add_attachment_in_editor( attach_id, editor_name, e ) {
 		image = '<a href="' + src + '">' + image + '</a>';
 
 	jQuery( "textarea[name=" + editor_name + "]" ).insertAtCaret( image + "&nbsp;" );
-
-	//var editor_id = jQuery( 'textarea[name="' + editor_name + '"]' ).attr( 'id' );
 
 	if ( typeof tinyMCE != 'undefined' ) {
 		tinyMCE.editors.forEach( function( editor ) {

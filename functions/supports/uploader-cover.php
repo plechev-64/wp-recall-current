@@ -45,7 +45,7 @@ function rcl_add_cover_uploader_button() {
 					'crop'	 => 0
 				)
 			),
-			'resize'		 => array( 2000, 2000 ),
+			'resize'		 => array( 1500, 1500 ),
 			'min_height'	 => 300,
 			'min_width'		 => 600,
 			'max_size'		 => rcl_get_option( 'cover_weight', 1024 )

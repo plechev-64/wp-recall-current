@@ -149,97 +149,97 @@ function rcl_metabox_products( $post ) {
 
 	endif;
 
-	$args = array(
-		'numberposts'	 => -1,
-		'order'			 => 'ASC',
-		'post_mime_type' => 'image',
-		'post_parent'	 => $post->ID,
-		'post_status'	 => null,
-		'post_type'		 => 'attachment'
-	);
+	/* $args = array(
+	  'numberposts'	 => -1,
+	  'order'			 => 'ASC',
+	  'post_mime_type' => 'image',
+	  'post_parent'	 => $post->ID,
+	  'post_status'	 => null,
+	  'post_type'		 => 'attachment'
+	  );
 
-	$attachments = get_children( $args );
+	  $attachments = get_children( $args );
 
-	if ( $attachments ):
+	  if ( $attachments ):
 
-		$content .= '<div class="rcl-product-meta">';
+	  $content .= '<div class="rcl-product-meta">';
 
-		$content .= '<label class="meta-title">' . __( 'Images gallery', 'wp-recall' ) . '</label>';
+	  $content .= '<label class="meta-title">' . __( 'Images gallery', 'wp-recall' ) . '</label>';
 
-		$content .= '<div class="meta-content">';
+	  $content .= '<div class="meta-content">';
 
-		$gallery = explode( ',', get_post_meta( $post->ID, 'children_prodimage', 1 ) );
+	  $gallery = explode( ',', get_post_meta( $post->ID, 'children_prodimage', 1 ) );
 
-		if ( $gallery ) {
+	  if ( $gallery ) {
 
-			$sort		 = array();
-			$new_images	 = array();
+	  $sort		 = array();
+	  $new_images	 = array();
 
-			foreach ( $attachments as $attachment ) {
+	  foreach ( $attachments as $attachment ) {
 
-				$k = array_search( $attachment->ID, $gallery );
+	  $k = array_search( $attachment->ID, $gallery );
 
-				if ( $k !== false ) {
+	  if ( $k !== false ) {
 
-					$sort[$k] = $attachment;
-				} else {
+	  $sort[$k] = $attachment;
+	  } else {
 
-					$new_images[] = $attachment;
-				}
-			}
+	  $new_images[] = $attachment;
+	  }
+	  }
 
-			if ( $new_images ) {
-				foreach ( $new_images as $attachment ) {
-					$sort[] = $attachment;
-				}
-			}
+	  if ( $new_images ) {
+	  foreach ( $new_images as $attachment ) {
+	  $sort[] = $attachment;
+	  }
+	  }
 
 
-			$attachments = $sort;
+	  $attachments = $sort;
 
-			ksort( $attachments );
-		}
+	  ksort( $attachments );
+	  }
 
-		$content .= '<div id="rcl-product-gallery">';
+	  $content .= '<div id="rcl-product-gallery">';
 
-		foreach ( $attachments as $attachment ) {
+	  foreach ( $attachments as $attachment ) {
 
-			$content .= '<span class="image-gallery">';
+	  $content .= '<span class="image-gallery">';
 
-			$content .= '<label>';
+	  $content .= '<label>';
 
-			$content .= '<span class="move-box"></span>';
+	  $content .= '<span class="move-box"></span>';
 
-			$content .= wp_get_attachment_image( $attachment->ID, array( 100, 100 ) );
+	  $content .= wp_get_attachment_image( $attachment->ID, array( 100, 100 ) );
 
-			$content .= '<input type="checkbox" name="children_prodimage[]" ' . checked( in_array( $attachment->ID, $gallery ), true, false ) . ' value="' . $attachment->ID . '">';
+	  $content .= '<input type="checkbox" name="children_prodimage[]" ' . checked( in_array( $attachment->ID, $gallery ), true, false ) . ' value="' . $attachment->ID . '">';
 
-			$content .= '</label>';
+	  $content .= '</label>';
 
-			$content .= '</span>';
-		}
+	  $content .= '</span>';
+	  }
 
-		$content .= '</div>';
+	  $content .= '</div>';
 
-		$content .= '<script>
-                jQuery(function(){
-                    jQuery("#rcl-product-gallery").sortable({
-                        connectWith: "#rcl-product-gallery",
-                        containment: "parent",
-                        handle: ".move-box",
-                        cursor: "move",
-                        placeholder: "ui-sortable-placeholder",
-                        distance: 5
-                    });
-                    return false;
-                });
-            </script>';
+	  $content .= '<script>
+	  jQuery(function(){
+	  jQuery("#rcl-product-gallery").sortable({
+	  connectWith: "#rcl-product-gallery",
+	  containment: "parent",
+	  handle: ".move-box",
+	  cursor: "move",
+	  placeholder: "ui-sortable-placeholder",
+	  distance: 5
+	  });
+	  return false;
+	  });
+	  </script>';
 
-		$content .= '</div>';
+	  $content .= '</div>';
 
-		$content .= '</div>';
+	  $content .= '</div>';
 
-	endif;
+	  endif; */
 
 	$metaBox = '<div class="rcl-products-metabox">';
 	$metaBox .= apply_filters( 'rcl_products_custom_fields', $content, $post );

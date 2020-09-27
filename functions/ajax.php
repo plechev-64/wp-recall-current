@@ -182,7 +182,7 @@ function rcl_upload() {
 }
 
 //удаление фото приложенных к публикации через загрузчик плагина
-rcl_ajax_action( 'rcl_ajax_delete_attachment', true, true );
+rcl_ajax_action( 'rcl_ajax_delete_attachment', true );
 function rcl_ajax_delete_attachment() {
 	global $user_ID;
 

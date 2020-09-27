@@ -473,12 +473,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 						$uploader = $field->get_uploader();
 
 						if ( $this->post_id ) {
-							global $wpdb;
-
-							$imagIds = RQ::tbl( new Rcl_Query( [
-									'name'	 => $wpdb->posts,
-									'cols'	 => ['ID', 'post_parent', 'post_type', 'post_status' ]
-								] ) )->select( ['ID' ] )->where( [
+							$imagIds = RQ::tbl( new Rcl_Posts_Query() )->select( ['ID' ] )->where( [
 									'post_parent'	 => $this->post_id,
 									'post_type'		 => 'attachment',
 								] )->limit( -1 )->order( 'ASC' )->get_col();

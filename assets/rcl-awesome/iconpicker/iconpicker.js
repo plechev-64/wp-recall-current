@@ -3203,3 +3203,7 @@
 			} ]
 	} );
 } );
+
+jQuery( window ).on( 'load', function() {
+	rcl_init_iconpicker();
+} );
