@@ -195,7 +195,6 @@ function rcl_delete_temp_default_avatar_cover() {
 }
 
 function rcl_add_cover_options( $options ) {
-	rcl_iconpicker();
 
 	$options->box( 'primary' )->group( 'design' )->add_options( [
 		array(
@@ -219,12 +218,6 @@ function rcl_add_cover_options( $options ) {
 			'title'		 => __( 'Max weight of cover', 'wp-recall' ) . ', Kb',
 			'notice'	 => __( 'Set the image upload limit in kb, by default', 'wp-recall' ) . ' 1024Kb' .
 			'. ' . __( 'If 0 is specified, download is disallowed.', 'wp-recall' )
-		),
-		array(
-			'type'	 => 'text',
-			'slug'	 => 'dfdfdf',
-			'class'	 => 'rcl-iconpicker',
-			'title'	 => __( 'Max weight of cover', 'wp-recall' ) . ', Kb'
 		)
 	] );
 

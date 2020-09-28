@@ -134,7 +134,6 @@ function pfm_update_topic_custom_fields( $topic_id ) {
 
 				if ( $value != $attach_id ) {
 					wp_delete_attachment( $attach_id );
-					//pfm_delete_topic_meta( $topic_id, $slug );
 				}
 			}
 
