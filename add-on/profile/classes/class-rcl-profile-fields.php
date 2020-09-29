@@ -43,7 +43,7 @@ class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager {
 					'type'	 => 'textarea'
 				),
 				array(
-					'slug'	 => 'birthday',
+					'slug'	 => 'rcl_birthday',
 					'title'	 => __( 'Birthday', 'wp-recall' ),
 					'icon'	 => 'fa-birthday-cake',
 					'type'	 => 'date'
