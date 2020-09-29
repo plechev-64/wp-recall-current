@@ -42,7 +42,7 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 		if ( $this->pay_systems_not_in )
 			$this->ids__not_in = $this->pay_systems_not_in;
 
-		$connects = rcl_get_commerce_option( 'connect_sale' );
+		$connects = rcl_get_commerce_option( 'payment_gateways', rcl_get_commerce_option( 'connect_sale' ) );
 
 		$checkSystems	 = is_array( $connects ) ? $connects : array( $connects );
 		$checkSystems[]	 = 'user_balance';
@@ -126,6 +126,9 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 		$k		 = 0;
 		foreach ( $this->gateways as $id => $gateway ) {
 
+			if ( $gateway->handle_forms )
+				continue;
+
 			$form = false;
 
 			if ( $this->pre_form ) {
@@ -183,6 +186,9 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 			$values	 = array();
 			$styles	 = '';
 			foreach ( $this->gateways as $id => $gateway ) {
+
+				if ( $gateway->handle_forms )
+					continue;
 
 				$values[$id] = $gateway->label;
 

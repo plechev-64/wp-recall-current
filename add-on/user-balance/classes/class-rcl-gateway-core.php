@@ -8,6 +8,9 @@ class Rcl_Gateway_Core {
 	public $label;
 	public $icon;
 	public $submit;
+	public $handle_activate	 = false;
+	public $handle_options	 = false;
+	public $handle_forms	 = false;
 
 	function __construct( $args = false ) {
 
@@ -39,7 +42,7 @@ class Rcl_Gateway_Core {
 
 	function add_gateway_options( $optionsManager ) {
 
-		if ( ! $options = $this->get_options() )
+		if ( $this->handle_options || ! $options = $this->get_options() )
 			return $optionsManager;
 
 		$optionsManager->add_box( $this->id, array(
@@ -151,6 +154,10 @@ class Rcl_Gateway_Core {
 			'pay_system'	 => $this->id
 			) );
 
+		$args['baggage_data'] = ($args['baggage_data']) ? json_decode( base64_decode( $args['baggage_data'] ) ) : false;
+
+		$args = apply_filters( 'rcl_pre_insert_payment_args', $args );
+
 		$pay_status = $wpdb->insert( RMAG_PREF . 'pay_results', array(
 			'payment_id'	 => $args['pay_id'],
 			'user_id'		 => $args['user_id'],
@@ -169,8 +176,6 @@ class Rcl_Gateway_Core {
 
 			exit;
 		}
-
-		$args['baggage_data'] = ($args['baggage_data']) ? json_decode( base64_decode( $args['baggage_data'] ) ) : false;
 
 		$object = ( object ) $args;
 

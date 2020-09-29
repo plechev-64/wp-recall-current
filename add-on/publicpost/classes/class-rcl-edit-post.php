@@ -273,10 +273,7 @@ class Rcl_EditPost {
 
 		$this->update_post_gallery( $postdata );
 
-		if ( isset( $_POST['add-gallery-rcl'] ) && $_POST['add-gallery-rcl'] == 1 )
-			update_post_meta( $this->post_id, 'recall_slider', 1 );
-		else
-			delete_post_meta( $this->post_id, 'recall_slider' );
+		delete_post_meta( $this->post_id, 'recall_slider' );
 
 		rcl_update_post_custom_fields( $this->post_id, $formID );
 

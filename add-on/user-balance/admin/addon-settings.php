@@ -10,7 +10,7 @@ function rcl_user_account_options( $options ) {
 
 	$systems = array();
 	foreach ( rcl_gateways()->gateways as $id => $className ) {
-		if ( $id == 'user_balance' )
+		if ( $id == 'user_balance' || rcl_gateways()->gateway( $id )->handle_activate )
 			continue;
 		$systems[$id] = rcl_gateways()->gateway( $id )->label;
 	}
@@ -53,9 +53,9 @@ function rcl_user_account_options( $options ) {
 		$groupOptions[] = array(
 			'type'	 => 'checkbox',
 			'title'	 => __( 'The using payments systems', 'wp-recall' ),
-			'slug'	 => 'connect_sale',
+			'slug'	 => 'payment_gateways',
 			'values' => $systems,
-			'value'	 => is_array( $group->get_value( 'connect_sale' ) ) ? $group->get_value( 'connect_sale' ) : array( $group->get_value( 'connect_sale' ) ),
+			'value'	 => rcl_get_commerce_option( 'payment_gateways', rcl_get_commerce_option( 'connect_sale' ) ),
 			'notice' => __( 'Applied connection type', 'wp-recall' )
 		);
 
@@ -112,7 +112,7 @@ function rcl_user_account_options( $options ) {
 		$groupOptions[] = array(
 			'type'		 => 'custom',
 			'title'		 => __( 'The using systems of payment', 'wp-recall' ),
-			'slug'		 => 'connect_sale',
+			'slug'		 => 'payment_gateways',
 			'content'	 => rcl_get_notice( [
 				'type'	 => 'error',
 				'text'	 => 'Похоже ни одного подключения не настроено. Скачайте <a href="https://codeseller.ru/product_tag/platezhnye-sistemy/" target="_blank">одно из доступных дополнений</a> для подключения к платежному агрегатору и настройте его'

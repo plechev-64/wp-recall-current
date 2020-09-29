@@ -12,7 +12,7 @@ class Rcl_Payment_Process extends Rcl_Payment_Core {
 
 		$this->post_id = $post && isset( $post->ID ) ? $post->ID : 0;
 
-		$this->ids = rcl_get_commerce_option( 'connect_sale' );
+		$this->ids = rcl_get_commerce_option( 'payment_gateways', rcl_get_commerce_option( 'connect_sale' ) );
 
 		if ( ! is_array( $this->ids ) )
 			$this->ids = array_map( 'trim', explode( ',', $this->ids ) );
@@ -38,9 +38,13 @@ class Rcl_Payment_Process extends Rcl_Payment_Core {
 	function payment_process( $gateway_id ) {
 
 		switch ( $this->post_id ) {
-			case $this->page_result: rcl_gateways()->gateway( $gateway_id )->result( $this );
+			case $this->page_result:
+				do_action( 'rcl_pre_payment_result', $gateway_id, $this );
+				rcl_gateways()->gateway( $gateway_id )->result( $this );
 				break;
-			case $this->page_success: rcl_gateways()->gateway( $gateway_id )->success( $this );
+			case $this->page_success:
+				do_action( 'rcl_pre_payment_success', $gateway_id, $this );
+				rcl_gateways()->gateway( $gateway_id )->success( $this );
 				break;
 		}
 	}
