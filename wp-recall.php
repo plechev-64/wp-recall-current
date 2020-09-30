@@ -14,6 +14,8 @@
 
 /*  Copyright 2012  Plechev Andrey  (email : support {at} codeseller.ru)  */
 
+/* sfdfdfdfdf */
+
 final class WP_Recall {
 
 	public $version				 = '16.24.11';
