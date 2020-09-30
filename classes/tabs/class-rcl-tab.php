@@ -140,7 +140,7 @@ class Rcl_Tab {
 			}
 		}
 
-		$onclick = $ajaxLoad ? 'rcl_load_tab("' . $this->id . '", "", this);return false;' : null;
+		$onclick = $ajaxLoad ? 'rcl_load_tab("' . $this->id . '", 0, this);return false;' : null;
 
 		if ( $this->onclick ) {
 			$onclick = $this->onclick;
@@ -202,22 +202,14 @@ class Rcl_Tab {
 		if ( ! $this->current_id )
 			$this->current_id = $this->get_active_subtab_id();
 
-		$ulClass = 'rcl-subtabs-menu';
-
-		$content = '<ul class="' . $ulClass . '">';
+		$content = '<div class="rcl-subtabs-menu rcl-wrap">';
 
 		foreach ( $this->content as $subtab ) {
 
-			$class = 'menu-item menu-item-' . $subtab->id;
-
-			$content .= '<li class="' . $class . '">';
-
 			$content .= $subtab->get_button( $this->current_id == $subtab->id ? ['status' => 'active' ] : [ ]  );
-
-			$content .= '</li>';
 		}
 
-		$content .= '</ul>';
+		$content .= '</div>';
 
 		return $content;
 	}

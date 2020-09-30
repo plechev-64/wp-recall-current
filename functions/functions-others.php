@@ -105,11 +105,16 @@ function rcl_mail( $email, $title, $text, $from = false, $attach = false ) {
 
 	$headers = 'From: ' . $from_name . ' <' . $from_mail . '>' . "\r\n";
 
-	$text .= '<p><small>-----------------------------------------------------<br/>
+	$content = rcl_get_include_template( 'mail.php', false, [
+		'mail_title'	 => $title,
+		'mail_content'	 => $text
+		] );
+
+	$content .= '<p><small>-----------------------------------------------------<br/>
 	' . __( 'This letter was created automatically, no need to answer it.', 'wp-recall' ) . '<br/>
 	"' . get_bloginfo( 'name' ) . '"</small></p>';
 
-	return wp_mail( $email, $title, $text, $headers, $attach );
+	return wp_mail( $email, $title, $content, $headers, $attach );
 }
 
 function rcl_get_form( $args ) {
@@ -118,7 +123,7 @@ function rcl_get_form( $args ) {
 }
 
 function rcl_get_notice( $args ) {
-	require_once 'classes/class-rcl-notice.php';
+	require_once RCL_PATH . '/classes/class-rcl-notice.php';
 	$Notice = new Rcl_Notice( $args );
 	return $Notice->get_notice();
 }

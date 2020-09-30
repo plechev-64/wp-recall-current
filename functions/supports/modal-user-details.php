@@ -59,7 +59,7 @@ function rcl_get_user_details( $user_id, $args = false ) {
 	$args = wp_parse_args( $args, $defaults );
 
 	if ( ! class_exists( 'Rcl_Blocks' ) )
-		require_once RCL_PATH . 'classes/class-rcl-blocks.php';
+		require_once RCL_PATH . 'deprecated/class-rcl-blocks.php';
 
 	$content = '<div id="rcl-user-details">';
 

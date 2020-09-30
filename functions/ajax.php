@@ -21,52 +21,93 @@ function rcl_is_ajax() {
 	return (defined( 'DOING_AJAX' ) && DOING_AJAX || isset( $GLOBALS['wp']->query_vars['rest_route'] ));
 }
 
-//загрузка вкладки ЛК через AJAX
-rcl_ajax_action( 'rcl_ajax_tab', true );
-function rcl_ajax_tab() {
+rcl_ajax_action( 'rcl_load_tab', true );
+function rcl_load_tab() {
 	global $user_LK;
 
 	rcl_verify_ajax_nonce();
 
-	$post = rcl_decode_post( $_POST['post'] );
+	$tab_id		 = $_POST['tab_id'];
+	$subtab_id	 = $_POST['subtab_id'];
+	$office_id	 = intval( $_POST['office_id'] );
 
-	do_action( 'rcl_init_ajax_tab', $post->tab_id );
-
-	$tab = rcl_get_tab( $post->tab_id );
+	$tab = RCL()->tabs()->tab( $tab_id );
 
 	if ( ! $tab ) {
 		wp_send_json( array( 'error' => __( 'Data of the requested tab was not found.', 'wp-recall' ) ) );
 	}
 
-	$ajax = (in_array( 'ajax', $tab['supports'] ) || in_array( 'dialog', $tab['supports'] )) ? 1 : 0;
+	$ajax = (in_array( 'ajax', $tab->supports ) || in_array( 'dialog', $tab->supports )) ? 1 : 0;
 
 	if ( ! $ajax ) {
 		wp_send_json( array( 'error' => __( 'Perhaps this add-on does not support ajax loading', 'wp-recall' ) ) );
 	}
 
-	$user_LK = intval( $post->master_id );
+	$user_LK = $office_id;
 
-	$content = rcl_get_tab_content( $post->tab_id, $post->master_id, isset( $post->subtab_id ) ? $post->subtab_id : ''  );
+	RCL()->tabs()->current_id	 = $tab_id;
+	$tab->current_id			 = $subtab_id ? $subtab_id : $tab->content[0]->id;
 
-	if ( ! $content ) {
-		wp_send_json( array( 'error' => __( 'Unable to obtain content of the requested tab', 'wp-recall' ) ) );
-	}
+	$content = $tab->get_menu();
 
-	$content = apply_filters( 'rcl_ajax_tab_content', $content );
+	$content .= $tab->subtab( $subtab_id )->get_content();
 
-	$result = apply_filters( 'rcl_ajax_tab_result', array(
-		'result' => $content,
-		'post'	 => array(
-			'tab_id'	 => $post->tab_id,
-			'subtab_id'	 => isset( $post->subtab_id ) ? $post->subtab_id : '',
-			'tab_url'	 => (isset( $_POST['tab'] )) ? $_POST['tab_url'] . '&tab=' . $_POST['tab'] : $_POST['tab_url'],
-			'supports'	 => $tab['supports'],
-			'master_id'	 => $post->master_id
-		)
-		) );
-
-	wp_send_json( $result );
+	wp_send_json( array(
+		'content'	 => $content,
+		'tab'		 => $tab,
+		'tab_id'	 => $tab->id,
+		'subtab_id'	 => $subtab_id ? $subtab_id : '',
+		'tab_url'	 => $tab->subtab( $subtab_id )->get_permalink(),
+		'supports'	 => $tab->supports
+	) );
 }
+
+//загрузка вкладки ЛК через AJAX
+/* rcl_ajax_action( 'rcl_ajax_tab', true );
+  function rcl_ajax_tab() {
+  global $user_LK;
+
+  rcl_verify_ajax_nonce();
+
+  $post = rcl_decode_post( $_POST['post'] );
+
+  do_action( 'rcl_init_ajax_tab', $post->tab_id );
+
+  $tab = rcl_get_tab( $post->tab_id );
+
+  if ( ! $tab ) {
+  wp_send_json( array( 'error' => __( 'Data of the requested tab was not found.', 'wp-recall' ) ) );
+  }
+
+  $ajax = (in_array( 'ajax', $tab['supports'] ) || in_array( 'dialog', $tab['supports'] )) ? 1 : 0;
+
+  if ( ! $ajax ) {
+  wp_send_json( array( 'error' => __( 'Perhaps this add-on does not support ajax loading', 'wp-recall' ) ) );
+  }
+
+  $user_LK = intval( $post->master_id );
+
+  $content = rcl_get_tab_content( $post->tab_id, $post->master_id, isset( $post->subtab_id ) ? $post->subtab_id : ''  );
+
+  if ( ! $content ) {
+  wp_send_json( array( 'error' => __( 'Unable to obtain content of the requested tab', 'wp-recall' ) ) );
+  }
+
+  $content = apply_filters( 'rcl_ajax_tab_content', $content );
+
+  $result = apply_filters( 'rcl_ajax_tab_result', array(
+  'result' => $content,
+  'post'	 => array(
+  'tab_id'	 => $post->tab_id,
+  'subtab_id'	 => isset( $post->subtab_id ) ? $post->subtab_id : '',
+  'tab_url'	 => (isset( $_POST['tab'] )) ? $_POST['tab_url'] . '&tab=' . $_POST['tab'] : $_POST['tab_url'],
+  'supports'	 => $tab['supports'],
+  'master_id'	 => $post->master_id
+  )
+  ) );
+
+  wp_send_json( $result );
+  } */
 
 //регистрируем биение плагина
 rcl_ajax_action( 'rcl_beat', true );

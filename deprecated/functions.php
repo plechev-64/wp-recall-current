@@ -178,7 +178,7 @@ function rcl_setup_blocks() {
 		return false;
 
 	if ( ! class_exists( 'Rcl_Blocks' ) )
-		require_once RCL_PATH . 'classes/class-rcl-blocks.php';
+		require_once RCL_PATH . 'deprecated/class-rcl-blocks.php';
 
 	foreach ( $rcl_blocks as $place_id => $blocks ) {
 		if ( ! $blocks )

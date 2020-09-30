@@ -124,17 +124,23 @@ class Rcl_Tabs {
 		return $ids;
 	}
 
-	function get_menu( $menu_id, $tab_ids = false ) {
+	function get_menu( $menu_id, $args = array() ) {
 
-		if ( ! $tab_ids && ! $tab_ids = $this->get_access_menu_items( $menu_id ) )
+		$tab_ids = isset( $args['tab_ids'] ) && $args['tab_ids'] ? $args['tab_ids'] : $this->get_access_menu_items( $menu_id );
+
+		if ( ! $tab_ids )
 			return false;
 
 		if ( ! $this->current_id )
 			$this->current_id = $this->get_current_id();
 
-		$ulClass = 'rcl-tabs-menu';
+		$classes = ['rcl-tabs-menu', 'rcl-wrap' ];
 
-		$content = '<ul class="' . $ulClass . '">';
+		if ( isset( $args['class'] ) && $args['class'] ) {
+			$classes[] = $args['class'];
+		}
+
+		$content = '<div id="rcl-tabs-menu-' . $menu_id . '" class="' . implode( ' ', $classes ) . '">';
 
 		foreach ( $tab_ids as $tab_id ) {
 
@@ -142,20 +148,10 @@ class Rcl_Tabs {
 				continue;
 			}
 
-			$class = 'menu-item menu-item-' . $tab_id;
-
-			if ( $this->current_id == $tab_id ) {
-				$class .= ' current-menu-item';
-			}
-
-			$content .= '<li class="' . $class . '">';
-
 			$content .= $tab->get_button( $this->current_id == $tab_id ? ['status' => 'active' ] : [ ]  );
-
-			$content .= '</li>';
 		}
 
-		$content .= '</ul>';
+		$content .= '</div>';
 
 		return $content;
 	}

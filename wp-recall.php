@@ -139,8 +139,6 @@ final class WP_Recall {
 		 */
 
 		require_once 'classes/class-rcl-cache.php';
-		require_once 'classes/class-rcl-custom-fields.php';
-		require_once 'classes/class-rcl-custom-fields-manager.php';
 
 		require_once 'classes/query/class-rcl-old-query.php';
 		require_once 'classes/query/class-rcl-query.php';
@@ -214,6 +212,8 @@ final class WP_Recall {
 
 		require_once "functions/frontend.php";
 
+		require_once 'deprecated/class-rcl-custom-fields.php';
+		require_once 'deprecated/class-rcl-custom-fields-manager.php';
 		require_once "deprecated/functions.php";
 
 		if ( $this->is_request( 'admin' ) ) {

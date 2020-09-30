@@ -17,7 +17,9 @@ function rcl_add_office_menu_counters() {
 
 add_action( 'rcl_area_menu', 'rcl_add_office_menu_menu', 10 );
 function rcl_add_office_menu_menu() {
-	echo RCL()->tabs()->get_menu( 'menu' );
+	echo RCL()->tabs()->get_menu( 'menu', [
+		'class' => rcl_get_option( 'buttons_place', 0 ) ? 'rcl-wrap__vertical' : false
+	] );
 }
 
 add_action( 'rcl_area_tabs', 'rcl_add_office_tab_content', 10 );
