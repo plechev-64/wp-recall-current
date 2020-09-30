@@ -45,7 +45,7 @@ function rcl_setup_author_role() {
 	}
 }
 
-add_action( 'init', 'rcl_init_publics_block', 20 );
+add_action( 'rcl_init_tabs', 'rcl_init_publics_block', 20 );
 function rcl_init_publics_block() {
 
 	if ( rcl_get_option( 'publics_block_rcl' ) == 1 ) {

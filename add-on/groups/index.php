@@ -218,7 +218,7 @@ function rcl_add_postlist_group() {
 	rcl_postlist( 'group', 'post-group', __( 'Groups records', 'wp-recall' ), array( 'order' => 40 ) );
 }
 
-add_action( 'init', 'rcl_add_tab_groups' );
+add_action( 'rcl_init_tabs', 'rcl_add_tab_groups' );
 function rcl_add_tab_groups() {
 
 	rcl_tab(

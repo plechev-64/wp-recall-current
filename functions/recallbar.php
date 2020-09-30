@@ -1,5 +1,15 @@
 <?php
 
+//регистрация recallbar`a
+add_action( 'after_setup_theme', 'rcl_register_recallbar' );
+function rcl_register_recallbar() {
+
+	if ( ! rcl_get_option( 'view_recallbar' ) )
+		return false;
+
+	register_nav_menus( array( 'recallbar' => __( 'Recallbar', 'wp-recall' ) ) );
+}
+
 add_action( 'wp_footer', 'rcl_recallbar_menu', 3 );
 function rcl_recallbar_menu() {
 	rcl_include_template( 'recallbar.php' );

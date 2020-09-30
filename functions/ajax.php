@@ -1,5 +1,14 @@
 <?php
 
+/* 14.0.0 */
+function rcl_verify_ajax_nonce() {
+	if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
+		return false;
+	if ( ! wp_verify_nonce( $_POST['ajax_nonce'], 'rcl-post-nonce' ) ) {
+		wp_send_json( array( 'error' => __( 'Signature verification failed', 'wp-recall' ) . '!' ) );
+	}
+}
+
 function rcl_ajax_action( $function_name, $guest_access = false ) {
 
 	add_action( 'wp_ajax_' . $function_name, $function_name );

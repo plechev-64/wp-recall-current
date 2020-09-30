@@ -1,5 +1,17 @@
 <?php
 
+function rcl_get_addon_paths() {
+
+	$paths = array(
+		RCL_TAKEPATH . 'add-on',
+		RCL_PATH . 'add-on'
+	);
+
+	$paths = apply_filters( 'rcl_addon_paths', $paths );
+
+	return $paths;
+}
+
 function rcl_get_addon( $addon_id ) {
 
 	if ( ! rcl_exist_addon( $addon_id ) )

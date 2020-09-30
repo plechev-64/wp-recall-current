@@ -64,11 +64,10 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 				)
 			)
 		) );
-		//print_r($this);
+
 		$this->setup_tabs();
 
 		add_filter( 'rcl_field_options', array( $this, 'edit_tab_options' ), 10, 3 );
-		//print_r($this);
 	}
 
 	function form_navi() {
@@ -98,12 +97,11 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 	}
 
 	function is_default_tab( $slug ) {
-		global $rcl_tabs;
 
-		if ( isset( $rcl_tabs[$slug] ) && ! isset( $rcl_tabs[$slug]['custom-tab'] ) )
-			return true;
+		if ( ! $tab = RCL()->tabs()->tab( $slug ) )
+			return false;
 
-		return false;
+		return $tab->custom_tab ? false : true;
 	}
 
 	function setup_tabs() {
@@ -123,12 +121,14 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 				}
 			}
 
-			foreach ( $defaultTabs as $tab ) {
-				if ( $this->is_active_field( $tab['slug'] ) )
-					continue;
-				$this->add_field( $tab );
+			if ( $defaultTabs ) {
+				foreach ( $defaultTabs as $tab ) {
+					if ( $this->is_active_field( $tab['slug'] ) )
+						continue;
+					$this->add_field( $tab );
+				}
 			}
-		}else {
+		}else if ( $defaultTabs ) {
 
 			foreach ( $defaultTabs as $tab ) {
 				$this->add_field( $tab );
@@ -137,21 +137,18 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 	}
 
 	function get_default_tabs() {
-		global $rcl_tabs;
 
-		if ( ! $rcl_tabs )
+		if ( ! RCL()->tabs )
 			return false;
 
 		$fields = array();
 
-		foreach ( $rcl_tabs as $tab_id => $tab ) {
+		foreach ( RCL()->tabs as $tab_id => $tab ) {
 
-			if ( isset( $tab['custom-tab'] ) )
+			if ( $tab->custom_tab )
 				continue;
 
-			$tabArea = (isset( $tab['output'] )) ? $tab['output'] : 'menu';
-
-			if ( 'area-' . $tabArea != $this->manager_id )
+			if ( 'area-' . $tab->output != $this->manager_id )
 				continue;
 
 			$fields[] = array(
@@ -161,8 +158,8 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 				'default-tab'	 => true,
 				'type'			 => 'custom',
 				'must_delete'	 => false,
-				'title'			 => $tab['name'],
-				'icon'			 => $tab['icon']
+				'title'			 => $tab->name,
+				'icon'			 => $tab->icon
 			);
 		}
 
@@ -170,7 +167,6 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 	}
 
 	function edit_tab_options( $options, $field, $type ) {
-		global $rcl_tabs;
 
 		if ( ! $field->slug )
 			return $options;
@@ -182,7 +178,7 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 			unset( $options['content'] );
 			unset( $options['slug'] );
 
-			$options['icon']['placeholder'] = $rcl_tabs[$field->slug]['icon'];
+			$options['icon']['placeholder'] = RCL()->tabs()->tab( $field->slug )->icon;
 
 			$options['default-tab'] = array(
 				'type'	 => 'hidden',

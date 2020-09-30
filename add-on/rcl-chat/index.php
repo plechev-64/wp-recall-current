@@ -119,7 +119,7 @@ function rcl_chat_add_inline_styles( $styles, $rgb ) {
 	return $styles;
 }
 
-add_action( 'init', 'rcl_add_chat_tab', 10 );
+add_action( 'rcl_init_tabs', 'rcl_add_chat_tab', 10 );
 function rcl_add_chat_tab() {
 	global $user_ID;
 
@@ -274,7 +274,7 @@ function rcl_get_user_contacts_list( $user_id ) {
 
 		return rcl_get_notice( [
 			'text' => apply_filters( 'rcl_chat_no_contacts_notice', $notice, $user_id )
-		] );
+			] );
 	}
 
 	rcl_dialog_scripts();

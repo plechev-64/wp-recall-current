@@ -42,7 +42,7 @@ function rcl_register_rating_base_type() {
 	);
 }
 
-add_action( 'init', 'rcl_add_rating_tab' );
+add_action( 'rcl_init_tabs', 'rcl_add_rating_tab' );
 function rcl_add_rating_tab() {
 	global $user_LK;
 

@@ -47,7 +47,7 @@ function pfm_scripts() {
 	}
 }
 
-add_action( 'init', 'pfm_init_tab', 10 );
+add_action( 'rcl_init_tabs', 'pfm_init_tab', 10 );
 function pfm_init_tab() {
 
 	rcl_tab(

@@ -41,7 +41,7 @@ function rcl_add_userlist_follow_button() {
 	echo '<div class="follow-button">' . rcl_add_feed_button( $rcl_user->ID ) . '</div>';
 }
 
-add_action( 'init', 'rcl_add_followers_tab', 10 );
+add_action( 'rcl_init_tabs', 'rcl_add_followers_tab', 10 );
 function rcl_add_followers_tab() {
 	global $user_LK;
 	$count = 0;
@@ -70,7 +70,7 @@ function rcl_add_followers_tab() {
 	);
 }
 
-add_action( 'init', 'rcl_add_subscriptions_tab', 10 );
+add_action( 'rcl_init_tabs', 'rcl_add_subscriptions_tab', 10 );
 function rcl_add_subscriptions_tab() {
 	global $user_LK;
 	$count = 0;

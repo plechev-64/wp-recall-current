@@ -53,10 +53,10 @@ class Rcl_Sub_Tabs {
 
 		foreach ( $this->subtabs as $key => $tab ) {
 
-			if ( ! isset( $tab['name'] ) || ! $tab['name'] )
+			if ( ! $tab['name'] )
 				continue;
 
-			$classes = array( 'rcl-subtab-button' );
+			$classes = ($this->active_tab == $tab['id']) ? array( 'rcl-bttn__active', 'rcl-subtab-button' ) : array( 'rcl-subtab-button' );
 
 			if ( isset( $this->parent_tab['supports'] ) ) {
 				if ( in_array( 'ajax', $this->parent_tab['supports'] ) ) {
@@ -64,27 +64,21 @@ class Rcl_Sub_Tabs {
 				}
 			}
 
-			$button_args = array(
-				'class'	 => implode( ' ', $classes ),
+			$tab_url = $this->url_string( $master_id, $tab['id'] );
+
+			$content .= rcl_get_button( array(
 				'label'	 => $tab['name'],
-				'href'	 => $this->url_string( $master_id, $tab['id'] ),
-				'status' => $this->active_tab == $tab['id'] ? 'active' : false
-			);
-
-			if ( isset( $tab['icon'] ) ) {
-				$button_args['icon'] = $tab['icon'];
-			}
-
-			$button_args['data'] = [
-				'post' => rcl_encode_post( [
-					'tab_id'	 => $this->parent_id,
-					'subtab_id'	 => $tab['id'],
-					'master_id'	 => $master_id
-					]
+				'href'	 => isset( $tab['query_args'] ) && $tab['query_args'] ? add_query_arg( $tab['query_args'], $tab_url ) : $tab_url,
+				'class'	 => implode( ' ', $classes ),
+				'icon'	 => isset( $tab['icon'] ) ? $tab['icon'] : '',
+				'data'	 => array(
+					'post' => rcl_encode_post( array(
+						'tab_id'	 => $this->parent_id,
+						'subtab_id'	 => $tab['id'],
+						'master_id'	 => $master_id
+					) )
 				)
-			];
-
-			$content .= rcl_get_button( $button_args );
+				) );
 		}
 
 		$content .= '</div>';
@@ -95,12 +89,12 @@ class Rcl_Sub_Tabs {
 	function get_subtab( $master_id ) {
 
 		foreach ( $this->subtabs as $key => $tab ) {
-			if ( isset( $tab['id'] ) && $this->active_tab == $tab['id'] ) {
+			if ( $this->active_tab == $tab['id'] ) {
 				$this->callback = (isset( $tab['callback'] )) ? $tab['callback'] : false;
 			}
 		}
 
-		$content = '<div id="subtab-' . $this->active_tab . '" class="rcl-subtab-content">';
+		$funcContent = false;
 
 		if ( $this->callback ) {
 
@@ -117,10 +111,10 @@ class Rcl_Sub_Tabs {
 					'get_subtab: ' . __( 'Failed to load tab content', 'wp-recall' ), $this->callback
 				);
 			}
-
-			$content .= $funcContent;
 		}
 
+		$content = '<div id="subtab-' . $this->active_tab . '" class="rcl-subtab-content">';
+		$content .= apply_filters( 'rcl_subtab_content', $funcContent, $this->active_tab, $this->parent_id );
 		$content .= '</div>';
 
 		return $content;

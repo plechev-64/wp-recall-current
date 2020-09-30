@@ -45,13 +45,13 @@ class Rcl_Tab {
 
 	function register_tab() {
 		add_filter( 'rcl_content_area_tabs', array( $this, 'print_tab' ), $this->order );
-		if ( $this->output && ! $this->hidden )
+		if ( $this->output && ! $this->hidden ) {
 			add_filter( 'rcl_content_area_' . $this->output, array( $this, 'print_tab_button' ), $this->order );
+		}
 	}
 
 	function print_tab( $content ) {
-		global $user_LK, $rcl_tabs;
-		//print_r( $rcl_tabs );
+		global $user_LK;
 		$content .= $this->get_tab( $user_LK );
 		return $content;
 	}
@@ -78,7 +78,7 @@ class Rcl_Tab {
 	}
 
 	function get_tab_content( $master_id, $subtab_id = false ) {
-		global $rcl_tab, $rcl_tabs;
+		global $rcl_tab;
 
 		$subtabs = apply_filters( 'rcl_subtabs', $this->content, $this->id );
 
@@ -177,30 +177,31 @@ class Rcl_Tab {
 			);
 		}
 
-		/* will open this code in the future version of plugin
-		 * if ( $this->onclick ) {
+		/* 17.0.0 */
+		/* if($this->onclick){
 
-		  $html_button = rcl_get_button( [
-		  'label'		 => $name,
-		  'icon'		 => $icon,
-		  'onclick'	 => $this->onclick
-		  ] );
-		  } else {
+		  $html_button = rcl_get_button(array(
+		  'label' => $name,
+		  'icon'=> $icon,
+		  'onclick' =>  $this->onclick.';return false;'
+		  ));
 
-		  $html_button = rcl_get_button( [
-		  'label'	 => $name,
-		  'url'	 => rcl_get_tab_permalink( $master_id, $this->id ),
-		  'class'	 => $this->get_class_button(),
-		  'icon'	 => $icon,
-		  'data'	 => [
-		  'post' => rcl_encode_post( array(
-		  'tab_id'	 => $this->id,
-		  'master_id'	 => $master_id
-		  ) )
-		  ]
-		  ] );
-		  }
-		 */
+		  }else{
+
+		  $html_button = rcl_get_button(array(
+		  'label' => $name,
+		  'href' => rcl_get_tab_permalink($master_id,$this->id),
+		  'class' => $this->get_class_button(),
+		  'icon'=> $icon,
+		  'data' => array(
+		  'post' => rcl_encode_post(array(
+		  'tab_id'=>$this->id,
+		  'master_id'=>$master_id
+		  ))
+		  )
+		  ));
+
+		  } */
 
 		return sprintf( '<span class="rcl-tab-button" data-tab="%s" id="tab-button-%s">%s</span>', $this->id, $this->id, $html_button );
 	}
@@ -218,9 +219,9 @@ class Rcl_Tab {
 
 		$content = '';
 
-		$rcl_cache = new Rcl_Cache();
+		if ( $this->use_cache && in_array( 'cache', $this->supports ) ) {
 
-		if ( $this->use_cache && in_array( 'cache', $this->supports ) && $rcl_cache->is_cache ) {
+			$rcl_cache = new Rcl_Cache();
 
 			$protocol = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://' : 'https://';
 

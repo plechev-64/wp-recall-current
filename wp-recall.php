@@ -3,7 +3,7 @@
   Plugin Name: WP-Recall
   Plugin URI: https://codeseller.ru/?p=69
   Description: Фронт-енд профиль, система личных сообщений и рейтинг пользователей на сайте вордпресс.
-  Version: 16.24.11
+  Version: 16.25.0
   Author: Plechev Andrey
   Author URI: https://codeseller.ru/
   Text Domain: wp-recall
@@ -14,14 +14,13 @@
 
 /*  Copyright 2012  Plechev Andrey  (email : support {at} codeseller.ru)  */
 
-/* sfdfdfdfdf */
-
 final class WP_Recall {
 
-	public $version				 = '16.24.11';
+	public $version				 = '16.25.0';
 	public $child_addons		 = array();
 	public $need_update			 = false;
 	public $fields				 = array();
+	public $tabs				 = array();
 	protected static $_instance	 = null;
 
 	/*
@@ -129,6 +128,10 @@ final class WP_Recall {
 		}
 	}
 
+	function tabs() {
+		return Rcl_Tabs::instance();
+	}
+
 	public function includes() {
 		/*
 		 * Здесь подключим те фалы которые нужны глобально для плагина
@@ -169,6 +172,10 @@ final class WP_Recall {
 		require_once 'classes/fields/types/class-rcl-field-file.php';
 		require_once 'classes/fields/types/class-rcl-field-hidden.php';
 
+		require_once 'classes/tabs/class-rcl-sub-tab.php';
+		require_once 'classes/tabs/class-rcl-tab.php';
+		require_once 'classes/tabs/class-rcl-tabs.php';
+
 		require_once 'classes/class-rcl-user.php';
 		require_once 'classes/class-rcl-form.php';
 		require_once 'classes/class-rcl-walker.php';
@@ -190,14 +197,24 @@ final class WP_Recall {
 		require_once 'functions/cron.php';
 		require_once 'functions/loginform.php';
 		require_once 'functions/currency.php';
-		require_once 'functions/functions-media.php';
 		require_once 'functions/deprecated.php';
 		require_once 'functions/shortcodes.php';
 
-		require_once 'rcl-functions.php';
+		require_once 'functions/functions-access.php';
+		require_once 'functions/functions-avatar.php';
+		require_once 'functions/functions-cache.php';
+		require_once 'functions/functions-media.php';
+		require_once 'functions/functions-office.php';
+		require_once 'functions/functions-options.php';
+		require_once 'functions/functions-tabs.php';
+		require_once 'functions/functions-user.php';
+		require_once 'functions/functions-others.php';
+
 		require_once 'rcl-widgets.php';
 
 		require_once "functions/frontend.php";
+
+		require_once "deprecated/functions.php";
 
 		if ( $this->is_request( 'admin' ) ) {
 			$this->admin_includes();
@@ -265,6 +282,14 @@ final class WP_Recall {
 
 			$this->init_frontend_globals();
 		}
+
+		do_action( 'rcl_init_tabs' );
+
+		$this->tabs()->init_custom_tabs();
+
+		$this->tabs()->order_tabs();
+
+		do_action( 'rcl_setup_tabs' );
 
 		if ( ! rcl_get_option( 'security-key' ) ) {
 			rcl_update_option( 'security-key', wp_generate_password( 20, false ) );

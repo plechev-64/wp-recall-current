@@ -162,7 +162,7 @@ function rcl_register_rating_product_type() {
 }
 
 //инициализация вкладки личного кабинета
-add_action( 'init', 'rcl_tab_orders', 10 );
+add_action( 'rcl_init_tabs', 'rcl_tab_orders', 10 );
 function rcl_tab_orders() {
 
 	$tab_data = array(

@@ -22,7 +22,7 @@ function rcl_init_js_profile_variables( $data ) {
 	return $data;
 }
 
-add_action( 'init', 'rcl_tab_profile' );
+add_action( 'rcl_init_tabs', 'rcl_tab_profile' );
 function rcl_tab_profile() {
 
 	rcl_tab(
