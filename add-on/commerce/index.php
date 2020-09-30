@@ -12,6 +12,9 @@ require_once 'classes/class-rcl-cart-constructor.php';
 require_once 'classes/class-rcl-product-variations.php';
 require_once 'classes/class-rcl-product-price.php';
 
+require_once RCL_PATH . 'modules/content-manager/index.php';
+require_once 'classes/class-rcl-orders-table-manager.php';
+
 require_once 'content/order-content.php';
 require_once 'content/product-gallery.php';
 require_once 'content/product-related.php';
@@ -167,89 +170,43 @@ function rcl_tab_orders() {
 
 	$tab_data = array(
 		'id'		 => 'orders',
-		'name'		 => __( 'Orders', 'wp-recall' ),
+		'name'		 => __( 'Все заказы', 'wp-recall' ),
 		'supports'	 => array( 'ajax' ),
 		'public'	 => 0,
-		'icon'		 => 'fa-shopping-cart'
+		'icon'		 => 'fa-shopping-cart',
+		'content'	 => [
+			array(
+				'id'		 => 'all-orders',
+				'name'		 => __( 'Orders', 'wp-recall' ),
+				'callback'	 => array(
+					'name' => 'rcl_orders_tab'
+				)
+			)
+		]
 	);
 
-	if ( isset( $_GET['order-id'] ) ) {
+	if ( isset( $_GET['subtab'] ) && $_GET['subtab'] == 'single-order' ) {
 
 		$tab_data['content'][] = array(
-			'id'		 => 'all-orders',
-			'name'		 => __( 'Orders', 'wp-recall' ),
+			'id'		 => 'single-order',
+			'name'		 => __( 'Order', 'wp-recall' ) . ' №' . intval( $_GET['order-id'] ),
 			'callback'	 => array(
 				'name'	 => 'rcl_single_order_tab',
 				'args'	 => array( intval( $_GET['order-id'] ) )
 			)
 		);
-	} else {
-
-		$statuses = rcl_order_statuses();
-
-		$tab_data['content'][] = array(
-			'id'		 => 'all-orders',
-			'name'		 => __( 'All orders', 'wp-recall' ),
-			'icon'		 => 'fa-shopping-bag',
-			'callback'	 => array(
-				'name'	 => 'rcl_orders_tab',
-				'args'	 => array( false )
-			)
-		);
-
-		foreach ( $statuses as $k => $name ) {
-			$tab_data['content'][] = array(
-				'id'		 => 'status-' . $k,
-				'name'		 => $name,
-				'icon'		 => 'fa-folder-o',
-				'callback'	 => array(
-					'name'	 => 'rcl_orders_tab',
-					'args'	 => array( $k )
-				)
-			);
-		}
 	}
 
 	rcl_tab( $tab_data );
 }
 
-function rcl_orders_tab( $status_id ) {
-	global $user_LK, $rcl_orders;
+function rcl_orders_tab( $master_id ) {
 
-	$args = array(
-		'user_id'	 => $user_LK,
-		'fields'	 => array(
-			'order_id',
-			'user_id',
-			'order_price',
-			'products_amount',
-			'order_status',
-			'order_date'
-		)
-	);
+	$ordersManager = new Rcl_Orders_Table_Manager( [
+		'user_id' => $master_id
+		] );
 
-	if ( $status_id ) {
-		$args['order_status'] = $status_id;
-	}
-
-	$count = rcl_count_orders( $args );
-
-	if ( ! $count )
-		return rcl_get_notice( ['text' => sprintf( __( 'No orders with status "%s" yet', 'wp-recall' ), rcl_get_status_name_order( $status_id ) ) ] );
-
-	$pagenavi = new Rcl_PageNavi( 'rcl-orders', $count, array( 'in_page' => 30 ) );
-
-	$args['offset'] = $pagenavi->offset;
-
-	$rcl_orders = rcl_get_orders( $args );
-
-	$content = $pagenavi->pagenavi();
-
-	$content .= rcl_get_include_template( 'orders-history.php', __FILE__ );
-
-	$content .= $pagenavi->pagenavi();
-
-	return $content;
+	return $ordersManager->get_manager();
 }
 
 /* ниже рассортировать */
@@ -287,12 +244,7 @@ function rcl_add_payment_order( $pay ) {
 function rcl_get_order_manager() {
 	global $user_ID, $rclOrder;
 
-	$args = array(
-		array(
-			'href'	 => rcl_get_tab_permalink( $user_ID, 'orders' ),
-			'title'	 => __( 'See all orders', 'wp-recall' )
-		)
-	);
+	$args = array();
 
 	if ( $rclOrder->order_status == 1 ) {
 

@@ -1,27 +1,26 @@
 <?php
 
-/* 14.0.0 */
 function rcl_verify_ajax_nonce() {
-	if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )
-		return false;
-	if ( ! wp_verify_nonce( $_POST['ajax_nonce'], 'rcl-post-nonce' ) ) {
-		wp_send_json( array( 'error' => __( 'Signature verification failed', 'wp-recall' ) . '!' ) );
-	}
-}
-
-function rcl_ajax_action( $function_name, $guest_access = false ) {
-
-	add_action( 'wp_ajax_' . $function_name, $function_name );
-
-	if ( $guest_access )
-		add_action( 'wp_ajax_nopriv_' . $function_name, $function_name );
+	$ajax = new Rcl_Ajax();
+	$ajax->verify();
 }
 
 function rcl_is_ajax() {
 	return (defined( 'DOING_AJAX' ) && DOING_AJAX || isset( $GLOBALS['wp']->query_vars['rest_route'] ));
 }
 
-rcl_ajax_action( 'rcl_load_tab', true );
+function rcl_ajax_action( $function_name, $guest_access = false, $rest = false ) {
+
+	$ajax = new Rcl_Ajax( array(
+		'rest'	 => $rest,
+		'name'	 => $function_name,
+		'nopriv' => $guest_access
+		) );
+
+	$ajax->init();
+}
+
+rcl_ajax_action( 'rcl_load_tab', true, true );
 function rcl_load_tab() {
 	global $user_LK;
 

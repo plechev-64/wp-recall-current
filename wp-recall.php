@@ -139,6 +139,8 @@ final class WP_Recall {
 		 */
 
 		require_once 'classes/class-rcl-cache.php';
+		require_once 'classes/class-rcl-ajax.php';
+		require_once 'classes/class-rcl-pager.php';
 
 		require_once 'classes/query/class-rcl-old-query.php';
 		require_once 'classes/query/class-rcl-query.php';
@@ -178,7 +180,6 @@ final class WP_Recall {
 		require_once 'classes/class-rcl-form.php';
 		require_once 'classes/class-rcl-walker.php';
 		require_once 'classes/class-rcl-includer.php';
-		require_once 'classes/class-rcl-pagenavi.php';
 		require_once 'classes/class-rcl-install.php';
 		require_once 'classes/class-rcl-log.php';
 		require_once 'classes/class-rcl-table.php';
@@ -214,6 +215,7 @@ final class WP_Recall {
 
 		require_once 'deprecated/class-rcl-custom-fields.php';
 		require_once 'deprecated/class-rcl-custom-fields-manager.php';
+		require_once 'deprecated/class-rcl-pagenavi.php';
 		require_once "deprecated/functions.php";
 
 		if ( $this->is_request( 'admin' ) ) {

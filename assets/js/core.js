@@ -571,9 +571,9 @@ function rcl_ajax( prop ) {
 
 	if ( typeof Rcl != 'undefined' ) {
 		if ( typeof prop.data === 'string' ) {
-			prop.data += '&ajax_nonce=' + Rcl.nonce;
+			prop.data += '&_wpnonce=' + Rcl.nonce;
 		} else if ( typeof prop.data === 'object' ) {
-			prop.data.ajax_nonce = Rcl.nonce;
+			prop.data._wpnonce = Rcl.nonce;
 		}
 	}
 
@@ -589,6 +589,38 @@ function rcl_ajax( prop ) {
 		action = prop.data.action;
 	}
 
+	var url;
+
+	if ( prop.rest ) {
+
+		var restAction = prop.data.action;
+		var restRoute = restAction;
+		var restSpace = 'rcl';
+
+		if ( typeof prop.rest === 'object' ) {
+
+			if ( prop.rest.action )
+				restAction = prop.rest.action;
+			if ( prop.rest.space )
+				restSpace = prop.rest.space;
+			if ( prop.rest.route )
+				restRoute = prop.rest.route;
+			else
+				restRoute = restAction;
+
+		}
+
+		if ( Rcl.permalink )
+			url = Rcl.wpurl + '/wp-json/' + restSpace + '/' + restRoute + '/';
+		else
+			url = Rcl.wpurl + '/?rest_route=/' + restSpace + '/' + restRoute + '/';
+
+	} else {
+
+		url = ( typeof ajax_url !== 'undefined' ) ? ajax_url : Rcl.ajaxurl;
+
+	}
+
 	if ( typeof tinyMCE != 'undefined' )
 		tinyMCE.triggerSave();
 
@@ -596,7 +628,7 @@ function rcl_ajax( prop ) {
 		type: 'POST',
 		data: prop.data,
 		dataType: 'json',
-		url: ( typeof ajaxurl !== 'undefined' ) ? ajaxurl : Rcl.ajaxurl,
+		url: url,
 		success: function( result, post ) {
 
 			var noticeTime = result.notice_time ? result.notice_time : 5000;

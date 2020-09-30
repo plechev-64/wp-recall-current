@@ -1,0 +1,91 @@
+.rcl-content-manager .rcl-pager{
+	text-align: right;
+}
+.rcl-content-manager .manager-buttons{
+	text-align: right;
+}
+
+#rcl-manager-filter{
+	float: left;
+	width: 300px;
+	margin-right: 10px;
+	padding: 10px;
+	position: relative;
+}
+#rcl-manager-filter.dropdown-filter{
+	float:none;
+	margin: 0;
+	padding: 0;
+}
+#rcl-manager-filter .switch-button{
+	display: block;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    line-height: 1;
+}
+#rcl-manager-filter .filter-content{
+	position: absolute;
+	z-index: 9;
+	background: #fff;
+	box-shadow: 2px 2px 2px #ccc;
+	padding: 10px;
+	left: 0;
+	max-height: 500px;
+	overflow-y: auto;
+	display: none;
+	width: 100%;
+	border-left: 1px solid #ccc;
+}
+#rcl-manager-filter .form-fields{
+	/*display: flex;*/
+}
+#rcl-manager-filter .form-fields div{
+
+}
+
+#rcl-cols-manager{
+	display: flex;
+}
+#rcl-cols-manager .cols-box{
+	width: 50%;
+	background: #ccc;
+	margin: 10px;
+	padding: 5px;
+}
+#rcl-cols-manager .list-title{
+	text-align: center;
+	font-weight: bold;
+	background: #fff;
+	padding: 10px;
+}
+#rcl-cols-manager .cols-list{
+	height: 100%;
+}
+#rcl-cols-manager .single-col{
+	margin: 5px 0 0 0;
+	background: #ffeded;
+	padding: 10px;
+	border-radius: 3px;
+	border: 1px solid #ccc;
+}
+#rcl-cols-manager .single-col:not(.disabled){
+	cursor: move;
+	background: #dbffdb;
+}
+#rcl-cols-manager .single-col.hidden{
+	display:none;
+}
+#rcl-cols-manager .col-name{
+
+}
+#rcl-cols-manager .ui-sortable-placeholder {
+	background: #fff;
+	border: 2px dashed #aaa;
+	box-sizing: border-box;
+	height: 40px;
+	width: 100%;
+	margin: 10px 0;
+}
+

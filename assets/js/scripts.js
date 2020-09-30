@@ -16,15 +16,12 @@ function rcl_load_tab( tab_id, subtab_id, e ) {
 
 	var button = jQuery( e );
 
-	//if ( button.hasClass( 'tab-upload' ) )
-	//return false;
-
 	rcl_do_action( 'rcl_before_upload_tab', button );
 
 	rcl_preloader_show( jQuery( '#rcl-tab-content' ) );
 
 	rcl_ajax( {
-		//rest: true,
+		rest: true,
 		data: {
 			action: 'rcl_load_tab',
 			tab_id: tab_id,
@@ -32,8 +29,6 @@ function rcl_load_tab( tab_id, subtab_id, e ) {
 			office_id: Rcl.office_ID
 		},
 		success: function( data ) {
-
-			//button.removeClass( 'tab-upload' );
 
 			data = rcl_apply_filters( 'rcl_upload_tab', data );
 

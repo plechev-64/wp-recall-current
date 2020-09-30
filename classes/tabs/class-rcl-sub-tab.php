@@ -66,12 +66,10 @@ class Rcl_Sub_Tab {
 		}
 
 		$args = wp_parse_args( $args, array(
-			//'class'		 => implode( ' ', $this->get_class_button() ),
 			'label'		 => $this->name,
 			'icon'		 => $this->icon,
 			'counter'	 => $this->counter,
 			'href'		 => $this->get_permalink(),
-			//'status'	 => $status,
 			'onclick'	 => $ajaxLoad ? 'rcl_load_tab("' . $tab->id . '", "' . $this->id . '", this);return false;' : null
 			) );
 
@@ -85,7 +83,11 @@ class Rcl_Sub_Tab {
 
 		$content = '<div id="rcl-subtab-' . $this->id . '">';
 
-		$content .= '<div class="tab-title"><i class="fa ' . $this->icon . '" aria-hidden="true"></i> ' . $title . '</div>';
+		$content .= '<div class="tab-title">';
+		if ( $this->icon )
+			$content .= '<i class="fa ' . $this->icon . '" aria-hidden="true"></i> ';
+		$content .= $title;
+		$content .= '</div>';
 
 		if ( $this->callback ) {
 

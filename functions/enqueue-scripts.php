@@ -162,7 +162,7 @@ function rcl_get_localize_data() {
 		'wpurl'		 => get_bloginfo( 'wpurl' ),
 		'rcl_url'	 => RCL_URL,
 		'user_ID'	 => ( int ) $user_ID,
-		'nonce'		 => wp_create_nonce( 'rcl-post-nonce' ),
+		'nonce'		 => wp_create_nonce( 'wp_rest' ),
 		'local'		 => apply_filters( 'rcl_js_localize', $local )
 	);
 
