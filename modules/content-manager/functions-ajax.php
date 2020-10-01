@@ -1,6 +1,6 @@
 <?php
 
-rcl_ajax_action( 'rcl_get_table_manager_cols' );
+rcl_ajax_action( 'rcl_get_table_manager_cols', true, true );
 function rcl_get_table_manager_cols() {
 
 	rcl_verify_ajax_nonce();
@@ -25,7 +25,7 @@ function rcl_get_table_manager_cols() {
 	) );
 }
 
-rcl_ajax_action( 'rcl_save_table_manager_cols' );
+rcl_ajax_action( 'rcl_save_table_manager_cols', true, true );
 function rcl_save_table_manager_cols() {
 
 	rcl_verify_ajax_nonce();
@@ -41,7 +41,7 @@ function rcl_save_table_manager_cols() {
 	) );
 }
 
-rcl_ajax_action( 'rcl_load_content_manager' );
+rcl_ajax_action( 'rcl_load_content_manager', true, true );
 function rcl_load_content_manager() {
 
 	rcl_verify_ajax_nonce();
@@ -57,7 +57,7 @@ function rcl_load_content_manager() {
 	) );
 }
 
-rcl_ajax_action( 'rcl_load_content_manager_state' );
+rcl_ajax_action( 'rcl_load_content_manager_state', true, true );
 function rcl_load_content_manager_state() {
 
 	rcl_verify_ajax_nonce();

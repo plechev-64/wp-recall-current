@@ -2,10 +2,10 @@
 
 global $rcl_options, $wpdb;
 
-require_once RCL_PATH . 'admin/classes/class-rcl-options-manager.php';
+RCL()->use_module( 'options-manager' );
 
 //needed for the working of old cases
-require_once RCL_PATH . 'classes/class-rcl-options.php';
+require_once RCL_PATH . 'deprecated/class-rcl-options.php';
 
 rcl_font_awesome_style();
 

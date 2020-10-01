@@ -1,5 +1,7 @@
 <?php
 
+RCL()->use_module( 'fields-manager' );
+
 $Manager = new Rcl_Fields_Manager( 'products-variations', array(
 	'switch_type'	 => true,
 	'types'			 => array(

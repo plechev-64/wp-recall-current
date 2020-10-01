@@ -1,5 +1,7 @@
 <?php
 
+RCL()->use_module( 'fields-manager' );
+
 class PrimeManager extends Rcl_Fields_Manager {
 
 	public $forum_groups;

@@ -21,6 +21,8 @@ final class WP_Recall {
 	public $need_update			 = false;
 	public $fields				 = array();
 	public $tabs				 = array();
+	public $modules				 = array();
+	public $used_modules		 = array();
 	protected static $_instance	 = null;
 
 	/*
@@ -64,9 +66,41 @@ final class WP_Recall {
 
 		$this->define_constants(); //Определяем константы.
 		$this->includes(); //Подключаем все нужные файлы с функциями и классами
+		$this->init_modules(); //Определяем модули.
 		$this->init_hooks(); //Тут все наши хуки
 
 		do_action( 'wp_recall_loaded' ); //Оставляем кручёк
+	}
+
+	private function init_modules() {
+
+		$this->modules = [
+			'table'				 => new Rcl_Module( RCL_PATH . 'modules/table/index.php' ),
+			'tabs'				 => new Rcl_Module( RCL_PATH . 'modules/tabs/index.php' ),
+			'forms'				 => new Rcl_Module( RCL_PATH . 'modules/forms/index.php', ['fields' ] ),
+			'fields'			 => new Rcl_Module( RCL_PATH . 'modules/fields/index.php' ),
+			'fields-manager'	 => new Rcl_Module( RCL_PATH . 'modules/fields-manager/index.php', ['fields' ] ),
+			'content-manager'	 => new Rcl_Module( RCL_PATH . 'modules/content-manager/index.php', ['fields', 'table' ] ),
+			'options-manager'	 => new Rcl_Module( RCL_PATH . 'modules/options-manager/index.php', ['fields' ] ),
+		];
+	}
+
+	function use_module( $module_id ) {
+
+		if ( $this->used_modules && in_array( $module_id, $this->used_modules ) )
+			return;
+
+		$module = $this->modules[$module_id];
+
+		if ( $module->parents ) {
+			foreach ( $module->parents as $parent_id ) {
+				$this->use_module( $parent_id );
+			}
+		}
+
+		$this->modules[$module_id]->inc();
+
+		$this->used_modules[] = $module_id;
 	}
 
 	private function init_hooks() {
@@ -129,6 +163,9 @@ final class WP_Recall {
 	}
 
 	function tabs() {
+
+		$this->use_module( 'tabs' );
+
 		return Rcl_Tabs::instance();
 	}
 
@@ -137,6 +174,7 @@ final class WP_Recall {
 		 * Здесь подключим те фалы которые нужны глобально для плагина
 		 * Остальные распихаем по соответсвующим функциям
 		 */
+		require_once 'classes/class-rcl-module.php';
 
 		require_once 'classes/class-rcl-cache.php';
 		require_once 'classes/class-rcl-ajax.php';
@@ -148,41 +186,13 @@ final class WP_Recall {
 
 		require_once 'classes/class-rcl-query-tables.php';
 
-		require_once 'classes/fields/class-rcl-field-abstract.php';
-		require_once 'classes/fields/class-rcl-field.php';
-		require_once 'classes/fields/class-rcl-fields.php';
-		require_once 'classes/fields/class-rcl-fields-manager.php';
-		require_once 'classes/fields/types/class-rcl-field-agree.php';
-		require_once 'classes/fields/types/class-rcl-field-checkbox.php';
-		require_once 'classes/fields/types/class-rcl-field-color.php';
-		require_once 'classes/fields/types/class-rcl-field-custom.php';
-		require_once 'classes/fields/types/class-rcl-field-date.php';
-		require_once 'classes/fields/types/class-rcl-field-dynamic.php';
-		require_once 'classes/fields/types/class-rcl-field-editor.php';
-		require_once 'classes/fields/types/class-rcl-field-select.php';
-		require_once 'classes/fields/types/class-rcl-field-multiselect.php';
-		require_once 'classes/fields/types/class-rcl-field-radio.php';
-		require_once 'classes/fields/types/class-rcl-field-range.php';
-		require_once 'classes/fields/types/class-rcl-field-runner.php';
-		require_once 'classes/fields/types/class-rcl-field-text.php';
-		require_once 'classes/fields/types/class-rcl-field-tel.php';
-		require_once 'classes/fields/types/class-rcl-field-number.php';
-		require_once 'classes/fields/types/class-rcl-field-textarea.php';
-		require_once 'classes/fields/types/class-rcl-field-uploader.php';
-		require_once 'classes/fields/types/class-rcl-field-file.php';
-		require_once 'classes/fields/types/class-rcl-field-hidden.php';
-
-		require_once 'classes/tabs/class-rcl-sub-tab.php';
-		require_once 'classes/tabs/class-rcl-tab.php';
-		require_once 'classes/tabs/class-rcl-tabs.php';
-
 		require_once 'classes/class-rcl-user.php';
-		require_once 'classes/class-rcl-form.php';
+
 		require_once 'classes/class-rcl-walker.php';
 		require_once 'classes/class-rcl-includer.php';
 		require_once 'classes/class-rcl-install.php';
 		require_once 'classes/class-rcl-log.php';
-		require_once 'classes/class-rcl-table.php';
+
 		require_once 'classes/class-rcl-button.php';
 		require_once 'classes/class-rcl-uploader.php';
 

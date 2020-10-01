@@ -1,9 +1,5 @@
 <?php
 
-require_once 'options/class-rcl-option.php';
-require_once 'options/class-rcl-options-box.php';
-require_once 'options/class-rcl-options-group.php';
-
 class Rcl_Options_Manager {
 
 	public $boxes			 = array();

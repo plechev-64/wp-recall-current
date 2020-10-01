@@ -42,7 +42,7 @@ function rcl_edit_field_options( $options, $field, $manager_id ) {
 
 function rmag_global_options() {
 
-	require_once RCL_PATH . 'admin/classes/class-rcl-options-manager.php';
+	RCL()->use_module( 'options-manager' );
 
 	$Manager = new Rcl_Options_Manager( array(
 		'option_name'	 => 'primary-rmag-options',
@@ -459,6 +459,8 @@ function rcl_send_addon_activation_notice( $addon_id, $addon_headers ) {
 rcl_ajax_action( 'rcl_manager_get_new_field', false );
 function rcl_manager_get_new_field() {
 
+	RCL()->use_module( 'fields-manager' );
+
 	$managerProps = $_POST['props'];
 
 	$Manager = new Rcl_Fields_Manager( $managerProps['manager_id'], $managerProps );
@@ -478,6 +480,8 @@ function rcl_manager_get_new_field() {
 
 rcl_ajax_action( 'rcl_manager_get_custom_field_options', false );
 function rcl_manager_get_custom_field_options() {
+
+	RCL()->use_module( 'fields-manager' );
 
 	$new_type	 = $_POST['newType'];
 	$old_type	 = $_POST['oldType'];
@@ -523,6 +527,8 @@ function rcl_manager_get_custom_field_options() {
 rcl_ajax_action( 'rcl_manager_get_new_area', false );
 function rcl_manager_get_new_area() {
 
+	RCL()->use_module( 'fields-manager' );
+
 	$managerProps = $_POST['props'];
 
 	$Manager = new Rcl_Fields_Manager( 'any', $managerProps );
@@ -534,6 +540,8 @@ function rcl_manager_get_new_area() {
 
 rcl_ajax_action( 'rcl_manager_get_new_group', false );
 function rcl_manager_get_new_group() {
+
+	RCL()->use_module( 'fields-manager' );
 
 	$managerProps = $_POST['props'];
 

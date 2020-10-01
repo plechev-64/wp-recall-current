@@ -238,6 +238,8 @@ class Rcl_Content_Manager {
 			return false;
 		}
 
+		RCL()->use_module( 'forms' );
+
 		$form = new Rcl_Form( array(
 			'fields'	 => array(
 				array(
@@ -265,6 +267,8 @@ class Rcl_Content_Manager {
 
 		if ( ! $fields = $this->get_search_fields() )
 			return false;
+
+		RCL()->use_module( 'forms' );
 
 		$form = new Rcl_Form( array(
 			'fields'	 => $fields,

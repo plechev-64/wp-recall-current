@@ -608,7 +608,7 @@ function rcl_get_group_options( $group_id ) {
 		$fields[$k]['name'] = 'group-options[' . $field['slug'] . ']';
 	}
 
-	require_once RCL_PATH . 'classes/class-rcl-form.php';
+	RCL()->use_module( 'forms' );
 
 	$form = new Rcl_Form( [
 		'fields' => $fields

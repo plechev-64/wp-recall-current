@@ -70,32 +70,35 @@ function rcl_rating_tab_add_types_data() {
 
 	$types = array();
 
-	foreach ( $rcl_rating_types as $type ) {
+	if ( $rcl_rating_types ) {
 
-		$types[] = $type['rating_type'];
+		foreach ( $rcl_rating_types as $type ) {
 
-		if ( ! rcl_get_option( 'rating_' . $type['rating_type'] ) )
-			continue;
+			$types[] = $type['rating_type'];
 
-		if ( ! rcl_get_option( 'rating_user_' . $type['rating_type'] ) )
-			continue;
+			if ( ! rcl_get_option( 'rating_' . $type['rating_type'] ) )
+				continue;
 
-		$args = array(
-			'rating_type'	 => $type['rating_type'],
-			'rating_status'	 => 'user'
-		);
+			if ( ! rcl_get_option( 'rating_user_' . $type['rating_type'] ) )
+				continue;
 
-		$subtab = array(
-			'id'		 => $type['rating_type'],
-			'name'		 => $type['type_name'],
-			'icon'		 => (isset( $type['icon'] )) ? $type['icon'] : 'fa-list-ul',
-			'callback'	 => array(
-				'name'	 => 'rcl_rating_get_list_votes_content',
-				'args'	 => array( $args )
-			)
-		);
+			$args = array(
+				'rating_type'	 => $type['rating_type'],
+				'rating_status'	 => 'user'
+			);
 
-		rcl_add_sub_tab( 'rating', $subtab );
+			$subtab = array(
+				'id'		 => $type['rating_type'],
+				'name'		 => $type['type_name'],
+				'icon'		 => (isset( $type['icon'] )) ? $type['icon'] : 'fa-list-ul',
+				'callback'	 => array(
+					'name'	 => 'rcl_rating_get_list_votes_content',
+					'args'	 => array( $args )
+				)
+			);
+
+			rcl_add_sub_tab( 'rating', $subtab );
+		}
 	}
 
 	if ( rcl_get_option( 'rating_custom' ) ) {

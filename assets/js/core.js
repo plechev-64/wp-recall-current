@@ -1188,14 +1188,19 @@ function RclForm( form ) {
 		}
 	};
 
-	this.send = function( action, success ) {
+	this.send = function( action, success, rest ) {
 
 		if ( !this.validate() )
 			return false;
 
+		var rest = rest ? {
+			action: action
+		} : false;
+
 		rcl_preloader_show( form );
 
 		var sendData = {
+			rest: rest,
 			data: form.serialize() + '&action=' + action
 		};
 

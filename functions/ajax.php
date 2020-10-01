@@ -49,7 +49,7 @@ function rcl_load_tab() {
 
 	$content = $tab->get_menu();
 
-	$content .= $tab->subtab( $subtab_id )->get_content();
+	$content .= apply_filters( 'rcl_ajax_tab_content', $tab->subtab( $subtab_id )->get_content() );
 
 	wp_send_json( array(
 		'content'	 => $content,

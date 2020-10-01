@@ -94,6 +94,7 @@ function rcl_load_content_manager( e, props ) {
 	if ( props != 'undefined' && props ) {
 
 		rcl_ajax( {
+			rest: true,
 			data: {
 				action: 'rcl_load_content_manager',
 				classname: props.classname,
@@ -120,7 +121,7 @@ function rcl_load_content_manager( e, props ) {
 
 			FormFactory.form.find( '.rcl-content-manager' ).replaceWith( result.content );
 
-		} );
+		}, true );
 
 	}
 
@@ -136,6 +137,7 @@ function rcl_load_content_manager_state( state, e ) {
 	}
 
 	rcl_ajax( {
+		rest: true,
 		data: {
 			action: 'rcl_load_content_manager_state',
 			state: state,
@@ -154,6 +156,9 @@ function rcl_save_table_manager_cols( e ) {
 	var form = jQuery( '#rcl-cols-manager .active-cols input' );
 
 	rcl_ajax( {
+		rest: {
+			action: 'rcl_save_table_manager_cols'
+		},
 		data: form.serialize() + '&action=rcl_save_table_manager_cols'
 	} );
 }
@@ -161,6 +166,7 @@ function rcl_save_table_manager_cols( e ) {
 function rcl_get_table_manager_cols( managerId, cols, active_cols, disabled_cols, e ) {
 
 	rcl_ajax( {
+		rest: true,
 		data: {
 			action: 'rcl_get_table_manager_cols',
 			manager_id: managerId,

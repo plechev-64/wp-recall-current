@@ -80,7 +80,7 @@ function pfm_page_topic_form() {
 function pfm_page_options() {
 	global $wpdb;
 
-	require_once RCL_PATH . 'admin/classes/class-rcl-options-manager.php';
+	RCL()->use_module( 'options-manager' );
 
 	$pages = rcl_get_pages_ids();
 

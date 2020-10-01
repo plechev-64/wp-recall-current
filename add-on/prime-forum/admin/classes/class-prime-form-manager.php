@@ -1,5 +1,7 @@
 <?php
 
+RCL()->use_module( 'fields-manager' );
+
 class Prime_Form_Manager extends Rcl_Fields_Manager {
 
 	public $group_id;

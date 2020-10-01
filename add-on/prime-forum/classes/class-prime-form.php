@@ -1,5 +1,7 @@
 <?php
 
+RCL()->use_module( 'fields' );
+
 class PrimeForm extends Rcl_Fields {
 
 	public $forum_id;

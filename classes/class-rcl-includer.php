@@ -458,7 +458,7 @@ function rcl_reset_wp_dependencies() {
 }
 
 //цепляем код подключения скриптов и стилей вызванных внутри вкладки
-add_filter( 'rcl_ajax_tab_content', 'rcl_add_registered_scripts' );
+add_filter( 'rcl_ajax_tab_content', 'rcl_add_registered_scripts', 10 );
 function rcl_add_registered_scripts( $content ) {
 
 	$Rcl_Include = new Rcl_Includer();

@@ -12,7 +12,7 @@ require_once 'classes/class-rcl-cart-constructor.php';
 require_once 'classes/class-rcl-product-variations.php';
 require_once 'classes/class-rcl-product-price.php';
 
-require_once RCL_PATH . 'modules/content-manager/index.php';
+RCL()->use_module( 'content-manager' );
 require_once 'classes/class-rcl-orders-table-manager.php';
 
 require_once 'content/order-content.php';

@@ -1,5 +1,7 @@
 <?php
 
+RCL()->use_module( 'fields-manager' );
+
 class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 
 	public $taxonomies;

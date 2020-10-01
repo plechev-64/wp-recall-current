@@ -118,6 +118,7 @@ function rcl_mail( $email, $title, $text, $from = false, $attach = false ) {
 }
 
 function rcl_get_form( $args ) {
+	RCL()->use_module( 'forms' );
 	$Form = new Rcl_Form( $args );
 	return $Form->get_form();
 }

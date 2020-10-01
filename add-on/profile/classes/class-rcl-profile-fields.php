@@ -1,5 +1,7 @@
 <?php
 
+RCL()->use_module( 'fields-manager' );
+
 class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager {
 	function __construct() {
 		global $wpdb;
