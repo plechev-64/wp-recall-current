@@ -114,7 +114,7 @@ function rcl_add_block_black_list_button() {
 			'public'	 => -2,
 			'output'	 => 'actions',
 			'icon'		 => 'fa-user',
-			'onclick'	 => 'rcl_manage_user_black_list(this);return false;'
+			'onclick'	 => 'rcl_manage_user_black_list(this, ' . $user_LK . ', "' . __( 'Are you sure?', 'wp-recall' ) . '");return false;'
 		)
 	);
 }

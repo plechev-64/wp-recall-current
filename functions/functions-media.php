@@ -1,7 +1,7 @@
 <?php
 
 function rcl_get_image_gallery( $args ) {
-	require_once RCL_PATH . 'classes/class-rcl-image-gallery.php';
+	RCL()->use_module( 'gallery' );
 	$gallery = new Rcl_Image_Gallery( $args );
 	return $gallery->get_gallery();
 }

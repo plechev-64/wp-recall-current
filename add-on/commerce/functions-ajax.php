@@ -12,11 +12,9 @@ function rcl_update_cart_content() {
 	wp_send_json( $result );
 }
 
-rcl_ajax_action( 'rcl_add_to_cart', true );
+rcl_ajax_action( 'rcl_add_to_cart', true, true );
 function rcl_add_to_cart() {
 	global $Cart;
-
-	rcl_verify_ajax_nonce();
 
 	$cart = apply_filters( 'rcl_add_to_cart_data', $_POST['cart'] );
 
@@ -86,9 +84,7 @@ function rcl_add_to_cart() {
 		. '</a>'
 	);
 
-	$result = apply_filters( 'rcl_add_to_cart_result', $result );
-
-	wp_send_json( $result );
+	return apply_filters( 'rcl_add_to_cart_result', $result );
 }
 
 rcl_ajax_action( 'rcl_check_cart_data', true );

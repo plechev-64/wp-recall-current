@@ -20,9 +20,37 @@ function rcl_ajax_action( $function_name, $guest_access = false, $rest = false )
 	$ajax->init();
 }
 
+rcl_ajax_action( 'rcl_ajax_call', true, true );
+function rcl_ajax_call() {
+	rcl_verify_ajax_nonce();
+
+	$callback	 = $_POST['callback'];
+	$modules	 = $_POST['modules'];
+
+	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ), VER_RCL );
+
+	if ( $modules ) {
+		foreach ( $modules as $module_id ) {
+			RCL()->use_module( $module_id );
+		}
+	}
+
+	if ( ! function_exists( $callback ) ) {
+		wp_send_json( [
+			'error' => __( 'Функция не найдена!', 'wp-recall' )
+		] );
+	}
+
+	$respond = $callback();
+
+	$respond['modules'] = RCL()->used_modules;
+
+	wp_send_json( $respond );
+}
+
 rcl_ajax_action( 'rcl_load_tab', true, true );
 function rcl_load_tab() {
-	global $user_LK;
+	global $user_LK, $office_id;
 
 	rcl_verify_ajax_nonce();
 
@@ -51,14 +79,14 @@ function rcl_load_tab() {
 
 	$content .= apply_filters( 'rcl_ajax_tab_content', $tab->subtab( $subtab_id )->get_content() );
 
-	wp_send_json( array(
+	return array(
 		'content'	 => $content,
 		'tab'		 => $tab,
 		'tab_id'	 => $tab->id,
 		'subtab_id'	 => $subtab_id ? $subtab_id : '',
 		'tab_url'	 => $tab->subtab( $subtab_id )->get_permalink(),
 		'supports'	 => $tab->supports
-	) );
+	);
 }
 
 //загрузка вкладки ЛК через AJAX
@@ -160,7 +188,7 @@ function rcl_manage_user_black_list() {
 	$new_status = $user_block ? 0 : 1;
 
 	wp_send_json( array(
-		'label' => ($new_status) ? __( 'Unblock', 'wp-recall' ) : __( 'Blacklist', 'wp-recall' )
+		'label' => ($new_status) ? __( 'Unblock', 'wp-recall' ) : __( 'Заблокировать', 'wp-recall' )
 	) );
 }
 

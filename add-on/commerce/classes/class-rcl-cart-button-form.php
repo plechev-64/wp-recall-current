@@ -106,6 +106,8 @@ class Rcl_Cart_Button_Form {
 
 	function cart_form( $args = false ) {
 
+		RCL()->use_module( 'forms' );
+
 		$this->output = apply_filters( 'rcl_cart_button_form_args', wp_parse_args( $args, $this->output ), $this->product_id );
 
 		if ( ! $this->output )

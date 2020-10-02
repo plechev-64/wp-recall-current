@@ -929,13 +929,12 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 	}
 
 	function get_types_list() {
-		global $wprecall;
 
 		$typesList = array();
 		foreach ( $this->types as $type ) {
-			if ( ! isset( $wprecall->fields[$type] ) )
+			if ( ! isset( RCL()->fields[$type] ) )
 				continue;
-			$typesList[$type] = $wprecall->fields[$type]['label'];
+			$typesList[$type] = RCL()->fields[$type]['label'];
 		}
 
 		return $typesList;

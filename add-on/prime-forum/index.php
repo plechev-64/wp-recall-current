@@ -2,6 +2,8 @@
 
 global $PrimeQuery, $PrimeGroup, $PrimeForum, $PrimeTopic, $PrimePost;
 
+RCL()->use_module( 'forms' );
+
 require_once 'classes/class-prime-roles.php';
 require_once 'classes/class-prime-user.php';
 require_once 'classes/class-prime-visits.php';

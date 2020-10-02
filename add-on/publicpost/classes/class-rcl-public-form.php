@@ -68,7 +68,6 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 			rcl_dialog_scripts();
 
 		if ( $this->user_can['upload'] ) {
-			rcl_fileupload_scripts();
 			add_action( 'wp_footer', array( $this, 'init_form_scripts' ), 100 );
 		}
 

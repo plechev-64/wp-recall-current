@@ -25,7 +25,7 @@ function rcl_chat_scripts() {
 		$contact_panel = (isset( $rcl_options['chat']['contact_panel'] )) ? $rcl_options['chat']['contact_panel'] : 0;
 
 		if ( $contact_panel || rcl_is_office() ) {
-			rcl_fileupload_scripts();
+			RCL()->use_module( 'uploader' );
 		}
 	}
 }
@@ -476,8 +476,9 @@ function rcl_chat_shortcode( $atts ) {
 
 	$file_upload = (isset( $atts['file_upload'] )) ? $atts['file_upload'] : 0;
 
-	if ( $user_ID && $file_upload )
-		rcl_fileupload_scripts();
+	if ( $user_ID && $file_upload ) {
+		RCL()->use_module( 'uploader' );
+	}
 
 	require_once 'class-rcl-chat.php';
 	$chat = new Rcl_Chat( $atts );

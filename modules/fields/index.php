@@ -22,3 +22,13 @@ require_once 'classes/types/class-rcl-field-textarea.php';
 require_once 'classes/types/class-rcl-field-uploader.php';
 require_once 'classes/types/class-rcl-field-file.php';
 require_once 'classes/types/class-rcl-field-hidden.php';
+function rcl_fields_scripts() {
+	rcl_enqueue_style( 'rcl-fields', RCL_URL . 'modules/fields/assets/style.css' );
+	rcl_enqueue_script( 'rcl-fields', RCL_URL . 'modules/fields/assets/scripts.js', ['rcl-core-scripts' ] );
+}
+
+if ( is_admin() || isset( $_REQUEST['rest_route'] ) ) {
+	rcl_fields_scripts();
+} else {
+	add_action( 'rcl_enqueue_scripts', 'rcl_fields_scripts', 10 );
+}

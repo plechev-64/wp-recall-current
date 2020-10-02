@@ -1,9 +1,8 @@
 <?php
 
-require_once 'classes/class-rcl-profile-fields.php';
-
-if ( is_admin() )
+if ( is_admin() ) {
 	require_once 'admin/index.php';
+}
 
 if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'rcl_profile_scripts', 10 );

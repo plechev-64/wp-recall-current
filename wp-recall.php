@@ -16,25 +16,53 @@
 
 final class WP_Recall {
 
-	public $version				 = '16.25.0';
-	public $child_addons		 = array();
-	public $need_update			 = false;
-	public $fields				 = array();
-	public $tabs				 = array();
-	public $modules				 = array();
-	public $used_modules		 = array();
-	protected static $_instance	 = null;
+	public $version		 = '16.25.0';
+	public $child_addons = array();
+	public $need_update	 = false;
+	public $fields		 = array();
+	public $tabs		 = array();
+	public $modules		 = array();
+	public $used_modules = array();
+
+	//protected static $_instance	 = null;
+
+	public static function getInstance() {
+		static $instance;
+
+		if ( null === $instance ) {
+			$instance = new self();
+		}
+
+		return $instance;
+	}
+
+	private function __construct() {
+		static $hasInstance = false;
+
+		if ( $hasInstance ) {
+			return;
+		}
+
+		$this->define_constants(); //Определяем константы.
+		$this->includes(); //Подключаем все нужные файлы с функциями и классами
+		$this->init_modules(); //Определяем модули.
+		$this->init_hooks(); //Тут все наши хуки
+
+		do_action( 'wp_recall_loaded' ); //Оставляем кручёк
+
+		$hasInstance = true;
+	}
 
 	/*
 	 * Основной экземпляр класса WP_Recall
 	 */
-	public static function instance() {
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self();
-		}
-		return self::$_instance;
-	}
+	/* public static function getInstance() {
+	  if ( is_null( self::$_instance ) ) {
+	  self::$_instance = new self();
+	  }
 
+	  return self::$_instance;
+	  } */
 	public function __clone() {
 		_doing_it_wrong( __FUNCTION__, __( 'Are you cheating, bastard?' ), $this->version );
 	}
@@ -60,29 +88,37 @@ final class WP_Recall {
 	/*
 	 * Конструктор нашего WP_Recall
 	 */
-	public function __construct() {
+	/* private function __construct() {
 
-		add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ), 10 );
+	  add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ), 10 );
 
-		$this->define_constants(); //Определяем константы.
-		$this->includes(); //Подключаем все нужные файлы с функциями и классами
-		$this->init_modules(); //Определяем модули.
-		$this->init_hooks(); //Тут все наши хуки
+	  $this->define_constants(); //Определяем константы.
 
-		do_action( 'wp_recall_loaded' ); //Оставляем кручёк
-	}
+	  $this->includes(); //Подключаем все нужные файлы с функциями и классами
+	  $this->init_modules(); //Определяем модули.
+	  $this->include_addons();
+	  $this->init_hooks(); //Тут все наши хуки
 
+	  do_action( 'wp_recall_loaded' ); //Оставляем кручёк
+	  } */
 	private function init_modules() {
 
 		$this->modules = [
+			'recallbar'			 => new Rcl_Module( RCL_PATH . 'modules/recallbar/index.php' ),
+			'uploader'			 => new Rcl_Module( RCL_PATH . 'modules/uploader/index.php' ),
+			'gallery'			 => new Rcl_Module( RCL_PATH . 'modules/gallery/index.php' ),
 			'table'				 => new Rcl_Module( RCL_PATH . 'modules/table/index.php' ),
 			'tabs'				 => new Rcl_Module( RCL_PATH . 'modules/tabs/index.php' ),
 			'forms'				 => new Rcl_Module( RCL_PATH . 'modules/forms/index.php', ['fields' ] ),
-			'fields'			 => new Rcl_Module( RCL_PATH . 'modules/fields/index.php' ),
+			'fields'			 => new Rcl_Module( RCL_PATH . 'modules/fields/index.php', ['uploader' ] ),
 			'fields-manager'	 => new Rcl_Module( RCL_PATH . 'modules/fields-manager/index.php', ['fields' ] ),
 			'content-manager'	 => new Rcl_Module( RCL_PATH . 'modules/content-manager/index.php', ['fields', 'table' ] ),
 			'options-manager'	 => new Rcl_Module( RCL_PATH . 'modules/options-manager/index.php', ['fields' ] ),
 		];
+	}
+
+	function init_module( $module_id, $path, $parents = [ ] ) {
+		$this->modules[$module_id] = new Rcl_Module( $path, $parents );
 	}
 
 	function use_module( $module_id ) {
@@ -106,6 +142,10 @@ final class WP_Recall {
 	private function init_hooks() {
 
 		register_activation_hook( __FILE__, array( 'RCL_Install', 'install' ) );
+
+		add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ), 10 );
+		add_action( 'plugins_loaded', array( $this, 'include_addons' ), 10 );
+		add_action( 'wp_loaded', array( $this, 'setup_tabs' ), 10 );
 
 		add_action( 'init', array( $this, 'init' ), 0 );
 
@@ -194,7 +234,7 @@ final class WP_Recall {
 		require_once 'classes/class-rcl-log.php';
 
 		require_once 'classes/class-rcl-button.php';
-		require_once 'classes/class-rcl-uploader.php';
+		//require_once 'classes/class-rcl-uploader.php';
 
 		require_once 'functions/activate.php';
 		require_once 'functions/ajax.php';
@@ -239,8 +279,6 @@ final class WP_Recall {
 		if ( $this->is_request( 'frontend' ) ) {
 			$this->frontend_includes();
 		}
-
-		$this->include_addons();
 	}
 
 	/*
@@ -289,11 +327,20 @@ final class WP_Recall {
 		if ( $this->is_request( 'frontend' ) ) {
 
 			if ( rcl_get_option( 'view_recallbar' ) ) {
-				require_once('functions/recallbar.php');
+				$this->use_module( 'recallbar' );
 			}
 
 			$this->init_frontend_globals();
 		}
+
+		if ( ! rcl_get_option( 'security-key' ) ) {
+			rcl_update_option( 'security-key', wp_generate_password( 20, false ) );
+		}
+
+		do_action( 'rcl_init' );
+	}
+
+	function setup_tabs() {
 
 		do_action( 'rcl_init_tabs' );
 
@@ -302,12 +349,6 @@ final class WP_Recall {
 		$this->tabs()->order_tabs();
 
 		do_action( 'rcl_setup_tabs' );
-
-		if ( ! rcl_get_option( 'security-key' ) ) {
-			rcl_update_option( 'security-key', wp_generate_password( 20, false ) );
-		}
-
-		do_action( 'rcl_init' );
 	}
 
 	function init_frontend_globals() {
@@ -631,7 +672,7 @@ final class WP_Recall {
  * @return WP_Recall
  */
 function RCL() {
-	return WP_Recall::instance();
+	return WP_Recall::getInstance();
 }
 
 /*

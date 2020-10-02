@@ -351,19 +351,6 @@ function rcl_manage_user_black_list( e, user_id, confirmText ) {
 	return false;
 }
 
-rcl_add_action( 'rcl_init', 'rcl_init_update_requared_checkbox' );
-function rcl_init_update_requared_checkbox() {
-
-	jQuery( 'body form' ).find( '.required-checkbox' ).each( function() {
-		rcl_update_require_checkbox( this );
-	} );
-
-	jQuery( 'body form' ).on( 'click', '.required-checkbox', function() {
-		rcl_update_require_checkbox( this );
-	} );
-
-}
-
 function rcl_show_tab( id_block ) {
 	jQuery( ".rcl-tab-button .recall-button" ).removeClass( "active" );
 	jQuery( "#lk-content .recall_content_block" ).removeClass( "active" );
@@ -385,10 +372,10 @@ function rcl_init_recallbar_hover() {
 	} );
 }
 
-rcl_add_action( 'rcl_before_upload_tab', 'rcl_add_class_upload_tab' );
-function rcl_add_class_upload_tab( e ) {
-	e.addClass( 'tab-upload' );
-}
+/*rcl_add_action( 'rcl_before_upload_tab', 'rcl_add_class_upload_tab' );
+ function rcl_add_class_upload_tab( e ) {
+ e.addClass( 'tab-upload' );
+ }*/
 
 rcl_add_action( 'rcl_before_upload_tab', 'rcl_add_preloader_tab' );
 function rcl_add_preloader_tab( e ) {

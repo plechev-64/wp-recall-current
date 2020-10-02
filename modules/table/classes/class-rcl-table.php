@@ -247,7 +247,7 @@ class Rcl_Table {
 
 		$content .= '</div>';
 
-		$content .= "<script>rcl_init_table('$this->table_id');</script>";
+		$content .= "<script>jQuery(function($){rcl_init_table('$this->table_id');});</script>";
 
 		return $content;
 	}

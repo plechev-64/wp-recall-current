@@ -61,7 +61,6 @@ function rcl_fileupload_scripts() {
 	rcl_enqueue_script( 'jquery-fileupload', RCL_URL . 'assets/js/fileupload/js/jquery.fileupload.js', array(), true );
 	rcl_enqueue_script( 'jquery-fileupload-process', RCL_URL . 'assets/js/fileupload/js/jquery.fileupload-process.js', array(), true );
 	rcl_enqueue_script( 'jquery-fileupload-image', RCL_URL . 'assets/js/fileupload/js/jquery.fileupload-image.js', array(), true );
-	//rcl_enqueue_script( 'jquery-fileupload-ui', RCL_URL . 'assets/js/fileupload/js/jquery.fileupload-ui.js', array(), true );
 }
 
 function rcl_crop_scripts() {
@@ -107,18 +106,10 @@ function rcl_frontend_scripts() {
 		rcl_enqueue_style( 'rcl-register-form', RCL_URL . 'assets/css/regform.css' );
 	}
 
-	//если используем recallbar, то подключаем его стили
-	if ( rcl_get_option( 'view_recallbar' ) ) {
-		rcl_enqueue_style( 'rcl-bar', RCL_URL . 'assets/css/recallbar.css' );
-	}
-
 	wp_enqueue_script( 'jquery' );
 
 	if ( rcl_is_office() ) {
 		rcl_dialog_scripts();
-		if ( rcl_is_office( $user_ID ) ) {
-			rcl_fileupload_scripts();
-		}
 	}
 
 	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ), VER_RCL );
@@ -163,7 +154,8 @@ function rcl_get_localize_data() {
 		'rcl_url'	 => RCL_URL,
 		'user_ID'	 => ( int ) $user_ID,
 		'nonce'		 => wp_create_nonce( 'wp_rest' ),
-		'local'		 => apply_filters( 'rcl_js_localize', $local )
+		'local'		 => apply_filters( 'rcl_js_localize', $local ),
+		'modules'	 => [ ]
 	);
 
 	$data['mobile']	 = (wp_is_mobile()) ? ( int ) 1 : ( int ) 0;

@@ -15,6 +15,8 @@ class Rcl_Cart_Constructor {
 
 	function get_cart( $cartProducts = false ) {
 
+		RCL()->use_module( 'forms' );
+
 		$content = '<div id="rcl-order">';
 
 		if ( $this->order_id ) {

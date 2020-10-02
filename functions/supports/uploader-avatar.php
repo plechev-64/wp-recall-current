@@ -1,13 +1,13 @@
 <?php
 
+RCL()->use_module( 'uploader' );
+
 if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'rcl_support_avatar_uploader_scripts', 10 );
 endif;
 function rcl_support_avatar_uploader_scripts() {
 	global $user_ID;
 	if ( rcl_is_office( $user_ID ) ) {
-		rcl_fileupload_scripts();
-		rcl_crop_scripts();
 		rcl_enqueue_script( 'avatar-uploader', RCL_URL . 'functions/supports/js/uploader-avatar.js', false, true );
 	}
 }
@@ -32,6 +32,8 @@ function rcl_button_avatar_upload( $icons ) {
 
 	if ( ! rcl_is_office( $user_ID ) )
 		return false;
+
+	RCL()->use_module( 'uploader' );
 
 	$uploder = new Rcl_Uploader( 'rcl_avatar', array(
 		'multiple'		 => 0,

@@ -1,0 +1,315 @@
+.rcl-field{
+	margin: 5px 0;
+	width: 100%;
+}
+.rcl-field .rcl-field-title{
+	font-weight: bold;
+	margin-bottom: 5px;
+    display: inline-block;
+}
+.rcl-field-notice {
+    align-items: center;
+    clear: both;
+    color: #797979;
+    display: flex;
+    font-size: .85em;
+    margin: 5px 0 0;
+}
+.rcl-field-notice .rcli {
+    margin-right: 5px;
+}
+.rcl-cf-title {
+    font-weight: bold;
+    margin: 0 3px 0 0;
+}
+.rcl-field-input {
+    width: 100%;
+}
+.rcl-field-core {
+    position: relative;
+}
+.rcl-field-input input:not([type="file"]):not([type="checkbox"]):not([type="radio"]):not([type="button"]),
+.rcl-field-input textarea {
+    background-color: #fff;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    box-shadow: none;
+    box-sizing: border-box;
+    float: none;
+    font-size: 100%;
+    height: auto;
+    line-height: 1.4;
+    margin: 0;
+    max-width: 100%;
+    outline: 0;
+    padding: 5px 10px;
+    width: 100%;
+}
+.rcl-field-input input:invalid {
+	border-color: red !important;
+}
+.rcl-field-input input:focus:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+.rcl-field-input textarea:focus {
+    background-color: #fff;
+    border-color: #c5c5c5;
+    box-shadow: none;
+    color: #000;
+    outline: none;
+}
+.rcl-field-input select {
+    background-color: #fff;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    box-shadow: none;
+    box-sizing: border-box;
+    float: none;
+    height: auto;
+    line-height: normal;
+    outline: 0;
+    padding: 5px 3px;
+    width: 100%;
+}
+.rcl-field-input .maxlength {
+    align-items: center;
+    background-color: #eaeaea;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    cursor: default;
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+    max-height: 100%;
+    min-width: 30px;
+    padding: 2px 5px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    z-index: 10;
+}
+.rcl-field-input.type-text-input .maxlength {
+    height: 100%;
+}
+.rcl-field-input .file-input-recycle {
+    font-size: 14px;
+    margin-right: 5px;
+    cursor: pointer;
+    color: #4c8cbd;
+}
+.type-multiselect-input .hidden {
+    display: none !important;
+}
+.type-multiselect-input .fs-wrap,
+.type-multiselect-input .fs-dropdown {
+    max-width: 410px;
+    width: 100%;
+}
+.type-multiselect-input .fs-dropdown {
+    box-shadow: 4px 4px 6px -3px #929292;
+}
+.type-multiselect-input .fs-wrap.multiple .fs-option.selected .fs-checkbox i {
+    background-color: #888;
+}
+.type-dynamic-input .dynamic-values {
+    display: block;
+}
+.type-dynamic-input .dynamic-values.ui-sortable a {
+    height: 14px;
+    position: absolute;
+    top: 3px;
+    right: 33px;
+}
+.type-dynamic-input .dynamic-value {
+    align-items: center;
+    display: flex;
+}
+.type-dynamic-input .dynamic-value:not(:last-child) {
+    margin: 0 0 5px;
+}
+.type-dynamic-input .dynamic-value a {
+    background-color: #fafafa;
+    border: 1px solid #ddd !important;
+    box-shadow: none;
+    color: #797979;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    line-height: 1;
+    margin: 0 0 0 8px;
+    min-width: initial;
+    padding: 6px;
+    text-decoration: none;
+    vertical-align: middle;
+    width: auto;
+}
+
+.type-dynamic-input .dynamic-value a:hover {
+    background-color: #fff;
+    text-decoration: none !important;
+}
+.type-dynamic-input a .fa-minus {
+    color: rgb(229, 57, 53);
+}
+.type-dynamic-input a .fa-plus {
+    color: #008000;
+}
+div.rcl-custom-fields .rcl-field-value .fa-upload {
+    margin-right: 5px;
+}
+.rcl-field-input .file-field-upload {
+    display: block;
+    font-size: 11px;
+    padding: 5px;
+}
+.rcl-field-input .file-manage-box {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px;
+    width: 100%;
+}
+.rcl-field-input .file-manage-box .rcl-field-value {
+    align-items: center;
+    display: flex;
+    margin: 0 15px 5px 0;
+}
+.rcl-field-input .delete-file-url a {
+    align-items: center;
+    display: flex;
+}
+.rcl-field-input .delete-file-url .rcli {
+    color: rgb(229, 57, 53);
+    font-size: 16px;
+    margin-right: 5px;
+}
+/*end*/
+
+
+/*----------------------------------
+  20. Checkbox & radio stylization
+------------------------------------*/
+.rcl-field-input .rcl-checkbox-box,
+.rcl-field-input .rcl-radio-box {
+    display: inline-flex;
+    margin-right: 2px;
+    position: relative;
+}
+.rcl-field-input input[type="radio"],
+.rcl-field-input input[type="checkbox"] {
+    left: 10px;
+    opacity: 0;
+    position: absolute;
+    top: 10px;
+    z-index: -1;
+}
+.rcl-field-input .block-label {
+    background-color: #f2f2f2;
+    border: 1px solid #e2e2e2;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Verdana,Tahoma,sans-serif; /*если другое семейство - то блоки плывут*/
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1;
+    margin: 4px;
+    padding: 5px 8px 4px 6px;
+    position: relative;
+    vertical-align: middle;
+	width: auto;
+}
+.rcl-field-input.type-agree-input .block-label {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+.rcl-field-input label.block-label::before {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-sizing: content-box;
+    content: "";
+    display: inline-block;
+    height: 12px;
+    margin: 0 5px 2px 0;
+    padding: 0 2px 4px;
+    text-align: center;
+    vertical-align: middle;
+    width: 12px;
+}
+.rcl-field-input.type-radio-input label::before {
+    border-radius: 50%;
+}
+.rcl-field-input input[type="checkbox"]:checked + label.block-label::before {
+    color: #fff;
+    content: "\f00c";
+    font-family: "rcl-awesome";
+    font-size: 12px;
+    line-height: 1;
+    padding: 2px;
+}
+.rcl-field-input input[type="checkbox"]:checked + label.block-label::before,
+.rcl-field-input input[type="radio"]:checked + label.block-label::before{
+	background: #4C8CBD;
+}
+.rcl-field-input .checkbox-display-block{
+	display: block;
+}
+.rcl-field-input .checkbox-display-block .block-label{
+	border: none;
+	display: block;
+}
+/*end*/
+
+
+/*---------------------
+  21. Runner & Range
+-----------------------*/
+.rcl-runner,
+.rcl-range {
+    padding: 10px;
+}
+.rcl-runner .rcl-runner-value,
+.rcl-range .rcl-range-value {
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 115px;
+    padding-left: 15px;
+    padding-right: 15px;
+    vertical-align: middle;
+}
+.rcl-runner .rcl-runner-box,
+.rcl-range .rcl-range-box {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2) inset,
+		0 0 1px 1px rgba(0, 0, 0, 0.2) inset;
+    display: inline-block;
+    height: 10px;
+    margin: 0;
+    max-width: 500px;
+    position: relative;
+    text-align: left;
+    vertical-align: middle;
+    width: 100%;
+}
+.rcl-runner .rcl-runner-box .ui-slider-handle,
+.rcl-range .rcl-range-box .ui-slider-handle {
+    background: -webkit-linear-gradient(top, #fff, #ddd);
+    background: linear-gradient(to bottom, #fff, #ddd);
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4),
+		0 8px 6px rgba(0, 0, 0, 0.1);
+    cursor: ew-resize;
+    height: 18px;
+    margin-left: -.6em;
+    position: absolute;
+    top: -4px;
+    -ms-touch-action: none;
+	touch-action: none;
+    width: 18px;
+    z-index: 1;
+}
+.rcl-runner .rcl-runner-box .ui-slider-handle:focus,
+.rcl-range .rcl-range-box .ui-slider-handle:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    outline: none;
+}

@@ -363,7 +363,7 @@ class Rcl_Includer {
 function rcl_enqueue_style( $id, $url, $parents = false, $in_footer = false ) {
 	global $rcl_styles;
 
-	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) ) {
+	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) || isset( $_REQUEST['rest_route'] ) ) {
 
 		wp_enqueue_style( $id, $url, $parents, VER_RCL );
 
@@ -391,7 +391,7 @@ function rcl_enqueue_style( $id, $url, $parents = false, $in_footer = false ) {
 function rcl_enqueue_script( $id, $url, $parents = false, $in_footer = false ) {
 	global $rcl_scripts;
 
-	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) ) {
+	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) || isset( $_REQUEST['rest_route'] ) ) {
 
 		wp_enqueue_script( $id, $url, $parents, VER_RCL, $in_footer );
 
@@ -446,6 +446,11 @@ function rcl_include_scripts() {
 	$Rcl_Include = new Rcl_Includer();
 	$Rcl_Include->include_styles();
 	$Rcl_Include->include_scripts();
+}
+
+add_action( 'wp_footer', 'rcl_localize_modules_list', 10 );
+function rcl_localize_modules_list() {
+	echo '<script>Rcl.modules = ' . json_encode( RCL()->used_modules ) . '</script>';
 }
 
 //сбрасываем массивы зарегистрированных скриптов и стилей при вызове вкладки через ajax

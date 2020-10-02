@@ -1,4 +1,4 @@
-<?php global $addon, $rcl_addons, $wprecall; ?>
+<?php global $addon, $rcl_addons; ?>
 <div class="addon-box plugin-card plugin-card-<?php echo $addon->slug; ?>">
     <div class="plugin-card-top">
         <div class="name column-name">
@@ -72,7 +72,7 @@
         <div class="column-compatibility">
 			<?php if ( isset( $addon->support_core ) ) { ?>
 				<span class="compatibility-compatible"><strong><?php _e( 'Compatible', 'wp-recall' ) ?></strong> с WP-Recall <?php echo $addon->support_core; ?> и выше</span>
-				<?php if ( version_compare( $addon->support_core, $wprecall->version ) > 0 ) { ?>
+				<?php if ( version_compare( $addon->support_core, RCL()->version ) > 0 ) { ?>
 					<span class="compatibility-untested"><?php _e( 'Operation is not guaranteed with your version of WP-Recall', 'wp-recall' ) ?></span>
 				<?php } ?>
 			<?php } ?>

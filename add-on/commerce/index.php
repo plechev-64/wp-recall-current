@@ -1,5 +1,7 @@
 <?php
 
+RCL()->init_module( 'orders-table-manager', rcl_addon_path( __FILE__ ) . 'classes/class-rcl-orders-table-manager.php', ['content-manager' ] );
+
 require_once 'core.php';
 require_once 'deprecated.php';
 require_once 'shortcodes.php';
@@ -11,9 +13,6 @@ require_once 'classes/class-rcl-cart-button-form.php';
 require_once 'classes/class-rcl-cart-constructor.php';
 require_once 'classes/class-rcl-product-variations.php';
 require_once 'classes/class-rcl-product-price.php';
-
-RCL()->use_module( 'content-manager' );
-require_once 'classes/class-rcl-orders-table-manager.php';
 
 require_once 'content/order-content.php';
 require_once 'content/product-gallery.php';
@@ -201,6 +200,8 @@ function rcl_tab_orders() {
 }
 
 function rcl_orders_tab( $master_id ) {
+
+	RCL()->use_module( 'orders-table-manager' );
 
 	$ordersManager = new Rcl_Orders_Table_Manager( [
 		'user_id' => $master_id

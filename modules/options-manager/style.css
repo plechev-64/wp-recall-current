@@ -1,0 +1,125 @@
+.rcl-children-field{
+	display: none;
+}
+.rcl-children-fields.active{
+	display: block;
+}
+.rcl-option-extend-switch{
+	padding: 10px;
+	display: block;
+	border: 1px solid #ccc;
+	background: #fcc;
+	margin-bottom: 20px;
+}
+
+.rcl-options{
+	margin-right: 10px;
+}
+
+.rcl-options .extend-options{
+	border-left: 5px solid #ff8181!important;
+	padding: 5px;
+}
+
+.rcl-options.hide-extends-options .extend-options{
+	display: none;
+}
+.rcl-options .options-menu-boxes{
+	margin-right: 10px;
+}
+.rcl-options .options-menu-boxes{
+	width: 250px;
+	float: left;
+}
+.rcl-options .options-menu-boxes > a{
+	width: 100%;
+	font-size: 16px;
+}
+.rcl-options .rcl-menu > a{
+	padding: 5px 0;
+	display: flex;
+	white-space: unset;
+}
+.rcl-options .rcl-menu a > i{
+
+}
+.rcl-options .rcl-menu .rcl-bttn__active{
+	background: #b6b6b6;
+	color: #fff;
+}
+
+.rcl-options .options-form-boxes{
+	overflow: hidden;
+}
+
+.rcl-options .options-box{
+	padding: 5px;
+	border: 1px solid #ccc;
+	width: 550px;
+	display: none;
+	overflow-y: auto;
+	max-height: 800px;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+.rcl-options .options-box.active{
+	display: block;
+}
+
+.rcl-options .options-group{
+	padding: 5px;
+	border: 1px solid #ccc;
+	margin-bottom: 10px;
+}
+
+.rcl-options .group-title{
+	background: #ccc;
+	display: block;
+	padding: 10px;
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+.rcl-options .rcl-option{
+	margin-bottom: 10px;
+	position:relative;
+}
+.rcl-options .rcl-field-help{
+	position: absolute;
+    top: 0;
+    right: 0;
+	display: block;
+}
+.rcl-options .rcl-field-help > i{
+	padding: 0 9px;
+    font-size: 16px;
+}
+.rcl-options .rcl-field-help .help-content{
+	min-width: 300px;
+}
+.rcl-options .active-menu-item{
+	display:none;
+	margin-bottom: 5px;
+}
+
+@media screen and (max-width:568px) {
+	.rcl-options .options-menu-boxes{
+		width: 100%;
+		float: unset;
+	}
+	.rcl-options .active-menu-item{
+		display:block;
+	}
+	.rcl-options .rcl-menu{
+		display:none;
+	}
+	.rcl-options .rcl-menu.active-menu{
+		display:block;
+	}
+	.rcl-options .rcl-submit-options{
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		z-index: 9;
+	}
+}

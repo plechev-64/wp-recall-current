@@ -38,8 +38,7 @@ function rcl_is_office( $user_id = null ) {
 
 		if ( $post->master_id )
 			$rcl_office = $post->master_id;
-	}else if ( isset( $_POST['action'] ) && $_POST['action'] == 'rcl_load_tab' ) {
-
+	}else if ( isset( $_POST['callback'] ) && $_POST['callback'] == 'rcl_load_tab' ) {
 		$rcl_office = intval( $_POST['office_id'] );
 	}
 

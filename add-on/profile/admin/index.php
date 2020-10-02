@@ -1,5 +1,6 @@
 <?php
 
+require_once 'class-rcl-profile-fields.php';
 require_once 'addon-settings.php';
 
 add_action( 'admin_menu', 'rcl_profile_admin_menu', 30 );

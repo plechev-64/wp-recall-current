@@ -469,6 +469,8 @@ function rcl_group_add_thumb_buttons( $content ) {
 	if ( ! rcl_is_group_can( 'admin' ) || rcl_get_option( 'group_avatar_weight', 1024 ) <= 0 )
 		return $content;
 
+	RCL()->use_module( 'uploader' );
+
 	$uploder = new Rcl_Uploader( 'rcl_group_avatar', array(
 		'multiple'		 => 0,
 		'crop'			 => 1,

@@ -1,4 +1,6 @@
 
+Rcl.modules.push( 'content-manager' );
+
 function rcl_table_manager_state( classname, state ) {
 
 }

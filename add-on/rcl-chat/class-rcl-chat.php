@@ -372,6 +372,8 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 			$chatOptions = rcl_get_option( 'chat', array() );
 
+			RCL()->use_module( 'uploader' );
+
 			$uploader = new Rcl_Uploader( 'rcl_chat_uploader', array(
 				'multiple'		 => 0,
 				'max_files'		 => 1,
