@@ -435,14 +435,6 @@ class Rcl_Uploader {
 			}
 		} else {
 
-			/* if ( $this->temp_media ) {
-			  rcl_delete_temp_media_by_args( array(
-			  'uploader_id'	 => $this->uploader_id,
-			  'user_id'		 => $this->user_id ? $this->user_id : 0,
-			  'session_id'	 => $this->user_id ? '' : $_COOKIE['PHPSESSID'],
-			  ) );
-			  } */
-
 			$uploads = $this->file_upload_process( $_FILES[$this->input_name] );
 		}
 
@@ -457,13 +449,15 @@ class Rcl_Uploader {
 
 		$filetype = wp_check_filetype_and_ext( $file['tmp_name'], $file['name'] );
 
-		if ( ! in_array( $filetype['ext'], $this->file_types ) ) {
+		$ext = strtolower( $filetype['ext'] );
+
+		if ( ! in_array( $ext, $this->file_types ) ) {
 			wp_send_json( array( 'error' => __( 'Forbidden file extension. Allowed:', 'wp-recall' ) . ' ' . implode( ', ', $this->file_types ) ) );
 		}
 
 		$pathInfo = pathinfo( basename( $file['name'] ) );
 
-		$file['name'] = $this->filename ? $this->filename . '.' . $filetype['ext'] : rcl_sanitize_string( $pathInfo['filename'] ) . '.' . $filetype['ext'];
+		$file['name'] = $this->filename ? $this->filename . '.' . $ext : rcl_sanitize_string( $pathInfo['filename'] ) . '.' . $ext;
 
 		$file = apply_filters( 'rcl_pre_upload_file_data', $file );
 
