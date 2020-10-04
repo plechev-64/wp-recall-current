@@ -24,8 +24,8 @@
 			if ( $logIn == 1 ) {
 				$page_in_out = rcl_format_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) );
 				$urls		 = array(
-					$page_in_out . 'action-rcl=login',
-					$page_in_out . 'action-rcl=register'
+					$page_in_out . 'show-form=login',
+					$page_in_out . 'show-form=register'
 				);
 			} else if ( $logIn == 2 ) {
 				$urls = array(

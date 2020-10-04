@@ -3,7 +3,7 @@
 RCL()->use_module( 'fields-manager' );
 
 $Manager = new Rcl_Fields_Manager( 'products-variations', array(
-	'switch_type'	 => true,
+	'switch_type'	 => 1,
 	'types'			 => array(
 		'select',
 		'checkbox',

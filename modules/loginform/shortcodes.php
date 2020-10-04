@@ -29,7 +29,7 @@ function rcl_get_userpanel( $atts = [ ] ) {
 		'label'		 => __( 'Авторизация', 'wp-recall' ),
 		'icon'		 => 'fa-sign-in',
 		'size'		 => 'large',
-		'onclick'	 => rcl_get_option( 'login_form_recall' ) ? null : 'Rcl.loginform.call(this);return false;',
+		'onclick'	 => rcl_get_option( 'login_form_recall' ) ? null : 'Rcl.loginform.call("login");return false;',
 		'href'		 => rcl_get_loginform_url( 'login' )
 		] );
 
@@ -37,7 +37,7 @@ function rcl_get_userpanel( $atts = [ ] ) {
 		'label'		 => __( 'Регистрация', 'wp-recall' ),
 		'icon'		 => 'fa-book',
 		'size'		 => 'large',
-		'onclick'	 => rcl_get_option( 'login_form_recall' ) ? null : 'Rcl.loginform.call(this);return false;',
+		'onclick'	 => rcl_get_option( 'login_form_recall' ) ? null : 'Rcl.loginform.call("register");return false;',
 		'href'		 => rcl_get_loginform_url( 'register' )
 		] );
 
@@ -56,23 +56,24 @@ function rcl_get_loginform( $atts = [ ] ) {
 	}
 
 	extract( shortcode_atts( array(
-		'forms' => 'login,register,lostpassword'
+		'active' => 'login',
+		'forms'	 => 'login,register,lostpassword'
 			), $atts ) );
 
 	$forms = array_map( 'trim', explode( ',', $forms ) );
 
-	$content = '<div class="usp-loginform">';
+	$content = '<div class="usp-loginform preloader-parent">';
 
 	$content .= '<div class="tab-group">';
 	if ( in_array( 'login', $forms ) )
-		$content .= '<a href="#signup" class="tab active" onclick="Rcl.loginform.tabShow(\'login\',this);return false;">' . __( 'Авторизация', 'wp-recall' ) . '</a>';
+		$content .= '<a href="#login" class="tab tab-login' . ($active == 'login' ? ' active' : '') . '" onclick="Rcl.loginform.tabShow(\'login\',this);return false;">' . __( 'Авторизация', 'wp-recall' ) . '</a>';
 	if ( in_array( 'register', $forms ) )
-		$content .= '<a href="#login" class="tab" onclick="Rcl.loginform.tabShow(\'register\',this);return false;">' . __( 'Регистрация', 'wp-recall' ) . '</a>';
+		$content .= '<a href="#register" class="tab tab-register' . ($active == 'register' ? ' active' : '') . '" onclick="Rcl.loginform.tabShow(\'register\',this);return false;">' . __( 'Регистрация', 'wp-recall' ) . '</a>';
 	$content .= '</div>';
 
 	if ( in_array( 'login', $forms ) ) {
 
-		$content .= '<div class="tab-content tab-login active">';
+		$content .= '<div class="tab-content tab-login' . ($active == 'login' ? ' active' : '') . '">';
 
 		$content .= rcl_get_form( array(
 			'submit'	 => __( 'Вход', 'wp-recall' ),
@@ -81,8 +82,8 @@ function rcl_get_loginform( $atts = [ ] ) {
 				array(
 					'slug'			 => 'user_login',
 					'type'			 => 'text',
-					'title'			 => __( 'Логин', 'wp-recall' ),
-					'placeholder'	 => __( 'Логин', 'wp-recall' ),
+					'title'			 => __( 'Логин или E-mail', 'wp-recall' ),
+					'placeholder'	 => __( 'Логин или E-mail', 'wp-recall' ),
 					'icon'			 => 'fa-user',
 					'maxlenght'		 => 50,
 					'required'		 => 1
@@ -106,45 +107,12 @@ function rcl_get_loginform( $atts = [ ] ) {
 	}
 
 	if ( in_array( 'register', $forms ) ) {
-		$registerFields = array(
-			array(
-				'type'			 => 'text',
-				'slug'			 => 'user_login',
-				'title'			 => __( 'Логин', 'wp-recall' ),
-				'placeholder'	 => __( 'Логин', 'wp-recall' ),
-				'icon'			 => 'fa-user',
-				'maxlenght'		 => 50,
-				'required'		 => 1
-			),
-			array(
-				'type'			 => 'text',
-				'slug'			 => 'user_email',
-				'title'			 => __( 'Email', 'wp-recall' ),
-				'placeholder'	 => __( 'Email', 'wp-recall' ),
-				'icon'			 => 'fa-at',
-				'maxlenght'		 => 50,
-				'required'		 => 1
-			),
-			array(
-				'type'			 => 'password',
-				'slug'			 => 'user_pass',
-				'title'			 => __( 'Password', 'wp-recall' ),
-				'placeholder'	 => __( 'Password', 'wp-recall' ),
-				'icon'			 => 'fa-key',
-				'maxlenght'		 => 50,
-				'required'		 => 1
-			)
-		);
 
-		if ( $customFields = get_site_option( 'rcl_register_form_fields' ) ) {
-			$registerFields = array_merge( $registerFields, $customFields );
-		}
-
-		$content .= '<div class="tab-content tab-register">';
+		$content .= '<div class="tab-content tab-register' . ($active == 'register' ? ' active' : '') . '">';
 		$content .= rcl_get_form( array(
 			'submit'	 => __( 'Регистрация', 'wp-recall' ),
 			'onclick'	 => 'Rcl.loginform.send("register",this);return false;',
-			'fields'	 => $registerFields, //apply_filters( 'rcl_register_form_fields', $registerFields ),
+			'fields'	 => rcl_get_register_form_fields(),
 			'structure'	 => get_site_option( 'rcl_fields_register_form_structure' )
 			)
 		);
@@ -152,7 +120,7 @@ function rcl_get_loginform( $atts = [ ] ) {
 	}
 
 	if ( in_array( 'lostpassword', $forms ) ) {
-		$content .= '<div class="tab-content tab-lostpassword">';
+		$content .= '<div class="tab-content tab-lostpassword' . ($active == 'lostpassword' ? ' active' : '') . '">';
 		$content .= rcl_get_form( array(
 			'submit'	 => __( 'Получить новый пароль', 'wp-recall' ),
 			'onclick'	 => 'Rcl.loginform.send("lostpassword",this);return false;',

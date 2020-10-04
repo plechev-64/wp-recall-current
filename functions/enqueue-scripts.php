@@ -87,9 +87,9 @@ function rcl_enqueue_wp_form_scripts() {
 	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ), VER_RCL );
 	wp_enqueue_script( 'rcl-primary-scripts', RCL_URL . 'assets/js/scripts.js', array( 'jquery' ), VER_RCL );
 
-	if ( ! is_user_logged_in() ) {
-		wp_enqueue_style( 'rcl-regform-style', RCL_URL . 'assets/css/regform.css', false, VER_RCL );
-	}
+	rcl_font_awesome_style();
+	rcl_fields_scripts();
+
 	wp_localize_script( 'rcl-core-scripts', 'Rcl', rcl_get_localize_data() );
 }
 

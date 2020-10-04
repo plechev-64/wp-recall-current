@@ -489,6 +489,12 @@ function rcl_ajax( prop ) {
 
 			}
 
+			if ( prop.afterSuccess ) {
+
+				prop.afterSuccess( result );
+
+			}
+
 			rcl_do_action( action, result );
 
 			if ( result.modules ) {

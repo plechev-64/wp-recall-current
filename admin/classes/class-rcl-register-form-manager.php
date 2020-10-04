@@ -6,12 +6,19 @@ class Rcl_Register_Form_Manager extends Rcl_Fields_Manager {
 	function __construct() {
 
 		parent::__construct( 'register_form', array(
-			'empty_field'	 => false,
-			'create_field'	 => false,
+			'empty_field'	 => 0,
+			'create_field'	 => 0,
 			'option_name'	 => 'rcl_register_form_fields',
-			'structure_edit' => true,
-			'default_fields' => apply_filters( 'rcl_register_form_default_fields', $this->get_profile_fields() ),
+			'structure_edit' => 1,
+			'default_fields' => apply_filters( 'rcl_register_form_default_fields', $this->get_default_fields() ),
 			'field_options'	 => apply_filters( 'rcl_register_form_field_options', array(
+				array(
+					'type'			 => 'text',
+					'slug'			 => 'icon',
+					'class'			 => 'rcl-iconpicker',
+					'title'			 => __( 'Icon class', 'wp-recall' ),
+					'placeholder'	 => __( 'Example, fa-user', 'wp-recall' )
+				),
 				array(
 					'type'	 => 'radio',
 					'slug'	 => 'required',
@@ -24,8 +31,40 @@ class Rcl_Register_Form_Manager extends Rcl_Fields_Manager {
 		$this->setup_default_fields();
 	}
 
-	function get_profile_fields() {
-		return get_site_option( 'rcl_profile_fields' );
+	function get_default_fields() {
+
+		$fields = get_site_option( 'rcl_profile_fields' );
+
+		if ( ! $fields )
+			$fields = [ ];
+
+		$fields[] = [
+			'type'			 => 'text',
+			'slug'			 => 'user_login',
+			'title'			 => __( 'Логин', 'wp-recall' ),
+			'placeholder'	 => __( 'Логин', 'wp-recall' ),
+			'icon'			 => 'fa-user',
+			'maxlenght'		 => 50,
+			'required'		 => 1
+		];
+
+		$fields[] = [
+			'type'		 => 'password',
+			'slug'		 => 'user_pass',
+			'icon'		 => 'fa-lock',
+			'title'		 => __( 'Пароль', 'wp-recall' ),
+			'required'	 => 1
+		];
+
+		$fields[] = [
+			'type'		 => 'password',
+			'slug'		 => 'user_pass_repeat',
+			'icon'		 => 'fa-lock',
+			'title'		 => __( 'Повтор пароля', 'wp-recall' ),
+			'required'	 => 1
+		];
+
+		return $fields;
 	}
 
 }

@@ -4,7 +4,7 @@ RCL()->use_module( 'fields-manager' );
 
 $Manager = new Rcl_Fields_Manager( 'orderform', array(
 	'option_name'	 => 'rcl_cart_fields',
-	'empty_field'	 => true,
+	'empty_field'	 => 1,
 	'field_options'	 => array(
 		array(
 			'type'	 => 'textarea',

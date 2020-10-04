@@ -5,21 +5,21 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 	public $manager_id			 = false;
 	//public $fields = array();
 	public $option_name			 = '';
-	public $structure_edit		 = false;
-	public $template_fields		 = false;
+	public $structure_edit		 = 0;
+	public $template_fields		 = 0;
 	public $default_fields		 = array();
-	public $default_is_null		 = false;
-	public $sortable			 = true;
-	public $empty_field			 = true;
-	public $create_field		 = true;
-	public $switch_id			 = false;
-	public $switch_type			 = true;
-	public $fields_delete		 = true;
+	public $default_is_null		 = 0;
+	public $sortable			 = 1;
+	public $empty_field			 = 1;
+	public $create_field		 = 1;
+	public $switch_id			 = 0;
+	public $switch_type			 = 1;
+	public $fields_delete		 = 1;
 	public $field_options		 = array();
 	public $new_field_options	 = array();
-	public $new_field_type		 = false;
-	public $default_box			 = true;
-	public $meta_delete			 = false;
+	public $new_field_type		 = 0;
+	public $default_box			 = 1;
+	public $meta_delete			 = 0;
 	public $current_item		 = 0;
 	public $group_id			 = 0;
 	public $onsubmit			 = 'rcl_manager_update_fields';
@@ -312,7 +312,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		unset( $props['fields'] );
 		unset( $props['default_fields'] );
 
-		$content .= "<script>rcl_init_manager_fields(" . json_encode( $props ) . ");</script>";
+		$content .= '<script>jQuery(window).on("load", function() {rcl_init_manager_fields(' . json_encode( $props ) . ');});</script>';
 
 		return $content;
 	}
@@ -513,8 +513,9 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 		$content .= "<div class=submit-box>";
 
-		if ( $this->create_field )
+		if ( $this->create_field ) {
 			$content .= "<input type=button onclick='rcl_manager_get_new_field(this);' class='add-field-button button-secondary right' value='+ " . __( 'Add field', 'wp-recall' ) . "'>";
+		}
 
 		$content .= "</div>";
 

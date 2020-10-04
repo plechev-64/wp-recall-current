@@ -1,12 +1,16 @@
 <?php
 
+require_once 'loginform.php';
 require_once 'register.php';
 require_once 'authorize.php';
 require_once 'shortcodes.php';
+require_once 'wp-register-form.php';
 if ( class_exists( 'ReallySimpleCaptcha' ) ) {
 	require_once 'captcha.php';
 }
 function rcl_loginform_scripts() {
+	if ( ! rcl_get_option( 'login_form_recall' ) )
+		rcl_dialog_scripts();
 	rcl_enqueue_style( 'rcl-loginform', RCL_URL . 'modules/loginform/assets/style.css' );
 	rcl_enqueue_script( 'rcl-loginform', RCL_URL . 'modules/loginform/assets/scripts.js' );
 }
@@ -16,8 +20,11 @@ if ( is_admin() || isset( $_REQUEST['rest_route'] ) ) {
 } else {
 	add_action( 'rcl_enqueue_scripts', 'rcl_loginform_scripts', 10 );
 }
+//вызываем форму входа и регистрации
 function rcl_call_loginform() {
 	global $user_ID;
+
+	$form = $_POST['form'];
 
 	if ( $user_ID )
 		return [
@@ -27,18 +34,16 @@ function rcl_call_loginform() {
 	return [
 		'dialog' => [
 			'size'		 => 'smallToMedium',
-			'content'	 => rcl_get_loginform()
+			'content'	 => rcl_get_loginform( ['active' => $form ] )
 		]
 	];
 }
 
-rcl_ajax_action( 'rcl_send_loginform', true );
+//принимаем данные отправленные с формы входа и регистрации
 function rcl_send_loginform() {
 
-	rcl_verify_ajax_nonce();
-
 	$tab_id		 = $_POST['tab_id'];
-	$user_login	 = sanitize_user( $_POST['user_login'] );
+	$user_login	 = isset( $_POST['user_login'] ) ? sanitize_user( $_POST['user_login'] ) : false;
 
 	if ( $tab_id == 'login' ) {
 
@@ -51,42 +56,55 @@ function rcl_send_loginform() {
 			) );
 
 		if ( is_wp_error( $user ) ) {
-			wp_send_json( array(
+			return array(
 				'error' => $user->get_error_message()
-			) );
+			);
 		}
 
-		wp_send_json( array(
+		return array(
 			'success' => __( 'Успешная авторизация', 'usp' )
-		) );
+		);
 	} else if ( $tab_id == 'register' ) {
 
 		$user_email = sanitize_email( $_POST['user_email'] );
 
+		if ( ! $user_login )
+			$user_login = $user_email;
+
 		$user_id = register_new_user( $user_login, $user_email );
 
 		if ( is_wp_error( $user_id ) ) {
-			wp_send_json( array(
+			return array(
 				'error' => $user_id->get_error_message()
-			) );
+			);
 		}
 
-		wp_send_json( array(
-			'success' => __( 'Успешная регистрация', 'usp' )
-		) );
+		return array(
+			'content'	 => rcl_get_notice( [
+				'type'	 => 'success',
+				'text'	 => __( 'Регистрация завершена, проверьте вашу почту, затем '
+					. 'зайдите на <a href="#" onclick="Rcl.loginform.tabShow(\'login\',this);'
+					. 'return false;">страницу входа</a>.', 'wp-recall' )
+			] ),
+			'success'	 => __( 'Успешная регистрация', 'usp' )
+		);
 	} else if ( $tab_id == 'lostpassword' ) {
 
 		$result = retrieve_password();
 
 		if ( is_wp_error( $result ) ) {
-			wp_send_json( array(
+			return array(
 				'error' => $result->get_error_message()
-			) );
+			);
 		}
 
-		wp_send_json( array(
-			'success' => __( 'Ссылка на восстановление выслана на почту', 'usp' )
-		) );
+		return array(
+			'content'	 => rcl_get_notice( [
+				'type'	 => 'success',
+				'text'	 => __( 'Ссылка для восстановления пароля выслана на почту', 'wp-recall' )
+			] ),
+			'success'	 => __( 'Письмо успешно отправлено', 'usp' )
+		);
 	}
 }
 
@@ -127,7 +145,7 @@ function rcl_add_rememberme_button( $fields ) {
 	return $fields;
 }
 
-add_filter( 'rcl_register_form_fields', 'rcl_add_register_form_custom_data', 10 );
+//add_filter( 'rcl_register_form_fields', 'rcl_add_register_form_custom_data', 10 );
 function rcl_add_register_form_custom_data( $fields ) {
 
 	ob_start();

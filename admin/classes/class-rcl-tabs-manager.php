@@ -6,8 +6,8 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 	function __construct( $areaType ) {
 
 		parent::__construct( $areaType, array(
-			'switch_type'	 => false,
-			'switch_id'		 => false,
+			'switch_type'	 => 0,
+			'switch_id'		 => 0,
 			'types'			 => array(
 				'custom'
 			),
@@ -34,9 +34,8 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 					'type'			 => 'text',
 					'slug'			 => 'icon',
 					'class'			 => 'rcl-iconpicker',
-					'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' ),
-					'placeholder'	 => __( 'Example, fa-user', 'wp-recall' ),
-					'notice'		 => __( 'Source', 'wp-recall' ) . ' <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">http://fontawesome.com/</a>'
+					'title'			 => __( 'Icon class', 'wp-recall' ),
+					'placeholder'	 => __( 'Example, fa-user', 'wp-recall' )
 				),
 				array(
 					'type'	 => 'select',

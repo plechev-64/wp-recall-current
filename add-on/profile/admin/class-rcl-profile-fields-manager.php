@@ -8,8 +8,8 @@ class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager {
 
 		parent::__construct( 'profile', array(
 			'option_name'	 => 'rcl_profile_fields',
-			'empty_field'	 => false,
-			'structure_edit' => false,
+			'empty_field'	 => 0,
+			'structure_edit' => 0,
 			'meta_delete'	 => array(
 				$wpdb->usermeta => 'meta_key'
 			),

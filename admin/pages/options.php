@@ -183,18 +183,18 @@ $options->box( 'primary' )->add_group( 'usersign', array(
 			)
 		)
 	),
-	array(
-		'type'	 => 'select',
-		'slug'	 => 'repeat_pass',
-		'title'	 => __( 'repeat password field', 'wp-recall' ),
-		'values' => array( __( 'Disabled', 'wp-recall' ), __( 'Displaye', 'wp-recall' ) )
-	),
-	array(
-		'type'	 => 'select',
-		'slug'	 => 'difficulty_parole',
-		'title'	 => __( 'Indicator of password complexity', 'wp-recall' ),
-		'values' => array( __( 'Disabled', 'wp-recall' ), __( 'Displaye', 'wp-recall' ) )
-	)
+	/* array(
+	  'type'	 => 'select',
+	  'slug'	 => 'repeat_pass',
+	  'title'	 => __( 'repeat password field', 'wp-recall' ),
+	  'values' => array( __( 'Disabled', 'wp-recall' ), __( 'Displaye', 'wp-recall' ) )
+	  ),
+	  array(
+	  'type'	 => 'select',
+	  'slug'	 => 'difficulty_parole',
+	  'title'	 => __( 'Indicator of password complexity', 'wp-recall' ),
+	  'values' => array( __( 'Disabled', 'wp-recall' ), __( 'Displaye', 'wp-recall' ) )
+	  ) */
 ) );
 
 $options->box( 'primary' )->add_group( 'recallbar', array(

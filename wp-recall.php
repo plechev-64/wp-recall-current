@@ -24,8 +24,6 @@ final class WP_Recall {
 	public $modules		 = array();
 	public $used_modules = array();
 
-	//protected static $_instance	 = null;
-
 	public static function getInstance() {
 		static $instance;
 
@@ -53,16 +51,6 @@ final class WP_Recall {
 		$hasInstance = true;
 	}
 
-	/*
-	 * Основной экземпляр класса WP_Recall
-	 */
-	/* public static function getInstance() {
-	  if ( is_null( self::$_instance ) ) {
-	  self::$_instance = new self();
-	  }
-
-	  return self::$_instance;
-	  } */
 	public function __clone() {
 		_doing_it_wrong( __FUNCTION__, __( 'Are you cheating, bastard?' ), $this->version );
 	}
@@ -85,22 +73,6 @@ final class WP_Recall {
 		}
 	}
 
-	/*
-	 * Конструктор нашего WP_Recall
-	 */
-	/* private function __construct() {
-
-	  add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ), 10 );
-
-	  $this->define_constants(); //Определяем константы.
-
-	  $this->includes(); //Подключаем все нужные файлы с функциями и классами
-	  $this->init_modules(); //Определяем модули.
-	  $this->include_addons();
-	  $this->init_hooks(); //Тут все наши хуки
-
-	  do_action( 'wp_recall_loaded' ); //Оставляем кручёк
-	  } */
 	private function init_modules() {
 
 		$this->modules = [
@@ -245,7 +217,7 @@ final class WP_Recall {
 		require_once 'functions/addons-update.php';
 		require_once 'functions/enqueue-scripts.php';
 		require_once 'functions/cron.php';
-		require_once 'functions/loginform.php';
+		//require_once 'functions/loginform.php';
 		require_once 'functions/currency.php';
 		require_once 'functions/deprecated.php';
 		require_once 'functions/shortcodes.php';

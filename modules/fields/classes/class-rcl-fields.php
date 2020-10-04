@@ -68,36 +68,33 @@ class Rcl_Fields extends Rcl_Field {
 				}
 			}
 
-			if ( $structureFields ) {
-
-				$structure		 = [ ];
-				$headerFields	 = [ ];
-				$footerFields	 = [ ];
-				$top			 = true;
-				foreach ( $this->fields as $field_id => $field ) {
-					if ( ! in_array( $field_id, $structureFields ) ) {
-						if ( $top )
-							$headerFields[] = $field_id;
-						else {
-							$footerFields[] = $field_id;
-						}
-					} else if ( $top ) {
-						$top = false;
+			$structure		 = [ ];
+			$headerFields	 = [ ];
+			$footerFields	 = [ ];
+			$top			 = true;
+			foreach ( $this->fields as $field_id => $field ) {
+				if ( ! in_array( $field_id, $structureFields ) ) {
+					if ( $top )
+						$headerFields[] = $field_id;
+					else {
+						$footerFields[] = $field_id;
 					}
+				} else if ( $top ) {
+					$top = false;
 				}
-
-				if ( $headerFields ) {
-					$structure['header-group']['areas'][0]['fields'] = $headerFields;
-				}
-
-				$structure += $this->structure;
-
-				if ( $footerFields ) {
-					$structure['footer-group']['areas'][0]['fields'] = $footerFields;
-				}
-
-				$this->structure = $structure;
 			}
+
+			if ( $headerFields ) {
+				$structure['header-group']['areas'][0]['fields'] = $headerFields;
+			}
+
+			$structure += $this->structure;
+
+			if ( $footerFields ) {
+				$structure['footer-group']['areas'][0]['fields'] = $footerFields;
+			}
+
+			$this->structure = $structure;
 		}
 	}
 

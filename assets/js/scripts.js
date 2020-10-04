@@ -3,6 +3,8 @@ jQuery( function( $ ) {
 	rcl_do_action( 'rcl_init' );
 } );
 
+rcl_add_action( 'rcl_init', 'rcl_init_cookie' );
+
 jQuery( window ).load( function() {
 	jQuery( 'body' ).on( 'drop', function( e ) {
 		return false;
@@ -538,79 +540,6 @@ function rcl_init_close_notice() {
 		rcl_close_notice( jQuery( this ).parent() );
 		return false;
 	} );
-}
-
-rcl_add_action( 'rcl_init', 'rcl_init_cookie' );
-
-rcl_add_action( 'rcl_login_form', 'rcl_init_login_form' );
-function rcl_init_login_form( type_form ) {
-
-	if ( rcl_url_params['action-rcl'] ) {
-		jQuery( '.panel_lk_recall.floatform > div' ).hide();
-	}
-
-	if ( type_form == 'floatform' ) {
-
-		jQuery( "body" ).on( 'click', '.rcl-register', function() {
-			rcl_show_float_login_form();
-			rcl_show_login_form_tab( 'register', type_form );
-			return false;
-		} );
-
-		jQuery( "body" ).on( 'click', '.rcl-login', function() {
-			rcl_show_float_login_form();
-			rcl_show_login_form_tab( 'login', type_form );
-			return false;
-		} );
-
-		if ( rcl_url_params['action-rcl'] ) {
-			rcl_show_float_login_form();
-		}
-
-	} else {
-
-		if ( rcl_url_params['action-rcl'] === 'login' ) {
-			jQuery( '.rcl-loginform-full.' + type_form + ' #register-form-rcl' ).hide();
-		}
-
-		if ( rcl_url_params['action-rcl'] === 'register' ) {
-			jQuery( '.rcl-loginform-full.' + type_form + ' #login-form-rcl' ).hide();
-		}
-
-		if ( rcl_url_params['action-rcl'] === 'remember' ) {
-			jQuery( '.rcl-loginform.' + type_form + ' #login-form-rcl' ).hide();
-		}
-
-	}
-
-	if ( rcl_url_params['action-rcl'] ) {
-		rcl_show_login_form_tab( rcl_url_params['action-rcl'], type_form );
-	}
-
-}
-
-function rcl_show_login_form_tab( tab, type_form ) {
-	type_form = ( !type_form ) ? '' : '.' + type_form;
-	jQuery( '.panel_lk_recall' + type_form + ' #' + tab + '-form-rcl' ).show();
-}
-
-function rcl_show_float_login_form() {
-	jQuery( '.panel_lk_recall.floatform > div' ).hide();
-	rcl_setup_position_float_form();
-	jQuery( '.panel_lk_recall.floatform' ).show();
-}
-
-function rcl_hide_float_login_form() {
-	jQuery( '.panel_lk_recall.floatform' ).fadeOut().children( '.form-tab-rcl' ).hide();
-}
-
-function rcl_setup_position_float_form() {
-	jQuery( "#rcl-overlay" ).fadeIn();
-	var screen_top = jQuery( window ).scrollTop();
-	var popup_h = jQuery( '.panel_lk_recall.floatform' ).height();
-	var window_h = jQuery( window ).height();
-	screen_top = screen_top + 60;
-	jQuery( '.panel_lk_recall.floatform' ).css( 'top', screen_top + 'px' );
 }
 
 rcl_add_action( 'rcl_footer', 'rcl_beat' );

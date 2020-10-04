@@ -153,7 +153,7 @@ function rcl_get_loginform_url( $type ) {
 
 	if ( $type == 'login' ) {
 		switch ( rcl_get_option( 'login_form_recall' ) ) {
-			case 1: return rcl_format_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) ) . 'action-rcl=login';
+			case 1: return add_query_arg( ['show-form' => 'login ' ], get_permalink( rcl_get_option( 'page_login_form_recall' ) ) );
 				break;
 			case 2: return wp_login_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) );
 				break;
@@ -164,7 +164,7 @@ function rcl_get_loginform_url( $type ) {
 
 	if ( $type == 'register' ) {
 		switch ( rcl_get_option( 'login_form_recall' ) ) {
-			case 1: return rcl_format_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) ) . 'action-rcl=register';
+			case 1: return add_query_arg( ['show-form' => 'register ' ], get_permalink( rcl_get_option( 'page_login_form_recall' ) ) );
 				break;
 			case 2: return wp_registration_url();
 				break;
