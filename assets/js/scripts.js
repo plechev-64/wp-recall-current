@@ -250,7 +250,7 @@ function rcl_manage_user_black_list( e, user_id, confirmText ) {
 	return false;
 }
 
-rcl_add_action( 'rcl_init', 'rcl_init_update_requared_checkbox' );
+/*rcl_add_action( 'rcl_init', 'rcl_init_update_requared_checkbox' );*/
 function rcl_init_update_requared_checkbox() {
 
 	jQuery( 'body form' ).find( '.required-checkbox' ).each( function() {

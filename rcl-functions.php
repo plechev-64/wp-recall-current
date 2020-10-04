@@ -1044,6 +1044,7 @@ function rcl_is_register_open() {
 
 /* 16.0.0 */
 function rcl_update_profile_fields( $user_id, $profileFields = false ) {
+	global $user_ID;
 
 	require_once(ABSPATH . "wp-admin" . '/includes/image.php');
 	require_once(ABSPATH . "wp-admin" . '/includes/file.php');
@@ -1076,7 +1077,7 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 
 			$value = (isset( $_POST[$slug] )) ? $_POST[$slug] : false;
 
-			if ( isset( $field['admin'] ) && $field['admin'] == 1 && ! is_admin() ) {
+			if ( isset( $field['admin'] ) && $field['admin'] == 1 && ! is_admin() && ! rcl_is_user_role( $user_ID, ['administrator' ] ) ) {
 
 				if ( in_array( $slug, array( 'display_name', 'user_url' ) ) ) {
 

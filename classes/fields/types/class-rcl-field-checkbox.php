@@ -105,4 +105,10 @@ class Rcl_Field_Checkbox extends Rcl_Field_Abstract {
 		return $content;
 	}
 
+	function get_field_input() {
+		$content = parent::get_field_input();
+		$content .= '<script>rcl_init_update_requared_checkbox();</script>';
+		return $content;
+	}
+
 }
