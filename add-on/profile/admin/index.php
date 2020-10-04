@@ -14,7 +14,7 @@ function rcl_edit_profile_field_options( $options, $field, $manager_id ) {
 	if ( $manager_id != 'profile' || ! rcl_is_register_open() )
 		return $options;
 
-	$options[] = array(
+	$options['register'] = array(
 		'type'	 => 'radio',
 		'slug'	 => 'register',
 		'title'	 => __( 'display in registration form', 'wp-recall' ),
@@ -23,6 +23,34 @@ function rcl_edit_profile_field_options( $options, $field, $manager_id ) {
 			__( 'Yes', 'wp-recall' )
 		)
 	);
+
+	return $options;
+}
+
+add_filter( 'rcl_field_options', 'rcl_edit_profile_manager_field_options', 10, 3 );
+function rcl_edit_profile_manager_field_options( $options, $field, $manager_id ) {
+
+	if ( ! $field->id || $manager_id != 'profile' )
+		return $options;
+
+	$defaultFields = array(
+		'first_name',
+		'last_name',
+		'display_name',
+		'url',
+		'description'
+	);
+
+	if ( in_array( $field->id, $defaultFields ) ) {
+		unset( $options['filter'] );
+		unset( $options['public_value'] );
+	} else if ( in_array( $field->type, array( 'editor', 'uploader', 'file' ) ) ) {
+		unset( $options['filter'] );
+	}
+
+	if ( in_array( $field->type, ['uploader', 'file' ] ) ) {
+		unset( $options['required'] );
+	}
 
 	return $options;
 }

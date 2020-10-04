@@ -55,6 +55,20 @@ function rcl_admin_menu() {
 	$hook	 = add_submenu_page( 'manage-wprecall', __( 'Templates', 'wp-recall' ) . $notice_t, __( 'Templates', 'wp-recall' ) . $notice_t, 'manage_options', 'manage-templates-recall', 'rcl_render_templates_manager' );
 	add_action( "load-$hook", 'rcl_add_options_templates_manager' );
 	add_submenu_page( 'manage-wprecall', __( 'Tabs manager', 'wp-recall' ), __( 'Tabs manager', 'wp-recall' ), 'manage_options', 'rcl-tabs-manager', 'rcl_admin_tabs_manager' );
+	add_submenu_page( 'manage-wprecall', __( 'Форма регистрации', 'wp-recall' ), __( 'Форма регистрации', 'wp-recall' ), 'manage_options', 'rcl-register-form-manager', 'rcl_register_form_manager' );
+}
+
+function rcl_register_form_manager() {
+
+	require_once 'classes/class-rcl-register-form-manager.php';
+
+	$Manager = new Rcl_Register_Form_Manager( );
+
+	$content = '<h2>' . __( 'Управление поля формы регистрации', 'wp-recall' ) . '</h2>';
+
+	$content .= $Manager->get_manager();
+
+	echo $content;
 }
 
 function rcl_dashboard() {

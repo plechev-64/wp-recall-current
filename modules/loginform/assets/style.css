@@ -1,0 +1,20 @@
+.usp-loginform{}
+.usp-loginform .tab-group{
+	display: flex;
+	line-height: 1;
+}
+.usp-loginform .tab-group .tab{
+	display: block;
+	padding: 10px 15px;
+	color: #333;
+}
+.usp-loginform .tab-group .active{
+    background: #eee;
+}
+.usp-loginform .tab-content{
+	display:none;
+}
+.usp-loginform .tab-content.active{
+	display:block;
+}
+

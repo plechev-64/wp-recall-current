@@ -107,31 +107,3 @@ class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager {
 	}
 
 }
-
-add_filter( 'rcl_field_options', 'rcl_edit_profile_manager_field_options', 10, 3 );
-function rcl_edit_profile_manager_field_options( $options, $field, $manager_id ) {
-
-	if ( ! $field->id || $manager_id != 'profile' )
-		return $options;
-
-	$defaultFields = array(
-		'first_name',
-		'last_name',
-		'display_name',
-		'url',
-		'description'
-	);
-
-	if ( in_array( $field->id, $defaultFields ) ) {
-		unset( $options['filter'] );
-		unset( $options['public_value'] );
-	} else if ( in_array( $field->type, array( 'editor', 'uploader', 'file' ) ) ) {
-		unset( $options['filter'] );
-	}
-
-	if ( in_array( $field->type, ['uploader', 'file' ] ) ) {
-		unset( $options['required'] );
-	}
-
-	return $options;
-}

@@ -104,6 +104,7 @@ final class WP_Recall {
 	private function init_modules() {
 
 		$this->modules = [
+			'loginform'			 => new Rcl_Module( RCL_PATH . 'modules/loginform/index.php', ['forms' ] ),
 			'recallbar'			 => new Rcl_Module( RCL_PATH . 'modules/recallbar/index.php' ),
 			'uploader'			 => new Rcl_Module( RCL_PATH . 'modules/uploader/index.php' ),
 			'gallery'			 => new Rcl_Module( RCL_PATH . 'modules/gallery/index.php' ),
@@ -309,21 +310,6 @@ final class WP_Recall {
 
 		$this->fields_init();
 
-		if ( ! $user_ID ) {
-
-			//тут подключаем файлы необходимые для регистрации и авторизации
-			require_once 'functions/register.php';
-			require_once 'functions/authorize.php';
-
-			if ( class_exists( 'ReallySimpleCaptcha' ) ) {
-				require_once 'functions/captcha.php';
-			}
-
-			if ( ! rcl_get_option( 'login_form_recall' ) ) {
-				add_action( 'wp_footer', 'rcl_login_form', 5 );
-			}
-		}
-
 		if ( $this->is_request( 'frontend' ) ) {
 
 			if ( rcl_get_option( 'view_recallbar' ) ) {
@@ -336,6 +322,8 @@ final class WP_Recall {
 		if ( ! rcl_get_option( 'security-key' ) ) {
 			rcl_update_option( 'security-key', wp_generate_password( 20, false ) );
 		}
+
+		$this->use_module( 'loginform' );
 
 		do_action( 'rcl_init' );
 	}

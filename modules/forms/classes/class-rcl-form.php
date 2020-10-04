@@ -19,7 +19,7 @@ class Rcl_Form extends Rcl_Fields {
 
 		$this->fields = array();
 
-		parent::__construct( $args['fields'] );
+		parent::__construct( $args['fields'], isset( $args['structure'] ) ? $args['structure'] : false  );
 	}
 
 	function init_properties( $args ) {
@@ -82,8 +82,12 @@ class Rcl_Form extends Rcl_Fields {
 
 		$content = '';
 
-		foreach ( $this->fields as $field_id => $field ) {
-			$content .= $this->get_form_field( $field_id );
+		if ( $this->structure ) {
+			$content .= $this->get_content_form();
+		} else {
+			foreach ( $this->fields as $field_id => $field ) {
+				$content .= $this->get_form_field( $field_id );
+			}
 		}
 
 		return $content;
