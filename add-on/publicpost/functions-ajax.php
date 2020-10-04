@@ -222,6 +222,8 @@ function rcl_preview_post() {
 		$post_content = wpautop( do_shortcode( stripslashes_deep( $postContent ) ) );
 	}
 
+	do_action( 'rcl_preview_post', $postdata );
+
 	if ( $postdata['publish'] ) {
 		wp_send_json( [
 			'submit' => true
@@ -268,13 +270,13 @@ function rcl_preview_post() {
 		}
 	}
 
-	do_action( 'rcl_preview_post', $postdata );
-
 	$preview = apply_filters( 'rcl_preview_post_content', $post_content );
 
 	$preview .= rcl_get_notice( [
 		'text' => __( 'If everything is correct – publish it! If not, you can go back to editing.', 'wp-recall' )
 		] );
+
+	do_action( 'rcl_pre_send_preview_post', $postdata );
 
 	wp_send_json( array(
 		'title'		 => $postdata['post_title'],
