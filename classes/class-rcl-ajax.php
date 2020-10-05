@@ -30,19 +30,6 @@ final class Rcl_Ajax {
 		$hasInstance = true;
 	}
 
-	/* function __construct( $args = false ) {
-	  $this->init_properties( $args );
-	  } */
-
-	/* function init_properties( $args ) {
-
-	  $properties = get_class_vars( get_class( $this ) );
-
-	  foreach ( $properties as $name => $val ) {
-	  if ( isset( $args[$name] ) )
-	  $this->$name = $args[$name];
-	  }
-	  } */
 	public function is_rest_request() {
 		return isset( $_REQUEST['rest_route'] ) && $_REQUEST['rest_route'] == '/' . $this->rest_space . '/' . $this->rest_route . '/' ? true : false;
 	}
@@ -67,24 +54,6 @@ final class Rcl_Ajax {
 		add_action( 'rest_api_init', array( $this, 'register_route' ) );
 	}
 
-	/* function init() {
-
-	  if ( $this->rest ) {
-	  add_action( 'rest_api_init', array( $this, 'register_route' ) );
-	  } else {
-
-	  if ( is_array( $this->name ) ) {
-	  $name = $this->name[1];
-	  } else {
-	  $name = $this->name;
-	  }
-
-	  add_action( 'wp_ajax_' . $name, $this->name );
-
-	  if ( $this->nopriv )
-	  add_action( 'wp_ajax_nopriv_' . $name, $this->name );
-	  }
-	  } */
 	function register_route() {
 
 		register_rest_route( $this->rest_space, '/' . $this->rest_route . '/', array(
