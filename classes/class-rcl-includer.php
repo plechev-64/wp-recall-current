@@ -360,7 +360,7 @@ class Rcl_Includer {
 }
 
 //подключаем стилевой файл дополнения
-function rcl_enqueue_style( $id, $url, $parents = false, $in_footer = false ) {
+function rcl_enqueue_style( $id, $url, $parents = false, $in_footer = false, $force_union = false ) {
 	global $rcl_styles;
 
 	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) || isset( $_REQUEST['rest_route'] ) ) {
@@ -386,9 +386,12 @@ function rcl_enqueue_style( $id, $url, $parents = false, $in_footer = false ) {
 	}else {
 		$rcl_styles[$id] = $url;
 	}
+
+	if ( $force_union )
+		$rcl_styles['force-union'][] = $id;
 }
 
-function rcl_enqueue_script( $id, $url, $parents = false, $in_footer = false ) {
+function rcl_enqueue_script( $id, $url, $parents = false, $in_footer = false, $force_union = false ) {
 	global $rcl_scripts;
 
 	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) || isset( $_REQUEST['rest_route'] ) ) {
@@ -409,6 +412,9 @@ function rcl_enqueue_script( $id, $url, $parents = false, $in_footer = false ) {
 
 	if ( $parents )
 		$rcl_scripts['parents'][$id] = $parents;
+
+	if ( $force_union )
+		$rcl_scripts['force-union'][] = $id;
 }
 
 function rcl_dequeue_style( $style ) {
@@ -449,6 +455,7 @@ function rcl_include_scripts() {
 }
 
 add_action( 'wp_footer', 'rcl_localize_modules_list', 10 );
+add_action( 'admin_footer', 'rcl_localize_modules_list', 10 );
 function rcl_localize_modules_list() {
 	echo '<script>Rcl.modules = ' . json_encode( RCL()->used_modules ) . '</script>';
 }

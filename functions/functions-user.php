@@ -149,23 +149,18 @@ function rcl_filter_user_description() {
 	echo $cont	 = apply_filters( 'rcl_description_user', $cont, $rcl_user->ID );
 }
 
-function rcl_is_user_role( $user_id, $role ) {
-	$user_data = get_userdata( $user_id );
+function rcl_is_user_role( $user, $roles ) {
+	if ( ! $user )
+		$user	 = wp_get_current_user();
+	if ( is_numeric( $user ) )
+		$user	 = get_userdata( $user );
 
-	if ( ! isset( $user_data->roles ) || ! $user_data->roles )
+	if ( empty( $user->ID ) )
 		return false;
 
-	$roles = $user_data->roles;
-
-	$current_role = array_shift( $roles );
-
-	if ( is_array( $role ) ) {
-		if ( in_array( $current_role, $role ) )
+	foreach ( ( array ) $roles as $role )
+		if ( isset( $user->caps[$role] ) || in_array( $role, $user->roles ) )
 			return true;
-	}else {
-		if ( $current_role == $role )
-			return true;
-	}
 
 	return false;
 }

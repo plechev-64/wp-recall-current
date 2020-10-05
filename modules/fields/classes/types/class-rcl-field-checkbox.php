@@ -106,8 +106,13 @@ class Rcl_Field_Checkbox extends Rcl_Field_Abstract {
 	}
 
 	function get_field_input() {
-		$content = parent::get_field_input();
-		$content .= '<script>rcl_init_update_requared_checkbox();</script>';
+		$content	 = parent::get_field_input();
+		$function	 = 'rcl_init_update_requared_checkbox();';
+		if ( ! rcl_is_ajax() ) {
+			$content .= '<script>jQuery(window).on("load", function() {' . $function . '});</script>';
+		} else {
+			$content .= '<script>' . $function . '</script>';
+		}
 		return $content;
 	}
 

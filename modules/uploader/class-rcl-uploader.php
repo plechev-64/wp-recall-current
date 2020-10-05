@@ -412,7 +412,8 @@ class Rcl_Uploader {
 			return false;
 		}
 
-		require_once( ABSPATH . 'wp-admin/includes/image.php' );
+		require_once ABSPATH . 'wp-admin/includes/image.php';
+		require_once ABSPATH . 'wp-admin/includes/file.php';
 
 		do_action( 'rcl_pre_upload', $this );
 

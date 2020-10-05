@@ -1,10 +1,9 @@
 <?php
 
+rcl_ajax_action( 'rcl_update_options', false );
 function rcl_update_options() {
 
-	rcl_verify_ajax_nonce();
-
-	$POST = $_POST; //filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
+	$POST = $_POST;
 
 	array_walk_recursive(
 		$POST, function(&$v, $k) {

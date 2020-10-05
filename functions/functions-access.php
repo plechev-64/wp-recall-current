@@ -58,27 +58,16 @@ function rcl_banned_user_redirect() {
 }
 
 function rcl_check_access_console() {
-	global $current_user;
+	global $user_ID;
 
-	$need_access = rcl_get_option( 'consol_access_rcl', 7 );
+	$roles = rcl_get_option( 'consol_access_rcl' );
 
-	if ( $current_user->user_level ) {
-
-		$access = ( $current_user->user_level < $need_access ) ? false : true;
-	} else if ( isset( $current_user->allcaps['level_' . $need_access] ) ) {
-
-		$access = ( $current_user->allcaps['level_' . $need_access] == 1 ) ? true : false;
+	//support old option
+	if ( ! is_array( $roles ) || ! $roles ) {
+		$roles = ['administrator' ];
 	} else {
-
-		$roles = array(
-			10	 => 'administrator',
-			7	 => 'editor',
-			2	 => 'author',
-			1	 => 'contributor'
-		);
-
-		$access = (isset( $roles[$need_access] ) && current_user_can( $roles[$need_access] )) ? true : false;
+		$roles[] = 'administrator';
 	}
 
-	return $access;
+	return rcl_is_user_role( $user_ID, $roles );
 }

@@ -88,8 +88,9 @@ function RclUploader( props, sk ) {
 			sk: sk
 		};
 
-		formData.action = uploader.options.action;
-		formData.ajax_nonce = Rcl.nonce;
+		formData.action = 'rcl_ajax_call';
+		formData.callback = uploader.options.action;
+		formData._wpnonce = Rcl.nonce;
 
 		return formData;
 
@@ -106,7 +107,7 @@ function RclUploader( props, sk ) {
 		options = {
 			dataType: 'json',
 			type: 'POST',
-			url: Rcl.ajaxurl,
+			url: Rcl.wpurl + '/?rest_route=/rcl/rcl_ajax_call/', /*Rcl.ajaxurl*/
 			dropZone: this.options.dropzone ? jQuery( "#rcl-dropzone-" + this.uploader_id ) : false,
 			formData: this.getFormData( uploader ),
 			loadImageMaxFileSize: this.options.max_size * 1024,

@@ -23,8 +23,8 @@ require_once 'classes/types/class-rcl-field-uploader.php';
 require_once 'classes/types/class-rcl-field-file.php';
 require_once 'classes/types/class-rcl-field-hidden.php';
 function rcl_fields_scripts() {
-	rcl_enqueue_style( 'rcl-fields', RCL_URL . 'modules/fields/assets/style.css' );
-	rcl_enqueue_script( 'rcl-fields', RCL_URL . 'modules/fields/assets/scripts.js', ['rcl-core-scripts' ] );
+	rcl_enqueue_style( 'rcl-fields', RCL_URL . 'modules/fields/assets/style.css', false, false, true );
+	rcl_enqueue_script( 'rcl-fields', RCL_URL . 'modules/fields/assets/scripts.js', ['rcl-core-scripts' ], false, false, true );
 }
 
 if ( is_admin() || isset( $_REQUEST['rest_route'] ) ) {
