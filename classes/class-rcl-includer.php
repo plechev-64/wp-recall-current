@@ -457,7 +457,7 @@ function rcl_include_scripts() {
 add_action( 'wp_footer', 'rcl_localize_modules_list', 10 );
 add_action( 'admin_footer', 'rcl_localize_modules_list', 10 );
 function rcl_localize_modules_list() {
-	echo '<script>Rcl.modules = ' . json_encode( RCL()->used_modules ) . '</script>';
+	echo '<script>Rcl.used_modules = ' . json_encode( RCL()->used_modules ) . '</script>';
 }
 
 //сбрасываем массивы зарегистрированных скриптов и стилей при вызове вкладки через ajax

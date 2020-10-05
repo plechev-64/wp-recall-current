@@ -5,8 +5,6 @@ rcl_ajax_action( 'rcl_ajax_delete_post', true );
 function rcl_ajax_delete_post() {
 	global $user_ID;
 
-	rcl_verify_ajax_nonce();
-
 	$user_id = ($user_ID) ? $user_ID : $_COOKIE['PHPSESSID'];
 
 	$temps		 = get_site_option( 'rcl_tempgallery' );
@@ -55,8 +53,6 @@ rcl_ajax_action( 'rcl_get_edit_postdata', false );
 function rcl_get_edit_postdata() {
 	global $user_ID;
 
-	rcl_verify_ajax_nonce();
-
 	$post_id = intval( $_POST['post_id'] );
 	$post	 = get_post( $post_id );
 
@@ -81,8 +77,6 @@ function rcl_get_edit_postdata() {
 rcl_ajax_action( 'rcl_edit_postdata', false );
 function rcl_edit_postdata() {
 	global $wpdb;
-
-	rcl_verify_ajax_nonce();
 
 	$post_array					 = array();
 	$post_array['post_title']	 = sanitize_text_field( $_POST['post_title'] );
@@ -114,8 +108,6 @@ rcl_ajax_action( 'rcl_get_like_tags', true );
 function rcl_get_like_tags() {
 	global $wpdb;
 
-	rcl_verify_ajax_nonce();
-
 	if ( ! $_POST['query'] ) {
 		wp_send_json( array( array( 'id' => '' ) ) );
 	};
@@ -139,7 +131,6 @@ rcl_ajax_action( 'rcl_preview_post', true );
 function rcl_preview_post() {
 	global $user_ID;
 
-	rcl_verify_ajax_nonce();
 	rcl_reset_wp_dependencies();
 
 	$log		 = array();

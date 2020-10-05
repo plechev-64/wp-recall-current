@@ -3,7 +3,7 @@
 rcl_ajax_action( 'rcl_get_table_manager_cols', true, true );
 function rcl_get_table_manager_cols() {
 
-	rcl_verify_ajax_nonce();
+
 
 	$manager_id		 = $_POST['manager_id'];
 	$cols			 = $_POST['cols'];
@@ -28,8 +28,6 @@ function rcl_get_table_manager_cols() {
 rcl_ajax_action( 'rcl_save_table_manager_cols', true, true );
 function rcl_save_table_manager_cols() {
 
-	rcl_verify_ajax_nonce();
-
 	$manager_id	 = $_POST['manager_id'];
 	$col_ids	 = $_POST['col_ids'];
 
@@ -44,8 +42,6 @@ function rcl_save_table_manager_cols() {
 rcl_ajax_action( 'rcl_load_content_manager', true, true );
 function rcl_load_content_manager() {
 
-	rcl_verify_ajax_nonce();
-
 	$class		 = $_REQUEST['classname'];
 	$classargs	 = isset( $_POST['classargs'] ) ? $_POST['classargs'] : null;
 	$tail		 = isset( $_POST['tail'] ) ? $_POST['tail'] : null;
@@ -59,8 +55,6 @@ function rcl_load_content_manager() {
 
 rcl_ajax_action( 'rcl_load_content_manager_state', true, true );
 function rcl_load_content_manager_state() {
-
-	rcl_verify_ajax_nonce();
 
 	$state		 = json_decode( wp_unslash( $_REQUEST['state'] ), true );
 	$class		 = $state['classname'];

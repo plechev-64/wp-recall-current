@@ -754,8 +754,6 @@ rcl_ajax_action( 'rcl_get_group_link_content', true );
 function rcl_get_group_link_content() {
 	global $rcl_group;
 
-	rcl_verify_ajax_nonce();
-
 	$group_id	 = intval( $_POST['group_id'] );
 	$callback	 = $_POST['callback'];
 
@@ -780,6 +778,7 @@ function rcl_get_group_link_content() {
 rcl_ajax_action( 'rcl_group_callback', false );
 function rcl_group_callback() {
 	global $rcl_group;
+
 	$group_id	 = intval( $_POST['group_id'] );
 	$user_id	 = intval( $_POST['user_id'] );
 	$callback	 = $_POST['callback'];

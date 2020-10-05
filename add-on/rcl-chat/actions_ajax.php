@@ -4,8 +4,6 @@ rcl_ajax_action( 'rcl_get_ajax_chat_window' );
 function rcl_get_ajax_chat_window() {
 	global $user_ID;
 
-	rcl_verify_ajax_nonce();
-
 	$user_id = intval( $_POST['user_id'] );
 
 	$chatdata = rcl_get_chat_private( $user_id );
@@ -26,8 +24,6 @@ rcl_ajax_action( 'rcl_chat_remove_contact', false );
 function rcl_chat_remove_contact() {
 	global $user_ID;
 
-	rcl_verify_ajax_nonce();
-
 	$chat_id = intval( $_POST['chat_id'] );
 
 	rcl_chat_update_user_status( $chat_id, $user_ID, 0 );
@@ -39,8 +35,6 @@ function rcl_chat_remove_contact() {
 
 rcl_ajax_action( 'rcl_get_chat_page', true );
 function rcl_get_chat_page() {
-
-	rcl_verify_ajax_nonce();
 
 	$chat_page	 = intval( $_POST['page'] );
 	$in_page	 = intval( $_POST['in_page'] );
@@ -70,8 +64,6 @@ function rcl_get_chat_page() {
 rcl_ajax_action( 'rcl_chat_add_message', false );
 function rcl_chat_add_message() {
 	global $user_ID, $rcl_options;
-
-	rcl_verify_ajax_nonce();
 
 	$POST = wp_unslash( $_POST['chat'] );
 
@@ -148,8 +140,6 @@ function rcl_chat_add_message() {
 rcl_ajax_action( 'rcl_get_chat_private_ajax', false );
 function rcl_get_chat_private_ajax() {
 
-	rcl_verify_ajax_nonce();
-
 	$user_id = intval( $_POST['user_id'] );
 
 	$chatdata = rcl_get_chat_private( $user_id, array( 'avatar_size' => 30, 'userslist' => 0 ) );
@@ -170,8 +160,6 @@ rcl_ajax_action( 'rcl_chat_message_important', false );
 function rcl_chat_message_important() {
 	global $user_ID;
 
-	rcl_verify_ajax_nonce();
-
 	$message_id = intval( $_POST['message_id'] );
 
 	$important = rcl_chat_get_message_meta( $message_id, 'important:' . $user_ID );
@@ -191,8 +179,6 @@ rcl_ajax_action( 'rcl_chat_important_manager_shift', false );
 function rcl_chat_important_manager_shift() {
 	global $user_ID;
 
-	rcl_verify_ajax_nonce();
-
 	$chat_token			 = wp_slash( $_POST['token'] );
 	$status_important	 = intval( $_POST['status_important'] );
 	$chat_room			 = rcl_chat_token_decode( $chat_token );
@@ -211,8 +197,6 @@ function rcl_chat_important_manager_shift() {
 rcl_ajax_action( 'rcl_chat_delete_attachment', false );
 function rcl_chat_delete_attachment() {
 	global $user_ID;
-
-	rcl_verify_ajax_nonce();
 
 	$attachment_id = intval( $_POST['attachment_id'] );
 
@@ -235,8 +219,6 @@ function rcl_chat_delete_attachment() {
 rcl_ajax_action( 'rcl_chat_ajax_delete_message', false );
 function rcl_chat_ajax_delete_message() {
 	global $current_user;
-
-	rcl_verify_ajax_nonce();
 
 	if ( ! $message_id = intval( $_POST['message_id'] ) )
 		return false;

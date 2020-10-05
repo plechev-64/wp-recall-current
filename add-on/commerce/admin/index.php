@@ -346,8 +346,6 @@ rcl_ajax_action( 'rcl_ajax_import_products' );
 function rcl_ajax_import_products() {
 	global $wpdb;
 
-	rcl_verify_ajax_nonce();
-
 	$path = $_POST['path'];
 
 	$xml = simplexml_load_file( $path );

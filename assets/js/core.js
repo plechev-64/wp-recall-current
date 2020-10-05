@@ -381,14 +381,14 @@ function rcl_ajax( prop ) {
 		prop.data = newRequestArray.join( '&' );
 
 		Rcl.modules.forEach( function( module_id ) {
-			prop.data += '&modules[]=' + module_id;
+			prop.data += '&used_modules[]=' + module_id;
 		} );
 
 		prop.data += '&action=rcl_ajax_call';
 
 	} else if ( typeof prop.data === 'object' ) {
 		callback = prop.data.action;
-		prop.data.modules = Rcl.modules;
+		prop.data.used_modules = Rcl.used_modules;
 		prop.data.action = action;
 		prop.data.callback = callback;
 	}
@@ -497,8 +497,8 @@ function rcl_ajax( prop ) {
 
 			rcl_do_action( action, result );
 
-			if ( result.modules ) {
-				Rcl.modules = result.modules;
+			if ( result.used_modules ) {
+				Rcl.used_modules = result.used_modules;
 			}
 
 		}

@@ -109,8 +109,6 @@ function rcl_manager_get_new_group() {
 rcl_ajax_action( 'rcl_manager_update_fields_by_ajax', false, true );
 function rcl_manager_update_fields_by_ajax() {
 
-	rcl_verify_ajax_nonce();
-
 	return rcl_manager_update_data_fields();
 }
 

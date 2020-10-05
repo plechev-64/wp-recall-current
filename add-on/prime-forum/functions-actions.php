@@ -427,8 +427,6 @@ rcl_ajax_action( 'pfm_ajax_action', true );
 function pfm_ajax_action() {
 	global $PrimeActions, $PrimeQuery, $PrimeUser;
 
-	rcl_verify_ajax_nonce();
-
 	$method		 = $_POST['method'];
 	$itemType	 = isset( $_POST['item_type'] ) ? $_POST['item_type'] : false;
 	$itemID		 = (isset( $_POST['item_id'] )) ? $_POST['item_id'] : null;

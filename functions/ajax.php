@@ -4,34 +4,41 @@ function rcl_is_ajax() {
 	return (defined( 'DOING_AJAX' ) && DOING_AJAX || isset( $GLOBALS['wp']->query_vars['rest_route'] ));
 }
 
+function RclAjax() {
+	return RclAjax::getInstance();
+}
+
 function rcl_verify_ajax_nonce() {
-	Rcl_Ajax::getInstance()->verify();
+	RclAjax()->verify();
 }
 
 function rcl_rest_action( $function_name ) {
-	Rcl_Ajax::getInstance()->init_rest( $function_name );
+	RclAjax()->init_rest( $function_name );
 }
 
 function rcl_ajax_action( $callback, $guest_access = false, $modules = true ) {
-	Rcl_Ajax::getInstance()->init_ajax_callback( $callback, $guest_access, $modules );
+	RclAjax()->init_ajax_callback( $callback, $guest_access, $modules );
 }
 
 rcl_rest_action( 'rcl_ajax_call' );
 function rcl_ajax_call() {
 	global $user_ID;
 
-	rcl_verify_ajax_nonce();
+	RclAjax()->verify();
 
 	$callback	 = $_POST['callback'];
-	$modules	 = $_POST['modules'];
+	$modules	 = $_POST['used_modules'];
 
 	if ( $modules ) {
 		foreach ( $modules as $module_id ) {
 			RCL()->use_module( $module_id );
+			$callbackProps = RclAjax()->get_ajax_callback( $callback );
+			if ( $callbackProps )
+				break;
 		}
+	}else {
+		$callbackProps = RclAjax()->get_ajax_callback( $callback );
 	}
-
-	$callbackProps = Rcl_Ajax::getInstance()->get_ajax_callback( $callback );
 
 	if ( ! $callbackProps ) {
 
@@ -52,22 +59,11 @@ function rcl_ajax_call() {
 		] );
 	}
 
-	/* if ( $callbackProps['modules'] ) {
-
-	  $modules = is_array( $callbackProps['modules'] ) ? $callbackProps['modules'] : $modules;
-
-	  if ( $modules ) {
-	  foreach ( $modules as $module_id ) {
-	  RCL()->use_module( $module_id );
-	  }
-	  }
-	  } */
-
 	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ), VER_RCL );
 
 	$respond = $callback();
 
-	$respond['modules'] = RCL()->used_modules;
+	$respond['used_modules'] = RCL()->used_modules;
 
 	wp_send_json( $respond );
 }
@@ -75,8 +71,6 @@ function rcl_ajax_call() {
 rcl_ajax_action( 'rcl_load_tab', true, true );
 function rcl_load_tab() {
 	global $user_LK, $office_id;
-
-	rcl_verify_ajax_nonce();
 
 	$tab_id		 = $_POST['tab_id'];
 	$subtab_id	 = $_POST['subtab_id'];
@@ -118,7 +112,7 @@ function rcl_load_tab() {
   function rcl_ajax_tab() {
   global $user_LK;
 
-  rcl_verify_ajax_nonce();
+
 
   $post = rcl_decode_post( $_POST['post'] );
 
@@ -164,8 +158,6 @@ function rcl_load_tab() {
 rcl_ajax_action( 'rcl_beat', true );
 function rcl_beat() {
 
-	rcl_verify_ajax_nonce();
-
 	$databeat	 = json_decode( wp_unslash( $_POST['databeat'] ) );
 	$return		 = array();
 
@@ -188,8 +180,6 @@ function rcl_beat() {
 rcl_ajax_action( 'rcl_manage_user_black_list', false );
 function rcl_manage_user_black_list() {
 	global $user_ID;
-
-	rcl_verify_ajax_nonce();
 
 	$user_id = intval( $_POST['user_id'] );
 
@@ -220,8 +210,6 @@ rcl_ajax_action( 'rcl_get_smiles_ajax', false );
 function rcl_get_smiles_ajax() {
 	global $wpsmiliestrans;
 
-	rcl_verify_ajax_nonce();
-
 	$content = array();
 
 	$smilies = array();
@@ -249,8 +237,6 @@ function rcl_get_smiles_ajax() {
 /* new uploader */
 rcl_ajax_action( 'rcl_upload', true );
 function rcl_upload() {
-
-	rcl_verify_ajax_nonce();
 
 	$options = ( array ) json_decode( wp_unslash( $_POST['options'] ) );
 
@@ -286,8 +272,6 @@ function rcl_upload() {
 rcl_ajax_action( 'rcl_ajax_delete_attachment', true );
 function rcl_ajax_delete_attachment() {
 	global $user_ID;
-
-	rcl_verify_ajax_nonce();
 
 	$attachment_id	 = intval( $_POST['attach_id'] );
 	$post_id		 = intval( $_POST['post_id'] );

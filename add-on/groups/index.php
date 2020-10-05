@@ -425,8 +425,6 @@ rcl_ajax_action( 'rcl_ajax_create_group' );
 function rcl_ajax_create_group() {
 	global $user_ID;
 
-	rcl_verify_ajax_nonce();
-
 	$group_name = sanitize_text_field( $_POST['group_name'] );
 
 	if ( ! $group_name ) {
@@ -709,8 +707,6 @@ function rcl_add_group_user_options() {
 rcl_ajax_action( 'rcl_apply_group_request', false );
 function rcl_apply_group_request() {
 	global $rcl_group, $user_ID;
-
-	rcl_verify_ajax_nonce();
 
 	$user_id	 = intval( $_POST['user_id'] );
 	$apply		 = intval( $_POST['apply'] );

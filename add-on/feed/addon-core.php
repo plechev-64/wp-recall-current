@@ -166,8 +166,6 @@ function rcl_feed_count_subscribers( $user_id ) {
 rcl_ajax_action( 'rcl_feed_callback', false );
 function rcl_feed_callback() {
 
-	rcl_verify_ajax_nonce();
-
 	$data		 = $_POST['data'];
 	$callback	 = $_POST['callback'];
 	$content	 = $callback( $data );

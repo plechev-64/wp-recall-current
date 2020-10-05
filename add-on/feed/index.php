@@ -222,8 +222,6 @@ rcl_ajax_action( 'rcl_feed_progress', false );
 function rcl_feed_progress() {
 	global $rcl_feed;
 
-	rcl_verify_ajax_nonce();
-
 	$customData = json_decode( base64_decode( $_POST['custom'] ) );
 
 	$customData = ( array ) $customData;

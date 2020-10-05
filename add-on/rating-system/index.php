@@ -495,8 +495,6 @@ rcl_ajax_action( 'rcl_edit_rating_post', false );
 function rcl_edit_rating_post() {
 	global $rcl_options, $rcl_rating_types;
 
-	rcl_verify_ajax_nonce();
-
 	$args = rcl_decode_data_rating( sanitize_text_field( $_POST['rating'] ) );
 
 	do_action( 'rcl_pre_edit_rating_post', $args );
@@ -578,8 +576,6 @@ function rcl_edit_rating_post() {
 
 rcl_ajax_action( 'rcl_view_rating_votes', true );
 function rcl_view_rating_votes() {
-
-	rcl_verify_ajax_nonce();
 
 	$string = sanitize_text_field( $_POST['rating'] );
 

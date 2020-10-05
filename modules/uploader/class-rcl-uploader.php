@@ -406,7 +406,7 @@ class Rcl_Uploader {
 
 	function upload() {
 
-		rcl_verify_ajax_nonce();
+		
 
 		if ( ! $_FILES[$this->input_name] ) {
 			return false;

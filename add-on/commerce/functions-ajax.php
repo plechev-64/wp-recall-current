@@ -91,8 +91,6 @@ rcl_ajax_action( 'rcl_check_cart_data', true );
 function rcl_check_cart_data() {
 	global $user_ID;
 
-	rcl_verify_ajax_nonce();
-
 	if ( ! $user_ID ) {
 
 		if ( ! isset( $_POST['user_email'] ) || ! $_POST['user_email'] ) {

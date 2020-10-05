@@ -7,8 +7,6 @@ rcl_ajax_action( 'rcl_add_count_user', false );
 function rcl_add_count_user() {
 	global $user_ID;
 
-	rcl_verify_ajax_nonce();
-
 	if ( ! intval( $_POST['pay_summ'] ) ) {
 		wp_send_json( array( 'error' => __( 'Enter the amount', 'wp-recall' ) ) );
 	}
@@ -45,8 +43,6 @@ function rcl_add_count_user() {
 rcl_ajax_action( 'rcl_pay_order_user_balance', false );
 function rcl_pay_order_user_balance() {
 	global $user_ID;
-
-	rcl_verify_ajax_nonce();
 
 	$POST = wp_unslash( $_POST );
 

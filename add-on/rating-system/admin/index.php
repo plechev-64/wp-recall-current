@@ -36,7 +36,7 @@ function rcl_get_rating_column_content( $custom_column, $column_name, $user_id )
 
 rcl_ajax_action( 'rcl_edit_rating_user', false );
 function rcl_edit_rating_user() {
-	global $wpdb, $user_ID;
+	global $user_ID;
 
 	$user_id	 = intval( $_POST['user'] );
 	$new_rating	 = floatval( $_POST['rayting'] );
