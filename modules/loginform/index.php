@@ -1,12 +1,16 @@
 <?php
 
-require_once 'loginform.php';
-require_once 'register.php';
-require_once 'authorize.php';
-require_once 'shortcodes.php';
+require_once 'registration.php';
+require_once 'authorization.php';
 require_once 'wp-register-form.php';
 if ( class_exists( 'ReallySimpleCaptcha' ) ) {
 	require_once 'captcha.php';
+}
+
+if ( is_admin() || isset( $_REQUEST['rest_route'] ) ) {
+	rcl_loginform_scripts();
+} else {
+	add_action( 'rcl_enqueue_scripts', 'rcl_loginform_scripts', 10 );
 }
 function rcl_loginform_scripts() {
 	if ( ! rcl_get_option( 'login_form_recall' ) )
@@ -15,12 +19,128 @@ function rcl_loginform_scripts() {
 	rcl_enqueue_script( 'rcl-loginform', RCL_URL . 'modules/loginform/assets/scripts.js' );
 }
 
-if ( is_admin() || isset( $_REQUEST['rest_route'] ) ) {
-	rcl_loginform_scripts();
-} else {
-	add_action( 'rcl_enqueue_scripts', 'rcl_loginform_scripts', 10 );
+function rcl_get_loginform( $atts = [ ] ) {
+	global $user_ID;
+
+	extract( shortcode_atts( array(
+		'active' => 'login',
+		'forms'	 => 'login,register,lostpassword'
+			), $atts ) );
+
+	$forms = array_map( 'trim', explode( ',', $forms ) );
+
+	$content = '<div class="rcl-loginform preloader-parent">';
+
+	$content .= '<div class="tab-group">';
+	if ( in_array( 'login', $forms ) )
+		$content .= '<a href="#login" class="tab tab-login' . ($active == 'login' ? ' active' : '') . '" onclick="Rcl.loginform.tabShow(\'login\',this);return false;">' . __( 'Авторизация', 'wp-recall' ) . '</a>';
+	if ( in_array( 'register', $forms ) )
+		$content .= '<a href="#register" class="tab tab-register' . ($active == 'register' ? ' active' : '') . '" onclick="Rcl.loginform.tabShow(\'register\',this);return false;">' . __( 'Регистрация', 'wp-recall' ) . '</a>';
+	$content .= '</div>';
+
+	$content .= apply_filters( 'rcl_loginform_notice', '' );
+
+	if ( in_array( 'login', $forms ) ) {
+
+		$content .= '<div class="tab-content tab-login' . ($active == 'login' ? ' active' : '') . '">';
+
+		$content .= rcl_get_form( array(
+			'submit'	 => __( 'Вход', 'wp-recall' ),
+			'onclick'	 => 'Rcl.loginform.send("login",this);return false;',
+			'fields'	 => apply_filters( 'rcl_login_form_fields', array(
+				array(
+					'slug'			 => 'user_login',
+					'type'			 => 'text',
+					'title'			 => __( 'Логин или E-mail', 'wp-recall' ),
+					'placeholder'	 => __( 'Логин или E-mail', 'wp-recall' ),
+					'icon'			 => 'fa-user',
+					'maxlenght'		 => 50,
+					'required'		 => 1
+				),
+				array(
+					'slug'			 => 'user_pass',
+					'type'			 => 'password',
+					'title'			 => __( 'Password', 'wp-recall' ),
+					'placeholder'	 => __( 'Password', 'wp-recall' ),
+					'icon'			 => 'fa-key',
+					'maxlenght'		 => 50,
+					'required'		 => 1
+				)
+			) )
+			) );
+
+		if ( in_array( 'lostpassword', $forms ) )
+			$content .= '<a href="#" class="forget-link" onclick="Rcl.loginform.tabShow(\'lostpassword\',this);return false;">' . __( 'Forget password', 'wp-recall' ) . '</a>';
+
+		$content .= '</div>';
+	}
+
+	if ( in_array( 'register', $forms ) ) {
+
+		$content .= '<div class="tab-content tab-register' . ($active == 'register' ? ' active' : '') . '">';
+		$content .= rcl_get_form( array(
+			'submit'	 => __( 'Регистрация', 'wp-recall' ),
+			'onclick'	 => 'Rcl.loginform.send("register",this);return false;',
+			'fields'	 => rcl_get_register_form_fields(),
+			'structure'	 => get_site_option( 'rcl_fields_register_form_structure' )
+			)
+		);
+		$content .= '</div>';
+	}
+
+	if ( in_array( 'lostpassword', $forms ) ) {
+		$content .= '<div class="tab-content tab-lostpassword' . ($active == 'lostpassword' ? ' active' : '') . '">';
+		$content .= rcl_get_form( array(
+			'submit'	 => __( 'Получить новый пароль', 'wp-recall' ),
+			'onclick'	 => 'Rcl.loginform.send("lostpassword",this);return false;',
+			'fields'	 => apply_filters( 'rcl_lostpassword_form_fields', array(
+				array(
+					'type'			 => 'text',
+					'slug'			 => 'user_login',
+					'title'			 => __( 'Логин', 'wp-recall' ),
+					'placeholder'	 => __( 'Логин или Email', 'wp-recall' ),
+					'icon'			 => 'fa-user',
+					'maxlenght'		 => 50,
+					'required'		 => 1
+				)
+				)
+			) )
+		);
+		$content .= '</div>';
+	}
+
+	$content .= '</div>';
+
+	return $content;
 }
+
+function rcl_get_loginform_url( $type ) {
+
+	if ( $type == 'login' ) {
+		switch ( rcl_get_option( 'login_form_recall' ) ) {
+			case 1: return add_query_arg( ['rcl-form' => 'login' ], get_permalink( rcl_get_option( 'page_login_form_recall' ) ) );
+				break;
+			case 2: return wp_login_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) );
+				break;
+			default: return '#';
+				break;
+		}
+	}
+
+	if ( $type == 'register' ) {
+		switch ( rcl_get_option( 'login_form_recall' ) ) {
+			case 1: return add_query_arg( ['rcl-form' => 'register' ], get_permalink( rcl_get_option( 'page_login_form_recall' ) ) );
+				break;
+			case 2: return wp_registration_url();
+				break;
+			default: return '#';
+				break;
+		}
+	}
+}
+
 //вызываем форму входа и регистрации
+rcl_ajax_action( 'rcl_call_loginform', true );
 function rcl_call_loginform() {
 	global $user_ID;
 
@@ -40,6 +160,7 @@ function rcl_call_loginform() {
 }
 
 //принимаем данные отправленные с формы входа и регистрации
+rcl_ajax_action( 'rcl_send_loginform', true );
 function rcl_send_loginform() {
 
 	$tab_id		 = $_POST['tab_id'];
@@ -61,8 +182,11 @@ function rcl_send_loginform() {
 			);
 		}
 
+		rcl_update_timeaction_user();
+
 		return array(
-			'success' => __( 'Успешная авторизация', 'usp' )
+			'redirect'	 => rcl_get_authorize_url( $user->ID ),
+			'success'	 => __( 'Успешная авторизация', 'usp' )
 		);
 	} else if ( $tab_id == 'register' ) {
 
@@ -108,6 +232,23 @@ function rcl_send_loginform() {
 	}
 }
 
+add_filter( 'rcl_loginform_notice', 'rcl_add_login_form_notice', 10 );
+function rcl_add_login_form_notice( $notice ) {
+
+	if ( ! isset( $_REQUEST['formaction'] ) || ! $_REQUEST['formaction'] )
+		return $notice;
+
+	switch ( $_REQUEST['formaction'] ) {
+		case 'success-checkemail':
+			$notice = rcl_get_notice( [
+				'success' => __( 'Your email has been successfully confirmed! Log in using your username and password', 'wp-recall' )
+				] );
+			break;
+	}
+
+	return $notice;
+}
+
 add_filter( 'rcl_login_form_fields', 'rcl_add_login_form_custom_data', 10 );
 function rcl_add_login_form_custom_data( $fields ) {
 
@@ -145,7 +286,8 @@ function rcl_add_rememberme_button( $fields ) {
 	return $fields;
 }
 
-//add_filter( 'rcl_register_form_fields', 'rcl_add_register_form_custom_data', 10 );
+if ( $GLOBALS['pagenow'] !== 'wp-login.php' )
+	add_filter( 'rcl_register_form_fields', 'rcl_add_register_form_custom_data', 10 );
 function rcl_add_register_form_custom_data( $fields ) {
 
 	ob_start();

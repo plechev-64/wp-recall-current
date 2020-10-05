@@ -18,42 +18,22 @@
             </a>
         </div>
 
-		<?php if ( ! is_user_logged_in() ): $logIn = rcl_get_option( 'login_form_recall' ); ?>
+		<?php if ( ! is_user_logged_in() ): ?>
 
-			<?php
-			if ( $logIn == 1 ) {
-				$page_in_out = rcl_format_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) );
-				$urls		 = array(
-					$page_in_out . 'show-form=login',
-					$page_in_out . 'show-form=register'
-				);
-			} else if ( $logIn == 2 ) {
-				$urls = array(
-					wp_login_url( '/' ),
-					wp_registration_url()
-				);
-			} else if ( $logIn == 3 ) { // Форма в виджете
-			} else {
-				$urls = array( '#', '#' );
-			}
-			?>
-
-			<?php if ( isset( $urls ) ) { ?>
+			<div class="rcb_icon">
+				<a href="<?php echo rcl_get_loginform_url( 'login' ); ?>" class="rcl-login">
+					<i class="rcli fa-sign-in" aria-hidden="true"></i><span><?php _e( 'Entry', 'wp-recall' ); ?></span>
+					<div class="rcb_hiden"><span><?php _e( 'Entry', 'wp-recall' ); ?></span></div>
+				</a>
+			</div>
+			<?php if ( rcl_is_register_open() ): ?>
 				<div class="rcb_icon">
-					<a href="<?php echo $urls[0]; ?>" class="rcl-login">
-						<i class="rcli fa-sign-in" aria-hidden="true"></i><span><?php _e( 'Entry', 'wp-recall' ); ?></span>
-						<div class="rcb_hiden"><span><?php _e( 'Entry', 'wp-recall' ); ?></span></div>
+					<a href="<?php echo rcl_get_loginform_url( 'register' ); ?>" class="rcl-register">
+						<i class="rcli fa-book" aria-hidden="true"></i><span><?php _e( 'Register', 'wp-recall' ); ?></span>
+						<div class="rcb_hiden"><span><?php _e( 'Register', 'wp-recall' ); ?></span></div>
 					</a>
 				</div>
-				<?php if ( rcl_is_register_open() ): ?>
-					<div class="rcb_icon">
-						<a href="<?php echo $urls[1]; ?>" class="rcl-register">
-							<i class="rcli fa-book" aria-hidden="true"></i><span><?php _e( 'Register', 'wp-recall' ); ?></span>
-							<div class="rcb_hiden"><span><?php _e( 'Register', 'wp-recall' ); ?></span></div>
-						</a>
-					</div>
-				<?php endif; ?>
-			<?php } ?>
+			<?php endif; ?>
 
 		<?php endif; ?>
 

@@ -67,6 +67,8 @@ function rcl_add_register_fields_to_register_form() {
 	foreach ( $fields as $k => $field ) {
 		if ( $field['slug'] == 'user_email' ) {
 			unset( $fields[$k] );
+		} else if ( $field['slug'] == 'user_login' ) {
+			unset( $fields[$k] );
 		}
 	}
 
@@ -77,4 +79,15 @@ function rcl_add_register_fields_to_register_form() {
 		] );
 
 	echo $form->get_fields_list();
+}
+
+add_filter( 'login_redirect', 'rcl_edit_default_login_redirect', 10, 3 );
+function rcl_edit_default_login_redirect( $redirect_to, $requested_redirect_to, $user ) {
+
+	if ( is_wp_error( $user ) )
+		return $redirect_to;
+
+	rcl_update_timeaction_user();
+
+	return rcl_get_authorize_url( $user->ID );
 }

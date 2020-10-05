@@ -1,20 +1,20 @@
-.usp-loginform{}
-.usp-loginform .tab-group{
+.rcl-loginform{}
+.rcl-loginform .tab-group{
 	display: flex;
 	line-height: 1;
 }
-.usp-loginform .tab-group .tab{
+.rcl-loginform .tab-group .tab{
 	display: block;
 	padding: 10px 15px;
 	color: #333;
 }
-.usp-loginform .tab-group .active{
+.rcl-loginform .tab-group .active{
     background: #eee;
 }
-.usp-loginform .tab-content{
+.rcl-loginform .tab-content{
 	display:none;
 }
-.usp-loginform .tab-content.active{
+.rcl-loginform .tab-content.active{
 	display:block;
 }
 

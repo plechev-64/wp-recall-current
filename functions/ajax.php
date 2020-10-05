@@ -1,33 +1,29 @@
 <?php
 
-function rcl_verify_ajax_nonce() {
-	$ajax = new Rcl_Ajax();
-	$ajax->verify();
-}
-
 function rcl_is_ajax() {
 	return (defined( 'DOING_AJAX' ) && DOING_AJAX || isset( $GLOBALS['wp']->query_vars['rest_route'] ));
 }
 
-function rcl_ajax_action( $function_name, $guest_access = false, $rest = false ) {
-
-	$ajax = new Rcl_Ajax( array(
-		'rest'	 => $rest,
-		'name'	 => $function_name,
-		'nopriv' => $guest_access
-		) );
-
-	$ajax->init();
+function rcl_verify_ajax_nonce() {
+	Rcl_Ajax::getInstance()->verify();
 }
 
-rcl_ajax_action( 'rcl_ajax_call', true, true );
+function rcl_rest_action( $function_name ) {
+	Rcl_Ajax::getInstance()->init_rest( $function_name );
+}
+
+function rcl_ajax_action( $callback, $guest_access = false, $modules = true ) {
+	Rcl_Ajax::getInstance()->init_ajax_callback( $callback, $guest_access, $modules );
+}
+
+rcl_rest_action( 'rcl_ajax_call' );
 function rcl_ajax_call() {
+	global $user_ID;
+
 	rcl_verify_ajax_nonce();
 
 	$callback	 = $_POST['callback'];
 	$modules	 = $_POST['modules'];
-
-	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ), VER_RCL );
 
 	if ( $modules ) {
 		foreach ( $modules as $module_id ) {
@@ -35,11 +31,39 @@ function rcl_ajax_call() {
 		}
 	}
 
-	if ( ! function_exists( $callback ) ) {
+	$callbackProps = Rcl_Ajax::getInstance()->get_ajax_callback( $callback );
+
+	if ( ! $callbackProps ) {
+
 		wp_send_json( [
-			'error' => __( 'Функция не найдена!', 'wp-recall' )
+			'error' => __( 'Unregistered callback', 'wp-recall' )
 		] );
 	}
+
+	if ( ! $user_ID && ! $callbackProps['guest'] ) {
+		wp_send_json( [
+			'error' => __( 'Access to callback is forbidden', 'wp-recall' )
+		] );
+	}
+
+	if ( ! function_exists( $callback ) ) {
+		wp_send_json( [
+			'error' => __( 'Function is not found', 'wp-recall' )
+		] );
+	}
+
+	/* if ( $callbackProps['modules'] ) {
+
+	  $modules = is_array( $callbackProps['modules'] ) ? $callbackProps['modules'] : $modules;
+
+	  if ( $modules ) {
+	  foreach ( $modules as $module_id ) {
+	  RCL()->use_module( $module_id );
+	  }
+	  }
+	  } */
+
+	wp_enqueue_script( 'rcl-core-scripts', RCL_URL . 'assets/js/core.js', array( 'jquery' ), VER_RCL );
 
 	$respond = $callback();
 

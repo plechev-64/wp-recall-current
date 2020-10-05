@@ -171,6 +171,10 @@
     float: left;
     width: 190px;
 }
+#rcl-office .cab_lt_sidebar .rcl-tabs-menu .rcl-bttn{
+    width: 100%;
+	margin-right: 0;
+}
 .cab_lt_sidebar .lk-sidebar {
     display: inline-block;
     line-height: 1.4;

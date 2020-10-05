@@ -1,4 +1,3 @@
-Rcl.modules.push( 'fields-manager' );
 
 var RclManagerFields = { };
 var startDefaultbox = 0;

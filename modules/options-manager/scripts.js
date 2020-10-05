@@ -1,4 +1,3 @@
-Rcl.modules.push( 'options-manager' );
 
 jQuery( function( $ ) {
 

@@ -116,16 +116,14 @@ final class WP_Recall {
 
 		register_activation_hook( __FILE__, array( 'RCL_Install', 'install' ) );
 
-		add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ), 10 );
+		add_action( 'plugins_loaded', array( $this, 'load_plugin_textdomain' ), 5 );
 		add_action( 'plugins_loaded', array( $this, 'include_addons' ), 10 );
+
 		add_action( 'wp_loaded', array( $this, 'setup_tabs' ), 10 );
 
 		add_action( 'init', array( $this, 'init' ), 0 );
 
-		if ( is_admin() ) {
-			add_action( 'save_post', 'rcl_postmeta_update', 0 );
-			add_action( 'admin_init', 'rcl_admin_scripts', 10 );
-		} else {
+		if ( ! is_admin() ) {
 			add_action( 'rcl_enqueue_scripts', 'rcl_frontend_scripts', 1 );
 			add_action( 'wp_head', 'rcl_update_timeaction_user', 10 );
 		}
@@ -295,7 +293,8 @@ final class WP_Recall {
 			rcl_update_option( 'security-key', wp_generate_password( 20, false ) );
 		}
 
-		$this->use_module( 'loginform' );
+		if ( ! $user_ID )
+			$this->use_module( 'loginform' );
 
 		do_action( 'rcl_init' );
 	}

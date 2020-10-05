@@ -1,4 +1,3 @@
-Rcl.modules.push( 'uploader' );
 
 var RclUploaders = new RclClassUploaders();
 

@@ -19,6 +19,66 @@ function rcl_get_shortcode_wp_recall() {
 	return $content;
 }
 
+add_shortcode( 'rcl-userpanel', 'rcl_get_userpanel' );
+function rcl_get_userpanel( $atts = [ ] ) {
+	global $user_ID;
+
+	if ( $user_ID ) {
+		$content = rcl_get_button( [
+			'label'	 => __( 'Перейти в личный кабинет', 'wp-recall' ),
+			'icon'	 => 'fa-home',
+			'size'	 => 'large',
+			'href'	 => rcl_get_user_url( $user_ID )
+			] );
+
+		$content .= rcl_get_button( [
+			'label'	 => __( 'Exit', 'wp-recall' ),
+			'href'	 => wp_logout_url( home_url() ),
+			'icon'	 => 'fa-external-link',
+			'size'	 => 'large',
+			] );
+
+		return $content;
+	}
+
+	//use loginform module
+	if ( ! rcl_get_option( 'login_form_recall' ) )
+		rcl_dialog_scripts();
+
+	$content = rcl_get_button( [
+		'label'		 => __( 'Авторизация', 'wp-recall' ),
+		'icon'		 => 'fa-sign-in',
+		'size'		 => 'large',
+		'onclick'	 => rcl_get_option( 'login_form_recall' ) ? null : 'Rcl.loginform.call("login");return false;',
+		'href'		 => rcl_get_loginform_url( 'login' )
+		] );
+
+	$content .= rcl_get_button( [
+		'label'		 => __( 'Регистрация', 'wp-recall' ),
+		'icon'		 => 'fa-book',
+		'size'		 => 'large',
+		'onclick'	 => rcl_get_option( 'login_form_recall' ) ? null : 'Rcl.loginform.call("register");return false;',
+		'href'		 => rcl_get_loginform_url( 'register' )
+		] );
+
+	return $content;
+}
+
+add_shortcode( 'loginform', 'rcl_get_loginform_shortcode' );
+function rcl_get_loginform_shortcode( $atts = [ ] ) {
+	global $user_ID;
+
+	if ( $user_ID ) {
+		return rcl_get_notice( [
+			'type'	 => 'success',
+			'text'	 => __( 'Вы уже авторизованы на сайте. Перейдите в <a href="' . rcl_get_user_url( $user_ID ) . '">личный кабинет</a>, чтобы начать работу.' )
+			] );
+	}
+
+	//use module loginform
+	return rcl_get_loginform( $atts );
+}
+
 add_shortcode( 'userlist', 'rcl_get_userlist' );
 function rcl_get_userlist( $atts ) {
 	global $rcl_user, $rcl_users_set, $user_ID;

@@ -13,6 +13,14 @@ class Rcl_Notice {
 
 	function __construct( $args ) {
 
+		if ( isset( $args['success'] ) ) {
+			$args['type']	 = 'success';
+			$args['text']	 = $args['success'];
+		} else if ( isset( $args['error'] ) ) {
+			$args['type']	 = 'error';
+			$args['text']	 = $args['error'];
+		}
+
 		$this->init_properties( $args );
 
 		$this->setup_icon();

@@ -7,18 +7,12 @@ jQuery( window ).load( function() {
 		Rcl.loginform.call( 'login' );
 	} );
 
-	if ( rcl_url_params['action-rcl'] === 'login' ) {
-		Rcl.loginform.call( 'login' );
-	} else if ( rcl_url_params['action-rcl'] === 'register' ) {
-		Rcl.loginform.call( 'register' );
-	} else if ( rcl_url_params['action-rcl'] === 'lostpassword' ) {
-		Rcl.loginform.call( 'lostpassword' );
-	} else if ( rcl_url_params['show-form'] === 'login' ) {
-		Rcl.loginform.tabShow( 'login' );
-	} else if ( rcl_url_params['show-form'] === 'register' ) {
-		Rcl.loginform.tabShow( 'register' );
-	} else if ( rcl_url_params['show-form'] === 'lostpassword' ) {
-		Rcl.loginform.tabShow( 'lostpassword' );
+	if ( rcl_url_params['rcl-form'] ) {
+		if ( rcl_url_params['type-form'] == 'float' ) {
+			Rcl.loginform.call( rcl_url_params['rcl-form'], rcl_url_params['formaction'] );
+		} else {
+			Rcl.loginform.tabShow( rcl_url_params['rcl-form'] );
+		}
 	}
 
 } );
@@ -26,7 +20,7 @@ jQuery( window ).load( function() {
 Rcl.loginform = {
 	animating: false,
 	tabShow: function( tabId, e ) {
-		var form = jQuery( '.usp-loginform' );
+		var form = jQuery( '.rcl-loginform' );
 		form.find( '.tab, .tab-content' ).removeClass( 'active' );
 		form.find( '.tab-' + tabId ).addClass( 'active' );
 		if ( e )
@@ -40,7 +34,7 @@ Rcl.loginform = {
 		if ( !rcl_check_form( form ) )
 			return false;
 
-		rcl_preloader_show( jQuery( '.usp-loginform' ) );
+		rcl_preloader_show( jQuery( '.rcl-loginform' ) );
 
 		rcl_ajax( {
 			data: form.serialize( ) + '&tab_id=' + tabId + '&action=rcl_send_loginform',
@@ -50,13 +44,15 @@ Rcl.loginform = {
 		} );
 
 	},
-	call: function( form ) {
+	call: function( form, action ) {
 
 		var form = form ? form : 'login';
+		var formaction = action ? action : '';
 
 		rcl_ajax( {
 			data: {
 				form: form,
+				formaction: formaction,
 				action: 'rcl_call_loginform'
 			}
 		} );

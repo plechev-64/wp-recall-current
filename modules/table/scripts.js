@@ -1,4 +1,3 @@
-Rcl.modules.push( 'table' );
 
 function rcl_init_table( table_id ) {
 

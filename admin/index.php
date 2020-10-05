@@ -95,6 +95,7 @@ function rcl_options_box( $post ) {
 	<?php
 }
 
+add_action( 'save_post', 'rcl_postmeta_update', 0 );
 function rcl_postmeta_update( $post_id ) {
 	if ( ! isset( $_POST['rcl_fields_nonce'] ) )
 		return false;

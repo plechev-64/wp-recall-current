@@ -54,21 +54,23 @@ function rcl_captcha_check_correct( $code, $prefix ) {
 	return $rcl_captcha_correct;
 }
 
-add_filter( 'regform_fields_rcl', 'rcl_add_regform_captcha', 999 );
-function rcl_add_regform_captcha( $fields ) {
+add_filter( 'rcl_register_form_fields', 'rcl_add_register_form_captcha', 999 );
+function rcl_add_register_form_captcha( $fields ) {
 
 	$captcha = rcl_get_simple_captcha();
 
 	if ( ! $captcha )
 		return $fields;
 
-	$fields .= '
-      <div class="form-block-rcl">
-        <label>' . __( 'Enter characters', 'wp-recall' ) . ' <span class="required">*</span></label>
-        <img src="' . $captcha->img_src . '" alt="captcha" width="' . $captcha->img_size[0] . '" height="' . $captcha->img_size[1] . '" />
+	$fields[] = [
+		'type'		 => 'custom',
+		'slug'		 => 'simple-captcha',
+		'title'		 => __( 'Enter characters', 'wp-recall' ),
+		'required'	 => 1,
+		'content'	 => '<img src="' . $captcha->img_src . '" alt="captcha" width="' . $captcha->img_size[0] . '" height="' . $captcha->img_size[1] . '" />
         <input id="rcl_captcha_code" required name="rcl_captcha_code" style="width: 160px;" size="' . $captcha->char_length . '" type="text" />
-        <input id="rcl_captcha_prefix" name="rcl_captcha_prefix" type="hidden" value="' . $captcha->prefix . '" />
-     </div>';
+        <input id="rcl_captcha_prefix" name="rcl_captcha_prefix" type="hidden" value="' . $captcha->prefix . '" />'
+	];
 
 	return $fields;
 }

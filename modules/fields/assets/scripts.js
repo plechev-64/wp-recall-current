@@ -1,4 +1,3 @@
-Rcl.modules.push( 'fields' );
 
 //rcl_add_action( 'rcl_init', 'rcl_init_update_requared_checkbox' );
 function rcl_init_update_requared_checkbox() {

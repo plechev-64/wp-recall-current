@@ -1,4 +1,3 @@
-Rcl.modules.push( 'forms' );
 
 function RclForm( form ) {
 
