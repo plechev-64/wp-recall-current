@@ -454,7 +454,7 @@ function pfm_ajax_action() {
 
 	$result = apply_filters( 'pfm_action_result', $result, $method, $itemID );
 
-	wp_send_json( $result );
+	return $result;
 }
 
 //сохранение ИД поста в куках для переноса в другой пост
@@ -494,6 +494,8 @@ function pfm_action_start_post_migrate( $post_id ) {
 
 	if ( ! pfm_is_can( 'post_migrate' ) )
 		return false;
+
+	RCL()->use_module( 'fields' );
 
 	$fields = array(
 		array(

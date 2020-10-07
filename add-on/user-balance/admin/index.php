@@ -75,16 +75,16 @@ function rcl_edit_balance_user() {
 	do_action( 'rcl_pre_edit_user_balance_by_admin', $user_id, $balance );
 
 	if ( ! $user_id ) {
-		wp_send_json( array( 'error' => __( 'Balance was not changed', 'wp-recall' ) ) );
+		return array( 'error' => __( 'Balance was not changed', 'wp-recall' ) );
 	}
 
 	rcl_update_user_balance( $balance, $user_id, __( 'Balance changed', 'wp-recall' ) );
 
-	wp_send_json( array(
+	return array(
 		'success'	 => __( 'Balance successfully changed', 'wp-recall' ),
 		'user_id'	 => $user_id,
 		'balance'	 => $balance
-	) );
+	);
 }
 
 add_action( 'admin_menu', 'rcl_statistic_user_pay_page', 25 );

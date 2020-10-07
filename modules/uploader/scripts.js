@@ -89,7 +89,7 @@ function RclUploader( props, sk ) {
 		};
 
 		formData.action = 'rcl_ajax_call';
-		formData.callback = uploader.options.action;
+		formData.call_action = uploader.options.action;
 		formData._wpnonce = Rcl.nonce;
 
 		return formData;

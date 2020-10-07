@@ -98,6 +98,8 @@ function rcl_add_order_details() {
 
 		if ( is_array( $rclOrder->order_details ) ) {
 
+			RCL()->use_module( 'fields' );
+
 			foreach ( $rclOrder->order_details as $k => $data ) {
 
 				$data['slug'] = $k;

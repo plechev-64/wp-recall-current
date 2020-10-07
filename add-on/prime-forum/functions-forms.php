@@ -96,6 +96,8 @@ function pfm_add_manager_fields_post_form( $content, $action ) {
 	if ( ! pfm_is_can( 'topic_close' ) )
 		return $content;
 
+	RCL()->use_module( 'fields' );
+
 	$fields = array(
 		array(
 			'type'	 => 'checkbox',

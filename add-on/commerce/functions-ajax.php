@@ -9,7 +9,7 @@ function rcl_update_cart_content() {
 		'content' => rcl_get_cart( $cartProducts )
 	);
 
-	wp_send_json( $result );
+	return $result;
 }
 
 rcl_ajax_action( 'rcl_add_to_cart', true, true );
@@ -57,12 +57,10 @@ function rcl_add_to_cart() {
 
 			$content .= '</div>';
 
-			$result = array(
+			return array(
 				'modal'		 => true,
 				'content'	 => $content
 			);
-
-			wp_send_json( $result );
 		}
 	}
 
@@ -94,7 +92,7 @@ function rcl_check_cart_data() {
 	if ( ! $user_ID ) {
 
 		if ( ! isset( $_POST['user_email'] ) || ! $_POST['user_email'] ) {
-			wp_send_json( array( 'error' => __( 'Please fill in required fields!', 'wp-recall' ) ) );
+			return array( 'error' => __( 'Please fill in required fields!', 'wp-recall' ) );
 		}
 
 		if ( rcl_get_commerce_option( 'buyer_register', 1 ) ) {
@@ -105,19 +103,19 @@ function rcl_check_cart_data() {
 			$validName	 = validate_username( $user_email );
 
 			if ( ! $validName || ! $isEmail ) {
-				wp_send_json( array( 'error' => __( 'You have entered an invalid email!', 'wp-recall' ) ) );
+				return array( 'error' => __( 'You have entered an invalid email!', 'wp-recall' ) );
 			}
 
 			if ( email_exists( $user_email ) || username_exists( $user_email ) ) {
-				wp_send_json( array( 'error' => __( 'This email is already used! If this is your email, then log in and proceed with the order.', 'wp-recall' ) ) );
+				return array( 'error' => __( 'This email is already used! If this is your email, then log in and proceed with the order.', 'wp-recall' ) );
 			}
 		}
 	}
 
 	do_action( 'rcl_check_cart_data' );
 
-	wp_send_json( array(
+	return array(
 		'submit'		 => true,
 		'preloader_live' => 1
-	) );
+	);
 }

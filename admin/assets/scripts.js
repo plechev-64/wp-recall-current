@@ -207,12 +207,8 @@ function rcl_update_addon( props, e ) {
 
 	button.addClass( 'updating-message' );
 
-	var dataString = 'action=rcl_update_addon&addon=' + props.slug;
-	jQuery.ajax( {
-		type: 'POST',
-		data: dataString,
-		dataType: 'json',
-		url: ajaxurl,
+	rcl_ajax( {
+		data: 'action=rcl_update_addon&addon=' + props.slug,
 		success: function( data ) {
 			if ( data.addon_id == props.slug ) {
 				button.addClass( 'button-disabled' ).toggleClass( 'updating-message updated-message' ).html( data.success );

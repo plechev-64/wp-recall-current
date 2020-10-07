@@ -76,6 +76,8 @@ function pfm_get_topic_meta_box( $topic_id ) {
 	if ( ! $fields )
 		return false;
 
+	RCL()->use_module( 'fields' );
+
 	$content = '';
 
 	foreach ( $fields as $field ) {

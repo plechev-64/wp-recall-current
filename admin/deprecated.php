@@ -125,9 +125,9 @@ function rcl_get_new_custom_field() {
 
 	$content = $manageFields->empty_field();
 
-	wp_send_json( array(
+	return array(
 		'content' => $content
-	) );
+	);
 }
 
 rcl_ajax_action( 'rcl_get_custom_field_options', false );
@@ -194,7 +194,7 @@ function rcl_get_custom_field_options() {
 			. '</script>';
 	}
 
-	wp_send_json( array(
+	return array(
 		'content' => $content
-	) );
+	);
 }

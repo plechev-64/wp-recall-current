@@ -26,19 +26,16 @@ function rcl_ajax_call() {
 
 	RclAjax()->verify();
 
-	$callback	 = $_POST['callback'];
+	$callback	 = $_POST['call_action'];
 	$modules	 = $_POST['used_modules'];
 
 	if ( $modules ) {
 		foreach ( $modules as $module_id ) {
 			RCL()->use_module( $module_id );
-			$callbackProps = RclAjax()->get_ajax_callback( $callback );
-			if ( $callbackProps )
-				break;
 		}
-	}else {
-		$callbackProps = RclAjax()->get_ajax_callback( $callback );
 	}
+
+	$callbackProps = RclAjax()->get_ajax_callback( $callback );
 
 	if ( ! $callbackProps ) {
 
@@ -63,7 +60,7 @@ function rcl_ajax_call() {
 
 	$respond = $callback();
 
-	$respond['used_modules'] = RCL()->used_modules;
+	$respond['used_modules'] = $modules ? array_unique( $modules + RCL()->used_modules ) : RCL()->used_modules;
 
 	wp_send_json( $respond );
 }
@@ -79,13 +76,13 @@ function rcl_load_tab() {
 	$tab = RCL()->tabs()->tab( $tab_id );
 
 	if ( ! $tab ) {
-		wp_send_json( array( 'error' => __( 'Data of the requested tab was not found.', 'wp-recall' ) ) );
+		return array( 'error' => __( 'Data of the requested tab was not found.', 'wp-recall' ) );
 	}
 
 	$ajax = (in_array( 'ajax', $tab->supports ) || in_array( 'dialog', $tab->supports )) ? 1 : 0;
 
 	if ( ! $ajax ) {
-		wp_send_json( array( 'error' => __( 'Perhaps this add-on does not support ajax loading', 'wp-recall' ) ) );
+		return array( 'error' => __( 'Perhaps this add-on does not support ajax loading', 'wp-recall' ) );
 	}
 
 	$user_LK = $office_id;
@@ -107,74 +104,27 @@ function rcl_load_tab() {
 	);
 }
 
-//загрузка вкладки ЛК через AJAX
-/* rcl_ajax_action( 'rcl_ajax_tab', true );
-  function rcl_ajax_tab() {
-  global $user_LK;
-
-
-
-  $post = rcl_decode_post( $_POST['post'] );
-
-  do_action( 'rcl_init_ajax_tab', $post->tab_id );
-
-  $tab = rcl_get_tab( $post->tab_id );
-
-  if ( ! $tab ) {
-  wp_send_json( array( 'error' => __( 'Data of the requested tab was not found.', 'wp-recall' ) ) );
-  }
-
-  $ajax = (in_array( 'ajax', $tab['supports'] ) || in_array( 'dialog', $tab['supports'] )) ? 1 : 0;
-
-  if ( ! $ajax ) {
-  wp_send_json( array( 'error' => __( 'Perhaps this add-on does not support ajax loading', 'wp-recall' ) ) );
-  }
-
-  $user_LK = intval( $post->master_id );
-
-  $content = rcl_get_tab_content( $post->tab_id, $post->master_id, isset( $post->subtab_id ) ? $post->subtab_id : ''  );
-
-  if ( ! $content ) {
-  wp_send_json( array( 'error' => __( 'Unable to obtain content of the requested tab', 'wp-recall' ) ) );
-  }
-
-  $content = apply_filters( 'rcl_ajax_tab_content', $content );
-
-  $result = apply_filters( 'rcl_ajax_tab_result', array(
-  'result' => $content,
-  'post'	 => array(
-  'tab_id'	 => $post->tab_id,
-  'subtab_id'	 => isset( $post->subtab_id ) ? $post->subtab_id : '',
-  'tab_url'	 => (isset( $_POST['tab'] )) ? $_POST['tab_url'] . '&tab=' . $_POST['tab'] : $_POST['tab_url'],
-  'supports'	 => $tab['supports'],
-  'master_id'	 => $post->master_id
-  )
-  ) );
-
-  wp_send_json( $result );
-  } */
-
 //регистрируем биение плагина
 rcl_ajax_action( 'rcl_beat', true );
 function rcl_beat() {
 
 	$databeat	 = json_decode( wp_unslash( $_POST['databeat'] ) );
-	$return		 = array();
+	$result		 = ['beat_result' => [ ] ];
 
 	if ( $databeat ) {
 		foreach ( $databeat as $data ) {
 
-			$result = array();
+			$callback = $data->action;
 
-			$callback			 = $data->action;
-			$result['result']	 = $callback( $data->data );
-			$result['success']	 = $data->success;
-			$result['beat_name'] = $data->beat_name;
-			$return[]			 = $result;
+			$result['beat_result'][] = [
+				'result'	 => $callback( $data->data ),
+				'success'	 => $data->success,
+				'beat_name'	 => $data->beat_name
+			];
 		}
 	}
 
-	wp_send_json( $return );
+	return $result;
 }
 
 rcl_ajax_action( 'rcl_manage_user_black_list', false );
@@ -184,9 +134,9 @@ function rcl_manage_user_black_list() {
 	$user_id = intval( $_POST['user_id'] );
 
 	if ( ! $user_id ) {
-		wp_send_json( array(
+		return array(
 			'error' => __( 'Error', 'wp-recall' )
-		) );
+		);
 	}
 
 	$user_block = get_user_meta( $user_ID, 'rcl_black_list:' . $user_id );
@@ -201,9 +151,9 @@ function rcl_manage_user_black_list() {
 
 	$new_status = $user_block ? 0 : 1;
 
-	wp_send_json( array(
+	return array(
 		'label' => ($new_status) ? __( 'Unblock', 'wp-recall' ) : __( 'Заблокировать', 'wp-recall' )
-	) );
+	);
 }
 
 rcl_ajax_action( 'rcl_get_smiles_ajax', false );
@@ -224,14 +174,14 @@ function rcl_get_smiles_ajax() {
 	}
 
 	if ( ! $content ) {
-		wp_send_json( array(
+		return array(
 			'error' => __( 'Failed to load emoticons', 'wp-recall' )
-		) );
+		);
 	}
 
-	wp_send_json( array(
+	return array(
 		'content' => implode( '', $content )
-	) );
+	);
 }
 
 /* new uploader */
@@ -241,9 +191,9 @@ function rcl_upload() {
 	$options = ( array ) json_decode( wp_unslash( $_POST['options'] ) );
 
 	if ( ! isset( $options['class_name'] ) || ! $options['class_name'] )
-		wp_send_json( [
+		return [
 			'error' => __( 'Error', 'wp-recall' )
-		] );
+		];
 
 	$className = $options['class_name'];
 
@@ -253,18 +203,18 @@ function rcl_upload() {
 		$uploader	 = new $className( $options );
 
 	if ( md5( json_encode( $uploader ) . rcl_get_option( 'security-key' ) ) != $_POST['sk'] )
-		wp_send_json( [
+		return [
 			'error' => __( 'Error of security', 'wp-recall' )
-		] );
+		];
 
 	$files = $uploader->upload();
 
 	if ( $files ) {
-		wp_send_json( $files );
+		return $files;
 	} else {
-		wp_send_json( array(
+		return array(
 			'error' => __( 'Something has been wrong', 'wp-recall' )
-		) );
+		);
 	}
 }
 
@@ -277,17 +227,17 @@ function rcl_ajax_delete_attachment() {
 	$post_id		 = intval( $_POST['post_id'] );
 
 	if ( ! $attachment_id ) {
-		wp_send_json( array(
+		return array(
 			'error' => __( 'The data has been wrong!', 'wp-recall' )
-		) );
+		);
 	}
 
 	if ( $post_id ) {
 
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
-			wp_send_json( array(
+			return array(
 				'error' => __( 'You can`t delete this file!', 'wp-recall' )
-			) );
+			);
 		}
 	} else {
 
@@ -295,15 +245,15 @@ function rcl_ajax_delete_attachment() {
 
 		if ( ! $user_ID ) {
 			if ( $media->session_id != $_COOKIE['PHPSESSID'] ) {
-				wp_send_json( array(
+				return array(
 					'error' => __( 'You can`t delete this file!', 'wp-recall' )
-				) );
+				);
 			}
 		} else {
 			if ( ! current_user_can( 'edit_post', $attachment_id ) ) {
-				wp_send_json( array(
+				return array(
 					'error' => __( 'You can`t delete this file!', 'wp-recall' )
-				) );
+				);
 			}
 		}
 
@@ -312,9 +262,9 @@ function rcl_ajax_delete_attachment() {
 
 	wp_delete_attachment( $attachment_id, true );
 
-	wp_send_json( array(
+	return array(
 		'success' => __( 'The file has been successfully deleted!', 'wp-recall' )
-	) );
+	);
 }
 
 /* new uploader end */

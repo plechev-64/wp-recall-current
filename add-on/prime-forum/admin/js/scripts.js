@@ -74,25 +74,8 @@ function pfm_manager_save_sort( typeObject ) {
 
 	rcl_preloader_show( box );
 
-	var dataString = "action=pfm_ajax_update_sort_" + typeObject + "&sort=" + JSON.stringify( fields );
-
-	jQuery.ajax( {
-		type: "POST",
-		data: dataString,
-		dataType: "json",
-		url: ajaxurl,
-		success: function( result ) {
-
-			rcl_preloader_hide();
-
-			if ( result["error"] ) {
-				rcl_notice( result["error"], "error", 10000 );
-				return false;
-			}
-
-			rcl_notice( result["success"], "success", 10000 );
-
-		}
+	rcl_ajax( {
+		data: "action=pfm_ajax_update_sort_" + typeObject + "&sort=" + JSON.stringify( fields )
 	} );
 
 }

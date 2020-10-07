@@ -505,7 +505,7 @@ function rcl_edit_rating_post() {
 		$timelimit	 = ($rcl_options['rating_' . $args['rating_status'] . '_time_' . $args['rating_type']]) ? $rcl_options['rating_' . $args['rating_status'] . '_time_' . $args['rating_type']] : 3600;
 		$votes		 = rcl_count_votes_time( $args, $timelimit );
 		if ( $votes >= $rslrt ) {
-			wp_send_json( array( 'error' => sprintf( __( 'exceeded the limit of votes for the period - %d seconds', 'wp-recall' ), $timelimit ) ) );
+			return array( 'error' => sprintf( __( 'exceeded the limit of votes for the period - %d seconds', 'wp-recall' ), $timelimit ) );
 		}
 	}
 
@@ -571,7 +571,7 @@ function rcl_edit_rating_post() {
 	$log['rating']		 = rcl_format_rating( $total );
 	$log['output_type']	 = $output_type;
 
-	wp_send_json( $log );
+	return $log;
 }
 
 rcl_ajax_action( 'rcl_view_rating_votes', true );
@@ -599,12 +599,12 @@ function rcl_view_rating_votes() {
 	}
 
 	if ( ! $content ) {
-		wp_send_json( array(
+		return array(
 			'error' => __( 'Unable to obtain data', 'wp-recall' )
-		) );
+		);
 	}
 
-	wp_send_json( array(
+	return array(
 		'content' => $content
-	) );
+	);
 }

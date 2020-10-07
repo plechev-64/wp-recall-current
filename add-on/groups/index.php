@@ -428,15 +428,15 @@ function rcl_ajax_create_group() {
 	$group_name = sanitize_text_field( $_POST['group_name'] );
 
 	if ( ! $group_name ) {
-		wp_send_json( array(
+		return array(
 			'error' => __( 'Enter the name', 'wp-recall' )
-		) );
+		);
 	}
 
 	if ( is_numeric( $group_name ) ) {
-		wp_send_json( array(
+		return array(
 			'error' => __( 'Specify the name of new group as string', 'wp-recall' )
-		) );
+		);
 	}
 
 	do_action( 'rcl_pre_create_group' );
@@ -447,17 +447,17 @@ function rcl_ajax_create_group() {
 		) );
 
 	if ( ! $group_id ) {
-		wp_send_json( array(
+		return array(
 			'error' => __( 'Group creation failed', 'wp-recall' )
-		) );
+		);
 	}
 
 	do_action( 'rcl_ajax_create_group', $group_id );
 
-	wp_send_json( array(
+	return array(
 		'success'	 => __( 'New group is successfully created!', 'wp-recall' ),
 		'redirect'	 => rcl_get_group_permalink( $group_id )
-	) );
+	);
 }
 
 add_filter( 'rcl_group_thumbnail', 'rcl_group_add_thumb_buttons' );
@@ -755,7 +755,7 @@ function rcl_apply_group_request() {
 
 	$log['user_id'] = $user_id;
 
-	wp_send_json( $log );
+	return $log;
 }
 
 //исключаем из поиска публикации из закрытых групп

@@ -766,13 +766,13 @@ function rcl_get_group_link_content() {
 	$content .= $callback( $group_id );
 	$content .= '</div>';
 
-	wp_send_json( array(
+	return array(
 		'dialog' => array(
 			'content'	 => $content,
 			'class'		 => 'group-dialog',
 			'size'		 => 'small'
 		)
-	) );
+	);
 }
 
 rcl_ajax_action( 'rcl_group_callback', false );
@@ -790,7 +790,7 @@ function rcl_group_callback() {
 
 	$result = $callback( $group_id, $user_id );
 
-	wp_send_json( $result );
+	return $result;
 }
 
 function rcl_group_ajax_delete_user( $group_id, $user_id ) {

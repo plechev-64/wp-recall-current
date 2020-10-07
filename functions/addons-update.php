@@ -161,17 +161,17 @@ function rcl_get_details_addon() {
 	$result = json_decode( $response['body'], true );
 
 	if ( is_array( $result ) && isset( $result['error'] ) ) {
-		wp_send_json( $result );
+		return $result;
 	}
 
 	$content = wpautop(
 		links_add_target( $result['content'] )
 	);
 
-	wp_send_json( array(
+	return array(
 		'title'		 => $result['title'],
 		'content'	 => $content
-	) );
+	);
 }
 
 rcl_ajax_action( 'rcl_update_addon', false );
@@ -216,13 +216,13 @@ function rcl_update_addon() {
 	$result = json_decode( $response['body'], true );
 
 	if ( is_array( $result ) && isset( $result['error'] ) ) {
-		wp_send_json( $result );
+		return $result;
 	}
 
 	$put = file_put_contents( $new_addon, $response['body'] );
 
 	if ( $put === false ) {
-		wp_send_json( array( 'error' => __( 'The files failed to be uploaded!', 'wp-recall' ) ) );
+		return array( 'error' => __( 'The files failed to be uploaded!', 'wp-recall' ) );
 	}
 
 	$zip = new ZipArchive;
@@ -242,7 +242,7 @@ function rcl_update_addon() {
 
 		if ( ! $info ) {
 			$zip->close();
-			wp_send_json( array( 'error' => __( 'Update has incorrect title!', 'wp-recall' ) ) );
+			return array( 'error' => __( 'Update has incorrect title!', 'wp-recall' ) );
 		}
 
 		$paths = rcl_get_addon_paths();
@@ -275,14 +275,14 @@ function rcl_update_addon() {
 			update_site_option( 'rcl_addons_need_update', $need_update );
 		}
 
-		wp_send_json( array(
+		return array(
 			'addon_id'	 => $addonID,
 			'success'	 => __( 'Successfully updated', 'wp-recall' )
-		) );
+		);
 	} else {
 
-		wp_send_json( array(
+		return array(
 			'error' => __( 'Unable to open update archive!', 'wp-recall' )
-		) );
+		);
 	}
 }

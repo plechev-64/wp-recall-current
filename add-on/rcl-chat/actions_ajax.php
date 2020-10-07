@@ -8,7 +8,7 @@ function rcl_get_ajax_chat_window() {
 
 	$chatdata = rcl_get_chat_private( $user_id );
 
-	wp_send_json( array(
+	return array(
 		'dialog' => array(
 			'content'		 => $chatdata['content'],
 			'title'			 => __( 'Chat with', 'wp-recall' ) . ' ' . get_the_author_meta( 'display_name', $user_id ),
@@ -17,7 +17,7 @@ function rcl_get_ajax_chat_window() {
 			'buttonClose'	 => false,
 			'onClose'		 => array( 'rcl_chat_clear_beat', array( $chatdata['token'] ) )
 		)
-	) );
+	);
 }
 
 rcl_ajax_action( 'rcl_chat_remove_contact', false );
@@ -30,7 +30,7 @@ function rcl_chat_remove_contact() {
 
 	$res['remove'] = true;
 
-	wp_send_json( $res );
+	return $res;
 }
 
 rcl_ajax_action( 'rcl_get_chat_page', true );
@@ -58,7 +58,7 @@ function rcl_get_chat_page() {
 
 	$res['content'] = $chat->get_messages_box();
 
-	wp_send_json( $res );
+	return $res;
 }
 
 rcl_ajax_action( 'rcl_chat_add_message', false );
@@ -93,9 +93,9 @@ function rcl_chat_add_message() {
 			] );
 
 		if ( $cntLastMess > $antispam )
-			wp_send_json( [
+			return [
 				'error' => __( 'Your activity has sings of spam!', 'wp-recall' )
-			] );
+			];
 	}
 
 	$attach = (isset( $POST['attachment'] )) ? $POST['attachment'] : false;
@@ -121,20 +121,20 @@ function rcl_chat_add_message() {
 
 	if ( isset( $result->errors ) && $result->errors ) {
 		$res['errors'] = $result->errors;
-		wp_send_json( $res );
+		return $res;
 	}
 
 	if ( $attach )
 		rcl_delete_temp_media( $attach );
 
 	if ( isset( $result['errors'] ) ) {
-		wp_send_json( $result );
+		return $result;
 	}
 
 	$res['content']			 = $content . $chat->get_message_box( $result );
 	$res['last_activity']	 = current_time( 'mysql' );
 
-	wp_send_json( $res );
+	return $res;
 }
 
 rcl_ajax_action( 'rcl_get_chat_private_ajax', false );
@@ -153,7 +153,7 @@ function rcl_get_chat_private_ajax() {
 	$result['content']		 = $chat;
 	$result['chat_token']	 = $chatdata['token'];
 
-	wp_send_json( $result );
+	return $result;
 }
 
 rcl_ajax_action( 'rcl_chat_message_important', false );
@@ -172,7 +172,7 @@ function rcl_chat_message_important() {
 
 	$result['important'] = ($important) ? 0 : 1;
 
-	wp_send_json( $result );
+	return $result;
 }
 
 rcl_ajax_action( 'rcl_chat_important_manager_shift', false );
@@ -191,7 +191,7 @@ function rcl_chat_important_manager_shift() {
 
 	$res['content'] = $chat->get_messages_box();
 
-	wp_send_json( $res );
+	return $res;
 }
 
 rcl_ajax_action( 'rcl_chat_delete_attachment', false );
@@ -213,7 +213,7 @@ function rcl_chat_delete_attachment() {
 
 	$result['remove'] = true;
 
-	wp_send_json( $result );
+	return $result;
 }
 
 rcl_ajax_action( 'rcl_chat_ajax_delete_message', false );
@@ -229,5 +229,5 @@ function rcl_chat_ajax_delete_message() {
 
 	$result['remove'] = true;
 
-	wp_send_json( $result );
+	return $result;
 }

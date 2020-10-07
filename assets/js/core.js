@@ -372,7 +372,7 @@ function rcl_ajax( prop ) {
 		for ( var key in propData ) {
 			if ( propData[key].split( "=" )[0] == 'action' ) {
 				callback = propData[key].split( "=" )[1];
-				newRequestArray.push( 'callback=' + propData[key].split( "=" )[1] );
+				newRequestArray.push( 'call_action=' + propData[key].split( "=" )[1] );
 			} else {
 				newRequestArray.push( propData[key] );
 			}
@@ -380,7 +380,7 @@ function rcl_ajax( prop ) {
 
 		prop.data = newRequestArray.join( '&' );
 
-		Rcl.modules.forEach( function( module_id ) {
+		Rcl.used_modules.forEach( function( module_id ) {
 			prop.data += '&used_modules[]=' + module_id;
 		} );
 
@@ -390,7 +390,7 @@ function rcl_ajax( prop ) {
 		callback = prop.data.action;
 		prop.data.used_modules = Rcl.used_modules;
 		prop.data.action = action;
-		prop.data.callback = callback;
+		prop.data.call_action = callback;
 	}
 
 	prop.rest = {

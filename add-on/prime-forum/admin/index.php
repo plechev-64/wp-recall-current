@@ -427,6 +427,8 @@ function pfm_admin_role_field( $user ) {
 
 	if ( $fields ) {
 
+		RCL()->use_module( 'fields' );
+
 		$content = '<h3>' . __( 'Role of the user on the forum', 'wp-recall' ) . ':</h3>
         <table class="form-table rcl-form">';
 
@@ -470,7 +472,7 @@ function pfm_ajax_manager_update_data() {
 		else
 			$result	 = pfm_manager_update_group( $post );
 
-		wp_send_json( $result );
+		return $result;
 	}
 
 	exit;
@@ -538,9 +540,9 @@ function pfm_ajax_update_sort_groups() {
 		);
 	}
 
-	wp_send_json( array(
+	return array(
 		'success' => __( 'Changes saved!', 'wp-recall' )
-	) );
+	);
 }
 
 rcl_ajax_action( 'pfm_ajax_update_sort_forums', false );
@@ -562,9 +564,9 @@ function pfm_ajax_update_sort_forums() {
 		);
 	}
 
-	wp_send_json( array(
+	return array(
 		'success' => __( 'Changes saved!', 'wp-recall' )
-	) );
+	);
 }
 
 rcl_ajax_action( 'pfm_ajax_get_manager_item_delete_form', false );
@@ -651,12 +653,14 @@ function pfm_ajax_get_manager_item_delete_form() {
 
 	$form = pfm_get_manager_item_delete_form( $fields );
 
-	wp_send_json( array(
+	return array(
 		'form' => $form
-	) );
+	);
 }
 
 function pfm_get_manager_item_delete_form( $fields ) {
+
+	RCL()->use_module( 'fields' );
 
 	$content = '<div id="manager-deleted-form" class="rcl-custom-fields-box">';
 	$content .= '<form method="post">';

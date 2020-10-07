@@ -3,6 +3,8 @@
 //deprecated
 function rcl_get_custom_post_meta( $post_id ) {
 
+	RCL()->use_module( 'fields' );
+
 	$get_fields = rcl_get_custom_fields( $post_id );
 
 	if ( $get_fields ) {
@@ -247,16 +249,16 @@ function rcl_save_temp_async_uploaded_thumbnail() {
 	$attachment_url	 = $_POST['attachment_url'];
 
 	if ( ! $attachment_id || ! $attachment_url ) {
-		wp_send_json( array(
+		return array(
 			'error' => __( 'Error', 'wp-recall' )
-		) );
+		);
 	}
 
 	rcl_update_tempgallery( $attachment_id, $attachment_url );
 
-	wp_send_json( array(
+	return array(
 		'save' => true
-	) );
+	);
 }
 
 function rcl_update_tempgallery( $attach_id, $attach_url ) {

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'class-rcl-profile-fields.php';
+require_once 'class-rcl-profile-fields-manager.php';
 require_once 'addon-settings.php';
 
 add_action( 'admin_menu', 'rcl_profile_admin_menu', 30 );
@@ -8,27 +8,8 @@ function rcl_profile_admin_menu() {
 	add_submenu_page( 'manage-wprecall', __( 'Profile fields', 'wp-recall' ), __( 'Profile fields', 'wp-recall' ), 'manage_options', 'manage-userfield', 'rcl_profile_fields_manager' );
 }
 
-add_filter( 'rcl_field_options', 'rcl_edit_profile_field_options', 10, 3 );
-function rcl_edit_profile_field_options( $options, $field, $manager_id ) {
-
-	if ( $manager_id != 'profile' || ! rcl_is_register_open() )
-		return $options;
-
-	$options['register'] = array(
-		'type'	 => 'radio',
-		'slug'	 => 'register',
-		'title'	 => __( 'display in registration form', 'wp-recall' ),
-		'values' => array(
-			__( 'No', 'wp-recall' ),
-			__( 'Yes', 'wp-recall' )
-		)
-	);
-
-	return $options;
-}
-
-add_filter( 'rcl_field_options', 'rcl_edit_profile_manager_field_options', 10, 3 );
-function rcl_edit_profile_manager_field_options( $options, $field, $manager_id ) {
+add_filter( 'rcl_field_options', 'rcl_setup_profile_manager_field_options', 10, 3 );
+function rcl_setup_profile_manager_field_options( $options, $field, $manager_id ) {
 
 	if ( ! $field->id || $manager_id != 'profile' )
 		return $options;
@@ -50,6 +31,19 @@ function rcl_edit_profile_manager_field_options( $options, $field, $manager_id )
 
 	if ( in_array( $field->type, ['uploader', 'file' ] ) ) {
 		unset( $options['required'] );
+	}
+
+	if ( rcl_is_register_open() ) {
+
+		$options['register'] = array(
+			'type'	 => 'radio',
+			'slug'	 => 'register',
+			'title'	 => __( 'display in registration form', 'wp-recall' ),
+			'values' => array(
+				__( 'No', 'wp-recall' ),
+				__( 'Yes', 'wp-recall' )
+			)
+		);
 	}
 
 	return $options;
@@ -104,6 +98,8 @@ function rcl_get_custom_fields_profile( $user ) {
 	$fields = apply_filters( 'rcl_admin_profile_fields', rcl_get_profile_fields( $args ), $user );
 
 	if ( $fields ) {
+
+		RCL()->use_module( 'fields' );
 
 		$content = '<h3>' . __( 'Custom Profile Fields', 'wp-recall' ) . ':</h3>
         <table class="form-table rcl-form rcl-custom-fields-box">';

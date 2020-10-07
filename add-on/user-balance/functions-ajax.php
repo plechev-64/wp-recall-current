@@ -8,7 +8,7 @@ function rcl_add_count_user() {
 	global $user_ID;
 
 	if ( ! intval( $_POST['pay_summ'] ) ) {
-		wp_send_json( array( 'error' => __( 'Enter the amount', 'wp-recall' ) ) );
+		return array( 'error' => __( 'Enter the amount', 'wp-recall' ) );
 	}
 
 	if ( $user_ID ) {
@@ -37,7 +37,7 @@ function rcl_add_count_user() {
 		$log['error'] = __( 'Error', 'wp-recall' );
 	}
 
-	wp_send_json( $log );
+	return $log;
 }
 
 rcl_ajax_action( 'rcl_pay_order_user_balance', false );
@@ -53,7 +53,7 @@ function rcl_pay_order_user_balance() {
 	$baggage_data	 = json_decode( base64_decode( $POST['baggage_data'] ) );
 
 	if ( ! $pay_id ) {
-		wp_send_json( array( 'error' => __( 'Order not found!', 'wp-recall' ) ) );
+		return array( 'error' => __( 'Order not found!', 'wp-recall' ) );
 	}
 
 	$data = array(
@@ -72,16 +72,16 @@ function rcl_pay_order_user_balance() {
 	$newBalance = $userBalance - $pay_summ;
 
 	if ( ! $userBalance || $newBalance < 0 ) {
-		wp_send_json( array( 'error' => sprintf( __( 'Insufficient funds in your personal account!<br>Order price: %d %s', 'wp-recall' ), $pay_summ, rcl_get_primary_currency( 1 ) ) ) );
+		return array( 'error' => sprintf( __( 'Insufficient funds in your personal account!<br>Order price: %d %s', 'wp-recall' ), $pay_summ, rcl_get_primary_currency( 1 ) ) );
 	}
 
 	rcl_update_user_balance( $newBalance, $user_ID, $description );
 
 	do_action( 'rcl_success_pay_balance', ( object ) $data );
 
-	wp_send_json( array(
+	return array(
 		'redirect' => rcl_format_url( get_permalink( rcl_get_commerce_option( 'page_successfully_pay' ) ) ) . 'payment-type=' . $pay_type
-	) );
+	);
 }
 
 rcl_ajax_action( 'rcl_load_payment_form' );
@@ -105,12 +105,12 @@ function rcl_load_payment_form() {
 
 	$content .= '</div>';
 
-	wp_send_json( array(
+	return array(
 		'dialog'	 => array(
 			'content'	 => $content,
 			'size'		 => 'medium',
 			'title'		 => $_POST['description']
 		),
 		'pay_type'	 => $_POST['pay_type']
-	) );
+	);
 }

@@ -308,7 +308,6 @@ function RclForm( form ) {
 		rcl_preloader_show( form );
 
 		var sendData = {
-			rest: rest,
 			data: form.serialize() + '&action=' + action
 		};
 

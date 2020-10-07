@@ -94,7 +94,6 @@ function rcl_load_content_manager( e, props ) {
 	if ( props != 'undefined' && props ) {
 
 		rcl_ajax( {
-			rest: true,
 			data: {
 				action: 'rcl_load_content_manager',
 				classname: props.classname,

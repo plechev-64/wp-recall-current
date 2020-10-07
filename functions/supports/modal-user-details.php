@@ -40,9 +40,9 @@ function rcl_add_user_info_button( $icons ) {
 rcl_ajax_action( 'rcl_return_user_details', true );
 function rcl_return_user_details() {
 
-	wp_send_json( array(
+	return array(
 		'content' => rcl_get_user_details( intval( $_POST['user_id'] ) )
-	) );
+	);
 }
 
 function rcl_get_user_details( $user_id, $args = false ) {

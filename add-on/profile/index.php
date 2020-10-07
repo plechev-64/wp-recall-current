@@ -70,6 +70,8 @@ function rcl_show_custom_fields_profile( $master_id ) {
 
 	if ( $get_fields ) {
 
+		RCL()->use_module( 'fields' );
+
 		foreach ( ( array ) stripslashes_deep( $get_fields ) as $field ) {
 			$field	 = apply_filters( 'custom_field_profile', $field );
 			if ( ! $field )
@@ -174,6 +176,7 @@ function rcl_tab_profile_content( $master_id ) {
 	global $userdata, $user_ID;
 
 	RCL()->use_module( 'table' );
+	RCL()->use_module( 'fields' );
 
 	$profileFields = rcl_get_profile_fields( array( 'user_id' => $master_id ) );
 

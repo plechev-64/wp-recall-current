@@ -115,119 +115,6 @@ function rcl_load_tab( tab_id, subtab_id, e ) {
 
 }
 
-/*rcl_add_action( 'rcl_init', 'rcl_init_ajax_tab' );
- function rcl_init_ajax_tab() {
- jQuery( 'body' ).on( 'click', '.rcl-ajax', function() {
-
- var e = jQuery( this );
-
- if ( e.hasClass( 'tab-upload' ) )
- return false;
-
- rcl_do_action( 'rcl_before_upload_tab', e );
-
- rcl_ajax( {
- data: {
- action: 'rcl_ajax_tab',
- post: e.data( 'post' ),
- tab_url: e.attr( 'href' ) //encodeURIComponent(e.attr('href'))
- },
- success: function( data ) {
-
- e.removeClass( 'tab-upload' );
-
- data = rcl_apply_filters( 'rcl_upload_tab', data );
-
- if ( data.result.error ) {
- rcl_notice( data.result.error, 'error', 10000 );
- return false;
- }
-
- var url = data.post.tab_url;
- var supports = data.post.supports;
- var subtab_id = data.post.subtab_id;
-
- if ( supports && supports.indexOf( 'dialog' ) >= 0 ) { //если вкладка поддерживает диалог
-
- if ( !subtab_id ) { //если загружается основная вкладка
-
- ssi_modal.show( {
- className: 'rcl-dialog-tab ' + data.post.tab_id,
- sizeClass: 'small',
- buttons: [ {
- label: Rcl.local.close,
- closeAfter: true
- } ],
- content: data.result
- } );
-
- } else {
-
- var box_id = '#ssi-modalContent';
-
- }
-
- } else {
-
- rcl_update_history_url( url );
-
- if ( !subtab_id ) {
- jQuery( '.rcl-tab-button .recall-button' ).removeClass( 'active' ).removeClass( 'rcl-bttn__active' );
- }
-
- e.addClass( 'active' ).addClass( 'rcl-bttn__active' );
-
- var box_id = '#lk-content';
-
- }
-
- if ( box_id ) {
-
- jQuery( box_id ).html( data.result );
-
- var options = rcl_get_options_url_params();
-
- if ( options.scroll == 1 ) {
- var offsetTop = jQuery( box_id ).offset().top;
- jQuery( 'body,html' ).animate( {
- scrollTop: offsetTop - options.offset
- },
- 1000 );
- }
-
- if ( data.includes ) {
-
- var includes = data.includes;
-
- includes.forEach( function( src, i, includes ) {
-
- jQuery.getScript( src );
-
- } );
-
- }
-
- }
-
- if ( !data.post.subtab_id ) {
- jQuery( '#lk-content' ).animateCss( 'fadeIn' );
- } else {
- jQuery( '#lk-content .rcl-subtab-content' ).animateCss( 'fadeIn' );
- }
-
- rcl_do_action( 'rcl_upload_tab', {
- element: e,
- result: data
- } );
-
- }
- } );
-
- return false;
-
- } );
- }*/
-
 function rcl_get_options_url_params() {
 
 	var options = {
@@ -560,7 +447,7 @@ function rcl_beat() {
 			},
 			success: function( data ) {
 
-				data.forEach( function( result, i, data ) {
+				data.beat_result.forEach( function( result, i, data ) {
 
 					rcl_do_action( 'rcl_beat_success_' + result['beat_name'] );
 

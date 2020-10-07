@@ -78,7 +78,7 @@ if ( ! isset( $rmag_options['primary_cur'] ) )
 
 if ( ! isset( $rmag_options['basket_page_rmag'] ) ) {
 
-	$labels = array(
+	$labels = [
 		'name'				 => __( 'Products catalog', 'wp-recall' ),
 		'singular_name'		 => __( 'Product', 'wp-recall' ),
 		'add_new'			 => __( 'Add this item', 'wp-recall' ),
@@ -91,9 +91,9 @@ if ( ! isset( $rmag_options['basket_page_rmag'] ) ) {
 		'not_found_in_trash' => __( 'Cart is empty', 'wp-recall' ),
 		'parent_item_colon'	 => __( 'Parental goods', 'wp-recall' ),
 		'menu_name'			 => __( 'Products', 'wp-recall' )
-	);
+	];
 
-	$args = array(
+	$args = [
 		'labels'				 => $labels,
 		'hierarchical'			 => false,
 		'supports'				 => array( 'title', 'editor', 'custom-fields', 'thumbnail', 'comments', 'excerpt', 'author' ),
@@ -110,11 +110,11 @@ if ( ! isset( $rmag_options['basket_page_rmag'] ) ) {
 		'can_export'			 => true,
 		'rewrite'				 => true,
 		'capability_type'		 => 'post'
-	);
+	];
 
 	register_post_type( 'products', $args );
 
-	$labels = array(
+	$labels = [
 		'name'						 => __( 'Product categories', 'wp-recall' ),
 		'singular_name'				 => __( 'Category', 'wp-recall' ),
 		'search_items'				 => __( 'Search', 'wp-recall' ),
@@ -130,9 +130,9 @@ if ( ! isset( $rmag_options['basket_page_rmag'] ) ) {
 		'add_or_remove_items'		 => __( 'Add or delete a category', 'wp-recall' ),
 		'choose_from_most_used'		 => __( 'Select to use', 'wp-recall' ),
 		'menu_name'					 => __( 'Product categories', 'wp-recall' )
-	);
+	];
 
-	$args = array(
+	$args = [
 		'labels'			 => $labels,
 		'public'			 => true,
 		'show_in_nav_menus'	 => true,
@@ -141,7 +141,7 @@ if ( ! isset( $rmag_options['basket_page_rmag'] ) ) {
 		'hierarchical'		 => true,
 		'rewrite'			 => true,
 		'query_var'			 => true
-	);
+	];
 
 	register_taxonomy( 'prodcat', array( 'products' ), $args );
 
@@ -152,7 +152,7 @@ if ( ! isset( $rmag_options['basket_page_rmag'] ) ) {
 		)
 	);
 
-	$labels = array(
+	$labels = [
 		'name'						 => __( 'Product Tags', 'wp-recall' ),
 		'singular_name'				 => __( 'Product Tag', 'wp-recall' ),
 		'search_items'				 => __( 'Search', 'wp-recall' ),
@@ -168,9 +168,9 @@ if ( ! isset( $rmag_options['basket_page_rmag'] ) ) {
 		'add_or_remove_items'		 => __( 'Add or delete', 'wp-recall' ),
 		'choose_from_most_used'		 => __( 'Select to use', 'wp-recall' ),
 		'menu_name'					 => __( 'Product Tags', 'wp-recall' )
-	);
+	];
 
-	$args = array(
+	$args = [
 		'labels'			 => $labels,
 		'public'			 => true,
 		'show_in_nav_menus'	 => true,
@@ -179,26 +179,26 @@ if ( ! isset( $rmag_options['basket_page_rmag'] ) ) {
 		'hierarchical'		 => false,
 		'rewrite'			 => true,
 		'query_var'			 => true
-	);
+	];
 
-	register_taxonomy( 'product_tag', array( 'products' ), $args );
+	register_taxonomy( 'product_tag', [ 'products' ], $args );
 
 	wp_insert_term(
-		__( 'Product Tag', 'wp-recall' ) . ' 1', 'product_tag', array(
+		__( 'Product Tag', 'wp-recall' ) . ' 1', 'product_tag', [
 		'slug' => 'products_tag_1'
-		)
+		]
 	);
 
 	wp_insert_term(
-		__( 'Product Tag', 'wp-recall' ) . ' 2', 'product_tag', array(
+		__( 'Product Tag', 'wp-recall' ) . ' 2', 'product_tag', [
 		'slug' => 'products_tag_2'
-		)
+		]
 	);
 
 	wp_insert_term(
-		__( 'Product Tag', 'wp-recall' ) . ' 3', 'product_tag', array(
+		__( 'Product Tag', 'wp-recall' ) . ' 3', 'product_tag', [
 		'slug' => 'products_tag_3'
-		)
+		]
 	);
 
 	if ( ! rcl_isset_plugin_page( 'commerce-cart' ) ) {

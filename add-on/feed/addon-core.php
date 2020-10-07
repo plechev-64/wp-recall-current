@@ -169,7 +169,7 @@ function rcl_feed_callback() {
 	$data		 = $_POST['data'];
 	$callback	 = $_POST['callback'];
 	$content	 = $callback( $data );
-	wp_send_json( $content );
+	return $content;
 }
 
 function rcl_feed_content() {

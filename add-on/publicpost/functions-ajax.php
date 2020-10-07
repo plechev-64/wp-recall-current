@@ -45,7 +45,7 @@ function rcl_ajax_delete_post() {
 		}
 	}
 
-	wp_send_json( $log );
+	return $log;
 }
 
 //вызов быстрой формы редактирования публикации
@@ -70,7 +70,7 @@ function rcl_get_edit_postdata() {
 		$log['error'] = __( 'Failed to get the data', 'wp-recall' );
 	}
 
-	wp_send_json( $log );
+	return $log;
 }
 
 //сохранение изменений в быстрой форме редактирования
@@ -89,13 +89,15 @@ function rcl_edit_postdata() {
 	);
 
 	if ( ! $result ) {
-		wp_send_json( array( 'error' => __( 'Changes to be saved not found', 'wp-recall' ) ) );
+		return array(
+			'error' => __( 'Changes to be saved not found', 'wp-recall' )
+		);
 	}
 
-	wp_send_json( array(
+	return array(
 		'success'	 => __( 'Publication updated', 'wp-recall' ),
 		'dialog'	 => array( 'close' )
-	) );
+	);
 }
 
 function rcl_edit_post() {
@@ -109,7 +111,7 @@ function rcl_get_like_tags() {
 	global $wpdb;
 
 	if ( ! $_POST['query'] ) {
-		wp_send_json( array( array( 'id' => '' ) ) );
+		return array( array( 'id' => '' ) );
 	};
 
 	$query		 = $_POST['query'];
@@ -123,7 +125,7 @@ function rcl_get_like_tags() {
 		$tags[$key]['name']	 = $term->name;
 	}
 
-	wp_send_json( $tags );
+	return $tags;
 }
 
 add_filter( 'rcl_preview_post_content', 'rcl_add_registered_scripts' );
@@ -165,7 +167,7 @@ function rcl_preview_post() {
 		}
 
 		if ( $log['error'] ) {
-			wp_send_json( $log );
+			return $log;
 		}
 	}
 
@@ -182,7 +184,7 @@ function rcl_preview_post() {
 			$max	 = $field->value_max;
 
 			if ( $value < $min || $value > $max ) {
-				wp_send_json( array( 'error' => __( 'Incorrect values of some fields, enter the correct values!', 'wp-recall' ) ) );
+				return array( 'error' => __( 'Incorrect values of some fields, enter the correct values!', 'wp-recall' ) );
 			}
 		}
 	}
@@ -194,7 +196,7 @@ function rcl_preview_post() {
 		$field = $formFields->get_field( 'post_thumbnail' );
 
 		if ( $field->get_prop( 'required' ) && ! $thumbnail_id ) {
-			wp_send_json( array( 'error' => __( 'Upload or specify an image as a thumbnail', 'wp-recall' ) ) );
+			return array( 'error' => __( 'Upload or specify an image as a thumbnail', 'wp-recall' ) );
 		}
 	}
 
@@ -207,7 +209,7 @@ function rcl_preview_post() {
 		$field = $formFields->get_field( 'post_content' );
 
 		if ( $field->get_prop( 'required' ) && ! $postContent ) {
-			wp_send_json( array( 'error' => __( 'Add contents of the publication!', 'wp-recall' ) ) );
+			return array( 'error' => __( 'Add contents of the publication!', 'wp-recall' ) );
 		}
 
 		$post_content = wpautop( do_shortcode( stripslashes_deep( $postContent ) ) );
@@ -216,9 +218,9 @@ function rcl_preview_post() {
 	do_action( 'rcl_preview_post', $postdata );
 
 	if ( $postdata['publish'] ) {
-		wp_send_json( [
+		return [
 			'submit' => true
-		] );
+		];
 	}
 
 	if ( rcl_get_option( 'pm_rcl' ) && $customFields = $formFields->get_custom_fields() ) {
@@ -269,10 +271,10 @@ function rcl_preview_post() {
 
 	do_action( 'rcl_pre_send_preview_post', $postdata );
 
-	wp_send_json( array(
+	return array(
 		'title'		 => $postdata['post_title'],
 		'content'	 => $preview
-	) );
+		);
 }
 
 rcl_ajax_action( 'rcl_set_post_thumbnail', true );
@@ -288,9 +290,9 @@ function rcl_set_post_thumbnail() {
 		) );
 
 	if ( ! $formFields->is_active_field( 'post_thumbnail' ) )
-		wp_send_json( [
+		return [
 			'error' => __( 'The field of the thumbnail is inactive!', 'wp-recall' )
-		] );
+		];
 
 	if ( $parent_id ) {
 		update_post_meta( $parent_id, '_thumbnail_id', $thumbnail_id );
@@ -311,7 +313,7 @@ function rcl_set_post_thumbnail() {
 		'id'	 => $thumbnail_id
 	);
 
-	wp_send_json( $result );
+	return $result;
 }
 
 add_action( 'rcl_upload', 'rcl_upload_post_thumbnail', 10, 2 );

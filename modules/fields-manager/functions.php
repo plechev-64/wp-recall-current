@@ -33,9 +33,9 @@ function rcl_manager_get_new_field() {
 		'_new'	 => true
 	) );
 
-	wp_send_json( array(
+	return array(
 		'content' => $Manager->get_field_manager( $field_id )
-	) );
+	);
 }
 
 rcl_ajax_action( 'rcl_manager_get_custom_field_options', false );
@@ -77,9 +77,9 @@ function rcl_manager_get_custom_field_options() {
 		$content .= $Manager->sortable_dynamic_values_script( $field_id );
 	}
 
-	wp_send_json( array(
+	return array(
 		'content' => $content
-	) );
+	);
 }
 
 rcl_ajax_action( 'rcl_manager_get_new_area', false );
@@ -89,9 +89,9 @@ function rcl_manager_get_new_area() {
 
 	$Manager = new Rcl_Fields_Manager( 'any', $managerProps );
 
-	wp_send_json( array(
+	return array(
 		'content' => $Manager->get_active_area()
-	) );
+	);
 }
 
 rcl_ajax_action( 'rcl_manager_get_new_group', false );
@@ -101,9 +101,9 @@ function rcl_manager_get_new_group() {
 
 	$Manager = new Rcl_Fields_Manager( 'any', $managerProps );
 
-	wp_send_json( array(
+	return array(
 		'content' => $Manager->get_group_areas()
-	) );
+	);
 }
 
 rcl_ajax_action( 'rcl_manager_update_fields_by_ajax', false, true );
