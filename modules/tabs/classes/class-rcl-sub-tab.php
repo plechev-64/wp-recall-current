@@ -81,11 +81,11 @@ class Rcl_Sub_Tab {
 
 		$title = $this->title ? $this->title : $this->name;
 
-		$content = '<div id="rcl-subtab-' . $this->id . '">';
+		$content = '<div id="rcl-subtab-' . $this->id . '" class="tab-content">';
 
 		$content .= '<div class="tab-title">';
 		if ( $this->icon )
-			$content .= '<i class="fa ' . $this->icon . '" aria-hidden="true"></i> ';
+			$content .= '<i class="rcli ' . $this->icon . '" aria-hidden="true"></i> ';
 		$content .= $title;
 		$content .= '</div>';
 

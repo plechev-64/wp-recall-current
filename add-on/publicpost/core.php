@@ -38,43 +38,43 @@ function rcl_tab_postform( $master_id ) {
 }
 
 //Прикрепление новой миниатюры к публикации из произвольного места на сервере
-function rcl_add_thumbnail_post( $post_id, $filepath ) {
+/* function rcl_add_thumbnail_post( $post_id, $filepath ) {
 
-	require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-	require_once(ABSPATH . "wp-admin" . '/includes/file.php');
-	require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+  require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+  require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+  require_once(ABSPATH . "wp-admin" . '/includes/media.php');
 
-	$filename	 = basename( $filepath );
-	$file		 = explode( '.', $filename );
-	$thumbpath	 = $filepath;
+  $filename	 = basename( $filepath );
+  $file		 = explode( '.', $filename );
+  $thumbpath	 = $filepath;
 
-	//if($file[0]=='image'){
-	$data	 = getimagesize( $thumbpath );
-	$mime	 = $data['mime'];
-	//}else $mime = mime_content_type($thumbpath);
+  //if($file[0]=='image'){
+  $data	 = getimagesize( $thumbpath );
+  $mime	 = $data['mime'];
+  //}else $mime = mime_content_type($thumbpath);
 
-	$cont	 = file_get_contents( $thumbpath );
-	$image	 = wp_upload_bits( $filename, null, $cont );
+  $cont	 = file_get_contents( $thumbpath );
+  $image	 = wp_upload_bits( $filename, null, $cont );
 
-	$attachment = array(
-		'post_mime_type' => $mime,
-		'post_title'	 => preg_replace( '/\.[^.]+$/', '', basename( $image['file'] ) ),
-		'post_content'	 => '',
-		'guid'			 => $image['url'],
-		'post_parent'	 => $post_id,
-		'post_status'	 => 'inherit'
-	);
+  $attachment = array(
+  'post_mime_type' => $mime,
+  'post_title'	 => preg_replace( '/\.[^.]+$/', '', basename( $image['file'] ) ),
+  'post_content'	 => '',
+  'guid'			 => $image['url'],
+  'post_parent'	 => $post_id,
+  'post_status'	 => 'inherit'
+  );
 
-	$attach_id	 = wp_insert_attachment( $attachment, $image['file'], $post_id );
-	$attach_data = wp_generate_attachment_metadata( $attach_id, $image['file'] );
-	wp_update_attachment_metadata( $attach_id, $attach_data );
+  $attach_id	 = wp_insert_attachment( $attachment, $image['file'], $post_id );
+  $attach_data = wp_generate_attachment_metadata( $attach_id, $image['file'] );
+  wp_update_attachment_metadata( $attach_id, $attach_data );
 
-	$oldthumb = get_post_meta( $post_id, '_thumbnail_id', 1 );
-	if ( $oldthumb )
-		wp_delete_attachment( $oldthumb );
+  $oldthumb = get_post_meta( $post_id, '_thumbnail_id', 1 );
+  if ( $oldthumb )
+  wp_delete_attachment( $oldthumb );
 
-	update_post_meta( $post_id, '_thumbnail_id', $attach_id );
-}
+  update_post_meta( $post_id, '_thumbnail_id', $attach_id );
+  } */
 
 function rcl_edit_post_button_html( $post_id ) {
 	return '<p class="post-edit-button">'

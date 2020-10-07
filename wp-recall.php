@@ -226,7 +226,10 @@ final class WP_Recall {
 		require_once 'deprecated/class-rcl-custom-fields.php';
 		require_once 'deprecated/class-rcl-custom-fields-manager.php';
 		require_once 'deprecated/class-rcl-pagenavi.php';
-		require_once "deprecated/functions.php";
+		require_once 'deprecated/functions.php';
+
+		require_once 'functions/frontend.php';
+		require_once 'functions/widgets.php';
 
 		if ( $this->is_request( 'admin' ) ) {
 			$this->admin_includes();
@@ -259,8 +262,7 @@ final class WP_Recall {
 	 * Сюда складываем все файлы для фронт-энда
 	 */
 	public function frontend_includes() {
-		require_once 'functions/widgets.php';
-		require_once "functions/frontend.php";
+
 	}
 
 	public function init() {

@@ -5,8 +5,7 @@ function rcl_get_shortcode_wp_recall() {
 	global $user_LK;
 
 	if ( ! $user_LK ) {
-		return '<h4 class="rcl_cab_guest_message">' . __( 'To use your personal account, please log in or register on this site', 'wp-recall' ) . '</h4>
-        <div class="authorize-form-rcl">' . rcl_get_authorize_form() . '</div>';
+		return rcl_get_userpanel();
 	}
 
 	ob_start();
@@ -19,47 +18,77 @@ function rcl_get_shortcode_wp_recall() {
 	return $content;
 }
 
-add_shortcode( 'rcl-userpanel', 'rcl_get_userpanel' );
-function rcl_get_userpanel( $atts = [ ] ) {
+add_shortcode( 'rcl-user-widget', 'rcl_get_user_widget' );
+function rcl_get_user_widget( $atts = [ ] ) {
 	global $user_ID;
 
-	if ( $user_ID ) {
-		$content = rcl_get_button( [
-			'label'	 => __( 'Перейти в личный кабинет', 'wp-recall' ),
-			'icon'	 => 'fa-home',
-			'size'	 => 'large',
-			'href'	 => rcl_get_user_url( $user_ID )
-			] );
+	$buttons = [ ];
 
-		$content .= rcl_get_button( [
+	$content = '<div class="rcl-user-widget">';
+
+	if ( $user_ID ) {
+
+		$userContent = apply_filters( 'rcl_widget_userdata_content', get_avatar( $user_ID, 100 ) );
+
+		if ( $userContent ) {
+
+			$content .= '<div class="userdata">';
+
+			$content .= $userContent;
+
+			$content .= '</div>';
+		}
+
+		$buttons[] = [
+			'label'	 => __( 'Личный кабинет', 'wp-recall' ),
+			'icon'	 => 'fa-home',
+			'size'	 => 'medium',
+			'href'	 => rcl_get_user_url( $user_ID )
+		];
+
+		$buttons[] = [
 			'label'	 => __( 'Exit', 'wp-recall' ),
 			'href'	 => wp_logout_url( home_url() ),
 			'icon'	 => 'fa-external-link',
-			'size'	 => 'large',
-			] );
+			'size'	 => 'medium',
+		];
+	} else {
 
-		return $content;
+		//use loginform module
+		if ( ! rcl_get_option( 'login_form_recall' ) )
+			rcl_dialog_scripts();
+
+		$buttons[] = [
+			'label'		 => __( 'Авторизация', 'wp-recall' ),
+			'icon'		 => 'fa-sign-in',
+			'size'		 => 'medium',
+			'onclick'	 => rcl_get_option( 'login_form_recall' ) ? null : 'Rcl.loginform.call("login");return false;',
+			'href'		 => rcl_get_loginform_url( 'login' )
+		];
+
+		$buttons[] = [
+			'label'		 => __( 'Регистрация', 'wp-recall' ),
+			'icon'		 => 'fa-book',
+			'size'		 => 'medium',
+			'onclick'	 => rcl_get_option( 'login_form_recall' ) ? null : 'Rcl.loginform.call("register");return false;',
+			'href'		 => rcl_get_loginform_url( 'register' )
+		];
 	}
 
-	//use loginform module
-	if ( ! rcl_get_option( 'login_form_recall' ) )
-		rcl_dialog_scripts();
+	$buttons = apply_filters( 'rcl_widget_buttons', $buttons );
 
-	$content = rcl_get_button( [
-		'label'		 => __( 'Авторизация', 'wp-recall' ),
-		'icon'		 => 'fa-sign-in',
-		'size'		 => 'large',
-		'onclick'	 => rcl_get_option( 'login_form_recall' ) ? null : 'Rcl.loginform.call("login");return false;',
-		'href'		 => rcl_get_loginform_url( 'login' )
-		] );
+	if ( $buttons ) {
 
-	$content .= rcl_get_button( [
-		'label'		 => __( 'Регистрация', 'wp-recall' ),
-		'icon'		 => 'fa-book',
-		'size'		 => 'large',
-		'onclick'	 => rcl_get_option( 'login_form_recall' ) ? null : 'Rcl.loginform.call("register");return false;',
-		'href'		 => rcl_get_loginform_url( 'register' )
-		] );
+		$content .= '<div class="buttons rcl-wrap rcl-wrap_vertical">';
+
+		foreach ( $buttons as $button ) {
+			$content .= rcl_get_button( $button );
+		}
+
+		$content .= '</div>';
+	}
+
+	$content .= '</div>';
 
 	return $content;
 }
@@ -80,7 +109,7 @@ function rcl_get_loginform_shortcode( $atts = [ ] ) {
 }
 
 add_shortcode( 'userlist', 'rcl_get_userlist' );
-function rcl_get_userlist( $atts ) {
+function rcl_get_userlist( $atts = [ ] ) {
 	global $rcl_user, $rcl_users_set, $user_ID;
 
 	require_once RCL_PATH . 'classes/class-rcl-users-list.php';

@@ -1538,3 +1538,27 @@ body .rcl-bttn:not(.rcl-bttn__type-clear):last-child {
     flex-basis: calc( var(--multiplier) * 999 );
 }
 /**/
+
+/* User Widget */
+.rcl-user-widget{
+	display: flex;
+}
+.rcl-user-widget .userdata{
+	margin-right: 10px;
+}
+.rcl-user-widget .buttons{
+
+}
+/* User Widget End */
+
+.tab-content{
+
+}
+.tab-content .tab-title > i{
+
+}
+.tab-content .tab-title{
+	padding: 10px;
+    margin-bottom: 10px;
+    background: #e7e7e7;
+}
