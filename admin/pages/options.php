@@ -280,14 +280,6 @@ $options->box( 'primary' )->add_group( 'caching', array(
 	)
 ) );
 
-$editable_roles	 = array_reverse( get_editable_roles() );
-$roles			 = [ ];
-foreach ( $editable_roles as $role => $details ) {
-	if ( $role == 'administrator' )
-		continue;
-	$roles[$role] = translate_user_role( $details['name'] );
-}
-
 $options->box( 'primary' )->add_group( 'access_console', array(
 	'title' => __( 'Access to the console', 'wp-recall' ),
 ) )->add_options( array(
@@ -295,7 +287,7 @@ $options->box( 'primary' )->add_group( 'access_console', array(
 		'type'	 => 'checkbox',
 		'slug'	 => 'consol_access_rcl',
 		'title'	 => __( 'Access to the console is allowed', 'wp-recall' ),
-		'values' => $roles,
+		'values' => rcl_get_roles_ids(),
 		'notice' => __( 'Администратор всегда имеет доступ в административную часть', 'wp-recall' )
 	)
 ) );

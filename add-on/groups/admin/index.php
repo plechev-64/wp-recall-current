@@ -45,15 +45,11 @@ function rcl_admin_groups_page_content( $options ) {
 			)
 		),
 		array(
-			'type'	 => 'select',
-			'title'	 => __( 'Group creation allowed', 'wp-recall' ),
-			'slug'	 => 'public_group_access_recall',
-			'values' => array(
-				10	 => __( 'only Administrators', 'wp-recall' ),
-				7	 => __( 'Editors and higher', 'wp-recall' ),
-				2	 => __( 'Authors and higher', 'wp-recall' ),
-				1	 => __( 'Participants and higher', 'wp-recall' )
-			)
+			'type'		 => 'checkbox',
+			'title'		 => __( 'Group creation allowed', 'wp-recall' ),
+			'slug'		 => 'public_group_access_recall',
+			'default'	 => ['editor', 'author' ],
+			'values'	 => rcl_get_roles_ids()
 		),
 		array(
 			'type'	 => 'select',

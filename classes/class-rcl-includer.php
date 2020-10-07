@@ -360,7 +360,7 @@ class Rcl_Includer {
 }
 
 //подключаем стилевой файл дополнения
-function rcl_enqueue_style( $id, $url, $parents = false, $in_footer = false, $force_union = false ) {
+function rcl_enqueue_style( $id, $url, $parents = false, $in_footer = false ) {
 	global $rcl_styles;
 
 	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) || isset( $_REQUEST['rest_route'] ) ) {
@@ -386,12 +386,9 @@ function rcl_enqueue_style( $id, $url, $parents = false, $in_footer = false, $fo
 	}else {
 		$rcl_styles[$id] = $url;
 	}
-
-	if ( $force_union )
-		$rcl_styles['force-union'][] = $id;
 }
 
-function rcl_enqueue_script( $id, $url, $parents = false, $in_footer = false, $force_union = false ) {
+function rcl_enqueue_script( $id, $url, $parents = false, $in_footer = false ) {
 	global $rcl_scripts;
 
 	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) || isset( $_REQUEST['rest_route'] ) ) {
@@ -412,9 +409,6 @@ function rcl_enqueue_script( $id, $url, $parents = false, $in_footer = false, $f
 
 	if ( $parents )
 		$rcl_scripts['parents'][$id] = $parents;
-
-	if ( $force_union )
-		$rcl_scripts['force-union'][] = $id;
 }
 
 function rcl_dequeue_style( $style ) {

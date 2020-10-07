@@ -128,7 +128,6 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 				continue;
 
 			$default_fields[$field['slug']] = $this::setup( $field );
-			//$this->add_field($field, true);
 
 			if ( ! $this->default_box && ! $this->is_active_field( $field['slug'] ) )
 				$this->add_field( $field );

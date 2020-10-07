@@ -33,6 +33,8 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 	function __construct( $args = false ) {
 		global $user_ID;
 
+		RCL()->use_module( 'forms' );
+
 		$this->init_properties( $args );
 
 		if ( isset( $_GET['rcl-post-edit'] ) ) {

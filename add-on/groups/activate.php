@@ -58,7 +58,7 @@ dbDelta( $sql );
 
 if ( ! isset( $rcl_options['moderation_public_group'] ) ) {
 
-	$rcl_options['public_group_access_recall']	 = 2;
+	$rcl_options['public_group_access_recall']	 = ['editor', 'author' ];
 	$rcl_options['moderation_public_group']		 = 0;
 	$rcl_options['group-output']				 = 1;
 

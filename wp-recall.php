@@ -187,25 +187,20 @@ final class WP_Recall {
 		 */
 		require_once 'classes/class-rcl-module.php';
 
-		require_once 'classes/class-rcl-cache.php';
-		require_once 'classes/class-rcl-ajax.php';
-		require_once 'classes/class-rcl-pager.php';
-
 		require_once 'classes/query/class-rcl-old-query.php';
 		require_once 'classes/query/class-rcl-query.php';
 		require_once 'classes/query/class-rq.php';
 
 		require_once 'classes/class-rcl-query-tables.php';
-
+		require_once 'classes/class-rcl-cache.php';
+		require_once 'classes/class-rcl-ajax.php';
+		require_once 'classes/class-rcl-pager.php';
 		require_once 'classes/class-rcl-user.php';
-
 		require_once 'classes/class-rcl-walker.php';
 		require_once 'classes/class-rcl-includer.php';
 		require_once 'classes/class-rcl-install.php';
 		require_once 'classes/class-rcl-log.php';
-
 		require_once 'classes/class-rcl-button.php';
-		//require_once 'classes/class-rcl-uploader.php';
 
 		require_once 'functions/activate.php';
 		require_once 'functions/ajax.php';
@@ -215,11 +210,9 @@ final class WP_Recall {
 		require_once 'functions/addons-update.php';
 		require_once 'functions/enqueue-scripts.php';
 		require_once 'functions/cron.php';
-		//require_once 'functions/loginform.php';
 		require_once 'functions/currency.php';
 		require_once 'functions/deprecated.php';
 		require_once 'functions/shortcodes.php';
-
 		require_once 'functions/functions-access.php';
 		require_once 'functions/functions-avatar.php';
 		require_once 'functions/functions-cache.php';
@@ -229,10 +222,6 @@ final class WP_Recall {
 		require_once 'functions/functions-tabs.php';
 		require_once 'functions/functions-user.php';
 		require_once 'functions/functions-others.php';
-
-		require_once 'rcl-widgets.php';
-
-		require_once "functions/frontend.php";
 
 		require_once 'deprecated/class-rcl-custom-fields.php';
 		require_once 'deprecated/class-rcl-custom-fields-manager.php';
@@ -270,7 +259,8 @@ final class WP_Recall {
 	 * Сюда складываем все файлы для фронт-энда
 	 */
 	public function frontend_includes() {
-		//require_once "functions/frontend.php";
+		require_once 'functions/widgets.php';
+		require_once "functions/frontend.php";
 	}
 
 	public function init() {

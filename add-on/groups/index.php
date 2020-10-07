@@ -253,41 +253,37 @@ function rcl_add_tab_groups() {
 }
 
 function rcl_tab_groups( $type_account = 'user_id' ) {
-
 	global $user_ID, $user_LK;
 
 	$content = '';
 
-	if ( rcl_is_office( $user_ID ) ) {
+	$def_roles = ['editor', 'author' ];
 
-		$group_can_public = rcl_get_option( 'public_group_access_recall' );
-		if ( $group_can_public ) {
-			$userdata = get_userdata( $user_ID );
-			if ( $userdata->user_level >= $group_can_public ) {
-				$public_groups = true;
-			} else {
-				$public_groups = false;
-			}
-		} else {
-			$public_groups = true;
-		}
+	$can_roles = rcl_get_option( 'public_group_access_recall', $def_roles );
 
-		if ( $public_groups ) {
-			$content = '<div id="create-group">'
-				. '<form method="post">'
-				. '<div class="form-field">'
-				. '<input type="text" required placeholder="' . __( 'Enter the name of the new group', 'wp-recall' ) . '" name="group_name">'
-				. rcl_get_button( array(
-					'onclick'	 => 'rcl_send_form_data("rcl_ajax_create_group", this);return false;',
-					'label'		 => __( 'Create', 'wp-recall' ),
-					'submit'	 => true
-				) )
-				. '</div>'
-				. wp_nonce_field( 'rcl-group-create', '_wpnonce', true, false )
-				. '</form>'
-				. '</div>';
-		}
+	$can_roles = ! is_array( $can_roles ) ? $def_roles : $can_roles;
+
+	$can_roles[] = 'administrator';
+
+	if ( rcl_is_user_role( $user_ID, $can_roles ) ) {
+
+		RCL()->use_module( 'forms' );
+
+		$content = rcl_get_form( [
+			'submit'	 => __( 'Создать новую группу', 'wp-recall' ),
+			'onclick'	 => 'rcl_send_form_data("rcl_ajax_create_group", this);return false;',
+			'fields'	 => [
+				[
+					'type'			 => 'text',
+					'slug'			 => 'group_name',
+					'title'			 => __( 'Наименование новой группы', 'wp-recall' ),
+					'placeholder'	 => __( 'Enter the name of the new group', 'wp-recall' ),
+					'required'		 => 1
+				]
+			]
+			] );
 	}
+
 
 	$content .= rcl_get_grouplist( array( 'filters' => 1, 'search_form' => 0, $type_account => $user_LK ) );
 

@@ -214,42 +214,6 @@ function rcl_css_variable( $styles, $rgb ) {
 	return $styles;
 }
 
-add_action( 'wp_footer', 'rcl_init_footer_action', 100 );
-function rcl_init_footer_action() {
-	echo '<script>rcl_do_action("rcl_footer")</script>';
-}
-
-add_action( 'wp_footer', 'rcl_popup_contayner', 4 );
-function rcl_popup_contayner() {
-	echo '<div id="rcl-overlay"></div>
-        <div id="rcl-popup"></div>';
-}
-
-function rcl_get_author_block() {
-	global $post;
-
-	$content = "<div id=block_author-rcl>";
-	$content .= "<h3>" . __( 'Publication author', 'wp-recall' ) . "</h3>";
-
-	if ( function_exists( 'rcl_add_userlist_follow_button' ) )
-		add_filter( 'rcl_user_description', 'rcl_add_userlist_follow_button', 90 );
-
-	$content .= rcl_get_userlist( array(
-		'template'	 => 'rows',
-		'orderby'	 => 'display_name',
-		'include'	 => $post->post_author,
-		'filter'	 => 0,
-		'data'		 => 'rating_total,description,posts_count,user_registered,comments_count'
-		) );
-
-	if ( function_exists( 'rcl_add_userlist_follow_button' ) )
-		remove_filter( 'rcl_user_description', 'rcl_add_userlist_follow_button', 90 );
-
-	$content .= "</div>";
-
-	return $content;
-}
-
 add_filter( 'the_content', 'rcl_message_post_moderation' );
 function rcl_message_post_moderation( $content ) {
 	global $post;
@@ -268,6 +232,11 @@ function rcl_message_post_moderation( $content ) {
 	return $content;
 }
 
+add_action( 'wp', 'rcl_post_bar_setup', 10 );
+function rcl_post_bar_setup() {
+	do_action( 'rcl_post_bar_setup' );
+}
+
 function rcl_bar_add_icon( $id_icon, $args ) {
 	global $rcl_bar;
 	if ( ! rcl_get_option( 'view_recallbar' ) )
@@ -282,11 +251,6 @@ function rcl_bar_add_menu_item( $id_item, $args ) {
 		return false;
 	$rcl_bar['menu'][$id_item] = $args;
 	return true;
-}
-
-add_action( 'wp', 'rcl_post_bar_setup', 10 );
-function rcl_post_bar_setup() {
-	do_action( 'rcl_post_bar_setup' );
 }
 
 function rcl_post_bar_add_item( $id_item, $args ) {
@@ -330,4 +294,15 @@ function rcl_post_bar( $content ) {
 
 
 	return $content;
+}
+
+add_action( 'wp_footer', 'rcl_init_footer_action', 100 );
+function rcl_init_footer_action() {
+	echo '<script>rcl_do_action("rcl_footer")</script>';
+}
+
+add_action( 'wp_footer', 'rcl_popup_contayner', 4 );
+function rcl_popup_contayner() {
+	echo '<div id="rcl-overlay"></div>
+        <div id="rcl-popup"></div>';
 }

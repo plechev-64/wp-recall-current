@@ -31,6 +31,17 @@ function rcl_get_pages_ids() {
 	return $pages;
 }
 
+function rcl_get_roles_ids() {
+	$editable_roles	 = array_reverse( get_editable_roles() );
+	$roles			 = [ ];
+	foreach ( $editable_roles as $role => $details ) {
+		if ( $role == 'administrator' )
+			continue;
+		$roles[$role] = translate_user_role( $details['name'] );
+	}
+	return $roles;
+}
+
 function rcl_sanitize_string( $title, $sanitize = true ) {
 
 	$title = mb_strtolower( $title );
@@ -223,4 +234,29 @@ function rcl_is_gutenberg() {
 	}
 
 	return true;
+}
+
+function rcl_get_author_block() {
+	global $post;
+
+	$content = "<div id=block_author-rcl>";
+	$content .= "<h3>" . __( 'Publication author', 'wp-recall' ) . "</h3>";
+
+	if ( function_exists( 'rcl_add_userlist_follow_button' ) )
+		add_filter( 'rcl_user_description', 'rcl_add_userlist_follow_button', 90 );
+
+	$content .= rcl_get_userlist( array(
+		'template'	 => 'rows',
+		'orderby'	 => 'display_name',
+		'include'	 => $post->post_author,
+		'filter'	 => 0,
+		'data'		 => 'rating_total,description,posts_count,user_registered,comments_count'
+		) );
+
+	if ( function_exists( 'rcl_add_userlist_follow_button' ) )
+		remove_filter( 'rcl_user_description', 'rcl_add_userlist_follow_button', 90 );
+
+	$content .= "</div>";
+
+	return $content;
 }

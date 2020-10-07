@@ -153,14 +153,15 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 			'slug'			 => 'post_content',
 			'title'			 => __( 'Content of the publication', 'wp-recall' ),
 			'type'			 => 'textarea',
-			'required'		 => 1,
 			'post-editor'	 => array( 'html', 'editor' ),
+			'required'		 => 1,
 			'options'		 => array(
 				array(
-					'slug'	 => 'post-editor',
-					'type'	 => 'checkbox',
-					'title'	 => __( 'Editor settings', 'wp-recall' ),
-					'values' => array(
+					'slug'		 => 'post-editor',
+					'type'		 => 'checkbox',
+					'title'		 => __( 'Editor settings', 'wp-recall' ),
+					'default'	 => array( 'html', 'editor' ),
+					'values'	 => array(
 						'media'	 => __( 'Media loader', 'wp-recall' ),
 						'html'	 => __( 'HTML editor', 'wp-recall' ),
 						'editor' => __( 'Visual editor', 'wp-recall' )
