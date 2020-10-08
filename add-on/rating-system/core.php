@@ -522,7 +522,8 @@ function rcl_delete_ratingdata_user( $user_id ) {
 	$datas = array();
 
 	$r_posts = rcl_get_vote_values( array(
-		'user_id' => $user_id
+		'number'	 => -1,
+		'user_id'	 => $user_id
 		) );
 
 	if ( $r_posts ) {

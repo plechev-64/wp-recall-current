@@ -65,6 +65,7 @@ class Rcl_Postlist {
 
 				$rayt_p = rcl_get_rating_totals( array(
 					'object_id__in'	 => $p_list,
+					'number'		 => -1,
 					'rating_type'	 => $this->post_type
 					) );
 
