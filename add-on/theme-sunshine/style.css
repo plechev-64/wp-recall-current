@@ -35,7 +35,7 @@
     padding: 0;
 }
 .cab_bttn_lite .rcli {
-    display: none;
+    /*display: none;*/
 }
 .cab_bttn_lite .rcl-tab-button a > span {
     color: #ccc;
@@ -319,6 +319,20 @@
 .vertical-menu #lk-menu a span {
     display: table-cell;
     padding: 5px;
+}
+/* new */
+.vertical-menu #rcl-tabs{
+	display: flex;
+}
+.vertical-menu #rcl-tabs-menu-menu{
+	width: 190px;
+	margin-right: 5px;
+}
+.vertical-menu #rcl-tabs-menu-menu a{
+	width: 100%;
+}
+.vertical-menu #rcl-tab-content{
+	width: 100%;
 }
 /* END left buttons */
 

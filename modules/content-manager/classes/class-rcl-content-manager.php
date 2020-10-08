@@ -4,7 +4,7 @@ class Rcl_Content_Manager {
 
 	public $data			 = array();
 	public $orderby			 = '';
-	public $order			 = 'DESC';
+	public $order			 = '';
 	public $total_items		 = 0;
 	public $number			 = 30;
 	public $pagenavi		 = true;
@@ -19,10 +19,14 @@ class Rcl_Content_Manager {
 	public $custom_props	 = [ ];
 	public $query			 = false;
 	public $startstate		 = false;
+	protected $request		 = 0;
 
 	function __construct( $args ) {
 
 		$this->init_properties( $args );
+
+		if ( isset( $_REQUEST['startstate'] ) )
+			$this->startstate = wp_unslash( $_REQUEST['startstate'] );
 
 		if ( $this->is_ajax && ! $this->startstate ) {
 
@@ -37,6 +41,9 @@ class Rcl_Content_Manager {
 				'classargs'	 => $args
 				] );
 		}
+
+		if ( isset( $_REQUEST['request'] ) )
+			$this->request = $_REQUEST['request'];
 
 		if ( isset( $_REQUEST['orderby'] ) )
 			$this->orderby = $_REQUEST['orderby'];
@@ -100,8 +107,8 @@ class Rcl_Content_Manager {
 		}
 	}
 
-	function get_request_data_value( $dataKey ) {
-		return isset( $_REQUEST[$dataKey] ) && $_REQUEST[$dataKey] ? $_REQUEST[$dataKey] : null;
+	function get_request_data_value( $dataKey, $default = null ) {
+		return isset( $_REQUEST[$dataKey] ) && $_REQUEST[$dataKey] ? $_REQUEST[$dataKey] : $default;
 	}
 
 	function init_custom_prop( $varName, $defaultValue = null ) {
@@ -115,9 +122,12 @@ class Rcl_Content_Manager {
 			return false;
 		}
 
+		if ( $this->orderby && $this->order ) {
+			$this->query->orderby( $this->orderby, $this->order );
+		}
+
 		$this->data = $this->query
 			->limit( $this->number, $this->pager->offset )
-			->orderby( $this->orderby, $this->order )
 			->get_results();
 	}
 
@@ -161,12 +171,14 @@ class Rcl_Content_Manager {
 
 		$buttonsArgs = $this->get_buttons_args();
 
-		$buttonsArgs[] = array(
-			'label'		 => __( 'Сбросить фильтр' ),
-			'onclick'	 => $this->is_ajax ? 'rcl_load_content_manager_state("' . wp_slash( $this->startstate ) . '", this);return false;' : null,
-			'icon'		 => 'fa-refresh',
-			'href'		 => $this->startpage
-		);
+		if ( $this->request ) {
+			$buttonsArgs[] = array(
+				'label'		 => __( 'Сбросить фильтр' ),
+				'onclick'	 => $this->is_ajax ? 'rcl_load_content_manager_state(' . $this->startstate . ', this);return false;' : null,
+				'icon'		 => 'fa-refresh',
+				'href'		 => $this->startpage
+			);
+		}
 
 		$content = '<div class="manager-buttons">';
 		foreach ( $buttonsArgs as $args ) {
@@ -308,11 +320,16 @@ class Rcl_Content_Manager {
 	function get_hidden_fields() {
 
 		$content = '<input type="hidden" id="value-pagenum" name="pagenum" value="' . $this->pager->current . '">';
-		$content .= '<input type="hidden" id="value-orderby" name="orderby" value="' . $this->orderby . '">';
-		$content .= '<input type="hidden" id="value-order" name="order" value="' . $this->order . '">';
+
+		if ( $this->orderby )
+			$content .= '<input type="hidden" id="value-orderby" name="orderby" value="' . $this->orderby . '">';
+
+		if ( $this->order )
+			$content .= '<input type="hidden" id="value-order" name="order" value="' . $this->order . '">';
 
 		if ( $this->is_ajax ) {
-			$content .= '<input type="hidden" id="value-startpage" name="startstate" value="' . $this->startstate . '">';
+			$content .= '<input type="hidden" id="value-request" name="request" value="1">';
+			$content .= '<input type="hidden" id="value-startstate" name="startstate" value=' . $this->startstate . '>';
 			$content .= '<input type="hidden" id="value-ajax" name="ajax" value="' . $this->is_ajax . '">';
 			$content .= '<input type="hidden" id="value-classname" name="classname" value="' . get_class( $this ) . '">';
 		} else {

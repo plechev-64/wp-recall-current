@@ -48,15 +48,16 @@ function rcl_add_cover_options( $options ) {
 
 	$options->box( 'primary' )->group( 'design' )->add_options( [
 		array(
-			'type'		 => 'uploader',
-			'temp_media' => 1,
-			'max_size'	 => 5120,
-			'multiple'	 => 0,
-			'crop'		 => ['ratio' => 0 ],
-			'filetitle'	 => 'rcl-default-cover',
-			'filename'	 => 'rcl-default-cover',
-			'slug'		 => 'default_cover',
-			'title'		 => __( 'Default cover', 'wp-recall' ),
+			'type'			 => 'uploader',
+			'temp_media'	 => 1,
+			'max_size'		 => 5120,
+			'multiple'		 => 0,
+			'image_thumb'	 => 'large',
+			'crop'			 => ['ratio' => 0 ],
+			'filetitle'		 => 'rcl-default-cover',
+			'filename'		 => 'rcl-default-cover',
+			'slug'			 => 'default_cover',
+			'title'			 => __( 'Default cover', 'wp-recall' ),
 		),
 		array(
 			'type'		 => 'runner',

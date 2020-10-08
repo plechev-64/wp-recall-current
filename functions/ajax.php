@@ -4,27 +4,27 @@ function rcl_is_ajax() {
 	return (defined( 'DOING_AJAX' ) && DOING_AJAX || isset( $GLOBALS['wp']->query_vars['rest_route'] ));
 }
 
-function RclAjax() {
-	return RclAjax::getInstance();
+function Rcl_Ajax() {
+	return Rcl_Ajax::getInstance();
 }
 
 function rcl_verify_ajax_nonce() {
-	RclAjax()->verify();
+	Rcl_Ajax()->verify();
 }
 
 function rcl_rest_action( $function_name ) {
-	RclAjax()->init_rest( $function_name );
+	Rcl_Ajax()->init_rest( $function_name );
 }
 
 function rcl_ajax_action( $callback, $guest_access = false, $modules = true ) {
-	RclAjax()->init_ajax_callback( $callback, $guest_access, $modules );
+	Rcl_Ajax()->init_ajax_callback( $callback, $guest_access, $modules );
 }
 
 rcl_rest_action( 'rcl_ajax_call' );
 function rcl_ajax_call() {
 	global $user_ID;
 
-	RclAjax()->verify();
+	Rcl_Ajax()->verify();
 
 	$callback	 = $_POST['call_action'];
 	$modules	 = $_POST['used_modules'];
@@ -35,7 +35,7 @@ function rcl_ajax_call() {
 		}
 	}
 
-	$callbackProps = RclAjax()->get_ajax_callback( $callback );
+	$callbackProps = Rcl_Ajax()->get_ajax_callback( $callback );
 
 	if ( ! $callbackProps ) {
 

@@ -15,8 +15,8 @@ if ( is_admin() || isset( $_REQUEST['rest_route'] ) ) {
 function rcl_loginform_scripts() {
 	if ( ! rcl_get_option( 'login_form_recall' ) )
 		rcl_dialog_scripts();
-	rcl_enqueue_style( 'rcl-loginform', RCL_URL . 'modules/loginform/assets/style.css' );
-	rcl_enqueue_script( 'rcl-loginform', RCL_URL . 'modules/loginform/assets/scripts.js' );
+	rcl_enqueue_style( 'rcl-loginform', RCL_URL . 'modules/loginform/assets/style.css', false, false, true );
+	rcl_enqueue_script( 'rcl-loginform', RCL_URL . 'modules/loginform/assets/scripts.js', false, false, true );
 }
 
 function rcl_get_loginform( $atts = [ ] ) {

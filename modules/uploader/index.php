@@ -2,8 +2,8 @@
 
 require_once 'class-rcl-uploader.php';
 function rcl_uploader_scripts() {
-	rcl_enqueue_style( 'rcl-uploader', RCL_URL . 'modules/uploader/style.css' );
-	rcl_enqueue_script( 'rcl-uploader', RCL_URL . 'modules/uploader/scripts.js' );
+	rcl_enqueue_style( 'rcl-uploader', RCL_URL . 'modules/uploader/style.css', false, false, true );
+	rcl_enqueue_script( 'rcl-uploader', RCL_URL . 'modules/uploader/scripts.js', false, false, true );
 }
 
 if ( is_admin() || isset( $_REQUEST['rest_route'] ) ) {

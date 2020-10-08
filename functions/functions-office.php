@@ -38,7 +38,7 @@ function rcl_is_office( $user_id = null ) {
 
 		if ( $post->master_id )
 			$rcl_office = $post->master_id;
-	}else if ( RclAjax()->is_rest_request() ) {
+	}else if ( Rcl_Ajax()->is_rest_request() ) {
 		$rcl_office = intval( $_POST['office_id'] );
 	}
 

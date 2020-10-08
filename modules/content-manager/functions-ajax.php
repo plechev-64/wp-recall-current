@@ -54,9 +54,9 @@ function rcl_load_content_manager() {
 rcl_ajax_action( 'rcl_load_content_manager_state', true, true );
 function rcl_load_content_manager_state() {
 
-	$state		 = json_decode( wp_unslash( $_REQUEST['state'] ), true );
-	$class		 = $state['classname'];
-	$classargs	 = isset( $state['classargs'] ) ? $state['classargs'] : null;
+	$class					 = $_REQUEST['state']['classname'];
+	$classargs				 = isset( $_REQUEST['state']['classargs'] ) ? $_REQUEST['state']['classargs'] : null;
+	$classargs['startstate'] = 0;
 
 	$Manager = new $class( $classargs );
 

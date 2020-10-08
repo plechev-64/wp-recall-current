@@ -2,7 +2,7 @@
 
 add_action( 'rcl_enqueue_scripts', 'rcl_recallbar_scripts', 10 );
 function rcl_recallbar_scripts() {
-	rcl_enqueue_style( 'rcl-recallbar', RCL_URL . 'modules/recallbar/style.css' );
+	rcl_enqueue_style( 'rcl-recallbar', RCL_URL . 'modules/recallbar/style.css', false, false, true );
 }
 
 add_action( 'after_setup_theme', 'rcl_register_recallbar' );

@@ -59,9 +59,8 @@ body .rcl-bttn.rcl-uploader-button{
 	position: relative;
 }
 .rcl-upload-gallery img{
-	vertical-align: top;
-	max-width: 100%;
-	height: auto;
+	width: auto;
+    height: inherit;
 }
 .rcl-upload-gallery.simple-manager .attachment-manager{
 	position: absolute;
@@ -70,12 +69,12 @@ body .rcl-bttn.rcl-uploader-button{
 }
 .rcl-upload-gallery .gallery-attachment{
 	position: relative;
-	margin: 3px;
-	border: 1px solid #eaeaea;
-	width: 110px;
-	height: 110px;
-	display: inline-block;
-	overflow: hidden;
+    margin: 3px;
+    border: 1px solid #eaeaea;
+    width: auto;
+    height: 110px;
+    display: inline-block;
+    overflow: hidden;
 }
 .rcl-upload-gallery .attachment-title{
 	display:none;

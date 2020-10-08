@@ -38,6 +38,7 @@ class Rcl_Uploader {
 	public $filename		 = '';
 	public $filetitle		 = '';
 	public $dir				 = '';
+	public $image_thumb		 = 'thumbnail';
 	protected $accept		 = array( 'image/*' );
 
 	function __construct( $uploader_id, $args = false ) {
@@ -278,7 +279,7 @@ class Rcl_Uploader {
 
 		if ( $is_image ) {
 
-			$image = wp_get_attachment_image( $attach_id, 'thumbnail' );
+			$image = wp_get_attachment_image( $attach_id, $this->image_thumb );
 		} else {
 
 			$image = wp_get_attachment_image( $attach_id, array( 100, 100 ), true );
@@ -406,7 +407,7 @@ class Rcl_Uploader {
 
 	function upload() {
 
-		
+
 
 		if ( ! $_FILES[$this->input_name] ) {
 			return false;

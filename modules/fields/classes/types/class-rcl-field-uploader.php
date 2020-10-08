@@ -25,6 +25,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 	public $dropzone		 = 0;
 	public $mode_output		 = 'grid';
 	public $temp_media		 = 1;
+	public $image_thumb		 = 'thumbnail';
 	public $uploader_props	 = array();
 
 	function __construct( $args ) {
@@ -114,7 +115,8 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 			'max_files'		 => $this->max_files,
 			'crop'			 => $this->multiple ? 0 : $this->crop,
 			'input_attach'	 => $this->input_name,
-			'mode_output'	 => $this->mode_output
+			'mode_output'	 => $this->mode_output,
+			'image_thumb'	 => $this->image_thumb
 			) );
 	}
 

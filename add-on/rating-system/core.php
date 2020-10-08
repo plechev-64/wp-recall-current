@@ -467,7 +467,7 @@ function rcl_delete_rating( $args ) {
 		$args['rating_value'] = (isset( $args['rating_value'] )) ? $args['rating_value'] : $rating;
 
 		$query = $wpdb->prepare(
-			"DELETE FROM " . RCL_PREF . "rating_values WHERE object_id = '%d' AND rating_type='%s' AND user_id='%s'", $args['object_id'], $args['rating_type'], $args['user_id']
+			"DELETE FROM " . RCL_PREF . "rating_values WHERE object_id = '%d' AND rating_type='%s' AND user_id='%d'", $args['object_id'], $args['rating_type'], $args['user_id']
 		);
 	}
 

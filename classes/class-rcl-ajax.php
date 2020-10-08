@@ -1,6 +1,6 @@
 <?php
 
-final class RclAjax {
+final class Rcl_Ajax {
 
 	public $name;
 	public $nopriv			 = false;

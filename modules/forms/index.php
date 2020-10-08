@@ -2,8 +2,8 @@
 
 require_once 'classes/class-rcl-form.php';
 function rcl_forms_scripts() {
-	rcl_enqueue_style( 'rcl-forms', RCL_URL . 'modules/forms/style.css' );
-	rcl_enqueue_script( 'rcl-forms', RCL_URL . 'modules/forms/scripts.js' );
+	rcl_enqueue_style( 'rcl-forms', RCL_URL . 'modules/forms/style.css', false, false, true );
+	rcl_enqueue_script( 'rcl-forms', RCL_URL . 'modules/forms/scripts.js', false, false, true );
 }
 
 if ( is_admin() || isset( $_REQUEST['rest_route'] ) ) {

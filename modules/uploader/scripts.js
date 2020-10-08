@@ -50,7 +50,7 @@ function RclClassUploaders() {
 		if ( k !== false )
 			return this.uploaders[k];
 
-	}
+	};
 
 	this.isset = function( uploader_id ) {
 
@@ -67,9 +67,10 @@ function RclClassUploaders() {
 
 		return false;
 
-	}
+	};
 
 }
+;
 
 function RclUploader( props, sk ) {
 
@@ -167,7 +168,7 @@ function RclUploader( props, sk ) {
 			placeholder: "ui-sortable-placeholder",
 			distance: 5
 		} );
-	}
+	};
 
 	this.processstart = function( e, data ) {
 		console.log( 'processstart' );
@@ -416,14 +417,14 @@ function RclUploader( props, sk ) {
 
 		}
 
-	}
+	};
 
 	this.animateLoading = function( status ) {
 		if ( status )
 			this.button.addClass( 'rcl-bttn__loading' );
 		else
 			this.button.removeClass( 'rcl-bttn__loading' );
-	}
+	};
 
 }
 

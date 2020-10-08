@@ -3,6 +3,8 @@
 if ( is_admin() )
 	require_once 'admin/index.php';
 
+RCL()->init_module( 'groups-manager', rcl_addon_path( __FILE__ ) . 'classes/class-rcl-groups-manager.php', ['content-manager' ] );
+
 require_once 'classes/rcl-groups-query.php';
 require_once 'groups-init.php';
 require_once 'groups-core.php';
@@ -284,8 +286,15 @@ function rcl_tab_groups( $type_account = 'user_id' ) {
 			] );
 	}
 
+	RCL()->use_module( 'groups-manager' );
 
-	$content .= rcl_get_grouplist( array( 'filters' => 1, 'search_form' => 0, $type_account => $user_LK ) );
+	$manager = new Rcl_Groups_Manager( [$type_account => $user_LK ] );
+
+	$content .= '<div class="rcl-grouplist">';
+	$content .= $manager->get_manager();
+	$content .= '</div>';
+
+	//$content .= rcl_get_grouplist( array( 'filters' => 1, 'search_form' => 0, $type_account => $user_LK ) );
 
 	return $content;
 }

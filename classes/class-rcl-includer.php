@@ -23,8 +23,6 @@ class Rcl_Includer {
 
 		$this->minify_dir = RCL_UPLOAD_PATH . 'css';
 
-		$this->init_dir();
-
 		//Если место подключения header
 		if ( $this->place == 'header' ) {
 			if ( ! $rcl_styles )
@@ -37,11 +35,19 @@ class Rcl_Includer {
 		if ( ! isset( $rcl_styles[$this->place] ) )
 			return false;
 
+		$forceUnion = isset( $rcl_styles['force-union'] ) ? $rcl_styles['force-union'] : [ ];
+
+		if ( $this->is_minify || $forceUnion ) {
+			$this->init_dir();
+		} else if ( is_dir( $this->minify_dir ) ) {
+			rcl_remove_dir( $this->minify_dir );
+		}
+
 		$styles = array();
 		foreach ( $rcl_styles[$this->place] as $key => $url ) {
 
 			//Если минификация не используется, то подключаем файлы как обычно
-			if ( ! $this->is_minify ) {
+			if ( ! $this->is_minify && ! in_array( $key, $forceUnion ) ) {
 				wp_enqueue_style( $key, $url, false, VER_RCL );
 				continue;
 			}
@@ -74,8 +80,6 @@ class Rcl_Includer {
 
 		$this->minify_dir = RCL_UPLOAD_PATH . 'js';
 
-		$this->init_dir();
-
 		//Если место подключения header
 		if ( $this->place == 'header' ) {
 			if ( ! $rcl_scripts )
@@ -88,13 +92,20 @@ class Rcl_Includer {
 		if ( ! isset( $rcl_scripts[$this->place] ) )
 			return false;
 
-		$in_footer = ($this->place == 'footer') ? true : false;
+		$in_footer	 = ($this->place == 'footer') ? true : false;
+		$forceUnion	 = isset( $rcl_scripts['force-union'] ) ? $rcl_scripts['force-union'] : [ ];
+
+		if ( $this->is_minify || $forceUnion ) {
+			$this->init_dir();
+		} else if ( is_dir( $this->minify_dir ) ) {
+			rcl_remove_dir( $this->minify_dir );
+		}
 
 		foreach ( $rcl_scripts[$this->place] as $key => $url ) {
 
 			//Если минификация не используется, то подключаем файлы как обычно
-			if ( ! $this->is_minify ) {
-				$parents = (isset( $rcl_scripts['parents'][$key] )) ? $parents = array_merge( $rcl_scripts['parents'][$key], array( 'jquery' ) ) : array( 'jquery' );
+			if ( ! $this->is_minify && ! in_array( $key, $forceUnion ) ) {
+				$parents = isset( $rcl_scripts['parents'][$key] ) ? $parents = array_merge( $rcl_scripts['parents'][$key], array( 'jquery' ) ) : array( 'jquery' );
 				wp_enqueue_script( $key, $url, $parents, VER_RCL, $in_footer );
 				continue;
 			}
@@ -107,9 +118,10 @@ class Rcl_Includer {
 			return false;
 
 		$parents = array( 'jquery' );
+
 		foreach ( $this->files['js'] as $key => $file ) {
 			$ids[] = $key . ':' . filemtime( $file['path'] );
-			if ( (isset( $rcl_scripts['parents'][$key] ) ) ) {
+			if ( $this->is_minify && isset( $rcl_scripts['parents'][$key] ) ) {
 				$parents = array_merge( $rcl_scripts['parents'][$key], $parents );
 			}
 		}
@@ -125,14 +137,9 @@ class Rcl_Includer {
 	}
 
 	function init_dir() {
-		if ( $this->is_minify ) {
-			if ( ! is_dir( $this->minify_dir ) ) {
-				mkdir( $this->minify_dir );
-				chmod( $this->minify_dir, 0755 );
-			}
-		} else {
-			if ( is_dir( $this->minify_dir ) )
-				rcl_remove_dir( $this->minify_dir );
+		if ( ! is_dir( $this->minify_dir ) ) {
+			mkdir( $this->minify_dir );
+			chmod( $this->minify_dir, 0755 );
 		}
 	}
 
@@ -184,6 +191,12 @@ class Rcl_Includer {
 	}
 
 	function regroup( $array ) {
+		$forceUnion = [ ];
+		if ( isset( $array['force-union'] ) ) {
+			$forceUnion = $array['force-union'];
+			unset( $array['force-union'] );
+		}
+
 		$new_array = array();
 
 		if ( isset( $array['dequeue'] ) ) {
@@ -191,7 +204,8 @@ class Rcl_Includer {
 			unset( $array['dequeue'] );
 		}
 
-		$new_array[$this->place] = $array;
+		$new_array[$this->place]	 = $array;
+		$new_array['force-union']	 = $forceUnion;
 
 		if ( isset( $new_array[$this->place]['footer'] ) ) {
 			$new_array['footer'] = $new_array[$this->place]['footer'];
@@ -360,7 +374,7 @@ class Rcl_Includer {
 }
 
 //подключаем стилевой файл дополнения
-function rcl_enqueue_style( $id, $url, $parents = false, $in_footer = false ) {
+function rcl_enqueue_style( $id, $url, $parents = false, $in_footer = false, $force_union = false ) {
 	global $rcl_styles;
 
 	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) || isset( $_REQUEST['rest_route'] ) ) {
@@ -386,12 +400,15 @@ function rcl_enqueue_style( $id, $url, $parents = false, $in_footer = false ) {
 	}else {
 		$rcl_styles[$id] = $url;
 	}
+
+	if ( $force_union )
+		$rcl_styles['force-union'][] = $id;
 }
 
-function rcl_enqueue_script( $id, $url, $parents = false, $in_footer = false ) {
+function rcl_enqueue_script( $id, $url, $parents = false, $in_footer = false, $force_union = false ) {
 	global $rcl_scripts;
 
-	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) || isset( $_REQUEST['rest_route'] ) ) {
+	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) || Rcl_Ajax()->is_rest_request() ) {
 
 		wp_enqueue_script( $id, $url, $parents, VER_RCL, $in_footer );
 
@@ -409,6 +426,9 @@ function rcl_enqueue_script( $id, $url, $parents = false, $in_footer = false ) {
 
 	if ( $parents )
 		$rcl_scripts['parents'][$id] = $parents;
+
+	if ( $force_union )
+		$rcl_scripts['force-union'][] = $id;
 }
 
 function rcl_dequeue_style( $style ) {
