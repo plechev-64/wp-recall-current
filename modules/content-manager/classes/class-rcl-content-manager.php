@@ -280,6 +280,9 @@ class Rcl_Content_Manager {
 		if ( ! $fields = $this->get_search_fields() )
 			return false;
 
+		if ( ! $this->request && ! $this->data )
+			return false;
+
 		RCL()->use_module( 'forms' );
 
 		$form = new Rcl_Form( array(

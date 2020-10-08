@@ -2,7 +2,11 @@
 
 require_once 'registration.php';
 require_once 'authorization.php';
-require_once 'wp-register-form.php';
+
+if ( $GLOBALS['pagenow'] === 'wp-login.php' ) {
+	require_once 'wp-register-form.php';
+}
+
 if ( class_exists( 'ReallySimpleCaptcha' ) ) {
 	require_once 'captcha.php';
 }

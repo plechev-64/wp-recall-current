@@ -131,9 +131,7 @@ function rcl_load_content_manager_state( state, e ) {
 	//получаем данные формы
 	var FormFactory = new RclForm( jQuery( e ).parents( 'form' ) );
 
-	if ( e && jQuery( e ).parents( '.preloader-parent' ) ) {
-		rcl_preloader_show( jQuery( e ).parents( '.preloader-parent' ) );
-	}
+	rcl_preloader_show( jQuery( 'form.preloader-parent' ) );
 
 	rcl_ajax( {
 		rest: true,
