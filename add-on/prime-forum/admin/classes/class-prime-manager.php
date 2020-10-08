@@ -173,6 +173,8 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 		if ( $options ) {
 			foreach ( $options as $k => $option ) {
+				if ( isset( $option['input_name'] ) )
+					continue;
 				$options[$k]['input_name'] = $option['slug'];
 			}
 		}
