@@ -42,12 +42,17 @@ class Rcl_Field_Dynamic extends Rcl_Field_Abstract {
 		if ( $this->value && is_array( $this->value ) ) {
 			$cnt = count( $this->value );
 			foreach ( $this->value as $k => $val ) {
+
+				$key = is_string( $k ) ? $k : '';
+
 				$content .= '<span class="dynamic-value">';
-				$content .= '<input type="text" ' . $this->get_required() . ' ' . $this->get_placeholder() . ' name="' . $this->input_name . '[]" value="' . $val . '"/>';
-				if ( $cnt == ++ $k ) {
-					$content .= '<a href="#" onclick="rcl_add_dynamic_field(this);return false;"><i class="rcli fa-plus" aria-hidden="true"></i></a>';
-				} else {
-					$content .= '<a href="#" onclick="rcl_remove_dynamic_field(this);return false;"><i class="rcli fa-minus" aria-hidden="true"></i></a>';
+				$content .= '<input type="text" ' . $this->get_required() . ' ' . $this->get_placeholder() . ' name="' . $this->input_name . '[' . $key . ']" value="' . $val . '"/>';
+				if ( ! is_string( $k ) ) {
+					if ( $cnt == ++ $k ) {
+						$content .= '<a href="#" onclick="rcl_add_dynamic_field(this);return false;"><i class="rcli fa-plus" aria-hidden="true"></i></a>';
+					} else {
+						$content .= '<a href="#" onclick="rcl_remove_dynamic_field(this);return false;"><i class="rcli fa-minus" aria-hidden="true"></i></a>';
+					}
 				}
 				$content .= '</span>';
 			}
