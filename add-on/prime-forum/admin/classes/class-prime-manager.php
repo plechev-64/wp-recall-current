@@ -136,7 +136,6 @@ class PrimeManager extends Rcl_Fields_Manager {
 			array(
 				'type'		 => 'select',
 				'slug'		 => 'group_id',
-				'input_name' => 'group_id',
 				'title'		 => __( 'Forum group', 'wp-recall' ),
 				'required'	 => 1,
 				'default'	 => $this->group_id,
@@ -145,36 +144,38 @@ class PrimeManager extends Rcl_Fields_Manager {
 			array(
 				'type'		 => 'text',
 				'slug'		 => 'forum_name',
-				'input_name' => 'forum_name',
 				'title'		 => __( 'Name of the forum', 'wp-recall' ),
 				'required'	 => 1
 			),
 			array(
-				'type'		 => 'text',
-				'slug'		 => 'forum_slug',
-				'input_name' => 'forum_slug',
-				'title'		 => __( 'Slug of the forum', 'wp-recall' )
+				'type'	 => 'text',
+				'slug'	 => 'forum_slug',
+				'title'	 => __( 'Slug of the forum', 'wp-recall' )
 			),
 			array(
-				'type'		 => 'select',
-				'slug'		 => 'forum_closed',
-				'input_name' => 'forum_closed',
-				'title'		 => __( 'Forum status', 'wp-recall' ),
-				'values'	 => array(
+				'type'	 => 'select',
+				'slug'	 => 'forum_closed',
+				'title'	 => __( 'Forum status', 'wp-recall' ),
+				'values' => array(
 					__( 'Open forum', 'wp-recall' ),
 					__( 'Closed forum', 'wp-recall' )
 				),
-				'notice'	 => __( 'It is impossible to publish new topics and messages in a closed forum', 'wp-recall' )
+				'notice' => __( 'It is impossible to publish new topics and messages in a closed forum', 'wp-recall' )
 			),
 			array(
-				'type'		 => 'textarea',
-				'slug'		 => 'forum_desc',
-				'input_name' => 'forum_desc',
-				'title'		 => __( 'Description of the forum', 'wp-recall' )
+				'type'	 => 'textarea',
+				'slug'	 => 'forum_desc',
+				'title'	 => __( 'Description of the forum', 'wp-recall' )
 			)
 		);
 
 		$options = apply_filters( 'pfm_options_forum', $options, $forum );
+
+		if ( $options ) {
+			foreach ( $options as $k => $option ) {
+				$options[$k]['input_name'] = $option['slug'];
+			}
+		}
 
 		return $options;
 	}
