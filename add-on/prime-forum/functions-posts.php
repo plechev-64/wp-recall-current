@@ -117,7 +117,8 @@ function pfm_add_data_rating_posts( $pfmPosts ) {
 	$rating_posts = rcl_get_rating_totals( array(
 		'rating_type'	 => 'forum-post',
 		'object_id__in'	 => $postIds,
-		'fields'		 => array(
+		'number'		 => -1,
+		'select'		 => array(
 			'rating_total',
 			'object_id'
 		)
@@ -126,7 +127,8 @@ function pfm_add_data_rating_posts( $pfmPosts ) {
 	$rating_values = rcl_get_vote_values( array(
 		'rating_type'	 => 'forum-post',
 		'object_id__in'	 => $postIds,
-		'fields'		 => array(
+		'number'		 => -1,
+		'select'		 => array(
 			'rating_value',
 			'object_id',
 			'user_id'

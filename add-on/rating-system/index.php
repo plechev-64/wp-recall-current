@@ -160,7 +160,8 @@ function rcl_add_data_rating_posts() {
 	$rating_posts = rcl_get_rating_totals( array(
 		'rating_type__in'	 => $post_types,
 		'object_id__in'		 => $posts,
-		'fields'			 => array(
+		'number'			 => -1,
+		'select'			 => array(
 			'rating_total',
 			'object_id'
 		)
@@ -221,7 +222,8 @@ function rcl_add_data_rating_comments( $comments ) {
 	$rating_comments = rcl_get_rating_totals( array(
 		'rating_type'	 => 'comment',
 		'object_id__in'	 => $comms,
-		'fields'		 => array(
+		'number'		 => -1,
+		'select'		 => array(
 			'rating_total',
 			'object_id'
 		)
@@ -230,7 +232,8 @@ function rcl_add_data_rating_comments( $comments ) {
 	$rating_values = rcl_get_vote_values( array(
 		'rating_type'	 => 'comment',
 		'object_id__in'	 => $comms,
-		'fields'		 => array(
+		'number'		 => -1,
+		'select'		 => array(
 			'rating_value',
 			'object_id',
 			'user_id'
