@@ -409,23 +409,17 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 						) );
 
 					$contentField .= $field->get_notice();
-				}
-
-				if ( $field_id == 'post_excerpt' ) {
+				} else if ( $field_id == 'post_excerpt' ) {
 
 					$field->set_prop( 'value', $dataPost->post_excerpt );
 
 					$contentField = $field->get_field_input();
-				}
-
-				if ( $field_id == 'post_title' ) {
+				} else if ( $field_id == 'post_title' ) {
 
 					$field->set_prop( 'value', esc_textarea( $dataPost->post_title ) );
 
 					$contentField = $field->get_field_input( esc_textarea( $dataPost->post_title ) );
-				}
-
-				if ( $field->type == 'uploader' ) {
+				} else if ( $field->type == 'uploader' ) {
 
 					if ( $field_id == 'post_thumbnail' ) {
 
@@ -493,6 +487,8 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 						$contentField .= $uploader->get_uploader();
 					}
+
+					$contentField .= $field->get_notice();
 				}
 			} else {
 
