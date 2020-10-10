@@ -274,7 +274,7 @@ function rcl_get_user_contacts_list( $user_id ) {
 
 		return rcl_get_notice( [
 			'text' => apply_filters( 'rcl_chat_no_contacts_notice', $notice, $user_id )
-		] );
+			] );
 	}
 
 	rcl_dialog_scripts();

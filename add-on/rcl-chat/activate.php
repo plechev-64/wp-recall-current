@@ -52,6 +52,7 @@ $sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
     PRIMARY KEY  message_id (message_id),
     KEY chat_id (chat_id),
     KEY user_id (user_id),
+	KEY private_key (private_key),
     KEY message_status (message_status)
 ) $collate;";
 

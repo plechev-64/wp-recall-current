@@ -74,7 +74,8 @@ class RCL_Install {
 				ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
 				user BIGINT(20) UNSIGNED NOT NULL,
 				time_action DATETIME NOT NULL,
-				UNIQUE KEY id (id)
+				PRIMARY KEY  id (id),
+				UNIQUE KEY user (user)
 			) $collate",
 			"CREATE TABLE IF NOT EXISTS `" . RCL_PREF . "temp_media` (
 				media_id BIGINT(20) UNSIGNED NOT NULL,
