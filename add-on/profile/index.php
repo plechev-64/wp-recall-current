@@ -28,6 +28,7 @@ function rcl_tab_profile() {
 		array(
 			'id'		 => 'profile',
 			'name'		 => __( 'Profile', 'wp-recall' ),
+			'title'		 => __( 'User profile', 'wp-recall' ),
 			'supports'	 => array( 'ajax' ),
 			'public'	 => 0,
 			'icon'		 => 'fa-user',
@@ -193,8 +194,7 @@ function rcl_tab_profile_content( $master_id ) {
 		//'border' => array('table', 'rows')
 		) );
 
-	$content = '<h3>' . __( 'User profile', 'wp-recall' ) . ' ' . $userdata->display_name . '</h3>
-	<form name="profile" id="your-profile" action="" method="post"  enctype="multipart/form-data">';
+	$content = '<form name="profile" id="your-profile" action="" method="post"  enctype="multipart/form-data">';
 
 	$profileFields = stripslashes_deep( $profileFields );
 

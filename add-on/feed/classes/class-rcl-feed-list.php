@@ -309,20 +309,20 @@ class Rcl_Feed_List extends Rcl_Query {
 	function search_request() {
 		global $user_LK;
 
-		$rqst = '';
+		$rqst = [ ];
 
 		if ( isset( $_GET['search-groups'] ) || $user_LK ) {
 			$rqst = array();
 			foreach ( $_GET as $k => $v ) {
 				if ( $k == 'rcl-page' || $k == 'feed-filter' )
 					continue;
-				$rqst[$k] = $k . '=' . $v;
+				$rqst[$k] = $v;
 			}
 		}
 
 		if ( $this->add_uri ) {
 			foreach ( $this->add_uri as $k => $v ) {
-				$rqst[$k] = $k . '=' . $v;
+				$rqst[$k] = $v;
 			}
 		}
 
@@ -342,17 +342,13 @@ class Rcl_Feed_List extends Rcl_Query {
 		if ( isset( $this->add_uri['feed-filter'] ) )
 			unset( $this->add_uri['feed-filter'] );
 
-		$s_array = $this->search_request();
-
-		$rqst = ($s_array) ? implode( '&', $s_array ) . '&' : '';
-
 		if ( $user_LK ) {
 			$url = (isset( $_POST['tab_url'] )) ? $_POST['tab_url'] : rcl_get_user_url( $user_LK );
 		} else {
 			$url = get_permalink( $post->ID );
 		}
 
-		$perm = rcl_format_url( $url ) . $rqst;
+		$searchArray = $this->search_request();
 
 		$filters = array(
 			'posts'		 => __( 'News', 'wp-recall' ),
@@ -365,9 +361,12 @@ class Rcl_Feed_List extends Rcl_Query {
 		$content .= '<div class="rcl-data-filters">';
 
 		foreach ( $filters as $key => $name ) {
+
+			$searchArray['feed-filter'] = $key;
+
 			$content .= rcl_get_button( array(
 				'label'	 => $name,
-				'href'	 => $perm . 'feed-filter=' . $key,
+				'href'	 => add_query_arg( $searchArray, $url ),
 				'class'	 => 'data-filter',
 				'status' => $this->content == $key ? 'disabled' : false
 				) );

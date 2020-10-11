@@ -81,21 +81,6 @@ function rcl_path_by_url( $url ) {
 	return $path;
 }
 
-function rcl_format_url( $url, $tab_id = false, $subtab_id = false ) {
-	$ar_perm = explode( '?', $url );
-	$cnt	 = count( $ar_perm );
-	if ( $cnt > 1 )
-		$a		 = '&';
-	else
-		$a		 = '?';
-	$url	 = $url . $a;
-	if ( $tab_id )
-		$url .= 'tab=' . $tab_id;
-	if ( $subtab_id )
-		$url .= '&subtab=' . $subtab_id;
-	return $url;
-}
-
 function rcl_check_jpeg( $f, $fix = false ) {
 # [070203]
 # check for jpeg file header and footer - also try to fix it

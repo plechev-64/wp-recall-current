@@ -57,12 +57,11 @@ function rcl_post_group_edit_button( $content ) {
 		return $content;
 
 	if ( rcl_is_group_can( 'moderator' ) ) {
-		$edit_url	 = rcl_format_url( get_permalink( rcl_get_option( 'public_form_page_rcl' ) ) );
-		$content	 = '<p class="post-edit-button">'
-			. '<a title="' . __( 'Edit', 'wp-recall' ) . '" object-id="none" href="' . $edit_url . 'rcl-post-edit=' . $post->ID . '">'
-			. '<i class="rcli fa-pencil-square-o"></i>'
-			. '</a>'
-			. '</p>' . $content;
+		$content = rcl_get_button( [
+				'href'	 => add_query_arg( ['rcl-post-edit' => $post->ID ], get_permalink( rcl_get_option( 'public_form_page_rcl' ) ) ),
+				'title'	 => __( 'Edit', 'wp-recall' ),
+				'icon'	 => 'fa-pencil-square-o'
+			] ) . $content;
 	}
 	return $content;
 }

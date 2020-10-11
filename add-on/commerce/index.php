@@ -177,6 +177,7 @@ function rcl_tab_orders() {
 			array(
 				'id'		 => 'all-orders',
 				'name'		 => __( 'Orders', 'wp-recall' ),
+				'title'		 => __( 'Все заказы', 'wp-recall' ),
 				'callback'	 => array(
 					'name' => 'rcl_orders_tab'
 				)

@@ -65,6 +65,7 @@ function pfm_init_tab() {
 					'id'		 => 'my-topics',
 					'icon'		 => 'fa-folder',
 					'name'		 => __( 'Started topics', 'wp-recall' ),
+					'title'		 => __( 'Started topics on the forum', 'wp-recall' ),
 					'callback'	 => array(
 						'name' => 'pfm_get_user_topics_list'
 					)
@@ -73,6 +74,7 @@ function pfm_init_tab() {
 					'id'		 => 'my-posts',
 					'icon'		 => 'fa-folder',
 					'name'		 => __( 'Messages in topics created by other users', 'wp-recall' ),
+					'title'		 => __( 'Messaged in topics on the forum created by other users', 'wp-recall' ),
 					'callback'	 => array(
 						'name' => 'pfm_user_posts_other_topics'
 					)
@@ -129,9 +131,7 @@ function pfm_user_posts_other_topics( $master_id ) {
 
 	$theme = pfm_get_current_theme();
 
-	$content = '<h3>' . __( 'Messaged in topics on the forum created by other users', 'wp-recall' ) . '</h3>';
-
-	$content .= '<div id="prime-forum">';
+	$content = '<div id="prime-forum">';
 
 	$content .= $pageNavi->pagenavi();
 
@@ -194,9 +194,7 @@ function pfm_get_user_topics_list( $master_id, $navi = true ) {
 
 	$theme = pfm_get_current_theme();
 
-	$content = '<h3>' . __( 'Started topics on the forum', 'wp-recall' ) . '</h3>';
-
-	$content .= '<div id="prime-forum">';
+	$content = '<div id="prime-forum">';
 
 	if ( $navi )
 		$content .= $pageNavi->pagenavi();

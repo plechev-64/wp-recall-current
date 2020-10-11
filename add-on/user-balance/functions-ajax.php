@@ -80,7 +80,7 @@ function rcl_pay_order_user_balance() {
 	do_action( 'rcl_success_pay_balance', ( object ) $data );
 
 	return array(
-		'redirect' => rcl_format_url( get_permalink( rcl_get_commerce_option( 'page_successfully_pay' ) ) ) . 'payment-type=' . $pay_type
+		'redirect' => add_query_arg( ['payment-type' => $pay_type ], get_permalink( rcl_get_commerce_option( 'page_successfully_pay' ) ) )
 	);
 }
 

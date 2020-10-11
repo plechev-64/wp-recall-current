@@ -134,6 +134,7 @@ function rcl_add_chat_tab() {
 			array(
 				'id'		 => 'private-contacts',
 				'name'		 => __( 'Contacts', 'wp-recall' ),
+				'title'		 => __( 'User contacts', 'wp-recall' ),
 				'icon'		 => 'fa-book',
 				'callback'	 => array(
 					'name' => 'rcl_chat_tab'
@@ -160,7 +161,7 @@ function rcl_chat_tab( $office_id ) {
 	global $user_ID;
 
 	if ( $office_id == $user_ID ) {
-		return rcl_get_tab_user_contacts( $office_id );
+		return rcl_get_user_contacts_list( $office_id );
 	}
 
 	if ( $user_ID ) {
@@ -214,15 +215,6 @@ function rcl_chat_add_page_link_attributes( $attrs ) {
 	$attrs['data']['post']	 = false;
 
 	return $attrs;
-}
-
-function rcl_get_tab_user_contacts() {
-	global $user_ID;
-
-	$content = '<h3>' . __( 'User contacts', 'wp-recall' ) . '</h3>';
-	$content .= rcl_get_user_contacts_list( $user_ID );
-
-	return $content;
 }
 
 function rcl_get_user_contacts( $user_id, $limit ) {

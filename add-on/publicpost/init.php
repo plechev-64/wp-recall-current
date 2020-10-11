@@ -75,6 +75,7 @@ function rcl_init_publics_block() {
 			$tab_data = array(
 				'id'		 => 'publics',
 				'name'		 => __( 'Posts', 'wp-recall' ),
+				'title'		 => __( 'Published', 'wp-recall' ) . ' "' . __( 'Posts', 'wp-recall' ) . '"',
 				'supports'	 => array( 'ajax', 'cache' ),
 				'public'	 => rcl_get_option( 'view_publics_block_rcl' ),
 				'icon'		 => 'fa-list',
@@ -86,6 +87,7 @@ function rcl_init_publics_block() {
 				$tab_data['content'][] = array(
 					'id'		 => 'type-' . $post_type,
 					'name'		 => $name,
+					'title'		 => __( 'Published', 'wp-recall' ) . ' "' . $name . '"',
 					'icon'		 => 'fa-list',
 					'callback'	 => array(
 						'name'	 => 'rcl_get_postslist',
@@ -104,6 +106,7 @@ function rcl_init_publics_block() {
 			array(
 				'id'		 => 'postform',
 				'name'		 => __( 'Publication', 'wp-recall' ),
+				'title'		 => __( 'Form of publication', 'wp-recall' ),
 				'public'	 => 0,
 				'icon'		 => 'fa-pencil',
 				'content'	 => array(

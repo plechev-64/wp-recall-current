@@ -1,12 +1,12 @@
 ( function( $ ) {
-	var LkMenu = $( '#lk-menu' );
+	var LkMenu = $( '#rcl-tabs .rcl-tabs-menu' );
 	var typeButton = $( '#rcl-office' );
 	var RclOverlay = $( '#rcl-overlay' );
 
 // при ресайзе обновляем
 	function moveMenu() {
 		LkMenu.append( $( '#sunshine_ext_menu ul' ).html() );
-		$( '#lk-menu .hideshow' ).remove();
+		$( '#rcl-tabs .hideshow' ).remove();
 		$( '#sunshine_ext_menu' ).remove();
 	}
 
@@ -72,28 +72,28 @@
 		var totalWidth = 0;                                             // сумма ширины всех кнопок
 
 		$.each( LkMenu.children( '.rcl-tab-button' ), function() {
-			totalWidth += $( this ).children().outerWidth( true );          // считаем ширину всех кнопок с учетом отступов
+			totalWidth += $( this ).outerWidth( true );          // считаем ширину всех кнопок с учетом отступов
 			if ( mw < totalWidth ) {                                      // если ширина блока кнопок меньше чем сумма ширины кнопок:
 				menuhtml += $( '<div>' ).append( $( this ).clone() ).html();
 				$( this ).remove();
 			}
 		} );
 		LkMenu.append(
-			'<span style="position:absolute;" class="rcl-tab-butt hideshow">'
-			+ '<a class="recall-button block_button bars" ><i class="rcli fa-bars"></i></a>'
-			+ '</span>'
+			'<a class="rcl-bttn rcl-tab-button rcl-bttn__type-primary rcl-bttn__size-standart rcl-tab-butt hideshow bars">'
+			+ '<i class="rcl-bttn__ico rcl-bttn__ico-left rcli fa-bars"></i>'
+			+ '</a>'
 			);
 		// формируем в кнопке контент
 		$( 'body' ).append( '<div id="sunshine_ext_menu"><ul>' + menuhtml + '</ul></div>' );
 
-		var hideshow = $( '#lk-menu .rcl-tab-butt.hideshow' );
+		var hideshow = $( '#rcl-tabs .rcl-tab-butt.hideshow' );
 		if ( menuhtml == '' ) {                                           // если нет контента в кнопке - скрываем её
 			hideshow.hide();
 		} else {
 			hideshow.show();
 		}
 
-		$( '#lk-menu .hideshow' ).on( 'click', function() {
+		$( '#rcl-tabs .hideshow' ).on( 'click', function() {
 			RclOverlay.fadeToggle( 100 ).toggleClass( 'sunshine_mbl_menu' ); // добавляем наш класс оверлею. Чтоб чужой не закрывать
 			menuPosition();
 			$( '#sunshine_ext_menu' ).toggleClass( 'bounce', 100 );

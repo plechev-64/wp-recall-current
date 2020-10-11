@@ -310,7 +310,7 @@ class Rcl_Field_Abstract {
 		if ( ! $val )
 			$val = $this->value;
 
-		return rcl_format_url( get_permalink( rcl_get_option( 'users_page_rcl' ) ) ) . 'usergroup=' . $this->slug . ':' . urlencode( $val );
+		return add_query_arg( ['usergroup' => $this->slug . ':' . urlencode( $val ) ], get_permalink( rcl_get_option( 'users_page_rcl' ) ) );
 	}
 
 }

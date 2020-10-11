@@ -208,7 +208,7 @@ function rcl_delete_post() {
 
 	do_action( 'after_delete_post_rcl', $post_id );
 
-	wp_redirect( rcl_format_url( rcl_get_user_url( $user_ID ) ) . '&public=deleted' );
+	wp_redirect( add_query_arg( ['public' => 'deleted' ], rcl_get_user_url( $user_ID ) ) );
 	exit;
 }
 
@@ -236,8 +236,7 @@ function rcl_edit_post_link( $admin_url, $post_id ) {
 	$user_info = get_userdata( $user_ID );
 
 	if ( array_search( $user_info->user_level, $frontEdit ) !== false || $user_info->user_level < rcl_get_option( 'consol_access_rcl', 7 ) ) {
-		$edit_url = rcl_format_url( get_permalink( rcl_get_option( 'public_form_page_rcl' ) ) );
-		return $edit_url . 'rcl-post-edit=' . $post_id;
+		return add_query_arg( ['rcl-post-edit' => $post_id ], get_permalink( rcl_get_option( 'public_form_page_rcl' ) ) );
 	} else {
 		return $admin_url;
 	}

@@ -242,6 +242,21 @@ function rcl_get_postmeta_array( $post_id ) {
 	return $mts;
 }
 
+function rcl_format_url( $url, $tab_id = false, $subtab_id = false ) {
+	$ar_perm = explode( '?', $url );
+	$cnt	 = count( $ar_perm );
+	if ( $cnt > 1 )
+		$a		 = '&';
+	else
+		$a		 = '?';
+	$url	 = $url . $a;
+	if ( $tab_id )
+		$url .= 'tab=' . $tab_id;
+	if ( $subtab_id )
+		$url .= '&subtab=' . $subtab_id;
+	return $url;
+}
+
 function rcl_setup_chartdata( $mysqltime, $data ) {
 	global $chartArgs;
 

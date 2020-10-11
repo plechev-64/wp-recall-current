@@ -79,7 +79,7 @@ function rcl_button_avatar_upload( $icons ) {
 			'icon'	 => 'fa-times',
 			'atts'	 => array(
 				'title'	 => __( 'Delete avatar', 'wp-recall' ),
-				'href'	 => wp_nonce_url( rcl_format_url( rcl_get_user_url( $user_ID ) ) . 'rcl-action=delete_avatar', $user_ID )
+				'href'	 => wp_nonce_url( add_query_arg( ['rcl-action' => 'delete_avatar' ], rcl_get_user_url( $user_ID ) ), $user_ID )
 			)
 		);
 	}
@@ -146,7 +146,7 @@ function rcl_delete_avatar_action() {
 
 	do_action( 'rcl_delete_avatar' );
 
-	wp_redirect( rcl_format_url( rcl_get_user_url( $user_ID ) ) . 'rcl-avatar=deleted' );
+	wp_redirect( add_query_arg( ['rcl-avatar' => 'deleted' ], rcl_get_user_url( $user_ID ) ) );
 	exit;
 }
 

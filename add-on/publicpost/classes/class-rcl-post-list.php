@@ -96,9 +96,7 @@ class Rcl_Postlist {
 
 		$page_navi = $this->page_navi();
 
-		$posts_block = '<h3>' . __( 'Published', 'wp-recall' ) . ' "' . $this->type_name . '"</h3>';
-
-		$posts_block .= $page_navi;
+		$posts_block = $page_navi;
 		$posts_block .= $this->get_postslist_table();
 		$posts_block .= $page_navi;
 

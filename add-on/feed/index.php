@@ -54,6 +54,7 @@ function rcl_add_followers_tab() {
 		array(
 			'id'		 => 'followers',
 			'name'		 => __( 'Followers', 'wp-recall' ),
+			'title'		 => __( 'List of subscribers', 'wp-recall' ),
 			'supports'	 => array( 'ajax', 'cache' ),
 			'public'	 => 1,
 			'icon'		 => 'fa-twitter',
@@ -82,6 +83,7 @@ function rcl_add_subscriptions_tab() {
 		array(
 			'id'		 => 'subscriptions',
 			'name'		 => __( 'Subscriptions', 'wp-recall' ),
+			'title'		 => __( 'List of subscriptions', 'wp-recall' ),
 			'supports'	 => array( 'ajax', 'cache' ),
 			'public'	 => 0,
 			'icon'		 => 'fa-bell-o',
@@ -100,8 +102,6 @@ function rcl_add_subscriptions_tab() {
 
 function rcl_followers_tab( $user_id ) {
 
-	$content = '<h3>' . __( 'List of subscribers', 'wp-recall' ) . '</h3>';
-
 	$cnt = rcl_feed_count_subscribers( $user_id );
 
 	if ( ! $cnt )
@@ -109,7 +109,8 @@ function rcl_followers_tab( $user_id ) {
 
 	add_filter( 'rcl_user_description', 'rcl_add_userlist_follow_button', 90 );
 	add_filter( 'rcl_users_query', 'rcl_feed_subsribers_query_userlist', 10 );
-	$content .= rcl_get_userlist( array(
+
+	return rcl_get_userlist( array(
 		'template'		 => 'rows',
 		'per_page'		 => 20,
 		'orderby'		 => 'user_registered',
@@ -118,13 +119,9 @@ function rcl_followers_tab( $user_id ) {
 		'data'			 => 'rating_total,description,posts_count,comments_count',
 		'add_uri'		 => array( 'tab' => 'followers' )
 		) );
-
-	return $content;
 }
 
 function rcl_subscriptions_tab( $user_id ) {
-
-	$content = '<h3>' . __( 'List of subscriptions', 'wp-recall' ) . '</h3>';
 
 	$feeds = rcl_feed_count_authors( $user_id );
 
@@ -133,7 +130,8 @@ function rcl_subscriptions_tab( $user_id ) {
 
 	add_filter( 'rcl_user_description', 'rcl_add_userlist_follow_button', 90 );
 	add_filter( 'rcl_users_query', 'rcl_feed_authors_query_userlist', 10 );
-	$content .= rcl_get_userlist( array(
+
+	return rcl_get_userlist( array(
 		'template'		 => 'rows',
 		'orderby'		 => 'user_registered',
 		'per_page'		 => 20,
@@ -142,8 +140,6 @@ function rcl_subscriptions_tab( $user_id ) {
 		'data'			 => 'rating_total,description,posts_count,comments_count',
 		'add_uri'		 => array( 'tab' => 'subscriptions' )
 		) );
-
-	return $content;
 }
 
 function rcl_feed_authors_query_userlist( $query ) {

@@ -257,6 +257,8 @@ function rcl_add_tab_groups() {
 function rcl_tab_groups( $type_account = 'user_id' ) {
 	global $user_ID, $user_LK;
 
+	RCL()->use_module( 'groups-manager' );
+
 	$content = '';
 
 	$def_roles = ['editor', 'author' ];
@@ -268,8 +270,6 @@ function rcl_tab_groups( $type_account = 'user_id' ) {
 	$can_roles[] = 'administrator';
 
 	if ( rcl_is_user_role( $user_ID, $can_roles ) ) {
-
-		RCL()->use_module( 'forms' );
 
 		$content = rcl_get_form( [
 			'submit'	 => __( 'Создать новую группу', 'wp-recall' ),
@@ -285,8 +285,6 @@ function rcl_tab_groups( $type_account = 'user_id' ) {
 			]
 			] );
 	}
-
-	RCL()->use_module( 'groups-manager' );
 
 	$manager = new Rcl_Groups_Manager( [$type_account => $user_LK ] );
 
@@ -364,7 +362,7 @@ function rcl_get_link_group_tag( $content ) {
 		}
 	}
 
-	$cat = '<p class="post-group-meta"><i class="rcli fa-folder-open rcl-icon"></i>' . __( 'Group categories', 'wp-recall' ) . ': <a href="' . rcl_format_url( rcl_get_group_permalink( $group_id ) ) . 'group-tag=' . $tag->slug . '">' . $tag->name . '</a></p>';
+	$cat = '<p class="post-group-meta"><i class="rcli fa-folder-open rcl-icon"></i>' . __( 'Group categories', 'wp-recall' ) . ': <a href="' . add_query_arg( ['group-tag' => $tag->slug ], rcl_get_group_permalink( $group_id ) ) . '">' . $tag->name . '</a></p>';
 
 	return $cat . $content;
 }
