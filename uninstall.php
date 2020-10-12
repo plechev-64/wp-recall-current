@@ -11,7 +11,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-global $wpdb, $rcl_options;
+global $wpdb;
 
 require_once 'classes/class-rcl-install.php';
 require_once 'functions/plugin-pages.php';
@@ -32,11 +32,6 @@ wp_clear_scheduled_hook( 'rcl_cron_daily_schedule' );
 //Подчищаем на сервере
 rcl_remove_dir( RCL_TAKEPATH );
 rcl_remove_dir( RCL_UPLOAD_PATH );
-
-//Удаляем созданные страницы
-wp_trash_post( get_site_option( $rcl_options['lk_page_rcl'] ) );
-wp_trash_post( get_site_option( $rcl_options['feed_page_rcl'] ) );
-wp_trash_post( get_site_option( $rcl_options['users_page_rcl'] ) );
 
 //Удаляем таблицы и настройки плагина
 $tables = $wpdb->get_results( "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name like '%rcl_%'" );

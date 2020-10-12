@@ -477,22 +477,6 @@ function rcl_decode_post( $string ) {
 	return json_decode( base64_decode( $string ) );
 }
 
-function rcl_get_wp_upload_dir() {
-	if ( defined( 'MULTISITE' ) ) {
-		$upload_dir = array(
-			'basedir'	 => WP_CONTENT_DIR . '/uploads',
-			'baseurl'	 => WP_CONTENT_URL . '/uploads'
-		);
-	} else {
-		$upload_dir = wp_upload_dir();
-	}
-
-	if ( is_ssl() )
-		$upload_dir['baseurl'] = str_replace( 'http://', 'https://', $upload_dir['baseurl'] );
-
-	return $upload_dir;
-}
-
 //запрещаем доступ в админку
 add_action( 'init', 'rcl_admin_access', 1 );
 function rcl_admin_access() {
