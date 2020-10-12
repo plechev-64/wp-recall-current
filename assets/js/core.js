@@ -4,22 +4,50 @@ var rcl_beats = [ ];
 var rcl_beats_delay = 0;
 var rcl_url_params = rcl_get_value_url_params();
 
-jQuery.fn.extend( {
-	animateCss: function( animationNameStart, functionEnd ) {
-		var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-		this.addClass( 'animated ' + animationNameStart ).one( animationEnd, function() {
-			jQuery( this ).removeClass( 'animated ' + animationNameStart );
+jQuery( document ).ready( function( $ ) {
 
-			if ( functionEnd ) {
-				if ( typeof functionEnd == 'function' ) {
-					functionEnd( this );
+	$.fn.extend( {
+		insertAtCaret: function( myValue ) {
+			return this.each( function( i ) {
+				if ( document.selection ) {
+					// Для браузеров типа Internet Explorer
+					this.focus();
+					var sel = document.selection.createRange();
+					sel.text = myValue;
+					this.focus();
+				} else if ( this.selectionStart || this.selectionStart == '0' ) {
+					// Для браузеров типа Firefox и других Webkit-ов
+					var startPos = this.selectionStart;
+					var endPos = this.selectionEnd;
+					var scrollTop = this.scrollTop;
+					this.value = this.value.substring( 0, startPos ) + myValue + this.value.substring( endPos, this.value.length );
+					this.focus();
+					this.selectionStart = startPos + myValue.length;
+					this.selectionEnd = startPos + myValue.length;
+					this.scrollTop = scrollTop;
 				} else {
-					jQuery( this ).animateCss( functionEnd );
+					this.value += myValue;
+					this.focus();
 				}
-			}
-		} );
-		return this;
-	}
+			} )
+		},
+		animateCss: function( animationNameStart, functionEnd ) {
+			var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+			this.addClass( 'animated ' + animationNameStart ).one( animationEnd, function() {
+				jQuery( this ).removeClass( 'animated ' + animationNameStart );
+
+				if ( functionEnd ) {
+					if ( typeof functionEnd == 'function' ) {
+						functionEnd( this );
+					} else {
+						jQuery( this ).animateCss( functionEnd );
+					}
+				}
+			} );
+			return this;
+		}
+	} );
+
 } );
 
 function rcl_do_action( action_name ) {
