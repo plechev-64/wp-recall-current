@@ -14,7 +14,7 @@ class Rcl_Groups_Manager extends Rcl_Content_Manager {
 
 		parent::
 		__construct( array(
-			'number'	 => 2,
+			'number'	 => 30,
 			'is_ajax'	 => 1,
 		) );
 	}

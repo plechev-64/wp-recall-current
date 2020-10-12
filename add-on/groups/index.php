@@ -222,44 +222,35 @@ function rcl_add_postlist_group() {
 
 add_action( 'rcl_init_tabs', 'rcl_add_tab_groups' );
 function rcl_add_tab_groups() {
+	global $user_ID;
 
-	rcl_tab(
-		array(
-			'id'		 => 'groups',
-			'name'		 => __( 'Groups', 'wp-recall' ),
-			'supports'	 => array( 'ajax', 'cache' ),
-			'public'	 => 1,
-			'icon'		 => 'fa-group',
-			'content'	 => array(
-				array(
-					'id'		 => 'all-groups',
-					'name'		 => __( 'All groups', 'wp-recall' ),
-					'icon'		 => 'fa-group',
-					'callback'	 => array(
-						'name'	 => 'rcl_tab_groups',
-						'args'	 => array( 'user_id' )
-					)
-				),
-				array(
-					'id'		 => 'admin-groups',
-					'name'		 => __( 'Groups created', 'wp-recall' ),
-					'icon'		 => 'fa-cogs',
-					'callback'	 => array(
-						'name'	 => 'rcl_tab_groups',
-						'args'	 => array( 'admin_id' )
-					)
+	$tabArgs = array(
+		'id'		 => 'groups',
+		'name'		 => __( 'Groups', 'wp-recall' ),
+		'supports'	 => array( 'ajax', 'cache' ),
+		'public'	 => 1,
+		'icon'		 => 'fa-group',
+		'content'	 => array(
+			array(
+				'id'		 => 'all-groups',
+				'name'		 => __( 'All groups', 'wp-recall' ),
+				'icon'		 => 'fa-group',
+				'callback'	 => array(
+					'name'	 => 'rcl_tab_groups',
+					'args'	 => array( 'user_id' )
+				)
+			),
+			array(
+				'id'		 => 'admin-groups',
+				'name'		 => __( 'Groups created', 'wp-recall' ),
+				'icon'		 => 'fa-cogs',
+				'callback'	 => array(
+					'name'	 => 'rcl_tab_groups',
+					'args'	 => array( 'admin_id' )
 				)
 			)
 		)
 	);
-}
-
-function rcl_tab_groups( $type_account = 'user_id' ) {
-	global $user_ID, $user_LK;
-
-	RCL()->use_module( 'groups-manager' );
-
-	$content = '';
 
 	$def_roles = ['editor', 'author' ];
 
@@ -271,24 +262,44 @@ function rcl_tab_groups( $type_account = 'user_id' ) {
 
 	if ( rcl_is_user_role( $user_ID, $can_roles ) ) {
 
-		$content = rcl_get_form( [
-			'submit'	 => __( 'Создать новую группу', 'wp-recall' ),
-			'onclick'	 => 'rcl_send_form_data("rcl_ajax_create_group", this);return false;',
-			'fields'	 => [
-				[
-					'type'			 => 'text',
-					'slug'			 => 'group_name',
-					'title'			 => __( 'Наименование новой группы', 'wp-recall' ),
-					'placeholder'	 => __( 'Enter the name of the new group', 'wp-recall' ),
-					'required'		 => 1
-				]
-			]
-			] );
+		$tabArgs['content'][] = array(
+			'id'		 => 'create-group',
+			'name'		 => __( 'Create group', 'wp-recall' ),
+			'icon'		 => 'fa-plus',
+			'callback'	 => array(
+				'name' => 'rcl_get_creating_group_tab'
+			)
+		);
 	}
+
+	rcl_tab( $tabArgs );
+}
+
+function rcl_get_creating_group_tab( $master_id ) {
+
+	return rcl_get_form( [
+		'submit'	 => __( 'Создать новую группу', 'wp-recall' ),
+		'onclick'	 => 'rcl_send_form_data("rcl_ajax_create_group", this);return false;',
+		'fields'	 => [
+			[
+				'type'			 => 'text',
+				'slug'			 => 'group_name',
+				'title'			 => __( 'Наименование новой группы', 'wp-recall' ),
+				'placeholder'	 => __( 'Enter the name of the new group', 'wp-recall' ),
+				'required'		 => 1
+			]
+		]
+		] );
+}
+
+function rcl_tab_groups( $type_account = 'user_id' ) {
+	global $user_ID, $user_LK;
+
+	RCL()->use_module( 'groups-manager' );
 
 	$manager = new Rcl_Groups_Manager( [$type_account => $user_LK ] );
 
-	$content .= '<div class="rcl-grouplist">';
+	$content = '<div class="rcl-grouplist">';
 	$content .= $manager->get_manager();
 	$content .= '</div>';
 
