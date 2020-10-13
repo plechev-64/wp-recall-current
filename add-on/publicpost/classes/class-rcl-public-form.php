@@ -487,9 +487,9 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 						$contentField = $uploader->get_gallery( $imagIds );
 
 						$contentField .= $uploader->get_uploader();
-					}
 
-					$contentField .= $field->get_notice();
+						$contentField .= $field->get_notice();
+					}
 				}
 			} else {
 
