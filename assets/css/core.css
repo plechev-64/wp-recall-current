@@ -755,7 +755,6 @@ a.data-filter.filter-active:hover {
     align-items: center;
     clear: both;
     color: #797979;
-    display: flex;
     font-size: .85em;
     margin: 5px 0 0;
 }

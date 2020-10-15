@@ -920,7 +920,7 @@ function rcl_get_button( $args, $depr_url = false, $depr_args = false ) {
 		return $bttn->get_button();
 	}
 
-	_deprecated_argument( __FUNCTION__, '16.21.0' );
+	//_deprecated_argument( __FUNCTION__, '16.21.0' );
 
 	$button = '<a href="' . $depr_url . '" ';
 	if ( isset( $depr_args['attr'] ) && $depr_args['attr'] )
