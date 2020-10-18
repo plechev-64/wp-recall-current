@@ -1,19 +1,4 @@
 
-jQuery( function( $ ) {
-
-	/* показ дочерних полей */
-	$( ".rcl-parent-field:not(.rcl-children-field)" ).find( "input, select" ).each( function() {
-		RclOptionsControl.showChildrens( RclOptionsControl.getId( this ), $( this ).val() );
-	} );
-
-	$( '.rcl-parent-field select, .rcl-parent-field input' ).change( function() {
-		RclOptionsControl.hideChildrens( RclOptionsControl.getId( this ) );
-		RclOptionsControl.showChildrens( RclOptionsControl.getId( this ), $( this ).val() );
-	} );
-	/***/
-
-} );
-
 var RclOptionsControl = {
 	getId: function( e ) {
 		return jQuery( e ).attr( 'type' ) == 'radio' && jQuery( e ).is( ":checked" ) ? jQuery( e ).data( 'slug' ) : jQuery( e ).attr( 'id' );
@@ -54,6 +39,21 @@ var RclOptionsControl = {
 	}
 
 };
+
+jQuery( function( $ ) {
+
+	/* показ дочерних полей */
+	$( ".rcl-parent-field:not(.rcl-children-field)" ).find( "input, select" ).each( function() {
+		RclOptionsControl.showChildrens( RclOptionsControl.getId( this ), $( this ).val() );
+	} );
+
+	$( '.rcl-parent-field select, .rcl-parent-field input' ).change( function() {
+		RclOptionsControl.hideChildrens( RclOptionsControl.getId( this ) );
+		RclOptionsControl.showChildrens( RclOptionsControl.getId( this ), $( this ).val() );
+	} );
+	/***/
+
+} );
 
 function rcl_enable_extend_options( e ) {
 	var extend = e.checked ? 1 : 0;

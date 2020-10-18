@@ -138,7 +138,9 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 	function read_chat( $chat_id ) {
 		global $wpdb;
-		$wpdb->query( "UPDATE " . RCL_PREF . "chat_messages SET message_status = '1' WHERE chat_id = '$chat_id' AND user_id != '$this->user_id'" );
+		if ( $wpdb->query( "UPDATE " . RCL_PREF . "chat_messages SET message_status = '1' WHERE chat_id = '$chat_id' AND user_id != '$this->user_id'" ) ) {
+			add_action( 'rcl_chat_read_messages', $chat_id, $this );
+		}
 	}
 
 	function set_activity() {

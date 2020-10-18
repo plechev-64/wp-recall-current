@@ -1,0 +1,31 @@
+#rcl-wizard{
+	padding: 20px 100px;
+}
+#rcl-wizard .wizard-image{
+	text-align: center;
+	margin: 10px;
+}
+#rcl-wizard .wizard-title{
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	margin: 20px;
+}
+#rcl-wizard .step-content{
+	background: #fff;
+	padding: 30px;
+}
+#rcl-wizard .step-title{
+    font-size: 20px;
+    border-bottom: 1px solid #ccc;
+    line-height: 2;
+}
+#rcl-wizard .step-description{
+	font-size: 16px;
+	margin: 15px 0;
+}
+#rcl-wizard .step-options{
+	max-width: 500px;
+}
+
+
