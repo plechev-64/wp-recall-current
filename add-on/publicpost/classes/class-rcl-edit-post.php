@@ -45,8 +45,6 @@ class Rcl_EditPost {
 			$this->error( __( 'Error publishing!', 'wp-recall' ) . ' Error 100' );
 
 		do_action( 'init_update_post_rcl', $this );
-
-		add_filter( 'pre_update_postdata_rcl', array( &$this, 'add_data_post' ), 5, 2 );
 	}
 
 	function error( $error ) {
@@ -98,14 +96,11 @@ class Rcl_EditPost {
 		$this->user_can = apply_filters( 'rcl_public_update_user_can', $this->user_can, $this );
 	}
 
-	function update_thumbnail( $postdata ) {
+	function update_thumbnail() {
 
-		$thumbnail_id = (isset( $_POST['post_thumbnail'] )) ? $_POST['post_thumbnail'] : 0;
+		$thumbnail_id = isset( $_POST['post_thumbnail'] ) ? $_POST['post_thumbnail'] : 0;
 
-		if ( ! $this->update )
-			return $this->rcl_add_attachments_in_temps( $postdata );
-
-		$currentThID = get_post_meta( $this->post_id, '_thumbnail_id', 1 );
+		$currentThID = $this->post_id ? get_post_meta( $this->post_id, '_thumbnail_id', 1 ) : 0;
 
 		if ( $thumbnail_id ) {
 
@@ -120,9 +115,7 @@ class Rcl_EditPost {
 		}
 	}
 
-	function rcl_add_attachments_in_temps( $postdata ) {
-
-		$user_id = $postdata['post_author'];
+	function rcl_add_attachments_in_temps( $user_id ) {
 
 		$temps = rcl_get_temp_media( array(
 			'user_id'			 => $user_id,
@@ -134,9 +127,6 @@ class Rcl_EditPost {
 			$thumbnail_id = isset( $_POST['post_thumbnail'] ) ? $_POST['post_thumbnail'] : 0;
 
 			foreach ( $temps as $temp ) {
-
-				if ( $thumbnail_id && $thumbnail_id == $temp->media_id )
-					add_post_meta( $this->post_id, '_thumbnail_id', $temp->media_id );
 
 				$attachData = array(
 					'ID'			 => $temp->media_id,
@@ -171,8 +161,6 @@ class Rcl_EditPost {
 		} else {
 			delete_post_meta( $this->post_id, 'rcl_post_gallery' );
 		}
-
-		delete_post_meta( $this->post_id, 'recall_slider' );
 	}
 
 	function get_status_post( $moderation ) {
@@ -208,13 +196,6 @@ class Rcl_EditPost {
 		return $post_status;
 	}
 
-	function add_data_post( $postdata, $data ) {
-
-		$postdata['post_status'] = $this->get_status_post( rcl_get_option( 'moderation_public_post' ) );
-
-		return $postdata;
-	}
-
 	function update_post() {
 		global $user_ID;
 
@@ -235,6 +216,8 @@ class Rcl_EditPost {
 		} else {
 			$postdata['post_author'] = $user_ID;
 		}
+
+		$postdata['post_status'] = $this->get_status_post( rcl_get_option( 'moderation_public_post' ) );
 
 		$postdata = apply_filters( 'pre_update_postdata_rcl', $postdata, $this );
 
@@ -269,7 +252,11 @@ class Rcl_EditPost {
 			wp_update_post( $postdata );
 		}
 
-		$this->update_thumbnail( $postdata );
+		$this->update_thumbnail();
+
+		if ( ! $this->update ) {
+			$this->rcl_add_attachments_in_temps( $postdata['post_author'] );
+		}
 
 		$this->update_post_gallery( $postdata );
 
