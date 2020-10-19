@@ -1358,11 +1358,29 @@ function rcl_filter_custom_tab_usermetas( $content ) {
 	if ( ! $metas[1] )
 		return $content;
 
+	$tblUsers = [
+		'display_name',
+		'user_url',
+		'user_login',
+		'user_nicename',
+		'user_email',
+		'user_registered'
+	];
+
 	$matchs = array();
 
 	foreach ( $metas[1] as $meta ) {
-		$value								 = get_user_meta( $rcl_office, $meta, 1 ) ? : __( 'not specified', 'wp-recall' );
-		$matchs['{RCL-UM:' . $meta . '}']	 = (is_array( $value )) ? implode( ', ', $value ) : $value;
+
+		if ( in_array( $meta, $tblUsers ) ) {
+			$value = get_the_author_meta( $meta, $rcl_office );
+		} else {
+			$value = get_user_meta( $rcl_office, $meta, 1 );
+		}
+
+		if ( ! $value )
+			$value = __( 'not specified', 'wp-recall' );
+
+		$matchs['{RCL-UM:' . $meta . '}'] = (is_array( $value )) ? implode( ', ', $value ) : $value;
 	}
 
 	return strtr( $content, $matchs );
