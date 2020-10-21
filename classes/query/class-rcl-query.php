@@ -242,7 +242,7 @@ class Rcl_Query extends Rcl_Old_Query {
 
 				if ( $data === 'is_null' ) {
 					$this->query['where'][] = $this->table['as'] . ".$col_name IS NULL";
-				} else if ( strpos( $data, '.' ) !== false ) {
+				} else if ( is_string( $data ) && strpos( $data, '.' ) !== false ) {
 					$this->query['where'][] = $this->table['as'] . ".$col_name = '" . esc_sql( $data ) . "'";
 				} else {
 					$this->query['where'][] = $this->table['as'] . ".$col_name = " . (is_object( $data ) ? "(" . $data->limit( 0 )->get_sql() . ")" : "'" . esc_sql( $data ) . "'");
