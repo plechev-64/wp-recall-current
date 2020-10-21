@@ -489,7 +489,11 @@ function rcl_author_link( $link, $author_id ) {
 	return rcl_get_user_url( $author_id );
 }
 
-function rcl_get_user_url( $user_id ) {
+function rcl_get_user_url( $user_id = false ) {
+	global $user_ID;
+
+	if ( ! $user_id )
+		$user_id = $user_ID;
 
 	if ( rcl_get_option( 'view_user_lk_rcl' ) != 1 )
 		return get_author_posts_url( $user_id );

@@ -231,6 +231,8 @@ final class WP_Recall {
 		require_once 'functions/frontend.php';
 		require_once 'functions/widgets.php';
 
+		$this->use_module( 'forms' );
+
 		if ( $this->is_request( 'admin' ) ) {
 			$this->admin_includes();
 		}

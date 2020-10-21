@@ -193,7 +193,7 @@ function rcl_chat_delete_message_meta( $message_id, $meta_key = false ) {
 	$sql = "DELETE FROM " . RCL_PREF . "chat_messagemeta WHERE message_id = '$message_id'";
 
 	if ( $meta_key )
-		$sql .= "AND meta_key = '$meta_key'";
+		$sql .= " AND meta_key = '$meta_key'";
 
 	$result = $wpdb->query( $sql );
 

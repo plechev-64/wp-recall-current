@@ -177,7 +177,7 @@ function rcl_tab_profile_content( $master_id ) {
 	global $userdata, $user_ID;
 
 	RCL()->use_module( 'table' );
-	RCL()->use_module( 'fields' );
+	RCL()->use_module( 'form' );
 
 	$profileFields = rcl_get_profile_fields( array( 'user_id' => $master_id ) );
 
