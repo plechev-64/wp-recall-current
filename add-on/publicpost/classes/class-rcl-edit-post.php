@@ -258,7 +258,7 @@ class Rcl_EditPost {
 			$this->add_attachments_from_temps( $postdata['post_author'] );
 		}
 
-		$this->update_post_gallery( $postdata );
+		$this->update_post_gallery();
 
 		delete_post_meta( $this->post_id, 'recall_slider' );
 

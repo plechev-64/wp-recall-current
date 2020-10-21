@@ -46,6 +46,9 @@ final class WP_Recall {
 		$this->init_modules(); //Определяем модули.
 		$this->init_hooks(); //Тут все наши хуки
 
+		$this->use_module( 'forms' );
+		$this->use_module( 'table' );
+
 		do_action( 'wp_recall_loaded' ); //Оставляем кручёк
 
 		$hasInstance = true;
@@ -230,8 +233,6 @@ final class WP_Recall {
 
 		require_once 'functions/frontend.php';
 		require_once 'functions/widgets.php';
-
-		$this->use_module( 'forms' );
 
 		if ( $this->is_request( 'admin' ) ) {
 			$this->admin_includes();

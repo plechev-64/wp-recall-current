@@ -229,9 +229,7 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 
 		$editPost = new Rcl_EditPost();
 
-		$editPost->rcl_add_attachments_in_temps( array(
-			'user_id' => $user_ID
-		) );
+		$editPost->add_attachments_from_temps( $user_ID );
 
 		$editPost->update_post_gallery();
 
