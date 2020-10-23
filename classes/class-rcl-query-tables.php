@@ -33,6 +33,7 @@ class Rcl_Posts_Query extends Rcl_Query {
 				'ID',
 				'post_author',
 				'post_status',
+				'post_excerpt',
 				'post_type',
 				'post_date',
 				'post_title',
