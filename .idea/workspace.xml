@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="dd7b85ef-5866-4a3f-844e-0e576c4681be" name="Default Changelist" comment="16.25.0">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/wp-recall.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/add-on/commerce/admin/pages/variations.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/commerce/admin/pages/variations.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/add-on/profile/admin/class-rcl-profile-fields-manager.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/profile/admin/class-rcl-profile-fields-manager.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/add-on/profile/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/profile/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/core.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/core.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/scripts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/class-rcl-includer.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/class-rcl-includer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/class-rcl-query-tables.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/class-rcl-query-tables.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/query/class-rcl-query.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/query/class-rcl-query.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/activate.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/addons-update.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/addons.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/ajax.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/cron.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/currency.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/deprecated.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/enqueue-scripts.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/files.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/frontend.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions-access.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions-avatar.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions-cache.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions-media.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions-office.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions-options.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions-others.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions-tabs.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions-user.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/plugin-pages.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/shortcodes.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/supports/js/uploader-avatar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/supports/js/uploader-cover.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/supports/js/user-details.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/supports/modal-user-details.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/supports/uploader-avatar.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/supports/uploader-cover.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/widgets.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/fields/classes/class-rcl-field-abstract.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/fields/classes/class-rcl-field-abstract.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/fields/classes/class-rcl-fields.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/fields/classes/class-rcl-fields.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/table/classes/class-rcl-table.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/table/classes/class-rcl-table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/table/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/modules/table/scripts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-sub-tab.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-sub-tab.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-tab.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-tab.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/add-on-card.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/chart.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/mail.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/recallbar.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user-avatars.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user-cards.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user-mini.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user-rows.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-recall.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-recall.php" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="DrupalConfiguration">
+    <drupalPath />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JoomlaConfiguration">
+    <joomlaConfigPath />
+    <joomlaPath />
+  </component>
+  <component name="ProjectId" id="1jsfPGt25qUjvWQRuP9cbp2Vmbu" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../xampp/htdocs/rcl.ru" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="settings.php.frameworks" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dd7b85ef-5866-4a3f-844e-0e576c4681be" name="Default Changelist" comment="" />
+      <created>1604597693845</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1604597693845</updated>
+      <workItem from="1604597694952" duration="2051000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="16.25.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="16.25.0" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="620" y="260" key="FileChooserDialogImpl" timestamp="1604599755612">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1604599755612" />
+    <state x="341" y="150" key="SettingsEditor" timestamp="1604599760532">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="341" y="150" key="SettingsEditor/0.0.1680.1010@0.0.1680.1010" timestamp="1604599760532" />
+    <state x="432" y="238" key="Vcs.Push.Dialog.v2" timestamp="1604598824229">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="432" y="238" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1604598824229" />
+    <state x="654" y="349" key="git4idea.ui.GitTagDialog" timestamp="1604597792859">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="654" y="349" key="git4idea.ui.GitTagDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1604597792859" />
+    <state x="708" y="412" key="save.project.as.template.dialog" timestamp="1604599523470">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="708" y="412" key="save.project.as.template.dialog/0.0.1680.1010@0.0.1680.1010" timestamp="1604599523470" />
+  </component>
+  <component name="WordPressConfiguration" enabled="true">
+    <wordpressPath>D:\xampp\htdocs\rcl.ru</wordpressPath>
+  </component>
+</project>

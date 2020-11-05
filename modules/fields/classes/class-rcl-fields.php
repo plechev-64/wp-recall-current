@@ -261,7 +261,7 @@ class Rcl_Fields extends Rcl_Field {
 		if ( ! $groupContent )
 			return false;
 
-		$content = '<div class="rcl-content-group">';
+		$content = '<div id="rcl-group-' . $group['id'] . '" class="rcl-content-group">';
 
 		if ( $group['title'] )
 			$content .= '<div class="group-title">' . $group['title'] . '</div>';
@@ -305,9 +305,8 @@ class Rcl_Fields extends Rcl_Field {
 		if ( ! $field->value )
 			return false;
 
-		$content .= $field->get_field_html( $field->value );
+        return $field->get_field_html( $field->value );
 
-		return $content;
 	}
 
 	function get_form( $args = array() ) {
@@ -386,7 +385,7 @@ class Rcl_Fields extends Rcl_Field {
 		if ( ! $groupContent )
 			return false;
 
-		$content = '<div class="rcl-content-group">';
+		$content = '<div id="rcl-group-' . $group['id'] . '" class="rcl-content-group">';
 
 		if ( isset( $group['title'] ) && $group['title'] )
 			$content .= '<div class="group-title">' . $group['title'] . '</div>';

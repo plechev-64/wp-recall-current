@@ -410,6 +410,13 @@ function rcl_enqueue_script( $id, $url, $parents = false, $in_footer = false, $f
 
 	if ( is_admin() || doing_action( 'login_enqueue_scripts' ) || Rcl_Ajax()->is_rest_request() ) {
 
+		if ( $parents ) {
+			$k = array_search( 'rcl-core-scripts', $parents );
+			if ( $k !== false ) {
+				unset( $parents[$k] );
+			}
+		}
+
 		wp_enqueue_script( $id, $url, $parents, VER_RCL, $in_footer );
 
 		return;

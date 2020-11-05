@@ -476,6 +476,10 @@ final class WP_Recall {
 
 		$active_addons = get_site_option( 'rcl_active_addons' );
 
+		if ( isset( $active_addons[''] ) ) {
+			unset( $active_addons[''] );
+		}
+
 		$rcl_template = get_site_option( 'rcl_active_template' );
 
 		do_action( 'rcl_before_include_addons' );

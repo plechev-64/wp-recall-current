@@ -1,5 +1,5 @@
-var rcl_actions = [ ];
-var rcl_filters = [ ];
+var rcl_actions =  typeof rcl_actions === 'undefined'? [ ]: rcl_actions;
+var rcl_filters = typeof rcl_filters === 'undefined'? [ ]: rcl_filters;
 var rcl_beats = [ ];
 var rcl_beats_delay = 0;
 var rcl_url_params = rcl_get_value_url_params();
@@ -53,7 +53,7 @@ jQuery( document ).ready( function( $ ) {
 function rcl_do_action( action_name ) {
 
 	var callbacks_action = rcl_actions[action_name];
-
+	
 	if ( !callbacks_action )
 		return false;
 
@@ -523,7 +523,7 @@ function rcl_ajax( prop ) {
 
 			}
 
-			rcl_do_action( action, result );
+			rcl_do_action( callback, result );
 
 			if ( result.used_modules ) {
 				Rcl.used_modules = result.used_modules;

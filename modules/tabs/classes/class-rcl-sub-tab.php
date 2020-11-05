@@ -51,6 +51,9 @@ class Rcl_Sub_Tab {
 	}
 
 	function get_permalink( $user_id = false ) {
+		global $user_LK;
+		if ( ! $user_id )
+			$user_id = $user_LK;
 		return add_query_arg( [ 'tab' => $this->parent_id, 'subtab' => $this->id ], rcl_get_user_url( $user_id ) );
 	}
 

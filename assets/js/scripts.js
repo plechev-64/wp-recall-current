@@ -1,12 +1,12 @@
 
-jQuery( function( $ ) {
+jQuery( function() {
 	rcl_do_action( 'rcl_init' );
 } );
 
 rcl_add_action( 'rcl_init', 'rcl_init_cookie' );
 
 jQuery( window ).load( function() {
-	jQuery( 'body' ).on( 'drop', function( e ) {
+	jQuery( 'body' ).on( 'drop', function() {
 		return false;
 	} );
 	jQuery( document.body ).bind( "drop", function( e ) {
@@ -41,6 +41,7 @@ function rcl_load_tab( tab_id, subtab_id, e ) {
 
 			var supports = data.supports;
 			var subtab_id = data.subtab_id;
+			var box_id = '';
 
 			if ( supports && supports.indexOf( 'dialog' ) >= 0 ) { //если вкладка поддерживает диалог
 
@@ -58,7 +59,7 @@ function rcl_load_tab( tab_id, subtab_id, e ) {
 
 				} else {
 
-					var box_id = '#ssi-modalContent';
+					box_id = '#ssi-modalContent';
 
 				}
 
@@ -71,7 +72,7 @@ function rcl_load_tab( tab_id, subtab_id, e ) {
 
 				button.addClass( 'rcl-bttn__active' );
 
-				var box_id = '#rcl-tab-content';
+				box_id = '#rcl-tab-content';
 
 			}
 
@@ -81,7 +82,7 @@ function rcl_load_tab( tab_id, subtab_id, e ) {
 
 				var options = rcl_get_options_url_params();
 
-				if ( options.scroll == 1 ) {
+				if ( options.scroll === 1 ) {
 					var offsetTop = jQuery( box_id ).offset().top;
 					jQuery( 'body,html' ).animate( {
 						scrollTop: offsetTop - options.offset
@@ -93,7 +94,7 @@ function rcl_load_tab( tab_id, subtab_id, e ) {
 
 					var includes = data.includes;
 
-					includes.forEach( function( src, i, includes ) {
+					includes.forEach( function( src ) {
 
 						jQuery.getScript( src );
 
@@ -104,7 +105,7 @@ function rcl_load_tab( tab_id, subtab_id, e ) {
 			}
 
 			jQuery( box_id ).animateCss( 'fadeIn' );
-
+			
 			rcl_do_action( 'rcl_upload_tab', {
 				element: button,
 				result: data
@@ -187,13 +188,15 @@ function rcl_add_dropzone( idzone ) {
 }
 
 function passwordStrength( password ) {
-	var desc = new Array();
-	desc[0] = Rcl.local.pass0;
-	desc[1] = Rcl.local.pass1;
-	desc[2] = Rcl.local.pass2;
-	desc[3] = Rcl.local.pass3;
-	desc[4] = Rcl.local.pass4;
-	desc[5] = Rcl.local.pass5;
+	var desc = [
+		Rcl.local.pass0,
+		Rcl.local.pass1,
+		Rcl.local.pass2,
+		Rcl.local.pass3,
+		Rcl.local.pass4,
+		Rcl.local.pass5
+	];
+
 	var score = 0;
 	if ( password.length > 6 )
 		score++;
@@ -213,7 +216,7 @@ function rcl_manage_user_black_list( e, user_id, confirmText ) {
 
 	var class_i = jQuery( e ).children( 'i' ).attr( 'class' );
 
-	if ( class_i == 'rcli fa-refresh fa-spin' )
+	if ( class_i === 'rcli fa-refresh fa-spin' )
 		return false;
 
 	if ( !confirm( confirmText ) )
@@ -267,7 +270,7 @@ function rcl_init_recallbar_hover() {
  }*/
 
 rcl_add_action( 'rcl_before_upload_tab', 'rcl_add_preloader_tab' );
-function rcl_add_preloader_tab( e ) {
+function rcl_add_preloader_tab() {
 	rcl_preloader_show( '#lk-content > div' );
 	rcl_preloader_show( '#ssi-modalContent > div' );
 }
@@ -347,7 +350,8 @@ function rcl_init_click_smilies() {
 	jQuery( "body" ).on( "click", '.rcl-smiles-list img', function() {
 		var alt = jQuery( this ).attr( "alt" );
 		var area = jQuery( this ).parents( ".rcl-smiles" ).data( "area" );
-		jQuery( "#" + area ).val( jQuery( "#" + area ).val() + " " + alt + " " );
+		var box = jQuery( "#" + area );
+		box.val( box.val() + " " + alt + " " );
 	} );
 }
 
@@ -403,12 +407,12 @@ function rcl_init_check_url_params() {
 	var options = rcl_get_options_url_params();
 
 	if ( rcl_url_params['tab'] ) {
-
-		if ( !jQuery( "#lk-content" ).length )
+		var lkContent = jQuery( "#lk-content" );
+		if ( !lkContent.length )
 			return false;
 
 		if ( options.scroll == 1 ) {
-			var offsetTop = jQuery( "#lk-content" ).offset().top;
+			var offsetTop = lkContent.offset().top;
 			jQuery( 'body,html' ).animate( {
 				scrollTop: offsetTop - options.offset
 			},
@@ -447,7 +451,7 @@ function rcl_beat() {
 			},
 			success: function( data ) {
 
-				data.beat_result.forEach( function( result, i, data ) {
+				data.beat_result.forEach( function( result ) {
 
 					rcl_do_action( 'rcl_beat_success_' + result['beat_name'] );
 
@@ -467,13 +471,13 @@ function rcl_beat() {
 
 function rcl_get_actual_beats_data( beats ) {
 
-	var beats_actual = new Array();
+	var beats_actual = [];
 
 	if ( beats ) {
 
-		beats.forEach( function( beat, i, beats ) {
+		beats.forEach( function( beat ) {
 			var rest = rcl_beats_delay % beat.delay;
-			if ( rest == 0 ) {
+			if ( rest === 0 ) {
 
 				var object = new ( window[beat.beat_name] )( beat.data );
 
