@@ -20,62 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dd7b85ef-5866-4a3f-844e-0e576c4681be" name="Default Changelist" comment="16.25.0">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/wp-recall.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/add-on/commerce/admin/pages/variations.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/commerce/admin/pages/variations.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/add-on/profile/admin/class-rcl-profile-fields-manager.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/profile/admin/class-rcl-profile-fields-manager.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/add-on/profile/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/profile/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/core.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/core.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/scripts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/class-rcl-includer.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/class-rcl-includer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/class-rcl-query-tables.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/class-rcl-query-tables.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/query/class-rcl-query.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/query/class-rcl-query.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/activate.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/addons-update.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/addons.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/ajax.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/cron.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/currency.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/deprecated.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/enqueue-scripts.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/files.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/frontend.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions-access.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions-avatar.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions-cache.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions-media.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions-office.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions-options.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions-others.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions-tabs.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions-user.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/plugin-pages.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/shortcodes.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/supports/js/uploader-avatar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/supports/js/uploader-cover.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/supports/js/user-details.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/supports/modal-user-details.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/supports/uploader-avatar.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/supports/uploader-cover.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/widgets.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/fields/classes/class-rcl-field-abstract.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/fields/classes/class-rcl-field-abstract.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/fields/classes/class-rcl-fields.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/fields/classes/class-rcl-fields.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/table/classes/class-rcl-table.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/table/classes/class-rcl-table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/table/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/modules/table/scripts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-sub-tab.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-sub-tab.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-tab.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-tab.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/add-on-card.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/chart.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/mail.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/recallbar.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user-avatars.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user-cards.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user-mini.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user-rows.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-recall.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-recall.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,6 +45,11 @@
     <joomlaConfigPath />
     <joomlaPath />
   </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/../../xampp/htdocs/rcl.ru" />
+    </include_path>
+  </component>
   <component name="ProjectId" id="1jsfPGt25qUjvWQRuP9cbp2Vmbu" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -108,7 +58,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../xampp/htdocs/rcl.ru" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -126,8 +76,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604597693845</updated>
-      <workItem from="1604597694952" duration="2051000" />
+      <workItem from="1604597694952" duration="3249000" />
+      <workItem from="1604602489191" duration="300000" />
     </task>
+    <task id="LOCAL-00001" summary="16.25.0">
+      <created>1604600421730</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1604600421730</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,24 +102,29 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="16.25.0" />
     <option name="LAST_COMMIT_MESSAGE" value="16.25.0" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="620" y="260" key="FileChooserDialogImpl" timestamp="1604599755612">
+    <state x="547" y="148" key="#PHP" timestamp="1604599780598">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1604599755612" />
+    <state x="547" y="148" key="#PHP/0.0.1680.1010@0.0.1680.1010" timestamp="1604599780598" />
+    <state x="620" y="260" key="FileChooserDialogImpl" timestamp="1604600954043">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1604600954043" />
     <state x="341" y="150" key="SettingsEditor" timestamp="1604599760532">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="341" y="150" key="SettingsEditor/0.0.1680.1010@0.0.1680.1010" timestamp="1604599760532" />
-    <state x="432" y="238" key="Vcs.Push.Dialog.v2" timestamp="1604598824229">
+    <state x="432" y="238" key="Vcs.Push.Dialog.v2" timestamp="1604600486695">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="432" y="238" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1604598824229" />
+    <state x="432" y="238" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1604600486695" />
     <state x="654" y="349" key="git4idea.ui.GitTagDialog" timestamp="1604597792859">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
