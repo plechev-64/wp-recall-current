@@ -784,11 +784,12 @@ function rcl_init_table( table_id ) {
 		list.sort( function( a, b ) {
 			var aVal = jQuery( a ).find( '[data-' + sortby + '-value]' ).data( sortby + '-value' );
 			var bVal = jQuery( b ).find( '[data-' + sortby + '-value]' ).data( sortby + '-value' );
-			//if(isNaN(aVal))
-			if ( route == 'asc' )
-				return ( aVal < bVal ) - ( aVal > bVal ); //по возрастанию
-			else
-				return ( aVal > bVal ) - ( aVal < bVal ); //по убыванию
+
+			if ( route == 'desc' ) {
+				return (aVal < bVal) - (aVal > bVal); //по возрастанию
+			}else {
+				return (aVal > bVal) - (aVal < bVal); //по убыванию
+			}
 		} );
 
 		sortCell.attr( 'data-route', ( route == 'desc' ? 'asc' : 'desc' ) );

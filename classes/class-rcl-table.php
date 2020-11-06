@@ -164,14 +164,14 @@ class Rcl_Table {
 					}
 
 					$attrs['class'][]	 = 'rcl-table__cell-must-sort';
-					//$attrs['data-sort']	 = $cellProps['sort'];
+					$attrs['data-sort']	 = $cellProps['sort'];
 					$attrs['data-order'] = isset( $cellProps['sort']['order'] ) ? $cellProps['sort']['order'] : 'desc';
 				} else if ( $place == 'total' ) {
 					$attrs['class'][] = 'rcl-table__cell-total';
-					//$attrs['data-field'] = $cellProps['sort'];
+					$attrs['data-field'] = $cellProps['sort'];
 				} else {
 					$attrs['class'][] = 'rcl-table__cell-sort';
-					//$attrs['data-' . $cellProps['sort'] . '-value']	 = trim( strip_tags( $contentCell ) );
+					$attrs['data-' . $cellProps['sort'] . '-value']	 = trim( strip_tags( $contentCell ) );
 				}
 			}
 		}
