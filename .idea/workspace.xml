@@ -19,9 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dd7b85ef-5866-4a3f-844e-0e576c4681be" name="Default Changelist" comment="16.25.0">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="dd7b85ef-5866-4a3f-844e-0e576c4681be" name="Default Changelist" comment="16.25.0" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -77,7 +75,7 @@
       <option name="presentableId" value="Default" />
       <updated>1604597693845</updated>
       <workItem from="1604597694952" duration="3249000" />
-      <workItem from="1604602489191" duration="300000" />
+      <workItem from="1604602489191" duration="559000" />
     </task>
     <task id="LOCAL-00001" summary="16.25.0">
       <created>1604600421730</created>
@@ -86,7 +84,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604600421730</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="16.25.0">
+      <created>1604602980682</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1604602980682</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -121,10 +126,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="341" y="150" key="SettingsEditor/0.0.1680.1010@0.0.1680.1010" timestamp="1604599760532" />
-    <state x="432" y="238" key="Vcs.Push.Dialog.v2" timestamp="1604600486695">
+    <state x="432" y="238" key="Vcs.Push.Dialog.v2" timestamp="1604603016648">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="432" y="238" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1604600486695" />
+    <state x="432" y="238" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1604603016648" />
     <state x="654" y="349" key="git4idea.ui.GitTagDialog" timestamp="1604597792859">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
