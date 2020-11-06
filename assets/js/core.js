@@ -207,15 +207,6 @@ function rcl_remove_dynamic_field( e ) {
 	jQuery( e ).parents( '.dynamic-value' ).remove();
 }
 
-function rcl_update_require_checkbox( e ) {
-	var name = jQuery( e ).attr( 'name' );
-	var chekval = jQuery( 'form input[name="' + name + '"]:checked' ).val();
-	if ( chekval )
-		jQuery( 'form input[name="' + name + '"]' ).attr( 'required', false );
-	else
-		jQuery( 'form input[name="' + name + '"]' ).attr( 'required', true );
-}
-
 function rcl_rand( min, max ) {
 	if ( max ) {
 		return Math.floor( Math.random() * ( max - min + 1 ) ) + min;
@@ -1761,3 +1752,25 @@ function rcl_add_attachment_in_editor( attach_id, editor_name, e ) {
 }
 
 /** new uploader scripts end **/
+
+function rcl_update_require_checkbox( e ) {
+	var name = jQuery( e ).attr( 'name' );
+	var chekval = jQuery( 'form input[name="' + name + '"]:checked' ).val();
+	if ( chekval )
+		jQuery( 'form input[name="' + name + '"]' ).attr( 'required', false );
+	else
+		jQuery( 'form input[name="' + name + '"]' ).attr( 'required', true );
+}
+
+/*rcl_add_action( 'rcl_init', 'rcl_init_update_requared_checkbox' );*/
+function rcl_init_update_requared_checkbox() {
+
+	jQuery( 'body form' ).find( '.required-checkbox' ).each( function() {
+		rcl_update_require_checkbox( this );
+	} );
+
+	jQuery( 'body form' ).on( 'click', '.required-checkbox', function() {
+		rcl_update_require_checkbox( this );
+	} );
+
+}

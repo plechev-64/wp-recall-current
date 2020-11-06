@@ -216,13 +216,13 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 				'title'		 => __( 'Thumbnail of the publication', 'wp-recall' ),
 				'type'		 => 'uploader',
 				'temp_media' => 1,
-				'file_types' => 'png, gif, jpg',
+				'file_types' => 'png, gif, jpg, jpeg',
 				'fix_editor' => 'post_content',
 				'options'	 => array(
 					array(
 						'slug'	 => 'file_types',
 						'type'	 => 'hidden',
-						'value'	 => 'png, gif, jpg'
+						'value'	 => 'png, gif, jpg, jpeg'
 					),
 					array(
 						'slug'	 => 'max_files',

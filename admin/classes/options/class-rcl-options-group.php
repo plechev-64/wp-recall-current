@@ -75,12 +75,14 @@ class Rcl_Options_Group {
 		if ( ! isset( $option['value'] ) )
 			$option['value'] = $this->get_value( $option_id, $default, $group, $local );
 
-		if ( $group ) {
-			$option['input_name'] = $this->option_name . '[' . $option['group'] . '][' . $option_id . ']';
-		} else if ( $local ) {
-			$option['input_name'] = 'local[' . $option_id . ']';
-		} else {
-			$option['input_name'] = $this->option_name . '[' . $option_id . ']';
+		if ( ! isset( $option['input_name'] ) ) {
+			if ( $group ) {
+				$option['input_name'] = $this->option_name . '[' . $option['group'] . '][' . $option_id . ']';
+			} else if ( $local ) {
+				$option['input_name'] = 'local[' . $option_id . ']';
+			} else {
+				$option['input_name'] = $this->option_name . '[' . $option_id . ']';
+			}
 		}
 
 		$this->options[$option_id] = Rcl_Option::setup_option( $option );
