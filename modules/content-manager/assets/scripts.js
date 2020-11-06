@@ -109,11 +109,11 @@ function rcl_load_content_manager( e, props ) {
 		} );
 
 	} else {
-		console.log( 1 );
+
 		//проверяем на правильность заполнения
 		if ( !FormFactory.validate() )
 			return false;
-		console.log( 1 );
+
 		FormFactory.send( 'rcl_load_content_manager', function( result ) {
 
 			rcl_proccess_ajax_return( result );

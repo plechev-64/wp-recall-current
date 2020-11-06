@@ -177,7 +177,6 @@ function rcl_add_office_profile_fields( $fields ) {
 function rcl_tab_profile_content( $master_id ) {
 	global $userdata, $user_ID;
 
-	RCL()->use_module( 'table' );
 	RCL()->use_module( 'forms' );
 
 	$profileFields = rcl_get_profile_fields( array( 'user_id' => $master_id ) );
@@ -200,98 +199,6 @@ function rcl_tab_profile_content( $master_id ) {
             }
         }
 	}
-
-	/* $Table = new Rcl_Table( array(
-	  'cols'	 => array(
-	  array(
-	  'width' => 30
-	  ),
-	  array(
-	  'width' => 70
-	  )
-	  ),
-	  'zebra'	 => true,
-	  //'border' => array('table', 'rows')
-	  ) );
-
-	  $content = '<form name="profile" id="your-profile" action="" method="post"  enctype="multipart/form-data">';
-
-	  $profileFields = stripslashes_deep( $profileFields );
-
-	  $hiddens = array();
-	  foreach ( $profileFields as $field ) {
-
-	  $field = apply_filters( 'custom_field_profile', $field );
-
-	  $slug = isset( $field['name'] ) ? $field['name'] : $field['slug'];
-
-	  if ( ! $field || ! $slug )
-	  continue;
-
-	  if ( $field['type'] == 'hidden' ) {
-	  $hiddens[] = $field;
-	  continue;
-	  }
-
-	  $fieldObject = Rcl_Field::setup( $field );
-
-	  $fieldObject->set_prop( 'value', (isset( $userdata->$slug )) ? $userdata->$slug : false  );
-
-	  if ( $slug == 'email' )
-	  $fieldObject->set_prop( 'value', get_the_author_meta( 'email', $user_ID ) );
-
-	  if ( $field['slug'] != 'show_admin_bar_front' && ! isset( $field['value_in_key'] ) )
-	  $fieldObject->set_prop( 'value_in_key', true );
-
-	  $fieldInput = $fieldObject->get_field_input();
-
-	  if ( isset( $fieldObject->admin ) && $fieldObject->admin && ! rcl_is_user_role( $user_ID, 'administrator' ) ) {
-	  if ( $fieldObject->value ) {
-	  $fieldInput = $fieldObject->get_field_value();
-	  }
-	  }
-
-	  $Table->add_row( array(
-	  $fieldObject->get_title(),
-	  $fieldInput
-	  ), apply_filters( 'rcl_profile_row_attrs', array( 'id' => 'profile-field-' . $slug ), $field ) );
-	  }
-
-	  $content .= $Table->get_table();
-
-	  foreach ( $hiddens as $field ) {
-
-	  $fieldObject = Rcl_Field::setup( $field );
-
-	  $fieldObject->set_prop( 'value', (isset( $userdata->$slug )) ? $userdata->$slug : false  );
-
-	  $content .= $fieldObject->get_field_input();
-	  }
-
-	  $content .= "<script>
-	  jQuery(function(){
-	  jQuery('#your-profile').find('.required-checkbox').each(function(){
-	  var name = jQuery(this).attr('name');
-	  var chekval = jQuery('#your-profile input[name=\"'+name+'\"]:checked').val();
-	  if(chekval) jQuery('#your-profile input[name=\"'+name+'\"]').attr('required',false);
-	  else jQuery('#your-profile input[name=\"'+name+'\"]').attr('required',true);
-	  });"
-	  . "});"
-	  . "</script>";
-
-	  $content = apply_filters( 'profile_options_rcl', $content, $userdata );
-
-	  $content .= wp_nonce_field( 'update-profile_' . $user_ID, '_wpnonce', true, false ) . '
-	  <div style="text-align:right;">'
-	  . rcl_get_button( array(
-	  'label'		 => __( 'Update profile', 'wp-recall' ),
-	  'id'		 => 'cpsubmit',
-	  'icon'		 => 'fa-check-circle',
-	  'onclick'	 => 'return rcl_check_profile_form()? rcl_submit_form(this): false;'
-	  ) )
-	  . '<input type="hidden" value="1" name="submit_user_profile" />
-	  </div>
-	  </form>'; */
 
 	$content = rcl_get_form( array(
 		'submit'	 => __( 'Update profile', 'wp-recall' ),
