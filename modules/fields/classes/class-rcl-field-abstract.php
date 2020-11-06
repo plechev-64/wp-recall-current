@@ -145,7 +145,11 @@ class Rcl_Field_Abstract {
 
 		$classes[] = 'rcl-field-input';
 
-		$inputField = $this->get_input();
+		if(isset($this->get_value) && $this->get_value){
+            $inputField = $this->get_field_value();
+        }else{
+            $inputField = $this->get_input();
+        }
 
 		if ( ! $this->title && $this->required ) {
 			$inputField .= '<span class="required">*</span>';

@@ -193,6 +193,12 @@ function rcl_tab_profile_content( $master_id ) {
 
 		if ( $slug != 'show_admin_bar_front' && ! isset( $field['value_in_key'] ) )
 			$profileFields[$k]['value_in_key'] = true;
+
+        if ( isset( $field['admin'] ) && $field['admin'] && ! rcl_is_user_role( $user_ID, 'administrator' ) ) {
+            if ( $profileFields[$k]['value'] ) {
+                $profileFields[$k]['get_value'] = 1;
+            }
+        }
 	}
 
 	/* $Table = new Rcl_Table( array(

@@ -216,14 +216,14 @@ class Rcl_Tabs {
 					if ( ! $tab = RCL()->tabs()->tab( $tabData['slug'] ) )
 						continue;
 
-					$tab->setup_prop( 'name', $tabData['title'] );
-					$tab->setup_prop( 'hidden', $tabData['hidden'] );
-					$tab->setup_prop( 'icon', $tabData['icon'] ? $tabData['icon'] : 'fa-cog'  );
+					$tab->set_prop( 'name', $tabData['title'] );
+					$tab->set_prop( 'hidden', $tabData['hidden'] );
+					$tab->set_prop( 'icon', $tabData['icon'] ? $tabData['icon'] : 'fa-cog'  );
 
 					if ( isset( $tabData['custom-tab'] ) && $tabData['custom-tab'] ) {
-						$tab->setup_prop( 'custom_tab', 1 );
-						$tab->setup_prop( 'supports', isset( $tabData['supports-tab'] ) ? $tabData['supports-tab'] : [ ]  );
-						$tab->setup_prop( 'public', isset( $tabData['public-tab'] ) && $tabData['public-tab'] ? 1 : 0  );
+						$tab->set_prop( 'custom_tab', 1 );
+						$tab->set_prop( 'supports', isset( $tabData['supports-tab'] ) ? $tabData['supports-tab'] : [ ]  );
+						$tab->set_prop( 'public', isset( $tabData['public-tab'] ) && $tabData['public-tab'] ? 1 : 0  );
 
 						$tab->content[0] = new Rcl_Sub_Tab( [
 							'id'		 => $tab->id,

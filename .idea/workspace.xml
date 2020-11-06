@@ -19,7 +19,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dd7b85ef-5866-4a3f-844e-0e576c4681be" name="Default Changelist" comment="16.25.0" />
+    <list default="true" id="dd7b85ef-5866-4a3f-844e-0e576c4681be" name="Default Changelist" comment="16.25.0">
+      <change beforePath="$PROJECT_DIR$/add-on/profile/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/profile/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/fields/classes/class-rcl-field-abstract.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/fields/classes/class-rcl-field-abstract.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-tab.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-tab.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-tabs.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-tabs.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,7 +62,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../add-ons/files-supply" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -119,14 +124,14 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="547" y="148" key="#PHP/0.0.1680.1010@0.0.1680.1010" timestamp="1604599780598" />
-    <state x="620" y="260" key="FileChooserDialogImpl" timestamp="1604600954043">
+    <state x="620" y="260" key="FileChooserDialogImpl" timestamp="1604669401795">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1604600954043" />
-    <state x="341" y="150" key="SettingsEditor" timestamp="1604599760532">
+    <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1604669401795" />
+    <state x="341" y="150" key="SettingsEditor" timestamp="1604663406298">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="341" y="150" key="SettingsEditor/0.0.1680.1010@0.0.1680.1010" timestamp="1604599760532" />
+    <state x="341" y="150" key="SettingsEditor/0.0.1680.1010@0.0.1680.1010" timestamp="1604663406298" />
     <state x="432" y="238" key="Vcs.Push.Dialog.v2" timestamp="1604603016648">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>

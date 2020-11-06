@@ -64,7 +64,7 @@ class Rcl_Tab {
 			] ) );
 	}
 
-	function setup_prop( $propName, $value ) {
+	function set_prop( $propName, $value ) {
 		$this->$propName = $value;
 	}
 
