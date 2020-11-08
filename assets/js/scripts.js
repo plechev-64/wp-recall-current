@@ -14,7 +14,7 @@ jQuery( window ).load( function() {
 	} );
 } );
 
-function rcl_load_tab( tab_id, subtab_id, page, e ) {
+function rcl_load_tab( tab_id, subtab_id, e ) {
 
 	var button = jQuery( e );
 

@@ -29,6 +29,9 @@ class Rcl_Tabs {
 
 	function add( $tabData ) {
 
+		if(!isset($tabData['id']))
+			return false;
+
 		RCL()->tabs[$tabData['id']] = new Rcl_Tab( $tabData );
 
 		RCL()->tabs[$tabData['id']]->setup_subtabs();
