@@ -25,6 +25,8 @@ class Rcl_Sub_Tab {
 
 	function __construct( $subtabData ) {
 		$this->init_properties( $subtabData );
+		$tab = RCL()->tabs()->tab( $this->parent_id );
+		$this->supports = $tab->supports;
 	}
 
 	function init_properties( $args ) {
@@ -80,7 +82,9 @@ class Rcl_Sub_Tab {
 	}
 
 	function get_content() {
-		global $user_LK;
+		global $user_LK, $rcl_tab;
+
+		$rcl_tab = $this;
 
 		$title = $this->title ? $this->title : $this->name;
 

@@ -24,9 +24,9 @@ class Rcl_PageNavi {
 				$this->current_page = $_REQUEST[$this->key];
 		}
 
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_POST['tab_url'] ) ) {
+		if ( Rcl_Ajax()->is_rest_request() && $_POST['call_action'] == 'rcl_load_tab') {
 			$post				 = rcl_decode_post( $_POST['post'] );
-			$this->current_page	 = isset( $post->page ) ? $post->page : false;
+			//$this->current_page	 = isset( $post->page ) ? $post->page : false;
 		}
 
 		if ( $rcl_tab ) {
@@ -73,8 +73,8 @@ class Rcl_PageNavi {
 
 	function uri_data_init() {
 
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_POST['tab_url'] ) ) {
-			$uri					 = $_POST['tab_url'];
+		if ( Rcl_Ajax()->is_rest_request() && $_POST['call_action'] == 'rcl_load_tab' ) {
+			$uri					 = rcl_get_tab_permalink($_POST['office_id'], $_POST['tab_id'],$_POST['subtab_id']? $_POST['subtab_id']: false);
 			$uri_string				 = explode( '?', $uri );
 			$query_string			 = $uri_string[1];
 			$this->uri['current']	 = $uri_string[0];
@@ -207,14 +207,18 @@ class Rcl_PageNavi {
 
 					if ( $this->ajax && rcl_is_office() ) {
 
-						$attrs['data']['post'] = rcl_encode_post( array(
+						/*$attrs['data']['post'] = rcl_encode_post( array(
 							'tab_id'	 => $rcl_tab->id,
 							'subtab_id'	 => $rcl_tab->active_subtab,
 							'master_id'	 => $user_LK,
 							'page'		 => $attrs['data']['page'],
 							) );
 
-						$attrs['class'] = 'rcl-ajax';
+						$attrs['class'] = 'rcl-ajax';*/
+
+						$attrs['onclick'] = 'rcl_load_tab("'.$rcl_tab->parent_id.'", "'.$rcl_tab->id.'", this);return false;';
+						$attrs['data']['pager-key'] = $this->key;
+
 					}
 
 					$attrs = apply_filters( 'rcl_page_link_attributes', $attrs );

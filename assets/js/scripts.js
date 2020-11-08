@@ -14,7 +14,7 @@ jQuery( window ).load( function() {
 	} );
 } );
 
-function rcl_load_tab( tab_id, subtab_id, e ) {
+function rcl_load_tab( tab_id, subtab_id, page, e ) {
 
 	var button = jQuery( e );
 
@@ -22,14 +22,22 @@ function rcl_load_tab( tab_id, subtab_id, e ) {
 
 	rcl_preloader_show( jQuery( '#rcl-tab-content' ) );
 
+	let data = {
+		action: 'rcl_load_tab',
+		tab_id: tab_id,
+		subtab_id: subtab_id,
+		office_id: Rcl.office_ID
+	};
+
+	/* support old pager */
+	if(pagerKey = button.data('pager-key')){
+		data[pagerKey] = button.data('page');
+		data['pager-id'] = button.data('pager-id')
+	}
+
 	rcl_ajax( {
 		rest: true,
-		data: {
-			action: 'rcl_load_tab',
-			tab_id: tab_id,
-			subtab_id: subtab_id,
-			office_id: Rcl.office_ID
-		},
+		data: data,
 		success: function( data ) {
 
 			data = rcl_apply_filters( 'rcl_upload_tab', data );

@@ -31,7 +31,8 @@ class Rcl_Tab {
 
 		$this->init_properties( $tabData );
 
-		$this->setup_subtabs();
+		//$this->setup_subtabs();
+
 	}
 
 	function init_properties( $args ) {

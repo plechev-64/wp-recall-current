@@ -72,6 +72,7 @@ function rcl_load_tab() {
 	$tab_id		 = $_POST['tab_id'];
 	$subtab_id	 = $_POST['subtab_id'];
 	$office_id	 = intval( $_POST['office_id'] );
+	$page_id	 = intval( $_POST['page_id'] );
 
 	$tab = RCL()->tabs()->tab( $tab_id );
 

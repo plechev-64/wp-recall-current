@@ -31,6 +31,8 @@ class Rcl_Tabs {
 
 		RCL()->tabs[$tabData['id']] = new Rcl_Tab( $tabData );
 
+		RCL()->tabs[$tabData['id']]->setup_subtabs();
+
 		return RCL()->tabs[$tabData['id']];
 	}
 
@@ -213,7 +215,9 @@ class Rcl_Tabs {
 
 				foreach ( $tabs as $tabData ) {
 
-					if ( ! $tab = RCL()->tabs()->tab( $tabData['slug'] ) )
+					$tab = RCL()->tabs()->tab( $tabData['slug'] );
+
+					if ( ! $tab )
 						continue;
 
 					$tab->set_prop( 'name', $tabData['title'] );
