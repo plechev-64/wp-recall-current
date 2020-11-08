@@ -130,20 +130,21 @@ function rcl_add_chat_tab() {
 		'public'	 => 1,
 		'icon'		 => 'fa-comments-o',
 		'output'	 => 'menu',
-		'content'	 => array(
-			array(
-				'id'		 => 'private-contacts',
-				'name'		 => __( 'Contacts', 'wp-recall' ),
-				'title'		 => __( 'User contacts', 'wp-recall' ),
-				'icon'		 => 'fa-book',
-				'callback'	 => array(
-					'name' => 'rcl_chat_tab'
-				)
-			)
-		)
+		'content'	 => array()
 	);
 
 	if ( rcl_is_office( $user_ID ) ) {
+
+		$tab_data['content'][] = array(
+			'id'		 => 'private-contacts',
+			'name'		 => __( 'Contacts', 'wp-recall' ),
+			'title'		 => __( 'User contacts', 'wp-recall' ),
+			'icon'		 => 'fa-book',
+			'callback'	 => array(
+				'name' => 'rcl_chat_tab'
+			)
+		);
+
 		$tab_data['content'][] = array(
 			'id'		 => 'important-messages',
 			'name'		 => __( 'Important messages', 'wp-recall' ),
@@ -154,7 +155,35 @@ function rcl_add_chat_tab() {
 		);
 	}
 
+	if ( !rcl_is_office( $user_ID ) ) {
+		$tab_data['content'][] = array(
+			'id'		 => 'important-messages',
+			'name'		 => __( 'Private chat', 'wp-recall' ),
+			'icon'		 => 'fa-comments',
+			'callback'	 => array(
+				'name' => 'rcl_get_tab_private_chat'
+			)
+		);
+	}
+
 	rcl_tab( $tab_data );
+}
+
+function rcl_get_tab_private_chat($office_id){
+	global $user_ID;
+
+	if ( $user_ID ) {
+		$chatdata	 = rcl_get_chat_private( $office_id );
+		$chat		 = $chatdata['content'];
+	} else {
+		$chat = rcl_get_notice( array(
+			'type'	 => 'error',
+			'text'	 => __( 'Sign in to send a message to the user', 'wp-recall' )
+		) );
+	}
+
+	return $chat;
+
 }
 
 function rcl_chat_tab( $office_id ) {
@@ -164,17 +193,6 @@ function rcl_chat_tab( $office_id ) {
 		return rcl_get_user_contacts_list( $office_id );
 	}
 
-	if ( $user_ID ) {
-		$chatdata	 = rcl_get_chat_private( $office_id );
-		$chat		 = $chatdata['content'];
-	} else {
-		$chat = rcl_get_notice( array(
-			'type'	 => 'error',
-			'text'	 => __( 'Sign in to send a message to the user', 'wp-recall' )
-			) );
-	}
-
-	return $chat;
 }
 
 function rcl_get_chat_private( $user_id, $args = array() ) {
