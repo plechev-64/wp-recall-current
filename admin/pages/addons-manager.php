@@ -26,6 +26,8 @@ if ( isset( $_GET['update-addon'] ) ) {
 			break;
 		case 'delete': $text_notice = __( 'Files and data additions have been <strong>deleted</strong>.', 'wp-recall' );
 			break;
+		case 'upload': $text_notice = __( 'Add-on has been successfully loaded. You can activate this add-on.', 'wp-recall' );
+			break;
 		case 'error-info': $text_notice = __( 'Add-on has not been loaded. Correct headers not found.', 'wp-recall' );
 			$type		 = 'error';
 			break;
