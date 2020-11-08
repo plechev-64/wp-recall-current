@@ -35,6 +35,14 @@ class Rcl_Register_Form_Manager extends Rcl_Fields_Manager {
 
 		$fields = get_site_option( 'rcl_profile_fields' );
 
+		if($fields){
+			foreach($fields as $k => $field){
+				if(in_array($field['slug'], ['primary_pass', 'repeat_pass', 'user_email'])){
+					unset($fields[$k]);
+				}
+			}
+		}
+
 		if ( ! $fields )
 			$fields = [ ];
 

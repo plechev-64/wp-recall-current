@@ -20,10 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dd7b85ef-5866-4a3f-844e-0e576c4681be" name="Default Changelist" comment="16.25.0">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/add-on/profile/admin/class-rcl-profile-fields-manager.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/profile/admin/class-rcl-profile-fields-manager.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/add-on/profile/admin/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/profile/admin/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/add-on/profile/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/profile/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/fields/classes/class-rcl-field-abstract.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/fields/classes/class-rcl-field-abstract.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-tab.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-tab.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-tabs.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/tabs/classes/class-rcl-tabs.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/add-on/theme-grace/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/theme-grace/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/add-on/theme-sunshine/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/theme-sunshine/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/classes/class-rcl-register-form-manager.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/classes/class-rcl-register-form-manager.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/fields/classes/class-rcl-fields.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/fields/classes/class-rcl-fields.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-recall.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-recall.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -49,7 +49,27 @@ class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager {
 					'title'	 => __( 'Birthday', 'wp-recall' ),
 					'icon'	 => 'fa-birthday-cake',
 					'type'	 => 'date'
-				) )
+				),
+				array(
+					'slug'		 => 'user_email',
+					'title'		 => __( 'E-mail', 'wp-recall' ),
+					'type'		 => 'email',
+					'required'	 => 1
+				),
+				array(
+					'slug'		 => 'primary_pass',
+					'title'		 => __( 'New password', 'wp-recall' ),
+					'type'		 => 'password',
+					'required'	 => 0,
+					'notice'	 => __( 'If you want to change your password - enter a new one', 'wp-recall' )
+				),
+				array(
+					'slug'		 => 'repeat_pass',
+					'title'		 => __( 'Repeat password', 'wp-recall' ),
+					'type'		 => 'password',
+					'required'	 => 0,
+					'notice'	 => __( 'Repeat the new password', 'wp-recall' )
+				))
 			),
 			'field_options'	 => apply_filters( 'rcl_profile_field_options', array(
 				array(

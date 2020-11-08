@@ -28,31 +28,25 @@
 .cab_bttn_lite {
     float: right;
 }
-.cab_bttn_lite > span {
-    display: inline-block;
+#rcl-tabs-menu-counters .rcl-tab-button {
+    background: none;
+    display: flex;
+    flex-direction: column-reverse;
 }
-.cab_bttn_lite .recall-button {
-    padding: 0;
+#rcl-tabs-menu-counters .rcl-tab-button .rcl-bttn__ico{
+    display: none;
 }
-.cab_bttn_lite .rcli {
-    /*display: none;*/
+#rcl-tabs-menu-counters .rcl-tab-button .rcl-bttn__text{
+    font-size: 12px;
+    padding: 5px 0 0;
 }
-.cab_bttn_lite .rcl-tab-button a > span {
-    color: #ccc;
-    display: table;
+#rcl-tabs-menu-counters .rcl-tab-button .rcl-bttn__count{
+    display: block;
+    width: 100%;
     text-align: center;
-}
-.cab_bttn_lite .rcl-tab-button span span {
-    background: transparent;
-    color: #fff;
-    display: table-header-group;
     font-size: 20px;
     font-weight: bold;
-    padding: 0;
-    text-align: center;
-}
-#lk-conteyner .cab_bttn_lite .rcl-tab-button span span > span {
-    display: table;
+    margin: 0;
 }
 /* END кнопки lite */
 

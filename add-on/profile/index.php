@@ -127,47 +127,23 @@ function rcl_edit_profile() {
 	exit;
 }
 
-//add_filter( 'rcl_profile_fields', 'rcl_add_office_profile_fields', 10 );
-add_filter( 'rcl_default_profile_fields', 'rcl_add_office_profile_fields', 10 );
+add_filter( 'rcl_profile_fields', 'rcl_add_office_profile_fields', 10 );
 function rcl_add_office_profile_fields( $fields ) {
-	global $userdata;
 
-	$profileFields = array();
+	if ( !rcl_check_access_console() )
+		return $fields;
 
-	//if ( isset( $userdata ) && $userdata->user_level >= rcl_get_option( 'consol_access_rcl', 7 ) ) {
-	$profileFields[] = array(
-		'slug'	 => 'show_admin_bar_front',
-		'title'	 => __( 'Admin toolbar', 'wp-recall' ),
-		'type'	 => 'select',
-		'values' => array(
-			'false'	 => __( 'Disabled', 'wp-recall' ),
-			'true'	 => __( 'Enabled', 'wp-recall' )
-		)
-	);
-	//}
-
-	$profileFields[] = array(
-		'slug'		 => 'user_email',
-		'title'		 => __( 'E-mail', 'wp-recall' ),
-		'type'		 => 'email',
-		'required'	 => 1
-	);
-
-	$profileFields[] = array(
-		'slug'		 => 'primary_pass',
-		'title'		 => __( 'New password', 'wp-recall' ),
-		'type'		 => 'password',
-		'required'	 => 0,
-		'notice'	 => __( 'If you want to change your password - enter a new one', 'wp-recall' )
-	);
-
-	$profileFields[] = array(
-		'slug'		 => 'repeat_pass',
-		'title'		 => __( 'Repeat password', 'wp-recall' ),
-		'type'		 => 'password',
-		'required'	 => 0,
-		'notice'	 => __( 'Repeat the new password', 'wp-recall' )
-	);
+	$profileFields = [
+			[
+			'slug'   => 'show_admin_bar_front',
+			'title'  => __( 'Admin toolbar', 'wp-recall' ),
+			'type'   => 'select',
+			'values' => [
+				'false' => __( 'Disabled', 'wp-recall' ),
+				'true'  => __( 'Enabled', 'wp-recall' )
+			]
+		]
+	];
 
 	$fields = ($fields) ? array_merge( $profileFields, $fields ) : $profileFields;
 
@@ -200,7 +176,14 @@ function rcl_tab_profile_content( $master_id ) {
         }
 	}
 
+	$profileFields[] = [
+		'type' => 'hidden',
+		'slug' => 'submit_user_profile',
+		'value' => 1
+	];
+
 	$content = rcl_get_form( array(
+		'nonce_name' => 'update-profile_' . $user_ID,
 		'submit'	 => __( 'Update profile', 'wp-recall' ),
 		'onclick'	 => 'rcl_check_profile_form()? rcl_submit_form(this): false;',
 		'fields'	 => $profileFields,

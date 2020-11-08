@@ -85,13 +85,27 @@ class Rcl_Fields extends Rcl_Field {
 			}
 
 			if ( $headerFields ) {
-				$structure['header-group']['areas'][0]['fields'] = $headerFields;
+				$structure['header-group'] = [
+					'id' => 'header',
+					'areas' => [
+						[
+							'fields' => $headerFields
+						]
+					]
+				];
 			}
 
 			$structure += $this->structure;
 
 			if ( $footerFields ) {
-				$structure['footer-group']['areas'][0]['fields'] = $footerFields;
+				$structure['footer-group'] = [
+					'id' => 'footer',
+					'areas' => [
+						[
+							'fields' => $footerFields
+						]
+					]
+				];
 			}
 
 			$this->structure = $structure;

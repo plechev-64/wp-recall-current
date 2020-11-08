@@ -5,7 +5,7 @@ require_once 'addon-settings.php';
 
 add_action( 'admin_menu', 'rcl_profile_admin_menu', 30 );
 function rcl_profile_admin_menu() {
-	add_submenu_page( 'manage-wprecall', __( 'Profile fields', 'wp-recall' ), __( 'Profile fields', 'wp-recall' ), 'manage_options', 'manage-userfield', 'rcl_profile_fields_manager' );
+	add_submenu_page( 'manage-wprecall', __( 'The form of profile', 'wp-recall' ), __( 'The form of profile', 'wp-recall' ), 'manage_options', 'manage-userfield', 'rcl_profile_fields_manager' );
 }
 
 add_filter( 'rcl_field_options', 'rcl_setup_profile_manager_field_options', 10, 3 );
@@ -31,19 +31,6 @@ function rcl_setup_profile_manager_field_options( $options, $field, $manager_id 
 
 	if ( in_array( $field->type, ['uploader', 'file' ] ) ) {
 		unset( $options['required'] );
-	}
-
-	if ( rcl_is_register_open() ) {
-
-		$options['register'] = array(
-			'type'	 => 'radio',
-			'slug'	 => 'register',
-			'title'	 => __( 'display in registration form', 'wp-recall' ),
-			'values' => array(
-				__( 'No', 'wp-recall' ),
-				__( 'Yes', 'wp-recall' )
-			)
-		);
 	}
 
 	return $options;

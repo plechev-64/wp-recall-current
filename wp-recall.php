@@ -46,6 +46,7 @@ final class WP_Recall {
 		$this->init_modules(); //Определяем модули.
 		$this->init_hooks(); //Тут все наши хуки
 
+		$this->use_module( 'tabs' );
 		$this->use_module( 'forms' );
 		$this->use_module( 'table' );
 
@@ -177,9 +178,6 @@ final class WP_Recall {
 	}
 
 	function tabs() {
-
-		$this->use_module( 'tabs' );
-
 		return Rcl_Tabs::instance();
 	}
 
