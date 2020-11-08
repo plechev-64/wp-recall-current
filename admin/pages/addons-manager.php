@@ -29,6 +29,8 @@ if ( isset( $_GET['update-addon'] ) ) {
 		case 'error-info': $text_notice = __( 'Add-on has not been loaded. Correct headers not found.', 'wp-recall' );
 			$type		 = 'error';
 			break;
+		case 'upload': $text_notice = __( 'Add-on has been successfully loaded. You can activate this add-on.', 'wp-recall' );
+			break;
 		case 'error-activate': $text_notice = $_GET['error-text'];
 			$type		 = 'error';
 			break;
