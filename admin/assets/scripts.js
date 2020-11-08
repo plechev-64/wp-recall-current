@@ -102,12 +102,12 @@ jQuery( function( $ ) {
 			return false;
 		var addon = $( this ).data( 'addon' );
 		$( '#' + addon + '-update .update-message' ).addClass( 'updating-message' );
-		var dataString = 'action=rcl_update_addon&addon=' + addon;
-		$.ajax( {
-			type: 'POST',
-			data: dataString,
-			dataType: 'json',
-			url: ajaxurl,
+
+		rcl_ajax({
+			data: {
+				action: 'rcl_update_addon',
+				addon: addon
+			},
 			success: function( data ) {
 				if ( data.addon_id == addon ) {
 					$( '#' + addon + '-update .update-message' ).toggleClass( 'updating-message updated-message' ).html( data.success );
@@ -121,9 +121,9 @@ jQuery( function( $ ) {
 						sizeClass: 'auto',
 						title: Rcl.local.error,
 						buttons: [ {
-								label: Rcl.local.close,
-								closeAfter: true
-							} ],
+							label: Rcl.local.close,
+							closeAfter: true
+						} ],
 						content: data.error
 					};
 
@@ -131,8 +131,10 @@ jQuery( function( $ ) {
 
 				}
 			}
-		} );
+		});
+
 		return false;
+
 	} );
 
 	$( '#rcl-notice,body' ).on( 'click', 'a.close-notice', function() {
