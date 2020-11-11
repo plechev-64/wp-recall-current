@@ -19,7 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dd7b85ef-5866-4a3f-844e-0e576c4681be" name="Default Changelist" comment="16.25.a.4">
+    <list default="true" id="4e314d39-c72c-4d13-8340-d29011786b13" name="Default Changelist" comment="16.24.29">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,7 +59,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../xampp/htdocs/rcl.ru" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -72,7 +72,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="dd7b85ef-5866-4a3f-844e-0e576c4681be" name="Default Changelist" comment="" />
+      <changelist id="4e314d39-c72c-4d13-8340-d29011786b13" name="Default Changelist" comment="16.24.29" />
       <created>1604597693845</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -80,6 +80,8 @@
       <workItem from="1604597694952" duration="3249000" />
       <workItem from="1604602489191" duration="559000" />
       <workItem from="1604864766215" duration="368000" />
+      <workItem from="1604865985236" duration="157000" />
+      <workItem from="1604866185049" duration="16000" />
     </task>
     <task id="LOCAL-00001" summary="16.25.0">
       <created>1604600421730</created>
@@ -161,10 +163,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="547" y="148" key="#PHP/0.0.1680.1010@0.0.1680.1010" timestamp="1604599780598" />
-    <state x="620" y="260" key="FileChooserDialogImpl" timestamp="1604669401795">
+    <state x="620" y="260" key="FileChooserDialogImpl" timestamp="1604866199006">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1604669401795" />
+    <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1604866199006" />
     <state x="341" y="150" key="SettingsEditor" timestamp="1604663406298">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -173,10 +175,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="432" y="238" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1604865001139" />
-    <state x="547" y="238" width="585" height="534" key="find.popup" timestamp="1604864778864">
+    <state x="547" y="238" width="585" height="534" key="find.popup" timestamp="1604865924854">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="547" y="238" width="585" height="534" key="find.popup/0.0.1680.1010@0.0.1680.1010" timestamp="1604864778864" />
+    <state x="547" y="238" width="585" height="534" key="find.popup/0.0.1680.1010@0.0.1680.1010" timestamp="1604865924854" />
     <state x="654" y="349" key="git4idea.ui.GitTagDialog" timestamp="1604597792859">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
