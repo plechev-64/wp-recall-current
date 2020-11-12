@@ -110,6 +110,7 @@
 .rcl-public-box .rcl-form-field .rcl-terms-select .rcl-field-input {
     display: inline-block;
     width: auto;
+    margin-bottom: 5px;
 }
 .rcl-public-box .rcl-form-field .rcl-terms-select .type-multiselect-input {
     display: block;
@@ -117,6 +118,9 @@
 .rcl-public-box .rcl-form-field .rcl-terms-select .rcl-tags-list {
     margin: 0 0 4px;
     overflow: hidden;
+}
+.rcl-public-box .rcl-form-field .rcl-terms-select .rcl-tags-list .required{
+    display: none;
 }
 .rcl-public-box .rcl-tags-list > .block-label {
     background: #fff;
