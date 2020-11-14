@@ -19,10 +19,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e314d39-c72c-4d13-8340-d29011786b13" name="Default Changelist" comment="16.24.29">
+    <list default="true" id="4e314d39-c72c-4d13-8340-d29011786b13" name="Default Changelist" comment="16.24.30">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/add-on/publicpost/classes/class-rcl-public-form.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/publicpost/classes/class-rcl-public-form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/add-on/publicpost/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/publicpost/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/add-on/user-balance/admin/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/user-balance/admin/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/add-on/user-balance/functions-ajax.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/user-balance/functions-ajax.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/uploader/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/uploader/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,10 +166,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="547" y="148" key="#PHP/0.0.1680.1010@0.0.1680.1010" timestamp="1604599780598" />
-    <state x="620" y="260" key="FileChooserDialogImpl" timestamp="1605162222981">
+    <state x="620" y="260" key="FileChooserDialogImpl" timestamp="1605341270789">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1605162222981" />
+    <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1605341270789" />
     <state x="341" y="150" key="SettingsEditor" timestamp="1604663406298">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -177,10 +178,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="432" y="238" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1604865001139" />
-    <state x="547" y="238" width="585" height="534" key="find.popup" timestamp="1604865924854">
+    <state x="547" y="238" width="585" height="592" key="find.popup" timestamp="1605340386824">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="547" y="238" width="585" height="534" key="find.popup/0.0.1680.1010@0.0.1680.1010" timestamp="1604865924854" />
+    <state x="547" y="238" width="585" height="592" key="find.popup/0.0.1680.1010@0.0.1680.1010" timestamp="1605340386824" />
     <state x="654" y="349" key="git4idea.ui.GitTagDialog" timestamp="1604597792859">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>

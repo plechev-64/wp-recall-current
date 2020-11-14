@@ -184,7 +184,7 @@ class Rcl_PageNavi {
 		$class = 'rcl-pager';
 
 		if ( $classes )
-			$class .= $class . ' ' . $classes;
+			$class .= ' ' . $classes;
 
 		if ( $this->ajax ) {
 			$class = $class . ' rcl-ajax-navi';

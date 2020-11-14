@@ -63,30 +63,6 @@ function rcl_get_chart_payments( $pays ) {
 	return rcl_get_chart( $chartArgs );
 }
 
-/* * ***********************************************
-  Меняем баланс пользователя из админки
- * *********************************************** */
-rcl_ajax_action( 'rcl_edit_balance_user', false );
-function rcl_edit_balance_user() {
-
-	$user_id = intval( $_POST['user'] );
-	$balance = floatval( str_replace( ',', '.', $_POST['balance'] ) );
-
-	do_action( 'rcl_pre_edit_user_balance_by_admin', $user_id, $balance );
-
-	if ( ! $user_id ) {
-		return array( 'error' => __( 'Balance was not changed', 'wp-recall' ) );
-	}
-
-	rcl_update_user_balance( $balance, $user_id, __( 'Balance changed', 'wp-recall' ) );
-
-	return array(
-		'success'	 => __( 'Balance successfully changed', 'wp-recall' ),
-		'user_id'	 => $user_id,
-		'balance'	 => $balance
-	);
-}
-
 add_action( 'admin_menu', 'rcl_statistic_user_pay_page', 25 );
 function rcl_statistic_user_pay_page() {
 	$prim = 'manage-rmag';

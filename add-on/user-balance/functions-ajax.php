@@ -1,6 +1,30 @@
 <?php
 
 /* * ***********************************************
+  Меняем баланс пользователя из админки
+ * *********************************************** */
+rcl_ajax_action( 'rcl_edit_balance_user', false );
+function rcl_edit_balance_user() {
+
+	$user_id = intval( $_POST['user'] );
+	$balance = floatval( str_replace( ',', '.', $_POST['balance'] ) );
+
+	do_action( 'rcl_pre_edit_user_balance_by_admin', $user_id, $balance );
+
+	if ( ! $user_id ) {
+		return array( 'error' => __( 'Balance was not changed', 'wp-recall' ) );
+	}
+
+	rcl_update_user_balance( $balance, $user_id, __( 'Balance changed', 'wp-recall' ) );
+
+	return array(
+		'success'	 => __( 'Balance successfully changed', 'wp-recall' ),
+		'user_id'	 => $user_id,
+		'balance'	 => $balance
+	);
+}
+
+/* * ***********************************************
   Пополнение личного счета пользователя
  * *********************************************** */
 rcl_ajax_action( 'rcl_add_count_user', false );
