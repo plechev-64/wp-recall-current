@@ -162,7 +162,7 @@ class Rcl_Rating_Box {
 		if ( ! $object || ! isset( $object->post_type ) )
 			return false;
 
-		$this->rating_none = ($object->ID == $post->ID && isset( $post->rating_none )) ? $post->rating_none : get_post_meta( $object->ID, 'rayting-none', 1 );
+		$this->rating_none = (isset($post->ID) && $object->ID == $post->ID && isset( $post->rating_none )) ? $post->rating_none : get_post_meta( $object->ID, 'rayting-none', 1 );
 	}
 
 	function get_box() {
