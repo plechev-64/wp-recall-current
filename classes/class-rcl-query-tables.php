@@ -39,7 +39,8 @@ class Rcl_Posts_Query extends Rcl_Query {
 				'post_content',
 				'post_parent',
 				'post_name',
-				'post_mime_type'
+				'post_mime_type',
+				'post_excerpt'
 			)
 		);
 

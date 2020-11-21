@@ -106,9 +106,9 @@ function rcl_edit_post() {
 }
 
 //выборка меток по введенным значениям
-rcl_ajax_action( 'rcl_get_like_tags', true );
+add_action( 'wp_ajax_rcl_get_like_tags', 'rcl_get_like_tags', 10 );
+add_action( 'wp_ajax_nopriv_rcl_get_like_tags', 'rcl_get_like_tags', 10 );
 function rcl_get_like_tags() {
-	global $wpdb;
 
 	if ( ! $_POST['query'] ) {
 		return array( array( 'id' => '' ) );
@@ -125,7 +125,7 @@ function rcl_get_like_tags() {
 		$tags[$key]['name']	 = $term->name;
 	}
 
-	return $tags;
+	wp_send_json($tags);
 }
 
 add_filter( 'rcl_preview_post_content', 'rcl_add_registered_scripts' );

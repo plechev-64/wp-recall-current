@@ -728,11 +728,11 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		jQuery(window).on('load', function(){
 			jQuery('#rcl-tags-" . $taxonomy . "').magicSuggest({
 				data: Rcl.ajaxurl,
-				dataUrlParams: { action: 'rcl_get_like_tags',taxonomy: '" . $taxonomy . "',ajax_nonce:Rcl.nonce },
+				dataUrlParams: { action: 'rcl_get_like_tags', taxonomy: '" . $taxonomy . "', ajax_nonce:Rcl.nonce },
 				noSuggestionText: '" . __( "Not found", "rcl-public" ) . "',
 				ajaxConfig: {
 					  xhrFields: {
-						withCredentials: true,
+						withCredentials: true
 					  }
 				}
 			});

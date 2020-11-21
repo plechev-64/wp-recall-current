@@ -407,8 +407,6 @@ class Rcl_Uploader {
 
 	function upload() {
 
-
-
 		if ( ! $_FILES[$this->input_name] ) {
 			return false;
 		}

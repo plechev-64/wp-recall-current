@@ -366,7 +366,6 @@ function rcl_init_click_smilies() {
 rcl_add_action( 'rcl_init', 'rcl_init_close_popup' );
 function rcl_init_close_popup() {
 	jQuery( '#rcl-popup,.floatform' ).on( 'click', '.close-popup', function() {
-		rcl_hide_float_login_form();
 		jQuery( '#rcl-overlay' ).fadeOut();
 		jQuery( '#rcl-popup' ).empty();
 		return false;
@@ -376,7 +375,6 @@ function rcl_init_close_popup() {
 rcl_add_action( 'rcl_init', 'rcl_init_click_overlay' );
 function rcl_init_click_overlay() {
 	jQuery( '#rcl-overlay' ).click( function() {
-		rcl_hide_float_login_form();
 		jQuery( '#rcl-overlay' ).fadeOut();
 		jQuery( '#rcl-popup' ).empty();
 		return false;
