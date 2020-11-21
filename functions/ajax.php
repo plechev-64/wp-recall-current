@@ -62,6 +62,7 @@ function rcl_ajax_tab() {
 //регистрируем биение плагина
 rcl_ajax_action( 'rcl_beat', true );
 function rcl_beat() {
+	global $rcl_beats;
 
 	rcl_verify_ajax_nonce();
 
@@ -70,6 +71,9 @@ function rcl_beat() {
 
 	if ( $databeat ) {
 		foreach ( $databeat as $data ) {
+
+			if(!isset($rcl_beats[$data->beat_name]))
+				continue;
 
 			$result = array();
 

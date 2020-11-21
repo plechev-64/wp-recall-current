@@ -1466,3 +1466,8 @@ function rcl_get_pages_ids() {
 
 	return $pages;
 }
+
+function rcl_init_beat($beatName){
+	global $rcl_beats;
+	$rcl_beats[$beatName] = [];
+}
