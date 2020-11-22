@@ -206,7 +206,7 @@ class Rcl_EditPost {
 			'post_content'	 => (isset( $_POST['post_content'] )) ? $_POST['post_content'] : ''
 		);
 
-		if ( ! $post || ! $post->post_name ) {
+		if ( ! $this->post || ! $this->post->post_name ) {
 			$postdata['post_name'] = sanitize_title( $postdata['post_title'] );
 		}
 

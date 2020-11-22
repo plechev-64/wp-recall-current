@@ -1,5 +1,10 @@
 <?php
 
+function rcl_init_beat($beatName){
+	global $rcl_beats;
+	$rcl_beats[$beatName] = [];
+}
+
 if ( ! function_exists( 'get_called_class' ) ) :
 	function get_called_class() {
 		$arr		 = array();

@@ -1,31 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BranchesTreeState">
-    <expand>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </expand>
+    <expand />
     <select />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="237d1cd5-1091-4209-bcef-efd94e85306b" name="Default Changelist" comment="16.24.30">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/add-on/publicpost/classes/class-rcl-public-form.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/publicpost/classes/class-rcl-public-form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/add-on/publicpost/functions-ajax.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/publicpost/functions-ajax.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/scripts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/class-rcl-query-tables.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/class-rcl-query-tables.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/uploader/class-rcl-uploader.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/uploader/class-rcl-uploader.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/add-on/prime-forum/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/prime-forum/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/add-on/publicpost/classes/class-rcl-edit-post.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/publicpost/classes/class-rcl-edit-post.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/add-on/rcl-chat/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/add-on/rcl-chat/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions-others.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions/functions-others.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/loginform/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/loginform/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-recall.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-recall.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +51,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../xampp/htdocs/medconsulting/themes/medconsulting" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -90,6 +77,8 @@
       <workItem from="1605593517521" duration="14306000" />
       <workItem from="1605769040001" duration="1787000" />
       <workItem from="1605887762850" duration="946000" />
+      <workItem from="1605950896500" duration="2205000" />
+      <workItem from="1606023582137" duration="365000" />
     </task>
     <task id="LOCAL-00001" summary="16.25.0">
       <created>1604600421730</created>
@@ -171,10 +160,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="547" y="148" key="#PHP/0.0.1680.1010@0.0.1680.1010" timestamp="1604599780598" />
-    <state x="620" y="260" key="FileChooserDialogImpl" timestamp="1605602286905">
+    <state x="620" y="260" key="FileChooserDialogImpl" timestamp="1605962506837">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1605602286905" />
+    <state x="620" y="260" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1605962506837" />
     <state x="341" y="150" key="SettingsEditor" timestamp="1604663406298">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -183,10 +172,14 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="432" y="238" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1604865001139" />
-    <state x="320" y="158" width="930" height="624" key="find.popup" timestamp="1605612840309">
+    <state x="320" y="158" width="930" height="624" key="find.popup" timestamp="1606023601495">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="320" y="158" width="930" height="624" key="find.popup/0.0.1680.1010@0.0.1680.1010" timestamp="1605612840309" />
+    <state x="320" y="158" width="930" height="624" key="find.popup/0.0.1680.1010@0.0.1680.1010" timestamp="1606023601495" />
+    <state x="620" y="218" key="git4idea.branch.GitSmartOperationDialog" timestamp="1606023935711">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="620" y="218" key="git4idea.branch.GitSmartOperationDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1606023935711" />
     <state x="654" y="349" key="git4idea.ui.GitTagDialog" timestamp="1604597792859">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
