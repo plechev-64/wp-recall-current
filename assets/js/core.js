@@ -239,7 +239,9 @@ function rcl_notice( text, type, time_close ) {
 			jQuery( '#rcl-notice' ).html( html );
 	}
 
-	jQuery( '#rcl-notice > div' ).last().animateCss( 'slideInLeft' );
+	if ( typeof animateCss !== 'undefined' ) {
+		jQuery( '#rcl-notice > div' ).last().animateCss( 'slideInLeft' );
+	}
 
 	if ( time_close ) {
 		setTimeout( function() {
