@@ -253,7 +253,10 @@ function rcl_save_temp_async_uploaded_thumbnail() {
 		) );
 	}
 
-	rcl_update_tempgallery( $attachment_id, $attachment_url );
+	rcl_add_temp_media(array(
+		'media_id' => $attachment_id,
+		'uploader_id' => 'post_uploader'
+	));
 
 	wp_send_json( array(
 		'save' => true
