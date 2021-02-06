@@ -181,7 +181,7 @@ function rcl_init_cookie() {
 			if ( document.cookie && document.cookie !== '' ) {
 				var cookies = document.cookie.split( ';' );
 				for ( var i = 0; i < cookies.length; i++ ) {
-					var cookie = jQuery.trim( cookies[i] );
+					var cookie = cookies[i].trim();
 					if ( cookie.substring( 0, name.length + 1 ) === ( name + '=' ) ) {
 						cookieValue = decodeURIComponent( cookie.substring( name.length + 1 ) );
 						break;
@@ -1009,7 +1009,7 @@ function RclForm( form ) {
 				var value = false;
 
 				if ( field.attr( 'type' ) == 'checkbox' ) {
-					if ( field.is( ":checked" ) )
+					if ( jQuery( 'input[name="' + field.attr( 'name' ) + '"]:checked' ).val() )
 						value = true;
 				} else if ( field.attr( 'type' ) == 'radio' ) {
 					if ( jQuery( 'input[name="' + field.attr( 'name' ) + '"]:checked' ).val() )

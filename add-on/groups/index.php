@@ -87,9 +87,9 @@ function rcl_group_add_seo_filters() {
 	add_filter( 'get_canonical_url', 'rcl_group_replace_canonical_url', 30 );
 	add_filter( 'get_shortlink', 'rcl_group_replace_shortlink', 30 );
 
-	add_filter( 'aioseop_canonical_url', 'rcl_group_replace_canonical_url', 30 );
-	add_filter( 'aioseop_description', 'rcl_group_replace_description', 30 );
-	add_filter( 'aioseop_title_page', 'rcl_group_replace_title', 30 );
+	add_filter( 'aioseo_canonical_url', 'rcl_group_replace_canonical_url', 30 );
+	add_filter( 'aioseo_description', 'rcl_group_replace_description', 30 );
+	add_filter( 'aioseo_title_page', 'rcl_group_replace_title', 30 );
 
 	add_filter( 'wpseo_title', 'rcl_group_replace_title', 30 );
 	add_filter( 'wpseo_canonical', 'rcl_group_replace_canonical_url', 30 );

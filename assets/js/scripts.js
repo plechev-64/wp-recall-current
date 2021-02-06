@@ -3,7 +3,7 @@ jQuery( function( $ ) {
 	rcl_do_action( 'rcl_init' );
 } );
 
-jQuery( window ).load( function() {
+jQuery( window ).on('load', function () {
 	jQuery( 'body' ).on( 'drop', function( e ) {
 		return false;
 	} );
@@ -107,9 +107,13 @@ function rcl_init_ajax_tab() {
 				}
 
 				if ( !data.post.subtab_id ) {
-					jQuery( '#lk-content' ).animateCss( 'fadeIn' );
+					if ( typeof animateCss !== 'undefined' ) {
+						jQuery( '#lk-content' ).animateCss( 'fadeIn' );
+					}
 				} else {
-					jQuery( '#lk-content .rcl-subtab-content' ).animateCss( 'fadeIn' );
+					if ( typeof animateCss !== 'undefined' ) {
+						jQuery( '#lk-content .rcl-subtab-content' ).animateCss( 'fadeIn' );
+					}
 				}
 
 				rcl_do_action( 'rcl_upload_tab', {

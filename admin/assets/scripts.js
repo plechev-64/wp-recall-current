@@ -97,7 +97,7 @@ jQuery( function( $ ) {
 		return false;
 	} );
 
-	$( '.update-message .update-add-on' ).click( function() {
+	$( 'body' ).on( 'click', '.update-message .update-add-on', function() {
 		if ( $( this ).hasClass( "updating-message" ) )
 			return false;
 		var addon = $( this ).data( 'addon' );

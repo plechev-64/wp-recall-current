@@ -33,7 +33,7 @@ jQuery( document ).ready( function( $ ) {
 
 	}
 
-	$( '.rcl-public-form #insert-media-button' ).click( function( e ) {
+	$( 'body' ).on( 'click', '.rcl-public-form #insert-media-button', function(  ) {
 
 		var editor = $( this ).data( 'editor' );
 
@@ -53,12 +53,12 @@ jQuery( document ).ready( function( $ ) {
 
 	} );
 
-	jQuery( '#rcl-delete-post .delete-toggle' ).click( function() {
+	jQuery( 'body' ).on( 'click', '#rcl-delete-post .delete-toggle', function(  ) {
 		jQuery( this ).next().toggle( 'fast' );
 		return false;
 	} );
 
-	jQuery( 'form[name="public_post"] input[name="rcl-edit-post"],form[name="public_post"] input[name="add_new_task"]' ).click( function() {
+	jQuery( 'body' ).on( 'click', 'form[name="public_post"] input[name="rcl-edit-post"],form[name="public_post"] input[name="add_new_task"]', function(  ) {
 		var error = 0;
 		jQuery( 'form[name="public_post"]' ).find( ':input' ).each( function() {
 			for ( var i = 0; i < field.length; i++ ) {

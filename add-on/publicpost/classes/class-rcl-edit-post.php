@@ -62,7 +62,7 @@ class Rcl_EditPost {
 
 			if ( $this->post_type == 'post-group' ) {
 
-				if ( rcl_can_user_edit_post_group( $this->post_id ) )
+				if ( !function_exists('rcl_can_user_edit_post_group') || rcl_can_user_edit_post_group( $this->post_id ) )
 					$this->user_can['edit'] = true;
 			}else {
 
