@@ -1228,7 +1228,7 @@ var RclUploaders = [ ];
 		jQuery( 'body' ).on( 'drop', function( e ) {
 			return false;
 		} );
-		jQuery( document.body ).bind( "drop", function( e ) {
+		jQuery( document.body ).on( "drop", function( e ) {
 			e.preventDefault();
 		} );
 

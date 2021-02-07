@@ -7,7 +7,7 @@ jQuery( window ).on('load', function () {
 	jQuery( 'body' ).on( 'drop', function( e ) {
 		return false;
 	} );
-	jQuery( document.body ).bind( "drop", function( e ) {
+	jQuery( document.body ).on( "drop", function( e ) {
 		e.preventDefault();
 	} );
 } );
@@ -143,7 +143,7 @@ function rcl_get_options_url_params() {
 
 function rcl_add_dropzone( idzone ) {
 
-	jQuery( document.body ).bind( "drop", function( e ) {
+	jQuery( document.body ).on( "drop", function( e ) {
 		var dropZone = jQuery( idzone ),
 			node = e.target,
 			found = false;
@@ -166,7 +166,7 @@ function rcl_add_dropzone( idzone ) {
 		}
 	} );
 
-	jQuery( idzone ).bind( 'dragover', function( e ) {
+	jQuery( idzone ).on( 'dragover', function( e ) {
 		var dropZone = jQuery( idzone ),
 			timeout = window.dropZoneTimeout;
 
@@ -264,7 +264,7 @@ function rcl_show_tab( id_block ) {
 
 rcl_add_action( 'rcl_init', 'rcl_init_recallbar_hover' );
 function rcl_init_recallbar_hover() {
-	jQuery( "#recallbar .menu-item-has-children" ).hover( function() {
+	jQuery( "#recallbar .menu-item-has-children" ).on('hover', function() {
 		jQuery( this ).children( ".sub-menu" ).css( {
 			'visibility': 'visible'
 		} );
@@ -377,7 +377,7 @@ function rcl_init_close_popup() {
 
 rcl_add_action( 'rcl_init', 'rcl_init_click_overlay' );
 function rcl_init_click_overlay() {
-	jQuery( '#rcl-overlay' ).click( function() {
+	jQuery( '#rcl-overlay' ).on('click', function() {
 		rcl_hide_float_login_form();
 		jQuery( '#rcl-overlay' ).fadeOut();
 		jQuery( '#rcl-popup' ).empty();
