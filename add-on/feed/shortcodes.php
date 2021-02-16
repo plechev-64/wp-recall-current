@@ -15,13 +15,13 @@
 
 add_shortcode( 'feed', 'rcl_get_feed_list' );
 function rcl_get_feed_list( $atts = array() ) {
-	global $wpdb, $user_ID, $rcl_feed;
+	global $user_ID, $rcl_feed;
 
 	if ( ! $user_ID ) {
-		return rcl_get_notice( [
+		return apply_filters('rcl_feed_no_login_notice', rcl_get_notice( [
 			'class'	 => 'rcl-feed-notice',
 			'text'	 => __( 'Login or register to view the latest publications and comments from users for which you have subscribed.', 'wp-recall' )
-			] );
+			] ));
 	}
 
 	rcl_feed_scripts_init();

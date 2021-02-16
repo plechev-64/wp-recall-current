@@ -1,11 +1,5 @@
 <?php
 
-/* the support of the plugin Rank Math SEO */
-add_filter( 'rank_math/frontend/canonical', 'pfm_replace_canonical_url', 30 );
-add_filter ('rank_math/frontend/title', 'pfm_replace_title', 30 );
-add_filter ('rank_math/frontend/description', 'pfm_replace_description', 30 );
-/**/
-
 add_filter( 'page_rewrite_rules', 'pfm_set_rewrite_rules' );
 function pfm_set_rewrite_rules( $rules ) {
 	global $wp_rewrite;
@@ -57,6 +51,12 @@ function pfm_print_noindex_meta_tag() {
 
 add_action( 'pfm_init', 'pfm_add_seo_filters', 10 );
 function pfm_add_seo_filters() {
+
+    /* the support of the plugin Rank Math SEO */
+    add_filter( 'rank_math/frontend/canonical', 'pfm_replace_canonical_url', 30 );
+    add_filter ('rank_math/frontend/title', 'pfm_replace_title', 30 );
+    add_filter ('rank_math/frontend/description', 'pfm_replace_description', 30 );
+    /**/
 
 	add_filter( 'the_title', 'pfm_setup_page_title', 30, 2 );
 	add_filter( 'document_title_parts', 'pfm_replace_title', 30 );

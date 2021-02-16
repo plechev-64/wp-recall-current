@@ -12,7 +12,7 @@ class Rcl_EditPost {
 		'upload'	 => false
 	);
 
-	function __construct() {
+	function __construct($post_id = false) {
 
 		if ( isset( $_FILES ) ) {
 			require_once(ABSPATH . "wp-admin" . '/includes/image.php');
@@ -24,7 +24,8 @@ class Rcl_EditPost {
 			$this->post_type = sanitize_text_field( $_POST['post_type'] );
 		}
 
-		$post_id = isset( $_POST['post_ID'] ) && $_POST['post_ID'] ? $_POST['post_ID'] : (isset( $_POST['post_id'] ) && $_POST['post_id'] ? $_POST['post_id'] : 0);
+		if(!$post_id)
+			$post_id = isset( $_POST['post_ID'] ) && $_POST['post_ID'] ? $_POST['post_ID'] : (isset( $_POST['post_id'] ) && $_POST['post_id'] ? $_POST['post_id'] : 0);
 
 		if ( $post_id ) {
 

@@ -78,6 +78,21 @@ function rcl_custom_fields_update( $post_id ) {
 
 	rcl_update_post_custom_fields( $post_id );
 
+	if (isset( $_POST['post_uploader'] ) && $_POST['post_uploader'] ) {
+		global $user_ID;
+
+		$editPost = new Rcl_EditPost($post_id);
+
+		$editPost->rcl_add_attachments_in_temps( $user_ID );
+
+		$editPost->update_post_gallery();
+
+		rcl_delete_temp_media_by_args( array(
+			'user_id'			 => $user_ID,
+			'uploader_id__in'	 => array( 'post_uploader', 'post_thumbnail' )
+		) );
+	}
+
 	return $post_id;
 }
 
