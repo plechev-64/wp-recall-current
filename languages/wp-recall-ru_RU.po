@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Wp-Recall\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2020-09-24 11:28+0400\n"
+"POT-Creation-Date: 2021-02-28 11:39+0400\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: wppost <support@wppost.ru>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
 "_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: add-on/commerce/activate.php:82 add-on/commerce/activate.php:213
@@ -45,8 +45,8 @@ msgstr "Добавить новый товар"
 #: add-on/commerce/index.php:45 add-on/commerce/index.php:125
 #: add-on/groups/groups-init.php:11 add-on/groups/groups-init.php:54
 #: add-on/groups/groups-public.php:62
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:364
-#: add-on/publicpost/core.php:79 add-on/publicpost/index.php:277
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:367
+#: add-on/publicpost/core.php:79 add-on/publicpost/index.php:279
 #: add-on/publicpost/init.php:17
 #: classes/class-rcl-custom-fields-manager.php:504
 #: classes/class-rcl-custom-fields-manager.php:611
@@ -78,7 +78,7 @@ msgstr "Поиск"
 #: add-on/commerce/activate.php:90 add-on/commerce/index.php:49
 #: add-on/groups/groups-init.php:15
 #: add-on/prime-forum/functions-shortcodes.php:105
-#: add-on/publicpost/classes/class-rcl-public-form.php:753
+#: add-on/publicpost/classes/class-rcl-public-form.php:731
 msgid "Not found"
 msgstr "Не найдено"
 
@@ -225,28 +225,28 @@ msgstr "заказы"
 msgid "No orders found."
 msgstr "Заказы не найдены"
 
-#: add-on/commerce/admin/class-rcl-history-orders.php:72
+#: add-on/commerce/admin/class-rcl-history-orders.php:73
 msgid "Order ID"
 msgstr "ID заказа"
 
-#: add-on/commerce/admin/class-rcl-history-orders.php:73
+#: add-on/commerce/admin/class-rcl-history-orders.php:74
 #: add-on/groups/classes/class-rcl-groups-list.php:175
 #: add-on/groups/groups-widgets.php:118 add-on/groups/groups-widgets.php:144
 #: add-on/groups/templates/group-list.php:11
 #: add-on/user-balance/admin/class-rcl-payments-history.php:84
-#: classes/class-rcl-install.php:107
+#: classes/class-rcl-install.php:108
 msgid "Users"
 msgstr "Пользователи"
 
-#: add-on/commerce/admin/class-rcl-history-orders.php:74
+#: add-on/commerce/admin/class-rcl-history-orders.php:75
 msgid "Number of products"
 msgstr "Кол-во товаров"
 
-#: add-on/commerce/admin/class-rcl-history-orders.php:75
+#: add-on/commerce/admin/class-rcl-history-orders.php:76
 msgid "Order sum"
 msgstr "Сумма заказа"
 
-#: add-on/commerce/admin/class-rcl-history-orders.php:76
+#: add-on/commerce/admin/class-rcl-history-orders.php:77
 #: add-on/commerce/admin/index.php:486
 #: add-on/prime-forum/admin/themes-manager.php:147
 #: add-on/profile/classes/class-rcl-profile-fields.php:41
@@ -255,7 +255,7 @@ msgstr "Сумма заказа"
 msgid "Status"
 msgstr "Статус"
 
-#: add-on/commerce/admin/class-rcl-history-orders.php:77
+#: add-on/commerce/admin/class-rcl-history-orders.php:78
 #: add-on/groups/classes/class-rcl-groups-list.php:173
 #: add-on/publicpost/templates/posts-list.php:17
 #: add-on/user-balance/admin/class-rcl-payments-history.php:87
@@ -263,44 +263,44 @@ msgstr "Статус"
 msgid "Date"
 msgstr "Дата"
 
-#: add-on/commerce/admin/class-rcl-history-orders.php:84
+#: add-on/commerce/admin/class-rcl-history-orders.php:85
 msgid "Details"
 msgstr "Детали"
 
-#: add-on/commerce/admin/class-rcl-history-orders.php:101
+#: add-on/commerce/admin/class-rcl-history-orders.php:102
 #: add-on/commerce/core.php:217
 msgid "Not paid"
 msgstr "Неоплачен"
 
-#: add-on/commerce/admin/class-rcl-history-orders.php:102
+#: add-on/commerce/admin/class-rcl-history-orders.php:103
 #: add-on/commerce/core.php:218
 msgid "Paid"
 msgstr "Оплачен"
 
-#: add-on/commerce/admin/class-rcl-history-orders.php:103
+#: add-on/commerce/admin/class-rcl-history-orders.php:104
 #: add-on/commerce/core.php:219
 msgid "Sent"
 msgstr "Отправлен"
 
-#: add-on/commerce/admin/class-rcl-history-orders.php:104
+#: add-on/commerce/admin/class-rcl-history-orders.php:105
 #: add-on/commerce/core.php:220
 msgid "Received"
 msgstr "Получен"
 
-#: add-on/commerce/admin/class-rcl-history-orders.php:105
+#: add-on/commerce/admin/class-rcl-history-orders.php:106
 #: add-on/commerce/core.php:221
 msgid "Closed"
 msgstr "Закрыт"
 
-#: add-on/commerce/admin/class-rcl-history-orders.php:106
+#: add-on/commerce/admin/class-rcl-history-orders.php:107
 #: add-on/commerce/core.php:222
 msgid "Trash"
 msgstr "Корзина"
 
-#: add-on/commerce/admin/class-rcl-history-orders.php:107
-#: add-on/commerce/admin/class-rcl-history-orders.php:124
-#: add-on/groups/index.php:692
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:363
+#: add-on/commerce/admin/class-rcl-history-orders.php:108
+#: add-on/commerce/admin/class-rcl-history-orders.php:127
+#: add-on/groups/index.php:738
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:366
 #: add-on/prime-forum/admin/themes-manager.php:165
 #: add-on/user-balance/admin/class-rcl-payments-history.php:104
 #: admin/add-on-manager.php:164 admin/add-on-manager.php:177
@@ -309,7 +309,7 @@ msgstr "Корзина"
 msgid "Delete"
 msgstr "Удалить"
 
-#: add-on/commerce/admin/class-rcl-history-orders.php:117
+#: add-on/commerce/admin/class-rcl-history-orders.php:120
 msgid "All user orders"
 msgstr "Все заказы пользователя"
 
@@ -491,8 +491,8 @@ msgstr "Данные сохранены"
 #: add-on/prime-forum/functions-actions.php:1149 add-on/publicpost/core.php:235
 #: add-on/user-balance/functions-ajax.php:39 admin/pages/repository.php:48
 #: admin/pages/repository.php:60 functions/addons-update.php:157
-#: functions/addons-update.php:212 functions/ajax.php:97 functions/ajax.php:158
-#: functions/enqueue-scripts.php:154
+#: functions/addons-update.php:212 functions/ajax.php:101
+#: functions/ajax.php:162 functions/enqueue-scripts.php:154
 msgid "Error"
 msgstr "Ошибка"
 
@@ -540,7 +540,7 @@ msgstr "отображать при оформлении заказа для г�
 #: add-on/rating-system/admin/addon-settings.php:158
 #: add-on/rating-system/admin/index.php:15 add-on/rcl-chat/addon-options.php:70
 #: add-on/rcl-chat/addon-options.php:81 add-on/rcl-chat/addon-options.php:136
-#: admin/classes/class-rcl-tabs-manager.php:27 admin/index.php:111
+#: admin/classes/class-rcl-tabs-manager.php:27
 msgid "No"
 msgstr "Нет"
 
@@ -560,7 +560,7 @@ msgstr "Нет"
 #: add-on/rating-system/admin/addon-settings.php:158
 #: add-on/rating-system/admin/index.php:16 add-on/rcl-chat/addon-options.php:71
 #: add-on/rcl-chat/addon-options.php:82 add-on/rcl-chat/addon-options.php:137
-#: admin/classes/class-rcl-tabs-manager.php:28 admin/index.php:112
+#: admin/classes/class-rcl-tabs-manager.php:28
 msgid "Yes"
 msgstr "Да"
 
@@ -573,7 +573,7 @@ msgid "No orders yet"
 msgstr "Заказов пока нет"
 
 #: add-on/commerce/admin/index.php:482
-#: add-on/commerce/content/order-content.php:137
+#: add-on/commerce/content/order-content.php:87
 msgid "Order"
 msgstr "Заказ"
 
@@ -599,7 +599,7 @@ msgstr "Перейти в менеджер заказов"
 
 #: add-on/commerce/admin/pages/addon-settings.php:12
 #: add-on/prime-forum/admin/index.php:20
-#: add-on/user-balance/classes/class-rcl-gateway-core.php:48
+#: add-on/user-balance/classes/class-rcl-gateway-core.php:51
 msgid "Settings"
 msgstr "Настройки"
 
@@ -611,7 +611,7 @@ msgstr "Валюта и курсы"
 #: add-on/groups/admin/index.php:39
 #: add-on/profile/classes/class-rcl-profile-fields.php:98
 #: add-on/publicpost/classes/class-rcl-list-terms.php:56
-#: add-on/publicpost/classes/class-rcl-list-terms.php:85 rcl-functions.php:1462
+#: add-on/publicpost/classes/class-rcl-list-terms.php:85 rcl-functions.php:1465
 #: rcl-widgets.php:68 rcl-widgets.php:130
 msgid "Not selected"
 msgstr "Не выбрано"
@@ -691,7 +691,7 @@ msgid "Incorrect extension of the downloaded file. XML format expected!"
 msgstr "Неверное расширение загружаемого файла. Ожидается формат XML!"
 
 #: add-on/commerce/admin/pages/order.php:9
-#: add-on/commerce/content/order-content.php:133 add-on/commerce/core.php:267
+#: add-on/commerce/content/order-content.php:83 add-on/commerce/core.php:267
 msgid "Order data"
 msgstr "Данные заказа"
 
@@ -814,10 +814,6 @@ msgstr "Выбрать метку"
 msgid "select a product tag"
 msgstr "выбрать метку товара"
 
-#: add-on/commerce/admin/products-metabox.php:167
-msgid "Images gallery"
-msgstr "Галерея изображений"
-
 #: add-on/commerce/classes/class-rcl-cart-button-form.php:26
 msgid "To cart"
 msgstr "В корзину"
@@ -862,7 +858,7 @@ msgstr "Данные заказа неверны!"
 #: add-on/commerce/classes/class-rcl-create-order.php:132
 #: add-on/commerce/classes/class-rcl-create-order.php:161
 #: add-on/commerce/functions-ajax.php:114
-#: add-on/publicpost/functions-ajax.php:167
+#: add-on/publicpost/functions-ajax.php:168
 msgid "You have entered an invalid email!"
 msgstr "Вы указали некорректный email!"
 
@@ -939,27 +935,27 @@ msgstr "Для отслеживания статуса своего заказа
 msgid "Follow the link in the letter sent to your email"
 msgstr "Перейдите по ссылке в полученном письме"
 
-#: add-on/commerce/content/order-content.php:101
-#, php-format
-msgid "Payment order №%s dated %s"
-msgstr "Оплата заказа №%s от %s"
-
-#: add-on/commerce/content/order-content.php:114
-msgid "Pay for the created order by one of the proposed methods"
-msgstr "Оплатите созданный заказ одним из предложенных способов"
-
-#: add-on/commerce/content/order-content.php:138
+#: add-on/commerce/content/order-content.php:88
 #: add-on/commerce/templates/orders-history.php:13
 msgid "Order status"
 msgstr "Статус заказа"
 
-#: add-on/commerce/content/order-content.php:139
+#: add-on/commerce/content/order-content.php:89
 msgid "Created date"
 msgstr "Дата создания"
 
-#: add-on/commerce/content/order-content.php:143
+#: add-on/commerce/content/order-content.php:95
 msgid "Data specified when placing the order"
 msgstr "Данные указанные при оформлении заказа"
+
+#: add-on/commerce/content/order-content.php:146
+#, php-format
+msgid "Payment order №%s dated %s"
+msgstr "Оплата заказа №%s от %s"
+
+#: add-on/commerce/content/order-content.php:159
+msgid "Pay for the created order by one of the proposed methods"
+msgstr "Оплатите созданный заказ одним из предложенных способов"
 
 #: add-on/commerce/content/product-terms.php:18
 msgid "Categories"
@@ -1116,18 +1112,18 @@ msgstr "Все заказы"
 msgid "No orders with status \"%s\" yet"
 msgstr "Заказов со статусом %s пока нет"
 
-#: add-on/commerce/index.php:278
+#: add-on/commerce/index.php:276
 msgid ""
 "Your order has been successfully paid! A notification has been sent to the "
 "administration."
 msgstr ""
 "Ваш заказ успешно оплачен! Уведомление было выслано администрации сервиса."
 
-#: add-on/commerce/index.php:296
+#: add-on/commerce/index.php:293
 msgid "See all orders"
 msgstr "Смотреть все заказы"
 
-#: add-on/commerce/index.php:304
+#: add-on/commerce/index.php:301
 msgid "Delete order"
 msgstr "Удалить заказ"
 
@@ -1276,11 +1272,11 @@ msgstr "Новости не найдены"
 
 #: add-on/groups/activate.php:67 add-on/groups/groups-init.php:47
 #: add-on/groups/groups-init.php:48 add-on/groups/groups-init.php:61
-#: add-on/groups/index.php:227
+#: add-on/groups/index.php:245
 msgid "Groups"
 msgstr "Группы"
 
-#: add-on/groups/admin/index.php:7 add-on/groups/index.php:618
+#: add-on/groups/admin/index.php:7 add-on/groups/index.php:656
 msgid "Group settings"
 msgstr "Настройки группы"
 
@@ -1373,14 +1369,14 @@ msgstr ""
 msgid "Max size of the group avatars"
 msgstr "Максимальный размер аватарки группы"
 
-#: add-on/groups/admin/index.php:76 admin/index.php:219
+#: add-on/groups/admin/index.php:76 admin/index.php:209
 #: admin/pages/options.php:128
 msgid "Set the image upload limit in kb, by default"
 msgstr ""
 "Установите ограничение для загружаемого изображения в килобайтах, по-"
 "умолчанию"
 
-#: add-on/groups/admin/index.php:77 admin/index.php:220
+#: add-on/groups/admin/index.php:77 admin/index.php:210
 #: admin/pages/options.php:129
 msgid "If 0 is specified, download is disallowed."
 msgstr "Если указан 0, то загрузка запрещена"
@@ -1395,7 +1391,7 @@ msgid "Unused"
 msgstr "Неиспользуемые"
 
 #: add-on/groups/classes/class-rcl-group-widget.php:179
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:380
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:383
 #: add-on/prime-forum/functions-actions.php:630
 #: add-on/prime-forum/functions-actions.php:662
 #: add-on/prime-forum/functions-actions.php:821
@@ -1422,7 +1418,7 @@ msgstr "Фильтр по"
 
 #: add-on/groups/groups-core.php:219
 #: add-on/prime-forum/classes/class-prime-roles.php:17
-#: classes/class-rcl-install.php:208
+#: classes/class-rcl-install.php:209
 msgid "Ban"
 msgstr "Бан"
 
@@ -1430,10 +1426,10 @@ msgstr "Бан"
 msgid "Reader"
 msgstr "Читатель"
 
-#: add-on/groups/groups-core.php:227 add-on/groups/index.php:593
+#: add-on/groups/groups-core.php:227 add-on/groups/index.php:631
 #: add-on/prime-forum/admin/index.php:755
 #: add-on/prime-forum/admin/themes-manager.php:185
-#: add-on/publicpost/admin/index.php:136 admin/add-on-manager.php:197
+#: add-on/publicpost/admin/index.php:151 admin/add-on-manager.php:197
 #: admin/pages/repository.php:101 admin/templates-manager.php:177
 #: templates/add-on-card.php:25
 msgid "Author"
@@ -1449,11 +1445,11 @@ msgstr "Модератор"
 msgid "Administrator"
 msgstr "Администратор"
 
-#: add-on/groups/groups-core.php:328 add-on/groups/index.php:573
+#: add-on/groups/groups-core.php:328 add-on/groups/index.php:611
 msgid "Open group"
 msgstr "Открытая группа"
 
-#: add-on/groups/groups-core.php:330 add-on/groups/index.php:574
+#: add-on/groups/groups-core.php:330 add-on/groups/index.php:612
 msgid "Closed group"
 msgstr "Закрытая группа"
 
@@ -1536,8 +1532,8 @@ msgid "Comment hidden by privacy settings"
 msgstr "Комментарий скрыт настройками приватности"
 
 #: add-on/groups/groups-init.php:7 add-on/groups/groups-init.php:8
-#: add-on/groups/groups-init.php:18 add-on/groups/index.php:37
-#: add-on/groups/index.php:218
+#: add-on/groups/groups-init.php:18 add-on/groups/index.php:41
+#: add-on/groups/index.php:236
 msgid "Groups records"
 msgstr "Публикации групп"
 
@@ -1622,7 +1618,7 @@ msgid "Publication form"
 msgstr "Форма публикации"
 
 #: add-on/groups/groups-widgets.php:213 add-on/groups/groups-widgets.php:221
-#: add-on/groups/index.php:362 add-on/groups/index.php:600
+#: add-on/groups/index.php:385 add-on/groups/index.php:638
 msgid "Group categories"
 msgstr "Категории группы"
 
@@ -1656,134 +1652,134 @@ msgstr "Не выводить"
 msgid "Display"
 msgstr "Отображать"
 
-#: add-on/groups/index.php:234
+#: add-on/groups/index.php:252
 msgid "All groups"
 msgstr "Все группы"
 
-#: add-on/groups/index.php:243
+#: add-on/groups/index.php:261
 msgid "Groups created"
 msgstr "Созданные группы"
 
-#: add-on/groups/index.php:279
+#: add-on/groups/index.php:297
 msgid "Enter the name of the new group"
 msgstr "Введите имя новой группы"
 
-#: add-on/groups/index.php:282
+#: add-on/groups/index.php:300
 msgid "Create"
 msgstr "Создать"
 
-#: add-on/groups/index.php:302 add-on/publicpost/admin/index.php:135
+#: add-on/groups/index.php:320 add-on/publicpost/admin/index.php:150
 msgid "Header"
 msgstr "Верхняя область"
 
-#: add-on/groups/index.php:309
+#: add-on/groups/index.php:327
 msgid "Sidebar"
 msgstr "Боковая колонка"
 
-#: add-on/groups/index.php:316
+#: add-on/groups/index.php:334
 msgid "Main"
 msgstr "Основной"
 
-#: add-on/groups/index.php:323
+#: add-on/groups/index.php:341
 msgid "Footer"
 msgstr "Подвал"
 
-#: add-on/groups/index.php:393
+#: add-on/groups/index.php:421
 msgid "Published in group"
 msgstr "Публикация в группе"
 
-#: add-on/groups/index.php:408 add-on/groups/index.php:453
+#: add-on/groups/index.php:437 add-on/groups/index.php:483
 msgid "Group creation failed"
 msgstr "Создание группы не удалось"
 
-#: add-on/groups/index.php:434
+#: add-on/groups/index.php:464
 msgid "Enter the name"
 msgstr "Укажите наименование"
 
-#: add-on/groups/index.php:440
+#: add-on/groups/index.php:470
 msgid "Specify the name of new group as string"
 msgstr "Укажите имя новой группы в виде строки"
 
-#: add-on/groups/index.php:460
+#: add-on/groups/index.php:490
 msgid "New group is successfully created!"
 msgstr "Новая группа успешно создана!"
 
-#: add-on/groups/index.php:558
+#: add-on/groups/index.php:596
 msgid "Group name"
 msgstr "Наименование группы"
 
-#: add-on/groups/index.php:565 add-on/prime-forum/admin/themes-manager.php:148
+#: add-on/groups/index.php:603 add-on/prime-forum/admin/themes-manager.php:148
 #: add-on/publicpost/functions-ajax.php:69 admin/add-on-manager.php:149
 #: admin/templates-manager.php:140
 msgid "Description"
 msgstr "Описание"
 
-#: add-on/groups/index.php:571 add-on/groups/templates/single-group.php:37
+#: add-on/groups/index.php:609 add-on/groups/templates/single-group.php:37
 msgid "Group status"
 msgstr "Статус группы"
 
-#: add-on/groups/index.php:581
+#: add-on/groups/index.php:619
 msgid "Membership"
 msgstr "Членство"
 
-#: add-on/groups/index.php:583
+#: add-on/groups/index.php:621
 msgid "Registration allowed"
 msgstr "Регистрация разрешена"
 
-#: add-on/groups/index.php:590
+#: add-on/groups/index.php:628
 msgid "New user role"
 msgstr "Роль нового пользователя"
 
-#: add-on/groups/index.php:592
+#: add-on/groups/index.php:630
 msgid "Visitor"
 msgstr "Посетитель"
 
-#: add-on/groups/index.php:600
+#: add-on/groups/index.php:638
 msgid "separate by commas"
 msgstr "разделять запятыми"
 
-#: add-on/groups/index.php:626 admin/classes/class-rcl-options-manager.php:134
+#: add-on/groups/index.php:664 admin/classes/class-rcl-options-manager.php:134
 msgid "Save settings"
 msgstr "Сохранить настройки"
 
-#: add-on/groups/index.php:643
+#: add-on/groups/index.php:681
 msgid "Requests for access to the group"
 msgstr "Запросы на доступ к группе"
 
-#: add-on/groups/index.php:646
+#: add-on/groups/index.php:684
 msgid "No requests"
 msgstr "Запросов нет"
 
-#: add-on/groups/index.php:661
+#: add-on/groups/index.php:705
 msgid "Approve request"
 msgstr "Одобрить запрос"
 
-#: add-on/groups/index.php:669
+#: add-on/groups/index.php:713
 msgid "Reject request"
 msgstr "Отклонить запрос"
 
-#: add-on/groups/index.php:696
+#: add-on/groups/index.php:742
 msgid "User status"
 msgstr "Статус пользователя"
 
-#: add-on/groups/index.php:701 add-on/prime-forum/admin/index.php:367
-#: admin/pages/addons-manager.php:52 admin/pages/repository.php:80
+#: add-on/groups/index.php:747 add-on/prime-forum/admin/index.php:367
+#: admin/pages/addons-manager.php:54 admin/pages/repository.php:80
 #: admin/pages/themes-manager.php:27
 #: classes/class-rcl-custom-fields-manager.php:125
-#: classes/fields/class-rcl-fields-manager.php:536
+#: classes/fields/class-rcl-fields-manager.php:535
 #: classes/fields/class-rcl-fields.php:301 functions/enqueue-scripts.php:150
 msgid "Save"
 msgstr "Сохранить"
 
-#: add-on/groups/index.php:733
+#: add-on/groups/index.php:781
 msgid "Request access to the group approved!"
 msgstr "Запрос на доступ к группе одобрен!"
 
-#: add-on/groups/index.php:739
+#: add-on/groups/index.php:787
 msgid "Welcome to the group"
 msgstr "Добро пожаловать в группу"
 
-#: add-on/groups/index.php:739
+#: add-on/groups/index.php:787
 #, php-format
 msgid ""
 "Congratulations , your access request to a private group on \"%s\" website "
@@ -1792,28 +1788,28 @@ msgstr ""
 "Поздравляем, ваш запрос на доступ к закрытой группе на сайте \"%s\" был "
 "одобрен"
 
-#: add-on/groups/index.php:739
+#: add-on/groups/index.php:787
 msgid "Now you can take part in the life of the group as its full participant."
 msgstr ""
 "Теперь вы можете принимать участие в жизни группы как ее полноценный участник"
 
-#: add-on/groups/index.php:739
+#: add-on/groups/index.php:787
 msgid "You can visit the group by clicking on the link"
 msgstr "Вы можете посетить группу по ссылке"
 
-#: add-on/groups/index.php:744
+#: add-on/groups/index.php:792
 msgid "Request approved"
 msgstr "Запрос одобрен"
 
-#: add-on/groups/index.php:747
+#: add-on/groups/index.php:795
 msgid "Request rejected"
 msgstr "Запрос отклонен"
 
-#: add-on/groups/index.php:748
+#: add-on/groups/index.php:796
 msgid "Access request to the group has been rejected."
 msgstr "Запрос на доступ к группе отклонен."
 
-#: add-on/groups/index.php:749
+#: add-on/groups/index.php:797
 #, php-format
 msgid ""
 "We are sorry, but your request to access a private group \"%s\" on the site "
@@ -1837,8 +1833,8 @@ msgstr "Публикации"
 #: add-on/prime-forum/admin/index.php:262
 #: add-on/prime-forum/admin/index.php:268
 #: add-on/prime-forum/functions-compatibility.php:11
-#: add-on/prime-forum/index.php:57 add-on/prime-forum/index.php:380
-#: add-on/prime-forum/index.php:382 add-on/prime-forum/index.php:408
+#: add-on/prime-forum/index.php:59 add-on/prime-forum/index.php:382
+#: add-on/prime-forum/index.php:384 add-on/prime-forum/index.php:410
 msgid "Forum"
 msgstr "Форум"
 
@@ -1886,71 +1882,71 @@ msgstr "Описание группы"
 msgid "Select the group forum"
 msgstr "Выберите группу форума"
 
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:140
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:139
 msgid "Forum group"
 msgstr "Группа форума"
 
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:149
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:147
 msgid "Name of the forum"
 msgstr "Название форума"
 
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:156
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:153
 msgid "Slug of the forum"
 msgstr "Slug форума"
 
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:162
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:158
 msgid "Forum status"
 msgstr "Статус форума"
 
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:164
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:160
 msgid "Open forum"
 msgstr "Открытый форум"
 
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:165
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:161
 msgid "Closed forum"
 msgstr "Закрытый форум"
 
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:167
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:163
 msgid "It is impossible to publish new topics and messages in a closed forum"
 msgstr "В закрытом форуме невозможна публикация новых топиков и сообщений"
 
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:173
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:168
 msgid "Description of the forum"
 msgstr "Описание форума"
 
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:186
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:189
 msgid "Manage groups"
 msgstr "Управление группами"
 
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:200
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:203
 msgid "No groups are created yet"
 msgstr "Группы пока не были созданы"
 
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:248
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:251
 msgid "Forums were not created yet"
 msgstr "Форумы пока не создавались"
 
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:257
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:260
 msgid "Group forums"
 msgstr "Группа форумов"
 
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:308
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:311
 #: add-on/prime-forum/admin/index.php:332
 msgid "Manage forums"
 msgstr "Управление форумами"
 
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:363
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:366
 #: add-on/prime-forum/functions-actions.php:120
 #: add-on/prime-forum/functions-actions.php:191
-#: add-on/publicpost/classes/class-rcl-public-form.php:833
-#: add-on/publicpost/classes/class-rcl-public-form.php:850
-#: add-on/publicpost/core.php:322
-#: classes/fields/class-rcl-fields-manager.php:385
-#: classes/fields/class-rcl-fields-manager.php:478 functions/frontend.php:652
+#: add-on/publicpost/classes/class-rcl-public-form.php:811
+#: add-on/publicpost/classes/class-rcl-public-form.php:828
+#: add-on/publicpost/core.php:325
+#: classes/fields/class-rcl-fields-manager.php:384
+#: classes/fields/class-rcl-fields-manager.php:477 functions/frontend.php:652
 msgid "Are you sure?"
 msgstr "Вы серьезно?"
 
-#: add-on/prime-forum/admin/classes/class-prime-manager.php:367
+#: add-on/prime-forum/admin/classes/class-prime-manager.php:370
 msgid "Get forums"
 msgstr "Получить форумы"
 
@@ -2162,8 +2158,8 @@ msgid "Title tag in the group of forums"
 msgstr "Тег title в группе форумов"
 
 #: add-on/prime-forum/admin/index.php:244
-#: add-on/prime-forum/admin/index.php:250 add-on/prime-forum/index.php:384
-#: add-on/prime-forum/index.php:410
+#: add-on/prime-forum/admin/index.php:250 add-on/prime-forum/index.php:386
+#: add-on/prime-forum/index.php:412
 msgid "Group of forums"
 msgstr "Группа форумов"
 
@@ -2215,17 +2211,17 @@ msgstr "Другие настройки"
 msgid "Settings of PrimeForum"
 msgstr "Настройки PrimeForum"
 
-#: add-on/prime-forum/admin/index.php:358 admin/pages/addons-manager.php:43
+#: add-on/prime-forum/admin/index.php:358 admin/pages/addons-manager.php:45
 #: admin/pages/repository.php:71 admin/pages/themes-manager.php:18
 msgid "Key has been saved"
 msgstr "Ключ сохранен"
 
-#: add-on/prime-forum/admin/index.php:364 admin/pages/addons-manager.php:49
+#: add-on/prime-forum/admin/index.php:364 admin/pages/addons-manager.php:51
 #: admin/pages/repository.php:77 admin/pages/themes-manager.php:24
 msgid "RCLKEY"
 msgstr "RCLKEY"
 
-#: add-on/prime-forum/admin/index.php:366 admin/pages/addons-manager.php:51
+#: add-on/prime-forum/admin/index.php:366 admin/pages/addons-manager.php:53
 #: admin/pages/repository.php:79 admin/pages/themes-manager.php:26
 msgid "Enter RCLKEY"
 msgstr "Введите RCLKEY"
@@ -2236,7 +2232,7 @@ msgstr ""
 "Ключ необходим для обновления дополнений на этой странице. Вы можете "
 "получить его в своем личном кабинете во вкладке профиля на сайте"
 
-#: add-on/prime-forum/admin/index.php:376 admin/pages/addons-manager.php:61
+#: add-on/prime-forum/admin/index.php:376 admin/pages/addons-manager.php:63
 #: admin/pages/themes-manager.php:36
 msgid "Install the add-on to WP-Recall format .ZIP"
 msgstr "Загрузить дополнение для WP-Recall в формате .zip"
@@ -2249,17 +2245,17 @@ msgstr ""
 "Если у вас есть архив шаблона для wp-recall в формате zip, вы можете "
 "загрузить его тут."
 
-#: add-on/prime-forum/admin/index.php:379 admin/pages/addons-manager.php:64
+#: add-on/prime-forum/admin/index.php:379 admin/pages/addons-manager.php:66
 #: admin/pages/themes-manager.php:39
 msgid "Add-on archive"
 msgstr "Архив дополнения"
 
-#: add-on/prime-forum/admin/index.php:381 admin/pages/addons-manager.php:66
+#: add-on/prime-forum/admin/index.php:381 admin/pages/addons-manager.php:68
 #: admin/pages/themes-manager.php:41
 msgid "Install"
 msgstr "Установить"
 
-#: add-on/prime-forum/admin/index.php:388 admin/pages/addons-manager.php:73
+#: add-on/prime-forum/admin/index.php:388 admin/pages/addons-manager.php:75
 #: admin/pages/repository.php:89 admin/pages/themes-manager.php:48
 msgid "All"
 msgstr "Все"
@@ -2328,9 +2324,9 @@ msgid "Topic"
 msgstr "Тема"
 
 #: add-on/prime-forum/admin/index.php:754
-#: add-on/prime-forum/functions-posts.php:334
+#: add-on/prime-forum/functions-posts.php:336
 #: add-on/prime-forum/themes/prime-first/templates/pfm-single-topic.php:12
-#: add-on/rcl-chat/index.php:64
+#: add-on/rcl-chat/index.php:66
 msgid "Messages"
 msgstr "Сообщения"
 
@@ -2355,12 +2351,12 @@ msgid "No addons found."
 msgstr "Дополнения не найдены."
 
 #: add-on/prime-forum/admin/themes-manager.php:124 admin/add-on-manager.php:124
-#: admin/pages/addons-manager.php:74 admin/templates-manager.php:116
+#: admin/pages/addons-manager.php:76 admin/templates-manager.php:116
 msgid "Active"
 msgstr "Активно"
 
 #: add-on/prime-forum/admin/themes-manager.php:126 admin/add-on-manager.php:126
-#: admin/pages/addons-manager.php:75 admin/templates-manager.php:118
+#: admin/pages/addons-manager.php:77 admin/templates-manager.php:118
 msgid "Inactive"
 msgstr "Неактивно"
 
@@ -2465,7 +2461,7 @@ msgstr "Тема не найдена"
 
 #: add-on/prime-forum/classes/class-prime-roles.php:22
 #: add-on/prime-forum/functions-query.php:198
-#: add-on/prime-forum/functions-topics.php:202 add-on/prime-forum/index.php:510
+#: add-on/prime-forum/functions-topics.php:201 add-on/prime-forum/index.php:512
 #: add-on/rcl-chat/class-rcl-chat.php:180
 msgid "Guest"
 msgstr "Гость"
@@ -2742,31 +2738,31 @@ msgstr "Редакции сообщения"
 msgid "The reason"
 msgstr "Причина"
 
-#: add-on/prime-forum/functions-post-content.php:244 rcl-functions.php:1379
+#: add-on/prime-forum/functions-post-content.php:244 rcl-functions.php:1381
 msgid "not specified"
 msgstr "не указано"
 
-#: add-on/prime-forum/functions-posts.php:228
+#: add-on/prime-forum/functions-posts.php:230
 msgid "New comment on your topic"
 msgstr "Новый комментарий в вашей теме"
 
-#: add-on/prime-forum/functions-posts.php:231
+#: add-on/prime-forum/functions-posts.php:233
 msgid "New reply added on your topic"
 msgstr "Новый ответ добавлен в вашу тему"
 
-#: add-on/prime-forum/functions-posts.php:233
+#: add-on/prime-forum/functions-posts.php:235
 msgid "answered"
 msgstr "ответил"
 
-#: add-on/prime-forum/functions-posts.php:235
+#: add-on/prime-forum/functions-posts.php:237
 msgid "To answer on this comment"
 msgstr "ответить на комментарий"
 
-#: add-on/prime-forum/functions-posts.php:305
+#: add-on/prime-forum/functions-posts.php:307
 msgid "On the website since"
 msgstr "На сайте с"
 
-#: add-on/prime-forum/functions-posts.php:326
+#: add-on/prime-forum/functions-posts.php:328
 #: add-on/prime-forum/themes/prime-first/templates/pfm-single-forum.php:18
 msgid "Topics"
 msgstr "Тем"
@@ -2785,18 +2781,18 @@ msgstr "не найдено"
 msgid "from"
 msgstr "от"
 
-#: add-on/prime-forum/functions-query.php:209 add-on/rcl-chat/index.php:313
+#: add-on/prime-forum/functions-query.php:209 add-on/rcl-chat/index.php:315
 #: templates/add-on-card.php:68
 msgid "ago"
 msgstr "назад"
 
 #: add-on/prime-forum/functions-shortcodes.php:71
-#: add-on/prime-forum/index.php:343
+#: add-on/prime-forum/index.php:345
 msgid "Spoiler"
 msgstr "Спойлер"
 
 #: add-on/prime-forum/functions-shortcodes.php:83
-#: add-on/prime-forum/index.php:344
+#: add-on/prime-forum/index.php:346
 msgid "Off-topic"
 msgstr "Оффтоп"
 
@@ -2833,7 +2829,7 @@ msgid "Currently on the forum"
 msgstr "Сейчас на форуме"
 
 #: add-on/prime-forum/functions-templates.php:205
-#: add-on/prime-forum/index.php:493
+#: add-on/prime-forum/index.php:495
 msgid "Nobody is here"
 msgstr "Никого нет"
 
@@ -2846,56 +2842,56 @@ msgstr "Поиск по форуму"
 msgid "Home"
 msgstr "Домой"
 
-#: add-on/prime-forum/functions-topics.php:198
+#: add-on/prime-forum/functions-topics.php:197
 msgid "New forum topic"
 msgstr "Новая тема на форуме"
 
-#: add-on/prime-forum/functions-topics.php:200
+#: add-on/prime-forum/functions-topics.php:199
 #, php-format
 msgid "On the forum of the site \"%s\" created a new topic!"
 msgstr "На форуме сайта \"%s\" создана новая тема!"
 
-#: add-on/prime-forum/functions-topics.php:201
+#: add-on/prime-forum/functions-topics.php:200
 msgid "The name of the topic"
 msgstr "Наименование темы"
 
-#: add-on/prime-forum/functions-topics.php:202
+#: add-on/prime-forum/functions-topics.php:201
 msgid "The topic author"
 msgstr "Автор темы"
 
-#: add-on/prime-forum/index.php:65
+#: add-on/prime-forum/index.php:67
 msgid "Started topics"
 msgstr "Начатые темы"
 
-#: add-on/prime-forum/index.php:73
+#: add-on/prime-forum/index.php:75
 msgid "Messages in topics created by other users"
 msgstr "Сообщения в чужих темах"
 
-#: add-on/prime-forum/index.php:107
+#: add-on/prime-forum/index.php:109
 msgid "There are no messages in topics created by other users."
 msgstr "Сообщений в чужих темах пока нет"
 
-#: add-on/prime-forum/index.php:130
+#: add-on/prime-forum/index.php:132
 msgid "Messaged in topics on the forum created by other users"
 msgstr "Сообщения в чужих темах на форуме"
 
-#: add-on/prime-forum/index.php:162
+#: add-on/prime-forum/index.php:164
 msgid "There are no started topics on the forum yet."
 msgstr "Начатых тем на форуме пока нет."
 
-#: add-on/prime-forum/index.php:195
+#: add-on/prime-forum/index.php:197
 msgid "Started topics on the forum"
 msgstr "Начатые темы на форуме"
 
-#: add-on/prime-forum/index.php:342
+#: add-on/prime-forum/index.php:344
 msgid "pre"
 msgstr ""
 
-#: add-on/prime-forum/index.php:342
+#: add-on/prime-forum/index.php:344
 msgid "Multiline code"
 msgstr "Многострочный код"
 
-#: add-on/prime-forum/index.php:388 add-on/prime-forum/index.php:414
+#: add-on/prime-forum/index.php:390 add-on/prime-forum/index.php:416
 msgid "Page"
 msgstr "Страница"
 
@@ -3324,28 +3320,28 @@ msgstr "Для размещения формы публикации исполь
 msgid "Arbitrary fields of  publication"
 msgstr "Произвольные поля формы публикации"
 
-#: add-on/publicpost/admin/index.php:121
+#: add-on/publicpost/admin/index.php:136
 msgid "Posts awaiting approval"
 msgstr "Публикации ожидающие одобрения"
 
-#: add-on/publicpost/admin/index.php:129
+#: add-on/publicpost/admin/index.php:144
 msgid "No posts under moderation"
 msgstr "Публикаций на модерации нет"
 
-#: add-on/publicpost/admin/index.php:137
+#: add-on/publicpost/admin/index.php:152
 msgid "Type"
 msgstr "Тип"
 
-#: add-on/publicpost/classes/class-rcl-edit-post.php:43
-#: add-on/publicpost/classes/class-rcl-edit-post.php:255
+#: add-on/publicpost/classes/class-rcl-edit-post.php:46
+#: add-on/publicpost/classes/class-rcl-edit-post.php:239
 msgid "Error publishing!"
 msgstr "Ошибка публикации!"
 
-#: add-on/publicpost/classes/class-rcl-post-list.php:87
+#: add-on/publicpost/classes/class-rcl-post-list.php:88
 msgid "Here has nothing been published yet"
 msgstr "Пока ничего не было опубликовано"
 
-#: add-on/publicpost/classes/class-rcl-post-list.php:98
+#: add-on/publicpost/classes/class-rcl-post-list.php:99
 msgid "Published"
 msgstr "Опубликованные"
 
@@ -3517,49 +3513,49 @@ msgstr "Сохранить как черновик"
 msgid "Publish"
 msgstr "Публиковать"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:743
+#: add-on/publicpost/classes/class-rcl-public-form.php:721
 msgid "It separates by push of Enter button"
 msgstr "разделяются по нажатию по кнопке Enter"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:828
-#: add-on/publicpost/classes/class-rcl-public-form.php:841
-#: add-on/publicpost/classes/class-rcl-public-form.php:854
+#: add-on/publicpost/classes/class-rcl-public-form.php:806
+#: add-on/publicpost/classes/class-rcl-public-form.php:819
+#: add-on/publicpost/classes/class-rcl-public-form.php:832
 msgid "Delete post"
 msgstr "Удалить публикацию"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:836
+#: add-on/publicpost/classes/class-rcl-public-form.php:814
 msgid "or enter your own"
 msgstr "или введите свое"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:838
+#: add-on/publicpost/classes/class-rcl-public-form.php:816
 msgid "Without notice"
 msgstr "Без уведомления"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:870
+#: add-on/publicpost/classes/class-rcl-public-form.php:848
 msgid "Does not correspond the topic"
 msgstr "Н/с тематике сайта"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:871
+#: add-on/publicpost/classes/class-rcl-public-form.php:849
 msgid "The publication does not correspond to the site topic"
 msgstr "Публикация не соответствует тематике сайта"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:874
+#: add-on/publicpost/classes/class-rcl-public-form.php:852
 msgid "Not completed"
 msgstr "Не оформлен"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:875
+#: add-on/publicpost/classes/class-rcl-public-form.php:853
 msgid "Publication does not correspond the rules"
 msgstr "Публикация не оформлена согласно правил"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:878
+#: add-on/publicpost/classes/class-rcl-public-form.php:856
 msgid "Advertising/Spam"
 msgstr "Реклама/Спам"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:879
+#: add-on/publicpost/classes/class-rcl-public-form.php:857
 msgid "Publication labeled as advertising or spam"
 msgstr "Публикация помечена как реклама или спам"
 
-#: add-on/publicpost/classes/class-rcl-public-form.php:888
+#: add-on/publicpost/classes/class-rcl-public-form.php:866
 msgid "Use blank notice"
 msgstr "Используйте заготовку уведомления"
 
@@ -3584,87 +3580,87 @@ msgstr "Изменения не найдены для сохранения"
 msgid "Publication updated"
 msgstr "Публикация обновлена"
 
-#: add-on/publicpost/functions-ajax.php:153
+#: add-on/publicpost/functions-ajax.php:154
 msgid "Enter your e-mail!"
 msgstr "Укажите свой e-mail!"
 
-#: add-on/publicpost/functions-ajax.php:156
+#: add-on/publicpost/functions-ajax.php:157
 msgid "Enter your name!"
 msgstr "Укажите свое имя!"
 
-#: add-on/publicpost/functions-ajax.php:170
+#: add-on/publicpost/functions-ajax.php:171
 msgid "This email is already used!"
 msgstr "Этот email уже используется!"
 
-#: add-on/publicpost/functions-ajax.php:171
+#: add-on/publicpost/functions-ajax.php:172
 msgid "If this is your email, then log in and publish your post"
 msgstr "Если это ваш email, то авторизуйтесь и опубликуйте запись"
 
-#: add-on/publicpost/functions-ajax.php:193
+#: add-on/publicpost/functions-ajax.php:194
 msgid "Incorrect values of some fields, enter the correct values!"
 msgstr "Некорректные значения некоторых полей, выставите корректные значения!"
 
-#: add-on/publicpost/functions-ajax.php:205
+#: add-on/publicpost/functions-ajax.php:206
 msgid "Upload or specify an image as a thumbnail"
 msgstr "Загрузите или укажите изображение в качестве миниатюры"
 
-#: add-on/publicpost/functions-ajax.php:218
+#: add-on/publicpost/functions-ajax.php:219
 msgid "Add contents of the publication!"
 msgstr "Добавьте содержимое публикации!"
 
-#: add-on/publicpost/functions-ajax.php:275
+#: add-on/publicpost/functions-ajax.php:276
 msgid ""
 "If everything is correct – publish it! If not, you can go back to editing."
 msgstr "Если все верно - публикуйте! Если нет, то вернитесь в редактор."
 
-#: add-on/publicpost/functions-ajax.php:298
+#: add-on/publicpost/functions-ajax.php:301
 msgid "The field of the thumbnail is inactive!"
 msgstr "Поле миниатюры неактивно!"
 
-#: add-on/publicpost/index.php:223
+#: add-on/publicpost/index.php:225
 msgid "Your post has been deleted"
 msgstr "Ваша публикация была удалена"
 
-#: add-on/publicpost/index.php:224
+#: add-on/publicpost/index.php:226
 msgid "Post"
 msgstr "Публикация"
 
-#: add-on/publicpost/index.php:224
+#: add-on/publicpost/index.php:226
 msgid "has been deleted"
 msgstr "была удалена"
 
-#: add-on/publicpost/index.php:225
+#: add-on/publicpost/index.php:227
 msgid "Notice of a moderator"
 msgstr "Замечание модератора"
 
-#: add-on/publicpost/index.php:501
+#: add-on/publicpost/index.php:503
 msgid "New write"
 msgstr "Новая публикация"
 
-#: add-on/publicpost/index.php:504
+#: add-on/publicpost/index.php:506
 #, php-format
 msgid "An user added new write on the website \"%s\""
 msgstr "Пользователь добавил новую публикацию на сайте \"%s\"!"
 
-#: add-on/publicpost/index.php:505
+#: add-on/publicpost/index.php:507
 msgid "The name of the write"
 msgstr "Наименование публикации"
 
-#: add-on/publicpost/index.php:506
+#: add-on/publicpost/index.php:508
 msgid "The author of the write"
 msgstr "Автор публикации"
 
-#: add-on/publicpost/index.php:507
+#: add-on/publicpost/index.php:509
 msgid ""
 "Don't forget to check this write, probably it is waiting for your moderation"
 msgstr ""
 "Не забудьте проверить эту публикацию, возможно, она ожидает вашей модерации"
 
-#: add-on/publicpost/index.php:528
+#: add-on/publicpost/index.php:532
 msgid "Appoint a thumbnail"
 msgstr "Назначить миниатюру"
 
-#: add-on/publicpost/index.php:551
+#: add-on/publicpost/index.php:555
 msgid "Output in a gallery"
 msgstr "Вывести изображения в галерее"
 
@@ -3909,7 +3905,7 @@ msgstr "Не удалось изменить общий рейтинг объе�
 msgid "Failed to change general rating of the user"
 msgstr "Не удалось изменить общий рейтинг пользователя"
 
-#: add-on/rating-system/core.php:632
+#: add-on/rating-system/core.php:633
 msgid "Data not found"
 msgstr "Данные не найдены"
 
@@ -3917,16 +3913,16 @@ msgstr "Данные не найдены"
 msgid "Other"
 msgstr "Разное"
 
-#: add-on/rating-system/index.php:370
+#: add-on/rating-system/index.php:373
 msgid "rating"
 msgstr "рейтинг"
 
-#: add-on/rating-system/index.php:507
+#: add-on/rating-system/index.php:510
 #, php-format
 msgid "exceeded the limit of votes for the period - %d seconds"
 msgstr "превышение ограничения голосов в течении %d секунд"
 
-#: add-on/rating-system/index.php:604
+#: add-on/rating-system/index.php:607
 msgid "Unable to obtain data"
 msgstr "Данные не удалось получить"
 
@@ -4133,64 +4129,64 @@ msgstr "Не удалось добавить метаданные сообщен
 msgid "Failed to refresh user status in the chat"
 msgstr "Не удалось обновить статус пользователя в чате"
 
-#: add-on/rcl-chat/index.php:79
+#: add-on/rcl-chat/index.php:81
 msgid "Write something"
 msgstr "Напишите хоть что-то"
 
-#: add-on/rcl-chat/index.php:80
+#: add-on/rcl-chat/index.php:82
 msgid "Exceeds the maximum message size"
 msgstr "Превышен максимальный размер сообщения"
 
-#: add-on/rcl-chat/index.php:81
+#: add-on/rcl-chat/index.php:83
 #, php-format
 msgid "Exceeds the maximum file size! Max. %d MB"
 msgstr "Превышен масимальный размер файла! Макс. %d МБ"
 
-#: add-on/rcl-chat/index.php:128
+#: add-on/rcl-chat/index.php:130
 msgid "Chat"
 msgstr "Чат"
 
-#: add-on/rcl-chat/index.php:136
+#: add-on/rcl-chat/index.php:138
 msgid "Contacts"
 msgstr "Контакты"
 
-#: add-on/rcl-chat/index.php:148
+#: add-on/rcl-chat/index.php:150
 msgid "Important messages"
 msgstr "Важные сообщения"
 
-#: add-on/rcl-chat/index.php:172
+#: add-on/rcl-chat/index.php:174
 msgid "Sign in to send a message to the user"
 msgstr "Авторизуйтесь, чтобы написать пользователю сообщение"
 
-#: add-on/rcl-chat/index.php:222
+#: add-on/rcl-chat/index.php:224
 msgid "User contacts"
 msgstr "Контакты пользователя"
 
-#: add-on/rcl-chat/index.php:269
+#: add-on/rcl-chat/index.php:271
 msgid "No contacts yet. Start a chat with another user on his page"
 msgstr "Пока контактов нет. Начните переписку на странице другого пользователя"
 
-#: add-on/rcl-chat/index.php:272
+#: add-on/rcl-chat/index.php:274
 msgid "Choose from the list of users"
 msgstr "Выберите из списка пользователей"
 
-#: add-on/rcl-chat/index.php:295
+#: add-on/rcl-chat/index.php:297
 msgid "Total number of contacts"
 msgstr "Всего контактов"
 
-#: add-on/rcl-chat/index.php:302 add-on/rcl-chat/index.php:437
+#: add-on/rcl-chat/index.php:304 add-on/rcl-chat/index.php:439
 msgid "Delete contact"
 msgstr "Удалить контакт"
 
-#: add-on/rcl-chat/index.php:303
+#: add-on/rcl-chat/index.php:305
 msgid "Open chat in window"
 msgstr "Открыть чат в окне"
 
-#: add-on/rcl-chat/index.php:340
+#: add-on/rcl-chat/index.php:342
 msgid "No important messages yet"
 msgstr "Важных сообщений пока нет"
 
-#: add-on/rcl-chat/index.php:474
+#: add-on/rcl-chat/index.php:476
 msgid "Not set attributes: chat_room"
 msgstr "Не указан атрибут: chat_room"
 
@@ -4281,7 +4277,7 @@ msgid "The caption on the button of the confirmation of a way of a payment"
 msgstr "Надпись на кнопке подтверждения способа оплаты"
 
 #: add-on/user-balance/admin/addon-settings.php:66
-#: add-on/user-balance/classes/class-rcl-payment-form.php:226
+#: add-on/user-balance/classes/class-rcl-payment-form.php:232
 msgid "Continue"
 msgstr "Продолжить"
 
@@ -4445,11 +4441,11 @@ msgstr "Заголовок способа оплаты"
 msgid "The caption on a button of a payment"
 msgstr "Надпись на кнопке оплаты"
 
-#: add-on/user-balance/classes/class-rcl-gateway-core.php:20
+#: add-on/user-balance/classes/class-rcl-gateway-core.php:23
 msgid "Pay"
 msgstr "Оплатить"
 
-#: add-on/user-balance/classes/class-rcl-gateway-core.php:167
+#: add-on/user-balance/classes/class-rcl-gateway-core.php:174
 msgid "Failed to add user payment"
 msgstr "Не удалось добавить платеж пользователя"
 
@@ -4457,12 +4453,12 @@ msgstr "Не удалось добавить платеж пользовател
 msgid "The payment from"
 msgstr "Платежная форма"
 
-#: add-on/user-balance/classes/class-rcl-payment-form.php:173
+#: add-on/user-balance/classes/class-rcl-payment-form.php:176
 #: add-on/user-balance/functions-ajax.php:105
 msgid "The sum of payment"
 msgstr "Сумма платежа"
 
-#: add-on/user-balance/classes/class-rcl-payment-form.php:203
+#: add-on/user-balance/classes/class-rcl-payment-form.php:209
 msgid "The system of payment"
 msgstr "Система платежа"
 
@@ -4633,23 +4629,19 @@ msgstr "Страница плагина Wp-Recall"
 msgid "Settings of commerce"
 msgstr "Настройки коммерции"
 
-#: admin/index.php:110
-msgid "Output images via WP-Recall gallery?"
-msgstr "Вывести изображения через галерею изображений WP-Recall?"
-
-#: admin/index.php:183 admin/index.php:704
+#: admin/index.php:173 admin/index.php:694
 msgid "Settings saved!"
 msgstr "Настройки сохранены!"
 
-#: admin/index.php:209
+#: admin/index.php:199
 msgid "Default cover"
 msgstr "Обложка по-умолчанию"
 
-#: admin/index.php:218
+#: admin/index.php:208
 msgid "Max weight of cover"
 msgstr "Максимальный размер обложки"
 
-#: admin/index.php:446
+#: admin/index.php:436
 #, php-format
 msgid ""
 "If you liked plugin %sWP-Recall%s, please vote for it in repository %s★★★★★"
@@ -4715,10 +4707,14 @@ msgid "Files and data additions have been <strong>deleted</strong>."
 msgstr "Файлы и данные дополнения были <strong>удалены</strong>"
 
 #: admin/pages/addons-manager.php:29
+msgid "Add-on has been successfully loaded. You can activate this add-on."
+msgstr ""
+
+#: admin/pages/addons-manager.php:31
 msgid "Add-on has not been loaded. Correct headers not found."
 msgstr "Дополнение не было загружено. Не найдены корректные заголовки."
 
-#: admin/pages/addons-manager.php:55 admin/pages/repository.php:83
+#: admin/pages/addons-manager.php:57 admin/pages/repository.php:83
 msgid ""
 "The key is required to update the add-ons here. You can get it in your "
 "personal account of website"
@@ -4727,7 +4723,7 @@ msgstr ""
 "получить его в своем личном кабинете во вкладке профиля на сайте <a href="
 "\"http://codeseller.ru/\" target=\"_blank\">http://codeseller.ru</a>"
 
-#: admin/pages/addons-manager.php:62
+#: admin/pages/addons-manager.php:64
 msgid ""
 "If you have the add-on archive for WP-Recall format .zip, you can upload and "
 "install it here."
@@ -4735,7 +4731,7 @@ msgstr ""
 "Если у вас есь архив дополнения к WP-Recall в формате ZIP, то вы можете "
 "загрузить и установить его здесь."
 
-#: admin/pages/addons-manager.php:82
+#: admin/pages/addons-manager.php:84
 msgid "Search by name"
 msgstr "Поиск по имени"
 
@@ -4744,7 +4740,7 @@ msgid "Dashboard WP-Recall"
 msgstr "Панель управления WP-Recall"
 
 #: admin/pages/options.php:30 admin/pages/options.php:37
-#: classes/class-rcl-install.php:97
+#: classes/class-rcl-install.php:98
 msgid "Personal cabinet"
 msgstr "Личный кабинет"
 
@@ -5148,12 +5144,12 @@ msgid "Active fields"
 msgstr "Активные поля"
 
 #: classes/class-rcl-custom-fields-manager.php:123
-#: classes/fields/class-rcl-fields-manager.php:518
+#: classes/fields/class-rcl-fields-manager.php:517
 msgid "Add field"
 msgstr "Добавить поле"
 
 #: classes/class-rcl-custom-fields-manager.php:129
-#: classes/fields/class-rcl-fields-manager.php:543
+#: classes/fields/class-rcl-fields-manager.php:542
 msgid "To remove the data added to this field?"
 msgstr "Удалить данные добавленные этим полем?"
 
@@ -5162,13 +5158,13 @@ msgid "MetaKey"
 msgstr "MetaKey"
 
 #: classes/class-rcl-custom-fields-manager.php:218
-#: classes/fields/class-rcl-fields-manager.php:778
+#: classes/fields/class-rcl-fields-manager.php:777
 msgid "not required, but you can list your own meta_key in this field"
 msgstr ""
 "не обязательно, но вы можете указать свое значение meta_key в этом поле"
 
 #: classes/class-rcl-custom-fields-manager.php:219
-#: classes/fields/class-rcl-fields-manager.php:779
+#: classes/fields/class-rcl-fields-manager.php:778
 msgid "Latin letters and numbers"
 msgstr "латиница и числа"
 
@@ -5377,11 +5373,11 @@ msgstr "Файл не найден на сервере!"
 msgid "File has been deleted"
 msgstr "Файл был удален"
 
-#: classes/class-rcl-install.php:102
+#: classes/class-rcl-install.php:103
 msgid "FEED"
 msgstr "FEED"
 
-#: classes/class-rcl-install.php:200
+#: classes/class-rcl-install.php:201
 msgid "Unconfirmed"
 msgstr "Неподтвержденные"
 
@@ -5409,7 +5405,7 @@ msgstr "Добавить в редактор"
 msgid "Delete the file"
 msgstr "Удалить файл"
 
-#: classes/class-rcl-uploader.php:461
+#: classes/class-rcl-uploader.php:455
 msgid "Forbidden file extension. Allowed:"
 msgstr "Запрещенное расширение файла. Разрешено:"
 
@@ -5436,48 +5432,48 @@ msgstr "Рейтингу"
 msgid "To delete a data adding this field?"
 msgstr "Удалить данные добавленные этим полем?"
 
-#: classes/fields/class-rcl-fields-manager.php:371
+#: classes/fields/class-rcl-fields-manager.php:370
 msgid "Name of the section"
 msgstr "Название секции"
 
-#: classes/fields/class-rcl-fields-manager.php:382
+#: classes/fields/class-rcl-fields-manager.php:381
 msgid "Delete section"
 msgstr "Удалить секцию"
 
-#: classes/fields/class-rcl-fields-manager.php:392
+#: classes/fields/class-rcl-fields-manager.php:391
 msgid "Settings of section"
 msgstr "Настройки секции"
 
-#: classes/fields/class-rcl-fields-manager.php:401
+#: classes/fields/class-rcl-fields-manager.php:400
 msgid "Add a group of fields"
 msgstr "Добавить группу полей"
 
-#: classes/fields/class-rcl-fields-manager.php:424
+#: classes/fields/class-rcl-fields-manager.php:423
 msgid "A note of this section"
 msgstr "Пояснение к секции"
 
-#: classes/fields/class-rcl-fields-manager.php:478
+#: classes/fields/class-rcl-fields-manager.php:477
 msgid "Delete group of fields"
 msgstr "Удалить группу полей"
 
-#: classes/fields/class-rcl-fields-manager.php:534
+#: classes/fields/class-rcl-fields-manager.php:533
 msgid "Add new section"
 msgstr "Добавить новую секцию"
 
-#: classes/fields/class-rcl-fields-manager.php:655
+#: classes/fields/class-rcl-fields-manager.php:654
 msgid "Point a title of new field"
 msgstr "Укажите заголовок нового поля"
 
-#: classes/fields/class-rcl-fields-manager.php:662
+#: classes/fields/class-rcl-fields-manager.php:661
 msgid "Point a title of this field"
 msgstr "Укажите заголовок этого поля"
 
-#: classes/fields/class-rcl-fields-manager.php:722
-#: classes/fields/class-rcl-fields-manager.php:777
+#: classes/fields/class-rcl-fields-manager.php:721
+#: classes/fields/class-rcl-fields-manager.php:776
 msgid "ID"
 msgstr ""
 
-#: classes/fields/class-rcl-fields-manager.php:798
+#: classes/fields/class-rcl-fields-manager.php:797
 msgid "Type of field"
 msgstr "Тип поля"
 
@@ -5590,35 +5586,35 @@ msgstr "Запрашиваемая вкладка не поддерживает 
 msgid "Unable to obtain content of the requested tab"
 msgstr "Не удалось получить контент запрашиваемой вкладки"
 
-#: functions/ajax.php:114 functions/frontend.php:646
+#: functions/ajax.php:118 functions/frontend.php:646
 msgid "Unblock"
 msgstr "Разблокировать"
 
-#: functions/ajax.php:114 functions/frontend.php:646
+#: functions/ajax.php:118 functions/frontend.php:646
 msgid "Blacklist"
 msgstr "Черный список"
 
-#: functions/ajax.php:139
+#: functions/ajax.php:143
 msgid "Failed to load emoticons"
 msgstr "Не удалось загрузить смайлы"
 
-#: functions/ajax.php:170
+#: functions/ajax.php:174
 msgid "Error of security"
 msgstr "Ошибка запроса"
 
-#: functions/ajax.php:179
+#: functions/ajax.php:183
 msgid "Something has been wrong"
 msgstr "Что то пошло не так"
 
-#: functions/ajax.php:196
+#: functions/ajax.php:200
 msgid "The data has been wrong!"
 msgstr "Данные неверны!"
 
-#: functions/ajax.php:204 functions/ajax.php:214 functions/ajax.php:220
+#: functions/ajax.php:208 functions/ajax.php:218 functions/ajax.php:224
 msgid "You can`t delete this file!"
 msgstr "Вы не можете удалить этот файл!"
 
-#: functions/ajax.php:231
+#: functions/ajax.php:235
 msgid "The file has been successfully deleted!"
 msgstr "Файл был успешно удален!"
 
@@ -5747,7 +5743,7 @@ msgid "Publics"
 msgstr "Публикации"
 
 #: functions/frontend.php:125 functions/frontend.php:201
-#: functions/frontend.php:526 rcl-functions.php:880
+#: functions/frontend.php:526 rcl-functions.php:864
 msgid "offline"
 msgstr "не в сети"
 
@@ -5942,16 +5938,16 @@ msgstr "Ваш аватар был удален!"
 msgid "Upload background"
 msgstr "Загрузка фона"
 
-#: rcl-functions.php:829
+#: rcl-functions.php:813
 msgid "This letter was created automatically, no need to answer it."
 msgstr ""
 "Это сообщение было сформировано автоматически, не надо отвечать на него."
 
-#: rcl-functions.php:856
+#: rcl-functions.php:840
 msgid "long ago"
 msgstr "давно"
 
-#: rcl-functions.php:969
+#: rcl-functions.php:953
 msgid "Signature verification failed"
 msgstr "Проверка подписи не пройдена"
 
@@ -6082,6 +6078,12 @@ msgstr "Текстовый редактор"
 #: wp-recall.php:428
 msgid "File uploader"
 msgstr "Файловый загрузчик"
+
+#~ msgid "Images gallery"
+#~ msgstr "Галерея изображений"
+
+#~ msgid "Output images via WP-Recall gallery?"
+#~ msgstr "Вывести изображения через галерею изображений WP-Recall?"
 
 #~ msgid "Currency of website"
 #~ msgstr "Валюта сайта"
