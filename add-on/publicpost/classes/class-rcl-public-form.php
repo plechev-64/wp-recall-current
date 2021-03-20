@@ -329,7 +329,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 		if ( $this->post_id ) {
 			$buttons['gotopost'] = array(
-				'href'	 => $this->post->post_status != 'publish' ? get_bloginfo( 'wpurl' ) . '/?p=' . $this->post_id . '&preview=true' : get_permalink( $this->post_id ),
+				'href'	 => get_permalink( $this->post_id ),
 				'label'	 => __( 'Go to the post', 'wp-recall' ),
 				'attrs'	 => array(
 					'target' => '_blank'

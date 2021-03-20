@@ -3,8 +3,8 @@ Contributors: wppost
 Donate link: https://codeseller.ru/
 Tags: user profile, members, community, private message, forum
 Requires at least: 4.6
-Tested up to: 5.5
-Stable tag: 16.24.36
+Tested up to: 5.7
+Stable tag: 16.24.37
 Requires PHP: 7.0
 License: GPL v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

@@ -190,7 +190,7 @@ class Rcl_Feed_List extends Rcl_Query {
 		) );
 
 		$defaults = array(
-			'post_status'			 => 'publish',
+			'post_status'			 => ['publish', 'inherit'],
 			'post_parent'			 => 0,
 			'post_author__not_in'	 => $authors_ignor,
 			'post_author__in'		 => $authors_feed,
@@ -199,7 +199,8 @@ class Rcl_Feed_List extends Rcl_Query {
 				'nav_menu_item',
 				'oembed_cache',
 				'customize_changeset',
-				'custom_css'
+				'custom_css',
+				'revision'
 			),
 			'select'				 => array(
 				'ID',

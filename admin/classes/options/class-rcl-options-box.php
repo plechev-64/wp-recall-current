@@ -33,7 +33,7 @@ class Rcl_Options_Box {
 	}
 
 	function add_group( $group_id, $args = false ) {
-		$this->groups[$group_id] = new Rcl_Options_Group( $group_id, $args, $this->option_name );
+		$this->groups[$group_id] = new Rcl_Options_Group( $group_id, $this->option_name, $args );
 		return $this->group( $group_id );
 	}
 

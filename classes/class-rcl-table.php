@@ -153,8 +153,9 @@ class Rcl_Table {
 				$attrs['data-rcl-ttitle'] = $cellProps['title'];
 			}
 
-			$attrs['data-value'] = trim( strip_tags( $contentCell ) );
-
+			if ( isset( $cellProps['sort'] ) && $cellProps['sort'] ) {
+				$attrs['data-value'] = trim( strip_tags( $contentCell ) );
+			}
 
 			if ( isset( $cellProps['sort'] ) && $cellProps['sort'] ) {
 				if ( $place == 'header' ) {

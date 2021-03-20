@@ -1000,10 +1000,10 @@ function RclForm( form ) {
 
 				var required = true;
 
-				if ( !field.is( ":required" ) )
+				if ( !field.prop( "required" ) )
 					return required;
 
-				if ( field.is( ":disabled" ) )
+				if ( field.prop( "disabled" ) )
 					return required;
 
 				var value = false;

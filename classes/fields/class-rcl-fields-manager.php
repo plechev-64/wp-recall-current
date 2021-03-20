@@ -938,6 +938,8 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			$typesList[$type] = $wprecall->fields[$type]['label'];
 		}
 
+		$typesList = apply_filters( 'rcl_field_types_manager_'.$this->manager_id, $typesList );
+
 		return $typesList;
 	}
 

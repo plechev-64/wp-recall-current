@@ -8,7 +8,7 @@ class Rcl_Options_Group {
 	public $extend;
 	public $option_values = array();
 
-	function __construct( $group_id, $args = false, $option_name ) {
+	function __construct( $group_id, $option_name, $args = false ) {
 
 		$this->group_id = $group_id;
 
