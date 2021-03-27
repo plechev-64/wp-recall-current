@@ -197,7 +197,7 @@ class Rcl_Feed_List extends Rcl_Query {
 		) );
 
 		$defaults = array(
-			'post_status__in'     => [ 'publish', 'inherit' ],
+			'post_status'         => 'publish',
 			'post_parent'         => 0,
 			'post_author__not_in' => $authors_ignor,
 			'post_author__in'     => $authors_feed,
@@ -227,6 +227,8 @@ class Rcl_Feed_List extends Rcl_Query {
 		$args = apply_filters( 'rcl_feed_posts_args', $args, $this->user_feed );
 
 		$this->parse( $args );
+
+		//$this->where_string("OR wp_posts.post_excerpt = 'rcl-user-media'");
 
 		return apply_filters( 'rcl_feed_posts_query', $this->query, $this->user_feed );
 	}
