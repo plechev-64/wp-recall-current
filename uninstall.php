@@ -16,6 +16,10 @@ global $wpdb;
 require_once 'classes/class-rcl-install.php';
 require_once 'functions/plugin-pages.php';
 require_once 'functions/files.php';
+require_once 'classes/query/class-rcl-old-query.php';
+require_once 'classes/query/class-rcl-query.php';
+require_once 'classes/query/class-rq.php';
+require_once 'classes/class-rcl-query-tables.php';
 
 $upload_dir = rcl_get_wp_upload_dir();
 define( 'RCL_UPLOAD_PATH', $upload_dir['basedir'] . '/rcl-uploads/' );

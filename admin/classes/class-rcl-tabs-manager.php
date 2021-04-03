@@ -64,11 +64,11 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 				)
 			)
 		) );
-		//print_r($this);
+
 		$this->setup_tabs();
 
 		add_filter( 'rcl_field_options', array( $this, 'edit_tab_options' ), 10, 3 );
-		//print_r($this);
+
 	}
 
 	function form_navi() {
