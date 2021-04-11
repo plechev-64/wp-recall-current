@@ -6,6 +6,8 @@ var rcl_url_params = rcl_get_value_url_params();
 
 jQuery( document ).ready( function( $ ) {
 
+	rcl_init_update_requared_checkbox();
+
 	$.fn.extend( {
 		insertAtCaret: function( myValue ) {
 			return this.each( function( i ) {
@@ -1765,7 +1767,6 @@ function rcl_update_require_checkbox( e ) {
 		jQuery( 'form input[name="' + name + '"]' ).attr( 'required', true );
 }
 
-/*rcl_add_action( 'rcl_init', 'rcl_init_update_requared_checkbox' );*/
 function rcl_init_update_requared_checkbox() {
 
 	jQuery( 'body form' ).find( '.required-checkbox' ).each( function() {

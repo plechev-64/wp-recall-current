@@ -11,14 +11,6 @@ jQuery( function( $ ) {
 		$( '#title-' + rcl_url_params['rcl-addon-options'] ).addClass( 'active' );
 	}
 
-	$( '.rcl-custom-fields-box' ).find( '.required-checkbox' ).each( function() {
-		rcl_update_require_checkbox( this );
-	} );
-
-	$( 'body' ).on( 'click', '.required-checkbox', function() {
-		rcl_update_require_checkbox( this );
-	} );
-
 	/**/
 	$( ".wrap-recall-options" ).find( ".parent-option" ).each( function() {
 		$( this ).find( "input,select" ).each( function() {

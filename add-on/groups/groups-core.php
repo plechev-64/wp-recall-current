@@ -39,6 +39,21 @@ function rcl_group_init( $group_id = false ) {
 	return $rcl_group;
 }
 
+function rcl_group_is_allowed_callback($callback){
+
+	$allowedCallbacks = apply_filters('rcl_group_allowed_callback', [
+		'rcl_get_group_options',
+		'rcl_get_group_widgets',
+		'rcl_get_group_requests_content',
+		'rcl_get_group_users',
+		'rcl_group_ajax_delete_user',
+		'rcl_group_ajax_update_role'
+	]);
+
+	return in_array($callback, $allowedCallbacks);
+
+}
+
 /* deprecated */
 function add_post_in_group() {
 	rcl_single_group();
@@ -759,6 +774,9 @@ function rcl_get_group_link_content() {
 	$group_id	 = intval( $_POST['group_id'] );
 	$callback	 = $_POST['callback'];
 
+	if ( ! rcl_group_is_allowed_callback( $callback ) )
+		exit;
+
 	if ( ! function_exists( $callback ) )
 		exit;
 
@@ -783,6 +801,9 @@ function rcl_group_callback() {
 	$group_id	 = intval( $_POST['group_id'] );
 	$user_id	 = intval( $_POST['user_id'] );
 	$callback	 = $_POST['callback'];
+
+	if ( ! rcl_group_is_allowed_callback( $callback ) )
+		exit;
 
 	if ( ! function_exists( $callback ) )
 		exit;

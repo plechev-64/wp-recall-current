@@ -4,7 +4,7 @@ Donate link: https://codeseller.ru/
 Tags: user profile, members, community, private message, forum
 Requires at least: 4.6
 Tested up to: 5.7
-Stable tag: 16.24.41
+Stable tag: 16.24.42
 Requires PHP: 7.0
 License: GPL v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -61,16 +61,6 @@ The base part of the plugin already includes a wide range of features, which you
 - [All in One SEO Pack](https://codeseller.ru/products/all-in-one-seo-pack-to-wp-recall/)
 - [WP-PostViews](https://codeseller.ru/products/wp-postviews-to-wp-recall/)
 - [Download Monitor](https://codeseller.ru/products/download-monitor-to-wp-recall/)
-
-
-= Free Extensions =
-- [Hello private message](https://codeseller.ru/products/hello-private-message-privetstvennoe-soobshhenie-v-lichku-pm-novym-polzovatelyam/) - after registration say "Hello" in private messages
-- [Сountry & city in profile](https://codeseller.ru/products/sountry-and-city-in-profile-strana-i-gorod-v-profile-polzovatelya/) - Adds the ability to specify the country and city of residence to the user profile
-- [Reviews](https://codeseller.ru/products/reviews-organizaciya-polzovatelskix-otzyvov/) - organizes a system of user reviews on the site
-- [Magnific Popup Recall](https://codeseller.ru/products/magnific-popup-recall/) - show your images in a truly responsive lightbox. Very easy, 100% responsive and fast
-- [WP-Recall Spoiler](https://codeseller.ru/products/wp-recall-spoiler/) - easy spoiler
-- [Mini ADS](https://codeseller.ru/products/mini-ads/) - advertisement in the user profile
-
 
 = Paid Extensions =
 

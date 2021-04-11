@@ -33,7 +33,7 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 			$this->orderby = $_GET['groups-filter'];
 
 		if ( isset( $_GET['group-name'] ) )
-			$this->search_name = $_GET['group-name'];
+			$this->search_name = wp_slash( strip_tags($_GET['group-name']));
 
 		$this->add_uri['groups-filter'] = $this->orderby;
 
@@ -148,12 +148,12 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 
 		if ( $this->search_form ) {
 
-			$search_text = ((isset( $_GET['group-name'] ))) ? $_GET['group-name'] : '';
+			$search_text = ((isset( $_GET['group-name'] ))) ? wp_slash( strip_tags($_GET['group-name'])) : '';
 
 			$content = '<div class="rcl-search-form">
 					<form method="get" action="">
 						<div class="rcl-search-form-title">' . __( 'Search groups', 'wp-recall' ) . '</div>
-						<input type="text" name="group-name" value="' . $search_text . '">'
+						<input type="text" name="group-name" value="' . esc_textarea($search_text) . '">'
 				. rcl_get_button( array(
 					'label'	 => __( 'Search', 'wp-recall' ),
 					'submit' => true

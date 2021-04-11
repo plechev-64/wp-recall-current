@@ -47,15 +47,15 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		$this->data = ($this->data) ? array_map( 'trim', explode( ',', $this->data ) ) : array();
 
 		if ( isset( $_GET['usergroup'] ) )
-			$this->usergroup = $_GET['usergroup'];
+			$this->usergroup = strval($_GET['usergroup']);
 
 		if ( $this->filters ) {
 
 			if ( isset( $_GET['users-filter'] ) )
-				$this->orderby = $_GET['users-filter'];
+				$this->orderby = strval($_GET['users-filter']);
 
 			if ( isset( $_GET['users-order'] ) )
-				$this->query['order'] = $_GET['users-order'];
+				$this->query['order'] = strval($_GET['users-order']);
 
 			add_filter( 'rcl_users_query', array( $this, 'add_query_search' ) );
 		}
@@ -549,7 +549,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 	}
 
 	function add_query_search( $query ) {
-		$search_text		 = (isset( $_GET['search_text'] )) ? sanitize_user( $_GET['search_text'] ) : '';
+		$search_text		 = (isset( $_GET['search_text'] )) ? wp_slash( strip_tags( $_GET['search_text'] )) : '';
 		$search_field		 = (isset( $_GET['search_field'] )) ? $_GET['search_field'] : '';
 		if ( ! $search_text || ! $search_field )
 			return $query;

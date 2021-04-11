@@ -80,6 +80,10 @@ function rcl_group_add_seo_filters() {
 		return false;
 	}
 
+	if ( ! $wp_query ) {
+		return false;
+	}
+
 	$groupPage = rcl_get_option( 'group-page' );
 
 	$isGroupPage = ( get_query_var( 'page_id' ) == $groupPage || $wp_query->queried_object_id == $groupPage ) ? true : false;

@@ -162,13 +162,13 @@ add_filter( 'users_search_form_rcl', 'rcl_default_search_form' );
 function rcl_default_search_form( $form ) {
 	global $user_LK, $rcl_tab;
 
-	$search_text	 = ((isset( $_GET['search_text'] ))) ? $_GET['search_text'] : '';
+	$search_text	 = ((isset( $_GET['search_text'] ))) ? wp_slash( strip_tags($_GET['search_text'])) : '';
 	$search_field	 = (isset( $_GET['search_field'] )) ? $_GET['search_field'] : '';
 
 	$form .='<div class="rcl-search-form">
             <form method="get">
                 <div class="rcl-search-form-title">' . __( 'Search users', 'wp-recall' ) . '</div>
-                <input type="text" name="search_text" value="' . $search_text . '">
+                <input type="text" name="search_text" value="' . esc_textarea($search_text) . '">
                 <select name="search_field">
                     <option ' . selected( $search_field, 'display_name', false ) . ' value="display_name">' . __( 'by name', 'wp-recall' ) . '</option>
                     <option ' . selected( $search_field, 'user_login', false ) . ' value="user_login">' . __( 'by login', 'wp-recall' ) . '</option>

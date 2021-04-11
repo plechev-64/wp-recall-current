@@ -104,11 +104,6 @@ function rcl_edit_postdata() {
 	) );
 }
 
-function rcl_edit_post() {
-	$edit = new Rcl_EditPost();
-	$edit->update_post();
-}
-
 //выборка меток по введенным значениям
 rcl_ajax_action( 'rcl_get_like_tags', true );
 function rcl_get_like_tags() {
@@ -198,7 +193,7 @@ function rcl_preview_post() {
 
 	if ( $formFields->is_active_field( 'post_thumbnail' ) ) {
 
-		$thumbnail_id = (isset( $postdata['post-thumbnail'] )) ? $postdata['post-thumbnail'] : 0;
+		$thumbnail_id = (isset( $postdata['post_thumbnail'] )) ? $postdata['post_thumbnail'] : 0;
 
 		$field = $formFields->get_field( 'post_thumbnail' );
 

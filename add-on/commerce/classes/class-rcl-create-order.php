@@ -36,10 +36,16 @@ class Rcl_Create_Order {
 
 			$this->order_price += $product_price * $product->product_amount;
 
+			if($product->variations){
+				foreach($product->variations as $k => $v){
+					$product->variations->$k = array_map('wp_strip_all_tags',$v);
+				}
+			}
+
 			$this->products[] = array(
-				'product_id'	 => $product->product_id,
-				'product_price'	 => $product_price,
-				'product_amount' => $product->product_amount,
+				'product_id'	 => intval($product->product_id),
+				'product_price'	 => intval($product_price),
+				'product_amount' => intval($product->product_amount),
 				'variations'	 => $product->variations
 			);
 		}
@@ -69,10 +75,10 @@ class Rcl_Create_Order {
 		}
 
 		$args = array(
-			'user_id'		 => $this->user_id,
+			'user_id'		 => intval($this->user_id),
 			'order_details'	 => $this->order_details,
-			'order_status'	 => $this->order_status,
-			'order_price'	 => $this->order_price
+			'order_status'	 => intval($this->order_status),
+			'order_price'	 => intval($this->order_price)
 		);
 
 		$this->order_id = rcl_insert_order( $args, $this->products );
@@ -110,7 +116,7 @@ class Rcl_Create_Order {
 			$order_details[] = array(
 				'type'	 => $field['type'],
 				'title'	 => $field['title'],
-				'value'	 => $value
+				'value'	 => wp_strip_all_tags($value)
 			);
 		}
 
@@ -119,8 +125,8 @@ class Rcl_Create_Order {
 
 	function register_user() {
 
-		$user_email	 = sanitize_text_field( $_POST['user_email'] );
-		$user_name	 = sanitize_text_field( $_POST['first_name'] );
+		$user_email	 = sanitize_text_field( wp_strip_all_tags($_POST['user_email']) );
+		$user_name	 = sanitize_text_field( wp_strip_all_tags($_POST['first_name']) );
 
 		$isEmail	 = is_email( $user_email );
 		$validName	 = validate_username( $user_email );
@@ -166,7 +172,10 @@ class Rcl_Create_Order {
 			if ( $user ) {
 
 				$this->user_id = $user->ID;
+
 			} else {
+
+				$user_password = wp_generate_password( 12, false );
 
 				$data = array(
 					'user_pass'		 => $user_password,

@@ -1145,6 +1145,11 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 
 				if ( $value ) {
 
+					if (in_array($field['type'], ['select', 'radio'])){
+						if ( !in_array( $value, $field['values'] ) )
+							continue;
+					}
+
 					update_user_meta( $user_id, $slug, $value );
 				} else {
 

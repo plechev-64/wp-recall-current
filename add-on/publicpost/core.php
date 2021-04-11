@@ -20,6 +20,14 @@ function rcl_get_custom_post_meta( $post_id ) {
 	}
 }
 
+function rcl_edit_post() {
+
+	$edit = new Rcl_EditPost();
+
+	$edit->update_post();
+
+}
+
 function rcl_get_postslist( $post_type, $type_name ) {
 	global $user_LK;
 
@@ -201,6 +209,12 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 			} else {
 
 				if ( $value || $value == 0 ) {
+
+					if (in_array($field->type, ['select', 'radio'])){
+						if ( !in_array( $value, $field->values ) )
+							continue;
+					}
+
 					update_post_meta( $post_id, $field_id, $value );
 				} else {
 					if ( get_post_meta( $post_id, $field_id, 1 ) )

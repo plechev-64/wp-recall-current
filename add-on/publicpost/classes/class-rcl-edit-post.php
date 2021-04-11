@@ -6,6 +6,7 @@ class Rcl_EditPost {
 	public $post = array();
 	public $post_type; //тип записи
 	public $update = false; //действие
+	public $required = false;
 	public $user_can = array(
 		'publish' => false,
 		'edit'    => false,
@@ -43,11 +44,56 @@ class Rcl_EditPost {
 
 		$this->setup_user_can();
 
-		if ( ! $this->user_can ) {
+		if ( ! $this->user_can || $this->update && empty( $this->user_can['edit'] ) || ! $this->update && empty( $this->user_can['publish'] ) ) {
 			$this->error( __( 'Error publishing!', 'wp-recall' ) . ' Error 100' );
 		}
 
 		do_action( 'init_update_post_rcl', $this );
+
+	}
+
+	function check_required_post_fields() {
+
+		$formFields = new Rcl_Public_Form_Fields( $_POST['post_type'], array(
+			'form_id' => isset( $_POST['form_id'] ) ? $_POST['form_id'] : 1
+		) );
+
+		foreach([
+			'post_title', 'post_content', 'post_thumbnail'
+		] as $field_name){
+			if ( $formFields->is_active_field( $field_name ) ) {
+				$field = $formFields->get_field( $field_name );
+				if ( $field->get_prop( 'required' ) && empty($_POST[$field_name]) ) {
+					return false;
+				}
+			}
+		}
+
+		if ( $customFields = $formFields->get_custom_fields() ) {
+			foreach ( $customFields as $field ) {
+
+				$value = ( isset( $_POST[ $field->slug ] ) ) ? $_POST[ $field->slug ] : false;
+
+				if ( $field->required && ! $value ) {
+					return false;
+				}
+
+				if ( in_array( $field->type, array( 'runner' ) ) ) {
+
+					$value = isset( $postdata[ $field->id ] ) ? $postdata[ $field->id ] : 0;
+					$min   = $field->value_min;
+					$max   = $field->value_max;
+
+					if ( $value < $min || $value > $max ) {
+						return false;
+					}
+				}
+
+			}
+		}
+
+		return true;
+
 	}
 
 	function error( $error ) {
@@ -108,7 +154,7 @@ class Rcl_EditPost {
 
 	function update_thumbnail() {
 
-		$thumbnail_id = isset( $_POST['post_thumbnail'] ) ? $_POST['post_thumbnail'] : 0;
+		$thumbnail_id = isset( $_POST['post_thumbnail'] ) ? intval( $_POST['post_thumbnail'] ) : 0;
 
 		$currentThID = $this->post_id ? get_post_meta( $this->post_id, '_thumbnail_id', 1 ) : 0;
 
@@ -136,8 +182,6 @@ class Rcl_EditPost {
 
 		if ( $temps ) {
 
-			$thumbnail_id = isset( $_POST['post_thumbnail'] ) ? $_POST['post_thumbnail'] : 0;
-
 			foreach ( $temps as $temp ) {
 
 				$attachData = array(
@@ -155,7 +199,7 @@ class Rcl_EditPost {
 
 	function update_post_gallery() {
 
-		$postGallery = isset( $_POST['rcl-post-gallery'] ) ? $_POST['rcl-post-gallery'] : false;
+		$postGallery = isset( $_POST['rcl-post-gallery'] ) ? array_map( 'intval', $_POST['rcl-post-gallery'] ) : false;
 
 		$gallery = array();
 
@@ -215,6 +259,8 @@ class Rcl_EditPost {
 	function update_post() {
 		global $user_ID;
 
+		$this->required = $this->check_required_post_fields();
+
 		$postdata = array(
 			'post_type'    => $this->post_type,
 			'post_title'   => ( isset( $_POST['post_title'] ) ) ? sanitize_text_field( $_POST['post_title'] ) : '',
@@ -233,7 +279,7 @@ class Rcl_EditPost {
 			$postdata['post_author'] = $user_ID;
 		}
 
-		$postdata['post_status'] = $this->get_status_post( rcl_get_option( 'moderation_public_post' ) );
+		$postdata['post_status'] = $this->required ? $this->get_status_post( rcl_get_option( 'moderation_public_post' ) ) : 'draft';
 
 		$postdata = apply_filters( 'pre_update_postdata_rcl', $postdata, $this );
 
@@ -289,8 +335,19 @@ class Rcl_EditPost {
 
 		do_action( 'update_post_rcl', $this->post_id, $postdata, $this->update, $this );
 
+		if ( ! $this->required ) {
+			wp_redirect( add_query_arg( [
+				'notice-warning' => 'required-fields',
+				'rcl-post-edit'  => $this->post_id
+			], get_permalink( rcl_get_option( 'public_form_page_rcl' ) ) ) );
+			exit;
+		}
+
 		if ( isset( $_POST['save-as-draft'] ) ) {
-			wp_redirect( get_permalink( rcl_get_option( 'public_form_page_rcl' ) ) . '?draft=saved&rcl-post-edit=' . $this->post_id );
+			wp_redirect( add_query_arg( [
+				'notice-success' => 'draft-saved',
+				'rcl-post-edit'  => $this->post_id
+			], get_permalink( rcl_get_option( 'public_form_page_rcl' ) ) ) );
 			exit;
 		}
 
