@@ -93,7 +93,6 @@ class Rcl_EditPost {
 		}
 
 		return true;
-
 	}
 
 	function error( $error ) {
@@ -322,7 +321,7 @@ class Rcl_EditPost {
 			$this->rcl_add_attachments_in_temps( $postdata['post_author'] );
 		}
 
-		$this->update_post_gallery( $postdata );
+		$this->update_post_gallery();
 
 		delete_post_meta( $this->post_id, 'recall_slider' );
 
