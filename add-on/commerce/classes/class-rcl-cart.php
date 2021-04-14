@@ -77,7 +77,15 @@ class Rcl_Cart {
 
 			if($vars){
 				foreach($vars as $k => $v){
-					$vars[$k] = array_map('wp_strip_all_tags',$v);
+					if(is_array($v)){
+						foreach($v as $i => $a){
+							if(is_array($v)){
+								$vars[$k][$i] = array_map('wp_strip_all_tags',$a);
+							}else{
+								$vars[$k][$i] = wp_strip_all_tags($a);
+							}
+						}
+					}
 				}
 			}
 
