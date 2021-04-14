@@ -80,7 +80,7 @@ class Rcl_EditPost {
 
 				if ( in_array( $field->type, array( 'runner' ) ) ) {
 
-					$value = isset( $postdata[ $field->id ] ) ? $postdata[ $field->id ] : 0;
+					$value = $value?: 0;
 					$min   = $field->value_min;
 					$max   = $field->value_max;
 

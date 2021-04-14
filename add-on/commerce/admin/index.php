@@ -102,7 +102,7 @@ function rcl_commerce_page_options( $options ) {
 					array(
 						'type'	 => 'text',
 						'title'	 => __( 'Block title for featured products', 'wp-recall' ),
-						'slug'	 => 'title_related_products_recal'
+						'slug'	 => 'title_related_products_recall'
 					),
 					array(
 						'type'	 => 'number',
