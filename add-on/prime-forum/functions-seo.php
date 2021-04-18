@@ -67,7 +67,7 @@ function pfm_add_seo_filters() {
 
 	add_filter( 'aioseo_canonical_url', 'pfm_replace_canonical_url', 30 );
 	add_filter( 'aioseo_description', 'pfm_replace_description', 30 );
-	add_filter( 'aioseo_title_page', 'pfm_replace_title', 30 );
+	add_filter( 'aioseo_title', 'pfm_replace_title', 30 );
 
 	add_filter( 'wpseo_title', 'pfm_replace_title', 30 );
 	add_filter( 'wpseo_canonical', 'pfm_replace_canonical_url', 30 );

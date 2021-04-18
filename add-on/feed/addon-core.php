@@ -173,7 +173,7 @@ function rcl_feed_callback() {
 
 	rcl_verify_ajax_nonce();
 
-	$allowedCallbacks = array_filters('rcl_feed_allowed_callbacks', [
+	$allowedCallbacks = apply_filters('rcl_feed_allowed_callbacks', [
 		'rcl_ignored_feed_author',
 		'rcl_update_feed_current_user'
 	]);
