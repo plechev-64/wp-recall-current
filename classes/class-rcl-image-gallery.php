@@ -142,7 +142,7 @@ class Rcl_Image_Gallery {
 			});
 		</script>';
 
-		$content .= '<div id="' . $this->id . '" class="rcl-slider" style="position: relative; top: 0px; left: 0px; width: ' . $this->width . 'px; height: ' . (isset( $this->navigator['thumbnails'] ) ? $this->height + $this->navigator['thumbnails']['height'] + 10 : $this->height) . 'px; max-width: 100%; overflow: hidden;">';
+		$content .= '<div id="' . $this->id . '" class="rcl-slider" style="position: relative; top: 0px; left: 0px; width: ' . $this->width . 'px; height: ' . (isset( $this->navigator['thumbnails'] ) && count( $this->image_urls ) > 1 ? $this->height + $this->navigator['thumbnails']['height'] + 10 : $this->height) . 'px; max-width: 100%; overflow: hidden;">';
 
 		$content .= '<!-- Loading Screen -->
 		<div data-u="loading" class="jssorl-009-spin" style="z-index:9;position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgb(232, 232, 232);">
