@@ -261,9 +261,13 @@ function rcl_close_notice( e ) {
 		var idCook = jQuery( e ).data( 'notice_id' );
 		var block = jQuery( e ).parents( '.rcl-notice' );
 
-		jQuery( block ).animateCss( 'flipOutX', function() {
-			jQuery( block ).remove();
-		} );
+		if ( typeof animateCss !== 'undefined' ) {
+			jQuery(block).animateCss('flipOutX', function () {
+				jQuery(block).remove();
+			});
+		}else{
+			jQuery(block).remove();
+		}
 
 		jQuery.cookie( idCook, '1', {
 			expires: timeCook,
@@ -272,9 +276,13 @@ function rcl_close_notice( e ) {
 
 	} else {
 
-		jQuery( e ).animateCss( 'flipOutX', function( e ) {
-			jQuery( e ).hide();
-		} );
+		if ( typeof animateCss !== 'undefined' ) {
+			jQuery(e).animateCss('flipOutX', function (e) {
+				jQuery(e).hide();
+			});
+		}else{
+			jQuery(e).hide();
+		}
 
 	}
 
