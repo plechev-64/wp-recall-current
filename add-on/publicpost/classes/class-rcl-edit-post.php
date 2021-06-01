@@ -69,6 +69,8 @@ class Rcl_EditPost {
 			}
 		}
 
+		return true;
+
 		if ( $customFields = $formFields->get_custom_fields() ) {
 			foreach ( $customFields as $field ) {
 
