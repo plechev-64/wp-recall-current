@@ -85,7 +85,7 @@ function rcl_get_authorize_url( $user_id ) {
 	if ( $autPage = rcl_get_option( 'authorize_page' ) ) {
 
 		if ( $autPage == 1 )
-			$redirect	 = $_POST['redirect_to'];
+			$redirect	 = $_POST['redirect_to'] ?? $_POST['redirect_to'];
 		else if ( $autPage == 2 )
 			$redirect	 = rcl_get_option( 'custom_authorize_page' );
 	}

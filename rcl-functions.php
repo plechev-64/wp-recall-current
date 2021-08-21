@@ -291,7 +291,7 @@ function rcl_get_order_tabs( $rcl_tabs ) {
 
 	if ( count( $counter ) == 1 ) {
 
-		foreach ( $counter as $order => $id_tab ) {
+		foreach ( $counter as $id_tab ) {
 			$rcl_tabs[$id_tab]['first'] = 1;
 			break;
 		}
@@ -299,7 +299,7 @@ function rcl_get_order_tabs( $rcl_tabs ) {
 		return $rcl_tabs;
 	}
 
-	if ( count( $rcl_tabs ) == 1 ) {
+	if ( count( $counter ) == 1 || !$counter ) {
 
 		foreach ( $rcl_tabs as $id_tab => $data ) {
 			$rcl_tabs[$id_tab]['first'] = 1;

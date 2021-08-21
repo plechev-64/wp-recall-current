@@ -45,7 +45,7 @@ class Rcl_Old_Query {
 		if ( isset( $this->args['distinct'] ) ) {
 			$this->query['select'][0] = 'DISTINCT ' . $this->query['select'][0];
 		}
-
+		
 		if ( $this->query['table']['cols'] ) {
 
 			if ( isset( $this->args['include'] ) && $this->args['include'] ) {

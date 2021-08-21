@@ -124,23 +124,16 @@ function rcl_avatar_upload( $uploads, $uploader ) {
 
 add_action( 'wp', 'rcl_delete_avatar_action' );
 function rcl_delete_avatar_action() {
-	global $wpdb, $user_ID, $rcl_avatar_sizes;
+	global $user_ID;
 	if ( ! isset( $_GET['rcl-action'] ) || $_GET['rcl-action'] != 'delete_avatar' )
 		return false;
 	if ( ! wp_verify_nonce( $_GET['_wpnonce'], $user_ID ) )
 		wp_die( 'Error' );
 
-	$result = delete_user_meta( $user_ID, 'rcl_avatar' );
+	if ( $AvatarId = get_user_meta( $user_ID, 'rcl_avatar', 1 ) )
+		wp_delete_attachment( $AvatarId );
 
-	if ( ! $result )
-		wp_die( 'Error' );
-
-	$dir_path = RCL_UPLOAD_PATH . 'avatars/';
-	foreach ( $rcl_avatar_sizes as $key => $size ) {
-		unlink( $dir_path . $user_ID . '-' . $size . '.jpg' );
-	}
-
-	unlink( $dir_path . $user_ID . '.jpg' );
+	delete_user_meta( $user_ID, 'rcl_avatar' );
 
 	do_action( 'rcl_delete_avatar' );
 

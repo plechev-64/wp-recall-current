@@ -36,12 +36,6 @@ class Rcl_Create_Order {
 
 			$this->order_price += $product_price * $product->product_amount;
 
-			if($product->variations){
-				foreach($product->variations as $k => $v){
-					$product->variations->$k = array_map('wp_strip_all_tags',$v);
-				}
-			}
-
 			$this->products[] = array(
 				'product_id'	 => intval($product->product_id),
 				'product_price'	 => intval($product_price),

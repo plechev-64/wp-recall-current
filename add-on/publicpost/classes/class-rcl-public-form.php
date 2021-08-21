@@ -221,7 +221,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 	}
 
 	function isset_notice(){
-		return !empty(strval($_GET['notice-warning'])) || !empty(strval($_GET['notice-success']));
+		return !empty($_GET['notice-warning']) || !empty($_GET['notice-success']);
 	}
 
 	function get_notice_content() {
@@ -239,7 +239,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 		foreach ( $noticesData as $type => $notices ) {
 
-			if(empty(strval($_GET['notice-'.$type])))
+			if(empty($_GET['notice-'.$type]))
 				continue;
 
 			$noticeKey = strval($_GET['notice-'.$type]);

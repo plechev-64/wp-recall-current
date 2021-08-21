@@ -75,20 +75,6 @@ class Rcl_Cart {
 			$this->products[$key]->product_amount += $qls;
 		} else {
 
-			if($vars){
-				foreach($vars as $k => $v){
-					if(is_array($v)){
-						foreach($v as $i => $a){
-							if(is_array($v)){
-								$vars[$k][$i] = array_map('wp_strip_all_tags',$a);
-							}else{
-								$vars[$k][$i] = wp_strip_all_tags($a);
-							}
-						}
-					}
-				}
-			}
-
 			$this->products[] = array(
 				'product_id'	 => intval($product_id),
 				'product_price'	 => intval($product_price),
