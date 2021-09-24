@@ -422,7 +422,7 @@ function rcl_get_last_chats_box() {
 
 	$class[] = ( isset( $_COOKIE['rcl_chat_contact_panel'] ) && $_COOKIE['rcl_chat_contact_panel'] ) ? '' : 'hidden-contacts';
 
-	echo '<div id="rcl-chat-noread-box" class="' . implode( ' ', $class ) . '">';
+	echo '<div id="rcl-chat-noread-box" class="' . esc_attr( implode( ' ', $class ) ) . '">';
 
 	echo '<div class="rcl-mini-chat"></div>';
 

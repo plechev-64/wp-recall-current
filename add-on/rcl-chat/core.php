@@ -82,7 +82,6 @@ function rcl_chat_remove_messages( $chat_id, $user_id = false ) {
 
 	do_action( 'rcl_chat_remove_messages', $chat_id, $user_id );
 
-	return $result;
 }
 
 function rcl_chat_delete_user( $chat_id, $user_id ) {
@@ -202,7 +201,7 @@ function rcl_chat_delete_message_meta( $message_id, $meta_key = false ) {
 	return $result;
 }
 
-function rcl_chat_update_user_status( $chat_id, $user_id, $status ) {
+function rcl_chat_update_user_status( int $chat_id, int $user_id, int $status ) {
 	global $wpdb;
 
 	$result = $wpdb->query( "INSERT INTO " . RCL_PREF . "chat_users "
