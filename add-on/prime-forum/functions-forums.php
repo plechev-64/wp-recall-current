@@ -46,7 +46,7 @@ function pfm_the_topic_count() {
 		$topic_count += pfm_subforums_topic_count( $PrimeForum->forum_id );
 	}
 
-	echo $topic_count;
+	echo absint( $topic_count );
 }
 
 function pfm_forum_field( $field_name, $echo = 1 ) {
