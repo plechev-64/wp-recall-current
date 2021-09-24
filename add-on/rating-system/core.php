@@ -65,8 +65,8 @@ function rcl_count_votes_time( $args, $second ) {
 		'rating_type'   => $args['rating_type']
 	) );
 
-	$rating->where_string( "rating_value $mark 0" );
-	$rating->where_string( "rating_date >= DATE_SUB('$now', INTERVAL $second SECOND)" );
+	//$rating->where_string( "rating_value $mark 0" );
+	$rating->where_string( "rating_date >= DATE_SUB('" . current_time( 'mysql' ) . "', INTERVAL " . intval( $second ) . " SECOND)" );
 
 	$result = $rating->get_count();
 
