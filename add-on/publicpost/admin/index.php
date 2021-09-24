@@ -14,8 +14,8 @@ function rcl_admin_page_publicform() {
 
 function rcl_public_form_manager() {
 
-	$post_type = ( isset( $_GET['post-type'] ) ) ? $_GET['post-type'] : 'post';
-	$form_id   = ( isset( $_GET['form-id'] ) ) ? $_GET['form-id'] : 1;
+	$post_type = ( isset( $_GET['post-type'] ) ) ? sanitize_key( $_GET['post-type'] ) : 'post';
+	$form_id   = ( isset( $_GET['form-id'] ) ) ? intval( $_GET['form-id'] ) : 1;
 
 	$shortCode = 'public-form post_type="' . $post_type . '"';
 
@@ -117,22 +117,22 @@ function rcl_public_form_admin_actions() {
 
 		case 'new-form':
 
-			$newFormId = $_GET['form-id'];
+			$newFormId = intval( $_GET['form-id'] );
 
-			add_option( 'rcl_fields_' . $_GET['post-type'] . '_' . $newFormId, array() );
+			add_option( 'rcl_fields_' . sanitize_key( $_GET['post-type'] ) . '_' . $newFormId, array() );
 
-			wp_redirect( admin_url( 'admin.php?page=manage-public-form&post-type=' . $_GET['post-type'] . '&form-id=' . $newFormId ) );
+			wp_redirect( admin_url( 'admin.php?page=manage-public-form&post-type=' . sanitize_key( $_GET['post-type'] ) . '&form-id=' . $newFormId ) );
 			exit;
 
 			break;
 
 		case 'delete-form':
 
-			$delFormId = $_GET['form-id'];
+			$delFormId = intval( $_GET['form-id'] );
 
-			delete_site_option( 'rcl_fields_' . $_GET['post-type'] . '_' . $delFormId );
+			delete_site_option( 'rcl_fields_' . sanitize_key( $_GET['post-type'] ) . '_' . $delFormId );
 
-			wp_redirect( admin_url( 'admin.php?page=manage-public-form&post-type=' . $_GET['post-type'] ) );
+			wp_redirect( admin_url( 'admin.php?page=manage-public-form&post-type=' . sanitize_key( $_GET['post-type'] ) ) );
 			exit;
 
 			break;

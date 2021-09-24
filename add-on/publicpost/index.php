@@ -237,15 +237,16 @@ function rcl_delete_post() {
 add_action( 'after_delete_post_rcl', 'rcl_delete_notice_author_post' );
 function rcl_delete_notice_author_post( $post_id ) {
 
-	if ( ! $_POST['reason_content'] ) {
+	if ( ! isset( $_POST['reason_content'] ) || ! $_POST['reason_content'] ) {
 		return false;
 	}
 
-	$post = get_post( $post_id );
+	$post          = get_post( $post_id );
+	$delete_reason = sanitize_textarea_field( $_POST['reason_content'] );
 
 	$subject  = __( 'Your post has been deleted', 'wp-recall' );
 	$textmail = '<h3>' . __( 'Post', 'wp-recall' ) . ' "' . $post->post_title . '" ' . __( 'has been deleted', 'wp-recall' ) . '</h3>
-    <p>' . __( 'Notice of a moderator', 'wp-recall' ) . ': ' . $_POST['reason_content'] . '</p>';
+    <p>' . __( 'Notice of a moderator', 'wp-recall' ) . ': ' . $delete_reason . '</p>';
 	rcl_mail( get_the_author_meta( 'user_email', $post->post_author ), $subject, $textmail );
 }
 
@@ -328,14 +329,14 @@ function rcl_add_taxonomy_in_postdata( $postdata, $data ) {
 		$post_type['post']->taxonomies = array( 'category' );
 
 		if ( isset( $_POST['tags'] ) && $_POST['tags'] ) {
-			$postdata['tags_input'] = $_POST['tags']['post_tag'];
+			$postdata['tags_input'] = array_map( 'sanitize_text_field', $_POST['tags']['post_tag'] );
 		}
 	}
 
 	if ( isset( $_POST['cats'] ) && $_POST['cats'] ) {
 
 		$FormFields = new Rcl_Public_Form_Fields( $data->post_type, array(
-			'form_id' => $_POST['form_id']
+			'form_id' => intval( $_POST['form_id'] )
 		) );
 
 		foreach ( $_POST['cats'] as $taxonomy => $terms ) {
@@ -422,7 +423,7 @@ function rcl_register_author_post( $postdata ) {
 				'user_pass'    => $random_password,
 				'user_login'   => $email_new_user,
 				'user_email'   => $email_new_user,
-				'display_name' => $_POST['name-user']
+				'display_name' => sanitize_user( $_POST['name-user'] )
 			);
 
 			$user_id = rcl_insert_user( $userdata );
@@ -432,7 +433,7 @@ function rcl_register_author_post( $postdata ) {
 				//переназначаем временный массив изображений от гостя юзеру
 				rcl_update_temp_media( [ 'user_id' => $user_id ], [
 					'user_id'    => 0,
-					'session_id' => isset( $_COOKIE['PHPSESSID'] ) && $_COOKIE['PHPSESSID'] ? $_COOKIE['PHPSESSID'] : 'none'
+					'session_id' => isset( $_COOKIE['PHPSESSID'] ) && $_COOKIE['PHPSESSID'] ? sanitize_text_field( $_COOKIE['PHPSESSID'] ) : 'none'
 				] );
 
 				//Сразу авторизуем пользователя

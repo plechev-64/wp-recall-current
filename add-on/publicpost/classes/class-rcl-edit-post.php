@@ -22,11 +22,11 @@ class Rcl_EditPost {
 		}
 
 		if ( isset( $_POST['post_type'] ) && $_POST['post_type'] ) {
-			$this->post_type = sanitize_text_field( $_POST['post_type'] );
+			$this->post_type = sanitize_key( $_POST['post_type'] );
 		}
 
 		if ( ! $post_id ) {
-			$post_id = isset( $_POST['post_ID'] ) && $_POST['post_ID'] ? $_POST['post_ID'] : ( isset( $_POST['post_id'] ) && $_POST['post_id'] ? $_POST['post_id'] : 0 );
+			$post_id = isset( $_POST['post_ID'] ) && $_POST['post_ID'] ? intval( $_POST['post_ID'] ) : ( isset( $_POST['post_id'] ) && $_POST['post_id'] ? intval( $_POST['post_id'] ) : 0 );
 		}
 
 		if ( $post_id ) {
@@ -54,8 +54,8 @@ class Rcl_EditPost {
 
 	function check_required_post_fields() {
 
-		$formFields = new Rcl_Public_Form_Fields( $_POST['post_type'], array(
-			'form_id' => isset( $_POST['form_id'] ) ? $_POST['form_id'] : 1
+		$formFields = new Rcl_Public_Form_Fields( sanitize_key( $_POST['post_type'] ), array(
+			'form_id' => isset( $_POST['form_id'] ) ? intval( $_POST['form_id'] ) : 1
 		) );
 
 		foreach (
@@ -70,31 +70,6 @@ class Rcl_EditPost {
 				if ( $field->get_prop( 'required' ) && empty( $_POST[ $field_name ] ) ) {
 					return false;
 				}
-			}
-		}
-
-		return true;
-
-		if ( $customFields = $formFields->get_custom_fields() ) {
-			foreach ( $customFields as $field ) {
-
-				$value = ( isset( $_POST[ $field->slug ] ) ) ? $_POST[ $field->slug ] : false;
-
-				if ( $field->required && ! $value ) {
-					return false;
-				}
-
-				if ( in_array( $field->type, array( 'runner' ) ) ) {
-
-					$value = $value ?: 0;
-					$min   = $field->value_min;
-					$max   = $field->value_max;
-
-					if ( $value < $min || $value > $max ) {
-						return false;
-					}
-				}
-
 			}
 		}
 

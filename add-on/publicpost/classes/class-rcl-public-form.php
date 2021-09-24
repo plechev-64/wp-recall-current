@@ -243,7 +243,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 				continue;
 			}
 
-			$noticeKey = strval( $_GET[ 'notice-' . $type ] );
+			$noticeKey = sanitize_key( $_GET[ 'notice-' . $type ] );
 
 			if ( empty( $notices[ $noticeKey ] ) ) {
 				continue;
@@ -480,7 +480,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 							                  ->select( [ 'media_id' ] )
 							                  ->where( [
 								                  'user_id'         => $uploader->user_id ? $uploader->user_id : 0,
-								                  'session_id'      => $uploader->user_id ? '' : $_COOKIE['PHPSESSID'],
+								                  'session_id'      => $uploader->user_id ? '' : sanitize_text_field( $_COOKIE['PHPSESSID'] ),
 								                  'uploader_id__in' => array( 'post_thumbnail' )
 							                  ] )
 							                  ->limit( 1 )
@@ -515,7 +515,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 							             ->select( [ 'media_id' ] )
 							             ->where( [
 								             'user_id'         => $uploader->user_id ? $uploader->user_id : 0,
-								             'session_id'      => $uploader->user_id ? '' : $_COOKIE['PHPSESSID'],
+								             'session_id'      => $uploader->user_id ? '' : sanitize_text_field( $_COOKIE['PHPSESSID'] ),
 								             'uploader_id__in' => array( 'post_uploader', 'post_thumbnail' )
 							             ] )
 							             ->limit( - 1 )->order( 'ASC' )->get_col();

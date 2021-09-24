@@ -149,7 +149,7 @@ function rcl_preview_post() {
 	if ( ! rcl_get_option( 'public_access' ) && ! $user_ID ) {
 
 		$email_new_user = sanitize_email( $postdata['email-user'] );
-		$name_new_user  = $postdata['name-user'];
+		$name_new_user  = sanitize_user( $postdata['name-user'] );
 
 		if ( ! $email_new_user ) {
 			$log['error'] = __( 'Enter your e-mail!', 'wp-recall' );
@@ -179,8 +179,8 @@ function rcl_preview_post() {
 		}
 	}
 
-	$formFields = new Rcl_Public_Form_Fields( $postdata['post_type'], array(
-		'form_id' => isset( $postdata['form_id'] ) ? $postdata['form_id'] : 1
+	$formFields = new Rcl_Public_Form_Fields( sanitize_text_field( $postdata['post_type'] ), array(
+		'form_id' => isset( $postdata['form_id'] ) ? intval( $postdata['form_id'] ) : 1
 	) );
 
 	foreach ( $formFields->fields as $field ) {
@@ -199,7 +199,7 @@ function rcl_preview_post() {
 
 	if ( $formFields->is_active_field( 'post_thumbnail' ) ) {
 
-		$thumbnail_id = ( isset( $postdata['post_thumbnail'] ) ) ? $postdata['post_thumbnail'] : 0;
+		$thumbnail_id = ( isset( $postdata['post_thumbnail'] ) ) ? intval( $postdata['post_thumbnail'] ) : 0;
 
 		$field = $formFields->get_field( 'post_thumbnail' );
 
@@ -293,7 +293,7 @@ function rcl_set_post_thumbnail() {
 	$thumbnail_id = intval( $_POST['thumbnail_id'] );
 	$parent_id    = intval( $_POST['parent_id'] );
 	$form_id      = intval( $_POST['form_id'] );
-	$post_type    = $_POST['post_type'];
+	$post_type    = sanitize_key( $_POST['post_type'] );
 
 	$formFields = new Rcl_Public_Form_Fields( $post_type, array(
 		'form_id' => $form_id ? $form_id : 1

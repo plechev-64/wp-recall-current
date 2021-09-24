@@ -271,7 +271,7 @@ function rcl_save_temp_async_uploaded_thumbnail() {
 function rcl_update_tempgallery( $attach_id, $attach_url ) {
 	global $user_ID;
 
-	$user_id = ( $user_ID ) ? $user_ID : $_COOKIE['PHPSESSID'];
+	$user_id = ( $user_ID ) ? $user_ID : sanitize_text_field( $_COOKIE['PHPSESSID'] );
 
 	$temp_gal = get_site_option( 'rcl_tempgallery' );
 
