@@ -21,13 +21,13 @@ class Rcl_PageNavi {
 
 		if ( isset( $_REQUEST['pager-id'] ) && $_REQUEST['pager-id'] == $this->pager_id ) {
 			if ( isset( $_REQUEST[ $this->key ] ) ) {
-				$this->current_page = $_REQUEST[ $this->key ];
+				$this->current_page = intval( $_REQUEST[ $this->key ] );
 			}
 		}
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_POST['tab_url'] ) ) {
 			$post               = rcl_decode_post( $_POST['post'] );
-			$this->current_page = isset( $post->page ) ? $post->page : false;
+			$this->current_page = isset( $post->page ) ? intval( $post->page ) : false;
 		}
 
 		if ( $rcl_tab ) {
@@ -47,7 +47,7 @@ class Rcl_PageNavi {
 			if ( isset( $this->custom['key'] ) ) {
 				$this->key = $this->custom['key'];
 				if ( isset( $_REQUEST[ $this->key ] ) ) {
-					$this->current_page = $_REQUEST[ $this->key ];
+					$this->current_page = intval( $_REQUEST[ $this->key ] );
 				}
 			}
 
@@ -210,7 +210,7 @@ class Rcl_PageNavi {
 				if ( $type == 'page' ) {
 
 					$attrs = array(
-						'href'  => $this->get_url( $data ),
+						'href'  => esc_url( $this->get_url( $data ) ),
 						'label' => $data,
 						'data'  => array(
 							'page'     => $data,

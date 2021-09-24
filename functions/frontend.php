@@ -172,7 +172,7 @@ function rcl_default_search_form( $form ) {
 	global $user_LK, $rcl_tab;
 
 	$search_text  = ( ( isset( $_GET['search_text'] ) ) ) ? wp_slash( strip_tags( $_GET['search_text'] ) ) : '';
-	$search_field = ( isset( $_GET['search_field'] ) ) ? $_GET['search_field'] : '';
+	$search_field = ( isset( $_GET['search_field'] ) ) ? sanitize_key( $_GET['search_field'] ) : '';
 
 	$form .= '<div class="rcl-search-form">
             <form method="get">

@@ -860,6 +860,10 @@ function rcl_delete_file() {
 		wp_die( __( 'File does not exist on the server!', 'wp-recall' ) );
 	}
 
+	if ( ! current_user_can( 'edit_post', $file->ID ) ) {
+		wp_die( __( 'Error', 'wp-recall' ) );
+	}
+
 	wp_delete_attachment( $file->ID );
 
 	if ( $file->post_parent ) {
@@ -893,6 +897,10 @@ function rcl_delete_file_admin() {
 
 	if ( ! $file ) {
 		wp_die( __( 'File does not exist on the server!', 'wp-recall' ) );
+	}
+
+	if ( ! current_user_can( 'edit_post', $file->ID ) ) {
+		wp_die( __( 'Error', 'wp-recall' ) );
 	}
 
 	wp_delete_attachment( $file->ID );

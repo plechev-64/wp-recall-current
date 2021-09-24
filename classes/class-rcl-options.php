@@ -29,7 +29,7 @@ class Rcl_Options extends Rcl_Custom_Fields {
 			$return = '<span ';
 
 			if ( $this->key ) {
-				$return .= 'id="title-' . $this->key . '" data-addon="' . $this->key . '" data-url="' . admin_url( 'admin.php?page=' . $_GET['page'] . '&rcl-addon-options=' . $this->key ) . '" ';
+				$return .= 'id="title-' . $this->key . '" data-addon="' . $this->key . '" data-url="' . admin_url( 'admin.php?page=' . sanitize_key( $_GET['page'] ) . '&rcl-addon-options=' . $this->key ) . '" ';
 			} else {
 				$return .= 'data-url="' . admin_url( 'admin.php?page=manage-wprecall' ) . '" ';
 			}

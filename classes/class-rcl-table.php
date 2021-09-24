@@ -308,7 +308,7 @@ class Rcl_Table {
 				$value = isset( $col['search']['value'] ) ? $col['search']['value'] : '';
 
 				if ( ! $value && isset( $_REQUEST[ $name ] ) && $_REQUEST[ $name ] ) {
-					$value = $_REQUEST[ $name ];
+					$value = sanitize_text_field( $_REQUEST[ $name ] );
 				}
 
 				$submit = isset( $col['search']['submit'] ) ? $col['search']['submit'] : 0;
@@ -339,7 +339,7 @@ class Rcl_Table {
 					}
 				}
 
-				$contentCell = '<input style="width:100%" type="text" ' . $datescript . ' name="' . $name . '" placeholder="' . __( 'Search', 'wp-recall' ) . '" ' . $onkeyup . ' value="' . $value . '">';
+				$contentCell = '<input style="width:100%" type="text" ' . $datescript . ' name="' . $name . '" placeholder="' . __( 'Search', 'wp-recall' ) . '" ' . $onkeyup . ' value="' . esc_attr( $value ) . '">';
 			}
 
 			$content .= $this->cell( $idcol, $contentCell, $col, 'search' );

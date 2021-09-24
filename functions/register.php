@@ -85,8 +85,9 @@ function rcl_confirm_user_registration() {
 			wp_update_user( array( 'ID' => $user->ID, 'role' => $defaultRole ) );
 
 			if ( ! rcl_get_time_user_action( $user->ID ) ) {
-				$wpdb->insert( RCL_PREF . 'user_action', array( 'user'        => $user->ID,
-				                                                'time_action' => current_time( 'mysql' )
+				$wpdb->insert( RCL_PREF . 'user_action', array(
+					'user'        => $user->ID,
+					'time_action' => current_time( 'mysql' )
 				) );
 			}
 
@@ -553,7 +554,7 @@ function rcl_custom_fields_regform( $content ) {
 		$class          = ( isset( $field['class'] ) ) ? $field['class'] : '';
 		$id             = ( isset( $field['id'] ) ) ? 'id=' . $field['id'] : '';
 		$attr           = ( isset( $field['attr'] ) ) ? '' . $field['attr'] : '';
-		$field['value'] = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : false;
+		$field['value'] = isset( $_POST[ $field['slug'] ] ) ? esc_html( wp_unslash($_POST[ $field['slug'] ]) ) : false;
 
 		unset( $field['class'] );
 		unset( $field['attr'] );
@@ -577,7 +578,7 @@ function rcl_custom_fields_regform( $content ) {
 	}
 
 	foreach ( $hiddens as $field ) {
-		$field['value'] = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : false;
+		$field['value'] = isset( $_POST[ $field['slug'] ] ) ? esc_html( wp_unslash($_POST[ $field['slug'] ]) ) : false;
 		$fieldObject    = Rcl_Field::setup( $field );
 		$content        .= $fieldObject->get_field_input();
 	}

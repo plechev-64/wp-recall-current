@@ -194,7 +194,7 @@ class Rcl_Field_Abstract {
 			$classes[] = 'rcl-children-field';
 		}
 
-		$content = '<div class="' . implode( ' ', $classes ) . '" ' . ( $this->parent ? 'data-parent="' . $this->parent['id'] . '" data-parent-value="' . $this->parent['value'] . '"' : '' ) . '>';
+		$content = '<div class="' . implode( ' ', $classes ) . '" ' . ( $this->parent ? 'data-parent="' . esc_attr( $this->parent['id'] ) . '" data-parent-value="' . esc_attr( $this->parent['value'] ) . '"' : '' ) . '>';
 
 		$content .= $this->get_title();
 

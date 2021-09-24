@@ -283,7 +283,7 @@ class Rcl_Uploader {
 			return false;
 		}
 
-		$is_image = wp_attachment_is( 'image', $attach ) ? true : false;
+		$is_image = wp_attachment_is( 'image', $attach );
 
 		if ( $is_image ) {
 

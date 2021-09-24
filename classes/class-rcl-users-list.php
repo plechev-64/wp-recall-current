@@ -49,17 +49,17 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		$this->data = ( $this->data ) ? array_map( 'trim', explode( ',', $this->data ) ) : array();
 
 		if ( isset( $_GET['usergroup'] ) ) {
-			$this->usergroup = strval( $_GET['usergroup'] );
+			$this->usergroup = sanitize_text_field( $_GET['usergroup'] );
 		}
 
 		if ( $this->filters ) {
 
 			if ( isset( $_GET['users-filter'] ) ) {
-				$this->orderby = strval( $_GET['users-filter'] );
+				$this->orderby = sanitize_sql_orderby( $_GET['users-filter'] );
 			}
 
 			if ( isset( $_GET['users-order'] ) ) {
-				$this->query['order'] = strval( $_GET['users-order'] );
+				$this->query['order'] = sanitize_sql_orderby( $_GET['users-order'] );
 			}
 
 			add_filter( 'rcl_users_query', array( $this, 'add_query_search' ) );
@@ -169,7 +169,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 				if ( $k == 'rcl-page' || $k == 'users-filter' ) {
 					continue;
 				}
-				$rqst[ $k ] = $k . '=' . $v;
+				$rqst[ $k ] = esc_html( $k ) . '=' . esc_html( $v );
 			}
 		}
 
@@ -186,7 +186,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 	function add_query_only_actions_users( $query ) {
 
-		$timeout          = rcl_get_option( 'timeout', 10 );
+		$timeout          = intval( rcl_get_option( 'timeout', 10 ) );
 		$query['where'][] = "actions.time_action > date_sub('" . current_time( 'mysql' ) . "', interval $timeout minute)";
 
 		if ( $this->orderby != 'time_action' ) {
@@ -202,10 +202,13 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 		$usergroup = explode( '|', $this->usergroup );
 		foreach ( $usergroup as $k => $filt ) {
-			$f                = explode( ':', $filt );
-			$n                = 'metas_' . str_replace( '-', '_', $f[0] );
-			$query['join'][]  = "INNER JOIN $wpdb->usermeta AS $n ON wp_users.ID=$n.user_id";
-			$query['where'][] = "($n.meta_key='$f[0]' AND $n.meta_value LIKE '%$f[1]%')";
+			$f        = explode( ':', $filt );
+			$uniq     = uniqid( 'meta_' );
+			$search   = sanitize_text_field( $f[1] );
+			$meta_key = sanitize_key( str_replace( '-', '_', $f[0] ) );
+
+			$query['join'][]  = "INNER JOIN $wpdb->usermeta AS $uniq ON wp_users.ID=$uniq.user_id";
+			$query['where'][] = $wpdb->prepare( "($uniq.meta_key=%s AND $uniq.meta_value LIKE %s)", $meta_key, '%' . $wpdb->esc_like( $search ) . '%' );
 		}
 
 		return $query;
@@ -239,7 +242,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 			if ( isset( $custom_field['public_value'] ) && $custom_field['public_value'] == 1 ) {
 				$fields[] = $custom_field;
-				$slugs[]  = $custom_field['slug'];
+				$slugs[]  = sanitize_key( $custom_field['slug'] );
 			}
 		}
 
@@ -555,14 +558,14 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		$rqst = ( $s_array ) ? implode( '&', $s_array ) . '&' : '';
 
 		if ( rcl_is_office() ) {
-			$url = ( isset( $_POST['tab_url'] ) ) ? $_POST['tab_url'] : rcl_get_user_url( $user_LK );
+			$url = ( isset( $_POST['tab_url'] ) ) ? esc_url( $_POST['tab_url'] ) : rcl_get_user_url( $user_LK );
 		} else {
 			$url = get_permalink( $post->ID );
 		}
 
 		$perm = rcl_format_url( $url ) . $rqst;
 
-		$current_filter = ( isset( $_GET['users-filter'] ) ) ? $_GET['users-filter'] : 'time_action';
+		$current_filter = ( isset( $_GET['users-filter'] ) ) ? sanitize_key( $_GET['users-filter'] ) : 'time_action';
 
 		$filters = array(
 			'time_action'     => __( 'Activity', 'wp-recall' ),
@@ -582,7 +585,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		foreach ( $filters as $key => $name ) {
 			$content .= rcl_get_button( array(
 				'label'  => $name,
-				'href'   => $perm . 'users-filter=' . $key,
+				'href'   => esc_url( $perm . 'users-filter=' . $key ),
 				'class'  => 'data-filter',
 				'status' => $current_filter == $key ? 'disabled' : null
 			) );
@@ -594,12 +597,17 @@ class Rcl_Users_List extends Rcl_Users_Query {
 	}
 
 	function add_query_search( $query ) {
-		$search_text  = ( isset( $_GET['search_text'] ) ) ? wp_slash( strip_tags( $_GET['search_text'] ) ) : '';
-		$search_field = ( isset( $_GET['search_field'] ) ) ? $_GET['search_field'] : '';
-		if ( ! $search_text || ! $search_field ) {
+
+		global $wpdb;
+
+		$search_text  = ( isset( $_GET['search_text'] ) ) ? sanitize_text_field( $_GET['search_text'] ) : '';
+		$search_field = ( isset( $_GET['search_field'] ) ) ? sanitize_key( $_GET['search_field'] ) : '';
+
+		if ( ! $search_text || ! in_array( $search_field, [ 'display_name', 'user_login' ] ) ) {
 			return $query;
 		}
-		$query['where'][] = "wp_users.$search_field LIKE '%$search_text%'";
+
+		$query['where'][] = $wpdb->prepare( "wp_users.$search_field LIKE %s", '%' . $wpdb->esc_like( $search_text ) . '%' );
 
 		return $query;
 	}
