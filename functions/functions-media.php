@@ -14,7 +14,7 @@ function rcl_add_temp_media( $args ) {
 		'media_id'    => '',
 		'user_id'     => $user_ID,
 		'uploader_id' => '',
-		'session_id'  => $user_ID ? '' : ( $_COOKIE['PHPSESSID'] ? $_COOKIE['PHPSESSID'] : 'none' ),
+		'session_id'  => $user_ID ? '' : ( $_COOKIE['PHPSESSID'] ? sanitize_text_field( $_COOKIE['PHPSESSID'] ) : 'none' ),
 		'upload_date' => current_time( 'mysql' )
 	) );
 

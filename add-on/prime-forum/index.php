@@ -31,7 +31,7 @@ require_once 'functions-permalink.php';
 require_once 'functions-seo.php';
 require_once 'functions-shortcodes.php';
 
-rcl_init_beat( "pfm_topic_beat" );
+rcl_init_beat( "pfm_topic_beat", [ 'pfm_topic_beat' ] );
 
 if ( is_admin() ) {
 	require_once 'admin/index.php';

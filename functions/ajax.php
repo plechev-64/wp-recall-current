@@ -51,9 +51,9 @@ function rcl_ajax_tab() {
 		'post'   => array(
 			'tab_id'    => $post->tab_id,
 			'subtab_id' => isset( $post->subtab_id ) ? $post->subtab_id : '',
-			'tab_url'   => ( isset( $_POST['tab'] ) ) ? $_POST['tab_url'] . '&tab=' . $_POST['tab'] : $_POST['tab_url'],
+			'tab_url'   => ( isset( $_POST['tab'] ) ) ? esc_url( $_POST['tab_url'] . '&tab=' . $_POST['tab'] ) : esc_url( $_POST['tab_url'] ),
 			'supports'  => $tab['supports'],
-			'master_id' => $post->master_id
+			'master_id' => intval( $post->master_id )
 		)
 	) );
 
@@ -63,8 +63,6 @@ function rcl_ajax_tab() {
 //регистрируем биение плагина
 rcl_ajax_action( 'rcl_beat', true );
 function rcl_beat() {
-	global $rcl_beats;
-
 	rcl_verify_ajax_nonce();
 
 	$databeat = json_decode( wp_unslash( $_POST['databeat'] ) );
@@ -73,7 +71,7 @@ function rcl_beat() {
 	if ( $databeat ) {
 		foreach ( $databeat as $data ) {
 
-			if ( ! isset( $rcl_beats[ $data->beat_name ] ) ) {
+			if ( ! rcl_beat_action_exist( $data->beat_name, $data->action ) ) {
 				continue;
 			}
 

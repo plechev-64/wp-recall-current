@@ -587,10 +587,11 @@ function rcl_check_access_console() {
 /* Удаление поста вместе с его вложениями */
 add_action( 'before_delete_post', 'rcl_delete_attachments_with_post' );
 function rcl_delete_attachments_with_post( $postid ) {
-	$attachments = get_posts( array( 'post_type'      => 'attachment',
-	                                 'posts_per_page' => - 1,
-	                                 'post_status'    => null,
-	                                 'post_parent'    => $postid
+	$attachments = get_posts( array(
+		'post_type'      => 'attachment',
+		'posts_per_page' => - 1,
+		'post_status'    => null,
+		'post_parent'    => $postid
 	) );
 	if ( $attachments ) {
 		foreach ( ( array ) $attachments as $attachment ) {
@@ -1711,7 +1712,21 @@ function rcl_get_pages_ids() {
 	return $pages;
 }
 
-function rcl_init_beat( $beatName ) {
+/**
+ * @param $beatName
+ * @param $actions - array with allowed function callbacks for beat
+ */
+function rcl_init_beat( $beatName, $actions ) {
 	global $rcl_beats;
-	$rcl_beats[ $beatName ] = [];
+	$rcl_beats[ $beatName ] = [
+		'actions' => $actions
+	];
+}
+
+function rcl_beat_action_exist( $beatName, $action ) {
+	global $rcl_beats;
+
+	$beat_actions = $rcl_beats[ $beatName ]['actions'] ?? [];
+
+	return in_array( $action, $beat_actions );
 }

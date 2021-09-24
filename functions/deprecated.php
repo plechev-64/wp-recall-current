@@ -49,7 +49,7 @@ class RCL_navi {
 		$this->navi   = 1;
 		$this->g_name = $getname;
 		if ( isset( $_GET[ $this->g_name ] ) ) {
-			$this->navi = $_GET[ $this->g_name ];
+			$this->navi = intval( $_GET[ $this->g_name ] );
 		}
 		if ( $page ) {
 			$this->navi = $page;
@@ -80,7 +80,7 @@ class RCL_navi {
 		if ( $group_id ) {
 			$prm = get_term_link( ( int ) $group_id, 'groups' );
 			if ( $_GET['group-page'] ) {
-				$prm = rcl_format_url( $prm ) . 'group-page=' . $_GET['group-page'];
+				$prm = rcl_format_url( $prm ) . 'group-page=' . sanitize_text_field( $_GET['group-page'] );
 			}
 		} else if ( $user_LK ) {
 			$prm = rcl_get_user_url( $user_LK );
