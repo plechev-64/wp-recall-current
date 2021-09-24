@@ -110,7 +110,7 @@ function pfm_get_forum_permalink( $forum_id ) {
 
 function pfm_the_topic_permalink() {
 	global $PrimeTopic;
-	echo pfm_get_topic_permalink( $PrimeTopic->topic_id );
+	echo pfm_get_topic_permalink( absint( $PrimeTopic->topic_id ) );
 }
 
 function pfm_get_topic_permalink( $topic_id, $args = false ) {
