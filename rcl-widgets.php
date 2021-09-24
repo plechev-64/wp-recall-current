@@ -165,7 +165,7 @@ class Widget_online_users extends WP_Widget {
         <p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'wp-recall' ); ?>:</label>
             <input id="<?php echo $this->get_field_id( 'title' ); ?>"
-                   name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo trim( strip_tags( stripslashes( $instance['title'] ) ); ?>"
+                   name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo trim( strip_tags( stripslashes( $instance['title'] ) ) ); ?>"
                    style="width:100%;"/>
         </p>
 		<?php
@@ -236,7 +236,7 @@ class Widget_author_profil extends WP_Widget {
         <p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'wp-recall' ); ?>:</label>
             <input id="<?php echo $this->get_field_id( 'title' ); ?>"
-                   name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo trim( strip_tags( stripslashes( $instance['title'] ) ); ?>"
+                   name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo trim( strip_tags( stripslashes( $instance['title'] ) ) ); ?>"
                    style="width:100%;"/>
         </p>
 		<?php
