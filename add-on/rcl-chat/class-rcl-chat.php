@@ -53,7 +53,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 		}
 
 		if ( ! $this->office_id ) {
-			$this->office_id = ( isset( $_POST['office_ID'] ) ) ? $_POST['office_ID'] : 0;
+			$this->office_id = ( isset( $_POST['office_ID'] ) ) ? intval( $_POST['office_ID'] ) : 0;
 		}
 
 		if ( ! $this->max_words ) {

@@ -42,11 +42,10 @@ function rcl_get_chat_page() {
 
 	rcl_verify_ajax_nonce();
 
-	$chat_page  = intval( $_POST['page'] );
-	$in_page    = intval( $_POST['in_page'] );
-	$important  = intval( $_POST['important'] );
-	$chat_token = $_POST['token'];
-	$chat_room  = rcl_chat_token_decode( $chat_token );
+	$chat_page = intval( $_POST['page'] );
+	$in_page   = intval( $_POST['in_page'] );
+	$important = intval( $_POST['important'] );
+	$chat_room = sanitize_text_field( rcl_chat_token_decode( $_POST['token'] ) );
 
 	if ( ! rcl_get_chat_by_room( $chat_room ) ) {
 		return false;
@@ -76,7 +75,7 @@ function rcl_chat_add_message() {
 
 	$POST = wp_unslash( $_POST['chat'] );
 
-	$chat_room = rcl_chat_token_decode( $POST['token'] );
+	$chat_room = sanitize_text_field( rcl_chat_token_decode( $POST['token'] ) );
 
 	if ( ! rcl_get_chat_by_room( $chat_room ) ) {
 		return false;
@@ -109,13 +108,13 @@ function rcl_chat_add_message() {
 		}
 	}
 
-	$attach = ( isset( $POST['attachment'] ) ) ? $POST['attachment'] : false;
+	$attach = ( isset( $POST['attachment'] ) ) ? intval( $POST['attachment'] ) : false;
 
 	$content = '';
 
 	$newMessages = rcl_chat_get_new_messages( ( object ) array(
-		'last_activity'   => $_POST['last_activity'],
-		'token'           => $POST['token'],
+		'last_activity'   => esc_sql( $_POST['last_activity'] ),
+		'token'           => esc_sql( $POST['token'] ),
 		'user_write'      => 0,
 		'update_activity' => 0
 	) );
@@ -199,7 +198,7 @@ function rcl_chat_important_manager_shift() {
 
 	$chat_token       = wp_slash( $_POST['token'] );
 	$status_important = intval( $_POST['status_important'] );
-	$chat_room        = rcl_chat_token_decode( $chat_token );
+	$chat_room        = sanitize_text_field( rcl_chat_token_decode( $chat_token ) );
 
 	if ( ! rcl_get_chat_by_room( $chat_room ) ) {
 		return false;
