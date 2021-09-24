@@ -8,14 +8,14 @@ function pfm_have_subforums() {
 
 function pfm_the_forum_name() {
 	global $PrimeForum;
-	echo $PrimeForum->forum_name;
+	echo esc_html( $PrimeForum->forum_name );
 }
 
 function pfm_get_forum_name( $forum_id ) {
 	global $PrimeForum;
 
 	if ( $PrimeForum && $PrimeForum->forum_id == $forum_id ) {
-		return $PrimeForum->forum_name;
+		return esc_html( $PrimeForum->forum_name );
 	}
 
 	return pfm_get_forum_field( $forum_id, 'forum_name' );
