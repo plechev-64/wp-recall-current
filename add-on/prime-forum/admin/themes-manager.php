@@ -158,8 +158,8 @@ class Prime_Themes_Manager extends WP_List_Table {
 	}
 
 	function usort_reorder( $a, $b ) {
-		$orderby = ( ! empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'addon_name';
-		$order   = ( ! empty( $_GET['order'] ) ) ? $_GET['order'] : 'asc';
+		$orderby = ( ! empty( $_GET['orderby'] ) ) ? sanitize_key( $_GET['orderby'] ) : 'addon_name';
+		$order   = ( ! empty( $_GET['order'] ) ) ? sanitize_key( $_GET['order'] ) : 'asc';
 		$result  = strcmp( $a[ $orderby ], $b[ $orderby ] );
 
 		return ( $order === 'asc' ) ? $result : - $result;
@@ -273,7 +273,7 @@ function pfm_upload_template() {
 
 	$paths = array( RCL_TAKEPATH . 'add-on', RCL_PATH . 'add-on' );
 
-	$filename = $_FILES['addonzip']['tmp_name'];
+	$filename = sanitize_key( $_FILES['addonzip']['tmp_name'] );
 	$arch     = current( wp_upload_dir() ) . "/" . basename( $filename );
 	copy( $filename, $arch );
 
@@ -296,7 +296,7 @@ function pfm_upload_template() {
 
 		if ( ! $info ) {
 			$zip->close();
-			wp_redirect( admin_url( 'admin.php?page=pfm-themes&update-template=error-info' ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=pfm-themes&update-template=error-info' ) );
 			exit;
 		}
 
@@ -310,7 +310,7 @@ function pfm_upload_template() {
 		$zip->close();
 		unlink( $arch );
 		if ( $rs ) {
-			wp_redirect( admin_url( 'admin.php?page=pfm-themes&update-template=upload' ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=pfm-themes&update-template=upload' ) );
 			exit;
 		} else {
 			wp_die( __( 'Unpacking of archive failed.', 'wp-recall' ) );

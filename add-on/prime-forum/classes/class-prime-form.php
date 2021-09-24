@@ -261,7 +261,7 @@ class PrimeForm extends Rcl_Fields {
 		}
 
 		$content .= '</div>';
-		$content .= '<input type="hidden" name="pfm-action" value="' . $this->action . '">';
+		$content .= '<input type="hidden" name="pfm-action" value="' . sanitize_key( $this->action ) . '">';
 		$content .= '<input type="hidden" name="form_load" value="' . current_time( 'mysql' ) . '">';
 		$content .= wp_nonce_field( 'pfm-nonce', '_wpnonce', true, false );
 

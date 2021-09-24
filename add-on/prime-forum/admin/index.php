@@ -357,7 +357,7 @@ function pfm_page_themes() {
 	if ( isset( $_POST['save-rcl-key'] ) ) {
 		if ( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ) {
 			update_site_option( 'rcl-key', $_POST['rcl-key'] );
-			echo '<div id="message" class="' . $type . '"><p>' . __( 'Key has been saved', 'wp-recall' ) . '!</p></div>';
+			echo '<div id="message"><p>' . __( 'Key has been saved', 'wp-recall' ) . '!</p></div>';
 		}
 	}
 
@@ -538,7 +538,7 @@ function pfm_ajax_update_sort_groups() {
 			RCL_PREF . 'pforum_groups', array(
 			'group_seq' => $s + 1
 		), array(
-				'group_id' => $group->id
+				'group_id' => absint( $group->id )
 			)
 		);
 	}
@@ -562,7 +562,7 @@ function pfm_ajax_update_sort_forums() {
 			'parent_id' => $forum->parent,
 			'forum_seq' => $s + 1
 		), array(
-				'forum_id' => $forum->id
+				'forum_id' => absint( $forum->id )
 			)
 		);
 	}
@@ -576,7 +576,7 @@ rcl_ajax_action( 'pfm_ajax_get_manager_item_delete_form', false );
 function pfm_ajax_get_manager_item_delete_form() {
 
 	$itemType = $_POST['item-type'];
-	$itemID   = $_POST['item-id'];
+	$itemID   = absint( $_POST['item-id'] );
 
 	if ( $itemType == 'groups' ) {
 
@@ -793,19 +793,19 @@ function pfm_init_admin_actions() {
 		case 'group_create': //добавление группы
 
 			pfm_add_group( array(
-				'group_name' => $_REQUEST['group_name'],
-				'group_slug' => $_REQUEST['group_slug'],
-				'group_desc' => $_REQUEST['group_desc']
+				'group_name' => esc_html( $_REQUEST['group_name'] ),
+				'group_slug' => sanitize_title( $_REQUEST['group_slug'] ),
+				'group_desc' => esc_html( $_REQUEST['group_desc'] )
 			) );
 
 			break;
 		case 'forum_create': //создание форума
 
 			pfm_add_forum( array(
-				'forum_name' => $_REQUEST['forum_name'],
-				'forum_desc' => $_REQUEST['forum_desc'],
-				'forum_slug' => $_REQUEST['forum_slug'],
-				'group_id'   => $_REQUEST['group_id']
+				'forum_name' => esc_html( $_REQUEST['forum_name'] ),
+				'forum_desc' => esc_html( $_REQUEST['forum_desc'] ),
+				'forum_slug' => sanitize_title( $_REQUEST['forum_slug'] ),
+				'group_id'   => absint( $_REQUEST['group_id'] )
 			) );
 
 			break;
@@ -815,9 +815,9 @@ function pfm_init_admin_actions() {
 				return false;
 			}
 
-			pfm_delete_group( $_REQUEST['group_id'], $_REQUEST['migrate_group'] );
+			pfm_delete_group( absint( $_REQUEST['group_id'] ), $_REQUEST['migrate_group'] );
 
-			wp_redirect( admin_url( 'admin.php?page=pfm-forums' ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=pfm-forums' ) );
 			exit;
 
 			break;
@@ -827,17 +827,17 @@ function pfm_init_admin_actions() {
 				return false;
 			}
 
-			$group = pfm_get_forum( $_REQUEST['forum_id'] );
+			$group = pfm_get_forum( absint( $_REQUEST['forum_id'] ) );
 
-			pfm_delete_forum( $_REQUEST['forum_id'], $_REQUEST['migrate_forum'] );
+			pfm_delete_forum( absint( $_REQUEST['forum_id'] ), $_REQUEST['migrate_forum'] );
 
-			wp_redirect( admin_url( 'admin.php?page=pfm-forums&group-id=' . $group->group_id ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=pfm-forums&group-id=' . $group->group_id ) );
 			exit;
 
 			break;
 	}
 
-	wp_redirect( $_POST['_wp_http_referer'] );
+	wp_safe_redirect( $_POST['_wp_http_referer'] );
 	exit;
 }
 
@@ -857,7 +857,7 @@ function pfm_template_update_status() {
 
 		global $wpdb, $user_ID, $active_addons;
 
-		$addon  = $_GET['template'];
+		$addon  = sanitize_key( $_GET['template'] );
 		$action = rcl_wp_list_current_action();
 
 		if ( $action == 'connect' ) {

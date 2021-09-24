@@ -92,7 +92,7 @@ class Prime_Form_Manager extends Rcl_Fields_Manager {
 		$content .= '<form method="get" action="' . admin_url( 'admin.php' ) . '">';
 
 		$content .= '<input type="hidden" name="page" value="manage-topic-form">';
-		$content .= '<input type="hidden" name="group-id" value="' . $this->group_id . '">';
+		$content .= '<input type="hidden" name="group-id" value="' . absint( $this->group_id ) . '">';
 
 		$content .= '<select name="forum-id">';
 

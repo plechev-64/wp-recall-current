@@ -286,21 +286,21 @@ function pfm_redirect_short_url() {
 
 	if ( $PrimeQuery->is_group && isset( $_GET['pfm-group'] ) ) {
 		if ( $group_id = pfm_get_group_field( $PrimeQuery->vars['pfm-group'], 'group_id' ) ) {
-			wp_redirect( pfm_get_group_permalink( $group_id ) );
+			wp_safe_redirect( pfm_get_group_permalink( $group_id ) );
 			exit;
 		}
 	}
 
 	if ( $PrimeQuery->is_forum && isset( $_GET['pfm-forum'] ) ) {
 		if ( $forum_id = pfm_get_forum_field( $PrimeQuery->vars['pfm-forum'], 'forum_id' ) ) {
-			wp_redirect( pfm_get_forum_permalink( $forum_id ) );
+			wp_safe_redirect( pfm_get_forum_permalink( $forum_id ) );
 			exit;
 		}
 	}
 
 	if ( $PrimeQuery->is_topic && isset( $_GET['pfm-topic'] ) ) {
 		if ( $topic_id = pfm_get_topic_field( $PrimeQuery->vars['pfm-topic'], 'topic_id' ) ) {
-			wp_redirect( pfm_get_topic_permalink( $topic_id ) );
+			wp_safe_redirect( pfm_get_topic_permalink( $topic_id ) );
 			exit;
 		}
 	}
