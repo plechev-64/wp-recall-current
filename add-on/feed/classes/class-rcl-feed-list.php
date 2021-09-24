@@ -21,7 +21,7 @@ class Rcl_Feed_List extends Rcl_Query {
 		}
 
 		if ( isset( $_GET['feed-filter'] ) ) {
-			$args['content'] = $_GET['feed-filter'];
+			$args['content'] = sanitize_key( ( $_GET['feed-filter'] ) );
 		}
 
 		$content = isset( $args['content'] ) ? $args['content'] : 'posts';
