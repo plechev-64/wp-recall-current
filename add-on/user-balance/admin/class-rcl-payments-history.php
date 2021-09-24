@@ -7,33 +7,34 @@ add_action( 'admin_init', array( 'Rcl_Payments_History', 'delete_payment' ) );
 
 class Rcl_Payments_History extends WP_List_Table {
 
-	var $per_page	 = 50;
+	var $per_page = 50;
 	var $current_page = 1;
 	var $total_items;
-	var $offset		 = 0;
+	var $offset = 0;
 	var $sum_balance;
-	var $sum			 = 0;
+	var $sum = 0;
 
 	function __construct() {
 		global $status, $page;
 
 		parent::__construct( array(
-			'singular'	 => __( 'payment', 'wp-recall' ),
-			'plural'	 => __( 'payments', 'wp-recall' ),
-			'ajax'		 => false
+			'singular' => __( 'payment', 'wp-recall' ),
+			'plural'   => __( 'payments', 'wp-recall' ),
+			'ajax'     => false
 		) );
 
-		$this->per_page		 = $this->get_items_per_page( 'rcl_payments_per_page', 50 );
-		$this->current_page	 = $this->get_pagenum();
-		$this->offset		 = ($this->current_page - 1) * $this->per_page;
+		$this->per_page     = $this->get_items_per_page( 'rcl_payments_per_page', 50 );
+		$this->current_page = $this->get_pagenum();
+		$this->offset       = ( $this->current_page - 1 ) * $this->per_page;
 
 		add_action( 'admin_head', array( &$this, 'admin_header' ) );
 	}
 
 	function admin_header() {
 		$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
-		if ( 'manage-wpm-cashe' != $page )
+		if ( 'manage-wpm-cashe' != $page ) {
 			return;
+		}
 		echo '<style type="text/css">';
 		echo '.wp-list-table .column-payment_number { width: 5%; }';
 		echo '.wp-list-table .column-payment_user { width: 30%; }';
@@ -65,11 +66,13 @@ class Rcl_Payments_History extends WP_List_Table {
 			case 'pay_system':
 				return $item->pay_system;
 			case 'pay_type':
-				if ( $item->pay_type == 1 )
+				if ( $item->pay_type == 1 ) {
 					$item->pay_type = 'user-balance';
+				}
 
-				if ( $item->pay_type == 2 )
+				if ( $item->pay_type == 2 ) {
 					$item->pay_type = 'order-payment';
+				}
 
 				return $item->pay_type;
 			default:
@@ -79,23 +82,26 @@ class Rcl_Payments_History extends WP_List_Table {
 
 	function get_columns() {
 		$columns = array(
-			'cb'			 => '<input type="checkbox" />',
+			'cb'             => '<input type="checkbox" />',
 			'payment_number' => '№',
-			'payment_user'	 => __( 'Users', 'wp-recall' ),
-			'payment_id'	 => __( 'Payments ID', 'wp-recall' ),
-			'payment_sum'	 => __( 'Sum', 'wp-recall' ),
-			'payment_date'	 => __( 'Date', 'wp-recall' ),
-			'pay_system'	 => __( 'Payment system', 'wp-recall' ),
-			'pay_type'		 => __( 'Payment type', 'wp-recall' )
+			'payment_user'   => __( 'Users', 'wp-recall' ),
+			'payment_id'     => __( 'Payments ID', 'wp-recall' ),
+			'payment_sum'    => __( 'Sum', 'wp-recall' ),
+			'payment_date'   => __( 'Date', 'wp-recall' ),
+			'pay_system'     => __( 'Payment system', 'wp-recall' ),
+			'pay_type'       => __( 'Payment type', 'wp-recall' )
 		);
+
 		return $columns;
 	}
 
 	function column_payment_user( $item ) {
+		$page    = sanitize_text_field( $_REQUEST['page'] );
 		$actions = array(
-			'delete'		 => sprintf( '<a href="?page=%s&action=%s&payment=%s">' . __( 'Delete payment', 'wp-recall' ) . '</a>', $_REQUEST['page'], 'delete', $item->ID ),
-			'all-payments'	 => sprintf( '<a href="?page=%s&action=%s&user_id=%s">' . __( 'All user payments', 'wp-recall' ) . '</a>', $_REQUEST['page'], 'all-payments', $item->user_id ),
+			'delete'       => sprintf( '<a href="?page=%s&action=%s&payment=%s">' . __( 'Delete payment', 'wp-recall' ) . '</a>', $page, 'delete', $item->ID ),
+			'all-payments' => sprintf( '<a href="?page=%s&action=%s&user_id=%s">' . __( 'All user payments', 'wp-recall' ) . '</a>', $page, 'all-payments', $item->user_id ),
 		);
+
 		return sprintf( '%1$s %2$s', $item->user_id . ': ' . get_the_author_meta( 'user_login', $item->user_id ), $this->row_actions( $actions ) );
 	}
 
@@ -103,6 +109,7 @@ class Rcl_Payments_History extends WP_List_Table {
 		$actions = array(
 			'delete' => __( 'Delete', 'wp-recall' ),
 		);
+
 		return $actions;
 	}
 
@@ -125,26 +132,28 @@ class Rcl_Payments_History extends WP_List_Table {
 
 		$month_count = count( $months );
 
-		if ( ! $month_count || ( 1 == $month_count && 0 == $months[0]->month ) )
+		if ( ! $month_count || ( 1 == $month_count && 0 == $months[0]->month ) ) {
 			return;
+		}
 
 		$m = isset( $_GET['m'] ) ? $_GET['m'] : 0;
 		?>
-		<label for="filter-by-date" class="screen-reader-text"><?php _e( 'Filter by date' ); ?></label>
-		<select name="m" id="filter-by-date">
-			<option <?php selected( $m, 0 ); ?> value="0"><?php _e( 'All dates' ); ?></option>
+        <label for="filter-by-date" class="screen-reader-text"><?php _e( 'Filter by date' ); ?></label>
+        <select name="m" id="filter-by-date">
+            <option <?php selected( $m, 0 ); ?> value="0"><?php _e( 'All dates' ); ?></option>
 			<?php
 			foreach ( $months as $arc_row ) {
-				if ( 0 == $arc_row->year )
+				if ( 0 == $arc_row->year ) {
 					continue;
-				$month	 = zeroise( $arc_row->month, 2 );
-				$year	 = $arc_row->year;
+				}
+				$month = zeroise( $arc_row->month, 2 );
+				$year  = $arc_row->year;
 				printf( "<option %s value='%s'>%s</option>\n", selected( $m, $year . '-' . $month, false ), esc_attr( $arc_row->year . '-' . $month ),
 					/* translators: 1: month name, 2: 4-digit year */ sprintf( __( '%1$s %2$d' ), $wp_locale->get_month( $month ), $year )
 				);
 			}
 			?>
-		</select>
+        </select>
 		<?php
 	}
 
@@ -152,23 +161,25 @@ class Rcl_Payments_History extends WP_List_Table {
 		global $wpdb;
 
 		$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
-		if ( 'manage-wpm-cashe' != $page )
+		if ( 'manage-wpm-cashe' != $page ) {
 			return;
+		}
 
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'delete' ) {
 
 			if ( isset( $_REQUEST['payment'] ) ) {
-				$payment = $_REQUEST['payment'];
+				$payment = intval( $_REQUEST['payment'] );
 				$wpdb->query( $wpdb->prepare( "DELETE FROM " . RMAG_PREF . "pay_results WHERE ID = '%d'", $payment ) );
 			}
 
 			if ( isset( $_REQUEST['payments'] ) ) {
-				$payments	 = $_REQUEST['payments'];
-				$cnt		 = count( $payments );
+				$payments = $_REQUEST['payments'];
+				$cnt      = count( $payments );
 				for ( $a = 0; $a < $cnt; $a ++ ) {
-					$id = intval( $payments[$a] );
-					if ( $id )
+					$id = intval( $payments[ $a ] );
+					if ( $id ) {
 						$wpdb->query( $wpdb->prepare( "DELETE FROM " . RMAG_PREF . "pay_results WHERE ID = '%d'", $id ) );
+					}
 				}
 			}
 		}
@@ -176,6 +187,7 @@ class Rcl_Payments_History extends WP_List_Table {
 
 	function get_sum_balance() {
 		global $wpdb;
+
 		return $wpdb->get_var( "SELECT SUM(CAST(user_balance AS DECIMAL)) FROM " . RMAG_PREF . "users_balance WHERE user_balance!='0'" );
 	}
 
@@ -189,20 +201,20 @@ class Rcl_Payments_History extends WP_List_Table {
 
 		if ( isset( $_POST['s'] ) ) {
 
-			$payments->where_string( "($tableAs.user_id = '" . $_POST['s'] . "' OR $tableAs.payment_id = '" . $_POST['s'] . "')" );
+			$payments->where_string( "($tableAs.user_id = '" . intval( $_POST['s'] ) . "' OR $tableAs.payment_id = '" . intval( $_POST['s'] ) . "')" );
 
 			if ( isset( $_GET['m'] ) && $_GET['m'] ) {
-				$payments->where( ['time_action__like' => $_GET['m'] . '-' ] );
+				$payments->where( [ 'time_action__like' => esc_sql( $_GET['m'] ) . '-' ] );
 			}
 		} else if ( isset( $_GET['m'] ) && $_GET['m'] ) {
-			$payments->where( ['time_action__like' => $_GET['m'] . '-' ] );
+			$payments->where( [ 'time_action__like' => esc_sql( $_GET['m'] ) . '-' ] );
 		} else if ( isset( $_GET['user_id'] ) ) {
-			$payments->where( ['user_id' => $_GET['user_id'] ] );
+			$payments->where( [ 'user_id' => intval( $_GET['user_id'] ) ] );
 		}
 
 		$items = $payments->get_results();
 
-		$payments->select( ['sum' => ['pay_amount' ] ] );
+		$payments->select( [ 'sum' => [ 'pay_amount' ] ] );
 
 		$this->total_items = $payments->get_count();
 
@@ -215,11 +227,11 @@ class Rcl_Payments_History extends WP_List_Table {
 
 	function prepare_items() {
 
-		$data					 = $this->get_data();
-		$this->_column_headers	 = $this->get_column_info();
+		$data                  = $this->get_data();
+		$this->_column_headers = $this->get_column_info();
 		$this->set_pagination_args( array(
-			'total_items'	 => $this->total_items,
-			'per_page'		 => $this->per_page
+			'total_items' => $this->total_items,
+			'per_page'    => $this->per_page
 		) );
 
 		$this->items = $data;

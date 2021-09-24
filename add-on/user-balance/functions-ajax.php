@@ -15,25 +15,25 @@ function rcl_add_count_user() {
 
 	if ( $user_ID ) {
 
-		$pay_summ		 = intval( $_POST['pay_summ'] );
-		$pay_type		 = (isset( $_POST['pay_type'] )) ? $_POST['pay_type'] : 'user-balance';
-		$description	 = (isset( $_POST['description'] )) ? $_POST['description'] : '';
-		$merchant_icon	 = (isset( $_POST['merchant_icon'] )) ? $_POST['merchant_icon'] : 1;
-		$submit_value	 = (isset( $_POST['submit_value'] )) ? $_POST['submit_value'] : __( 'Make payment', 'wp-recall' );
+		$pay_summ      = intval( $_POST['pay_summ'] );
+		$pay_type      = ( isset( $_POST['pay_type'] ) ) ? sanitize_text_field( $_POST['pay_type'] ) : 'user-balance';
+		$description   = ( isset( $_POST['description'] ) ) ? sanitize_text_field( $_POST['description'] ) : '';
+		$merchant_icon = ( isset( $_POST['merchant_icon'] ) ) ? intval( $_POST['merchant_icon'] ) : 1;
+		$submit_value  = ( isset( $_POST['submit_value'] ) ) ? sanitize_text_field( $_POST['submit_value'] ) : __( 'Make payment', 'wp-recall' );
 
 		$args = array(
-			'pay_summ'			 => $pay_summ,
-			'pay_type'			 => $pay_type,
-			'description'		 => $description,
-			'merchant_icon'		 => $merchant_icon,
-			'submit_value'		 => $submit_value,
+			'pay_summ'           => $pay_summ,
+			'pay_type'           => $pay_type,
+			'description'        => $description,
+			'merchant_icon'      => $merchant_icon,
+			'submit_value'       => $submit_value,
 			'pay_systems_not_in' => array( 'user_balance' ),
 		);
 
 		$args = apply_filters( 'rcl_ajax_pay_form_args', $args );
 
 		$log['redirectform'] = rcl_get_pay_form( $args );
-		$log['otvet']		 = 100;
+		$log['otvet']        = 100;
 	} else {
 
 		$log['error'] = __( 'Error', 'wp-recall' );
@@ -50,23 +50,23 @@ function rcl_pay_order_user_balance() {
 
 	$POST = wp_unslash( $_POST );
 
-	$pay_id			 = intval( $POST['pay_id'] );
-	$pay_type		 = $POST['pay_type'];
-	$pay_summ		 = abs( $POST['pay_summ'] );
-	$description	 = $POST['description'];
-	$baggage_data	 = json_decode( base64_decode( $POST['baggage_data'] ) );
+	$pay_id       = intval( $POST['pay_id'] );
+	$pay_type     = sanitize_text_field( $POST['pay_type'] );
+	$pay_summ     = abs( floatval( $POST['pay_summ'] ) );
+	$description  = sanitize_textarea_field( $POST['description'] );
+	$baggage_data = array_map( 'sanitize_text_field', (array) json_decode( base64_decode( $POST['baggage_data'] ) ) );
 
 	if ( ! $pay_id ) {
 		wp_send_json( array( 'error' => __( 'Order not found!', 'wp-recall' ) ) );
 	}
 
 	$data = array(
-		'user_id'			 => $user_ID,
-		'pay_type'			 => $pay_type,
-		'pay_id'			 => $pay_id,
-		'pay_summ'			 => $pay_summ,
-		'current_connect'	 => 'user_balance',
-		'baggage_data'		 => $baggage_data
+		'user_id'         => $user_ID,
+		'pay_type'        => $pay_type,
+		'pay_id'          => $pay_id,
+		'pay_summ'        => $pay_summ,
+		'current_connect' => 'user_balance',
+		'baggage_data'    => $baggage_data
 	);
 
 	do_action( 'rcl_pre_pay_balance', ( object ) $data );
@@ -92,29 +92,29 @@ rcl_ajax_action( 'rcl_load_payment_form' );
 function rcl_load_payment_form() {
 
 	$form = rcl_get_pay_form( array(
-		'pay_summ'		 => $_POST['pay_summ'],
-		'ids'			 => array( $_POST['gateway_id'] ),
-		'pay_type'		 => $_POST['pay_type'],
-		'description'	 => $_POST['description'],
-		'pre_form'		 => $_POST['pre_form'],
-		) );
+		'pay_summ'    => abs( floatval( $_POST['pay_summ'] ) ),
+		'ids'         => array( sanitize_text_field( $_POST['gateway_id'] ) ),
+		'pay_type'    => sanitize_text_field( $_POST['pay_type'] ),
+		'description' => sanitize_textarea_field( $_POST['description'] ),
+		'pre_form'    => intval( $_POST['pre_form'] ),
+	) );
 
 	$content = '<div class="rcl-pre-payment-data">';
 
 	$content .= rcl_get_notice( [
-		'text' => '<b>' . __( 'The sum of payment', 'wp-recall' ) . '</b>: ' . $_POST['pay_summ'] . ' ' . rcl_get_primary_currency( 1 )
-		] );
+		'text' => '<b>' . __( 'The sum of payment', 'wp-recall' ) . '</b>: ' . abs( floatval( $_POST['pay_summ'] ) ) . ' ' . rcl_get_primary_currency( 1 )
+	] );
 
 	$content .= $form;
 
 	$content .= '</div>';
 
 	wp_send_json( array(
-		'dialog'	 => array(
-			'content'	 => $content,
-			'size'		 => 'medium',
-			'title'		 => $_POST['description']
+		'dialog'   => array(
+			'content' => $content,
+			'size'    => 'medium',
+			'title'   => sanitize_textarea_field( $_POST['description'] )
 		),
-		'pay_type'	 => $_POST['pay_type']
+		'pay_type' => sanitize_text_field( $_POST['pay_type'] )
 	) );
 }
