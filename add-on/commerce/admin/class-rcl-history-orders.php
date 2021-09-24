@@ -84,7 +84,7 @@ class Rcl_History_Orders extends WP_List_Table {
 
 	function column_order_id( $item ) {
 		$actions = array(
-			'order-details' => sprintf( '<a href="?page=%s&action=%s&order-id=%s">' . __( 'Details', 'wp-recall' ) . '</a>', $_REQUEST['page'], 'order-details', $item->order_id ),
+			'order-details' => sprintf( '<a href="?page=%s&action=%s&order-id=%s">' . __( 'Details', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'order-details', $item->order_id ),
 		);
 
 		return sprintf( '%1$s %2$s', $item->order_id, $this->row_actions( $actions ) );
@@ -102,13 +102,13 @@ class Rcl_History_Orders extends WP_List_Table {
 		);
 
 		$actions = array(
-			'not paid' => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Not paid', 'wp-recall' ) . '</a>', $_REQUEST['page'], 'update_status', 1, $item->order_id ),
-			'paid'     => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Paid', 'wp-recall' ) . '</a>', $_REQUEST['page'], 'update_status', 2, $item->order_id ),
-			'sent'     => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Sent', 'wp-recall' ) . '</a>', $_REQUEST['page'], 'update_status', 3, $item->order_id ),
-			'received' => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Received', 'wp-recall' ) . '</a>', $_REQUEST['page'], 'update_status', 4, $item->order_id ),
-			'closed'   => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Closed', 'wp-recall' ) . '</a>', $_REQUEST['page'], 'update_status', 5, $item->order_id ),
-			'trash'    => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Trash', 'wp-recall' ) . '</a>', $_REQUEST['page'], 'update_status', 6, $item->order_id ),
-			'delete'   => sprintf( '<a href="?page=%s&action=%s&order=%s">' . __( 'Delete', 'wp-recall' ) . '</a>', $_REQUEST['page'], 'delete', $item->order_id ),
+			'not paid' => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Not paid', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'update_status', 1, $item->order_id ),
+			'paid'     => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Paid', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'update_status', 2, $item->order_id ),
+			'sent'     => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Sent', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'update_status', 3, $item->order_id ),
+			'received' => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Received', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'update_status', 4, $item->order_id ),
+			'closed'   => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Closed', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'update_status', 5, $item->order_id ),
+			'trash'    => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Trash', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'update_status', 6, $item->order_id ),
+			'delete'   => sprintf( '<a href="?page=%s&action=%s&order=%s">' . __( 'Delete', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'delete', $item->order_id ),
 		);
 
 		unset( $actions[ $status[ $item->order_status ] ] );
@@ -120,7 +120,7 @@ class Rcl_History_Orders extends WP_List_Table {
 
 	function column_user_id( $item ) {
 		$actions = array(
-			'all-orders' => sprintf( '<a href="?page=%s&action=%s&user=%s">' . __( 'All user orders', 'wp-recall' ) . '</a>', $_REQUEST['page'], 'all-orders', $item->user_id ),
+			'all-orders' => sprintf( '<a href="?page=%s&action=%s&user=%s">' . __( 'All user orders', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'all-orders', $item->user_id ),
 		);
 
 		return sprintf( '%1$s %2$s', $item->user_id . ': ' . get_the_author_meta( 'user_login', $item->user_id ), $this->row_actions( $actions ) );
@@ -152,14 +152,14 @@ class Rcl_History_Orders extends WP_List_Table {
 				if ( ! isset( $_POST['orders'] ) ) {
 					return;
 				}
-				$action = $_POST['action'];
+				$action = sanitize_text_field( $_POST['action'] );
 				foreach ( $_POST['orders'] as $order_id ) {
 					switch ( $action ) {
 						case 'delete':
-							rcl_delete_order( $order_id );
+							rcl_delete_order( intval( $order_id ) );
 							break;
 						default:
-							rcl_update_status_order( $order_id, $action );
+							rcl_update_status_order( intval( $order_id ), $action );
 					}
 				}
 				wp_redirect( $_POST['_wp_http_referer'] );
@@ -168,9 +168,9 @@ class Rcl_History_Orders extends WP_List_Table {
 			if ( isset( $_GET['action'] ) ) {
 				switch ( $_GET['action'] ) {
 					case 'update_status':
-						return rcl_update_status_order( $_REQUEST['order'], $_REQUEST['status'] );
+						return rcl_update_status_order( sanitize_text_field( $_REQUEST['order'] ), sanitize_text_field( $_REQUEST['status'] ) );
 					case 'delete':
-						return rcl_delete_order( $_REQUEST['order'] );
+						return rcl_delete_order( intval( $_REQUEST['order'] ) );
 				}
 
 				return;

@@ -81,7 +81,7 @@ function rcl_shortcode_productlist( $atts ) {
 		$inpage     = $num;
 	}
 
-	$rclnavi = new Rcl_PageNavi( 'rcl-products', $count_prod, array( 'in_page' => $inpage ) );
+	$rclnavi = new Rcl_PageNavi( 'rcl-products', $count_prod, array( 'in_page' => intval( $inpage ) ) );
 
 	$args['numberposts'] = $inpage;
 	$args['fields']      = '';
@@ -114,12 +114,12 @@ function rcl_shortcode_productlist( $atts ) {
 
 	$type_list = ( $switch ) ? $type : $type . ' cancel-switch';
 
-	$prodlist = '<div class="products-box type-' . $type_list . '">
+	$prodlist = '<div class="products-box type-' . esc_attr( $type_list ) . '">
                     <div class="products-list">';
 
 	foreach ( $products as $post ) {
 		setup_postdata( $post );
-		$prodlist .= rcl_get_include_template( 'product-' . $type . '.php', __FILE__, $atts );
+		$prodlist .= rcl_get_include_template( 'product-' . sanitize_key( $type ) . '.php', __FILE__, $atts );
 	}
 
 	wp_reset_query();

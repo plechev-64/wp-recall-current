@@ -9,7 +9,7 @@ echo rcl_get_chart_orders( $Rcl_History_Orders->items );
 ?>
 <form method="get">
 	<?php
-	$currentStatus = ( isset( $_GET['sts'] ) ) ? $_GET['sts'] : 0;
+	$currentStatus = ( isset( $_GET['sts'] ) ) ? intval( $_GET['sts'] ) : 0;
 	$sts           = rcl_order_statuses();
 	?>
     <select name="sts" id="filter-by-status">

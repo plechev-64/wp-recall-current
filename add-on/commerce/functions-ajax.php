@@ -24,7 +24,7 @@ function rcl_add_to_cart() {
 		exit;
 	}
 
-	$product_id = $cart['product_id'];
+	$product_id = intval( $cart['product_id'] );
 
 	if ( ! $product_id ) {
 		exit;
@@ -83,7 +83,7 @@ function rcl_add_to_cart() {
 		'product' => $Cart->get_product( $product_id ),
 		'success' => __( 'Added to cart!', 'wp-recall' ) . '<br>'
 		             . sprintf( __( 'In your shopping cart: %d items', 'wp-recall' ), $Cart->products_amount ) . '<br>'
-		             . '<a style="text-decoration:underline;" href="' . $Cart->cart_url . '">'
+		             . '<a style="text-decoration:underline;" href="' . esc_url( $Cart->cart_url ) . '">'
 		             . __( 'Go to cart', 'wp-recall' )
 		             . '</a>'
 	);
