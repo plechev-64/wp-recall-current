@@ -252,6 +252,8 @@ function rcl_tab_profile_content( $master_id ) {
 
 	foreach ( $hiddens as $field ) {
 
+		$slug = isset( $field['name'] ) ? $field['name'] : $field['slug'];
+
 		$fieldObject = Rcl_Field::setup( $field );
 
 		$fieldObject->set_prop( 'value', ( isset( $userdata->$slug ) ) ? $userdata->$slug : false );

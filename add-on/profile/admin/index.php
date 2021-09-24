@@ -126,7 +126,7 @@ function rcl_update_users_page_option( $fields, $manager_id ) {
 	if ( $manager_id != 'profile' || ! isset( $_POST['users_page_rcl'] ) ) {
 		return false;
 	}
-	rcl_update_option( 'users_page_rcl', $_POST['users_page_rcl'] );
+	rcl_update_option( 'users_page_rcl', intval( $_POST['users_page_rcl'] ) );
 }
 
 //add users page value in the time of saving global options of plugin
