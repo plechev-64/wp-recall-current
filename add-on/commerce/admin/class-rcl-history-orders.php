@@ -162,7 +162,7 @@ class Rcl_History_Orders extends WP_List_Table {
 							rcl_update_status_order( intval( $order_id ), $action );
 					}
 				}
-				wp_redirect( $_POST['_wp_http_referer'] );
+				wp_safe_redirect( $_POST['_wp_http_referer'] );
 				exit;
 			}
 			if ( isset( $_GET['action'] ) ) {

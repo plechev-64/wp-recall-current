@@ -1085,7 +1085,7 @@ function rcl_edit_group_pre_get_posts( $query ) {
 		if ( isset( $_GET['group-tag'] ) ) {
 
 			if ( ! $_GET['group-tag'] ) {
-				wp_redirect( rcl_get_group_permalink( $rcl_group->term_id ) );
+				wp_safe_redirect( rcl_get_group_permalink( $rcl_group->term_id ) );
 				exit;
 			}
 

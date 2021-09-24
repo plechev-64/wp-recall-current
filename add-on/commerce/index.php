@@ -357,6 +357,6 @@ function rcl_commerce_setup_order_actions() {
 			break;
 	}
 
-	wp_redirect( rcl_get_tab_permalink( $user_ID, 'orders' ) );
+	wp_safe_redirect( rcl_get_tab_permalink( $user_ID, 'orders' ) );
 	exit;
 }

@@ -133,7 +133,7 @@ function rcl_commerce_actions() {
 				wp_die( print_r( $order_id ) );
 			}
 
-			wp_redirect( rcl_format_url( $cart_url ) . 'order-id=' . $order_id . '&order-status=new' );
+			wp_safe_redirect( rcl_format_url( $cart_url ) . 'order-id=' . $order_id . '&order-status=new' );
 			exit;
 
 			break;

@@ -440,7 +440,7 @@ function rcl_new_group() {
 	if ( ! $group_id ) {
 		rcl_notice_text( __( 'Group creation failed', 'wp-recall' ), 'error' );
 	} else {
-		wp_redirect( rcl_get_group_permalink( $group_id ) );
+		wp_safe_redirect( rcl_get_group_permalink( $group_id ) );
 		exit;
 	}
 }
@@ -581,7 +581,7 @@ function rcl_group_actions() {
 			break;
 	}
 
-	wp_redirect( rcl_get_group_permalink( $rcl_group->term_id ) );
+	wp_safe_redirect( rcl_get_group_permalink( $rcl_group->term_id ) );
 	exit;
 }
 

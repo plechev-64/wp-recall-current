@@ -316,7 +316,7 @@ class Rcl_EditPost {
 		do_action( 'update_post_rcl', $this->post_id, $postdata, $this->update, $this );
 
 		if ( ! $this->required ) {
-			wp_redirect( add_query_arg( [
+			wp_safe_redirect( add_query_arg( [
 				'notice-warning' => 'required-fields',
 				'rcl-post-edit'  => $this->post_id
 			], get_permalink( rcl_get_option( 'public_form_page_rcl' ) ) ) );
@@ -324,7 +324,7 @@ class Rcl_EditPost {
 		}
 
 		if ( isset( $_POST['save-as-draft'] ) ) {
-			wp_redirect( add_query_arg( [
+			wp_safe_redirect( add_query_arg( [
 				'notice-success' => 'draft-saved',
 				'rcl-post-edit'  => $this->post_id
 			], get_permalink( rcl_get_option( 'public_form_page_rcl' ) ) ) );

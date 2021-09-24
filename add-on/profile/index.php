@@ -132,7 +132,7 @@ function rcl_edit_profile() {
 
 	$redirect_url = rcl_get_tab_permalink( $user_ID, 'profile' ) . '&updated=true';
 
-	wp_redirect( $redirect_url );
+	wp_safe_redirect( $redirect_url );
 
 	exit;
 }

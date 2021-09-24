@@ -230,7 +230,7 @@ function rcl_delete_post() {
 
 	do_action( 'after_delete_post_rcl', $post_id );
 
-	wp_redirect( rcl_format_url( rcl_get_user_url( $user_ID ) ) . '&public=deleted' );
+	wp_safe_redirect( rcl_format_url( rcl_get_user_url( $user_ID ) ) . '&public=deleted' );
 	exit;
 }
 

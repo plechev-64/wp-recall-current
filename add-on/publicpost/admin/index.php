@@ -121,7 +121,7 @@ function rcl_public_form_admin_actions() {
 
 			add_option( 'rcl_fields_' . sanitize_key( $_GET['post-type'] ) . '_' . $newFormId, array() );
 
-			wp_redirect( admin_url( 'admin.php?page=manage-public-form&post-type=' . sanitize_key( $_GET['post-type'] ) . '&form-id=' . $newFormId ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=manage-public-form&post-type=' . sanitize_key( $_GET['post-type'] ) . '&form-id=' . $newFormId ) );
 			exit;
 
 			break;
@@ -132,7 +132,7 @@ function rcl_public_form_admin_actions() {
 
 			delete_site_option( 'rcl_fields_' . sanitize_key( $_GET['post-type'] ) . '_' . $delFormId );
 
-			wp_redirect( admin_url( 'admin.php?page=manage-public-form&post-type=' . sanitize_key( $_GET['post-type'] ) ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=manage-public-form&post-type=' . sanitize_key( $_GET['post-type'] ) ) );
 			exit;
 
 			break;
