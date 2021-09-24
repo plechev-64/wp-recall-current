@@ -21,12 +21,22 @@ class Rcl_Widget_user_count extends WP_Widget {
 		global $user_ID;
 
 		if ( $user_ID ) {
-			echo $before_widget;
+			/**
+			 * @var string $before_widget
+			 */
+			echo $before_widget; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			if ( $instance['title'] ) {
-				echo $before_title . $instance['title'] . $after_title;
+				/**
+				 * @var string $before_title
+				 * @var string $after_title
+				 */
+				echo $before_title . trim( strip_tags( stripslashes( $instance['title'] ) ) ) . $after_title;
 			}
 			echo rcl_get_html_usercount();
-			echo $after_widget;
+			/**
+			 * @var string $after_widget
+			 */
+			echo $after_widget; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 

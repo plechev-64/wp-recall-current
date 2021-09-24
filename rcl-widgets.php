@@ -26,11 +26,17 @@ class Widget_new_author extends WP_Widget {
 		if ( ! $count_user ) {
 			$count_user = 12;
 		}
-
-		echo $before_widget;
+		/**
+		 * @var string $before_widget
+		 */
+		echo $before_widget; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		if ( $title ) {
-			echo $before_title . $title . $after_title;
+			/**
+			 * @var string $before_title
+			 * @var string $after_title
+			 */
+			echo $before_title . trim( strip_tags( stripslashes( $title ) ) ) . $after_title;
 		}
 
 		echo rcl_get_userlist( array(
@@ -44,7 +50,10 @@ class Widget_new_author extends WP_Widget {
 		if ( $all ) {
 			echo '<p class="clear alignright"><a href="' . get_permalink( $all ) . '">' . __( 'All users', 'wp-recall' ) . '</a></p>';
 		}
-		echo $after_widget;
+		/**
+		 * @var string $after_widget
+		 */
+		echo $after_widget; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	function update( $new_instance, $old_instance ) {
@@ -63,7 +72,7 @@ class Widget_new_author extends WP_Widget {
         <p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'wp-recall' ); ?>:</label>
             <input id="<?php echo $this->get_field_id( 'title' ); ?>"
-                   name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>"
+                   name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo trim( strip_tags( stripslashes( $instance['title'] ) ) ); ?>"
                    style="width:100%;"/>
         </p>
         <p>
@@ -110,11 +119,17 @@ class Widget_online_users extends WP_Widget {
 
 		$title = apply_filters( 'widget_title', $instance['title'] );
 		$all   = $instance['page_all_users'];
-
-		echo $before_widget;
+		/**
+		 * @var string $before_widget
+		 */
+		echo $before_widget; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		if ( $title ) {
-			echo $before_title . $title . $after_title;
+			/**
+			 * @var string $before_title
+			 * @var string $after_title
+			 */
+			echo $before_title . trim( strip_tags( stripslashes( $title ) ) ) . $after_title;
 		}
 
 		echo rcl_get_userlist( array(
@@ -129,7 +144,10 @@ class Widget_online_users extends WP_Widget {
 		if ( $all ) {
 			echo '<p class="clear alignright"><a href="' . get_permalink( $all ) . '">' . __( 'All users', 'wp-recall' ) . '</a></p>';
 		}
-		echo $after_widget;
+		/**
+		 * @var string $after_widget
+		 */
+		echo $after_widget; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	function update( $new_instance, $old_instance ) {
@@ -147,7 +165,7 @@ class Widget_online_users extends WP_Widget {
         <p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'wp-recall' ); ?>:</label>
             <input id="<?php echo $this->get_field_id( 'title' ); ?>"
-                   name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>"
+                   name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo trim( strip_tags( stripslashes( $instance['title'] ) ); ?>"
                    style="width:100%;"/>
         </p>
 		<?php
@@ -186,13 +204,22 @@ class Widget_author_profil extends WP_Widget {
 		extract( $args );
 
 		$title = apply_filters( 'widget_title', $instance['title'] );
-
-		echo $before_widget;
+		/**
+		 * @var string $before_widget
+		 */
+		echo $before_widget; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		if ( $title ) {
-			echo $before_title . $title . $after_title;
+			/**
+			 * @var string $before_title
+			 * @var string $after_title
+			 */
+			echo $before_title . trim( strip_tags( stripslashes( $title ) ) ) . $after_title;
 		}
 		echo rcl_get_authorize_form();
-		echo $after_widget;
+		/**
+		 * @var string $after_widget
+		 */
+		echo $after_widget; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	function update( $new_instance, $old_instance ) {
@@ -209,7 +236,7 @@ class Widget_author_profil extends WP_Widget {
         <p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'wp-recall' ); ?>:</label>
             <input id="<?php echo $this->get_field_id( 'title' ); ?>"
-                   name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>"
+                   name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo trim( strip_tags( stripslashes( $instance['title'] ) ); ?>"
                    style="width:100%;"/>
         </p>
 		<?php
