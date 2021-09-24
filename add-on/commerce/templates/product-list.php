@@ -27,7 +27,7 @@
 		<?php
 		echo rcl_get_cart_box( $post->ID, array(
 			'variations' => false,
-			'quantity'	 => false,
+			'quantity'   => false,
 		) );
 		?>
     </div>

@@ -33,22 +33,23 @@ function rcl_get_userlist( $atts ) {
 
 		$count_users = $users->count();
 
-		$id_pager = ($users->id) ? 'rcl-users-' . $users->id : 'rcl-users';
+		$id_pager = ( $users->id ) ? 'rcl-users-' . $users->id : 'rcl-users';
 
 		$pagenavi = new Rcl_PageNavi( $id_pager, $count_users, array( 'in_page' => $users->query['number'] ) );
 
 		$users->query['offset'] = $pagenavi->offset;
 	}
 
-	$timecache = ($user_ID && $users->query['number'] == 'time_action') ? rcl_get_option( 'timeout', 600 ) : 0;
+	$timecache = ( $user_ID && $users->query['number'] == 'time_action' ) ? rcl_get_option( 'timeout', 600 ) : 0;
 
 	$rcl_cache = new Rcl_Cache( $timecache );
 
 	if ( $rcl_cache->is_cache ) {
-		if ( isset( $users->id ) && $users->id == 'rcl-online-users' )
-			$string	 = json_encode( $users );
-		else
-			$string	 = json_encode( $users->query );
+		if ( isset( $users->id ) && $users->id == 'rcl-online-users' ) {
+			$string = json_encode( $users );
+		} else {
+			$string = json_encode( $users->query );
+		}
 
 		$file = $rcl_cache->get_file( $string );
 
@@ -67,7 +68,7 @@ function rcl_get_userlist( $atts ) {
 	$userlist .= '<div class="rcl-userlist">';
 
 	if ( ! $usersdata ) {
-		$userlist .= rcl_get_notice( ['text' => __( 'Users not found', 'wp-recall' ) ] );
+		$userlist .= rcl_get_notice( [ 'text' => __( 'Users not found', 'wp-recall' ) ] );
 	} else {
 
 		if ( ! isset( $atts['number'] ) && $pagenavi->in_page ) {
@@ -106,10 +107,10 @@ function rcl_cache_shortcode( $atts, $content = null ) {
 	global $post;
 
 	extract( shortcode_atts( array(
-		'key'		 => '',
+		'key'        => '',
 		'only_guest' => false,
-		'time'		 => false
-			), $atts ) );
+		'time'       => false
+	), $atts ) );
 
 	if ( $post->post_status == 'publish' ) {
 
@@ -129,8 +130,9 @@ function rcl_cache_shortcode( $atts, $content = null ) {
 
 	$content = do_shortcode( shortcode_unautop( $content ) );
 	if ( '</p>' == substr( $content, 0, 4 )
-		and '<p>' == substr( $content, strlen( $content ) - 3 ) )
+	     and '<p>' == substr( $content, strlen( $content ) - 3 ) ) {
 		$content = substr( $content, 4, strlen( $content ) - 7 );
+	}
 
 	if ( $post->post_status == 'publish' ) {
 
@@ -149,9 +151,9 @@ function rcl_tab_shortcode( $atts ) {
 	$user_LK = $user_ID;
 
 	extract( shortcode_atts( array(
-		'tab_id'	 => '',
-		'subtab_id'	 => ''
-			), $atts ) );
+		'tab_id'    => '',
+		'subtab_id' => ''
+	), $atts ) );
 
 	if ( ! $user_ID ) {
 		return '<h4 class="rcl_cab_guest_message">' . __( 'To use your personal account, please log in or register on this site', 'wp-recall' ) . '</h4>
@@ -160,16 +162,19 @@ function rcl_tab_shortcode( $atts ) {
 
 	$tab = rcl_get_tab( $tab_id );
 
-	if ( ! $tab_id || ! $tab )
+	if ( ! $tab_id || ! $tab ) {
 		return '<p>' . __( 'Such tab was not found!', 'wp-recall' ) . '</p>';
+	}
 
-	if ( ! class_exists( 'Rcl_Tab' ) )
+	if ( ! class_exists( 'Rcl_Tab' ) ) {
 		require_once RCL_PATH . 'classes/class-rcl-tab.php';
+	}
 
 	$Rcl_Tab = new Rcl_Tab( $tab );
 
-	if ( ! $Rcl_Tab->is_user_access( $user_ID ) )
+	if ( ! $Rcl_Tab->is_user_access( $user_ID ) ) {
 		return false;
+	}
 
 	$content = '<div id="rcl-office" class="wprecallblock" data-account="' . $user_ID . '">';
 	$content .= '<div id="lk-content">';

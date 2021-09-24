@@ -2,6 +2,7 @@
 
 function pfm_have_subforums() {
 	global $PrimeForum;
+
 	return isset( $PrimeForum->subforum_count ) && $PrimeForum->subforum_count ? true : false;
 }
 
@@ -52,10 +53,11 @@ function pfm_forum_field( $field_name, $echo = 1 ) {
 	global $PrimeForum;
 
 	if ( isset( $PrimeForum->$field_name ) ) {
-		if ( $echo )
+		if ( $echo ) {
 			echo $PrimeForum->$field_name;
-		else
+		} else {
 			return $PrimeForum->$field_name;
+		}
 	}
 
 	return false;
@@ -99,8 +101,9 @@ function pfm_the_forum_icons() {
 
 	$icons = apply_filters( 'pfm_icons', $icons );
 
-	if ( ! $icons )
+	if ( ! $icons ) {
 		return false;
+	}
 
 	$content = '<div class="prime-topic-icons">';
 
@@ -118,8 +121,9 @@ function pfm_the_forum_icons() {
 function pfm_subforums_list() {
 	global $PrimeForum;
 
-	if ( ! $PrimeForum->subforum_count )
+	if ( ! $PrimeForum->subforum_count ) {
 		return false;
+	}
 
 	$content = pfm_get_subforums_list( $PrimeForum->forum_id );
 
@@ -129,15 +133,16 @@ function pfm_subforums_list() {
 function pfm_get_subforums( $forum_id ) {
 	return pfm_get_forums( array(
 		'parent_id' => $forum_id
-		) );
+	) );
 }
 
 function pfm_get_subforums_list( $forum_id ) {
 
 	$childs = pfm_get_subforums( $forum_id );
 
-	if ( ! $childs )
+	if ( ! $childs ) {
 		return false;
+	}
 
 	$forums = array();
 	foreach ( $childs as $child ) {
@@ -159,5 +164,6 @@ function pfm_get_forums_list() {
 add_action( 'pfm_delete_forum', 'pfm_delete_forum_metas', 10 );
 function pfm_delete_forum_metas( $forum_id ) {
 	global $wpdb;
+
 	return $wpdb->query( "DELETE FROM " . RCL_PREF . "pforum_meta WHERE object_type='forum' AND object_id='$forum_id'" );
 }

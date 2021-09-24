@@ -220,36 +220,38 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		return $errorContent;
 	}
 
-	function isset_notice(){
-		return !empty($_GET['notice-warning']) || !empty($_GET['notice-success']);
+	function isset_notice() {
+		return ! empty( $_GET['notice-warning'] ) || ! empty( $_GET['notice-success'] );
 	}
 
 	function get_notice_content() {
 
 		$noticeContent = '';
 
-		$noticesData = apply_filters('rcl_public_form_notices', [
+		$noticesData = apply_filters( 'rcl_public_form_notices', [
 			'warning' => [
 				'required-fields' => __( 'Please fill in required fields!', 'wp-recall' )
 			],
 			'success' => [
 				'draft-saved' => __( 'The draft has been saved successfully!', 'wp-recall' )
 			]
-		]);
+		] );
 
 		foreach ( $noticesData as $type => $notices ) {
 
-			if(empty($_GET['notice-'.$type]))
+			if ( empty( $_GET[ 'notice-' . $type ] ) ) {
 				continue;
+			}
 
-			$noticeKey = strval($_GET['notice-'.$type]);
+			$noticeKey = strval( $_GET[ 'notice-' . $type ] );
 
-			if(empty($notices[$noticeKey]))
+			if ( empty( $notices[ $noticeKey ] ) ) {
 				continue;
+			}
 
 			$noticeContent .= rcl_get_notice( array(
 				'type' => $type,
-				'text' => $notices[$noticeKey]
+				'text' => $notices[ $noticeKey ]
 			) );
 
 		}

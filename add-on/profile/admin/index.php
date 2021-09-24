@@ -10,13 +10,14 @@ function rcl_profile_admin_menu() {
 add_filter( 'rcl_field_options', 'rcl_edit_profile_field_options', 10, 3 );
 function rcl_edit_profile_field_options( $options, $field, $manager_id ) {
 
-	if ( $manager_id != 'profile' || ! rcl_is_register_open() )
+	if ( $manager_id != 'profile' || ! rcl_is_register_open() ) {
 		return $options;
+	}
 
 	$options[] = array(
-		'type'	 => 'radio',
-		'slug'	 => 'register',
-		'title'	 => __( 'display in registration form', 'wp-recall' ),
+		'type'   => 'radio',
+		'slug'   => 'register',
+		'title'  => __( 'display in registration form', 'wp-recall' ),
 		'values' => array(
 			__( 'No', 'wp-recall' ),
 			__( 'Yes', 'wp-recall' )
@@ -44,8 +45,9 @@ add_action( 'personal_options_update', 'rcl_save_profile_fields' );
 add_action( 'edit_user_profile_update', 'rcl_save_profile_fields' );
 function rcl_save_profile_fields( $user_id ) {
 
-	if ( ! current_user_can( 'edit_user', $user_id ) )
+	if ( ! current_user_can( 'edit_user', $user_id ) ) {
 		return false;
+	}
 
 	rcl_update_profile_fields( $user_id );
 }
@@ -58,7 +60,7 @@ endif;
 function rcl_get_custom_fields_profile( $user ) {
 
 	$args = array(
-		'exclude'	 => array(
+		'exclude' => array(
 			'first_name',
 			'last_name',
 			'description',
@@ -69,7 +71,7 @@ function rcl_get_custom_fields_profile( $user ) {
 			'repeat_pass',
 			'show_admin_bar_front'
 		),
-		'user_id'	 => $user->ID
+		'user_id' => $user->ID
 	);
 
 	$fields = apply_filters( 'rcl_admin_profile_fields', rcl_get_profile_fields( $args ), $user );
@@ -87,11 +89,13 @@ function rcl_get_custom_fields_profile( $user ) {
 				continue;
 			}
 
-			if ( ! isset( $field['value_in_key'] ) )
+			if ( ! isset( $field['value_in_key'] ) ) {
 				$field['value_in_key'] = true;
+			}
 
-			if ( ! isset( $field['value'] ) )
+			if ( ! isset( $field['value'] ) ) {
 				$field['value'] = get_the_author_meta( $field['slug'], $user->ID );
+			}
 
 			$fieldObject = Rcl_Field::setup( $field );
 
@@ -105,8 +109,9 @@ function rcl_get_custom_fields_profile( $user ) {
 
 		foreach ( $hiddens as $field ) {
 
-			if ( ! isset( $field['value'] ) )
+			if ( ! isset( $field['value'] ) ) {
 				$field['value'] = get_the_author_meta( $field['slug'], $user->ID );
+			}
 
 			$content .= Rcl_Field::setup( $field )->get_field_input();
 		}
@@ -118,8 +123,9 @@ function rcl_get_custom_fields_profile( $user ) {
 //save users page option in global array of options
 add_action( 'rcl_fields_update', 'rcl_update_users_page_option', 10, 2 );
 function rcl_update_users_page_option( $fields, $manager_id ) {
-	if ( $manager_id != 'profile' || ! isset( $_POST['users_page_rcl'] ) )
+	if ( $manager_id != 'profile' || ! isset( $_POST['users_page_rcl'] ) ) {
 		return false;
+	}
 	rcl_update_option( 'users_page_rcl', $_POST['users_page_rcl'] );
 }
 
@@ -127,5 +133,6 @@ function rcl_update_users_page_option( $fields, $manager_id ) {
 add_filter( 'rcl_global_options_pre_update', 'rcl_add_options_users_page_value', 10 );
 function rcl_add_options_users_page_value( $values ) {
 	$values['users_page_rcl'] = rcl_get_option( 'users_page_rcl', 0 );
+
 	return $values;
 }

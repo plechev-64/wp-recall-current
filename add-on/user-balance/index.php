@@ -22,8 +22,9 @@ require_once "functions-ajax.php";
 require_once "addon-widgets.php";
 require_once "addon-shortcodes.php";
 
-if ( is_admin() )
+if ( is_admin() ) {
 	require_once 'admin/index.php';
+}
 
 if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'rcl_user_account_scripts', 10 );
@@ -43,8 +44,9 @@ function rcl_init_js_account_variables( $data ) {
 
 	$data['account']['currency'] = rcl_get_primary_currency( 1 );
 
-	if ( $user_ID )
+	if ( $user_ID ) {
 		$data['account']['balance'] = rcl_get_user_balance( $user_ID );
+	}
 
 	return $data;
 }
@@ -52,8 +54,9 @@ function rcl_init_js_account_variables( $data ) {
 add_action( 'init', 'rmag_get_global_unit_wallet', 10 );
 function rmag_get_global_unit_wallet() {
 
-	if ( defined( 'RMAG_PREF' ) )
+	if ( defined( 'RMAG_PREF' ) ) {
 		return false;
+	}
 
 	global $wpdb;
 	global $rmag_options;
@@ -91,15 +94,17 @@ function rcl_success_pay( $dataPay ) {
 add_action( 'rcl_success_pay_system', 'rcl_pay_user_balance', 10 );
 function rcl_pay_user_balance( $data ) {
 
-	if ( $data->pay_type != 'user-balance' )
+	if ( $data->pay_type != 'user-balance' ) {
 		return false;
+	}
 
 	$oldcount = rcl_get_user_balance( $data->user_id );
 
-	if ( $oldcount )
-		$newcount	 = $oldcount + $data->pay_summ;
-	else
-		$newcount	 = $data->pay_summ;
+	if ( $oldcount ) {
+		$newcount = $oldcount + $data->pay_summ;
+	} else {
+		$newcount = $data->pay_summ;
+	}
 
 	rcl_update_user_balance( $newcount, $data->user_id, __( 'The replenish of personal account', 'wp-recall' ) );
 }
@@ -107,5 +112,6 @@ function rcl_pay_user_balance( $data ) {
 add_action( 'delete_user', 'rcl_delete_user_balance', 10 );
 function rcl_delete_user_balance( $user_id ) {
 	global $wpdb;
+
 	return $wpdb->query( $wpdb->prepare( "DELETE FROM " . RMAG_PREF . "users_balance WHERE user_id='%d'", $user_id ) );
 }

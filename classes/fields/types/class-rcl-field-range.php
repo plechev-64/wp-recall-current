@@ -13,9 +13,9 @@
  */
 class Rcl_Field_Range extends Rcl_Field_Abstract {
 
-	public $value_min	 = 0;
-	public $value_max	 = 100;
-	public $value_step	 = 1;
+	public $value_min = 0;
+	public $value_max = 100;
+	public $value_step = 1;
 	public $manual_input = 0;
 	public $unit;
 
@@ -27,38 +27,38 @@ class Rcl_Field_Range extends Rcl_Field_Abstract {
 
 		$options = array(
 			array(
-				'slug'			 => 'unit',
-				'default'		 => $this->unit,
-				'placeholder'	 => __( 'For example: km or pcs', 'wp-recall' ),
-				'type'			 => 'text',
-				'title'			 => __( 'Unit', 'wp-recall' )
+				'slug'        => 'unit',
+				'default'     => $this->unit,
+				'placeholder' => __( 'For example: km or pcs', 'wp-recall' ),
+				'type'        => 'text',
+				'title'       => __( 'Unit', 'wp-recall' )
 			),
 			array(
-				'slug'		 => 'value_min',
-				'value'		 => $this->value_min,
-				'type'		 => 'number',
-				'title'		 => __( 'Min', 'wp-recall' ),
-				'default'	 => 0
+				'slug'    => 'value_min',
+				'value'   => $this->value_min,
+				'type'    => 'number',
+				'title'   => __( 'Min', 'wp-recall' ),
+				'default' => 0
 			),
 			array(
-				'slug'		 => 'value_max',
-				'value'		 => $this->value_max,
-				'type'		 => 'number',
-				'title'		 => __( 'Max', 'wp-recall' ),
-				'default'	 => 100
+				'slug'    => 'value_max',
+				'value'   => $this->value_max,
+				'type'    => 'number',
+				'title'   => __( 'Max', 'wp-recall' ),
+				'default' => 100
 			),
 			array(
-				'slug'		 => 'value_step',
-				'value'		 => $this->value_step,
-				'type'		 => 'number',
-				'title'		 => __( 'Step', 'wp-recall' ),
-				'default'	 => 1
+				'slug'    => 'value_step',
+				'value'   => $this->value_step,
+				'type'    => 'number',
+				'title'   => __( 'Step', 'wp-recall' ),
+				'default' => 1
 			),
 			array(
-				'slug'	 => 'manual_input',
-				'value'	 => $this->manual_input,
-				'type'	 => 'radio',
-				'title'	 => __( 'Manual input', 'wp-recall' ),
+				'slug'   => 'manual_input',
+				'value'  => $this->manual_input,
+				'type'   => 'radio',
+				'title'  => __( 'Manual input', 'wp-recall' ),
 				'values' => array(
 					__( 'Disable', 'wp-recall' ),
 					__( 'Enable', 'wp-recall' )
@@ -73,8 +73,8 @@ class Rcl_Field_Range extends Rcl_Field_Abstract {
 
 		rcl_slider_scripts();
 
-		$valMin	 = $this->value ? $this->value[0] : $this->value_min;
-		$valMax	 = $this->value ? $this->value[1] : $this->value_max;
+		$valMin = $this->value ? $this->value[0] : $this->value_min;
+		$valMax = $this->value ? $this->value[1] : $this->value_max;
 
 		$content = '<div id="rcl-range-' . $this->rand . '" class="rcl-range">';
 
@@ -87,11 +87,15 @@ class Rcl_Field_Range extends Rcl_Field_Abstract {
 		} else {
 			$content .= '<input type="hidden" class="rcl-range-min" name="' . $this->input_name . '[]" value="' . $this->value_min . '">';
 			$content .= '<input type="hidden" class="rcl-range-max" name="' . $this->input_name . '[]" value="' . $this->value_max . '">';
-			$content .= '<span class="rcl-range-value no-input"><span>' . (implode( ' - ', array( $valMin, $valMax ) )) . '</span>';
+			$content .= '<span class="rcl-range-value no-input"><span>' . ( implode( ' - ', array(
+					$valMin,
+					$valMax
+				) ) ) . '</span>';
 		}
 
-		if ( $this->unit )
+		if ( $this->unit ) {
 			$content .= ' ' . $this->unit;
+		}
 
 		$content .= '</span>';
 
@@ -100,11 +104,11 @@ class Rcl_Field_Range extends Rcl_Field_Abstract {
 		$content .= '</div>';
 
 		$init = 'rcl_init_range(' . json_encode( array(
-				'id'	 => $this->rand,
+				'id'     => $this->rand,
 				'values' => $this->value ? $this->value : array( $this->value_min, $this->value_max ),
-				'min'	 => $this->value_min,
-				'max'	 => $this->value_max,
-				'step'	 => $this->value_step,
+				'min'    => $this->value_min,
+				'max'    => $this->value_max,
+				'step'   => $this->value_step,
 				'manual' => $this->manual_input,
 			) ) . ');';
 
@@ -119,11 +123,12 @@ class Rcl_Field_Range extends Rcl_Field_Abstract {
 
 	function get_value() {
 
-		if ( ! $this->value )
+		if ( ! $this->value ) {
 			return false;
+		}
 
-		$minValue	 = $this->value[0];
-		$maxValue	 = $this->value[1];
+		$minValue = $this->value[0];
+		$maxValue = $this->value[1];
 
 		if ( $this->unit ) {
 			$minValue .= ' ' . $this->unit;

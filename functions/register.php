@@ -8,18 +8,23 @@ if ( ! function_exists( 'wp_send_new_user_notifications' ) ) {
 }
 function rcl_insert_user( $data ) {
 
-	if ( get_user_by( 'email', $data['user_email'] ) )
+	if ( get_user_by( 'email', $data['user_email'] ) ) {
 		return false;
+	}
 
-	if ( get_user_by( 'login', $data['user_login'] ) )
+	if ( get_user_by( 'login', $data['user_login'] ) ) {
 		return false;
+	}
 
 	$userdata = array_merge( $data, array(
-		'user_nicename'	 => ''
-		, 'nickname'		 => $data['user_email']
-		, 'first_name'	 => $data['display_name']
-		, 'rich_editing'	 => 'true'  // false - выключить визуальный редактор для пользователя.
-		) );
+		'user_nicename' => ''
+	,
+		'nickname'      => $data['user_email']
+	,
+		'first_name'    => $data['display_name']
+	,
+		'rich_editing'  => 'true'  // false - выключить визуальный редактор для пользователя.
+	) );
 
 	$user_id = wp_insert_user( $userdata );
 
@@ -40,8 +45,8 @@ function rcl_insert_user( $data ) {
 	$wpdb->insert( RCL_PREF . 'user_action', array( 'user' => $user_id, 'time_action' => $timeAction ) );
 
 	rcl_register_mail( array(
-		'user_id'	 => $user_id,
-		'user_pass'	 => $userdata['user_pass'],
+		'user_id'    => $user_id,
+		'user_pass'  => $userdata['user_pass'],
 		'user_login' => $userdata['user_login'],
 		'user_email' => $userdata['user_email']
 	) );
@@ -63,11 +68,13 @@ function rcl_confirm_user_registration() {
 
 		if ( $user = get_user_by( 'login', $confirmdata[0] ) ) {
 
-			if ( md5( $user->ID ) != $confirmdata[1] )
+			if ( md5( $user->ID ) != $confirmdata[1] ) {
 				return false;
+			}
 
-			if ( ! rcl_is_user_role( $user->ID, 'need-confirm' ) )
+			if ( ! rcl_is_user_role( $user->ID, 'need-confirm' ) ) {
 				return false;
+			}
 
 			$defaultRole = get_site_option( 'default_role' );
 			if ( $defaultRole == 'need-confirm' ) {
@@ -77,8 +84,11 @@ function rcl_confirm_user_registration() {
 
 			wp_update_user( array( 'ID' => $user->ID, 'role' => $defaultRole ) );
 
-			if ( ! rcl_get_time_user_action( $user->ID ) )
-				$wpdb->insert( RCL_PREF . 'user_action', array( 'user' => $user->ID, 'time_action' => current_time( 'mysql' ) ) );
+			if ( ! rcl_get_time_user_action( $user->ID ) ) {
+				$wpdb->insert( RCL_PREF . 'user_action', array( 'user'        => $user->ID,
+				                                                'time_action' => current_time( 'mysql' )
+				) );
+			}
 
 			do_action( 'rcl_confirm_registration', $user->ID );
 
@@ -91,8 +101,9 @@ function rcl_confirm_user_registration() {
 					$place = rcl_format_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) );
 				}
 				wp_redirect( add_query_arg( array(
-					'action-rcl' => 'login', 'success'	 => 'checkemail'
-						), $place ) );
+					'action-rcl' => 'login',
+					'success'    => 'checkemail'
+				), $place ) );
 			}
 			exit;
 		}
@@ -102,8 +113,9 @@ function rcl_confirm_user_registration() {
 		wp_safe_redirect( wp_login_url() . '?checkemail=confirm' );
 	} else {
 		wp_redirect( add_query_arg( array(
-			'action-rcl' => 'login', 'login'		 => 'checkemail'
-				), home_url() ) );
+			'action-rcl' => 'login',
+			'login'      => 'checkemail'
+		), home_url() ) );
 	}
 	exit;
 }
@@ -112,11 +124,13 @@ function rcl_confirm_user_registration() {
 add_action( 'init', 'rcl_confirm_user_resistration_activate', 10 );
 function rcl_confirm_user_resistration_activate() {
 
-	if ( ! isset( $_GET['rcl-confirmdata'] ) )
+	if ( ! isset( $_GET['rcl-confirmdata'] ) ) {
 		return false;
+	}
 
-	if ( rcl_get_option( 'confirm_register_recall' ) )
+	if ( rcl_get_option( 'confirm_register_recall' ) ) {
 		add_action( 'wp', 'rcl_confirm_user_registration', 10 );
+	}
 }
 
 //добавляем коды ошибок для тряски формы ВП
@@ -128,7 +142,7 @@ function rcl_add_shake_error_codes( $codes ) {
 		'rcl_register_email',
 		'rcl_register_login_us',
 		'rcl_register_email_us'
-		) );
+	) );
 }
 
 //регистрация пользователя на сайте
@@ -140,23 +154,25 @@ function rcl_get_register_user( $errors ) {
 
 	if ( count( $errors->errors ) ) {
 		$wp_errors = $errors;
+
 		return $wp_errors;
 	}
 
-	$pass	 = sanitize_text_field( $_POST['user_pass'] );
-	$email	 = $_POST['user_email'];
-	$login	 = sanitize_user( $_POST['user_login'] );
+	$pass  = sanitize_text_field( $_POST['user_pass'] );
+	$email = $_POST['user_email'];
+	$login = sanitize_user( $_POST['user_login'] );
 
-	$ref = ($_POST['redirect_to']) ? apply_filters( 'url_after_register_rcl', $_POST['redirect_to'] ) : wp_registration_url();
+	$ref = ( $_POST['redirect_to'] ) ? apply_filters( 'url_after_register_rcl', $_POST['redirect_to'] ) : wp_registration_url();
 
-	$get_fields	 = rcl_get_profile_fields();
-	$required	 = true;
+	$get_fields = rcl_get_profile_fields();
+	$required   = true;
 	if ( $get_fields ) {
 		foreach ( ( array ) $get_fields as $field ) {
 
 			$field = apply_filters( 'chek_custom_field_regform', $field );
-			if ( ! $field )
+			if ( ! $field ) {
 				continue;
+			}
 
 			$slug = $field['slug'];
 			if ( $field['required'] == 1 && isset( $field['register'] ) && $field['register'] == 1 ) {
@@ -166,7 +182,7 @@ function rcl_get_register_user( $errors ) {
 					$count_field = count( $field['values'] );
 
 					for ( $a = 0; $a < $count_field; $a ++ ) {
-						if ( ! isset( $_POST[$slug][$a] ) ) {
+						if ( ! isset( $_POST[ $slug ][ $a ] ) ) {
 							$required = false;
 						} else {
 							$required = true;
@@ -174,8 +190,9 @@ function rcl_get_register_user( $errors ) {
 						}
 					}
 				} else {
-					if ( ! $_POST[$slug] )
+					if ( ! $_POST[ $slug ] ) {
 						$required = false;
+					}
 				}
 			}
 		}
@@ -183,23 +200,25 @@ function rcl_get_register_user( $errors ) {
 
 	if ( ! $pass || ! $email || ! $login || ! $required ) {
 		$wp_errors->add( 'rcl_register_empty', __( 'Fill in the required fields!', 'wp-recall' ) );
+
 		return $wp_errors;
 	}
 
 	$wp_errors = apply_filters( 'rcl_registration_errors', $wp_errors, $login, $email );
 
-	if ( $wp_errors->errors )
+	if ( $wp_errors->errors ) {
 		return $wp_errors;
+	}
 
 	do_action( 'pre_register_user_rcl', $ref );
 
 	//регистрируем юзера с указанными данными
 
 	$userdata = array(
-		'user_pass'		 => $pass,
-		'user_login'	 => $login,
-		'user_email'	 => $email,
-		'display_name'	 => isset( $_POST['display_name'] ) && $_POST['display_name'] ? $_POST['display_name'] : ''
+		'user_pass'    => $pass,
+		'user_login'   => $login,
+		'user_email'   => $email,
+		'display_name' => isset( $_POST['display_name'] ) && $_POST['display_name'] ? $_POST['display_name'] : ''
 	);
 
 	$user_id = rcl_insert_user( $userdata );
@@ -208,17 +227,19 @@ function rcl_get_register_user( $errors ) {
 
 		if ( rcl_get_option( 'login_form_recall' ) == 2 || false !== strpos( $ref, wp_login_url() ) ) {
 			//если форма ВП, то возвращаем на login с нужными GET-параметрами
-			if ( $rcl_options['confirm_register_recall'] == 1 )
+			if ( $rcl_options['confirm_register_recall'] == 1 ) {
 				wp_safe_redirect( wp_login_url() . '?checkemail=confirm' );
-			else
+			} else {
 				wp_safe_redirect( wp_login_url() . '?checkemail=registered' );
-		}else {
+			}
+		} else {
 
 			//иначе возвращаем на ту же страницу
-			if ( rcl_get_option( 'confirm_register_recall' ) )
+			if ( rcl_get_option( 'confirm_register_recall' ) ) {
 				wp_redirect( rcl_format_url( $ref ) . 'action-rcl=login&register=checkemail' );
-			else
+			} else {
 				wp_redirect( rcl_format_url( $ref ) . 'action-rcl=login&register=success' );
+			}
 		}
 
 		exit();
@@ -229,10 +250,11 @@ function rcl_get_register_user( $errors ) {
 add_action( 'wp', 'rcl_get_register_user_activate', 10 );
 function rcl_get_register_user_activate() {
 	if ( isset( $_POST['register_wpnonce'] ) ) { //если данные пришли с формы wp-recall
-		if ( ! wp_verify_nonce( $_POST['register_wpnonce'], 'register-key-rcl' ) )
+		if ( ! wp_verify_nonce( $_POST['register_wpnonce'], 'register-key-rcl' ) ) {
 			return false;
-		$email	 = $_POST['user_email'];
-		$login	 = sanitize_user( $_POST['user_login'] );
+		}
+		$email = $_POST['user_email'];
+		$login = sanitize_user( $_POST['user_login'] );
 		register_new_user( $login, $email );
 	}
 }
@@ -240,8 +262,8 @@ function rcl_get_register_user_activate() {
 //письмо высылаемое при регистрации
 function rcl_register_mail( $userdata ) {
 
-	$user_login	 = $userdata['user_login'];
-	$user_id	 = $userdata['user_id'];
+	$user_login = $userdata['user_login'];
+	$user_id    = $userdata['user_id'];
 
 	$userdata = apply_filters( 'rcl_register_mail_data', $userdata );
 
@@ -265,7 +287,7 @@ function rcl_register_mail( $userdata ) {
 
 		$url = add_query_arg( array(
 			'rcl-confirmdata' => urlencode( $confirmstr )
-			), home_url() );
+		), home_url() );
 
 		$textmail .= '<p>' . __( 'If it was you, then confirm your registration by clicking on the link below', 'wp-recall' ) . ':</p>
         <p><a href="' . $url . '">' . $url . '</a></p>
@@ -307,16 +329,17 @@ function rcl_notice_form( $form = 'login' ) {
 	$wp_error = apply_filters( 'rcl_login_errors', $wp_error );
 
 	if ( $wp_error->get_error_code() ) {
-		$errors		 = '';
-		$messages	 = '';
+		$errors   = '';
+		$messages = '';
 		foreach ( $wp_error->get_error_codes() as $code ) {
 			$severity = $wp_error->get_error_data( $code );
 			foreach ( $wp_error->get_error_messages( $code ) as $error_message ) {
 
-				if ( 'message' == $severity )
+				if ( 'message' == $severity ) {
 					$messages .= ' ' . $error_message . "<br />\n";
-				else
+				} else {
 					$errors .= ' ' . $error_message . "<br />\n";
+				}
 			}
 		}
 
@@ -333,8 +356,9 @@ function rcl_notice_form( $form = 'login' ) {
 add_filter( 'rcl_registration_errors', 'rcl_chek_repeat_pass' );
 function rcl_chek_repeat_pass( $errors ) {
 
-	if ( ! rcl_get_option( 'repeat_pass' ) )
+	if ( ! rcl_get_option( 'repeat_pass' ) ) {
 		return false;
+	}
 
 	if ( $_POST['user_secondary_pass'] != $_POST['user_pass'] ) {
 		$errors = new WP_Error();
@@ -395,11 +419,11 @@ function rcl_checkemail_success( $errors ) {
 function rcl_get_current_url( $typeform = false, $unset = false ) {
 
 	$args = array(
-		'register'			 => false,
-		'login'				 => false,
-		'remember'			 => false,
-		'success'			 => false,
-		'rcl-confirmdata'	 => false
+		'register'        => false,
+		'login'           => false,
+		'remember'        => false,
+		'success'         => false,
+		'rcl-confirmdata' => false
 	);
 
 	$args['action-rcl'] = $typeform;
@@ -440,7 +464,7 @@ function rcl_password_regform( $content ) {
 
 	$content .= '<div class="form-block-rcl default-field">';
 
-	$content .= '<input placeholder="' . __( 'Password', 'wp-recall' ) . '" required id="primary-pass-user" type="password" ' . ($difficulty == 1 ? 'onkeyup="passwordStrength(this.value)"' : '') . ' name="user_pass">';
+	$content .= '<input placeholder="' . __( 'Password', 'wp-recall' ) . '" required id="primary-pass-user" type="password" ' . ( $difficulty == 1 ? 'onkeyup="passwordStrength(this.value)"' : '' ) . ' name="user_pass">';
 
 	$content .= '<i class="rcli fa-lock"></i>';
 	$content .= '<span class="required">*</span>';
@@ -462,8 +486,9 @@ function rcl_password_regform( $content ) {
 add_filter( 'regform_fields_rcl', 'rcl_secondary_password', 10 );
 function rcl_secondary_password( $fields ) {
 
-	if ( ! rcl_get_option( 'repeat_pass' ) )
+	if ( ! rcl_get_option( 'repeat_pass' ) ) {
 		return $fields;
+	}
 
 	$fields .= '<div class="form-block-rcl default-field">
                     <input placeholder="' . __( 'Repeat the password', 'wp-recall' ) . '" required id="secondary-pass-user" type="password" name="user_secondary_pass">
@@ -497,11 +522,13 @@ function rcl_custom_fields_regform( $content ) {
 
 		foreach ( $fields as $field ) {
 
-			if ( ! isset( $field['register'] ) || $field['register'] != 1 )
+			if ( ! isset( $field['register'] ) || $field['register'] != 1 ) {
 				continue;
+			}
 
-			if ( ! isset( $field['value_in_key'] ) )
+			if ( ! isset( $field['value_in_key'] ) ) {
 				$field['value_in_key'] = true;
+			}
 
 			$regFields[] = $field;
 		}
@@ -509,8 +536,9 @@ function rcl_custom_fields_regform( $content ) {
 
 	$regFields = apply_filters( 'rcl_register_form_fields', stripslashes_deep( $regFields ) );
 
-	if ( ! $regFields )
+	if ( ! $regFields ) {
 		return $content;
+	}
 
 	$hiddens = array();
 	foreach ( $regFields as $field ) {
@@ -522,10 +550,10 @@ function rcl_custom_fields_regform( $content ) {
 			continue;
 		}
 
-		$class			 = (isset( $field['class'] )) ? $field['class'] : '';
-		$id				 = (isset( $field['id'] )) ? 'id=' . $field['id'] : '';
-		$attr			 = (isset( $field['attr'] )) ? '' . $field['attr'] : '';
-		$field['value']	 = isset( $_POST[$field['slug']] ) ? $_POST[$field['slug']] : false;
+		$class          = ( isset( $field['class'] ) ) ? $field['class'] : '';
+		$id             = ( isset( $field['id'] ) ) ? 'id=' . $field['id'] : '';
+		$attr           = ( isset( $field['attr'] ) ) ? '' . $field['attr'] : '';
+		$field['value'] = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : false;
 
 		unset( $field['class'] );
 		unset( $field['attr'] );
@@ -537,8 +565,9 @@ function rcl_custom_fields_regform( $content ) {
 
 		if ( $fieldObject->title ) {
 			$content .= '<label>' . $fieldObject->get_title();
-			if ( $field['type'] )
+			if ( $field['type'] ) {
 				$content .= '<span class="colon">:</span>';
+			}
 			$content .= '</label>';
 		}
 
@@ -548,9 +577,9 @@ function rcl_custom_fields_regform( $content ) {
 	}
 
 	foreach ( $hiddens as $field ) {
-		$field['value']	 = isset( $_POST[$field['slug']] ) ? $_POST[$field['slug']] : false;
-		$fieldObject	 = Rcl_Field::setup( $field );
-		$content .= $fieldObject->get_field_input();
+		$field['value'] = isset( $_POST[ $field['slug'] ] ) ? $_POST[ $field['slug'] ] : false;
+		$fieldObject    = Rcl_Field::setup( $field );
+		$content        .= $fieldObject->get_field_input();
 	}
 
 	return $content;

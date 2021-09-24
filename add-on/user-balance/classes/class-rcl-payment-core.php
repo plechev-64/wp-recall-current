@@ -13,25 +13,30 @@ class Rcl_Payment_Core {
 			$this->init_properties( $args );
 		}
 
-		if ( ! $this->page_result )
+		if ( ! $this->page_result ) {
 			$this->page_result = rcl_get_commerce_option( 'page_result_pay' );
+		}
 
-		if ( ! $this->page_success )
+		if ( ! $this->page_success ) {
 			$this->page_success = rcl_get_commerce_option( 'page_success_pay' );
+		}
 
-		if ( ! $this->page_fail )
+		if ( ! $this->page_fail ) {
 			$this->page_fail = rcl_get_commerce_option( 'page_fail_pay' );
+		}
 
-		if ( ! $this->page_successfully )
+		if ( ! $this->page_successfully ) {
 			$this->page_successfully = rcl_get_commerce_option( 'page_successfully_pay' );
+		}
 	}
 
 	function init_properties( $args ) {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( isset( $args[$name] ) )
-				$this->$name = $args[$name];
+			if ( isset( $args[ $name ] ) ) {
+				$this->$name = $args[ $name ];
+			}
 		}
 	}
 

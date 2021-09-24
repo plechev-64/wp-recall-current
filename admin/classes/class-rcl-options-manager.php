@@ -6,14 +6,14 @@ require_once 'options/class-rcl-options-group.php';
 
 class Rcl_Options_Manager {
 
-	public $boxes			 = array();
-	public $extends			 = false;
-	public $extend_options	 = false;
-	public $nonce			 = 'update-options';
-	public $page_options	 = '';
-	public $onclick			 = 'rcl_update_options();return false;';
-	public $action			 = 'options.php';
-	public $method			 = 'post';
+	public $boxes = array();
+	public $extends = false;
+	public $extend_options = false;
+	public $nonce = 'update-options';
+	public $page_options = '';
+	public $onclick = 'rcl_update_options();return false;';
+	public $action = 'options.php';
+	public $method = 'post';
 	public $option_name;
 
 	function __construct( $args = false ) {
@@ -22,8 +22,9 @@ class Rcl_Options_Manager {
 			$this->init_properties( $args );
 		}
 
-		if ( $this->extends )
+		if ( $this->extends ) {
 			$this->extend_options = isset( $_COOKIE['rcl_extends'] ) ? $_COOKIE['rcl_extends'] : 0;
+		}
 	}
 
 	function init_properties( $args ) {
@@ -31,44 +32,47 @@ class Rcl_Options_Manager {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( isset( $args[$name] ) & ! empty( $args[$name] ) )
-				$this->$name = $args[$name];
+			if ( isset( $args[ $name ] ) & ! empty( $args[ $name ] ) ) {
+				$this->$name = $args[ $name ];
+			}
 		}
 	}
 
 	function isset_box( $box_id ) {
-		return isset( $this->boxes[$box_id] );
+		return isset( $this->boxes[ $box_id ] );
 	}
 
 	function add_box( $box_id, $args ) {
-		$this->boxes[$box_id] = new Rcl_Options_Box( $box_id, $args, $this->option_name );
+		$this->boxes[ $box_id ] = new Rcl_Options_Box( $box_id, $args, $this->option_name );
+
 		return $this->box( $box_id );
 	}
 
 	function box( $box_id ) {
-		return $this->boxes[$box_id];
+		return $this->boxes[ $box_id ];
 	}
 
 	function get_menu() {
 
-		if ( ! $this->boxes )
+		if ( ! $this->boxes ) {
 			return false;
+		}
 
-		$items = [ ];
+		$items = [];
 
 		foreach ( $this->boxes as $box ) {
 
 			$items[] = rcl_get_button( array(
-				'data'		 => array(
+				'data'    => array(
 					'options' => $box->box_id
 				),
-				'label'		 => $box->title,
-				'href'		 => admin_url( 'admin.php?page=' . $this->page_options . '&rcl-options-box=' . $box->box_id ),
-				'onclick'	 => 'rcl_onclick_options_label(this);return false;',
-				'icon'		 => $box->icon,
-				'type'		 => 'simple',
-				'status'	 => $box->active ? 'active' : ''
-				) );
+				'label'   => $box->title,
+				'href'    => admin_url( 'admin.php?page=' . $this->page_options . '&rcl-options-box=' . $box->box_id ),
+				'onclick' => 'rcl_onclick_options_label(this);return false;',
+				'icon'    => $box->icon,
+				'type'    => 'simple',
+				'status'  => $box->active ? 'active' : ''
+			) );
 		}
 
 		$content = '<div class="rcl-menu menu-items">';
@@ -86,12 +90,12 @@ class Rcl_Options_Manager {
 
 		if ( ! isset( $_GET['rcl-options-box'] ) ) {
 			foreach ( $this->boxes as $id => $box ) {
-				$this->boxes[$id]->active = true;
+				$this->boxes[ $id ]->active = true;
 				break;
 			}
 		}
 
-		$content = '<div class="rcl-options-manager rcl-options ' . ($this->extend_options ? 'show-extends-options' : 'hide-extends-options') . '">';
+		$content = '<div class="rcl-options-manager rcl-options ' . ( $this->extend_options ? 'show-extends-options' : 'hide-extends-options' ) . '">';
 
 		$content .= '<form method="post" class="rcl-options-form" action="' . $this->action . '">';
 
@@ -111,19 +115,20 @@ class Rcl_Options_Manager {
 
 		foreach ( $this->boxes as $box ) {
 
-			if ( ! $box->active )
+			if ( ! $box->active ) {
 				continue;
+			}
 
 			$content .= rcl_get_button( array(
-				'label'		 => $box->title,
-				'onclick'	 => 'rcl_show_options_menu(this);return false;',
-				'icon'		 => 'fa-chevron-down', //$box->icon,
-				'icon_align' => 'right',
-				'type'		 => 'clear',
-				'style'		 => 'text-align: center;',
-				'fullwidth'	 => true,
-				'class'		 => array( 'button button-primary button-large active-menu-item' )
-				//'status'	 => $box->active ? 'active' : ''
+					'label'      => $box->title,
+					'onclick'    => 'rcl_show_options_menu(this);return false;',
+					'icon'       => 'fa-chevron-down', //$box->icon,
+					'icon_align' => 'right',
+					'type'       => 'clear',
+					'style'      => 'text-align: center;',
+					'fullwidth'  => true,
+					'class'      => array( 'button button-primary button-large active-menu-item' )
+					//'status'	 => $box->active ? 'active' : ''
 				)
 			);
 		}
@@ -131,14 +136,14 @@ class Rcl_Options_Manager {
 		$content .= $this->get_menu();
 
 		$content .= rcl_get_button( array(
-			'label'		 => __( 'Save settings', 'wp-recall' ),
-			'onclick'	 => $this->onclick ? $this->onclick : false,
-			'submit'	 => $this->onclick ? false : true,
-			'icon'		 => 'fa-floppy-o',
-			'type'		 => 'clear',
-			'style'		 => 'text-align: center;',
-			'class'		 => array( 'button button-primary button-large rcl-submit-options' )
-			) );
+			'label'   => __( 'Save settings', 'wp-recall' ),
+			'onclick' => $this->onclick ? $this->onclick : false,
+			'submit'  => $this->onclick ? false : true,
+			'icon'    => 'fa-floppy-o',
+			'type'    => 'clear',
+			'style'   => 'text-align: center;',
+			'class'   => array( 'button button-primary button-large rcl-submit-options' )
+		) );
 
 		$content .= '</div>';
 

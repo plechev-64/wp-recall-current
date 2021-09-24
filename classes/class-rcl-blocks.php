@@ -5,13 +5,13 @@ class Rcl_Blocks {
 	public $place;
 	public $callback;
 	public $args = array(
-		'id'		 => '',
-		'class'		 => '',
-		'title'		 => '',
-		'gallery'	 => 0,
-		'public'	 => 1,
-		'order'		 => 10,
-		'width'		 => 40
+		'id'      => '',
+		'class'   => '',
+		'title'   => '',
+		'gallery' => 0,
+		'public'  => 1,
+		'order'   => 10,
+		'width'   => 40
 	);
 
 	function __construct( $data ) {
@@ -24,15 +24,16 @@ class Rcl_Blocks {
 
 		foreach ( $properties as $name => $val ) {
 
-			if ( ! isset( $args[$name] ) )
-				continue;
-
-			if ( $name == 'args' ) {
-				$this->args = wp_parse_args( $args[$name], $this->args );
+			if ( ! isset( $args[ $name ] ) ) {
 				continue;
 			}
 
-			$this->$name = $args[$name];
+			if ( $name == 'args' ) {
+				$this->args = wp_parse_args( $args[ $name ], $this->args );
+				continue;
+			}
+
+			$this->$name = $args[ $name ];
 		}
 	}
 
@@ -49,30 +50,40 @@ class Rcl_Blocks {
 		global $user_ID;
 
 		switch ( $this->args['public'] ) {
-			case 0: if ( ! $user_ID || $user_ID != $user_lk )
+			case 0:
+				if ( ! $user_ID || $user_ID != $user_lk ) {
 					return false;
+				}
 				break; //только хозяину ЛК
-			case -1: if ( ! $user_ID || $user_ID == $user_lk )
+			case - 1:
+				if ( ! $user_ID || $user_ID == $user_lk ) {
 					return false;
+				}
 				break; //всем зарегистрированным кроме хозяина ЛК
-			case -2: if ( $user_ID && $user_ID == $user_lk )
+			case - 2:
+				if ( $user_ID && $user_ID == $user_lk ) {
 					return false;
+				}
 				break; //всем посетителям кроме хозяина
 		}
 
 		$cl_content = $this->get_callback_content( $user_lk );
-		if ( ! $cl_content )
+		if ( ! $cl_content ) {
 			return false;
+		}
 
 		$content = '<div';
-		if ( $this->args['id'] )
+		if ( $this->args['id'] ) {
 			$content .= ' id="' . $this->args['id'] . '"';
+		}
 		$content .= ' class="' . $this->place . '-block-rcl block-rcl';
-		if ( $this->args['class'] )
+		if ( $this->args['class'] ) {
 			$content .= ' ' . $this->args['class'];
+		}
 		$content .= '">';
-		if ( $this->args['title'] )
+		if ( $this->args['title'] ) {
 			$content .= '<h4>' . $this->args['title'] . '</h4>';
+		}
 		$content .= $cl_content;
 
 		if ( $this->args['gallery'] ) {
@@ -98,8 +109,8 @@ class Rcl_Blocks {
 		$callback = $this->callback;
 
 		if ( is_array( $callback ) ) {
-			$object	 = new $callback[0];
-			$method	 = $callback[1];
+			$object  = new $callback[0];
+			$method  = $callback[1];
 			$content = $object->$method( $master_id );
 		} else {
 			$content = $callback( $master_id );

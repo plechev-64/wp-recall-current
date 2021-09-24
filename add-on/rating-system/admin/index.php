@@ -10,11 +10,12 @@ function rcl_add_admin_rating_scripts() {
 
 add_filter( 'rcl_post_options', 'rcl_get_post_rating_options', 10, 2 );
 function rcl_get_post_rating_options( $options, $post ) {
-	$mark_v = get_post_meta( $post->ID, 'rayting-none', 1 );
+	$mark_v  = get_post_meta( $post->ID, 'rayting-none', 1 );
 	$options .= '<p>' . __( 'Disable rating for publication', 'wp-recall' ) . ':
         <label><input type="radio" name="wprecall[rayting-none]" value="" ' . checked( $mark_v, '', false ) . ' />' . __( 'No', 'wp-recall' ) . '</label>
         <label><input type="radio" name="wprecall[rayting-none]" value="1" ' . checked( $mark_v, '1', false ) . ' />' . __( 'Yes', 'wp-recall' ) . '</label>
     </p>';
+
 	return $options;
 }
 
@@ -31,6 +32,7 @@ function rcl_get_rating_column_content( $custom_column, $column_name, $user_id )
           <input type="button" class="button edit_rayting" id="user-' . $user_id . '" value="' . __( 'OK', 'wp-recall' ) . '">';
 			break;
 	}
+
 	return $custom_column;
 }
 
@@ -38,8 +40,8 @@ rcl_ajax_action( 'rcl_edit_rating_user', false );
 function rcl_edit_rating_user() {
 	global $wpdb, $user_ID;
 
-	$user_id	 = intval( $_POST['user'] );
-	$new_rating	 = floatval( $_POST['rayting'] );
+	$user_id    = intval( $_POST['user'] );
+	$new_rating = floatval( $_POST['rayting'] );
 
 	if ( ! isset( $new_rating ) ) {
 		wp_send_json( array( 'error' => __( 'Rating was not updated', 'wp-recall' ) ) );
@@ -50,11 +52,11 @@ function rcl_edit_rating_user() {
 	$val = $new_rating - $rating;
 
 	$args = array(
-		'user_id'		 => $user_ID,
-		'object_id'		 => $user_id,
-		'object_author'	 => $user_id,
-		'rating_value'	 => $val,
-		'rating_type'	 => 'edit-admin'
+		'user_id'       => $user_ID,
+		'object_id'     => $user_id,
+		'object_author' => $user_id,
+		'rating_value'  => $val,
+		'rating_type'   => 'edit-admin'
 	);
 
 	rcl_insert_rating( $args );

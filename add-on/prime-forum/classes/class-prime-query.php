@@ -2,41 +2,41 @@
 
 class PrimeQuery {
 
-	public $vars			 = array();
+	public $vars = array();
 	public $object;
-	public $is_frontpage	 = false;
-	public $is_group		 = false;
-	public $is_forum		 = false;
-	public $is_topic		 = false;
-	public $is_search		 = false;
-	public $is_page			 = false;
-	public $is_author		 = false;
+	public $is_frontpage = false;
+	public $is_group = false;
+	public $is_forum = false;
+	public $is_topic = false;
+	public $is_search = false;
+	public $is_page = false;
+	public $is_author = false;
 	public $groups;
 	public $forums;
 	public $topics;
 	public $posts;
-	public $canonical		 = '';
-	public $errors			 = array();
+	public $canonical = '';
+	public $errors = array();
 	public $groups_query;
 	public $forums_query;
 	public $topics_query;
 	public $posts_query;
-	public $offset			 = 0;
-	public $number			 = 20;
-	public $all_items		 = 0;
-	public $current_page	 = 1;
-	public $meta			 = array();
-	public $users_data		 = array();
-	public $parent_groups	 = array();
-	public $last			 = array(
+	public $offset = 0;
+	public $number = 20;
+	public $all_items = 0;
+	public $current_page = 1;
+	public $meta = array();
+	public $users_data = array();
+	public $parent_groups = array();
+	public $last = array(
 		'topics' => array(),
-		'posts'	 => array()
+		'posts'  => array()
 	);
-	public $next			 = array(
-		'group'	 => 0,
-		'forum'	 => 0,
-		'topic'	 => 0,
-		'post'	 => 0
+	public $next = array(
+		'group' => 0,
+		'forum' => 0,
+		'topic' => 0,
+		'post'  => 0
 	);
 
 	function __construct() {
@@ -48,10 +48,10 @@ class PrimeQuery {
 		if ( $vars ) {
 
 			$defaults = array(
-				'pfm-group'	 => '',
-				'pfm-forum'	 => '',
-				'pfm-topic'	 => '',
-				'pfm-page'	 => '',
+				'pfm-group'  => '',
+				'pfm-forum'  => '',
+				'pfm-topic'  => '',
+				'pfm-page'   => '',
 				'pfm-author' => '',
 				'pfm-search' => ''
 			);
@@ -60,10 +60,10 @@ class PrimeQuery {
 		} else {
 
 			$vars = array(
-				'pfm-group'	 => get_site_option( 'permalink_structure' ) != '' ? wp_slash( strip_tags( get_query_var( 'pfm-group' ) ) ) : intval( get_query_var( 'pfm-group' ) ),
-				'pfm-forum'	 => get_site_option( 'permalink_structure' ) != '' ? wp_slash( strip_tags( get_query_var( 'pfm-forum' ) ) ) : intval( get_query_var( 'pfm-forum' ) ),
-				'pfm-topic'	 => get_site_option( 'permalink_structure' ) != '' ? wp_slash( strip_tags( get_query_var( 'pfm-topic' ) ) ) : intval( get_query_var( 'pfm-topic' ) ),
-				'pfm-page'	 => intval( get_query_var( 'pfm-page' ) ),
+				'pfm-group'  => get_site_option( 'permalink_structure' ) != '' ? wp_slash( strip_tags( get_query_var( 'pfm-group' ) ) ) : intval( get_query_var( 'pfm-group' ) ),
+				'pfm-forum'  => get_site_option( 'permalink_structure' ) != '' ? wp_slash( strip_tags( get_query_var( 'pfm-forum' ) ) ) : intval( get_query_var( 'pfm-forum' ) ),
+				'pfm-topic'  => get_site_option( 'permalink_structure' ) != '' ? wp_slash( strip_tags( get_query_var( 'pfm-topic' ) ) ) : intval( get_query_var( 'pfm-topic' ) ),
+				'pfm-page'   => intval( get_query_var( 'pfm-page' ) ),
 				'pfm-author' => isset( $_GET['pfm-author'] ) ? intval( $_GET['pfm-author'] ) : '',
 				'pfm-search' => isset( $_GET['fs'] ) ? wp_slash( strip_tags( $_GET['fs'] ) ) : ''
 			);
@@ -76,16 +76,17 @@ class PrimeQuery {
 
 	function init_table_query() {
 
-		$this->groups_query	 = new PrimeGroups();
-		$this->forums_query	 = new PrimeForums();
-		$this->topics_query	 = new PrimeTopics();
-		$this->posts_query	 = new PrimePosts();
+		$this->groups_query = new PrimeGroups();
+		$this->forums_query = new PrimeForums();
+		$this->topics_query = new PrimeTopics();
+		$this->posts_query  = new PrimePosts();
 	}
 
 	function init_query() {
 
-		if ( ! $this->vars )
+		if ( ! $this->vars ) {
 			$this->setup_vars();
+		}
 
 		$this->init_conditions();
 
@@ -172,22 +173,22 @@ class PrimeQuery {
 
 		if ( $this->is_topic ) {
 
-			$this->number	 = $this->posts_query->number;
+			$this->number    = $this->posts_query->number;
 			$this->all_items = $this->object->post_count;
 		} else if ( $this->is_forum ) {
 
-			$this->number	 = $this->topics_query->number;
+			$this->number    = $this->topics_query->number;
 			$this->all_items = $this->object->topic_count;
 		} else if ( $this->is_group ) {
 
-			$this->number	 = $this->forums_query->number;
+			$this->number    = $this->forums_query->number;
 			$this->all_items = $this->forums_query->where( array(
-					'group_id'	 => $this->object->group_id,
-					'parent_id'	 => 0
-				) )->get_count();
+				'group_id'  => $this->object->group_id,
+				'parent_id' => 0
+			) )->get_count();
 		}
 
-		$this->offset = ($this->current_page - 1) * $this->number;
+		$this->offset = ( $this->current_page - 1 ) * $this->number;
 	}
 
 	function get_args_object() {
@@ -210,7 +211,8 @@ class PrimeQuery {
 			$args = array(
 				'join' => array(
 					array(
-						['group_id', 'group_id' ], $this->groups_query->select( true )
+						[ 'group_id', 'group_id' ],
+						$this->groups_query->select( true )
 					)
 				)
 			);
@@ -225,22 +227,23 @@ class PrimeQuery {
 			$args = array(
 				'join' => array(
 					array(
-						['forum_id', 'forum_id' ],
+						[ 'forum_id', 'forum_id' ],
 						$this->forums_query->join( 'group_id', $this->groups_query->select( true )
 						)
 					),
 					array(
-						['topic_id', 'topic_id' ], $this->posts_query
+						[ 'topic_id', 'topic_id' ],
+						$this->posts_query
 					)
 				)
 			);
 
 			if ( '' != get_site_option( 'permalink_structure' ) ) {
 				$args['topic_slug'] = $this->vars['pfm-topic'];
-				$args['join'][0][1]->where( ['forum_slug' => $this->vars['pfm-forum'] ] );
+				$args['join'][0][1]->where( [ 'forum_slug' => $this->vars['pfm-forum'] ] );
 			} else {
 				$args['topic_id'] = $this->vars['pfm-topic'];
-				$args['join'][0][1]->where( ['forum_id' => $this->vars['pfm-forum'] ] );
+				$args['join'][0][1]->where( [ 'forum_id' => $this->vars['pfm-forum'] ] );
 			}
 		}
 
@@ -251,8 +254,9 @@ class PrimeQuery {
 
 		$args = $this->get_args_object();
 
-		if ( ! $args )
+		if ( ! $args ) {
 			return false;
+		}
 
 		if ( $this->is_group ) {
 			$object = $this->groups_query->parse( $args )->get_results();
@@ -276,14 +280,15 @@ class PrimeQuery {
 		if ( $this->is_search ) {
 
 			$args = array(
-				'number'	 => $this->number,
-				'offset'	 => $this->offset,
-				'join'		 => array(
+				'number'  => $this->number,
+				'offset'  => $this->offset,
+				'join'    => array(
 					array(
-						['topic_id', 'topic_id' ], $this->posts_query
+						[ 'topic_id', 'topic_id' ],
+						$this->posts_query
 					)
 				),
-				'groupby'	 => $this->topics_query->get_colname( 'topic_id' )
+				'groupby' => $this->topics_query->get_colname( 'topic_id' )
 			);
 
 			if ( $this->vars['pfm-forum'] ) {
@@ -292,74 +297,79 @@ class PrimeQuery {
 
 			if ( $this->vars['pfm-group'] ) {
 				$args['join'][] = array(
-					['forum_id', 'forum_id' ],
-					$this->forums_query->where( ['group_id' => $this->vars['pfm-group'] ] )
+					[ 'forum_id', 'forum_id' ],
+					$this->forums_query->where( [ 'group_id' => $this->vars['pfm-group'] ] )
 				);
 			}
-		}if ( $this->is_author ) {
+		}
+		if ( $this->is_author ) {
 
 			$args = array(
-				'number'	 => $this->number,
-				'offset'	 => $this->offset,
-				'user_id'	 => $this->vars['pfm-author'],
-				'join'		 => array(
+				'number'  => $this->number,
+				'offset'  => $this->offset,
+				'user_id' => $this->vars['pfm-author'],
+				'join'    => array(
 					array(
-						['topic_id', 'topic_id' ], $this->posts_query
+						[ 'topic_id', 'topic_id' ],
+						$this->posts_query
 					)
 				),
-				'groupby'	 => $this->topics_query->get_colname( 'topic_id' )
+				'groupby' => $this->topics_query->get_colname( 'topic_id' )
 			);
 		} else if ( $this->is_frontpage ) {
 
 			$args = array(
-				'number'	 => -1,
-				'order'		 => 'ASC',
-				'orderby'	 => 'group_seq',
-				'join'		 => array(
+				'number'  => - 1,
+				'order'   => 'ASC',
+				'orderby' => 'group_seq',
+				'join'    => array(
 					array(
-						['group_id', 'group_id', 'LEFT' ], $this->forums_query
+						[ 'group_id', 'group_id', 'LEFT' ],
+						$this->forums_query
 					)
 				),
-				'groupby'	 => $this->groups_query->get_colname( 'group_id' )
+				'groupby' => $this->groups_query->get_colname( 'group_id' )
 			);
 		} else if ( $this->is_group && $this->object ) {
 
 			$args = array(
-				'group_id'	 => $this->object->group_id,
-				'parent_id'	 => 0,
-				'number'	 => $this->number,
-				'offset'	 => $this->offset,
-				'order'		 => 'ASC',
-				'orderby'	 => 'forum_seq',
-				'join'		 => array(
+				'group_id'  => $this->object->group_id,
+				'parent_id' => 0,
+				'number'    => $this->number,
+				'offset'    => $this->offset,
+				'order'     => 'ASC',
+				'orderby'   => 'forum_seq',
+				'join'      => array(
 					array(
-						['forum_id', 'parent_id', 'LEFT' ], RQ::tbl( new PrimeForums( 'forums2' ) )
+						[ 'forum_id', 'parent_id', 'LEFT' ],
+						RQ::tbl( new PrimeForums( 'forums2' ) )
 					)
 				),
-				'groupby'	 => $this->forums_query->get_colname( 'forum_id' )
+				'groupby'   => $this->forums_query->get_colname( 'forum_id' )
 			);
 		} else if ( $this->is_forum && $this->object ) {
 
 			$args = array(
-				'forum_id'	 => $this->object->forum_id,
-				'join'		 => array(
+				'forum_id' => $this->object->forum_id,
+				'join'     => array(
 					array(
-						['topic_id', 'topic_id' ], $this->posts_query
+						[ 'topic_id', 'topic_id' ],
+						$this->posts_query
 					)
 				),
-				'offset'	 => $this->offset,
-				'number'	 => $this->number,
-				'groupby'	 => $this->topics_query->get_colname( 'topic_id' )
+				'offset'   => $this->offset,
+				'number'   => $this->number,
+				'groupby'  => $this->topics_query->get_colname( 'topic_id' )
 			);
 		} else if ( $this->is_topic && $this->object ) {
 			global $wpdb;
 
 			$args = array(
-				'topic_id'	 => $this->object->topic_id,
-				'number'	 => $this->number,
-				'offset'	 => $this->offset,
-				'order'		 => 'ASC',
-				'orderby'	 => 'post_date'
+				'topic_id' => $this->object->topic_id,
+				'number'   => $this->number,
+				'offset'   => $this->offset,
+				'order'    => 'ASC',
+				'orderby'  => 'post_date'
 			);
 		}
 
@@ -377,7 +387,7 @@ class PrimeQuery {
 			$this->topics_query->parse( $args );
 
 			$this->topics_query->where_string( "(pfm_topics.topic_name LIKE '%" . $this->vars['pfm-search'] . "%' "
-				. "OR pfm_posts.post_content LIKE '%" . $this->vars['pfm-search'] . "%')" );
+			                                   . "OR pfm_posts.post_content LIKE '%" . $this->vars['pfm-search'] . "%')" );
 
 			$this->all_items = $this->topics_query->get_count();
 
@@ -387,7 +397,8 @@ class PrimeQuery {
 			$this->topics_query = apply_filters( 'pfm_search_posts_query', $this->topics_query, $this );
 
 			$this->topics = apply_filters( 'pfm_search_posts', $this->topics_query->get_results(), $this );
-		}if ( $this->is_author ) {
+		}
+		if ( $this->is_author ) {
 
 			$this->topics_query->reset_query();
 
@@ -448,15 +459,17 @@ class PrimeQuery {
 
 	function setup_forums_data_in_home() {
 
-		if ( ! pfm_get_option( 'view-forums-home' ) )
+		if ( ! pfm_get_option( 'view-forums-home' ) ) {
 			return false;
+		}
 
-		if ( ! $this->is_frontpage || ! $this->groups )
+		if ( ! $this->is_frontpage || ! $this->groups ) {
 			return false;
+		}
 
 		$this->forums_query->reset_query();
 
-		$groups = (pfm_get_option( 'forums-home-list' )) ? array_map( 'trim', explode( ',', pfm_get_option( 'forums-home-list' ) ) ) : false;
+		$groups = ( pfm_get_option( 'forums-home-list' ) ) ? array_map( 'trim', explode( ',', pfm_get_option( 'forums-home-list' ) ) ) : false;
 
 		if ( ! $groups ) {
 			$groups = array();
@@ -470,51 +483,53 @@ class PrimeQuery {
 		$this->forums = $this->forums_query
 			->select_string( "pfm_forums.*" )
 			->where( [
-				'group_id__in'	 => $groups,
-				'parent_id'		 => 0,
+				'group_id__in' => $groups,
+				'parent_id'    => 0,
 			] )
 			->join(
-				['group_id', 'group_id', 'LEFT' ], RQ::tbl( new PrimeGroups() )
+				[ 'group_id', 'group_id', 'LEFT' ], RQ::tbl( new PrimeGroups() )
 			)
 			->join(
-				['forum_id', 'parent_id', 'LEFT' ], RQ::tbl( new PrimeForums( 'forums2' ) )
-				->select( ['count' => ['subforum_count' => 'forum_id' ] ] )
+				[ 'forum_id', 'parent_id', 'LEFT' ], RQ::tbl( new PrimeForums( 'forums2' ) )
+				                                       ->select( [ 'count' => [ 'subforum_count' => 'forum_id' ] ] )
 			)
 			->groupby( $this->forums_query->get_colname( 'forum_id' ) )
 			->order( 'ASC' )
 			->orderby( array(
-				'pfm_groups.group_seq'	 => 'ASC',
-				'pfm_forums.forum_seq'	 => 'ASC'
-				), false, false )
-			->limit( -1 )
+				'pfm_groups.group_seq' => 'ASC',
+				'pfm_forums.forum_seq' => 'ASC'
+			), false, false )
+			->limit( - 1 )
 			->get_results();
 	}
 
 	function setup_child_forums() {
 
-		if ( ! $this->is_forum )
+		if ( ! $this->is_forum ) {
 			return false;
+		}
 
 		$this->forums_query->reset_query();
 
 		$args = array(
-			'group_id'	 => $this->object->group_id,
-			'parent_id'	 => $this->object->forum_id,
-			'number'	 => -1,
-			'order'		 => 'ASC',
-			'orderby'	 => 'forum_seq',
-			'join'		 => array(
+			'group_id'  => $this->object->group_id,
+			'parent_id' => $this->object->forum_id,
+			'number'    => - 1,
+			'order'     => 'ASC',
+			'orderby'   => 'forum_seq',
+			'join'      => array(
 				array(
-					['forum_id', 'parent_id', 'LEFT' ], RQ::tbl( new PrimeForums( 'forums2' ) )
+					[ 'forum_id', 'parent_id', 'LEFT' ],
+					RQ::tbl( new PrimeForums( 'forums2' ) )
 				)
 			),
-			'groupby'	 => $this->forums_query->get_colname( 'forum_id' )
+			'groupby'   => $this->forums_query->get_colname( 'forum_id' )
 		);
 
 		$this->forums = $this->forums_query->parse( $args )
-			->select_string( "pfm_forums.*" )
-			->select_string( "COUNT(DISTINCT forums2.forum_id) AS subforum_count" )
-			->get_results();
+		                                   ->select_string( "pfm_forums.*" )
+		                                   ->select_string( "COUNT(DISTINCT forums2.forum_id) AS subforum_count" )
+		                                   ->get_results();
 	}
 
 	function setup_last_items() {
@@ -549,28 +564,29 @@ class PrimeQuery {
 		}
 
 		$sql = "SELECT "
-			. "MAX(p.post_id) AS post_id "
-			. "FROM " . RCL_PREF . "pforum_posts AS p "
-			. "INNER JOIN  " . RCL_PREF . "pforum_topics AS t ON p.topic_id = t.topic_id "
-			. "WHERE t.forum_id IN (" . implode( ',', $forumIDs ) . ") "
-			. "GROUP BY t.forum_id";
+		       . "MAX(p.post_id) AS post_id "
+		       . "FROM " . RCL_PREF . "pforum_posts AS p "
+		       . "INNER JOIN  " . RCL_PREF . "pforum_topics AS t ON p.topic_id = t.topic_id "
+		       . "WHERE t.forum_id IN (" . implode( ',', $forumIDs ) . ") "
+		       . "GROUP BY t.forum_id";
 
 		$postIdx = $wpdb->get_col( $sql );
 
-		if ( ! $postIdx )
+		if ( ! $postIdx ) {
 			return false;
+		}
 
 		$sql = "SELECT "
-			. "p.post_id,"
-			. "p.post_date,"
-			. "p.post_index,"
-			. "p.topic_id,"
-			. "p.user_id,"
-			. "t.forum_id, "
-			. "t.topic_slug "
-			. "FROM " . RCL_PREF . "pforum_posts AS p "
-			. "INNER JOIN  " . RCL_PREF . "pforum_topics AS t ON p.topic_id = t.topic_id "
-			. "WHERE p.post_id IN (" . implode( ',', $postIdx ) . ")";
+		       . "p.post_id,"
+		       . "p.post_date,"
+		       . "p.post_index,"
+		       . "p.topic_id,"
+		       . "p.user_id,"
+		       . "t.forum_id, "
+		       . "t.topic_slug "
+		       . "FROM " . RCL_PREF . "pforum_posts AS p "
+		       . "INNER JOIN  " . RCL_PREF . "pforum_topics AS t ON p.topic_id = t.topic_id "
+		       . "WHERE p.post_id IN (" . implode( ',', $postIdx ) . ")";
 
 		$posts = $wpdb->get_results( $sql );
 
@@ -587,25 +603,26 @@ class PrimeQuery {
 		}
 
 		$sql = "SELECT "
-			. "MAX(post_id) AS post_id "
-			. "FROM " . RCL_PREF . "pforum_posts "
-			. "WHERE topic_id IN (" . implode( ',', $topicIDs ) . ") "
-			. "GROUP BY topic_id";
+		       . "MAX(post_id) AS post_id "
+		       . "FROM " . RCL_PREF . "pforum_posts "
+		       . "WHERE topic_id IN (" . implode( ',', $topicIDs ) . ") "
+		       . "GROUP BY topic_id";
 
 		$postIdx = $wpdb->get_col( $sql );
 
-		if ( ! $postIdx )
+		if ( ! $postIdx ) {
 			return false;
+		}
 
 		$sql = "SELECT "
-			. "post_id,"
-			. "post_date,"
-			. "post_index,"
-			. "topic_id,"
-			. "user_id "
-			. "FROM " . RCL_PREF . "pforum_posts "
-			. "WHERE post_id IN (" . implode( ',', $postIdx ) . ") "
-			. "ORDER BY post_id DESC";
+		       . "post_id,"
+		       . "post_date,"
+		       . "post_index,"
+		       . "topic_id,"
+		       . "user_id "
+		       . "FROM " . RCL_PREF . "pforum_posts "
+		       . "WHERE post_id IN (" . implode( ',', $postIdx ) . ") "
+		       . "ORDER BY post_id DESC";
 
 		$posts = $wpdb->get_results( $sql );
 
@@ -621,32 +638,35 @@ class PrimeQuery {
 			$forumIDs[] = $forum->forum_id;
 		}
 
-		$topicIdx = RQ::tbl( new PrimeTopics() )->select( ['max' => ['post_id' => 'topic_id' ] ] )
-				->where( ['forum_id__in' => $forumIDs ] )
-				->groupby( 'forum_id' )->get_col();
+		$topicIdx = RQ::tbl( new PrimeTopics() )->select( [ 'max' => [ 'post_id' => 'topic_id' ] ] )
+		              ->where( [ 'forum_id__in' => $forumIDs ] )
+		              ->groupby( 'forum_id' )->get_col();
 
-		if ( ! $topicIdx )
+		if ( ! $topicIdx ) {
 			return false;
+		}
 
 		$topics = RQ::tbl( new PrimeTopics() )->select( [
-				"topic_id",
-				"topic_name",
-				"forum_id",
-				"topic_slug",
-				"user_id"
-			] )->where( ['topic_id__in' => $topicIdx ] )->get_results();
+			"topic_id",
+			"topic_name",
+			"forum_id",
+			"topic_slug",
+			"user_id"
+		] )->where( [ 'topic_id__in' => $topicIdx ] )->get_results();
 
 		return $topics;
 	}
 
 	function search_forum_last_topic( $forum_id ) {
 
-		if ( ! $this->last['topics'] )
+		if ( ! $this->last['topics'] ) {
 			return false;
+		}
 
 		foreach ( $this->last['topics'] as $topic ) {
-			if ( $forum_id == $topic->forum_id )
+			if ( $forum_id == $topic->forum_id ) {
 				return $topic;
+			}
 		}
 
 		return false;
@@ -654,14 +674,17 @@ class PrimeQuery {
 
 	function search_forum_last_post( $forum_id ) {
 
-		if ( ! $this->last['posts'] )
+		if ( ! $this->last['posts'] ) {
 			return false;
+		}
 
 		foreach ( $this->last['posts'] as $post ) {
-			if ( ! isset( $post->forum_id ) )
+			if ( ! isset( $post->forum_id ) ) {
 				continue;
-			if ( $forum_id == $post->forum_id )
+			}
+			if ( $forum_id == $post->forum_id ) {
 				return $post;
+			}
 		}
 
 		return false;
@@ -669,12 +692,14 @@ class PrimeQuery {
 
 	function search_topic_last_post( $topic_id ) {
 
-		if ( ! $this->last['posts'] )
+		if ( ! $this->last['posts'] ) {
 			return false;
+		}
 
 		foreach ( $this->last['posts'] as $post ) {
-			if ( $topic_id == $post->topic_id )
+			if ( $topic_id == $post->topic_id ) {
 				return $post;
+			}
 		}
 
 		return false;
@@ -713,13 +738,14 @@ class PrimeQuery {
 	function setup_meta() {
 		global $wpdb;
 
-		if ( $this->is_frontpage )
+		if ( $this->is_frontpage ) {
 			return false;
+		}
 
 		$PrimeMeta = new PrimeMeta();
 
-		$table	 = $PrimeMeta->table['name'];
-		$as		 = $PrimeMeta->table['as'];
+		$table = $PrimeMeta->table['name'];
+		$as    = $PrimeMeta->table['as'];
 
 		$childrens = array();
 
@@ -731,9 +757,9 @@ class PrimeQuery {
 				}
 			}
 
-			$parentID		 = $this->object->group_id;
-			$parentType		 = 'group';
-			$childrenType	 = 'forum';
+			$parentID     = $this->object->group_id;
+			$parentType   = 'group';
+			$childrenType = 'forum';
 		} else if ( $this->is_forum ) {
 
 			if ( $this->topics ) {
@@ -742,9 +768,9 @@ class PrimeQuery {
 				}
 			}
 
-			$parentID		 = $this->object->forum_id;
-			$parentType		 = 'forum';
-			$childrenType	 = 'topic';
+			$parentID     = $this->object->forum_id;
+			$parentType   = 'forum';
+			$childrenType = 'topic';
 		} else if ( $this->is_topic ) {
 
 			$authors = array();
@@ -753,22 +779,22 @@ class PrimeQuery {
 
 				foreach ( $this->posts as $post ) {
 					$childrens[] = $post->post_id;
-					$authors[]	 = $post->user_id;
+					$authors[]   = $post->user_id;
 				}
 
 				$authors = array_unique( $authors );
 			}
 
-			$parentID		 = $this->object->topic_id;
-			$parentType		 = 'topic';
-			$childrenType	 = 'post';
+			$parentID     = $this->object->topic_id;
+			$parentType   = 'topic';
+			$childrenType = 'post';
 		}
 
 		$sql = "SELECT "
-			. "$as.object_id, "
-			. "$as.object_type, "
-			. "$as.meta_key, "
-			. "$as.meta_value
+		       . "$as.object_id, "
+		       . "$as.object_type, "
+		       . "$as.meta_key, "
+		       . "$as.meta_value
 				FROM $table AS $as
 				WHERE $as.object_type = '$parentType'
 					AND $as.object_id = '$parentID'";
@@ -776,10 +802,10 @@ class PrimeQuery {
 		if ( $childrens ) {
 			$sql .= " UNION
 					SELECT " .
-				$as . "2.object_id, "
-				. $as . "2.object_type, "
-				. $as . "2.meta_key, "
-				. $as . "2.meta_value
+			        $as . "2.object_id, "
+			        . $as . "2.object_type, "
+			        . $as . "2.meta_key, "
+			        . $as . "2.meta_value
 					FROM $table AS " . $as . "2
 					WHERE " . $as . "2.object_type = '$childrenType'
 						AND " . $as . "2.object_id IN (" . implode( ',', $childrens ) . ")";
@@ -788,10 +814,10 @@ class PrimeQuery {
 		if ( $this->is_topic && $authors ) {
 			$sql .= " UNION
 					SELECT "
-				. $as . "3.object_id, "
-				. $as . "3.object_type, "
-				. $as . "3.meta_key, "
-				. $as . "3.meta_value
+			        . $as . "3.object_id, "
+			        . $as . "3.object_type, "
+			        . $as . "3.meta_key, "
+			        . $as . "3.meta_value
 					FROM $table AS " . $as . "3
 					WHERE " . $as . "3.object_type = 'author'
 						AND " . $as . "3.object_id IN (" . implode( ',', $authors ) . ")";
@@ -802,8 +828,9 @@ class PrimeQuery {
 
 	function search_meta_value( $object_id, $object_type, $meta_key ) {
 
-		if ( ! $this->meta )
+		if ( ! $this->meta ) {
 			return false;
+		}
 
 		foreach ( $this->meta as $meta ) {
 
@@ -844,8 +871,9 @@ class PrimeQuery {
 
 		$userIds = array_unique( apply_filters( 'pfm_users', $userIds ) );
 
-		if ( ! $userIds )
+		if ( ! $userIds ) {
 			return false;
+		}
 
 		global $wpdb;
 
@@ -859,31 +887,32 @@ class PrimeQuery {
 		}
 
 		$query = new Rcl_Query( array(
-			'name'	 => $wpdb->users,
-			'as'	 => 'wp_users',
-			'cols'	 => $fields
-			) );
+			'name' => $wpdb->users,
+			'as'   => 'wp_users',
+			'cols' => $fields
+		) );
 
 		$argsQuery = apply_filters( 'pfm_users_data_query', array(
 			'ID__in' => $userIds,
-			'number' => -1,
+			'number' => - 1,
 			'select' => $fields
-			) );
+		) );
 
 		$users = $query->parse( $argsQuery )->get_results();
 
 		$this->users_data = array();
 		foreach ( $users as $user ) {
-			$this->users_data[$user->ID] = $user;
+			$this->users_data[ $user->ID ] = $user;
 		}
 	}
 
 	function get_user_data( $user_id, $dataName ) {
 
-		if ( ! isset( $this->users_data[$user_id] ) )
+		if ( ! isset( $this->users_data[ $user_id ] ) ) {
 			return false;
+		}
 
-		return (isset( $this->users_data[$user_id]->$dataName )) ? $this->users_data[$user_id]->$dataName : false;
+		return ( isset( $this->users_data[ $user_id ]->$dataName ) ) ? $this->users_data[ $user_id ]->$dataName : false;
 	}
 
 }

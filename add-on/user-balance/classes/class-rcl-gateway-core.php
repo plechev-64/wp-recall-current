@@ -8,32 +8,35 @@ class Rcl_Gateway_Core {
 	public $label;
 	public $icon;
 	public $submit;
-	public $handle_activate	 = false;
-	public $handle_options	 = false;
-	public $handle_forms	 = false;
+	public $handle_activate = false;
+	public $handle_options = false;
+	public $handle_forms = false;
 
 	function __construct( $args = false ) {
 
 		$this->init_properties( $args );
 
-		if ( ! $this->label )
+		if ( ! $this->label ) {
 			$this->label = $this->name;
+		}
 
-		if ( ! $this->submit )
+		if ( ! $this->submit ) {
 			$this->submit = __( 'Pay', 'wp-recall' );
+		}
 	}
 
 	function init_properties( $args ) {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( isset( $args[$name] ) )
-				$this->$name = $args[$name];
+			if ( isset( $args[ $name ] ) ) {
+				$this->$name = $args[ $name ];
+			}
 		}
 	}
 
 	function options_init() {
-		add_filter( 'rcl_commerce_options', (array( $this, 'add_gateway_options' ) ) );
+		add_filter( 'rcl_commerce_options', ( array( $this, 'add_gateway_options' ) ) );
 	}
 
 	function get_options() {
@@ -42,8 +45,9 @@ class Rcl_Gateway_Core {
 
 	function add_gateway_options( $optionsManager ) {
 
-		if ( $this->handle_options || ! $options = $this->get_options() )
+		if ( $this->handle_options || ! $options = $this->get_options() ) {
 			return $optionsManager;
+		}
 
 		$optionsManager->add_box( $this->id, array(
 			'title' => $this->name
@@ -62,53 +66,55 @@ class Rcl_Gateway_Core {
 
 		$preFields = $this->get_pre_form_fields();
 
-		if ( ! $preFields )
+		if ( ! $preFields ) {
 			return false;
+		}
 
 		$preFields[] = [
-			'slug'	 => 'gateway_id',
-			'type'	 => 'hidden',
-			'value'	 => $this->id
+			'slug'  => 'gateway_id',
+			'type'  => 'hidden',
+			'value' => $this->id
 		];
 
 		$preFields[] = [
-			'slug'	 => 'pay_summ',
-			'type'	 => 'hidden',
-			'value'	 => $data->pay_summ
+			'slug'  => 'pay_summ',
+			'type'  => 'hidden',
+			'value' => $data->pay_summ
 		];
 
 		$preFields[] = [
-			'slug'	 => 'pay_type',
-			'type'	 => 'hidden',
-			'value'	 => $data->pay_type
+			'slug'  => 'pay_type',
+			'type'  => 'hidden',
+			'value' => $data->pay_type
 		];
 
 		$preFields[] = [
-			'slug'	 => 'description',
-			'type'	 => 'hidden',
-			'value'	 => $data->description
+			'slug'  => 'description',
+			'type'  => 'hidden',
+			'value' => $data->description
 		];
 
 		$preFields[] = [
-			'slug'	 => 'pre_form',
-			'type'	 => 'hidden',
-			'value'	 => 0
+			'slug'  => 'pre_form',
+			'type'  => 'hidden',
+			'value' => 0
 		];
 
 		return $this->construct_form( [
-				'onclick'	 => 'rcl_send_form_data("rcl_load_payment_form",this);return false;',
-				'fields'	 => $preFields
-			] );
+			'onclick' => 'rcl_send_form_data("rcl_load_payment_form",this);return false;',
+			'fields'  => $preFields
+		] );
 	}
 
 	function construct_form( $args ) {
 
-		if ( ! isset( $args['submit'] ) )
+		if ( ! isset( $args['submit'] ) ) {
 			$args['submit'] = $this->submit;
+		}
 
 		$args['submit_args'] = [
-			'size'		 => 'medium',
-			'fullwidth'	 => 1
+			'size'      => 'medium',
+			'fullwidth' => 1
 		];
 
 		if ( $args['fields'] ) {
@@ -118,9 +124,9 @@ class Rcl_Gateway_Core {
 
 				if ( ! is_array( $value ) ) {
 					$fields[] = array(
-						'type'	 => 'hidden',
-						'slug'	 => $field_name,
-						'value'	 => $value
+						'type'  => 'hidden',
+						'slug'  => $field_name,
+						'value' => $value
 					);
 				} else {
 					$fields[] = $value;
@@ -143,6 +149,7 @@ class Rcl_Gateway_Core {
 
 	function get_payment( $pay_id ) {
 		global $wpdb;
+
 		return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM " . RMAG_PREF . "pay_results WHERE payment_id = '%s'", $pay_id ) );
 	}
 
@@ -150,21 +157,21 @@ class Rcl_Gateway_Core {
 		global $wpdb;
 
 		$args = wp_parse_args( $args, array(
-			'time_action'	 => current_time( 'mysql' ),
-			'pay_system'	 => $this->id
-			) );
+			'time_action' => current_time( 'mysql' ),
+			'pay_system'  => $this->id
+		) );
 
-		$args['baggage_data'] = ($args['baggage_data']) ? json_decode( base64_decode( $args['baggage_data'] ) ) : false;
+		$args['baggage_data'] = ( $args['baggage_data'] ) ? json_decode( base64_decode( $args['baggage_data'] ) ) : false;
 
 		$args = apply_filters( 'rcl_pre_insert_payment_args', $args );
 
 		$pay_status = $wpdb->insert( RMAG_PREF . 'pay_results', array(
-			'payment_id'	 => $args['pay_id'],
-			'user_id'		 => $args['user_id'],
-			'pay_amount'	 => $args['pay_summ'],
-			'time_action'	 => $args['time_action'],
-			'pay_system'	 => $args['pay_system'],
-			'pay_type'		 => $args['pay_type']
+				'payment_id'  => $args['pay_id'],
+				'user_id'     => $args['user_id'],
+				'pay_amount'  => $args['pay_summ'],
+				'time_action' => $args['time_action'],
+				'pay_system'  => $args['pay_system'],
+				'pay_type'    => $args['pay_type']
 			)
 		);
 

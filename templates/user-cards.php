@@ -15,7 +15,7 @@ if ( in_array( 'posts_count', $rcl_users_set->data ) ) {
 	$up_count .= '</span></div>';
 }
 
-$style = (isset( $rcl_users_set->width )) ? 'style="width:' . $rcl_users_set->width . 'px"' : '';
+$style = ( isset( $rcl_users_set->width ) ) ? 'style="width:' . $rcl_users_set->width . 'px"' : '';
 ?>
 <div class="user-single" <?php echo $style; ?> data-user-id="<?php echo $rcl_user->ID; ?>">
     <div class="u_card_top">

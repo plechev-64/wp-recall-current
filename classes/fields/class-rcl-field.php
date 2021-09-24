@@ -8,9 +8,9 @@ class Rcl_Field {
 			rcl_font_awesome_style();
 		}
 
-		if ( isset( $wprecall->fields[$args['type']] ) ) {
+		if ( isset( $wprecall->fields[ $args['type'] ] ) ) {
 
-			$className = $wprecall->fields[$args['type']]['class'];
+			$className = $wprecall->fields[ $args['type'] ]['class'];
 
 			return new $className( $args );
 		}

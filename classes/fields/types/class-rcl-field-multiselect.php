@@ -25,33 +25,36 @@ class Rcl_Field_MultiSelect extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'		 => 'values',
-				'default'	 => $this->values,
-				'type'		 => 'dynamic',
-				'title'		 => __( 'Specify options', 'wp-recall' ),
-				'notice'	 => __( 'specify each option in a separate field', 'wp-recall' )
+				'slug'    => 'values',
+				'default' => $this->values,
+				'type'    => 'dynamic',
+				'title'   => __( 'Specify options', 'wp-recall' ),
+				'notice'  => __( 'specify each option in a separate field', 'wp-recall' )
 			)
 		);
 	}
 
 	function get_input() {
 
-		if ( ! $this->values )
+		if ( ! $this->values ) {
 			return false;
+		}
 
 		rcl_multiselect_scripts();
 
-		$this->value = ($this->value) ? $this->value : array();
+		$this->value = ( $this->value ) ? $this->value : array();
 
-		if ( ! is_array( $this->value ) )
+		if ( ! is_array( $this->value ) ) {
 			$this->value = array( $this->value );
+		}
 
 		$content = '<select ' . $this->get_required() . ' name="' . $this->input_name . '[]" id="' . $this->input_id . '" ' . $this->get_class() . ' multiple>';
 
 		foreach ( $this->values as $k => $value ) {
 
-			if ( $this->value_in_key )
+			if ( $this->value_in_key ) {
 				$k = $value;
+			}
 
 			$content .= '<option ' . selected( in_array( $k, $this->value ), true, false ) . ' value="' . trim( $k ) . '">' . $value . '</option>';
 		}
@@ -71,8 +74,9 @@ class Rcl_Field_MultiSelect extends Rcl_Field_Abstract {
 
 	function get_value() {
 
-		if ( ! $this->value )
+		if ( ! $this->value ) {
 			return false;
+		}
 
 		return implode( ', ', $this->value );
 	}
@@ -83,8 +87,9 @@ class Rcl_Field_MultiSelect extends Rcl_Field_Abstract {
 
 		foreach ( $this->value as $val ) {
 
-			if ( ! $val )
+			if ( ! $val ) {
 				continue;
+			}
 
 			$links[] = '<a href="' . $this->get_filter_url( $val ) . '" target="_blank">' . $val . '</a>';
 		}

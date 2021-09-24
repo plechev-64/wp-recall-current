@@ -3,13 +3,14 @@
 class Rcl_Query extends Rcl_Old_Query {
 
 	public $table;
-	public $serialize	 = array();
-	public $query		 = array();
+	public $serialize = array();
+	public $query = array();
 
 	function __construct( $table ) {
 
-		if ( ! isset( $table['as'] ) )
+		if ( ! isset( $table['as'] ) ) {
 			$table['as'] = $table['name'];
+		}
 
 		$this->table = $table;
 		$this->reset_query();
@@ -17,21 +18,21 @@ class Rcl_Query extends Rcl_Old_Query {
 
 	function reset_query() {
 		$this->query = array(
-			'table'		 => $this->table, //deprecated
-			'select'	 => array(),
-			'where'		 => array(),
-			'join'		 => array(),
-			'number'	 => 30,
-			'offset'	 => 0,
-			'orderby'	 => false,
-			'order'		 => 'DESC',
-			'having'	 => array(),
-			'groupby'	 => false
+			'table'   => $this->table, //deprecated
+			'select'  => array(),
+			'where'   => array(),
+			'join'    => array(),
+			'number'  => 30,
+			'offset'  => 0,
+			'orderby' => false,
+			'order'   => 'DESC',
+			'having'  => array(),
+			'groupby' => false
 		);
 	}
 
 	function get_table_data( $dataName ) {
-		return isset( $this->table[$dataName] ) ? $this->table[$dataName] : false;
+		return isset( $this->table[ $dataName ] ) ? $this->table[ $dataName ] : false;
 	}
 
 	function get_colname( $colname ) {
@@ -40,8 +41,9 @@ class Rcl_Query extends Rcl_Old_Query {
 
 	function parse( $args = false ) {
 
-		if ( ! $args )
+		if ( ! $args ) {
 			return $this;
+		}
 
 		$args = wp_unslash( $args );
 
@@ -60,16 +62,20 @@ class Rcl_Query extends Rcl_Old_Query {
 		foreach ( $args as $operator => $data ) {
 
 			switch ( $operator ) {
-				case 'select': $this->select( $data );
+				case 'select':
+					$this->select( $data );
 					break;
-				case 'where': $this->where( $data );
+				case 'where':
+					$this->where( $data );
 					break;
 				case 'date':
 					foreach ( $data as $dateData ) {
-						if ( ! isset( $dateData['colname'] ) || ! $dateData['colname'] )
+						if ( ! isset( $dateData['colname'] ) || ! $dateData['colname'] ) {
 							break;
-						if ( ! isset( $dateData['compare'] ) || ! $dateData['compare'] )
+						}
+						if ( ! isset( $dateData['compare'] ) || ! $dateData['compare'] ) {
 							$dateData['compare'] = '=';
+						}
 						$this->date( $dateData['colname'], $dateData['compare'], $dateData['data'] );
 					}
 					break;
@@ -78,17 +84,23 @@ class Rcl_Query extends Rcl_Old_Query {
 						$this->join( $joinData[0], $joinData[1] );
 					}
 					break;
-				case 'number': $this->number( $data );
+				case 'number':
+					$this->number( $data );
 					break;
-				case 'offset': $this->offset( $data );
+				case 'offset':
+					$this->offset( $data );
 					break;
-				case 'orderby': $this->orderby( $data );
+				case 'orderby':
+					$this->orderby( $data );
 					break;
-				case 'order': $this->order( $data );
+				case 'order':
+					$this->order( $data );
 					break;
-				case 'groupby': $this->groupby( $data );
+				case 'groupby':
+					$this->groupby( $data );
 					break;
-				case 'cache': $this->set_cache( $data );
+				case 'cache':
+					$this->set_cache( $data );
 					break;
 				default:
 					$this->where( array( $operator => $data ) );
@@ -105,31 +117,34 @@ class Rcl_Query extends Rcl_Old_Query {
 	function get_operator_data( $operator, $field_name = false, $use_cache = false ) {
 		global $wpdb;
 
-		$field_name = ($field_name) ? $field_name : $this->table['cols'][0];
+		$field_name = ( $field_name ) ? $field_name : $this->table['cols'][0];
 
 		$query = $this->get_query();
 
 		$sql = $this->get_sql( array(
-			'select'	 => array( $operator . '(' . $this->table['as'] . '.' . $field_name . ')' ),
-			'join'		 => $query['join'],
-			'where'		 => $query['where'],
-			'groupby'	 => isset( $query['groupby'] ) ? $query['groupby'] : null
-			) );
+			'select'  => array( $operator . '(' . $this->table['as'] . '.' . $field_name . ')' ),
+			'join'    => $query['join'],
+			'where'   => $query['where'],
+			'groupby' => isset( $query['groupby'] ) ? $query['groupby'] : null
+		) );
 
 		if ( $use_cache ) {
-			$cachekey	 = md5( $sql );
-			$cache		 = wp_cache_get( $cachekey );
-			if ( $cache !== false )
+			$cachekey = md5( $sql );
+			$cache    = wp_cache_get( $cachekey );
+			if ( $cache !== false ) {
 				return $cache;
+			}
 		}
 
-		if ( isset( $query['groupby'] ) && $query['groupby'] )
-			$result	 = $wpdb->query( $sql );
-		else
-			$result	 = $wpdb->get_var( $sql );
+		if ( isset( $query['groupby'] ) && $query['groupby'] ) {
+			$result = $wpdb->query( $sql );
+		} else {
+			$result = $wpdb->get_var( $sql );
+		}
 
-		if ( $use_cache )
+		if ( $use_cache ) {
 			wp_cache_add( $cachekey, $result );
+		}
 
 		return $result;
 	}
@@ -150,10 +165,11 @@ class Rcl_Query extends Rcl_Old_Query {
 		if ( is_array( $operator ) ) {
 
 			switch ( $operator[1] ) {
-				case 'DISTINCT': return $operator[0] . '( ' . $operator[1] . ' ' . $this->table['as'] . '.' . $col_name . ')' . ( is_string( $as_value ) ? ' AS ' . $as_value : '');
+				case 'DISTINCT':
+					return $operator[0] . '( ' . $operator[1] . ' ' . $this->table['as'] . '.' . $col_name . ')' . ( is_string( $as_value ) ? ' AS ' . $as_value : '' );
 			}
 		} else {
-			return $operator . '(' . $this->table['as'] . '.' . $col_name . ')' . ( is_string( $as_value ) ? ' AS ' . $as_value : '');
+			return $operator . '(' . $this->table['as'] . '.' . $col_name . ')' . ( is_string( $as_value ) ? ' AS ' . $as_value : '' );
 		}
 	}
 
@@ -161,7 +177,7 @@ class Rcl_Query extends Rcl_Old_Query {
 
 		foreach ( $select as $as_value => $data ) {
 			if ( in_array( $data, $this->table['cols'] ) ) {
-				$this->query['select'][] = 'DISTINCT ' . $this->table['as'] . '.' . $data . ( is_string( $as_value ) ? ' AS ' . $as_value : '');
+				$this->query['select'][] = 'DISTINCT ' . $this->table['as'] . '.' . $data . ( is_string( $as_value ) ? ' AS ' . $as_value : '' );
 			} else if ( in_array( $as_value, array( 'count' ) ) ) {
 				$this->set_operator_query( strtoupper( $as_value ) . ' DISTINCT', $data );
 			}
@@ -172,8 +188,9 @@ class Rcl_Query extends Rcl_Old_Query {
 
 	function select( $select = false ) {
 
-		if ( ! $select )
+		if ( ! $select ) {
 			return $this;
+		}
 
 		if ( ! is_array( $select ) ) {
 			if ( $select ) {
@@ -183,7 +200,7 @@ class Rcl_Query extends Rcl_Old_Query {
 
 			foreach ( $select as $as_value => $data ) {
 				if ( in_array( $data, $this->table['cols'] ) ) {
-					$this->query['select'][] = $this->table['as'] . '.' . $data . ( is_string( $as_value ) ? ' AS ' . $as_value : '');
+					$this->query['select'][] = $this->table['as'] . '.' . $data . ( is_string( $as_value ) ? ' AS ' . $as_value : '' );
 				} else if ( in_array( $as_value, array( 'count', 'max', 'min', 'sum' ) ) ) {
 					$this->set_operator_query( strtoupper( $as_value ), $data );
 				} else if ( is_object( $data ) ) {
@@ -199,26 +216,32 @@ class Rcl_Query extends Rcl_Old_Query {
 
 		if ( $compare == '=' ) {
 
-			if ( isset( $props['year'] ) )
+			if ( isset( $props['year'] ) ) {
 				$this->query['where'][] = "YEAR(" . $this->table['as'] . ".$col_name) = '" . $props['year'] . "'";
+			}
 
-			if ( isset( $props['month'] ) )
+			if ( isset( $props['month'] ) ) {
 				$this->query['where'][] = "MONTH(" . $this->table['as'] . ".$col_name) = '" . $props['month'] . "'";
+			}
 
-			if ( isset( $props['day'] ) )
+			if ( isset( $props['day'] ) ) {
 				$this->query['where'][] = "DAY(" . $this->table['as'] . ".$col_name) = '" . $props['day'] . "'";
+			}
 
-			if ( isset( $props['last'] ) )
+			if ( isset( $props['last'] ) ) {
 				$this->date( $col_name, '>=', array( 'interval' => $props['last'] ) );
+			}
 
-			if ( isset( $props['older'] ) )
+			if ( isset( $props['older'] ) ) {
 				$this->date( $col_name, '<', array( 'interval' => $props['older'] ) );
+			}
 		} else if ( $compare == 'BETWEEN' ) {
 
 			if ( $props ) {
 
-				if ( ! $props[1] )
+				if ( ! $props[1] ) {
 					$props[1] = current_time( 'mysql' );
+				}
 
 				$this->query['where'][] = "(" . $this->table['as'] . ".$col_name BETWEEN CAST('" . $props[0] . "' AS DATE) AND CAST('" . $props[1] . "' AS DATE))";
 			}
@@ -236,94 +259,100 @@ class Rcl_Query extends Rcl_Old_Query {
 
 	function where( $where ) {
 		foreach ( $this->table['cols'] as $col_name ) {
-			if ( isset( $where[$col_name] ) ) {
+			if ( isset( $where[ $col_name ] ) ) {
 
-				$data = $where[$col_name];
+				$data = $where[ $col_name ];
 
 				if ( $data === 'is_null' ) {
 					$this->query['where'][] = $this->table['as'] . ".$col_name IS NULL";
 				} else if ( is_string( $data ) && strpos( $data, '.' ) !== false ) {
 					$this->query['where'][] = $this->table['as'] . ".$col_name = '" . esc_sql( $data ) . "'";
 				} else {
-					$this->query['where'][] = $this->table['as'] . ".$col_name = " . (is_object( $data ) ? "(" . $data->limit( 0 )->get_sql() . ")" : "'" . esc_sql( $data ) . "'");
+					$this->query['where'][] = $this->table['as'] . ".$col_name = " . ( is_object( $data ) ? "(" . $data->limit( 0 )->get_sql() . ")" : "'" . esc_sql( $data ) . "'" );
 				}
-			} else if ( isset( $where[$col_name . '__in'] ) && $where[$col_name . '__in'] ) {
+			} else if ( isset( $where[ $col_name . '__in' ] ) && $where[ $col_name . '__in' ] ) {
 
-				$data = $where[$col_name . '__in'];
+				$data = $where[ $col_name . '__in' ];
 
-				$this->query['where'][] = $this->table['as'] . ".$col_name IN (" . (is_object( $data ) ? $data->limit( 0 )->get_sql() : $this->get_string_in( esc_sql( $data ) ) ) . ")";
-			} else if ( isset( $where[$col_name . '__not_in'] ) && $where[$col_name . '__not_in'] ) {
+				$this->query['where'][] = $this->table['as'] . ".$col_name IN (" . ( is_object( $data ) ? $data->limit( 0 )->get_sql() : $this->get_string_in( esc_sql( $data ) ) ) . ")";
+			} else if ( isset( $where[ $col_name . '__not_in' ] ) && $where[ $col_name . '__not_in' ] ) {
 
-				$data = $where[$col_name . '__not_in'];
+				$data = $where[ $col_name . '__not_in' ];
 
-				$this->query['where'][] = $this->table['as'] . ".$col_name NOT IN (" . (is_object( $data ) ? $data->limit( 0 )->get_sql() : $this->get_string_in( esc_sql( $data ) ) ) . ")";
-			} else if ( isset( $where[$col_name . '__between'] ) && $where[$col_name . '__between'] ) {
+				$this->query['where'][] = $this->table['as'] . ".$col_name NOT IN (" . ( is_object( $data ) ? $data->limit( 0 )->get_sql() : $this->get_string_in( esc_sql( $data ) ) ) . ")";
+			} else if ( isset( $where[ $col_name . '__between' ] ) && $where[ $col_name . '__between' ] ) {
 
-				$data = esc_sql( $where[$col_name . '__between'] );
+				$data = esc_sql( $where[ $col_name . '__between' ] );
 
 				$this->query['where'][] = "(" . $this->table['as'] . '.' . $col_name . " BETWEEN IFNULL(" . $data[0] . ", 0) AND '" . $data[1] . "')";
-			} else if ( isset( $where[$col_name . '__like'] ) && $where[$col_name . '__like'] ) {
+			} else if ( isset( $where[ $col_name . '__like' ] ) && $where[ $col_name . '__like' ] ) {
 
-				$data = $where[$col_name . '__like'];
+				$data = $where[ $col_name . '__like' ];
 
 				$this->query['where'][] = $this->table['as'] . ".$col_name LIKE '%" . esc_sql( $data ) . "%'";
-			} else if ( isset( $where[$col_name . '__to'] ) ) {
+			} else if ( isset( $where[ $col_name . '__to' ] ) ) {
 
-				$data = $where[$col_name . '__to'];
+				$data = $where[ $col_name . '__to' ];
 
 				$colName = is_numeric( $data ) ? "CAST(" . $this->table['as'] . ".$col_name AS DECIMAL)" : $this->table['as'] . "." . $col_name;
 
 				$this->query['where'][] = $colName . " <= '" . esc_sql( $data ) . "'";
-			} else if ( isset( $where[$col_name . '__from'] ) ) {
+			} else if ( isset( $where[ $col_name . '__from' ] ) ) {
 
-				$data = $where[$col_name . '__from'];
+				$data = $where[ $col_name . '__from' ];
 
 				$colName = is_numeric( $data ) ? "CAST(" . $this->table['as'] . ".$col_name AS DECIMAL)" : $this->table['as'] . "." . $col_name;
 
 				$this->query['where'][] = $colName . " >= '" . esc_sql( $data ) . "'";
-			} else if ( isset( $where[$col_name . '__is'] ) ) {
+			} else if ( isset( $where[ $col_name . '__is' ] ) ) {
 
-				$data = $where[$col_name . '__is'];
+				$data = $where[ $col_name . '__is' ];
 
 				$this->query['where'][] = $this->table['as'] . ".$col_name IS " . $data;
 			}
 		}
+
 		return $this;
 	}
 
 	function select_string( $string ) {
 		$this->query['select'][] = $string;
+
 		return $this;
 	}
 
 	function where_string( $string ) {
 		$this->query['where'][] = $string;
+
 		return $this;
 	}
 
 	function having_string( $string ) {
 		$this->query['having'][] = $string;
+
 		return $this;
 	}
 
 	function orderby_string( $string ) {
 		$this->query['orderby'][] = $string;
+
 		return $this;
 	}
 
 	function get_string_in( $data ) {
 
-		$vars = (is_array( $data )) ? $data : explode( ',', $data );
+		$vars = ( is_array( $data ) ) ? $data : explode( ',', $data );
 
 		$vars = array_map( 'trim', $vars );
 
 		$array = array();
 		foreach ( $vars as $var ) {
 
-			if ( is_numeric( $var ) )
+			if ( is_numeric( $var ) ) {
 				$array[] = $var;
-			else
+			} else {
 				$array[] = "'$var'";
+			}
 		}
 
 		return implode( ',', $array );
@@ -334,8 +363,8 @@ class Rcl_Query extends Rcl_Old_Query {
 		if ( is_array( $joinProps ) ) {
 			$joinType = isset( $joinProps[2] ) ? $joinProps[2] : 'INNER';
 		} else { //if colnames of join is the same you can convey a colname as a string
-			$joinType	 = 'INNER';
-			$joinProps	 = [$joinProps, $joinProps ];
+			$joinType  = 'INNER';
+			$joinProps = [ $joinProps, $joinProps ];
 		}
 
 		$this->query['join'][] = $joinType . " JOIN " . $joinQuery->table['name'] . " AS " . $joinQuery->table['as'] . " ON " . $this->table['as'] . "." . $joinProps[0] . " = " . $joinQuery->table['as'] . "." . $joinProps[1];
@@ -346,12 +375,15 @@ class Rcl_Query extends Rcl_Old_Query {
 			}
 		}
 
-		if ( $joinQuery->query['select'] )
-			$this->query['select']	 = array_merge( $this->query['select'], $joinQuery->query['select'] );
-		if ( $joinQuery->query['where'] )
-			$this->query['where']	 = array_merge( $this->query['where'], $joinQuery->query['where'] );
-		if ( $joinQuery->query['join'] )
-			$this->query['join']	 = array_merge( $this->query['join'], $joinQuery->query['join'] );
+		if ( $joinQuery->query['select'] ) {
+			$this->query['select'] = array_merge( $this->query['select'], $joinQuery->query['select'] );
+		}
+		if ( $joinQuery->query['where'] ) {
+			$this->query['where'] = array_merge( $this->query['where'], $joinQuery->query['where'] );
+		}
+		if ( $joinQuery->query['join'] ) {
+			$this->query['join'] = array_merge( $this->query['join'], $joinQuery->query['join'] );
+		}
 
 		$joinQuery->reset_query();
 
@@ -361,16 +393,19 @@ class Rcl_Query extends Rcl_Old_Query {
 	function limit( $number, $offset = 0 ) {
 		$this->number( $number );
 		$this->offset( $offset );
+
 		return $this;
 	}
 
 	function number( $number ) {
 		$this->query['number'] = $number;
+
 		return $this;
 	}
 
 	function offset( $offset ) {
 		$this->query['offset'] = $offset;
+
 		return $this;
 	}
 
@@ -386,16 +421,17 @@ class Rcl_Query extends Rcl_Old_Query {
 		if ( is_array( $orderby ) ) {
 			foreach ( $orderby as $by => $order ) {
 
-				$by = count( explode( '.', $by ) ) > 1 ? $by : (in_array( $by, $this->table['cols'] ) ? $this->table['as'] . '.' . $by : $by);
+				$by = count( explode( '.', $by ) ) > 1 ? $by : ( in_array( $by, $this->table['cols'] ) ? $this->table['as'] . '.' . $by : $by );
 
-				$this->query['orderby'][$by] = $order;
+				$this->query['orderby'][ $by ] = $order;
 			}
 		} else {
 
-			$this->query['orderby'] = count( explode( '.', $orderby ) ) > 1 ? $orderby : (in_array( $orderby, $this->table['cols'] ) ? $this->table['as'] . '.' . $orderby : $orderby);
+			$this->query['orderby'] = count( explode( '.', $orderby ) ) > 1 ? $orderby : ( in_array( $orderby, $this->table['cols'] ) ? $this->table['as'] . '.' . $orderby : $orderby );
 
-			if ( $order )
+			if ( $order ) {
 				$this->order( $order );
+			}
 		}
 
 		return $this;
@@ -403,6 +439,7 @@ class Rcl_Query extends Rcl_Old_Query {
 
 	function order( $order ) {
 		$this->query['order'] = $order;
+
 		return $this;
 	}
 
@@ -434,16 +471,18 @@ class Rcl_Query extends Rcl_Old_Query {
 
 		if ( isset( $query['where_or'] ) && $query['where_or'] ) {
 
-			if ( $query['where'] )
+			if ( $query['where'] ) {
 				$where_or[] = 'OR';
+			}
 
 			$where_or[] = implode( ' OR ', $query['where_or'] );
 
 			$where[] = implode( ' ', $where_or );
 		}
 
-		if ( $where )
+		if ( $where ) {
 			$sql[] = "WHERE " . implode( ' ', $where );
+		}
 
 		if ( isset( $query['union'] ) ) { //support old union request
 			foreach ( $query['union'] as $unionQuery ) {
@@ -456,11 +495,13 @@ class Rcl_Query extends Rcl_Old_Query {
 			}
 		}
 
-		if ( isset( $query['groupby'] ) && $query['groupby'] )
+		if ( isset( $query['groupby'] ) && $query['groupby'] ) {
 			$sql[] = "GROUP BY " . $query['groupby'];
+		}
 
-		if ( isset( $query['having'] ) && $query['having'] )
+		if ( isset( $query['having'] ) && $query['having'] ) {
 			$sql[] = "HAVING " . implode( ' AND ', $query['having'] );
+		}
 
 		if ( isset( $query['orderby'] ) && $query['orderby'] ) {
 
@@ -474,7 +515,7 @@ class Rcl_Query extends Rcl_Old_Query {
 				$sql[] = "ORDER BY " . $query['orderby'] . " " . $query['order'];
 			}
 		} else {
-			$sql[] = "ORDER BY " . $this->table['as'] . "." . $this->table['cols'][0] . " " . (isset( $query['order'] ) ? $query['order'] : 'DESC');
+			$sql[] = "ORDER BY " . $this->table['as'] . "." . $this->table['cols'][0] . " " . ( isset( $query['order'] ) ? $query['order'] : 'DESC' );
 		}
 
 		if ( isset( $query['number'] ) && $query['number'] ) {
@@ -500,16 +541,18 @@ class Rcl_Query extends Rcl_Old_Query {
 	function get_data( $method = 'get_results', $use_cache = false, $return_as = false ) {
 		global $wpdb;
 
-		if ( $this->return_as )
+		if ( $this->return_as ) {
 			$return_as = $this->return_as;
+		}
 
 		$query = $this->get_query();
 
 		if ( $use_cache || $this->cache ) {
-			$cachekey	 = md5( json_encode( $query ) );
-			$cache		 = wp_cache_get( $cachekey );
-			if ( $cache !== false )
+			$cachekey = md5( json_encode( $query ) );
+			$cache    = wp_cache_get( $cachekey );
+			if ( $cache !== false ) {
 				return $cache;
+			}
 		}
 
 		$sql = $this->get_sql( $query );
@@ -520,16 +563,18 @@ class Rcl_Query extends Rcl_Old_Query {
 
 		$data = wp_unslash( $data );
 
-		if ( $use_cache )
+		if ( $use_cache ) {
 			wp_cache_add( $cachekey, $data );
+		}
 
 		return $data;
 	}
 
 	function maybe_unserialize( $data ) {
 
-		if ( ! $this->serialize )
+		if ( ! $this->serialize ) {
 			return $data;
+		}
 
 		if ( is_string( $data ) ) {
 			return maybe_unserialize( $data );
@@ -539,15 +584,17 @@ class Rcl_Query extends Rcl_Old_Query {
 			if ( is_array( $data ) ) {
 				foreach ( $data as $k => $item ) {
 					if ( is_object( $item ) ) {
-						if ( isset( $item->$colName ) )
-							$data[$k]->$colName = maybe_unserialize( $item->$colName );
-					}else {
-						$data[$k] = maybe_unserialize( $item );
+						if ( isset( $item->$colName ) ) {
+							$data[ $k ]->$colName = maybe_unserialize( $item->$colName );
+						}
+					} else {
+						$data[ $k ] = maybe_unserialize( $item );
 					}
 				}
 			} else if ( is_object( $data ) ) {
-				if ( isset( $data->$colName ) )
+				if ( isset( $data->$colName ) ) {
 					$data->$colName = maybe_unserialize( $data->$colName );
+				}
 			}
 		}
 
@@ -559,26 +606,34 @@ class Rcl_Query extends Rcl_Old_Query {
 	}
 
 	function get_var( $cache = false ) {
-		if ( is_array( $cache ) )
+		if ( is_array( $cache ) ) {
 			return parent::get_var( $cache );
+		}
+
 		return $this->get_data( 'get_var', $cache );
 	}
 
 	function get_results( $cache = false, $return_as = false ) {
-		if ( is_array( $cache ) )
+		if ( is_array( $cache ) ) {
 			return parent::get_results( $cache );
+		}
+
 		return $this->get_data( 'get_results', $cache, $return_as );
 	}
 
 	function get_row( $cache = false ) {
-		if ( is_array( $cache ) )
+		if ( is_array( $cache ) ) {
 			return parent::get_row( $cache );
+		}
+
 		return $this->get_data( 'get_row', $cache );
 	}
 
 	function get_col( $cache = false ) {
-		if ( is_array( $cache ) )
+		if ( is_array( $cache ) ) {
 			return parent::get_col( $cache );
+		}
+
 		return $this->get_data( 'get_col', $cache );
 	}
 

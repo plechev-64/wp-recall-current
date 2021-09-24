@@ -2,6 +2,7 @@
 
 function pfm_is_can( $action ) {
 	global $user_ID;
+
 	return pfm_is_user_can( $user_ID, $action );
 }
 
@@ -24,10 +25,11 @@ function pfm_is_can_topic_edit( $topic_id ) {
 
 		global $PrimeTopic, $user_ID;
 
-		if ( $PrimeTopic->topic_closed )
+		if ( $PrimeTopic->topic_closed ) {
 			return false;
+		}
 
-		$topic = ($PrimeTopic && $PrimeTopic->topic_id == $topic_id) ? $PrimeTopic : pfm_get_topic( $topic_id );
+		$topic = ( $PrimeTopic && $PrimeTopic->topic_id == $topic_id ) ? $PrimeTopic : pfm_get_topic( $topic_id );
 
 		if ( $topic->user_id == $user_ID ) {
 			return pfm_is_can( 'topic_edit' );
@@ -46,10 +48,11 @@ function pfm_is_can_topic_delete( $topic_id ) {
 
 		global $PrimeTopic, $user_ID;
 
-		if ( $PrimeTopic->topic_closed )
+		if ( $PrimeTopic->topic_closed ) {
 			return false;
+		}
 
-		$topic = ($PrimeTopic && $PrimeTopic->topic_id == $topic_id) ? $PrimeTopic : pfm_get_topic( $topic_id );
+		$topic = ( $PrimeTopic && $PrimeTopic->topic_id == $topic_id ) ? $PrimeTopic : pfm_get_topic( $topic_id );
 
 		if ( $topic->user_id == $user_ID ) {
 			return pfm_is_can( 'topic_delete' );
@@ -68,10 +71,11 @@ function pfm_is_can_post_edit( $post_id ) {
 
 		global $PrimeTopic, $PrimePost, $user_ID;
 
-		if ( $PrimeTopic->topic_closed )
+		if ( $PrimeTopic->topic_closed ) {
 			return false;
+		}
 
-		$post = ($PrimePost && $PrimePost->post_id == $post_id) ? $PrimePost : pfm_get_post( $post_id );
+		$post = ( $PrimePost && $PrimePost->post_id == $post_id ) ? $PrimePost : pfm_get_post( $post_id );
 
 		if ( $post->user_id == $user_ID ) {
 
@@ -93,10 +97,11 @@ function pfm_is_can_post_delete( $post_id ) {
 
 		global $PrimeTopic, $PrimePost, $user_ID;
 
-		if ( $PrimeTopic->topic_closed )
+		if ( $PrimeTopic->topic_closed ) {
 			return false;
+		}
 
-		$post = ($PrimePost && $PrimePost->post_id == $post_id) ? $PrimePost : pfm_get_post( $post_id );
+		$post = ( $PrimePost && $PrimePost->post_id == $post_id ) ? $PrimePost : pfm_get_post( $post_id );
 
 		if ( $post->user_id == $user_ID ) {
 
@@ -112,18 +117,20 @@ function pfm_is_can_post_delete( $post_id ) {
 function pfm_is_last_post( $post_id ) {
 	global $PrimeTopic, $PrimePost;
 
-	$post = ($PrimePost && $PrimePost->post_id == $post_id) ? $PrimePost : pfm_get_post( $post_id );
+	$post = ( $PrimePost && $PrimePost->post_id == $post_id ) ? $PrimePost : pfm_get_post( $post_id );
 
-	$topic = ($PrimeTopic && $PrimeTopic->topic_id == $post->topic_id) ? $PrimeTopic : pfm_get_topic( $post->topic_id );
+	$topic = ( $PrimeTopic && $PrimeTopic->topic_id == $post->topic_id ) ? $PrimeTopic : pfm_get_topic( $post->topic_id );
 
-	if ( $topic->last_post_date == $post->post_date )
+	if ( $topic->last_post_date == $post->post_date ) {
 		return true;
+	}
 
 	return false;
 }
 
 function pfm_is_role( $roleName ) {
 	global $PrimeUser;
+
 	return $PrimeUser->is_role( $roleName );
 }
 

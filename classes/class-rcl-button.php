@@ -9,12 +9,12 @@ class Rcl_Button {
 
 	public $id;
 	public $onclick;
-	public $href		 = 'javascript:void(0);';
-	public $class		 = array();
-	public $type		 = 'primary'; // clear, simple, primary
+	public $href = 'javascript:void(0);';
+	public $class = array();
+	public $type = 'primary'; // clear, simple, primary
 	public $style;
 	public $icon; // for example: fa-car
-	public $icon_align	 = 'left'; // left or right position
+	public $icon_align = 'left'; // left or right position
 	public $icon_mask;  // 1 - is mask on icon
 	public $label;   // text on button
 	public $title;   // title attribute
@@ -25,7 +25,7 @@ class Rcl_Button {
 	public $data;
 	public $submit;
 	public $status;  // state of the button: loading, disabled, active
-	public $size		 = 'standart';   // standart, medium, large, big
+	public $size = 'standart';   // standart, medium, large, big
 	public $attr;
 	public $attrs;
 	public $fullwidth;  // 1 - is fullwidth button
@@ -33,8 +33,9 @@ class Rcl_Button {
 
 	function __construct( $args ) {
 
-		if ( ! isset( $args['title'] ) && isset( $args['label'] ) )
+		if ( ! isset( $args['title'] ) && isset( $args['label'] ) ) {
 			$args['title'] = $args['label'];
+		}
 
 		$this->init_properties( $args );
 
@@ -47,19 +48,20 @@ class Rcl_Button {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( isset( $args[$name] ) & ! empty( $args[$name] ) )
-				$this->$name = $args[$name];
+			if ( isset( $args[ $name ] ) & ! empty( $args[ $name ] ) ) {
+				$this->$name = $args[ $name ];
+			}
 		}
 	}
 
 	function setup_attrs() {
 
-		$this->attrs['href']	 = $this->href;
-		$this->attrs['title']	 = $this->title;
-		$this->attrs['onclick']	 = $this->onclick;
-		$this->attrs['style']	 = $this->style;
-		$this->attrs['id']		 = $this->id;
-		$this->attrs['class']	 = is_array( $this->class ) ? implode( ' ', $this->class ) : $this->class;
+		$this->attrs['href']    = $this->href;
+		$this->attrs['title']   = $this->title;
+		$this->attrs['onclick'] = $this->onclick;
+		$this->attrs['style']   = $this->style;
+		$this->attrs['id']      = $this->id;
+		$this->attrs['class']   = is_array( $this->class ) ? implode( ' ', $this->class ) : $this->class;
 
 		if ( $this->submit && ! $this->onclick ) {
 			$this->attrs['onclick'] = 'rcl_submit_form(this);return false;';
@@ -68,19 +70,21 @@ class Rcl_Button {
 		if ( $this->data ) {
 
 			foreach ( $this->data as $k => $value ) {
-				if ( ! $value )
+				if ( ! $value ) {
 					continue;
-				$this->attrs['data-' . $k] = $value;
+				}
+				$this->attrs[ 'data-' . $k ] = $value;
 			}
 		}
 	}
 
 	function setup_class() {
 
-		if ( $this->class && ! is_array( $this->class ) )
-			$this->class	 = array( 'rcl-bttn', $this->class );
-		else
-			$this->class[]	 = 'rcl-bttn';
+		if ( $this->class && ! is_array( $this->class ) ) {
+			$this->class = array( 'rcl-bttn', $this->class );
+		} else {
+			$this->class[] = 'rcl-bttn';
+		}
 
 		if ( $this->icon ) {
 
@@ -98,39 +102,48 @@ class Rcl_Button {
 				$this->class[] = 'rcl-bttn__mod-only-icon';
 			}
 
-			if ( $this->icon_mask )
+			if ( $this->icon_mask ) {
 				$this->class[] = 'rcl-bttn__ico-mask';
+			}
 		}
 
 		$this->class[] = 'rcl-bttn__type-' . $this->type;
 
-		if ( $this->size )
+		if ( $this->size ) {
 			$this->class[] = 'rcl-bttn__size-' . $this->size;
+		}
 
-		if ( $this->status )
+		if ( $this->status ) {
 			$this->class[] = 'rcl-bttn__' . $this->status;
+		}
 
-		if ( $this->fullwidth )
+		if ( $this->fullwidth ) {
 			$this->class[] = 'rcl-bttn__fullwidth';
+		}
 
-		if ( $this->inset )
+		if ( $this->inset ) {
 			$this->class[] = 'rcl-bttn__inset';
+		}
 
-		if ( $this->avatar_circle )
+		if ( $this->avatar_circle ) {
 			$this->class[] = 'rcl-bttn__ava_circle';
+		}
 	}
 
 	function parse_attrs() {
 
 		$attrs = array();
 		foreach ( $this->attrs as $name => $value ) {
-			if ( ! $value )
+			if ( ! $value ) {
 				continue;
+			}
 			$attrs[] = $name . '=\'' . $value . '\'';
 		}
 
 		if ( $this->attr ) //поддержка старого указания произвольных атрибутов
+		{
 			$attrs[] = $this->attr;
+		}
 
 		return implode( ' ', $attrs );
 	}
@@ -160,23 +173,29 @@ class Rcl_Button {
 
 		$content = sprintf( '<a %s>', $this->parse_attrs() );
 
-		if ( $this->icon && $this->icon_align == 'left' )
+		if ( $this->icon && $this->icon_align == 'left' ) {
 			$content .= $this->get_icon();
+		}
 
-		if ( $this->avatar )
+		if ( $this->avatar ) {
 			$content .= $this->get_avatar();
+		}
 
-		if ( $this->label )
+		if ( $this->label ) {
 			$content .= $this->get_label();
+		}
 
-		if ( $this->icon && $this->icon_align == 'right' )
+		if ( $this->icon && $this->icon_align == 'right' ) {
 			$content .= $this->get_icon();
+		}
 
-		if ( $this->counter )
+		if ( $this->counter ) {
 			$content .= $this->get_counter();
+		}
 
-		if ( $this->content )
+		if ( $this->content ) {
 			$content .= $this->get_custom_content();
+		}
 
 		$content .= '</a>';
 

@@ -17,13 +17,15 @@ function rcl_stats_metabox() {
 		$path = wp_normalize_path( $path );
 		if ( file_exists( $path ) ) {
 			foreach ( scandir( $path, 1 ) as $namedir ) {
-				$addon_dir	 = $path . '/' . $namedir;
-				$index_src	 = $addon_dir . '/index.php';
-				if ( ! is_dir( $addon_dir ) || ! file_exists( $index_src ) )
+				$addon_dir = $path . '/' . $namedir;
+				$index_src = $addon_dir . '/index.php';
+				if ( ! is_dir( $addon_dir ) || ! file_exists( $index_src ) ) {
 					continue;
-				$info_src	 = $addon_dir . '/info.txt';
-				if ( ! file_exists( $info_src ) )
+				}
+				$info_src = $addon_dir . '/info.txt';
+				if ( ! file_exists( $info_src ) ) {
 					continue;
+				}
 				$countAddons ++;
 			}
 		}
@@ -31,16 +33,16 @@ function rcl_stats_metabox() {
 
 	$data = array(
 		array(
-			'name'		 => __( 'Total addons', 'wp-recall' ),
-			'content'	 => $countAddons
+			'name'    => __( 'Total addons', 'wp-recall' ),
+			'content' => $countAddons
 		),
 		array(
-			'name'		 => __( 'Active addons', 'wp-recall' ),
-			'content'	 => count( $active_addons ) . ' (<a href="' . admin_url( 'admin.php?page=manage-addon-recall' ) . '">' . __( 'Go to addons manager', 'wp-recall' ) . '</a>)'
+			'name'    => __( 'Active addons', 'wp-recall' ),
+			'content' => count( $active_addons ) . ' (<a href="' . admin_url( 'admin.php?page=manage-addon-recall' ) . '">' . __( 'Go to addons manager', 'wp-recall' ) . '</a>)'
 		),
 		array(
-			'name'		 => __( 'Active template', 'wp-recall' ),
-			'content'	 => $active_addons[$rcl_template]['name'] . ' (<a href="' . admin_url( 'admin.php?page=manage-templates-recall' ) . '">' . __( 'Go to templates manager', 'wp-recall' ) . '</a>)'
+			'name'    => __( 'Active template', 'wp-recall' ),
+			'content' => $active_addons[ $rcl_template ]['name'] . ' (<a href="' . admin_url( 'admin.php?page=manage-templates-recall' ) . '">' . __( 'Go to templates manager', 'wp-recall' ) . '</a>)'
 		)
 	);
 
@@ -57,6 +59,7 @@ function rcl_news_metabox() {
 
 	if ( ! $xmlData ) {
 		echo __( 'Unable to retrieve news', 'wp-recall' );
+
 		return;
 	}
 

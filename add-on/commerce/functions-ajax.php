@@ -20,18 +20,20 @@ function rcl_add_to_cart() {
 
 	$cart = apply_filters( 'rcl_add_to_cart_data', $_POST['cart'] );
 
-	if ( ! $cart )
+	if ( ! $cart ) {
 		exit;
+	}
 
 	$product_id = $cart['product_id'];
 
-	if ( ! $product_id )
+	if ( ! $product_id ) {
 		exit;
+	}
 
 	$args = array();
 
-	$args['quantity']	 = isset( $cart['quantity'] ) ? absint( $cart['quantity'] ) : false;
-	$args['variations']	 = isset( $cart['variations'] ) ? $cart['variations'] : false;
+	$args['quantity']   = isset( $cart['quantity'] ) ? absint( $cart['quantity'] ) : false;
+	$args['variations'] = isset( $cart['variations'] ) ? $cart['variations'] : false;
 
 	if ( ! isset( $cart['isset']['variations'] ) ) {
 
@@ -41,7 +43,7 @@ function rcl_add_to_cart() {
 
 			$cartBox = new Rcl_Cart_Button_Form( array(
 				'product_id' => $product_id
-				) );
+			) );
 
 			$content = '<div id="rcl-product-box" class="modal-box">';
 
@@ -60,8 +62,8 @@ function rcl_add_to_cart() {
 			$content .= '</div>';
 
 			$result = array(
-				'modal'		 => true,
-				'content'	 => $content
+				'modal'   => true,
+				'content' => $content
 			);
 
 			wp_send_json( $result );
@@ -73,17 +75,17 @@ function rcl_add_to_cart() {
 	$Cart->add_product( $product_id, $args );
 
 	$result = array(
-		'cart'		 => array(
-			'order_price'		 => $Cart->order_price,
-			'products_amount'	 => $Cart->products_amount,
-			'products'			 => $Cart->products
+		'cart'    => array(
+			'order_price'     => $Cart->order_price,
+			'products_amount' => $Cart->products_amount,
+			'products'        => $Cart->products
 		),
-		'product'	 => $Cart->get_product( $product_id ),
-		'success'	 => __( 'Added to cart!', 'wp-recall' ) . '<br>'
-		. sprintf( __( 'In your shopping cart: %d items', 'wp-recall' ), $Cart->products_amount ) . '<br>'
-		. '<a style="text-decoration:underline;" href="' . $Cart->cart_url . '">'
-		. __( 'Go to cart', 'wp-recall' )
-		. '</a>'
+		'product' => $Cart->get_product( $product_id ),
+		'success' => __( 'Added to cart!', 'wp-recall' ) . '<br>'
+		             . sprintf( __( 'In your shopping cart: %d items', 'wp-recall' ), $Cart->products_amount ) . '<br>'
+		             . '<a style="text-decoration:underline;" href="' . $Cart->cart_url . '">'
+		             . __( 'Go to cart', 'wp-recall' )
+		             . '</a>'
 	);
 
 	$result = apply_filters( 'rcl_add_to_cart_result', $result );
@@ -107,8 +109,8 @@ function rcl_check_cart_data() {
 
 			$user_email = sanitize_text_field( $_POST['user_email'] );
 
-			$isEmail	 = is_email( $user_email );
-			$validName	 = validate_username( $user_email );
+			$isEmail   = is_email( $user_email );
+			$validName = validate_username( $user_email );
 
 			if ( ! $validName || ! $isEmail ) {
 				wp_send_json( array( 'error' => __( 'You have entered an invalid email!', 'wp-recall' ) ) );
@@ -123,7 +125,7 @@ function rcl_check_cart_data() {
 	do_action( 'rcl_check_cart_data' );
 
 	wp_send_json( array(
-		'submit'		 => true,
+		'submit'         => true,
 		'preloader_live' => 1
 	) );
 }

@@ -15,8 +15,8 @@ if ( $wpdb->has_cap( 'collation' ) ) {
 	}
 }
 
-$table	 = RCL_PREF . "groups";
-$sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
+$table = RCL_PREF . "groups";
+$sql   = "CREATE TABLE IF NOT EXISTS " . $table . " (
         ID BIGINT(20) UNSIGNED NOT NULL,
         admin_id BIGINT(20) UNSIGNED NOT NULL,
         group_users MEDIUMINT(7) UNSIGNED NOT NULL,
@@ -28,8 +28,8 @@ $sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
 
 dbDelta( $sql );
 
-$table	 = RCL_PREF . "groups_users";
-$sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
+$table = RCL_PREF . "groups_users";
+$sql   = "CREATE TABLE IF NOT EXISTS " . $table . " (
         ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
         group_id BIGINT(20) UNSIGNED NOT NULL,
         user_id BIGINT(20) UNSIGNED NOT NULL,
@@ -43,8 +43,8 @@ $sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
 
 dbDelta( $sql );
 
-$table	 = RCL_PREF . "groups_options";
-$sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
+$table = RCL_PREF . "groups_options";
+$sql   = "CREATE TABLE IF NOT EXISTS " . $table . " (
         ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
         group_id BIGINT(20) UNSIGNED NOT NULL,
         option_key VARCHAR( 255 ) NOT NULL,
@@ -58,16 +58,16 @@ dbDelta( $sql );
 
 if ( ! isset( $rcl_options['moderation_public_group'] ) ) {
 
-	$rcl_options['public_group_access_recall']	 = 2;
-	$rcl_options['moderation_public_group']		 = 0;
-	$rcl_options['group-output']				 = 1;
+	$rcl_options['public_group_access_recall'] = 2;
+	$rcl_options['moderation_public_group']    = 0;
+	$rcl_options['group-output']               = 1;
 
 	if ( ! rcl_isset_plugin_page( 'group-page' ) ) {
 		$rcl_options['group-page'] = rcl_create_plugin_page( 'group-page', [
-			'post_title'	 => __( 'Groups', 'wp-recall' ),
-			'post_content'	 => '[grouplist]',
-			'post_name'		 => 'group-page'
-			] );
+			'post_title'   => __( 'Groups', 'wp-recall' ),
+			'post_content' => '[grouplist]',
+			'post_name'    => 'group-page'
+		] );
 	}
 
 	update_site_option( 'rcl_global_options', $rcl_options );

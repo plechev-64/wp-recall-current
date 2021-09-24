@@ -4,18 +4,18 @@ class Rcl_Tab {
 
 	public $id; //идентификатор вкладки
 	public $name; //имя вкладки
-	public $icon		 = 'fa-cog';
-	public $public		 = 0;
-	public $hidden		 = 0;
-	public $order		 = 10;
-	public $first		 = false;
-	public $counter		 = null;
-	public $onclick		 = false;
-	public $output		 = 'menu';
-	public $supports	 = array();
-	public $content		 = array();
-	public $tab_active	 = 0; //указание активности вкладки
-	public $tab_upload	 = 0; //указание загрузки содержимого вкладки
+	public $icon = 'fa-cog';
+	public $public = 0;
+	public $hidden = 0;
+	public $order = 10;
+	public $first = false;
+	public $counter = null;
+	public $onclick = false;
+	public $output = 'menu';
+	public $supports = array();
+	public $content = array();
+	public $tab_active = 0; //указание активности вкладки
+	public $tab_upload = 0; //указание загрузки содержимого вкладки
 	public $use_cache;
 	public $active_subtab;
 
@@ -25,9 +25,9 @@ class Rcl_Tab {
 
 		$this->init_properties( $args );
 
-		$this->tab_active	 = $this->is_view_tab();
-		$this->tab_upload	 = ($this->tab_active) ? true : false;
-		$this->use_cache	 = rcl_get_option( 'use_cache' );
+		$this->tab_active = $this->is_view_tab();
+		$this->tab_upload = ( $this->tab_active ) ? true : false;
+		$this->use_cache  = rcl_get_option( 'use_cache' );
 
 		do_action( 'rcl_construct_' . $this->id . '_tab' );
 	}
@@ -37,28 +37,32 @@ class Rcl_Tab {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( ! isset( $args[$name] ) )
+			if ( ! isset( $args[ $name ] ) ) {
 				continue;
-			$this->$name = $args[$name];
+			}
+			$this->$name = $args[ $name ];
 		}
 	}
 
 	function register_tab() {
 		add_filter( 'rcl_content_area_tabs', array( $this, 'print_tab' ), $this->order );
-		if ( $this->output && ! $this->hidden )
+		if ( $this->output && ! $this->hidden ) {
 			add_filter( 'rcl_content_area_' . $this->output, array( $this, 'print_tab_button' ), $this->order );
+		}
 	}
 
 	function print_tab( $content ) {
 		global $user_LK, $rcl_tabs;
 		//print_r( $rcl_tabs );
 		$content .= $this->get_tab( $user_LK );
+
 		return $content;
 	}
 
 	function print_tab_button( $content ) {
 		global $user_LK;
 		$content .= $this->get_tab_button( $user_LK );
+
 		return $content;
 	}
 
@@ -67,7 +71,7 @@ class Rcl_Tab {
 		$view = false;
 
 		if ( isset( $_GET['tab'] ) ) {
-			$view = ($_GET['tab'] == $this->id) ? true : false;
+			$view = ( $_GET['tab'] == $this->id ) ? true : false;
 		} else {
 			if ( $this->first ) {
 				$view = true;
@@ -86,8 +90,9 @@ class Rcl_Tab {
 
 		$subtab = new Rcl_Sub_Tabs( $subtabs, $this->id );
 
-		if ( $subtab_id )
+		if ( $subtab_id ) {
 			$subtab->active_tab = $subtab_id;
+		}
 
 		if ( $subtab->active_tab ) {
 			$this->active_subtab = $subtab->active_tab;
@@ -95,10 +100,11 @@ class Rcl_Tab {
 
 		$rcl_tab = $this;
 
-		if ( count( $this->content ) > 1 )
+		if ( count( $this->content ) > 1 ) {
 			$content = $subtab->get_sub_content( $master_id );
-		else
+		} else {
 			$content = $subtab->get_subtab( $master_id );
+		}
 
 		$content = apply_filters( 'rcl_tab_' . $this->id, $content );
 
@@ -110,14 +116,15 @@ class Rcl_Tab {
 		$classes = array();
 
 		if ( in_array( 'dialog', $this->supports ) ) {
-			$classes[]	 = 'rcl-dialog';
-			$classes[]	 = 'rcl-ajax';
+			$classes[] = 'rcl-dialog';
+			$classes[] = 'rcl-ajax';
 		} else if ( in_array( 'ajax', $this->supports ) ) {
 			$classes[] = 'rcl-ajax';
 		}
 
-		if ( $this->tab_active )
+		if ( $this->tab_active ) {
 			$classes[] = ' active';
+		}
 
 		return implode( ' ', $classes );
 	}
@@ -126,14 +133,20 @@ class Rcl_Tab {
 		global $user_ID;
 
 		switch ( $this->public ) {
-			case 0: if ( ! $user_ID || $user_ID != $master_id )
+			case 0:
+				if ( ! $user_ID || $user_ID != $master_id ) {
 					return false;
+				}
 				break;
-			case -1: if ( ! $user_ID || $user_ID == $master_id )
+			case - 1:
+				if ( ! $user_ID || $user_ID == $master_id ) {
 					return false;
+				}
 				break;
-			case -2: if ( $user_ID && $user_ID == $master_id )
+			case - 2:
+				if ( $user_ID && $user_ID == $master_id ) {
 					return false;
+				}
 				break;
 		}
 
@@ -143,20 +156,21 @@ class Rcl_Tab {
 	function get_tab_button( $master_id ) {
 		global $user_ID;
 
-		if ( ! $this->is_user_access( $master_id ) )
+		if ( ! $this->is_user_access( $master_id ) ) {
 			return false;
+		}
 
-		$name = (isset( $this->counter )) ? sprintf( '%s <span class="rcl-menu-notice">%s</span>', $this->name, $this->counter ) : $this->name;
+		$name = ( isset( $this->counter ) ) ? sprintf( '%s <span class="rcl-menu-notice">%s</span>', $this->name, $this->counter ) : $this->name;
 
-		$icon = ($this->icon) ? $this->icon : 'fa-cog';
+		$icon = ( $this->icon ) ? $this->icon : 'fa-cog';
 
 		if ( $this->onclick ) {
 
 			$html_button = rcl_get_button(
 				$name, '#', array(
-				'class'	 => 'recall-button',
-				'icon'	 => $icon,
-				'attr'	 => 'onclick="' . $this->onclick . ';return false;"'
+					'class' => 'recall-button',
+					'icon'  => $icon,
+					'attr'  => 'onclick="' . $this->onclick . ';return false;"'
 				)
 			);
 		} else {
@@ -164,15 +178,15 @@ class Rcl_Tab {
 			$link = rcl_get_tab_permalink( $master_id, $this->id );
 
 			$datapost = array(
-				'tab_id'	 => $this->id,
-				'master_id'	 => $master_id
+				'tab_id'    => $this->id,
+				'master_id' => $master_id
 			);
 
 			$html_button = rcl_get_button(
 				$name, $link, array(
-				'class'	 => $this->get_class_button(),
-				'icon'	 => $icon,
-				'attr'	 => 'data-post=' . rcl_encode_post( $datapost )
+					'class' => $this->get_class_button(),
+					'icon'  => $icon,
+					'attr'  => 'data-post=' . rcl_encode_post( $datapost )
 				)
 			);
 		}
@@ -208,13 +222,15 @@ class Rcl_Tab {
 	function get_tab( $master_id, $subtab_id = false ) {
 		global $user_ID;
 
-		if ( ! $this->is_user_access( $master_id ) )
+		if ( ! $this->is_user_access( $master_id ) ) {
 			return false;
+		}
 
-		if ( ! $this->tab_upload )
+		if ( ! $this->tab_upload ) {
 			return false;
+		}
 
-		$status = ($this->tab_active) ? 'active' : '';
+		$status = ( $this->tab_active ) ? 'active' : '';
 
 		$content = '';
 
@@ -245,8 +261,9 @@ class Rcl_Tab {
 
 			$content = $this->get_tab_content( $master_id, $subtab_id );
 
-			if ( ! $content )
+			if ( ! $content ) {
 				return false;
+			}
 		}
 
 		return sprintf( '<div id="tab-%s" class="%s_block recall_content_block %s">%s</div>', $this->id, $this->id, $status, $content );

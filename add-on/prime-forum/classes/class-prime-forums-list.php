@@ -2,42 +2,43 @@
 
 class PrimeForumsList {
 
-	public $forums	 = array();
-	public $groups	 = array();
-	public $parents	 = array();
+	public $forums = array();
+	public $groups = array();
+	public $parents = array();
 
 	function __construct() {
-		$this->groups	 = $this->get_groups();
-		$this->forums	 = $this->get_forums();
+		$this->groups = $this->get_groups();
+		$this->forums = $this->get_forums();
 	}
 
 	function get_forums() {
 
 		return RQ::tbl( new PrimeForums() )->select( [
-					'forum_id',
-					'group_id',
-					'forum_name',
-					'parent_id'
-				] )->orderby( 'forum_name', 'ASC' )
-				->number( -1 )
-				->get_results();
+			'forum_id',
+			'group_id',
+			'forum_name',
+			'parent_id'
+		] )->orderby( 'forum_name', 'ASC' )
+		         ->number( - 1 )
+		         ->get_results();
 	}
 
 	function get_groups() {
 
 		return RQ::tbl( new PrimeGroups() )
-				->select( [
-					'group_id',
-					'group_name'
-				] )->orderby( 'group_seq', 'ASC' )
-				->limit( -1 )
-				->get_results();
+		         ->select( [
+			         'group_id',
+			         'group_name'
+		         ] )->orderby( 'group_seq', 'ASC' )
+		         ->limit( - 1 )
+		         ->get_results();
 	}
 
 	function get_parent_forums( $group_id ) {
 
-		if ( ! $this->forums )
+		if ( ! $this->forums ) {
 			return false;
+		}
 
 		$forums = array();
 
@@ -48,8 +49,9 @@ class PrimeForumsList {
 				continue;
 			}
 
-			if ( $group_id != $forum->group_id )
+			if ( $group_id != $forum->group_id ) {
 				continue;
+			}
 
 			$forums[] = $forum;
 		}
@@ -65,8 +67,9 @@ class PrimeForumsList {
 
 		foreach ( $this->forums as $forum ) {
 
-			if ( $forum_id != $forum->parent_id )
+			if ( $forum_id != $forum->parent_id ) {
 				continue;
+			}
 
 			$forums[] = $forum;
 		}
@@ -82,8 +85,9 @@ class PrimeForumsList {
 
 			$forums = $this->get_parent_forums( $group->group_id );
 
-			if ( ! $forums )
+			if ( ! $forums ) {
 				continue;
+			}
 
 			$content .= '<optgroup label="' . $group->group_name . '">';
 
@@ -105,8 +109,9 @@ class PrimeForumsList {
 
 			$content .= '<option value="' . $forum->forum_id . '">' . str_pad( '', $level * 3, "-- ", STR_PAD_LEFT ) . $forum->forum_name . '</option>';
 
-			if ( ! in_array( $forum->forum_id, $this->parents ) )
+			if ( ! in_array( $forum->forum_id, $this->parents ) ) {
 				continue;
+			}
 
 			$childrens = $this->get_children_forums( $forum->forum_id );
 

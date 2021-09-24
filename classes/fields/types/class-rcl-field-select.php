@@ -22,8 +22,9 @@ class Rcl_Field_Select extends Rcl_Field_Abstract {
 
 	function __construct( $args ) {
 
-		if ( isset( $args['empty-first'] ) )
+		if ( isset( $args['empty-first'] ) ) {
 			$args['empty_first'] = $args['empty-first'];
+		}
 
 		parent::__construct( $args );
 	}
@@ -32,18 +33,18 @@ class Rcl_Field_Select extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'		 => 'empty_first',
-				'default'	 => $this->empty_first,
-				'type'		 => 'text',
-				'title'		 => __( 'First value', 'wp-recall' ),
-				'notice'	 => __( 'Name of the first blank value, for example: "Not selected"', 'wp-recall' )
+				'slug'    => 'empty_first',
+				'default' => $this->empty_first,
+				'type'    => 'text',
+				'title'   => __( 'First value', 'wp-recall' ),
+				'notice'  => __( 'Name of the first blank value, for example: "Not selected"', 'wp-recall' )
 			),
 			array(
-				'slug'		 => 'values',
-				'default'	 => $this->values,
-				'type'		 => 'dynamic',
-				'title'		 => __( 'Specify options', 'wp-recall' ),
-				'notice'	 => __( 'specify each option in a separate field', 'wp-recall' )
+				'slug'    => 'values',
+				'default' => $this->values,
+				'type'    => 'dynamic',
+				'title'   => __( 'Specify options', 'wp-recall' ),
+				'notice'  => __( 'specify each option in a separate field', 'wp-recall' )
 			)
 		);
 	}
@@ -52,16 +53,18 @@ class Rcl_Field_Select extends Rcl_Field_Abstract {
 
 		$content = '<select ' . $this->get_required() . ' name="' . $this->input_name . '" id="' . $this->input_id . '" ' . $this->get_class() . '>';
 
-		if ( $this->empty_first )
+		if ( $this->empty_first ) {
 			$content .= '<option value="">' . $this->empty_first . '</option>';
+		}
 
 		if ( $this->values ) {
 			foreach ( $this->values as $k => $value ) {
 
-				$data = ($this->key_in_data) ? 'data-key="' . $k . '"' : '';
+				$data = ( $this->key_in_data ) ? 'data-key="' . $k . '"' : '';
 
-				if ( $this->value_in_key )
+				if ( $this->value_in_key ) {
 					$k = $value;
+				}
 
 				$content .= '<option ' . selected( $this->value, $k, false ) . ' ' . $data . ' value="' . trim( $k ) . '">' . $value . '</option>';
 			}

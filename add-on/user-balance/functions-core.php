@@ -2,6 +2,7 @@
 
 function rcl_gateways() {
 	global $rcl_gateways;
+
 	return $rcl_gateways;
 }
 
@@ -12,14 +13,16 @@ function rcl_gateway_register( $gateway_id, $gatewayClassName ) {
 //получение данных из таблицы произведенных платежей
 function rcl_get_payments( $args = false ) {
 	require_once 'classes/class-rcl-payments.php';
+
 	return RQ::tbl( new Rcl_Payments() )->parse( $args )->get_results();
 }
 
 function rcl_get_user_balance( $user_id = false ) {
 	global $wpdb, $user_ID;
 
-	if ( ! $user_id )
+	if ( ! $user_id ) {
 		$user_id = $user_ID;
+	}
 
 	if ( $user_id == $user_ID && isset( RCL()->User()->balance ) ) {
 		return RCL()->User()->balance;
@@ -52,7 +55,11 @@ function rcl_update_user_balance( $newmoney, $user_id, $comment = '' ) {
 
 		if ( ! $result ) {
 			rcl_add_log(
-				'rcl_update_user_balance: ' . __( 'Failed to refresh user balance', 'wp-recall' ), array( $newmoney, $user_id, $comment )
+				'rcl_update_user_balance: ' . __( 'Failed to refresh user balance', 'wp-recall' ), array(
+					$newmoney,
+					$user_id,
+					$comment
+				)
 			);
 		}
 
@@ -73,7 +80,11 @@ function rcl_add_user_balance( $money, $user_id, $comment = '' ) {
 
 	if ( ! $result ) {
 		rcl_add_log(
-			'rcl_add_user_balance: ' . __( 'Failed to add user balance', 'wp-recall' ), array( $money, $user_id, $comment )
+			'rcl_add_user_balance: ' . __( 'Failed to add user balance', 'wp-recall' ), array(
+				$money,
+				$user_id,
+				$comment
+			)
 		);
 	}
 
@@ -91,8 +102,9 @@ function rcl_get_html_usercount() {
 
 	$user_count = rcl_get_user_balance();
 
-	if ( ! $user_count )
+	if ( ! $user_count ) {
 		$user_count = 0;
+	}
 
 	$content = '<div class="rcl-balance-widget">';
 	$content .= '<div class="balance-amount">';
@@ -101,11 +113,11 @@ function rcl_get_html_usercount() {
 
 	if ( $rcl_gateways && count( $rcl_gateways->gateways ) > 1 ) {
 		$content .= ' ' . rcl_get_button( [
-				'label'		 => __( 'replenish', 'wp-recall' ),
-				'onclick'	 => 'rcl_switch_view_balance_form(this);return false;',
-				'icon'		 => 'fa-plus-circle',
-				'type'		 => 'clear',
-				'class'		 => 'update-link'
+				'label' => __( 'replenish', 'wp-recall' ),
+				'onclick' => 'rcl_switch_view_balance_form(this);return false;',
+				'icon' => 'fa-plus-circle',
+				'type' => 'clear',
+				'class' => 'update-link'
 			] );
 	}
 
@@ -137,7 +149,7 @@ function rcl_mail_payment_error( $hash = false, $other = false ) {
 
 	if ( $hash ) {
 		$textmail .= 'Cформированный хеш - ' . $hash . '<br>';
-		$title = 'Неудачная оплата';
+		$title    = 'Неудачная оплата';
 	} else {
 		$title = 'Данные платежа';
 	}

@@ -25,17 +25,17 @@ class Rcl_Field_TextArea extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'		 => 'placeholder',
-				'default'	 => $this->placeholder,
-				'type'		 => 'text',
-				'title'		 => __( 'Placeholder', 'wp-recall' )
+				'slug'    => 'placeholder',
+				'default' => $this->placeholder,
+				'type'    => 'text',
+				'title'   => __( 'Placeholder', 'wp-recall' )
 			),
 			array(
-				'slug'		 => 'maxlength',
-				'default'	 => $this->maxlength,
-				'type'		 => 'number',
-				'title'		 => __( 'Maxlength', 'wp-recall' ),
-				'notice'	 => __( 'maximum number of symbols per field', 'wp-recall' )
+				'slug'    => 'maxlength',
+				'default' => $this->maxlength,
+				'type'    => 'number',
+				'title'   => __( 'Maxlength', 'wp-recall' ),
+				'notice'  => __( 'maximum number of symbols per field', 'wp-recall' )
 			)
 		);
 	}
@@ -46,8 +46,9 @@ class Rcl_Field_TextArea extends Rcl_Field_Abstract {
 
 	function get_value() {
 
-		if ( ! $this->value )
+		if ( ! $this->value ) {
 			return false;
+		}
 
 		return nl2br( $this->value );
 	}

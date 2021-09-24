@@ -3,8 +3,9 @@ function pfm_get_template_content() {
 
 	$theme = pfm_get_current_theme();
 
-	if ( ! $theme )
+	if ( ! $theme ) {
 		return false;
+	}
 
 	global $PrimeQuery, $PrimeUser;
 
@@ -19,7 +20,8 @@ function pfm_get_template_content() {
 	if ( pfm_is_search() ) {
 
 		$content .= rcl_get_include_template( 'pfm-search.php', $theme['path'] );
-	}if ( pfm_is_author() ) {
+	}
+	if ( pfm_is_author() ) {
 
 		$content .= rcl_get_include_template( 'pfm-author.php', $theme['path'] );
 	} else if ( pfm_is_home() ) {
@@ -43,14 +45,15 @@ function pfm_get_template_content() {
 	if ( pfm_is_topic() && $PrimeUser->user_id && pfm_is_can( 'post_create' ) && $PrimeUser->is_can_posts( $PrimeQuery->object->topic_id ) ) {
 
 		$args = array(
-			'topic_id'	 => $PrimeQuery->object->topic_id,
-			'forum_id'	 => $PrimeQuery->object->forum_id,
-			'group_id'	 => $PrimeQuery->object->group_id,
+			'topic_id'   => $PrimeQuery->object->topic_id,
+			'forum_id'   => $PrimeQuery->object->forum_id,
+			'group_id'   => $PrimeQuery->object->group_id,
 			'start_beat' => current_time( 'mysql' )
 		);
 
-		if ( $beatTime = pfm_get_option( 'beat-time', 30 ) )
+		if ( $beatTime = pfm_get_option( 'beat-time', 30 ) ) {
 			$content .= '<script>rcl_add_beat("pfm_topic_beat",' . $beatTime . ',' . json_encode( $args ) . ');</script>';
+		}
 	}
 
 	return $content;
@@ -136,6 +139,7 @@ function pfm_the_notices() {
 
 			if ( ! $PrimeQuery->object ) {
 				echo pfm_get_notice( __( 'Group not found', 'wp-recall' ) );
+
 				return;
 			}
 
@@ -144,6 +148,7 @@ function pfm_the_notices() {
 
 			if ( ! $PrimeQuery->object ) {
 				echo pfm_get_notice( __( 'Forum not found', 'wp-recall' ) );
+
 				return;
 			}
 
@@ -152,6 +157,7 @@ function pfm_the_notices() {
 
 			if ( ! $PrimeQuery->object ) {
 				echo pfm_get_notice( __( 'Topic not found', 'wp-recall' ) );
+
 				return;
 			}
 
@@ -165,9 +171,9 @@ function pfm_the_notices() {
 function pfm_get_notice( $notice, $type = 'info' ) {
 
 	return rcl_get_notice( array(
-		'type'	 => $type,
-		'text'	 => $notice
-		) );
+		'type' => $type,
+		'text' => $notice
+	) );
 }
 
 function pfm_the_visitors() {
@@ -199,10 +205,11 @@ function pfm_the_visitors() {
 
 	$content .= '<span class="visitors-list">';
 
-	if ( $visits )
+	if ( $visits ) {
 		$content .= implode( ', ', $visits );
-	else
+	} else {
 		$content .= __( 'Nobody is here', 'wp-recall' );
+	}
 
 	$content .= '</span>';
 
@@ -215,17 +222,19 @@ function pfm_the_search_form() {
 	global $PrimeQuery;
 	?>
 
-	<form action="<?php echo pfm_get_home_url() ?>">
-		<input name="fs" value="<?php echo ($PrimeQuery->vars['pfm-search']) ? htmlspecialchars( $PrimeQuery->vars['pfm-search'] ) : ''; ?>" placeholder="<?php _e( 'Search the forum', 'wp-recall' ); ?>" type="text">
+    <form action="<?php echo pfm_get_home_url() ?>">
+        <input name="fs"
+               value="<?php echo ( $PrimeQuery->vars['pfm-search'] ) ? htmlspecialchars( $PrimeQuery->vars['pfm-search'] ) : ''; ?>"
+               placeholder="<?php _e( 'Search the forum', 'wp-recall' ); ?>" type="text">
 		<?php if ( pfm_is_search() ): ?>
 
 			<?php if ( $PrimeQuery->vars['pfm-group'] ): ?>
 
-				<input type="hidden" name="pfm-group" value="<?php echo $PrimeQuery->vars['pfm-group']; ?>">
+                <input type="hidden" name="pfm-group" value="<?php echo $PrimeQuery->vars['pfm-group']; ?>">
 
 			<?php elseif ( $PrimeQuery->vars['pfm-forum'] ): ?>
 
-				<input type="hidden" name="pfm-forum" value="<?php echo $PrimeQuery->vars['pfm-forum']; ?>">
+                <input type="hidden" name="pfm-forum" value="<?php echo $PrimeQuery->vars['pfm-forum']; ?>">
 
 			<?php endif; ?>
 
@@ -233,19 +242,19 @@ function pfm_the_search_form() {
 
 			<?php if ( $PrimeQuery->is_group && $PrimeQuery->object->group_id ) { ?>
 
-				<input type="hidden" name="pfm-group" value="<?php echo $PrimeQuery->object->group_id; ?>">
+                <input type="hidden" name="pfm-group" value="<?php echo $PrimeQuery->object->group_id; ?>">
 
 			<?php } else if ( $PrimeQuery->is_forum || $PrimeQuery->is_topic && $PrimeQuery->object->forum_id ) { ?>
 
-				<input type="hidden" name="pfm-forum" value="<?php echo $PrimeQuery->object->forum_id; ?>">
+                <input type="hidden" name="pfm-forum" value="<?php echo $PrimeQuery->object->forum_id; ?>">
 
 			<?php } ?>
 
 		<?php endif; ?>
-		<button id="search-image" class="prime-search-button" type="submit" value="">
-			<i class="rcli fa-search" aria-hidden="true"></i>
-		</button>
-	</form>
+        <button id="search-image" class="prime-search-button" type="submit" value="">
+            <i class="rcli fa-search" aria-hidden="true"></i>
+        </button>
+    </form>
 
 	<?php
 }
@@ -253,16 +262,16 @@ function pfm_the_search_form() {
 function pfm_the_breadcrumbs() {
 	global $PrimeQuery;
 
-	$object	 = $PrimeQuery->object;
+	$object = $PrimeQuery->object;
 	?>
 
-	<div class="prime-breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/">
+    <div class="prime-breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/">
 
 		<?php $homeUrl = pfm_get_home_url(); ?>
 
 		<?php if ( pfm_is_home() ): ?>
 
-			<span property="itemListElement" typeof="ListItem">
+            <span property="itemListElement" typeof="ListItem">
 				<span property="position" content="1"></span>
 				<span property="item" typeof="WebPage" resource="<?php echo $homeUrl; ?>">
 					<span property="name"><?php _e( 'Home', 'wp-recall' ); ?></span>
@@ -271,7 +280,7 @@ function pfm_the_breadcrumbs() {
 
 		<?php else: ?>
 
-			<span property="itemListElement" typeof="ListItem">
+            <span property="itemListElement" typeof="ListItem">
 				<span property="position" content="1"></span>
 				<a href="<?php echo $homeUrl; ?>" property="item" typeof="WebPage">
 					<span property="name"><?php _e( 'Home', 'wp-recall' ); ?></span>
@@ -282,25 +291,27 @@ function pfm_the_breadcrumbs() {
 
 				<?php if ( $PrimeQuery->vars['pfm-group'] ): ?>
 
-					<span property="itemListElement" typeof="ListItem">
+                    <span property="itemListElement" typeof="ListItem">
 						<span property="position" content="2"></span>
-						<a href="<?php echo pfm_get_group_permalink( $PrimeQuery->vars['pfm-group'] ); ?>" property="item" typeof="WebPage">
+						<a href="<?php echo pfm_get_group_permalink( $PrimeQuery->vars['pfm-group'] ); ?>"
+                           property="item" typeof="WebPage">
 							<span property="name"><?php echo pfm_get_group_field( $PrimeQuery->vars['pfm-group'], 'group_name' ); ?></span>
 						</a>
 					</span>
 
 				<?php elseif ( $PrimeQuery->vars['pfm-forum'] ): ?>
 
-					<span property="itemListElement" typeof="ListItem">
+                    <span property="itemListElement" typeof="ListItem">
 						<span property="position" content="2"></span>
-						<a href="<?php echo pfm_get_forum_permalink( $PrimeQuery->vars['pfm-forum'] ); ?>" property="item" typeof="WebPage">
+						<a href="<?php echo pfm_get_forum_permalink( $PrimeQuery->vars['pfm-forum'] ); ?>"
+                           property="item" typeof="WebPage">
 							<span property="name"><?php echo pfm_get_forum_field( $PrimeQuery->vars['pfm-forum'], 'forum_name' ); ?></span>
 						</a>
 					</span>
 
 				<?php endif; ?>
 
-				<span>
+                <span>
 					<?php _e( 'Search', 'wp-recall' ); ?>: <?php echo $PrimeQuery->vars['pfm-search'] ?>
 				</span>
 
@@ -310,18 +321,20 @@ function pfm_the_breadcrumbs() {
 
 					<?php if ( pfm_is_group() ): ?>
 
-						<span property="itemListElement" typeof="ListItem">
+                        <span property="itemListElement" typeof="ListItem">
 							<span property="position" content="2"></span>
-							<span property="item" typeof="WebPage" resource="<?php echo pfm_get_group_permalink( $object->group_id ); ?>">
+							<span property="item" typeof="WebPage"
+                                  resource="<?php echo pfm_get_group_permalink( $object->group_id ); ?>">
 								<span property="name"><?php echo $object->group_name; ?></span>
 							</span>
 						</span>
 
 					<?php else: ?>
 
-						<span property="itemListElement" typeof="ListItem">
+                        <span property="itemListElement" typeof="ListItem">
 							<span property="position" content="2"></span>
-							<a href="<?php echo pfm_get_group_permalink( $object->group_id ); ?>" property="item" typeof="WebPage">
+							<a href="<?php echo pfm_get_group_permalink( $object->group_id ); ?>" property="item"
+                               typeof="WebPage">
 								<span property="name"><?php echo $object->group_name; ?></span>
 							</a>
 						</span>
@@ -330,9 +343,10 @@ function pfm_the_breadcrumbs() {
 
 							<?php if ( $object->parent_id ): ?>
 
-								<span property="itemListElement" typeof="ListItem">
+                                <span property="itemListElement" typeof="ListItem">
 									<span property="position" content="3"></span>
-									<a href="<?php echo pfm_get_forum_permalink( $object->parent_id ); ?>" property="item" typeof="WebPage">
+									<a href="<?php echo pfm_get_forum_permalink( $object->parent_id ); ?>"
+                                       property="item" typeof="WebPage">
 										<span property="name">
 											<?php echo pfm_get_forum_field( $object->parent_id, 'forum_name' ); ?>
 										</span>
@@ -341,9 +355,10 @@ function pfm_the_breadcrumbs() {
 
 							<?php endif; ?>
 
-							<span property="itemListElement" typeof="ListItem">
+                            <span property="itemListElement" typeof="ListItem">
 								<span property="position" content="3"></span>
-								<span property="item" typeof="WebPage" resource="<?php echo pfm_get_topic_permalink( $object->parent_id ); ?>">
+								<span property="item" typeof="WebPage"
+                                      resource="<?php echo pfm_get_topic_permalink( $object->parent_id ); ?>">
 									<span property="name"><?php echo $object->forum_name; ?></span>
 								</span>
 							</span>
@@ -352,9 +367,10 @@ function pfm_the_breadcrumbs() {
 
 							<?php if ( $object->parent_id ): ?>
 
-								<span property="itemListElement" typeof="ListItem">
+                                <span property="itemListElement" typeof="ListItem">
 									<span property="position" content="3"></span>
-									<a href="<?php echo pfm_get_forum_permalink( $object->parent_id ); ?>" property="item" typeof="WebPage">
+									<a href="<?php echo pfm_get_forum_permalink( $object->parent_id ); ?>"
+                                       property="item" typeof="WebPage">
 										<span property="name">
 											<?php echo pfm_get_forum_field( $object->parent_id, 'forum_name' ); ?>
 										</span>
@@ -363,27 +379,30 @@ function pfm_the_breadcrumbs() {
 
 							<?php endif; ?>
 
-							<span property="itemListElement" typeof="ListItem">
+                            <span property="itemListElement" typeof="ListItem">
 								<span property="position" content="3"></span>
-								<a href="<?php echo pfm_get_forum_permalink( $object->forum_id ); ?>" property="item" typeof="WebPage">
+								<a href="<?php echo pfm_get_forum_permalink( $object->forum_id ); ?>" property="item"
+                                   typeof="WebPage">
 									<span property="name"><?php echo $object->forum_name; ?></span>
 								</a>
 							</span>
 
 							<?php if ( pfm_is_topic() ): ?>
 
-								<span property="itemListElement" typeof="ListItem">
+                                <span property="itemListElement" typeof="ListItem">
 									<span property="position" content="4"></span>
-									<span property="item" typeof="WebPage" resource="<?php echo pfm_get_topic_permalink( $object->topic_id ); ?>">
+									<span property="item" typeof="WebPage"
+                                          resource="<?php echo pfm_get_topic_permalink( $object->topic_id ); ?>">
 										<span property="name"><?php echo $object->topic_name; ?></span>
 									</span>
 								</span>
 
 							<?php else: ?>
 
-								<span property="itemListElement" typeof="ListItem">
+                                <span property="itemListElement" typeof="ListItem">
 									<span property="position" content="4"></span>
-									<a href="<?php echo pfm_get_topic_permalink( $object->topic_id ); ?>" property="item" typeof="WebPage">
+									<a href="<?php echo pfm_get_topic_permalink( $object->topic_id ); ?>"
+                                       property="item" typeof="WebPage">
 										<span property="name"><?php echo $object->topic_name; ?></span>
 									</a>
 								</span>
@@ -400,7 +419,7 @@ function pfm_the_breadcrumbs() {
 
 		<?php endif; ?>
 
-	</div>
+    </div>
 
 	<?php
 }
@@ -418,7 +437,7 @@ function pfm_get_icon( $icon_class = 'fa-folder' ) {
 		return apply_filters( 'pfm_topic_icon', $defaultIcon );
 	}
 
-	if ( $PrimeGroup && $PrimeForum || (isset( $PrimeForum->parent_id ) && $PrimeForum->parent_id) ) {
+	if ( $PrimeGroup && $PrimeForum || ( isset( $PrimeForum->parent_id ) && $PrimeForum->parent_id ) ) {
 		return apply_filters( 'pfm_forum_icon', $defaultIcon );
 	}
 

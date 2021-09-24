@@ -3,14 +3,14 @@
 class Rcl_Image_Gallery {
 
 	public $id;
-	public $attach_ids	 = array();
-	public $image_urls	 = array();
+	public $attach_ids = array();
+	public $image_urls = array();
 	public $center_align = false;
-	public $width		 = 1500;
-	public $height		 = 350;
-	public $slides		 = array();
-	public $navigator	 = array();
-	public $options		 = array();
+	public $width = 1500;
+	public $height = 350;
+	public $slides = array();
+	public $navigator = array();
+	public $options = array();
 
 	function __construct( $args ) {
 
@@ -22,12 +22,12 @@ class Rcl_Image_Gallery {
 		}
 
 		$defaultOptions = array(
-			'$AutoPlay'		 => 0,
+			'$AutoPlay'      => 0,
 			//'$SlideWidth' => $this->gallery['thumbnail'][0],
 			//'$SlideHeight' => $this->gallery['thumbnail'][1],
-			'$FillMode'		 => 1,
+			'$FillMode'      => 1,
 			//'$DragOrientation' => 3,
-			'$Idle'			 => 4000,
+			'$Idle'          => 4000,
 			'$SlideDuration' => 500
 		);
 
@@ -37,21 +37,21 @@ class Rcl_Image_Gallery {
 
 			if ( isset( $this->navigator['thumbnails'] ) ) {
 				$defaultOptions['$ThumbnailNavigatorOptions'] = array(
-					'$ChanceToShow'			 => 2,
-					'$Loop'					 => 1,
-					'$SpacingX'				 => 3,
-					'$SpacingY'				 => 3,
+					'$ChanceToShow'          => 2,
+					'$Loop'                  => 1,
+					'$SpacingX'              => 3,
+					'$SpacingY'              => 3,
 					'$ArrowNavigatorOptions' => array(
-						'$ChanceToShow'	 => 1,
-						'$Steps'		 => 6
+						'$ChanceToShow' => 1,
+						'$Steps'        => 6
 					)
 				);
 			}
 
 			if ( isset( $this->navigator['arrows'] ) ) {
 				$defaultOptions['$ArrowNavigatorOptions'] = array(
-					'$ChanceToShow'	 => 1,
-					'$Steps'		 => 6
+					'$ChanceToShow' => 1,
+					'$Steps'        => 6
 				);
 			}
 		}
@@ -64,8 +64,9 @@ class Rcl_Image_Gallery {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( isset( $args[$name] ) )
-				$this->$name = $args[$name];
+			if ( isset( $args[ $name ] ) ) {
+				$this->$name = $args[ $name ];
+			}
 		}
 	}
 
@@ -73,25 +74,29 @@ class Rcl_Image_Gallery {
 
 		$attach_ids = $attach_ids ? $attach_ids : $this->attach_ids;
 
-		if ( ! $attach_ids )
+		if ( ! $attach_ids ) {
 			return false;
+		}
 
 		$images = array();
 		foreach ( $attach_ids as $attach_id ) {
 
 			$src = wp_get_attachment_image_src( $attach_id, $this->slides['slide'] );
 
-			$images[$attach_id]			 = array();
-			$images[$attach_id]['slide'] = $src[0];
+			$images[ $attach_id ]          = array();
+			$images[ $attach_id ]['slide'] = $src[0];
 
 			if ( $this->slides['full'] ) {
-				$src						 = wp_get_attachment_image_src( $attach_id, $this->slides['full'] );
-				$images[$attach_id]['full']	 = $src[0];
+				$src                          = wp_get_attachment_image_src( $attach_id, $this->slides['full'] );
+				$images[ $attach_id ]['full'] = $src[0];
 			}
 
 			if ( isset( $this->navigator['thumbnails'] ) ) {
-				$src						 = wp_get_attachment_image_src( $attach_id, array( $this->navigator['thumbnails']['width'], $this->navigator['thumbnails']['height'] ) );
-				$images[$attach_id]['thumb'] = $src[0];
+				$src                           = wp_get_attachment_image_src( $attach_id, array(
+					$this->navigator['thumbnails']['width'],
+					$this->navigator['thumbnails']['height']
+				) );
+				$images[ $attach_id ]['thumb'] = $src[0];
 			}
 		}
 
@@ -100,8 +105,9 @@ class Rcl_Image_Gallery {
 
 	function get_gallery() {
 
-		if ( ! $this->image_urls )
+		if ( ! $this->image_urls ) {
 			return false;
+		}
 
 		rcl_image_slider_scripts();
 
@@ -111,9 +117,9 @@ class Rcl_Image_Gallery {
 			jQuery(document).ready(function ($) {
 
 				var options = ' . json_encode( $this->options ) . ';
-				' . (isset( $this->navigator['thumbnails'] ) ? 'options.$ThumbnailNavigatorOptions.$Class = $JssorThumbnailNavigator$;'
-				. 'options.$ThumbnailNavigatorOptions.$ArrowNavigatorOptions.$Class = $JssorArrowNavigator$' : '') . '
-				' . (isset( $this->navigator['arrows'] ) ? 'options.$ArrowNavigatorOptions.$Class = $JssorArrowNavigator$;' : '') . '
+				' . ( isset( $this->navigator['thumbnails'] ) ? 'options.$ThumbnailNavigatorOptions.$Class = $JssorThumbnailNavigator$;'
+		                                                        . 'options.$ThumbnailNavigatorOptions.$ArrowNavigatorOptions.$Class = $JssorArrowNavigator$' : '' ) . '
+				' . ( isset( $this->navigator['arrows'] ) ? 'options.$ArrowNavigatorOptions.$Class = $JssorArrowNavigator$;' : '' ) . '
 				//options.$ThumbnailNavigatorOptions.$Class = $JssorThumbnailNavigator$;
 				//options.$ThumbnailNavigatorOptions.$ArrowNavigatorOptions.$Class = $JssorArrowNavigator$;
 				var jssor_slider = new $JssorSlider$("' . $this->id . '", options);
@@ -126,7 +132,7 @@ class Rcl_Image_Gallery {
 					if (containerWidth) {
 						var expectedWidth = Math.min(containerWidth, jssor_slider.$OriginalWidth());
 						jssor_slider.$ScaleSize(expectedWidth, jssor_slider.$OriginalHeight());
-						' . ($this->center_align ? 'jssor_slider.$Elmt.style.left = ((containerWidth - expectedWidth) / 2) + "px";' : '') . '
+						' . ( $this->center_align ? 'jssor_slider.$Elmt.style.left = ((containerWidth - expectedWidth) / 2) + "px";' : '' ) . '
 					}
 					else {
 						window.setTimeout(rcl_scale_slider, 30);
@@ -142,7 +148,7 @@ class Rcl_Image_Gallery {
 			});
 		</script>';
 
-		$content .= '<div id="' . $this->id . '" class="rcl-slider" style="position: relative; top: 0px; left: 0px; width: ' . $this->width . 'px; height: ' . (isset( $this->navigator['thumbnails'] ) && count( $this->image_urls ) > 1 ? $this->height + $this->navigator['thumbnails']['height'] + 10 : $this->height) . 'px; max-width: 100%; overflow: hidden;">';
+		$content .= '<div id="' . $this->id . '" class="rcl-slider" style="position: relative; top: 0px; left: 0px; width: ' . $this->width . 'px; height: ' . ( isset( $this->navigator['thumbnails'] ) && count( $this->image_urls ) > 1 ? $this->height + $this->navigator['thumbnails']['height'] + 10 : $this->height ) . 'px; max-width: 100%; overflow: hidden;">';
 
 		$content .= '<!-- Loading Screen -->
 		<div data-u="loading" class="jssorl-009-spin" style="z-index:9;position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgb(232, 232, 232);">
@@ -168,8 +174,9 @@ class Rcl_Image_Gallery {
 
 	function get_slides() {
 
-		if ( ! $this->image_urls )
+		if ( ! $this->image_urls ) {
 			return false;
+		}
 
 		$content = '<!-- Slides Container -->
 			<div data-u="slides" style="max-width: 100%; left: 0px; top: 0px; height: ' . $this->height . 'px; width: ' . $this->width . 'px; overflow: hidden;">';
@@ -212,8 +219,8 @@ class Rcl_Image_Gallery {
 					height: ' . $this->navigator['thumbnails']['height'] . 'px;
 				}
 				.rcl-gallery-navigator .o {
-					width: ' . ($this->navigator['thumbnails']['width'] - 2) . 'px;
-					height: ' . ($this->navigator['thumbnails']['height'] - 2) . 'px;
+					width: ' . ( $this->navigator['thumbnails']['width'] - 2 ) . 'px;
+					height: ' . ( $this->navigator['thumbnails']['height'] - 2 ) . 'px;
 				}
 				* html .rcl-gallery-navigator .o {
 					/* ie quirks mode adjust */
@@ -230,7 +237,7 @@ class Rcl_Image_Gallery {
 						<div class="o"></div>
 					</div>
 				</div>
-				' . (isset( $this->navigator['thumbnails']['arrows'] ) ? $this->get_navigator_arrows() : '') . '
+				' . ( isset( $this->navigator['thumbnails']['arrows'] ) ? $this->get_navigator_arrows() : '' ) . '
 			</div>
 			<!-- endregion Thumbnail Navigator Skin End -->';
 

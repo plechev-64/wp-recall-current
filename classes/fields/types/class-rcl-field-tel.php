@@ -27,22 +27,22 @@ class Rcl_Field_Tel extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'		 => 'placeholder',
-				'default'	 => $this->placeholder,
-				'type'		 => 'text',
-				'title'		 => __( 'Placeholder', 'wp-recall' )
+				'slug'    => 'placeholder',
+				'default' => $this->placeholder,
+				'type'    => 'text',
+				'title'   => __( 'Placeholder', 'wp-recall' )
 			),
 			array(
-				'slug'		 => 'maxlength',
-				'default'	 => $this->maxlength,
-				'type'		 => 'number',
-				'title'		 => __( 'Maxlength', 'wp-recall' ),
-				'notice'	 => __( 'maximum number of symbols per field', 'wp-recall' )
+				'slug'    => 'maxlength',
+				'default' => $this->maxlength,
+				'type'    => 'number',
+				'title'   => __( 'Maxlength', 'wp-recall' ),
+				'notice'  => __( 'maximum number of symbols per field', 'wp-recall' )
 			),
 			array(
-				'type'	 => 'text',
-				'slug'	 => 'pattern',
-				'title'	 => __( 'Phone mask', 'wp-recall' ),
+				'type'   => 'text',
+				'slug'   => 'pattern',
+				'title'  => __( 'Phone mask', 'wp-recall' ),
 				'notice' => __( 'Example: 8\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2} Result: 8(900)123-45-67', 'wp-recall' ),
 			)
 		);

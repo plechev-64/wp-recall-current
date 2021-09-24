@@ -6,7 +6,7 @@ function pfm_sort_array_by_string( $a, $b ) {
 	} elseif ( strlen( $a ) == strlen( $b ) ) {
 		return 0;
 	} else {
-		return -1;
+		return - 1;
 	}
 }
 
@@ -55,12 +55,12 @@ function pfm_filter_content( $content ) {
 
 			$content = str_replace(
 				array(
-				'<!--pre' . $k . '-->',
-				'&lt;!--pre' . $k . '--&gt;'
+					'<!--pre' . $k . '-->',
+					'&lt;!--pre' . $k . '--&gt;'
 				), array(
 				'<pre>' . esc_html( $preContent ) . '</pre>',
 				esc_html( '<pre>' . $preContent . '</pre>' )
-				), $content );
+			), $content );
 		}
 	}
 
@@ -71,35 +71,35 @@ add_filter( 'pfm_content_without_code', 'pfm_filter_allowed_tags', 10 );
 function pfm_filter_allowed_tags( $content ) {
 
 	$allowed_tags = apply_filters( 'pfm_content_allowed_tags', array(
-		'a'			 => array(
-			'href'	 => true,
-			'title'	 => true,
+		'a'          => array(
+			'href'  => true,
+			'title' => true,
 		),
-		'img'		 => array(
-			'src'	 => true,
-			'alt'	 => true,
-			'class'	 => true,
+		'img'        => array(
+			'src'   => true,
+			'alt'   => true,
+			'class' => true,
 		),
-		'p'			 => array(
+		'p'          => array(
 			'style' => true
 		),
 		'blockquote' => array(),
-		'h3'		 => array(),
-		'code'		 => array(),
-		'pre'		 => array(),
-		'del'		 => array(),
-		'b'			 => array(),
-		's'			 => array(),
-		'br'		 => array(),
-		'em'		 => array(),
-		'strong'	 => array(),
-		'details'	 => array(),
-		'summary'	 => array(),
-		'span'		 => array(
-			'class'	 => true,
-			'style'	 => true
+		'h3'         => array(),
+		'code'       => array(),
+		'pre'        => array(),
+		'del'        => array(),
+		'b'          => array(),
+		's'          => array(),
+		'br'         => array(),
+		'em'         => array(),
+		'strong'     => array(),
+		'details'    => array(),
+		'summary'    => array(),
+		'span'       => array(
+			'class' => true,
+			'style' => true
 		)
-		) );
+	) );
 
 	$content = force_balance_tags( wp_kses( $content, $allowed_tags ) );
 
@@ -113,14 +113,14 @@ function pfm_filter_urls( $content ) {
 
 	if ( $urls[0] ) {
 
-		$oembedSupport = (pfm_get_option( 'support-oembed' ) && function_exists( 'wp_oembed_get' )) ? true : false;
+		$oembedSupport = ( pfm_get_option( 'support-oembed' ) && function_exists( 'wp_oembed_get' ) ) ? true : false;
 
 		$sortStrings = array_unique( $urls[2] );
 
 		usort( $sortStrings, 'pfm_sort_array_by_string' );
 
 		$replaceOemb = array();
-		$urlOemb	 = array();
+		$urlOemb     = array();
 
 		foreach ( $sortStrings as $k => $url ) {
 
@@ -129,8 +129,8 @@ function pfm_filter_urls( $content ) {
 				$oembed = wp_oembed_get( $url, array( 'width' => 400, 'height' => 400, 'discover' => false ) );
 
 				if ( $oembed ) {
-					$replaceOemb[]	 = $oembed;
-					$urlOemb[]		 = $url;
+					$replaceOemb[] = $oembed;
+					$urlOemb[]     = $url;
 					//$content = str_replace($url,$oembed,$content);
 					continue;
 				}
@@ -144,11 +144,15 @@ function pfm_filter_urls( $content ) {
 				$replaceUrl = pfm_get_notice( __( 'You are unable to view published links', 'wp-recall' ), 'warning' );
 			}
 
-			$content = preg_replace( '/(\s|^|])(' . str_replace( array( '/', '?' ), array( '\/', '\?' ), $url ) . ')/ui', $replaceUrl, $content );
+			$content = preg_replace( '/(\s|^|])(' . str_replace( array( '/', '?' ), array(
+					'\/',
+					'\?'
+				), $url ) . ')/ui', $replaceUrl, $content );
 		}
 
-		if ( $replaceOemb )
+		if ( $replaceOemb ) {
 			$content = str_replace( $urlOemb, $replaceOemb, $content );
+		}
 	}
 
 
@@ -166,7 +170,7 @@ function pfm_filter_links( $content ) {
 
 			if ( pfm_get_option( 'view-links' ) || pfm_is_can( 'post_create' ) ) {
 
-				$replace = '<a href=' . $links[2][$k] . ' target="_blank" rel="nofollow">' . $links[3][$k] . '</a>';
+				$replace = '<a href=' . $links[2][ $k ] . ' target="_blank" rel="nofollow">' . $links[3][ $k ] . '</a>';
 			} else {
 
 				$replace = pfm_get_notice( __( 'You are unable to view published links', 'wp-recall' ), 'warning' );
@@ -182,8 +186,9 @@ function pfm_filter_links( $content ) {
 add_filter( 'pfm_content_without_code', 'pfm_filter_smilies', 13 );
 function pfm_filter_smilies( $content ) {
 
-	if ( function_exists( 'convert_smilies' ) )
+	if ( function_exists( 'convert_smilies' ) ) {
 		$content = str_replace( 'style="height: 1em; max-height: 1em;"', '', convert_smilies( $content ) );
+	}
 
 	return $content;
 }
@@ -197,7 +202,7 @@ function pfm_filter_imgs( $content ) {
 
 		foreach ( $imgs[0] as $k => $img ) {
 
-			$replace = '<a href=' . $imgs[3][$k] . ' rel=fancybox class=fancybox>' . $img . '</a>';
+			$replace = '<a href=' . $imgs[3][ $k ] . ' rel=fancybox class=fancybox>' . $img . '</a>';
 
 			$content = str_replace( $img, $replace, $content );
 		}
@@ -213,8 +218,9 @@ add_filter( 'pfm_the_post_content', 'pfm_add_topic_meta_box', 20 );
 function pfm_add_topic_meta_box( $content ) {
 	global $PrimeTopic, $PrimePost;
 
-	if ( ! isset( $PrimePost->post_index ) || $PrimePost->post_index != 1 )
+	if ( ! isset( $PrimePost->post_index ) || $PrimePost->post_index != 1 ) {
 		return $content;
+	}
 
 	$content = pfm_get_topic_meta_box( $PrimeTopic->topic_id ) . $content;
 
@@ -225,13 +231,15 @@ add_filter( 'pfm_the_post_content', 'pfm_add_post_edition', 25 );
 function pfm_add_post_edition( $content ) {
 	global $PrimePost;
 
-	if ( ! $PrimePost || ! isset( $PrimePost->post_edit ) || ! $PrimePost->post_edit )
+	if ( ! $PrimePost || ! isset( $PrimePost->post_edit ) || ! $PrimePost->post_edit ) {
 		return $content;
+	}
 
 	$postEdition = pfm_get_post_edition();
 
-	if ( ! $postEdition )
+	if ( ! $postEdition ) {
 		return $content;
+	}
 
 	$content .= '<div class="post-edit-list">';
 
@@ -239,10 +247,10 @@ function pfm_add_post_edition( $content ) {
 
 	foreach ( $postEdition as $edit ) {
 		$content .= '<div class="post-edit-item">'
-			. '<span class="edit-time">' . mysql2date( 'd.m.Y H:i', $edit['time'] ) . '</span>'
-			. '<span class="edit-author">' . $edit['author'] . '</span>'
-			. '<span class="edit-reason">' . __( 'The reason', 'wp-recall' ) . ': ' . ($edit['reason'] ? $edit['reason'] : __( 'not specified', 'wp-recall' )) . '</span>'
-			. '</div>';
+		            . '<span class="edit-time">' . mysql2date( 'd.m.Y H:i', $edit['time'] ) . '</span>'
+		            . '<span class="edit-author">' . $edit['author'] . '</span>'
+		            . '<span class="edit-reason">' . __( 'The reason', 'wp-recall' ) . ': ' . ( $edit['reason'] ? $edit['reason'] : __( 'not specified', 'wp-recall' ) ) . '</span>'
+		            . '</div>';
 	}
 
 	$content .= '</div>';

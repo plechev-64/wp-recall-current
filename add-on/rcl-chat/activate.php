@@ -15,8 +15,8 @@ if ( $wpdb->has_cap( 'collation' ) ) {
 	}
 }
 
-$table	 = RCL_PREF . "chats";
-$sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
+$table = RCL_PREF . "chats";
+$sql   = "CREATE TABLE IF NOT EXISTS " . $table . " (
     chat_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     chat_room VARCHAR(100) NOT NULL,
     chat_status VARCHAR(20) NOT NULL,
@@ -25,8 +25,8 @@ $sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
 
 dbDelta( $sql );
 
-$table	 = RCL_PREF . "chat_users";
-$sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
+$table = RCL_PREF . "chat_users";
+$sql   = "CREATE TABLE IF NOT EXISTS " . $table . " (
     room_place VARCHAR(20) NOT NULL,
     chat_id BIGINT(20) UNSIGNED NOT NULL,
     user_id BIGINT(20) UNSIGNED NOT NULL,
@@ -40,8 +40,8 @@ $sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
 
 dbDelta( $sql );
 
-$table	 = RCL_PREF . "chat_messages";
-$sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
+$table = RCL_PREF . "chat_messages";
+$sql   = "CREATE TABLE IF NOT EXISTS " . $table . " (
     message_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     chat_id  BIGINT(20) UNSIGNED NOT NULL,
     user_id  BIGINT(20) UNSIGNED NOT NULL,
@@ -58,8 +58,8 @@ $sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
 
 dbDelta( $sql );
 
-$table	 = RCL_PREF . "chat_messagemeta";
-$sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
+$table = RCL_PREF . "chat_messagemeta";
+$sql   = "CREATE TABLE IF NOT EXISTS " . $table . " (
     meta_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     message_id BIGINT(20) UNSIGNED NOT NULL,
     meta_key VARCHAR(255) NOT NULL,
@@ -73,10 +73,12 @@ dbDelta( $sql );
 
 global $rcl_options;
 
-if ( ! isset( $rcl_options['chat']['contact_panel'] ) )
+if ( ! isset( $rcl_options['chat']['contact_panel'] ) ) {
 	$rcl_options['chat']['contact_panel'] = 1;
+}
 
-if ( ! isset( $rcl_options['chat']['place_contact_panel'] ) )
+if ( ! isset( $rcl_options['chat']['place_contact_panel'] ) ) {
 	$rcl_options['chat']['place_contact_panel'] = 0;
+}
 
 update_site_option( 'rcl_global_options', $rcl_options );

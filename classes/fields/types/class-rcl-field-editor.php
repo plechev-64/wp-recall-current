@@ -21,8 +21,9 @@ class Rcl_Field_Editor extends Rcl_Field_Abstract {
 
 	function __construct( $args ) {
 
-		if ( isset( $args['editor-id'] ) )
+		if ( isset( $args['editor-id'] ) ) {
 			$args['editor_id'] = $args['editor-id'];
+		}
 
 		parent::__construct( $args );
 	}
@@ -31,9 +32,9 @@ class Rcl_Field_Editor extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'	 => 'tinymce',
-				'type'	 => 'radio',
-				'title'	 => __( 'TinyMCE', 'wp-recall' ),
+				'slug'   => 'tinymce',
+				'type'   => 'radio',
+				'title'  => __( 'TinyMCE', 'wp-recall' ),
 				'values' => array(
 					__( 'Disabled', 'wp-recall' ),
 					__( 'Using TinyMCE', 'wp-recall' )
@@ -41,9 +42,9 @@ class Rcl_Field_Editor extends Rcl_Field_Abstract {
 				'notice' => __( 'May not load with AJAX', 'wp-recall' )
 			),
 			array(
-				'slug'	 => 'media_button',
-				'type'	 => 'radio',
-				'title'	 => __( 'Media uploader WordPress', 'wp-recall' ),
+				'slug'   => 'media_button',
+				'type'   => 'radio',
+				'title'  => __( 'Media uploader WordPress', 'wp-recall' ),
 				'values' => array(
 					__( 'Disabled', 'wp-recall' ),
 					__( 'Enabled', 'wp-recall' )
@@ -56,17 +57,28 @@ class Rcl_Field_Editor extends Rcl_Field_Abstract {
 
 		$editor_id = $this->editor_id ? $this->editor_id : 'editor-' . $this->rand;
 
-		$data = array( 'wpautop'		 => 1
-			, 'media_buttons'	 => $this->media_button
-			, 'textarea_name'	 => $this->input_name
-			, 'textarea_rows'	 => 10
-			, 'tabindex'		 => null
-			, 'editor_css'	 => ''
-			, 'editor_class'	 => 'autosave'
-			, 'teeny'			 => 0
-			, 'dfw'			 => 0
-			, 'tinymce'		 => $this->tinymce ? true : false
-			, 'quicktags'		 => $this->quicktags ? array( 'buttons' => $this->quicktags ) : true
+		$data = array(
+			'wpautop'       => 1
+		,
+			'media_buttons' => $this->media_button
+		,
+			'textarea_name' => $this->input_name
+		,
+			'textarea_rows' => 10
+		,
+			'tabindex'      => null
+		,
+			'editor_css'    => ''
+		,
+			'editor_class'  => 'autosave'
+		,
+			'teeny'         => 0
+		,
+			'dfw'           => 0
+		,
+			'tinymce'       => $this->tinymce ? true : false
+		,
+			'quicktags'     => $this->quicktags ? array( 'buttons' => $this->quicktags ) : true
 		);
 
 		ob_start();
@@ -89,7 +101,7 @@ class Rcl_Field_Editor extends Rcl_Field_Abstract {
 
 		if ( rcl_is_ajax() ) {
 			$content .= '<script>rcl_init_ajax_editor("' . $editor_id . '",' . json_encode( array(
-					'tinymce'	 => $this->tinymce,
+					'tinymce'    => $this->tinymce,
 					'qt_buttons' => $this->quicktags ? $this->quicktags : false
 				) ) . ');</script>';
 		}
@@ -101,8 +113,9 @@ class Rcl_Field_Editor extends Rcl_Field_Abstract {
 
 	function get_value() {
 
-		if ( ! $this->value )
+		if ( ! $this->value ) {
 			return false;
+		}
 
 		return nl2br( $this->value );
 	}

@@ -7,6 +7,7 @@ function rcl_login_form() {
 add_shortcode( 'loginform', 'rcl_get_login_form' );
 function rcl_get_login_form( $atts ) {
 	extract( shortcode_atts( array( 'form' => false ), $atts ) );
+
 	return rcl_get_authorize_form( 'pageform', $form );
 }
 
@@ -18,7 +19,7 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 
 	ob_start();
 
-	echo '<div class="rcl-loginform rcl-loginform-' . ($form ? $form : 'full') . ' panel_lk_recall ' . $type . '">';
+	echo '<div class="rcl-loginform rcl-loginform-' . ( $form ? $form : 'full' ) . ' panel_lk_recall ' . $type . '">';
 
 	if ( $user_ID ) {
 
@@ -34,19 +35,19 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 
 		$buttons = array(
 			rcl_get_button( [
-				'href'	 => $rcl_user_URL,
-				'label'	 => __( 'To personal account', 'wp-recall' ),
-				'icon'	 => 'fa-home'
+				'href'  => $rcl_user_URL,
+				'label' => __( 'To personal account', 'wp-recall' ),
+				'icon'  => 'fa-home'
 			] ),
 			rcl_get_button( [
-				'href'	 => wp_logout_url( home_url() ),
-				'label'	 => __( 'Exit', 'wp-recall' ),
-				'icon'	 => 'fa-external-link'
+				'href'  => wp_logout_url( home_url() ),
+				'label' => __( 'Exit', 'wp-recall' ),
+				'icon'  => 'fa-external-link'
 			] )
 		);
 
 		echo rcl_get_primary_widget_buttons( $buttons );
-	}else {
+	} else {
 
 		$login_form = rcl_get_option( 'login_form_recall' );
 
@@ -56,39 +57,41 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 
 			$buttons = array(
 				rcl_get_button( [
-					'href'	 => $redirect_url . 'action-rcl=login',
-					'label'	 => __( 'Entry', 'wp-recall' ),
-					'icon'	 => 'fa-sign-in'
+					'href'  => $redirect_url . 'action-rcl=login',
+					'label' => __( 'Entry', 'wp-recall' ),
+					'icon'  => 'fa-sign-in'
 				] )
 			);
 
-			if ( $can_register )
+			if ( $can_register ) {
 				$buttons[] = rcl_get_button( [
-					'href'	 => $redirect_url . 'action-rcl=register',
-					'label'	 => __( 'Registration', 'wp-recall' ),
-					'icon'	 => 'fa-book'
-					] );
+					'href'  => $redirect_url . 'action-rcl=register',
+					'label' => __( 'Registration', 'wp-recall' ),
+					'icon'  => 'fa-book'
+				] );
+			}
 
 			echo rcl_get_primary_widget_buttons( $buttons );
-		}else if ( $login_form == 2 ) {
+		} else if ( $login_form == 2 ) {
 
 			$buttons = array(
 				rcl_get_button( [
-					'href'	 => esc_url( wp_login_url( '/' ) ),
-					'label'	 => __( 'Entry', 'wp-recall' ),
-					'icon'	 => 'fa-sign-in'
+					'href'  => esc_url( wp_login_url( '/' ) ),
+					'label' => __( 'Entry', 'wp-recall' ),
+					'icon'  => 'fa-sign-in'
 				] )
 			);
 
-			if ( $can_register )
+			if ( $can_register ) {
 				$buttons[] = rcl_get_button( [
-					'href'	 => esc_url( wp_registration_url() ),
-					'label'	 => __( 'Registration', 'wp-recall' ),
-					'icon'	 => 'fa-book'
-					] );
+					'href'  => esc_url( wp_registration_url() ),
+					'label' => __( 'Registration', 'wp-recall' ),
+					'icon'  => 'fa-book'
+				] );
+			}
 
 			echo rcl_get_primary_widget_buttons( $buttons );
-		}else if ( $login_form == 3 || $type ) {
+		} else if ( $login_form == 3 || $type ) {
 
 			if ( $typeform != 'register' ) {
 				rcl_include_template( 'form-sign.php' );
@@ -103,18 +106,19 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 
 			$buttons = array(
 				rcl_get_button( [
-					'class'	 => 'rcl-login',
-					'label'	 => __( 'Entry', 'wp-recall' ),
-					'icon'	 => 'fa-sign-in'
+					'class' => 'rcl-login',
+					'label' => __( 'Entry', 'wp-recall' ),
+					'icon'  => 'fa-sign-in'
 				] )
 			);
 
-			if ( $can_register )
+			if ( $can_register ) {
 				$buttons[] = rcl_get_button( [
-					'class'	 => 'rcl-register',
-					'label'	 => __( 'Registration', 'wp-recall' ),
-					'icon'	 => 'fa-book'
-					] );
+					'class' => 'rcl-register',
+					'label' => __( 'Registration', 'wp-recall' ),
+					'icon'  => 'fa-book'
+				] );
+			}
 
 			echo rcl_get_primary_widget_buttons( $buttons );
 		}
@@ -122,8 +126,9 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 
 	echo '</div>';
 
-	if ( ! $user_ID && $type )
+	if ( ! $user_ID && $type ) {
 		echo '<script>rcl_do_action("rcl_login_form","' . $type . '")</script>';
+	}
 
 	$html = ob_get_contents();
 	ob_end_clean();
@@ -153,22 +158,28 @@ function rcl_get_loginform_url( $type ) {
 
 	if ( $type == 'login' ) {
 		switch ( rcl_get_option( 'login_form_recall' ) ) {
-			case 1: return rcl_format_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) ) . 'action-rcl=login';
+			case 1:
+				return rcl_format_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) ) . 'action-rcl=login';
 				break;
-			case 2: return wp_login_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) );
+			case 2:
+				return wp_login_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) );
 				break;
-			default: return '#';
+			default:
+				return '#';
 				break;
 		}
 	}
 
 	if ( $type == 'register' ) {
 		switch ( rcl_get_option( 'login_form_recall' ) ) {
-			case 1: return rcl_format_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) ) . 'action-rcl=register';
+			case 1:
+				return rcl_format_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) ) . 'action-rcl=register';
 				break;
-			case 2: return wp_registration_url();
+			case 2:
+				return wp_registration_url();
 				break;
-			default: return '#';
+			default:
+				return '#';
 				break;
 		}
 	}

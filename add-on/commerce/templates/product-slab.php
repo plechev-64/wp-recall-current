@@ -5,8 +5,8 @@
 
 global $post;
 
-$attrWidth	 = (isset( $width ) && is_numeric( $width )) ? 'style="width:' . $width . 'px;"' : '';
-$imagesize	 = (isset( $width )) ? array( $width, $width ) : 'thumbnail';
+$attrWidth = ( isset( $width ) && is_numeric( $width ) ) ? 'style="width:' . $width . 'px;"' : '';
+$imagesize = ( isset( $width ) ) ? array( $width, $width ) : 'thumbnail';
 ?>
 <div class="product" <?php echo $attrWidth; ?> id="product-<?php the_ID(); ?>">
     <a class="product-thumbnail" href="<?php the_permalink(); ?>">
@@ -32,7 +32,7 @@ $imagesize	 = (isset( $width )) ? array( $width, $width ) : 'thumbnail';
 		<?php
 		echo rcl_get_cart_box( $post->ID, array(
 			'variations' => false,
-			'quantity'	 => false,
+			'quantity'   => false,
 		) );
 		?>
     </div>

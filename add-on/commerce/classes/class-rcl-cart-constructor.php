@@ -2,13 +2,14 @@
 
 class Rcl_Cart_Constructor {
 
-	public $fields	 = array();
+	public $fields = array();
 	public $order_id = false;
 
 	function __construct() {
 
-		if ( isset( $_GET['order-id'] ) )
+		if ( isset( $_GET['order-id'] ) ) {
 			$this->order_id = intval( $_GET['order-id'] );
+		}
 
 		$this->init_fields();
 	}
@@ -23,9 +24,9 @@ class Rcl_Cart_Constructor {
 
 			$rclOrder = rcl_get_order( $this->order_id );
 
-			if ( ($user_ID && $rclOrder->user_id != $user_ID) || ! $rclOrder || empty( $rclOrder ) ) {
+			if ( ( $user_ID && $rclOrder->user_id != $user_ID ) || ! $rclOrder || empty( $rclOrder ) ) {
 
-				$content .= rcl_get_notice( ['text' => __( 'Shopping cart is not available', 'wp-recall' ) ] );
+				$content .= rcl_get_notice( [ 'text' => __( 'Shopping cart is not available', 'wp-recall' ) ] );
 			} else {
 
 				$content .= rcl_get_include_template( 'order.php', __FILE__ );
@@ -36,12 +37,12 @@ class Rcl_Cart_Constructor {
 
 			if ( ! $Cart->products_amount ) {
 
-				$content .= rcl_get_notice( ['text' => __( 'Your shopping cart is empty', 'wp-recall' ) ] );
+				$content .= rcl_get_notice( [ 'text' => __( 'Your shopping cart is empty', 'wp-recall' ) ] );
 			} else {
 
 				$content .= rcl_get_include_template( 'cart.php', __FILE__, array(
 					'Cart' => $Cart
-					) );
+				) );
 
 				$content .= $this->get_form_fields();
 			}
@@ -66,32 +67,33 @@ class Rcl_Cart_Constructor {
 
 			foreach ( $this->fields as $field ) {
 
-				if ( ! isset( $field['value_in_key'] ) )
+				if ( ! isset( $field['value_in_key'] ) ) {
 					$field['value_in_key'] = true;
+				}
 
 				$fieldObject = Rcl_Field::setup( $field );
 
 				$content .= '<tr class="cart-field">'
-					. '<td class="field-title">'
-					. '<label>' . $fieldObject->get_title() . '</label>'
-					. '</td>'
-					. '<td class="field-input">'
-					. $fieldObject->get_field_input()
-					. '</td>'
-					. '</tr>';
+				            . '<td class="field-title">'
+				            . '<label>' . $fieldObject->get_title() . '</label>'
+				            . '</td>'
+				            . '<td class="field-input">'
+				            . $fieldObject->get_field_input()
+				            . '</td>'
+				            . '</tr>';
 			}
 
 			$content .= '</table>';
 		}
 
 		$content .= '<div class="submit-box">'
-			. rcl_get_button( array(
-				'label'		 => __( 'Checkout', 'wp-recall' ),
-				'onclick'	 => 'rcl_cart_submit();return false;',
-				'icon'		 => 'fa-shopping-bag'
+		            . rcl_get_button( array(
+				'label'   => __( 'Checkout', 'wp-recall' ),
+				'onclick' => 'rcl_cart_submit();return false;',
+				'icon'    => 'fa-shopping-bag'
 			) )
-			. '<input type="hidden" name="rcl-commerce-action" value="new-order">'
-			. '</div>';
+		            . '<input type="hidden" name="rcl-commerce-action" value="new-order">'
+		            . '</div>';
 
 		$content .= '</form>';
 
@@ -103,10 +105,11 @@ class Rcl_Cart_Constructor {
 	function init_fields() {
 		global $user_ID;
 
-		if ( ! $user_ID )
+		if ( ! $user_ID ) {
 			$this->init_guest_fields();
+		}
 
-		$fields		 = ($cartFields	 = $this->get_cart_fields()) ? array_merge( $this->fields, $cartFields ) : $this->fields;
+		$fields = ( $cartFields = $this->get_cart_fields() ) ? array_merge( $this->fields, $cartFields ) : $this->fields;
 
 		$this->fields = apply_filters( 'rcl_cart_fields', $fields );
 	}
@@ -118,19 +121,19 @@ class Rcl_Cart_Constructor {
 		$fields = array();
 
 		$fields[] = array(
-			'title'		 => __( 'Enter your E-mail', 'wp-recall' ),
-			'slug'		 => 'user_email',
-			'required'	 => 1,
-			'type'		 => 'text'
+			'title'    => __( 'Enter your E-mail', 'wp-recall' ),
+			'slug'     => 'user_email',
+			'required' => 1,
+			'type'     => 'text'
 		);
 
 		if ( ! $this->exist_field( 'first_name' ) ) {
 
 			$fields[] = array(
-				'title'		 => __( 'Your name', 'wp-recall' ),
-				'slug'		 => 'first_name',
-				'required'	 => 1,
-				'type'		 => 'text'
+				'title'    => __( 'Your name', 'wp-recall' ),
+				'slug'     => 'first_name',
+				'required' => 1,
+				'type'     => 'text'
 			);
 		}
 
@@ -141,15 +144,17 @@ class Rcl_Cart_Constructor {
 
 		$profileFields = rcl_get_profile_fields();
 
-		if ( ! $profileFields )
+		if ( ! $profileFields ) {
 			return false;
+		}
 
 		$fields = array();
 
 		foreach ( $profileFields as $field ) {
 
-			if ( ! isset( $field['order'] ) || $field['order'] != 1 )
+			if ( ! isset( $field['order'] ) || $field['order'] != 1 ) {
 				continue;
+			}
 
 			$fields[] = $field;
 		}
@@ -161,8 +166,9 @@ class Rcl_Cart_Constructor {
 
 		foreach ( $this->fields as $field ) {
 
-			if ( $field['slug'] == $meta_key )
+			if ( $field['slug'] == $meta_key ) {
 				return true;
+			}
 		}
 
 		return false;
@@ -172,8 +178,9 @@ class Rcl_Cart_Constructor {
 
 		$cartFields = get_site_option( 'rcl_cart_fields' );
 
-		if ( ! $cartFields )
+		if ( ! $cartFields ) {
 			return false;
+		}
 
 		return $cartFields;
 	}

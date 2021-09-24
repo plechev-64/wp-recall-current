@@ -18,18 +18,19 @@ function rcl_get_feed_list( $atts = array() ) {
 	global $user_ID, $rcl_feed;
 
 	if ( ! $user_ID ) {
-		return apply_filters('rcl_feed_no_login_notice', rcl_get_notice( [
-			'class'	 => 'rcl-feed-notice',
-			'text'	 => __( 'Login or register to view the latest publications and comments from users for which you have subscribed.', 'wp-recall' )
-			] ));
+		return apply_filters( 'rcl_feed_no_login_notice', rcl_get_notice( [
+			'class' => 'rcl-feed-notice',
+			'text'  => __( 'Login or register to view the latest publications and comments from users for which you have subscribed.', 'wp-recall' )
+		] ) );
 	}
 
 	rcl_feed_scripts_init();
 
 	add_filter( 'rcl_rating_user_can', 'rcl_feed_unset_can_vote', 10 );
 
-	if ( ! $atts )
+	if ( ! $atts ) {
 		$atts = array();
+	}
 
 	include_once 'classes/class-rcl-feed-list.php';
 
@@ -39,7 +40,7 @@ function rcl_get_feed_list( $atts = array() ) {
 
 		$rclnavi = new Rcl_PageNavi(
 			'rcl-feed', $list->count_feed(), array(
-			'in_page' => 30
+				'in_page' => 30
 			)
 		);
 
@@ -56,7 +57,7 @@ function rcl_get_feed_list( $atts = array() ) {
 			] );
 	}
 
-	$load = ($rclnavi->in_page) ? 'data-load="' . $list->load . '"' : '';
+	$load = ( $rclnavi->in_page ) ? 'data-load="' . $list->load . '"' : '';
 
 	$content .= '<div id="rcl-feed" data-custom="' . base64_encode( json_encode( $atts ) ) . '" data-feed="' . $list->content . '" ' . $load . '>';
 
@@ -67,14 +68,16 @@ function rcl_get_feed_list( $atts = array() ) {
 		$content .= '</div>';
 	}
 
-	if ( $list->load == 'ajax' && $rclnavi->in_page )
+	if ( $list->load == 'ajax' && $rclnavi->in_page ) {
 		$content .= '<div id="feed-preloader"><div></div></div>'
-			. '<div id="feed-bottom"></div>';
+		            . '<div id="feed-bottom"></div>';
+	}
 
 	$content .= '</div>';
 
-	if ( $list->load == 'pagenavi' && $rclnavi->in_page )
+	if ( $list->load == 'pagenavi' && $rclnavi->in_page ) {
 		$content .= $rclnavi->pagenavi();
+	}
 
 	$list->remove_data();
 

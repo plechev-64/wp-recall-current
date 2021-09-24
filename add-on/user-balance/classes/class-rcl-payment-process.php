@@ -2,8 +2,8 @@
 
 class Rcl_Payment_Process extends Rcl_Payment_Core {
 
-	public $post_id	 = 0;
-	public $ids		 = array();
+	public $post_id = 0;
+	public $ids = array();
 
 	function __construct() {
 		global $post;
@@ -14,22 +14,26 @@ class Rcl_Payment_Process extends Rcl_Payment_Core {
 
 		$this->ids = rcl_get_commerce_option( 'payment_gateways', rcl_get_commerce_option( 'connect_sale' ) );
 
-		if ( ! is_array( $this->ids ) )
+		if ( ! is_array( $this->ids ) ) {
 			$this->ids = array_map( 'trim', explode( ',', $this->ids ) );
+		}
 	}
 
 	function get_id_is_payment() {
 
-		if ( ! rcl_gateways()->gateways )
+		if ( ! rcl_gateways()->gateways ) {
 			return false;
+		}
 
 		foreach ( rcl_gateways()->gateways as $id => $className ) {
 
-			if ( ! in_array( $id, $this->ids ) )
+			if ( ! in_array( $id, $this->ids ) ) {
 				continue;
+			}
 
-			if ( isset( $_REQUEST[rcl_gateways()->gateway( $id )->request] ) )
+			if ( isset( $_REQUEST[ rcl_gateways()->gateway( $id )->request ] ) ) {
 				return $id;
+			}
 		}
 
 		return false;

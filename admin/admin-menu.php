@@ -1,9 +1,10 @@
 <?php
 
-add_filter( 'set-screen-option', function( $status, $option, $value ) {
+add_filter( 'set-screen-option', function ( $status, $option, $value ) {
 	if ( in_array( $option, array( 'addons_per_page', 'templates_per_page' ) ) ) {
 		return ( int ) $value;
 	}
+
 	return $status;
 }, 10, 3 );
 
@@ -15,8 +16,9 @@ function rcl_init_update_notice() {
 
 	$need_update = get_site_option( 'rcl_addons_need_update' );
 
-	if ( ! $need_update )
+	if ( ! $need_update ) {
 		return false;
+	}
 
 	foreach ( $need_update as $addon_id => $data ) {
 
@@ -40,26 +42,26 @@ add_action( 'admin_menu', 'rcl_admin_menu', 19 );
 function rcl_admin_menu() {
 	global $rcl_update_notice;
 
-	$cnt_t	 = isset( $rcl_update_notice['templates'] ) ? count( $rcl_update_notice['templates'] ) : 0;
-	$cnt_a	 = isset( $rcl_update_notice['addons'] ) ? count( $rcl_update_notice['addons'] ) : 0;
+	$cnt_t = isset( $rcl_update_notice['templates'] ) ? count( $rcl_update_notice['templates'] ) : 0;
+	$cnt_a = isset( $rcl_update_notice['addons'] ) ? count( $rcl_update_notice['addons'] ) : 0;
 
-	$notice_t	 = ($cnt_t) ? ' <span class="update-plugins count-' . $cnt_t . '"><span class="plugin-count">' . $cnt_t . '</span></span>' : '';
-	$notice_a	 = ($cnt_a) ? ' <span class="update-plugins count-' . $cnt_a . '"><span class="plugin-count">' . $cnt_a . '</span></span>' : '';
+	$notice_t = ( $cnt_t ) ? ' <span class="update-plugins count-' . $cnt_t . '"><span class="plugin-count">' . $cnt_t . '</span></span>' : '';
+	$notice_a = ( $cnt_a ) ? ' <span class="update-plugins count-' . $cnt_a . '"><span class="plugin-count">' . $cnt_a . '</span></span>' : '';
 
 	add_menu_page( __( 'WP-RECALL', 'wp-recall' ), __( 'WP-RECALL', 'wp-recall' ), 'manage_options', 'manage-wprecall', 'rcl_dashboard' );
 	add_submenu_page( 'manage-wprecall', __( 'Dashboard', 'wp-recall' ), __( 'Dashboard', 'wp-recall' ), 'manage_options', 'manage-wprecall', 'rcl_dashboard' );
 	add_submenu_page( 'manage-wprecall', __( 'SETTINGS', 'wp-recall' ), __( 'SETTINGS', 'wp-recall' ), 'manage_options', 'rcl-options', 'rcl_global_options' );
 	add_submenu_page( 'manage-wprecall', __( 'Repository', 'wp-recall' ), __( 'Repository', 'wp-recall' ), 'manage_options', 'rcl-repository', 'rcl_repository_page' );
-	$hook	 = add_submenu_page( 'manage-wprecall', __( 'Add-ons', 'wp-recall' ) . $notice_a, __( 'Add-ons', 'wp-recall' ) . $notice_a, 'manage_options', 'manage-addon-recall', 'rcl_render_addons_manager' );
+	$hook = add_submenu_page( 'manage-wprecall', __( 'Add-ons', 'wp-recall' ) . $notice_a, __( 'Add-ons', 'wp-recall' ) . $notice_a, 'manage_options', 'manage-addon-recall', 'rcl_render_addons_manager' );
 	add_action( "load-$hook", 'rcl_add_options_addons_manager' );
-	$hook	 = add_submenu_page( 'manage-wprecall', __( 'Templates', 'wp-recall' ) . $notice_t, __( 'Templates', 'wp-recall' ) . $notice_t, 'manage_options', 'manage-templates-recall', 'rcl_render_templates_manager' );
+	$hook = add_submenu_page( 'manage-wprecall', __( 'Templates', 'wp-recall' ) . $notice_t, __( 'Templates', 'wp-recall' ) . $notice_t, 'manage_options', 'manage-templates-recall', 'rcl_render_templates_manager' );
 	add_action( "load-$hook", 'rcl_add_options_templates_manager' );
 	add_submenu_page( 'manage-wprecall', __( 'Tabs manager', 'wp-recall' ), __( 'Tabs manager', 'wp-recall' ), 'manage_options', 'rcl-tabs-manager', 'rcl_admin_tabs_manager' );
 }
 
 function rcl_dashboard() {
 	/** Load WordPress dashboard API */
-	require_once(ABSPATH . 'wp-admin/includes/dashboard.php');
+	require_once( ABSPATH . 'wp-admin/includes/dashboard.php' );
 
 	wp_enqueue_script( 'dashboard' );
 
@@ -73,11 +75,11 @@ function rcl_add_options_addons_manager() {
 
 	require_once "add-on-manager.php";
 
-	$option	 = 'per_page';
-	$args	 = array(
-		'label'		 => __( 'Add-ons', 'wp-recall' ),
-		'default'	 => 100,
-		'option'	 => 'addons_per_page'
+	$option = 'per_page';
+	$args   = array(
+		'label'   => __( 'Add-ons', 'wp-recall' ),
+		'default' => 100,
+		'option'  => 'addons_per_page'
 	);
 
 	add_screen_option( $option, $args );
@@ -91,11 +93,11 @@ function rcl_add_options_templates_manager() {
 
 	require_once "templates-manager.php";
 
-	$option	 = 'per_page';
-	$args	 = array(
-		'label'		 => __( 'Templates', 'wp-recall' ),
-		'default'	 => 100,
-		'option'	 => 'templates_per_page'
+	$option = 'per_page';
+	$args   = array(
+		'label'   => __( 'Templates', 'wp-recall' ),
+		'default' => 100,
+		'option'  => 'templates_per_page'
 	);
 
 	add_screen_option( $option, $args );
@@ -107,19 +109,21 @@ function rcl_add_options_templates_manager() {
 add_action( 'rcl_before_include_addons', 'rcl_template_update_status' );
 function rcl_template_update_status() {
 
-	if ( wp_doing_ajax() )
+	if ( wp_doing_ajax() ) {
 		return false;
+	}
 
 	$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
-	if ( 'manage-templates-recall' != $page )
+	if ( 'manage-templates-recall' != $page ) {
 		return;
+	}
 
 	if ( isset( $_GET['template'] ) && isset( $_GET['action'] ) ) {
 
 		global $wpdb, $user_ID, $active_addons;
 
-		$addon	 = $_GET['template'];
-		$action	 = rcl_wp_list_current_action();
+		$addon  = $_GET['template'];
+		$action = rcl_wp_list_current_action();
 
 		if ( $action == 'connect' ) {
 			rcl_deactivate_addon( get_site_option( 'rcl_active_template' ) );

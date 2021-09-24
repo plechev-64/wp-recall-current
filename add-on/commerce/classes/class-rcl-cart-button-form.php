@@ -9,11 +9,11 @@ class Rcl_Cart_Button_Form {
 	public $product_status;
 	public $label;
 	public $output = array(
-		'price'			 => true,
-		'old_price'		 => true,
-		'variations'	 => true,
-		'quantity'		 => true,
-		'cart_button'	 => true,
+		'price'       => true,
+		'old_price'   => true,
+		'variations'  => true,
+		'quantity'    => true,
+		'cart_button' => true,
 	);
 
 	function __construct( $args ) {
@@ -22,8 +22,9 @@ class Rcl_Cart_Button_Form {
 
 		$this->init_properties( $args );
 
-		if ( ! $this->label )
+		if ( ! $this->label ) {
 			$this->label = __( 'To cart', 'wp-recall' );
+		}
 	}
 
 	function init_properties( $args ) {
@@ -32,30 +33,35 @@ class Rcl_Cart_Button_Form {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( isset( $args[$name] ) )
-				$this->$name = $args[$name];
+			if ( isset( $args[ $name ] ) ) {
+				$this->$name = $args[ $name ];
+			}
 		}
 
-		if ( ! $this->product_id && $post )
+		if ( ! $this->product_id && $post ) {
 			$this->product_id = $post->ID;
+		}
 
-		if ( ! $this->product_price )
+		if ( ! $this->product_price ) {
 			$this->product_price = $this->get_price();
+		}
 
-		if ( ! $this->product_old_price )
+		if ( ! $this->product_old_price ) {
 			$this->product_old_price = $this->get_old_price();
+		}
 
-		$this->product_status = (get_post_meta( $this->product_id, 'outsale', 1 )) ? 0 : 1;
+		$this->product_status = ( get_post_meta( $this->product_id, 'outsale', 1 ) ) ? 0 : 1;
 	}
 
 	function price_box( $Product_Variations = false ) {
 
 		$content = '<span class="product-price">';
 
-		if ( $this->product_price || $Product_Variations && $Product_Variations->get_product_variations( $this->product_id ) )
+		if ( $this->product_price || $Product_Variations && $Product_Variations->get_product_variations( $this->product_id ) ) {
 			$content .= '<span class="current-price">' . $this->product_price . '</span> ' . rcl_get_primary_currency( 1 );
-		else
+		} else {
 			$content .= '<span class="current-price">' . __( 'Free', 'wp-recall' ) . '</span>';
+		}
 
 		$content .= '</span>';
 
@@ -64,8 +70,9 @@ class Rcl_Cart_Button_Form {
 
 	function old_price_box() {
 
-		if ( ! $this->product_old_price )
+		if ( ! $this->product_old_price ) {
 			return false;
+		}
 
 		$content = '<span class="product-old-price">';
 
@@ -108,8 +115,9 @@ class Rcl_Cart_Button_Form {
 
 		$this->output = apply_filters( 'rcl_cart_button_form_args', wp_parse_args( $args, $this->output ), $this->product_id );
 
-		if ( ! $this->output )
+		if ( ! $this->output ) {
 			return false;
+		}
 
 		$PrVars = new Rcl_Product_Variations();
 
@@ -120,9 +128,9 @@ class Rcl_Cart_Button_Form {
 		$content = '<div class="rcl-cart-box">';
 
 		$content .= rcl_get_include_template( 'cart-button-form.php', __FILE__, array(
-			'Cart_Button'		 => apply_filters( 'rcl_cart_button_form', $this ),
+			'Cart_Button'        => apply_filters( 'rcl_cart_button_form', $this ),
 			'Product_Variations' => $PrVars
-			) );
+		) );
 
 		$content .= '</div>';
 
@@ -133,18 +141,18 @@ class Rcl_Cart_Button_Form {
 
 		if ( $this->product_status ) {
 			$content = rcl_get_button( array(
-				'label'		 => $this->label,
-				'onclick'	 => 'rcl_add_to_cart(this);return false;',
-				'icon'		 => 'fa-shopping-cart',
-				'class'		 => 'rcl-in-to-cart'
-				) );
+				'label'   => $this->label,
+				'onclick' => 'rcl_add_to_cart(this);return false;',
+				'icon'    => 'fa-shopping-cart',
+				'class'   => 'rcl-in-to-cart'
+			) );
 		} else {
 			$content = rcl_get_button( array(
-				'label'	 => __( 'Not available', 'wp-recall' ),
-				'icon'	 => 'fa-refresh',
-				'class'	 => 'outsale-product',
+				'label'  => __( 'Not available', 'wp-recall' ),
+				'icon'   => 'fa-refresh',
+				'class'  => 'outsale-product',
 				'status' => 'active'
-				) );
+			) );
 		}
 
 		$content = '<span class="cart-button">' . $content . '</span>';
@@ -154,8 +162,9 @@ class Rcl_Cart_Button_Form {
 
 	function quantity_selector_box() {
 
-		if ( ! $this->product_status )
+		if ( ! $this->product_status ) {
 			return false;
+		}
 
 		$content = '<span class="quantity-selector">';
 
@@ -174,8 +183,9 @@ class Rcl_Cart_Button_Form {
 
 		$productVars = $PrVars->get_product_variations( $product_id );
 
-		if ( ! $productVars )
+		if ( ! $productVars ) {
 			return false;
+		}
 
 		$box_id = rand( 0, 100 );
 
@@ -196,9 +206,9 @@ class Rcl_Cart_Button_Form {
 
 			if ( isset( $variation['empty-first'] ) ) {
 
-				array_unshift( $productVars[$k]['values'], array(
-					'price'	 => "0",
-					'name'	 => $variation['empty-first']
+				array_unshift( $productVars[ $k ]['values'], array(
+					'price' => "0",
+					'name'  => $variation['empty-first']
 				) );
 
 				$variation['empty-value'] = $variation['empty-first'];
@@ -220,11 +230,11 @@ class Rcl_Cart_Button_Form {
 		}
 
 		$content .= '<script>rcl_init_variations({'
-			. 'box_id: ' . $box_id . ','
-			. 'product_id: ' . $this->product_id . ','
-			. 'product_price: ' . $this->product_price . ','
-			. 'variations: ' . json_encode( $productVars )
-			. '});</script>';
+		            . 'box_id: ' . $box_id . ','
+		            . 'product_id: ' . $this->product_id . ','
+		            . 'product_price: ' . $this->product_price . ','
+		            . 'variations: ' . json_encode( $productVars )
+		            . '});</script>';
 
 		$content .= '</div>';
 

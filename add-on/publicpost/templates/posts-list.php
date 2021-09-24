@@ -11,26 +11,26 @@
 <?php
 
 $Table = new Rcl_Table( array(
-	'cols'	 => array(
+	'cols'   => array(
 		array(
-			'align'	 => 'center',
-			'title'	 => __( 'Date', 'wp-recall' ),
-			'width'	 => 15
+			'align' => 'center',
+			'title' => __( 'Date', 'wp-recall' ),
+			'width' => 15
 		),
 		array(
-			'title'	 => __( 'Title', 'wp-recall' ),
-			'width'	 => 65
+			'title' => __( 'Title', 'wp-recall' ),
+			'width' => 65
 		),
 		array(
-			'align'	 => 'center',
-			'title'	 => __( 'Status', 'wp-recall' ),
-			'width'	 => 20
+			'align' => 'center',
+			'title' => __( 'Status', 'wp-recall' ),
+			'width' => 20
 		)
 	),
-	'zebra'	 => true,
-	'class'	 => 'rcl_author_postlist',
+	'zebra'  => true,
+	'class'  => 'rcl_author_postlist',
 	'border' => array( 'table', 'cols', 'rows' )
-	) );
+) );
 ?>
 
 
@@ -42,24 +42,27 @@ $Table = new Rcl_Table( array(
 		?>
 		<?php
 
-		if ( $post->post_status == 'pending' )
-			$status				 = '<span class="status-pending">' . __( 'to be approved', 'wp-recall' ) . '</span>';
-		elseif ( $post->post_status == 'trash' )
-			$status				 = '<span class="status-pending">' . __( 'deleted', 'wp-recall' ) . '</span>';
-		elseif ( $post->post_status == 'draft' )
-			$status				 = '<span class="status-draft">' . __( 'draft', 'wp-recall' ) . '</span>';
-		else
-			$status				 = '<span class="status-publish">' . __( 'published', 'wp-recall' ) . '</span>';
+		if ( $post->post_status == 'pending' ) {
+			$status = '<span class="status-pending">' . __( 'to be approved', 'wp-recall' ) . '</span>';
+		} elseif ( $post->post_status == 'trash' ) {
+			$status = '<span class="status-pending">' . __( 'deleted', 'wp-recall' ) . '</span>';
+		} elseif ( $post->post_status == 'draft' ) {
+			$status = '<span class="status-draft">' . __( 'draft', 'wp-recall' ) . '</span>';
+		} else {
+			$status = '<span class="status-publish">' . __( 'published', 'wp-recall' ) . '</span>';
+		}
 		?>
 
-		<?php $content			 = ''; ?>
-		<?php if ( empty( $post->post_title ) ) $post->post_title	 = "<i class='rcli fa-ellipsis-h' aria-hidden='true'></i>"; ?>
-		<?php $content .= ($post->post_status == 'trash') ? $post->post_title : '<a target="_blank" href="' . $post->guid . '">' . $post->post_title . '</a>'; ?>
+		<?php $content = ''; ?>
+		<?php if ( empty( $post->post_title ) ) {
+			$post->post_title = "<i class='rcli fa-ellipsis-h' aria-hidden='true'></i>";
+		} ?>
+		<?php $content .= ( $post->post_status == 'trash' ) ? $post->post_title : '<a target="_blank" href="' . $post->guid . '">' . $post->post_title . '</a>'; ?>
 
 		<?php
 
 		if ( function_exists( 'rcl_format_rating' ) ) {
-			$rtng = (isset( $ratings[$post->ID] )) ? $ratings[$post->ID] : 0;
+			$rtng    = ( isset( $ratings[ $post->ID ] ) ) ? $ratings[ $post->ID ] : 0;
 			$content .= rcl_rating_block( array( 'value' => $rtng ) );
 		}
 		?>

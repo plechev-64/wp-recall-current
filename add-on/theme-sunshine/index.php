@@ -26,39 +26,39 @@ function rcl_setup_template_options() {
 // регистрируем 3 области виджетов
 function cab_15_sidebar() {
 	register_sidebar( array(
-		'name'			 => "RCL: Сайдбар контента личного кабинета",
-		'id'			 => 'cab_15_sidebar',
-		'description'	 => 'Выводится только в личном кабинете. Справа от контента (сайдбар)',
-		'before_title'	 => '<h3 class="cabinet_sidebar_title">',
-		'after_title'	 => '</h3>',
-		'before_widget'	 => '<div class="cabinet_sidebar">',
-		'after_widget'	 => '</div>'
+		'name'          => "RCL: Сайдбар контента личного кабинета",
+		'id'            => 'cab_15_sidebar',
+		'description'   => 'Выводится только в личном кабинете. Справа от контента (сайдбар)',
+		'before_title'  => '<h3 class="cabinet_sidebar_title">',
+		'after_title'   => '</h3>',
+		'before_widget' => '<div class="cabinet_sidebar">',
+		'after_widget'  => '</div>'
 	) );
 }
 
 add_action( 'widgets_init', 'cab_15_sidebar' );
 function cab_15_sidebar_before() {
 	register_sidebar( array(
-		'name'			 => "RCL: Сайдбар над личным кабинетом",
-		'id'			 => 'cab_15_sidebar_before',
-		'description'	 => 'Выводится только в личном кабинете',
-		'before_title'	 => '<h3 class="cab_title_before">',
-		'after_title'	 => '</h3>',
-		'before_widget'	 => '<div class="cabinet_sidebar_before">',
-		'after_widget'	 => '</div>'
+		'name'          => "RCL: Сайдбар над личным кабинетом",
+		'id'            => 'cab_15_sidebar_before',
+		'description'   => 'Выводится только в личном кабинете',
+		'before_title'  => '<h3 class="cab_title_before">',
+		'after_title'   => '</h3>',
+		'before_widget' => '<div class="cabinet_sidebar_before">',
+		'after_widget'  => '</div>'
 	) );
 }
 
 add_action( 'widgets_init', 'cab_15_sidebar_before' );
 function cab_15_sidebar_after() {
 	register_sidebar( array(
-		'name'			 => "RCL: Сайдбар под личным кабинетом",
-		'id'			 => 'cab_15_sidebar_after',
-		'description'	 => 'Выводится только в личном кабинете',
-		'before_title'	 => '<h3 class="cab_title_after">',
-		'after_title'	 => '</h3>',
-		'before_widget'	 => '<div class="cabinet_sidebar_after">',
-		'after_widget'	 => '</div>'
+		'name'          => "RCL: Сайдбар под личным кабинетом",
+		'id'            => 'cab_15_sidebar_after',
+		'description'   => 'Выводится только в личном кабинете',
+		'before_title'  => '<h3 class="cab_title_after">',
+		'after_title'   => '</h3>',
+		'before_widget' => '<div class="cabinet_sidebar_after">',
+		'after_widget'  => '</div>'
 	) );
 }
 
@@ -82,23 +82,26 @@ function rcl_add_sidebar_area_after() {
 add_filter( 'rcl_inline_styles', 'rcl_add_cover_inline_styles', 10 );
 function rcl_add_cover_inline_styles( $styles ) {
 
-	if ( ! rcl_is_office() )
+	if ( ! rcl_is_office() ) {
 		return $styles;
+	}
 
 	global $user_LK;
 
 	$cover = get_user_meta( $user_LK, 'rcl_cover', 1 );
 
-	if ( ! $cover )
+	if ( ! $cover ) {
 		$cover = rcl_get_option( 'default_cover', 0 );
+	}
 
 	$cover_url = $cover && is_numeric( $cover ) ? wp_get_attachment_image_url( $cover, 'large' ) : $cover;
 
-	if ( ! $cover_url )
+	if ( ! $cover_url ) {
 		$cover_url = rcl_addon_url( 'img/default-cover.jpg', __FILE__ );
+	}
 
-	$dataUrl	 = wp_parse_url( $cover_url );
-	$cover_path	 = untrailingslashit( ABSPATH ) . $dataUrl['path'];
+	$dataUrl    = wp_parse_url( $cover_url );
+	$cover_path = untrailingslashit( ABSPATH ) . $dataUrl['path'];
 
 	$styles .= '#lk-conteyner{background-image: url(' . $cover_url . '?vers=' . filemtime( $cover_path ) . ');}';
 
@@ -108,15 +111,16 @@ function rcl_add_cover_inline_styles( $styles ) {
 add_filter( 'rcl_inline_styles', 'rcl_add_colors_inline_styles', 10 );
 function rcl_add_colors_inline_styles( $styles ) {
 
-	if ( ! rcl_is_office() )
+	if ( ! rcl_is_office() ) {
 		return $styles;
+	}
 
 	$lca_hex = rcl_get_option( 'primary-color' ); // достаем оттуда наш цвет
-	list($r, $g, $b) = sscanf( $lca_hex, "#%02x%02x%02x" );
+	list( $r, $g, $b ) = sscanf( $lca_hex, "#%02x%02x%02x" );
 
-	$rp	 = round( $r * 0.90 );
-	$gp	 = round( $g * 0.90 );
-	$bp	 = round( $b * 0.90 );
+	$rp = round( $r * 0.90 );
+	$gp = round( $g * 0.90 );
+	$bp = round( $b * 0.90 );
 
 	$styles .= '
     #lk-menu a:hover {

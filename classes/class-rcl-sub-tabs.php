@@ -21,9 +21,9 @@ class Rcl_Sub_Tabs {
 
 	function __construct( $subtabs, $parent_id = false ) {
 
-		$this->subtabs		 = $subtabs;
-		$this->parent_id	 = $parent_id;
-		$this->parent_tab	 = rcl_get_tab( $parent_id );
+		$this->subtabs    = $subtabs;
+		$this->parent_id  = $parent_id;
+		$this->parent_tab = rcl_get_tab( $parent_id );
 
 		if ( isset( $_GET['subtab'] ) ) {
 
@@ -44,6 +44,7 @@ class Rcl_Sub_Tabs {
 	function get_sub_content( $master_id ) {
 		$content = $this->get_submenu( $master_id );
 		$content .= $this->get_subtab( $master_id );
+
 		return $content;
 	}
 
@@ -53,8 +54,9 @@ class Rcl_Sub_Tabs {
 
 		foreach ( $this->subtabs as $key => $tab ) {
 
-			if ( ! isset( $tab['name'] ) || ! $tab['name'] )
+			if ( ! isset( $tab['name'] ) || ! $tab['name'] ) {
 				continue;
+			}
 
 			$classes = array( 'rcl-subtab-button' );
 
@@ -65,9 +67,9 @@ class Rcl_Sub_Tabs {
 			}
 
 			$button_args = array(
-				'class'	 => implode( ' ', $classes ),
-				'label'	 => $tab['name'],
-				'href'	 => $this->url_string( $master_id, $tab['id'] ),
+				'class'  => implode( ' ', $classes ),
+				'label'  => $tab['name'],
+				'href'   => $this->url_string( $master_id, $tab['id'] ),
 				'status' => $this->active_tab == $tab['id'] ? 'active' : false
 			);
 
@@ -77,9 +79,9 @@ class Rcl_Sub_Tabs {
 
 			$button_args['data'] = [
 				'post' => rcl_encode_post( [
-					'tab_id'	 => $this->parent_id,
-					'subtab_id'	 => $tab['id'],
-					'master_id'	 => $master_id
+						'tab_id'    => $this->parent_id,
+						'subtab_id' => $tab['id'],
+						'master_id' => $master_id
 					]
 				)
 			];
@@ -96,7 +98,7 @@ class Rcl_Sub_Tabs {
 
 		foreach ( $this->subtabs as $key => $tab ) {
 			if ( isset( $tab['id'] ) && $this->active_tab == $tab['id'] ) {
-				$this->callback = (isset( $tab['callback'] )) ? $tab['callback'] : false;
+				$this->callback = ( isset( $tab['callback'] ) ) ? $tab['callback'] : false;
 			}
 		}
 

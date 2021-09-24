@@ -1,51 +1,59 @@
 /* RCL Login */
 .panel_lk_recall {
-    color:#333;
+    color: #333;
     display: block;
-    line-height: 1.5;                           /*++Twenty16++*/
+    line-height: 1.5; /*++Twenty16++*/
     margin: 0 auto;
     max-width: 320px;
     width: 100%;
 }
+
 .panel_lk_recall.floatform {
-    display:none;
+    display: none;
     left: 50%;
     margin-left: -160px;
     position: absolute;
     z-index: 9999;
 }
+
 div.panel_lk_recall a {
-    border: none;                               /*++Twenty15++*/
-    box-shadow: none;                           /*++Twenty16++*/
+    border: none; /*++Twenty15++*/
+    box-shadow: none; /*++Twenty16++*/
     text-decoration: none;
 }
+
 .panel_lk_recall .form-tab-rcl {
     background: #fff;
     border-radius: 2px;
     display: none;
-    font: 16px/26px Verdana,Tahoma,sans-serif;
+    font: 16px/26px Verdana, Tahoma, sans-serif;
     margin: 3px auto;
     overflow: hidden;
     width: calc(100% - 2px);
 }
+
 .panel_lk_recall.pageform .form-tab-rcl {
     box-shadow: 0 0 1px 1px #bebebe;
 }
+
 .panel_lk_recall.floatform .form-tab-rcl {
     box-shadow: 0 0 20px 4px rgba(0, 0, 0, 0.5);
 }
+
 .panel_lk_recall .form_head {
     display: inline-block;
     overflow: hidden;
     width: 100%;
 }
+
 .panel_lk_recall .form-tab-rcl .form_head a {
     border-bottom: 1px solid #ccc;
     color: #aaa;
     display: block;
     padding: 8px 0;
-    text-align:center;
+    text-align: center;
 }
+
 .panel_lk_recall .form_reg,
 .panel_lk_recall .form_auth {
     background: #e6e7e8;
@@ -55,19 +63,23 @@ div.panel_lk_recall a {
     text-align: center;
     width: 50%;
 }
+
 .panel_lk_recall .form_active {
     background-color: #fff;
     padding: 8px 0;
 }
+
 .panel_lk_recall .form-tab-rcl a.link-tab-rcl:hover {
     color: #555;
 }
+
 .panel_lk_recall .form-block-rcl {
     clear: both;
     line-height: 1.4;
     margin: 0 17px 15px;
     position: relative;
 }
+
 /*end*/
 
 
@@ -82,19 +94,23 @@ div.panel_lk_recall a {
     margin: 5px auto;
     text-transform: none;
 }
+
 .panel_lk_recall .rcl-field-input textarea,
 .panel_lk_recall .rcl-field-input input:not([type="checkbox"]):not([type="radio"]) {
     -webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important;
 }
+
 .panel_lk_recall .rcl-field-input select:focus,
 .panel_lk_recall .rcl-field-input textarea:focus,
 .panel_lk_recall .rcl-field-input input:focus:not([type="file"]):not([type="checkbox"]):not([type="radio"]) {
     background-color: #f7f7f7;
     outline: none;
 }
+
 .panel_lk_recall .rcl-field-input .maxlength {
     font-size: 13px;
 }
+
 /*end*/
 
 
@@ -117,12 +133,14 @@ div.panel_lk_recall a {
     padding: 6px 12px 6px 32px;
     text-transform: none;
     width: 100%;
-    -webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important;  /*chrome banana fix*/
+    -webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important; /*chrome banana fix*/
 }
+
 .panel_lk_recall form-tab-rcl .block-label {
     font-weight: normal;
-    text-align:left;
+    text-align: left;
 }
+
 .rcl-loginform label.block-label {
     background-color: transparent;
     border: none;
@@ -131,6 +149,7 @@ div.panel_lk_recall a {
     padding: 0;
     width: 100%;
 }
+
 /*end*/
 
 
@@ -143,6 +162,7 @@ div.panel_lk_recall a {
     text-transform: uppercase;
     width: 100%;
 }
+
 .form-block-rcl.default-field .rcli {
     color: #538a9a;
     font-size: 16px;
@@ -151,11 +171,13 @@ div.panel_lk_recall a {
     position: absolute;
     top: 10px;
 }
+
 .panel_lk_recall input[type="text"]:focus + .rcli,
 .panel_lk_recall input[type="email"]:focus + .rcli,
 .panel_lk_recall input[type="password"]:focus + .rcli {
     opacity: 1;
 }
+
 .panel_lk_recall .form-block-rcl .required {
     font-size: 14px;
     line-height: normal;
@@ -163,6 +185,7 @@ div.panel_lk_recall a {
     right: 8px;
     top: 10px;
 }
+
 .form-tab-rcl .form-block-rcl a.link-remember-rcl {
     color: #aaa;
     float: right;
@@ -170,28 +193,34 @@ div.panel_lk_recall a {
     margin: 3px 0;
     padding: 8px 0;
 }
+
 .form-block-rcl.form_extend .form-block-rcl {
     margin: 0 0 15px;
 }
+
 .panel_lk_recall .form-block-rcl label .required {
     position: inherit;
 }
+
 .form_rmmbr a {
     background: #e6e7e8;
     float: left;
     text-align: center;
     width: 50%;
 }
+
 .form_auth,
 .form_head.form_rmmbr a:first-child {
     border-right: 1px solid #ccc;
     box-sizing: border-box;
 }
+
 .form-tab-rcl .form-title {
     display: block;
     font-size: 20px;
     text-align: center;
 }
+
 .form-block-rcl .login-error,
 .form-block-rcl .login-message,
 .form-block-rcl [class^="strength"] {
@@ -201,23 +230,50 @@ div.panel_lk_recall a {
     padding: 8px;
     text-align: center;
 }
-.form-block-rcl .strength0 {background:#ccc;width:140px;}
-.form-block-rcl .strength1 {background:#fea6a6;width:140px;}
-.form-block-rcl .strength2 {background:orange;width:55%;}
-.form-block-rcl .strength3 {background:#efed6d;width:60%;}
-.form-block-rcl .strength4 {background:#8de991;width:80%;}
-.form-block-rcl .strength5 {background:#99e3ff;width:100%;}
+
+.form-block-rcl .strength0 {
+    background: #ccc;
+    width: 140px;
+}
+
+.form-block-rcl .strength1 {
+    background: #fea6a6;
+    width: 140px;
+}
+
+.form-block-rcl .strength2 {
+    background: orange;
+    width: 55%;
+}
+
+.form-block-rcl .strength3 {
+    background: #efed6d;
+    width: 60%;
+}
+
+.form-block-rcl .strength4 {
+    background: #8de991;
+    width: 80%;
+}
+
+.form-block-rcl .strength5 {
+    background: #99e3ff;
+    width: 100%;
+}
 
 .panel_lk_recall span.login-error a:hover,
 .panel_lk_recall .form-block-rcl label a:hover {
     text-decoration: underline;
 }
+
 .panel_lk_recall .form-tab-rcl .login-error {
     background: #ffcfcf;
 }
+
 .panel_lk_recall .form-tab-rcl .login-message {
     background: #bfffbd;
 }
+
 /*end*/
 
 
@@ -225,6 +281,7 @@ div.panel_lk_recall a {
 #registerform .rcl-field-core {
     position: relative;
 }
+
 #registerform .maxlength {
     align-items: center;
     background-color: #eaeaea;
@@ -243,40 +300,49 @@ div.panel_lk_recall a {
     top: 0;
     z-index: 10;
 }
+
 #registerform .type-text-input .maxlength {
     height: 100%;
 }
+
 #registerform .rcl-field-notice {
     clear: both;
     font-size: .85em;
 }
+
 #registerform .form-block-rcl .required {
     color: rgb(229, 57, 53);
-    font: bold 15px/normal Verdana,arial;
+    font: bold 15px/normal Verdana, arial;
     left: -15px;
     position: absolute;
     top: 10px;
 }
+
 #registerform .form-block-rcl label .required {
     position: inherit;
 }
+
 #registerform .form-block-rcl {
     margin-bottom: 15px;
     position: relative;
 }
+
 #registerform .form-block-rcl label {
     display: block;
     margin-bottom: 5px;
 }
+
 #registerform .rcl-checkbox-box,
 #registerform .rcl-radio-box {
     display: block;
     padding: 3px 0 0 20px;
 }
+
 #registerform .rcl-checkbox-box label,
 #registerform .rcl-radio-box label {
     display: inline-block;
 }
+
 #registerform textarea,
 #registerform select,
 #registerform input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]) {
@@ -285,7 +351,9 @@ div.panel_lk_recall a {
     width: 100%;
     margin: 0 auto;
 }
+
 #registerform #user_email {
     margin-bottom: 16px;
 }
+
 /*end*/

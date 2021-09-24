@@ -2,8 +2,9 @@
 
 global $wpdb;
 
-if ( ! defined( 'RMAG_PREF' ) )
+if ( ! defined( 'RMAG_PREF' ) ) {
 	define( 'RMAG_PREF', $wpdb->prefix . "rmag_" );
+}
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
@@ -18,8 +19,8 @@ if ( $wpdb->has_cap( 'collation' ) ) {
 	}
 }
 
-$table	 = RMAG_PREF . "users_balance";
-$sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
+$table = RMAG_PREF . "users_balance";
+$sql   = "CREATE TABLE IF NOT EXISTS " . $table . " (
 		user_id BIGINT(20) UNSIGNED NOT NULL,
 		user_balance VARCHAR (20) NOT NULL,
 		PRIMARY KEY  user_id (user_id)
@@ -27,8 +28,8 @@ $sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
 
 dbDelta( $sql );
 
-$table	 = RMAG_PREF . "pay_results";
-$sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
+$table = RMAG_PREF . "pay_results";
+$sql   = "CREATE TABLE IF NOT EXISTS " . $table . " (
 			ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
 			payment_id INT(20) UNSIGNED NOT NULL,
 			user_id BIGINT(20) UNSIGNED NOT NULL,

@@ -2,16 +2,16 @@
 
 class Rcl_Form extends Rcl_Fields {
 
-	public $class		 = '';
-	public $action		 = '';
-	public $method		 = 'post';
-	public $icon		 = 'fa-check-circle';
-	public $target		 = '';
+	public $class = '';
+	public $action = '';
+	public $method = 'post';
+	public $icon = 'fa-check-circle';
+	public $target = '';
 	public $submit;
 	public $submit_args;
-	public $nonce_name	 = '';
+	public $nonce_name = '';
 	public $onclick;
-	public $values		 = array();
+	public $values = array();
 
 	function __construct( $args = false ) {
 
@@ -27,14 +27,15 @@ class Rcl_Form extends Rcl_Fields {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( isset( $args[$name] ) )
-				$this->$name = $args[$name];
+			if ( isset( $args[ $name ] ) ) {
+				$this->$name = $args[ $name ];
+			}
 		}
 	}
 
 	function get_form( $args = false ) {
 
-		$content = '<div class="rcl-form preloader-parent' . ($this->class ? ' ' . $this->class : '') . '">';
+		$content = '<div class="rcl-form preloader-parent' . ( $this->class ? ' ' . $this->class : '' ) . '">';
 
 		$content .= '<form method="' . $this->method . '" action="' . $this->action . '" target="' . $this->target . '">';
 
@@ -42,8 +43,9 @@ class Rcl_Form extends Rcl_Fields {
 
 		$content .= $this->get_submit_box();
 
-		if ( $this->nonce_name )
+		if ( $this->nonce_name ) {
 			$content .= wp_nonce_field( $this->nonce_name, '_wpnonce', true, false );
+		}
 
 		$content .= '</form>';
 
@@ -58,16 +60,16 @@ class Rcl_Form extends Rcl_Fields {
 
 		if ( $this->onclick ) {
 			$content .= rcl_get_button( wp_parse_args( $this->submit_args, array(
-				'label'		 => $this->submit,
-				'icon'		 => $this->icon,
-				'onclick'	 => $this->onclick
-				) ) );
+				'label'   => $this->submit,
+				'icon'    => $this->icon,
+				'onclick' => $this->onclick
+			) ) );
 		} else {
 			$content .= rcl_get_button( wp_parse_args( $this->submit_args, array(
-				'label'	 => $this->submit,
-				'icon'	 => $this->icon,
+				'label'  => $this->submit,
+				'icon'   => $this->icon,
 				'submit' => true
-				) ) );
+			) ) );
 		}
 
 		$content .= '</div>';
@@ -77,8 +79,9 @@ class Rcl_Form extends Rcl_Fields {
 
 	function get_fields_list() {
 
-		if ( ! $this->fields )
+		if ( ! $this->fields ) {
 			return false;
+		}
 
 		$content = '';
 
@@ -93,11 +96,13 @@ class Rcl_Form extends Rcl_Fields {
 
 		$field = $this->get_field( $field_id );
 
-		if ( ! $field )
+		if ( ! $field ) {
 			return false;
+		}
 
-		if ( ! isset( $field->value ) )
-			$field->value = (isset( $this->values[$field->slug] )) ? $this->values[$field->slug] : null;
+		if ( ! isset( $field->value ) ) {
+			$field->value = ( isset( $this->values[ $field->slug ] ) ) ? $this->values[ $field->slug ] : null;
+		}
 
 		return $field->get_field_html();
 	}

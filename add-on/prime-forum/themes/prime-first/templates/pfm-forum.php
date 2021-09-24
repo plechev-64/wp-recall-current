@@ -2,9 +2,9 @@
 
 	<?php if ( pfm_have_forums() ): ?>
 
-		<div class="prime-subforums prime-parent-box">
-			<div class="prime-item-label"><span><?php _e( 'Child forums', 'wp-recall' ); ?></span></div>
-			<div class="prime-subforums-list prime-loop-list">
+        <div class="prime-subforums prime-parent-box">
+            <div class="prime-item-label"><span><?php _e( 'Child forums', 'wp-recall' ); ?></span></div>
+            <div class="prime-subforums-list prime-loop-list">
 
 				<?php while ( pfm_get_next( 'forum' ) ) : ?>
 
@@ -12,8 +12,8 @@
 
 				<?php endwhile; ?>
 
-			</div>
-		</div>
+            </div>
+        </div>
 
 		<?php pfm_reset_forumdata(); ?>
 
@@ -21,9 +21,9 @@
 
 	<?php if ( pfm_have_topics() ): ?>
 
-		<div class="prime-topics prime-parent-box">
-			<div class="prime-item-label"><span><?php _e( 'Forum topics', 'wp-recall' ); ?></span></div>
-			<div class="prime-topics-list prime-loop-list">
+        <div class="prime-topics prime-parent-box">
+            <div class="prime-item-label"><span><?php _e( 'Forum topics', 'wp-recall' ); ?></span></div>
+            <div class="prime-topics-list prime-loop-list">
 
 				<?php pfm_page_navi(); ?>
 
@@ -37,8 +37,8 @@
 
 				<?php pfm_page_navi(); ?>
 
-			</div>
-		</div>
+            </div>
+        </div>
 
 	<?php else: ?>
 

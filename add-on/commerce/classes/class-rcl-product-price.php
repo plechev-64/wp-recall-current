@@ -12,14 +12,15 @@ class Rcl_Product_Price {
 
 	function __construct( $product_id ) {
 
-		$this->product_id	 = $product_id;
+		$this->product_id    = $product_id;
 		$this->product_price = get_post_meta( $this->product_id, 'price-products', 1 );
 	}
 
 	function get_price( $vars = false ) {
 
-		if ( $vars )
+		if ( $vars ) {
 			$this->add_variation_price( $vars );
+		}
 
 		return $this->product_price;
 	}
@@ -31,24 +32,28 @@ class Rcl_Product_Price {
 		//получаем все текущие вариации товара
 		$productVars = $Vars->get_product_variations();
 
-		if ( ! $productVars )
+		if ( ! $productVars ) {
 			return false;
+		}
 
 		foreach ( $productVars as $productVar ) {
 
-			if ( ! isset( $vars[$productVar['slug']] ) )
+			if ( ! isset( $vars[ $productVar['slug'] ] ) ) {
 				continue;
+			}
 
-			$name = $vars[$productVar['slug']][1];
+			$name = $vars[ $productVar['slug'] ][1];
 
 			foreach ( $productVar['values'] as $varValue ) {
 
 				if ( is_array( $name ) ) {
-					if ( ! in_array( $varValue['name'], $name ) )
+					if ( ! in_array( $varValue['name'], $name ) ) {
 						continue;
-				}else {
-					if ( $varValue['name'] != $name )
+					}
+				} else {
+					if ( $varValue['name'] != $name ) {
 						continue;
+					}
 				}
 
 				$this->product_price += $varValue['price'];

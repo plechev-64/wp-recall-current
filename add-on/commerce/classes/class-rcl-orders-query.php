@@ -7,9 +7,9 @@ class Rcl_Orders_Query extends Rcl_Query {
 	function __construct( $as = false ) {
 
 		$table = array(
-			'name'	 => RCL_PREF . "orders",
-			'as'	 => $as ? $as : 'rcl_orders',
-			'cols'	 => array(
+			'name' => RCL_PREF . "orders",
+			'as'   => $as ? $as : 'rcl_orders',
+			'cols' => array(
 				'order_id',
 				'user_id',
 				'order_price',
@@ -32,9 +32,9 @@ class Rcl_Order_Items_Query extends Rcl_Query {
 	function __construct( $as = false ) {
 
 		$table = array(
-			'name'	 => RCL_PREF . "order_items",
-			'as'	 => $as ? $as : 'rcl_order_items',
-			'cols'	 => array(
+			'name' => RCL_PREF . "order_items",
+			'as'   => $as ? $as : 'rcl_order_items',
+			'cols' => array(
 				'order_id',
 				'product_id',
 				'product_price',

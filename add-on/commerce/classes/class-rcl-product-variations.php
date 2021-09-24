@@ -7,9 +7,9 @@
  */
 class Rcl_Product_Variations {
 
-	public $variations			 = array();
+	public $variations = array();
 	public $product_id;
-	public $product_variations	 = array();
+	public $product_variations = array();
 
 	function __construct( $args = false ) {
 
@@ -22,27 +22,30 @@ class Rcl_Product_Variations {
 
 	function init_product_variations( $product_id ) {
 
-		$this->product_variations	 = $this->get_product_variations( $product_id );
-		$this->product_id			 = $product_id;
+		$this->product_variations = $this->get_product_variations( $product_id );
+		$this->product_id         = $product_id;
 	}
 
 	function get_variations( $product_id = false ) {
 
 		$Vars = get_site_option( 'rcl_fields_products-variations' );
 
-		if ( ! $product_id )
+		if ( ! $product_id ) {
 			return $Vars;
+		}
 	}
 
 	function get_variation( $slug ) {
 
-		if ( ! $this->variations )
+		if ( ! $this->variations ) {
 			return false;
+		}
 
 		foreach ( $this->variations as $variation ) {
 
-			if ( $variation['slug'] == $slug )
+			if ( $variation['slug'] == $slug ) {
 				return $variation;
+			}
 		}
 
 		return false;
@@ -50,13 +53,15 @@ class Rcl_Product_Variations {
 
 	function get_variation_title( $slug ) {
 
-		if ( ! $this->variations )
+		if ( ! $this->variations ) {
 			return false;
+		}
 
 		foreach ( $this->variations as $variation ) {
 
-			if ( $variation['slug'] == $slug )
+			if ( $variation['slug'] == $slug ) {
 				return $variation['title'];
+			}
 		}
 
 		return false;
@@ -64,26 +69,30 @@ class Rcl_Product_Variations {
 
 	function get_product_variations( $product_id = false ) {
 
-		if ( ! $this->variations )
+		if ( ! $this->variations ) {
 			return false;
+		}
 
-		if ( ! $product_id || $product_id == $this->product_id )
+		if ( ! $product_id || $product_id == $this->product_id ) {
 			return $this->product_variations;
+		}
 
 		$productVars = apply_filters( 'rcl_product_variations', get_post_meta( $product_id, 'product-variations', 1 ), $product_id, $this );
 
-		if ( ! $productVars )
+		if ( ! $productVars ) {
 			return false;
+		}
 
 		/* удаляем вариации товара, в которых не указана стоимость */
 		foreach ( $productVars as $k => $prVar ) {
 			$values = array();
 			foreach ( $prVar['values'] as $x => $var ) {
-				if ( $var['price'] === '' )
+				if ( $var['price'] === '' ) {
 					continue;
+				}
 				$values[] = $var;
 			}
-			$productVars[$k]['values'] = $values;
+			$productVars[ $k ]['values'] = $values;
 		}
 		/**/
 
@@ -93,8 +102,9 @@ class Rcl_Product_Variations {
 
 			foreach ( $productVars as $prVar ) {
 
-				if ( $variation['slug'] != $prVar['slug'] )
+				if ( $variation['slug'] != $prVar['slug'] ) {
 					continue;
+				}
 
 				$varsData[] = $prVar;
 			}
@@ -107,13 +117,15 @@ class Rcl_Product_Variations {
 
 		$productVars = $this->get_product_variations( $product_id );
 
-		if ( ! $productVars )
+		if ( ! $productVars ) {
 			return false;
+		}
 
 		foreach ( $productVars as $var ) {
 
-			if ( $var['slug'] == $varSlug )
+			if ( $var['slug'] == $varSlug ) {
 				return true;
+			}
 		}
 
 		return false;
@@ -123,8 +135,9 @@ class Rcl_Product_Variations {
 
 		$productVars = $this->get_product_variations( $product_id );
 
-		if ( ! $productVars )
+		if ( ! $productVars ) {
 			return false;
+		}
 
 		foreach ( $productVars as $var ) {
 
@@ -132,8 +145,9 @@ class Rcl_Product_Variations {
 
 				foreach ( $var['values'] as $value ) {
 
-					if ( $value['name'] == $varValue )
+					if ( $value['name'] == $varValue ) {
 						return $value;
+					}
 				}
 			}
 		}

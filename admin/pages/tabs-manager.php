@@ -2,7 +2,7 @@
 
 require_once RCL_PATH . 'admin/classes/class-rcl-tabs-manager.php';
 
-$areaType = (isset( $_GET['area-type'] )) ? $_GET['area-type'] : 'area-menu';
+$areaType = ( isset( $_GET['area-type'] ) ) ? $_GET['area-type'] : 'area-menu';
 
 $tabsManager = new Rcl_Tabs_Manager( $areaType );
 

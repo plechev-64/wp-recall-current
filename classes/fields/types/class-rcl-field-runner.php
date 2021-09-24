@@ -13,9 +13,9 @@
  */
 class Rcl_Field_Runner extends Rcl_Field_Abstract {
 
-	public $value_min	 = 0;
-	public $value_max	 = 100;
-	public $value_step	 = 1;
+	public $value_min = 0;
+	public $value_max = 100;
+	public $value_step = 1;
 	public $unit;
 
 	function __construct( $args ) {
@@ -26,29 +26,29 @@ class Rcl_Field_Runner extends Rcl_Field_Abstract {
 
 		$options = array(
 			array(
-				'slug'			 => 'unit',
-				'default'		 => $this->unit,
-				'placeholder'	 => __( 'For example: km or pcs', 'wp-recall' ),
-				'type'			 => 'text',
-				'title'			 => __( 'Unit', 'wp-recall' )
+				'slug'        => 'unit',
+				'default'     => $this->unit,
+				'placeholder' => __( 'For example: km or pcs', 'wp-recall' ),
+				'type'        => 'text',
+				'title'       => __( 'Unit', 'wp-recall' )
 			),
 			array(
-				'slug'		 => 'value_min',
-				'default'	 => $this->value_min,
-				'type'		 => 'number',
-				'title'		 => __( 'Min', 'wp-recall' ),
+				'slug'    => 'value_min',
+				'default' => $this->value_min,
+				'type'    => 'number',
+				'title'   => __( 'Min', 'wp-recall' ),
 			),
 			array(
-				'slug'		 => 'value_max',
-				'default'	 => $this->value_max,
-				'type'		 => 'number',
-				'title'		 => __( 'Max', 'wp-recall' ),
+				'slug'    => 'value_max',
+				'default' => $this->value_max,
+				'type'    => 'number',
+				'title'   => __( 'Max', 'wp-recall' ),
 			),
 			array(
-				'slug'		 => 'value_step',
-				'default'	 => $this->value_step,
-				'type'		 => 'number',
-				'title'		 => __( 'Step', 'wp-recall' ),
+				'slug'    => 'value_step',
+				'default' => $this->value_step,
+				'type'    => 'number',
+				'title'   => __( 'Step', 'wp-recall' ),
 			)
 		);
 
@@ -62,8 +62,9 @@ class Rcl_Field_Runner extends Rcl_Field_Abstract {
 		$content = '<div id="rcl-runner-' . $this->rand . '" class="rcl-runner rcl-runner-' . $this->rand . '">';
 
 		$content .= '<span class="rcl-runner-value"><span></span>';
-		if ( $this->unit )
+		if ( $this->unit ) {
 			$content .= ' ' . $this->unit;
+		}
 		$content .= '</span>';
 
 		$content .= '<div class="rcl-runner-box"></div>';
@@ -71,11 +72,11 @@ class Rcl_Field_Runner extends Rcl_Field_Abstract {
 		$content .= '</div>';
 
 		$init = 'rcl_init_runner(' . json_encode( array(
-				'id'	 => $this->rand,
-				'value'	 => $this->value ? $this->value : 0,
-				'min'	 => $this->value_min,
-				'max'	 => $this->value_max,
-				'step'	 => $this->value_step
+				'id'    => $this->rand,
+				'value' => $this->value ? $this->value : 0,
+				'min'   => $this->value_min,
+				'max'   => $this->value_max,
+				'step'  => $this->value_step
 			) ) . ');';
 
 		if ( ! rcl_is_ajax() ) {
@@ -89,8 +90,9 @@ class Rcl_Field_Runner extends Rcl_Field_Abstract {
 
 	function get_value() {
 
-		if ( ! $this->value )
+		if ( ! $this->value ) {
 			return false;
+		}
 
 		if ( $this->unit ) {
 			$this->value .= ' ' . $this->unit;

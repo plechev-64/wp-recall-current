@@ -15,8 +15,8 @@ if ( $wpdb->has_cap( 'collation' ) ) {
 	}
 }
 
-$table	 = RCL_PREF . "feeds";
-$sql	 = "CREATE TABLE IF NOT EXISTS " . $table . " (
+$table = RCL_PREF . "feeds";
+$sql   = "CREATE TABLE IF NOT EXISTS " . $table . " (
     feed_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id BIGINT(20) UNSIGNED NOT NULL,
     object_id BIGINT(20) UNSIGNED NOT NULL,

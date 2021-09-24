@@ -5,9 +5,9 @@ global $active_addons, $Rcl_Addons_Manager;
 
 $Rcl_Addons_Manager->get_addons_data();
 
-$cnt_all	 = count( $Rcl_Addons_Manager->addons_data );
-$cnt_act	 = count( $active_addons );
-$cnt_inact	 = $cnt_all - $cnt_act;
+$cnt_all   = count( $Rcl_Addons_Manager->addons_data );
+$cnt_act   = count( $active_addons );
+$cnt_inact = $cnt_all - $cnt_act;
 
 echo '</pre><div class="wrap">';
 
@@ -16,23 +16,29 @@ echo '<div id="icon-plugins" class="icon32"><br></div>
 
 if ( isset( $_GET['update-addon'] ) ) {
 
-	$type		 = 'updated';
+	$type        = 'updated';
 	$text_notice = '';
 
 	switch ( $_GET['update-addon'] ) {
-		case 'activate': $text_notice = __( 'Addition <strong>activated</strong>. New settings may be available on  WP-Recall page', 'wp-recall' );
+		case 'activate':
+			$text_notice = __( 'Addition <strong>activated</strong>. New settings may be available on  WP-Recall page', 'wp-recall' );
 			break;
-		case 'deactivate': $text_notice = __( 'Addition <strong>deactivated</strong>.', 'wp-recall' );
+		case 'deactivate':
+			$text_notice = __( 'Addition <strong>deactivated</strong>.', 'wp-recall' );
 			break;
-		case 'delete': $text_notice = __( 'Files and data additions have been <strong>deleted</strong>.', 'wp-recall' );
+		case 'delete':
+			$text_notice = __( 'Files and data additions have been <strong>deleted</strong>.', 'wp-recall' );
 			break;
-		case 'upload': $text_notice = __( 'Add-on has been successfully loaded. You can activate this add-on.', 'wp-recall' );
+		case 'upload':
+			$text_notice = __( 'Add-on has been successfully loaded. You can activate this add-on.', 'wp-recall' );
 			break;
-		case 'error-info': $text_notice = __( 'Add-on has not been loaded. Correct headers not found.', 'wp-recall' );
-			$type		 = 'error';
+		case 'error-info':
+			$text_notice = __( 'Add-on has not been loaded. Correct headers not found.', 'wp-recall' );
+			$type        = 'error';
 			break;
-		case 'error-activate': $text_notice = $_GET['error-text'];
-			$type		 = 'error';
+		case 'error-activate':
+			$text_notice = $_GET['error-text'];
+			$type        = 'error';
 			break;
 	}
 
@@ -80,12 +86,12 @@ echo '<h4>' . __( 'Install the add-on to WP-Recall format .ZIP', 'wp-recall' ) .
 $Rcl_Addons_Manager->prepare_items();
 ?>
 <form method="get" class="rcl-repository-list">
-	<input type="hidden" name="page" value="manage-addon-recall">
+    <input type="hidden" name="page" value="manage-addon-recall">
 	<?php echo $Rcl_Addons_Manager->search_box( __( 'Search by name', 'wp-recall' ), 'search_id' ); ?>
 </form>
 
 <form method="post" class="rcl-repository-list">
-	<input type="hidden" name="page" value="manage-addon-recall">
+    <input type="hidden" name="page" value="manage-addon-recall">
 	<?php
 	//$Rcl_Addons_Manager->search_box( __( 'Search by name', 'wp-recall' ), 'search_id' );
 	$Rcl_Addons_Manager->display();

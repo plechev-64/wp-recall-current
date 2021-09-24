@@ -6,14 +6,14 @@ function rcl_get_chats( $args ) {
 
 function rcl_get_chat( $chat_id ) {
 	return RQ::tbl( new Rcl_Chats_Query() )->where( array(
-			'chat_id' => $chat_id
-		) )->get_row();
+		'chat_id' => $chat_id
+	) )->get_row();
 }
 
 function rcl_get_chat_by_room( $chat_room ) {
 	return RQ::tbl( new Rcl_Chats_Query() )->where( array(
-			'chat_room' => $chat_room
-		) )->get_row();
+		'chat_room' => $chat_room
+	) )->get_row();
 }
 
 function rcl_insert_chat( $chat_room, $chat_status ) {
@@ -21,8 +21,8 @@ function rcl_insert_chat( $chat_room, $chat_status ) {
 
 	$result = $wpdb->insert(
 		RCL_PREF . 'chats', array(
-		'chat_room'		 => $chat_room,
-		'chat_status'	 => $chat_status
+			'chat_room'   => $chat_room,
+			'chat_status' => $chat_status
 		)
 	);
 
@@ -66,8 +66,9 @@ function rcl_chat_remove_messages( $chat_id, $user_id = false ) {
 		'chat_id' => $chat_id
 	);
 
-	if ( $user_id )
+	if ( $user_id ) {
 		$args['user_id'] = $user_id;
+	}
 
 	//получаем все сообщения в этом чате
 	$messages = rcl_chat_get_messages( $args );
@@ -96,31 +97,31 @@ function rcl_chat_delete_user( $chat_id, $user_id ) {
 
 function rcl_chat_get_users( $chat_id ) {
 	return RQ::tbl( new Rcl_Chat_Users_Query() )->select( [
-			'user_id'
-		] )->where( array(
-			'chat_id' => $chat_id,
-		) )->get_col();
+		'user_id'
+	] )->where( array(
+		'chat_id' => $chat_id,
+	) )->get_col();
 }
 
 function rcl_chat_get_user_status( $chat_id, $user_id ) {
-	return RQ::tbl( new Rcl_Chat_Users_Query() )->select( ['user_status' ] )->where( array(
-			'chat_id'	 => $chat_id,
-			'user_id'	 => $user_id
-		) )->get_var();
+	return RQ::tbl( new Rcl_Chat_Users_Query() )->select( [ 'user_status' ] )->where( array(
+		'chat_id' => $chat_id,
+		'user_id' => $user_id
+	) )->get_var();
 }
 
 function rcl_chat_insert_user( $chat_id, $user_id, $status = 1, $activity = 1 ) {
 	global $wpdb;
 
-	$user_activity = ($activity) ? current_time( 'mysql' ) : '0000-00-00 00:00:00';
+	$user_activity = ( $activity ) ? current_time( 'mysql' ) : '0000-00-00 00:00:00';
 
 	$args = array(
-		'room_place'	 => $chat_id . ':' . $user_id,
-		'chat_id'		 => $chat_id,
-		'user_id'		 => $user_id,
-		'user_activity'	 => $user_activity,
-		'user_write'	 => 0,
-		'user_status'	 => $status
+		'room_place'    => $chat_id . ':' . $user_id,
+		'chat_id'       => $chat_id,
+		'user_id'       => $user_id,
+		'user_activity' => $user_activity,
+		'user_write'    => 0,
+		'user_status'   => $status
 	);
 
 	$result = $wpdb->insert(
@@ -156,15 +157,15 @@ function rcl_chat_count_messages( $args ) {
 
 function rcl_chat_get_message( $message_id ) {
 	return RQ::tbl( new Rcl_Chat_Messages_Query() )->where( array(
-			'message_id' => $message_id
-		) )->get_row();
+		'message_id' => $message_id
+	) )->get_row();
 }
 
 function rcl_chat_get_message_meta( $message_id, $meta_key ) {
-	return RQ::tbl( new Rcl_Chat_Messagemeta_Query() )->select( ['meta_value' ] )->where( array(
-			'message_id' => $message_id,
-			'meta_key'	 => $meta_key
-		) )->get_var();
+	return RQ::tbl( new Rcl_Chat_Messagemeta_Query() )->select( [ 'meta_value' ] )->where( array(
+		'message_id' => $message_id,
+		'meta_key'   => $meta_key
+	) )->get_var();
 }
 
 function rcl_chat_add_message_meta( $message_id, $meta_key, $meta_value ) {
@@ -172,7 +173,7 @@ function rcl_chat_add_message_meta( $message_id, $meta_key, $meta_value ) {
 
 	$args = array(
 		'message_id' => $message_id,
-		'meta_key'	 => $meta_key,
+		'meta_key'   => $meta_key,
 		'meta_value' => $meta_value
 	);
 
@@ -192,8 +193,9 @@ function rcl_chat_delete_message_meta( $message_id, $meta_key = false ) {
 
 	$sql = "DELETE FROM " . RCL_PREF . "chat_messagemeta WHERE message_id = '$message_id'";
 
-	if ( $meta_key )
+	if ( $meta_key ) {
 		$sql .= "AND meta_key = '$meta_key'";
+	}
 
 	$result = $wpdb->query( $sql );
 
@@ -204,12 +206,16 @@ function rcl_chat_update_user_status( $chat_id, $user_id, $status ) {
 	global $wpdb;
 
 	$result = $wpdb->query( "INSERT INTO " . RCL_PREF . "chat_users "
-		. "(`room_place`, `chat_id`, `user_id`, `user_activity`, `user_write`, `user_status`) "
-		. "VALUES('$chat_id:$user_id', $chat_id, $user_id, '" . current_time( 'mysql' ) . "', 0, $status) "
-		. "ON DUPLICATE KEY UPDATE user_status='$status'" );
+	                        . "(`room_place`, `chat_id`, `user_id`, `user_activity`, `user_write`, `user_status`) "
+	                        . "VALUES('$chat_id:$user_id', $chat_id, $user_id, '" . current_time( 'mysql' ) . "', 0, $status) "
+	                        . "ON DUPLICATE KEY UPDATE user_status='$status'" );
 
 	if ( ! $result ) {
-		rcl_add_log( 'rcl_chat_update_user_status: ' . __( 'Failed to refresh user status in the chat', 'wp-recall' ), array( $chat_id, $user_id, $status ) );
+		rcl_add_log( 'rcl_chat_update_user_status: ' . __( 'Failed to refresh user status in the chat', 'wp-recall' ), array(
+			$chat_id,
+			$user_id,
+			$status
+		) );
 	}
 
 	return $result;
@@ -228,31 +234,33 @@ function rcl_chat_excerpt( $string ) {
 
 	$string = wp_kses( $string, array() );
 
-	if ( iconv_strlen( $string, 'utf-8' ) <= $max )
+	if ( iconv_strlen( $string, 'utf-8' ) <= $max ) {
 		return $string;
+	}
 
-	$string	 = substr( $string, 0, $max );
-	$string	 = rtrim( $string, "!,.-" );
-	$string	 = substr( $string, 0, strrpos( $string, ' ' ) );
+	$string = substr( $string, 0, $max );
+	$string = rtrim( $string, "!,.-" );
+	$string = substr( $string, 0, strrpos( $string, ' ' ) );
+
 	return $string . "… ";
 }
 
 function rcl_chat_noread_messages_amount( $user_id ) {
 	return RQ::tbl( new Rcl_Chat_Messages_Query() )->where( array(
-			'private_key'	 => $user_id,
-			'message_status' => 0
-		) )->get_count();
+		'private_key'    => $user_id,
+		'message_status' => 0
+	) )->get_count();
 }
 
 function rcl_chat_get_important_messages( $user_id, $limit ) {
 
 	$messagesData = RQ::tbl( new Rcl_Chat_Messages_Query() )
-		->join( 'message_id', RQ::tbl( new Rcl_Chat_Messagemeta_Query() )
-			->where( ['meta_key' => 'important:' . $user_id ] )
-		)
-		->orderby( 'message_time' )
-		->limit( $limit[1], $limit[0] )
-		->get_results( false, ARRAY_A );
+	                  ->join( 'message_id', RQ::tbl( new Rcl_Chat_Messagemeta_Query() )
+	                                          ->where( [ 'meta_key' => 'important:' . $user_id ] )
+	                  )
+	                  ->orderby( 'message_time' )
+	                  ->limit( $limit[1], $limit[0] )
+	                  ->get_results( false, ARRAY_A );
 
 	return stripslashes_deep( $messagesData );
 }
@@ -260,10 +268,10 @@ function rcl_chat_get_important_messages( $user_id, $limit ) {
 function rcl_chat_count_important_messages( $user_id ) {
 
 	return RQ::tbl( new Rcl_Chat_Messages_Query() )
-			->join( 'message_id', RQ::tbl( new Rcl_Chat_Messagemeta_Query() )
-				->where( ['meta_key' => 'important:' . $user_id ] )
-			)
-			->get_count();
+	         ->join( 'message_id', RQ::tbl( new Rcl_Chat_Messagemeta_Query() )
+	                                 ->where( [ 'meta_key' => 'important:' . $user_id ] )
+	         )
+	         ->get_count();
 }
 
 function rcl_chat_get_new_messages( $post ) {
@@ -271,23 +279,25 @@ function rcl_chat_get_new_messages( $post ) {
 
 	$chat_room = rcl_chat_token_decode( $post->token );
 
-	if ( ! rcl_get_chat_by_room( $chat_room ) )
+	if ( ! rcl_get_chat_by_room( $chat_room ) ) {
 		return false;
+	}
 
 	$content = '';
 
 	require_once 'class-rcl-chat.php';
 	$chat = new Rcl_Chat( array(
-		'chat_room'			 => $chat_room,
-		'user_write'		 => $post->user_write,
-		'update_activity'	 => $post->update_activity
-		) );
+		'chat_room'       => $chat_room,
+		'user_write'      => $post->user_write,
+		'update_activity' => $post->update_activity
+	) );
 
 	if ( $post->last_activity ) {
 
-		$chat->query['where'][]	 = "message_time > '$post->last_activity'";
-		if ( $user_ID )
-			$chat->query['where'][]	 = "user_id != '$user_ID'";
+		$chat->query['where'][] = "message_time > '$post->last_activity'";
+		if ( $user_ID ) {
+			$chat->query['where'][] = "user_id != '$user_ID'";
+		}
 
 		$messages = $chat->get_messages();
 
@@ -305,11 +315,12 @@ function rcl_chat_get_new_messages( $post ) {
 		$res['content'] = $content;
 	}
 
-	if ( $activity		 = $chat->get_current_activity() )
-		$res['users']	 = $activity;
+	if ( $activity = $chat->get_current_activity() ) {
+		$res['users'] = $activity;
+	}
 
-	$res['success']		 = true;
-	$res['token']		 = $post->token;
+	$res['success']      = true;
+	$res['token']        = $post->token;
 	$res['current_time'] = current_time( 'mysql' );
 
 	return $res;

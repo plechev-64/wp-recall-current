@@ -15,13 +15,13 @@
     </div>
 
 	<?php if ( $thumbnail && has_post_thumbnail() ) { ?>
-		<div class="post-group-thumb"><?php the_post_thumbnail( 'thumbnail' ); ?></div>
+        <div class="post-group-thumb"><?php the_post_thumbnail( 'thumbnail' ); ?></div>
 	<?php } ?>
 
 	<?php if ( $excerpt ) { ?>
-		<div class="post-group-content">
+        <div class="post-group-content">
 			<?php the_excerpt(); ?>
-		</div>
+        </div>
 	<?php } ?>
 
 </div>

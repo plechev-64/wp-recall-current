@@ -7,29 +7,30 @@ class PrimePageNavi extends Rcl_PageNavi {
 	function __construct( $args = array() ) {
 		global $PrimeQuery;
 
-		if ( $args )
+		if ( $args ) {
 			$this->init_properties( $args );
+		}
 
 		$currentPage = 1;
 
 		if ( $this->type == 'global' ) {
 			$itemsAmount = $PrimeQuery->all_items;
-			$inPage		 = $PrimeQuery->number;
+			$inPage      = $PrimeQuery->number;
 			$currentPage = $PrimeQuery->current_page;
 		} else if ( $this->type == 'topic' ) {
 			global $PrimeTopic;
 			$itemsAmount = $PrimeTopic->post_count;
-			$inPage		 = $PrimeQuery->posts_query->number;
+			$inPage      = $PrimeQuery->posts_query->number;
 		} else if ( $this->type == 'forum' ) {
 			global $PrimeForum;
 			$itemsAmount = $PrimeForum->topic_count;
-			$inPage		 = $PrimeQuery->topics_query->number;
+			$inPage      = $PrimeQuery->topics_query->number;
 		}
 
 		parent::__construct( false, $itemsAmount, array(
-			'in_page'		 => $inPage,
-			'current_page'	 => $currentPage,
-			'ajax'			 => false
+				'in_page'      => $inPage,
+				'current_page' => $currentPage,
+				'ajax'         => false
 			)
 		);
 	}
@@ -39,8 +40,9 @@ class PrimePageNavi extends Rcl_PageNavi {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( isset( $args[$name] ) )
-				$this->$name = $args[$name];
+			if ( isset( $args[ $name ] ) ) {
+				$this->$name = $args[ $name ];
+			}
 		}
 	}
 
@@ -57,7 +59,9 @@ class PrimePageNavi extends Rcl_PageNavi {
 					return add_query_arg( array( 'pfm-page' => $page_id, 'fs' => $PrimeQuery->vars['pfm-search'] ) );
 				}
 				if ( $PrimeQuery->is_author ) {
-					return add_query_arg( array( 'pfm-page' => $page_id, 'pfm-author' => $PrimeQuery->vars['pfm-author'] ) );
+					return add_query_arg( array( 'pfm-page'   => $page_id,
+					                             'pfm-author' => $PrimeQuery->vars['pfm-author']
+					) );
 				}
 			}
 		} else if ( $this->type == 'global' ) {

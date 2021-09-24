@@ -51,10 +51,10 @@ echo '<h4>' . __( 'Install the add-on to WP-Recall format .ZIP', 'wp-recall' ) .
 $Rcl_Templates_Manager->prepare_items();
 ?>
 
-<form method="post">
-	<input type="hidden" name="page" value="manage-addon-recall">
-	<?php
-	$Rcl_Templates_Manager->search_box( 'Search by name', 'search_id' );
-	$Rcl_Templates_Manager->display();
-	echo '</form></div>';
+    <form method="post">
+        <input type="hidden" name="page" value="manage-addon-recall">
+<?php
+$Rcl_Templates_Manager->search_box( 'Search by name', 'search_id' );
+$Rcl_Templates_Manager->display();
+echo '</form></div>';
 

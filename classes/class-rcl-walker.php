@@ -11,13 +11,15 @@ class Rcl_Walker {
 
 	function get_item( $name, $value ) {
 
-		if ( ! $this->items )
+		if ( ! $this->items ) {
 			return false;
+		}
 
 		foreach ( $this->items as $item ) {
 
-			if ( isset( $item->$name ) && $item->$name == $value )
+			if ( isset( $item->$name ) && $item->$name == $value ) {
 				return $item;
+			}
 		}
 
 		return false;
@@ -25,22 +27,26 @@ class Rcl_Walker {
 
 	function get_item_value( $byname, $nameValue, $getName ) {
 
-		if ( ! $this->items )
+		if ( ! $this->items ) {
 			return false;
+		}
 
-		if ( ! $item = $this->get_item( $byname, $nameValue ) )
+		if ( ! $item = $this->get_item( $byname, $nameValue ) ) {
 			return false;
+		}
 
 		return isset( $item->$getName ) ? $item->$getName : false;
 	}
 
 	function get_items( $args = false ) {
 
-		if ( ! $this->items )
+		if ( ! $this->items ) {
 			return false;
+		}
 
-		if ( ! $args )
+		if ( ! $args ) {
 			return $this->items;
+		}
 
 		$items = array();
 		foreach ( $this->items as $item ) {
@@ -60,8 +66,9 @@ class Rcl_Walker {
 				}
 			}
 
-			if ( $correct )
+			if ( $correct ) {
 				$items[] = $item;
+			}
 		}
 
 		return $items;
@@ -69,13 +76,15 @@ class Rcl_Walker {
 
 	function get_field_values( $field_name ) {
 
-		if ( ! $this->items )
+		if ( ! $this->items ) {
 			return false;
+		}
 
 		$fields = array();
 		foreach ( $this->items as $item ) {
-			if ( ! isset( $item->$field_name ) )
+			if ( ! isset( $item->$field_name ) ) {
 				continue;
+			}
 			$fields[] = $item->$field_name;
 		}
 
@@ -84,14 +93,16 @@ class Rcl_Walker {
 
 	function get_index_values( $index_field, $value_field ) {
 
-		if ( ! $this->items )
+		if ( ! $this->items ) {
 			return false;
+		}
 
 		$pack = array();
 		foreach ( $this->items as $item ) {
-			if ( ! isset( $item->$index_field ) || ! isset( $item->$value_field ) )
+			if ( ! isset( $item->$index_field ) || ! isset( $item->$value_field ) ) {
 				continue;
-			$pack[$item->$index_field] = $item->$value_field;
+			}
+			$pack[ $item->$index_field ] = $item->$value_field;
 		}
 
 		return $pack;
@@ -99,13 +110,15 @@ class Rcl_Walker {
 
 	function is_set( $name, $value ) {
 
-		if ( ! $this->items )
+		if ( ! $this->items ) {
 			return false;
+		}
 
 		foreach ( $this->items as $item ) {
 
-			if ( isset( $item->$name ) && $item->$name == $value )
+			if ( isset( $item->$name ) && $item->$name == $value ) {
 				return true;
+			}
 		}
 
 		return false;

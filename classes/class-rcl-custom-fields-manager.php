@@ -19,30 +19,34 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 	public $fields;
 	public $name_field;
 	public $new_slug;
-	public $meta_delete		 = false;
-	public $defaultOptions	 = array();
+	public $meta_delete = false;
+	public $defaultOptions = array();
 
 	function __construct( $post_type, $options = false ) {
 
-		$this->create_field		 = (isset( $options['create-field'] )) ? $options['create-field'] : true;
-		$this->empty_field		 = (isset( $options['empty-field'] )) ? $options['empty-field'] : true;
-		$this->select_type		 = (isset( $options['select-type'] )) ? $options['select-type'] : true;
-		$this->meta_key			 = (isset( $options['meta-key'] )) ? $options['meta-key'] : true;
-		$this->exist_placeholder = (isset( $options['placeholder'] )) ? $options['placeholder'] : true;
-		$this->sortable			 = (isset( $options['sortable'] )) ? $options['sortable'] : true;
-		$this->types			 = (isset( $options['types'] )) ? $options['types'] : array();
-		$this->meta_delete		 = (isset( $options['meta_delete'] )) ? $options['meta_delete'] : false;
-		$this->primary			 = $options;
-		$this->post_type		 = $post_type;
+		$this->create_field      = ( isset( $options['create-field'] ) ) ? $options['create-field'] : true;
+		$this->empty_field       = ( isset( $options['empty-field'] ) ) ? $options['empty-field'] : true;
+		$this->select_type       = ( isset( $options['select-type'] ) ) ? $options['select-type'] : true;
+		$this->meta_key          = ( isset( $options['meta-key'] ) ) ? $options['meta-key'] : true;
+		$this->exist_placeholder = ( isset( $options['placeholder'] ) ) ? $options['placeholder'] : true;
+		$this->sortable          = ( isset( $options['sortable'] ) ) ? $options['sortable'] : true;
+		$this->types             = ( isset( $options['types'] ) ) ? $options['types'] : array();
+		$this->meta_delete       = ( isset( $options['meta_delete'] ) ) ? $options['meta_delete'] : false;
+		$this->primary           = $options;
+		$this->post_type         = $post_type;
 
 		switch ( $this->post_type ) {
-			case 'post': $name_option = 'rcl_fields_post_' . $this->primary['id'];
+			case 'post':
+				$name_option = 'rcl_fields_post_' . $this->primary['id'];
 				break;
-			case 'orderform': $name_option = 'rcl_cart_fields';
+			case 'orderform':
+				$name_option = 'rcl_cart_fields';
 				break;
-			case 'profile': $name_option = 'rcl_profile_fields';
+			case 'profile':
+				$name_option = 'rcl_profile_fields';
 				break;
-			default: $name_option = 'rcl_fields_' . $this->post_type;
+			default:
+				$name_option = 'rcl_fields_' . $this->post_type;
 		}
 
 		$this->name_option = $name_option;
@@ -55,23 +59,23 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 	function get_field_types() {
 
 		$types = array(
-			'text'			 => __( 'Text', 'wp-recall' ),
-			'textarea'		 => __( 'Multiline text area', 'wp-recall' ),
-			'select'		 => __( 'Select', 'wp-recall' ),
-			'multiselect'	 => __( 'MultiSelect', 'wp-recall' ),
-			'checkbox'		 => __( 'Checkbox', 'wp-recall' ),
-			'radio'			 => __( 'Radiobutton', 'wp-recall' ),
-			'email'			 => __( 'E-mail', 'wp-recall' ),
-			'tel'			 => __( 'Phone', 'wp-recall' ),
-			'number'		 => __( 'Number', 'wp-recall' ),
-			'date'			 => __( 'Date', 'wp-recall' ),
-			'time'			 => __( 'Time', 'wp-recall' ),
-			'url'			 => __( 'Url', 'wp-recall' ),
-			'agree'			 => __( 'Agreement', 'wp-recall' ),
-			'file'			 => __( 'File', 'wp-recall' ),
-			'dynamic'		 => __( 'Dynamic', 'wp-recall' ),
-			'runner'		 => __( 'Runner', 'wp-recall' ),
-			'range'			 => __( 'Range', 'wp-recall' ),
+			'text'        => __( 'Text', 'wp-recall' ),
+			'textarea'    => __( 'Multiline text area', 'wp-recall' ),
+			'select'      => __( 'Select', 'wp-recall' ),
+			'multiselect' => __( 'MultiSelect', 'wp-recall' ),
+			'checkbox'    => __( 'Checkbox', 'wp-recall' ),
+			'radio'       => __( 'Radiobutton', 'wp-recall' ),
+			'email'       => __( 'E-mail', 'wp-recall' ),
+			'tel'         => __( 'Phone', 'wp-recall' ),
+			'number'      => __( 'Number', 'wp-recall' ),
+			'date'        => __( 'Date', 'wp-recall' ),
+			'time'        => __( 'Time', 'wp-recall' ),
+			'url'         => __( 'Url', 'wp-recall' ),
+			'agree'       => __( 'Agreement', 'wp-recall' ),
+			'file'        => __( 'File', 'wp-recall' ),
+			'dynamic'     => __( 'Dynamic', 'wp-recall' ),
+			'runner'      => __( 'Runner', 'wp-recall' ),
+			'range'       => __( 'Range', 'wp-recall' ),
 			//'color'=>__('Color','wp-recall')
 		);
 
@@ -81,10 +85,11 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 			foreach ( $types as $key => $fieldname ) {
 
-				if ( ! in_array( $key, $this->types ) )
+				if ( ! in_array( $key, $this->types ) ) {
 					continue;
+				}
 
-				$newFields[$key] = $fieldname;
+				$newFields[ $key ] = $fieldname;
 			}
 
 			$types = $newFields;
@@ -112,21 +117,23 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$form .= $this->loop( $this->get_active_fields() );
 
-		if ( $this->create_field && $this->empty_field )
+		if ( $this->create_field && $this->empty_field ) {
 			$form .= $this->empty_field();
+		}
 
 		$form .= '</ul>';
 
 		$form .= "<div class=fields-submit>";
 
-		if ( $this->create_field )
+		if ( $this->create_field ) {
 			$form .= "<input type=button onclick='rcl_get_new_custom_field();' class='add-field-button button-secondary right' value='+ " . __( 'Add field', 'wp-recall' ) . "'>";
+		}
 
 		$form .= "<input class='button button-primary' type=submit value='" . __( 'Save', 'wp-recall' ) . "' name='rcl_save_custom_fields'>";
 
 		if ( $this->meta_delete ) {
 			$form .= "<input type=hidden id=rcl-deleted-fields name=rcl_deleted_custom_fields value=''>"
-				. "<div id='field-delete-confirm' style='display:none;'>" . __( 'To remove the data added to this field?', 'wp-recall' ) . "</div>";
+			         . "<div id='field-delete-confirm' style='display:none;'>" . __( 'To remove the data added to this field?', 'wp-recall' ) . "</div>";
 		}
 
 		$form .= "</div>
@@ -188,14 +195,16 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$form = '';
 
-		if ( ! isset( $fields ) )
+		if ( ! isset( $fields ) ) {
 			$fields = $this->fields;
+		}
 
 		if ( $fields ) {
 
 			foreach ( $fields as $key => $args ) {
-				if ( $key === 'options' )
+				if ( $key === 'options' ) {
 					continue;
+				}
 				$form .= $this->field( $args );
 			}
 		}
@@ -212,50 +221,50 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 		if ( $this->new_slug && $this->meta_key && ! $this->is_default_field( $slug ) ) {
 
 			$options[] = array(
-				'type'			 => 'text',
-				'slug'			 => 'slug',
-				'title'			 => __( 'MetaKey', 'wp-recall' ),
-				'notice'		 => __( 'not required, but you can list your own meta_key in this field', 'wp-recall' ),
-				'placeholder'	 => __( 'Latin letters and numbers', 'wp-recall' )
+				'type'        => 'text',
+				'slug'        => 'slug',
+				'title'       => __( 'MetaKey', 'wp-recall' ),
+				'notice'      => __( 'not required, but you can list your own meta_key in this field', 'wp-recall' ),
+				'placeholder' => __( 'Latin letters and numbers', 'wp-recall' )
 			);
 		}
 
 		if ( ! isset( $field['newField'] ) ) {
 			$options[] = array(
-				'type'		 => 'text',
-				'slug'		 => 'title',
-				'title'		 => __( 'Title', 'wp-recall' ),
-				'default'	 => $field['title']
+				'type'    => 'text',
+				'slug'    => 'title',
+				'title'   => __( 'Title', 'wp-recall' ),
+				'default' => $field['title']
 			);
 		}
 
 		if ( $this->select_type ) {
 
-			$typeEdit = (isset( $field['type-edit'] )) ? $field['type-edit'] : true;
+			$typeEdit = ( isset( $field['type-edit'] ) ) ? $field['type-edit'] : true;
 
 			if ( $typeEdit ) {
 
 				$options[] = array(
-					'title'		 => __( 'Field type', 'wp-recall' ),
-					'slug'		 => 'type',
-					'type'		 => 'select',
-					'classes'	 => 'select-type-field',
-					'values'	 => $this->get_field_types()
+					'title'   => __( 'Field type', 'wp-recall' ),
+					'slug'    => 'type',
+					'type'    => 'select',
+					'classes' => 'select-type-field',
+					'values'  => $this->get_field_types()
 				);
 			} else {
 
 				$options[] = array(
-					'slug'	 => 'type',
-					'type'	 => 'hidden',
-					'value'	 => $field['type']
+					'slug'  => 'type',
+					'type'  => 'hidden',
+					'value' => $field['type']
 				);
 			}
 		} else {
 
 			$options[] = array(
-				'slug'	 => 'type',
-				'type'	 => 'hidden',
-				'value'	 => 'custom'
+				'slug'  => 'type',
+				'type'  => 'hidden',
+				'value' => 'custom'
 			);
 		}
 
@@ -276,89 +285,89 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 			'range'
 		);
 
-		$options = (isset( $this->field['options-field'] )) ? $this->field['options-field'] : array();
+		$options = ( isset( $this->field['options-field'] ) ) ? $this->field['options-field'] : array();
 
 		if ( in_array( $this->field['type'], $types ) ) {
 
 			if ( $this->field['type'] == 'file' ) {
 
 				$options[] = array(
-					'type'		 => 'runner',
-					'value_min'	 => 1,
-					'value_max'	 => 100,
+					'type'       => 'runner',
+					'value_min'  => 1,
+					'value_max'  => 100,
 					'value_step' => 1,
-					'default'	 => 2,
-					'slug'		 => 'sizefile',
-					'title'		 => __( 'File size', 'wp-recall' ),
-					'notice'	 => __( 'maximum size of uploaded file, MB (Default - 2)', 'wp-recall' )
+					'default'    => 2,
+					'slug'       => 'sizefile',
+					'title'      => __( 'File size', 'wp-recall' ),
+					'notice'     => __( 'maximum size of uploaded file, MB (Default - 2)', 'wp-recall' )
 				);
 
 				$options[] = array(
-					'type'	 => 'textarea',
-					'slug'	 => 'ext-files',
-					'title'	 => __( 'Allowed file types', 'wp-recall' ),
+					'type'   => 'textarea',
+					'slug'   => 'ext-files',
+					'title'  => __( 'Allowed file types', 'wp-recall' ),
 					'notice' => __( 'allowed types of files are divided by comma, for example: pdf, zip, jpg', 'wp-recall' )
 				);
 			} else if ( $this->field['type'] == 'agree' ) {
 
 				$options[] = array(
-					'type'	 => 'url',
-					'slug'	 => 'url-agreement',
-					'title'	 => __( 'Agreement URL', 'wp-recall' )
+					'type'  => 'url',
+					'slug'  => 'url-agreement',
+					'title' => __( 'Agreement URL', 'wp-recall' )
 				);
 
 				$options[] = array(
-					'type'	 => 'textarea',
-					'slug'	 => 'text-confirm',
-					'title'	 => __( 'Consent confirmation text', 'wp-recall' )
+					'type'  => 'textarea',
+					'slug'  => 'text-confirm',
+					'title' => __( 'Consent confirmation text', 'wp-recall' )
 				);
 			} else if ( $this->field['type'] == 'editor' ) {
 
 				$options[] = array(
-					'type'	 => 'checkbox',
-					'slug'	 => 'tinymce',
-					'title'	 => __( 'TinyMCE', 'wp-recall' ),
+					'type'   => 'checkbox',
+					'slug'   => 'tinymce',
+					'title'  => __( 'TinyMCE', 'wp-recall' ),
 					'values' => array( 1 => __( 'Using TinyMCE', 'wp-recall' ) ),
 					'notice' => __( 'May not load with AJAX', 'wp-recall' )
 				);
 			} else if ( $this->field['type'] == 'runner' || $this->field['type'] == 'range' ) {
 
 				$options[] = array(
-					'type'		 => 'number',
-					'slug'		 => 'value_min',
-					'title'		 => __( 'Min', 'wp-recall' ),
-					'default'	 => 0
+					'type'    => 'number',
+					'slug'    => 'value_min',
+					'title'   => __( 'Min', 'wp-recall' ),
+					'default' => 0
 				);
 
 				$options[] = array(
-					'type'		 => 'number',
-					'slug'		 => 'value_max',
-					'title'		 => __( 'Max', 'wp-recall' ),
-					'default'	 => 100
+					'type'    => 'number',
+					'slug'    => 'value_max',
+					'title'   => __( 'Max', 'wp-recall' ),
+					'default' => 100
 				);
 
 				$options[] = array(
-					'type'		 => 'number',
-					'slug'		 => 'value_step',
-					'title'		 => __( 'Step', 'wp-recall' ),
-					'default'	 => 1
+					'type'    => 'number',
+					'slug'    => 'value_step',
+					'title'   => __( 'Step', 'wp-recall' ),
+					'default' => 1
 				);
 			} else {
 
 				if ( in_array( $this->field['type'], array( 'select', 'radio' ) ) ) {
 
 					$options[] = array(
-						'type'	 => 'text',
-						'slug'	 => 'empty-first',
-						'title'	 => __( 'First value', 'wp-recall' ),
+						'type'   => 'text',
+						'slug'   => 'empty-first',
+						'title'  => __( 'First value', 'wp-recall' ),
 						'notice' => __( 'Name of the first blank value, for example: "Not selected"', 'wp-recall' )
 					);
 				}
 
 				$options[] = array(
-					'type'	 => 'dynamic',
-					'slug'	 => 'values',
-					'title'	 => __( 'Specify options', 'wp-recall' ),
+					'type'   => 'dynamic',
+					'slug'   => 'values',
+					'title'  => __( 'Specify options', 'wp-recall' ),
 					'notice' => __( 'specify each option in a separate field', 'wp-recall' )
 				);
 			}
@@ -367,17 +376,17 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 			if ( $this->exist_placeholder && ! in_array( $this->field['type'], array( 'custom', 'color' ) ) ) {
 
 				$options[] = array(
-					'type'	 => 'text',
-					'slug'	 => 'placeholder',
-					'title'	 => __( 'Placeholder', 'wp-recall' )
+					'type'  => 'text',
+					'slug'  => 'placeholder',
+					'title' => __( 'Placeholder', 'wp-recall' )
 				);
 			}
 
 			if ( in_array( $this->field['type'], array( 'tel' ) ) ) {
 				$options[] = array(
-					'type'	 => 'text',
-					'slug'	 => 'pattern',
-					'title'	 => __( 'Phone mask', 'wp-recall' ),
+					'type'   => 'text',
+					'slug'   => 'pattern',
+					'title'  => __( 'Phone mask', 'wp-recall' ),
 					'notice' => __( 'Example: 8\([0-9]{3}\)[0-9]{3}-[0-9]{2}-[0-9]{2} Result: 8(900)123-45-67', 'wp-recall' ),
 				);
 			}
@@ -386,16 +395,16 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 				if ( in_array( $this->field['type'], array( 'text' ) ) ) {
 					$options[] = array(
-						'type'	 => 'text',
-						'slug'	 => 'pattern',
-						'title'	 => __( 'Pattern', 'wp-recall' )
+						'type'  => 'text',
+						'slug'  => 'pattern',
+						'title' => __( 'Pattern', 'wp-recall' )
 					);
 				}
 
 				$options[] = array(
-					'type'	 => 'number',
-					'slug'	 => 'maxlength',
-					'title'	 => __( 'Maxlength', 'wp-recall' ),
+					'type'   => 'number',
+					'slug'   => 'maxlength',
+					'title'  => __( 'Maxlength', 'wp-recall' ),
 					'notice' => __( 'maximum number of symbols per field', 'wp-recall' )
 				);
 			}
@@ -403,15 +412,15 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 			if ( $this->field['type'] == 'number' ) {
 
 				$options[] = array(
-					'type'	 => 'number',
-					'slug'	 => 'value_min',
-					'title'	 => __( 'Min', 'wp-recall' )
+					'type'  => 'number',
+					'slug'  => 'value_min',
+					'title' => __( 'Min', 'wp-recall' )
 				);
 
 				$options[] = array(
-					'type'	 => 'number',
-					'slug'	 => 'value_max',
-					'title'	 => __( 'Max', 'wp-recall' )
+					'type'  => 'number',
+					'slug'  => 'value_max',
+					'title' => __( 'Max', 'wp-recall' )
 				);
 			}
 		}
@@ -423,7 +432,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 	function get_input_option( $option, $value = false ) {
 
-		$value = (isset( $this->field[$option['slug']] )) ? $this->field[$option['slug']] : $value;
+		$value = ( isset( $this->field[ $option['slug'] ] ) ) ? $this->field[ $option['slug'] ] : $value;
 
 		$option['field-id'] = isset( $this->field['slug'] ) ? $this->field['slug'] . '-' . $option['slug'] : $this->new_slug . '-' . $option['slug'];
 
@@ -442,8 +451,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$options = $this->get_constant_options( $field );
 
-		if ( ! $options )
+		if ( ! $options ) {
 			return false;
+		}
 
 		$content = '';
 
@@ -459,8 +469,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$options = $this->get_options_field();
 
-		if ( ! $options )
+		if ( ! $options ) {
 			return false;
+		}
 
 		$content = '';
 
@@ -474,8 +485,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 	function get_option( $option, $value = false ) {
 
-		if ( $option['type'] == 'hidden' )
+		if ( $option['type'] == 'hidden' ) {
 			return $this->get_input_option( $option );
+		}
 
 		$content = '<div class="option-content">';
 		$content .= '<label>' . $this->get_title( $option ) . '</label>';
@@ -489,26 +501,27 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 	function header_field() {
 
-		$delete = (isset( $this->field['delete'] )) ? $this->field['delete'] : true;
+		$delete = ( isset( $this->field['delete'] ) ) ? $this->field['delete'] : true;
 
 		$controls = array();
 
-		if ( $delete && ! $this->is_default_field( $this->field['slug'] ) )
+		if ( $delete && ! $this->is_default_field( $this->field['slug'] ) ) {
 			$controls['delete'] = array(
-				'class'	 => 'field-delete',
-				'title'	 => __( 'Delete', 'wp-recall' )
+				'class' => 'field-delete',
+				'title' => __( 'Delete', 'wp-recall' )
 			);
+		}
 
 		$controls['edit'] = array(
-			'class'	 => 'field-edit',
-			'title'	 => __( 'Edit', 'wp-recall' )
+			'class' => 'field-edit',
+			'title' => __( 'Edit', 'wp-recall' )
 		);
 
 		$controls = apply_filters( 'rcl_manager_field_controls', $controls, $this->field['slug'], $this->post_type );
 
 		$content = '<div class="field-header">
                     <span class="field-type type-' . $this->field['type'] . '"></span>
-                    <span class="field-title">' . $this->field['title'] . (isset( $this->field['required'] ) && $this->field['required'] ? ' <span class="required">*</span>' : '') . '</span>
+                    <span class="field-title">' . $this->field['title'] . ( isset( $this->field['required'] ) && $this->field['required'] ? ' <span class="required">*</span>' : '' ) . '</span>
                     <span class="field-controls">
                     ';
 
@@ -516,9 +529,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 			foreach ( $controls as $control ) {
 				$content .= rcl_get_button(
 					isset( $control['label'] ) ? $control['label'] : '', isset( $control['href'] ) ? $control['href'] : '#', array(
-					'class'	 => $control['class'] . ' field-control',
-					'icon'	 => isset( $control['icon'] ) ? $control['icon'] : false,
-					'attr'	 => 'title="' . $control['title'] . '"'
+						'class' => $control['class'] . ' field-control',
+						'icon'  => isset( $control['icon'] ) ? $control['icon'] : false,
+						'attr'  => 'title="' . $control['title'] . '"'
 					)
 				);
 			}
@@ -536,7 +549,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$this->status = true;
 
-		$form = (isset( $this->field['form'] )) ? $this->field['form'] : false;
+		$form = ( isset( $this->field['form'] ) ) ? $this->field['form'] : false;
 
 		$classes = array( 'rcl-custom-field' );
 
@@ -556,14 +569,15 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
                     ' . $this->header_field() . '
                     <div class="field-settings">';
 
-		if ( $form )
+		if ( $form ) {
 			$field .= '<form method="' . $form['method'] . '" action="' . $form['action'] . '">';
+		}
 
 		$field .= $this->get_field_value( array(
-			'type'	 => 'text',
-			'slug'	 => 'slug',
-			'title'	 => __( 'Meta-key', 'wp-recall' ),
-			), $this->field['slug']
+			'type'  => 'text',
+			'slug'  => 'slug',
+			'title' => __( 'Meta-key', 'wp-recall' ),
+		), $this->field['slug']
 		);
 
 		$field .= $this->get_constant_options_content( $this->field );
@@ -595,18 +609,22 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 	function empty_field() {
 
-		$this->status			 = false;
-		$this->new_slug			 = 'CreateNewField' . rand( 10, 100 );
+		$this->status            = false;
+		$this->new_slug          = 'CreateNewField' . rand( 10, 100 );
 		$this->field['newField'] = 1;
 
-		if ( $this->select_type )
-			$this->field['type'] = ($this->types) ? $this->types[0] : 'text';
-		else
+		if ( $this->select_type ) {
+			$this->field['type'] = ( $this->types ) ? $this->types[0] : 'text';
+		} else {
 			$this->field['type'] = 'custom';
+		}
 
 		$field = '<li id="field-' . $this->new_slug . '" data-slug="' . $this->new_slug . '" data-type="' . $this->field['type'] . '" class="rcl-custom-field new-field">
                     <div class="field-header">
-                        <span class="field-title half-width">' . $this->get_option( array( 'type' => 'text', 'slug' => 'title', 'title' => __( 'Name', 'wp-recall' ) ) ) . '</span>
+                        <span class="field-title half-width">' . $this->get_option( array( 'type'  => 'text',
+		                                                                                   'slug'  => 'title',
+		                                                                                   'title' => __( 'Name', 'wp-recall' )
+			) ) . '</span>
                         <span class="field-controls half-width">
                             <a class="field-edit field-control" href="#" title="' . __( 'Edit', 'wp-recall' ) . '"></a>
                         </span>
@@ -630,8 +648,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 	function get_vals( $name ) {
 		foreach ( $this->fields as $field ) {
-			if ( $field[$name] )
+			if ( $field[ $name ] ) {
 				return $field;
+			}
 		}
 	}
 
@@ -639,24 +658,27 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$args['type'] = $type;
 
-		if ( isset( $args['label'] ) )
+		if ( isset( $args['label'] ) ) {
 			$args['title'] = $args['label'];
+		}
 
-		if ( isset( $args['name'] ) )
+		if ( isset( $args['name'] ) ) {
 			$args['slug'] = $args['name'];
+		}
 
-		if ( isset( $args['value'] ) )
+		if ( isset( $args['value'] ) ) {
 			$args['values'] = $args['value'];
+		}
 
 		return $args;
 	}
 
 	function options( $args ) {
 
-		$val	 = ($this->fields['options']) ? $this->fields['options'][$args['name']] : '';
-		$ph		 = (isset( $args['placeholder'] )) ? $args['placeholder'] : '';
-		$pattern = (isset( $args['pattern'] )) ? 'pattern="' . $args['pattern'] . '"' : '';
-		$field	 = '<input type="text" placeholder="' . $ph . '" title="' . $ph . '" ' . $pattern . ' name="options[' . $args['name'] . ']" value="' . $val . '"> ';
+		$val     = ( $this->fields['options'] ) ? $this->fields['options'][ $args['name'] ] : '';
+		$ph      = ( isset( $args['placeholder'] ) ) ? $args['placeholder'] : '';
+		$pattern = ( isset( $args['pattern'] ) ) ? 'pattern="' . $args['pattern'] . '"' : '';
+		$field   = '<input type="text" placeholder="' . $ph . '" title="' . $ph . '" ' . $pattern . ' name="options[' . $args['name'] . ']" value="' . $val . '"> ';
 
 		return $field;
 	}
@@ -695,12 +717,12 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 			foreach ( $default_fields as $k => $field ) {
 
 				if ( $this->exist_active_field( $field['slug'] ) ) {
-					unset( $default_fields[$k] );
+					unset( $default_fields[ $k ] );
 					continue;
 				}
 
-				$default_fields[$k]['class']	 = 'must-receive';
-				$default_fields[$k]['type-edit'] = false;
+				$default_fields[ $k ]['class']     = 'must-receive';
+				$default_fields[ $k ]['type-edit'] = false;
 			}
 		}
 
@@ -709,8 +731,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 	function get_active_fields() {
 
-		if ( ! $this->fields )
+		if ( ! $this->fields ) {
 			return false;
+		}
 
 		$options = $this->get_default_fields_options();
 
@@ -718,12 +741,12 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 			if ( $this->is_default_field( $field['slug'] ) ) {
 
-				if ( isset( $options[$field['slug']] ) ) {
-					$this->fields[$k]['options-field'] = $options[$field['slug']];
+				if ( isset( $options[ $field['slug'] ] ) ) {
+					$this->fields[ $k ]['options-field'] = $options[ $field['slug'] ];
 				}
 
-				$this->fields[$k]['type-edit']	 = false;
-				$this->fields[$k]['class']		 = 'must-receive';
+				$this->fields[ $k ]['type-edit'] = false;
+				$this->fields[ $k ]['class']     = 'must-receive';
 			}
 		}
 
@@ -732,8 +755,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 	function exist_active_field( $slug ) {
 
-		if ( ! $this->fields )
+		if ( ! $this->fields ) {
 			return false;
+		}
 
 		foreach ( $this->fields as $k => $field ) {
 
@@ -748,8 +772,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 	function get_field( $slug ) {
 
-		if ( ! $this->fields )
+		if ( ! $this->fields ) {
 			return false;
+		}
 
 		foreach ( $this->fields as $k => $field ) {
 
@@ -766,11 +791,13 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$field = $this->get_field( $slug );
 
-		if ( ! $field )
+		if ( ! $field ) {
 			return false;
+		}
 
-		if ( isset( $field[$option] ) )
-			return $field[$option];
+		if ( isset( $field[ $option ] ) ) {
+			return $field[ $option ];
+		}
 
 		return false;
 	}
@@ -779,18 +806,20 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$fields = $this->get_default_fields();
 
-		if ( ! $fields )
+		if ( ! $fields ) {
 			return $fields;
+		}
 
 		$options = array();
 		foreach ( $fields as $field ) {
 
-			if ( ! isset( $field['options-field'] ) )
+			if ( ! isset( $field['options-field'] ) ) {
 				continue;
+			}
 
 			$slug = $field['slug'];
 
-			$options[$slug] = $field['options-field'];
+			$options[ $slug ] = $field['options-field'];
 		}
 
 		return $options;
@@ -802,8 +831,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		foreach ( $fields as $field ) {
 
-			if ( $field['slug'] == $slug )
+			if ( $field['slug'] == $slug ) {
 				return true;
+			}
 		}
 
 		return false;
@@ -827,18 +857,19 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 	/* depricated */
 	function get_types() {
 
-		if ( ! $this->select_type )
+		if ( ! $this->select_type ) {
 			return false;
+		}
 
 		$fields = $this->get_field_types();
 
 		$content = $this->get_option( array(
-			'title'		 => __( 'Field type', 'wp-recall' ),
-			'slug'		 => 'type',
-			'type'		 => 'select',
-			'classes'	 => 'select-type-field',
-			'values'	 => $fields
-			) );
+			'title'   => __( 'Field type', 'wp-recall' ),
+			'slug'    => 'type',
+			'type'    => 'select',
+			'classes' => 'select-type-field',
+			'values'  => $fields
+		) );
 
 		return $content;
 	}

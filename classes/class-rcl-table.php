@@ -13,15 +13,15 @@
  */
 class Rcl_Table {
 
-	public $zebra		 = false;
-	public $border		 = array();
-	public $cols		 = array();
-	public $cols_number	 = 0;
-	public $rows		 = array();
-	public $total		 = false;
-	public $table_id	 = 0;
-	public $class		 = array();
-	public $attr_rows	 = array();
+	public $zebra = false;
+	public $border = array();
+	public $cols = array();
+	public $cols_number = 0;
+	public $rows = array();
+	public $total = false;
+	public $table_id = 0;
+	public $class = array();
+	public $attr_rows = array();
 
 	function __construct( $tableProps = false ) {
 
@@ -29,11 +29,13 @@ class Rcl_Table {
 
 		$this->init_properties( $tableProps );
 
-		if ( ! $this->table_id )
+		if ( ! $this->table_id ) {
 			$this->table_id = 'rcl-table-' . current_time( 'timestamp' );
+		}
 
-		if ( ! $this->cols_number )
+		if ( ! $this->cols_number ) {
 			$this->cols_number = count( $this->cols );
+		}
 	}
 
 	function init_properties( $args ) {
@@ -41,8 +43,9 @@ class Rcl_Table {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( isset( $args[$name] ) )
-				$this->$name = $args[$name];
+			if ( isset( $args[ $name ] ) ) {
+				$this->$name = $args[ $name ];
+			}
 		}
 	}
 
@@ -52,8 +55,9 @@ class Rcl_Table {
 
 		foreach ( $attrs as $name => $value ) {
 
-			if ( ! isset( $value ) || $value === '' )
+			if ( ! isset( $value ) || $value === '' ) {
 				continue;
+			}
 
 			if ( is_array( $value ) ) {
 				$value = implode( ' ', $value );
@@ -72,8 +76,8 @@ class Rcl_Table {
 	function get_table_attrs() {
 
 		$attrs = array(
-			'class'	 => array( 'rcl-table preloader-parent' ),
-			'id'	 => $this->table_id
+			'class' => array( 'rcl-table preloader-parent' ),
+			'id'    => $this->table_id
 		);
 
 		if ( $this->class ) {
@@ -112,9 +116,9 @@ class Rcl_Table {
 
 	function get_header_attrs() {
 
-		$attrs				 = array();
-		$attrs['class'][]	 = 'rcl-table__row';
-		$attrs['class'][]	 = 'rcl-table__row-header';
+		$attrs            = array();
+		$attrs['class'][] = 'rcl-table__row';
+		$attrs['class'][] = 'rcl-table__row-header';
 
 		return $this->setup_string_attrs( $attrs );
 	}
@@ -123,8 +127,9 @@ class Rcl_Table {
 
 		$attrs = array();
 
-		if ( $customAttrs )
+		if ( $customAttrs ) {
 			$attrs = $customAttrs;
+		}
 
 		$attrs['class'][] = 'rcl-table__row';
 
@@ -164,15 +169,15 @@ class Rcl_Table {
 						$attrs['onclick'] = $cellProps['sort']['onclick'];
 					}
 
-					$attrs['class'][]	 = 'rcl-table__cell-must-sort';
-					$attrs['data-sort']	 = $cellProps['sort'];
+					$attrs['class'][]    = 'rcl-table__cell-must-sort';
+					$attrs['data-sort']  = $cellProps['sort'];
 					$attrs['data-order'] = isset( $cellProps['sort']['order'] ) ? $cellProps['sort']['order'] : 'desc';
 				} else if ( $place == 'total' ) {
-					$attrs['class'][] = 'rcl-table__cell-total';
+					$attrs['class'][]    = 'rcl-table__cell-total';
 					$attrs['data-field'] = $cellProps['sort'];
 				} else {
-					$attrs['class'][] = 'rcl-table__cell-sort';
-					$attrs['data-' . $cellProps['sort'] . '-value']	 = trim( strip_tags( $contentCell ) );
+					$attrs['class'][]                                 = 'rcl-table__cell-sort';
+					$attrs[ 'data-' . $cellProps['sort'] . '-value' ] = trim( strip_tags( $contentCell ) );
 				}
 			}
 		}
@@ -181,8 +186,8 @@ class Rcl_Table {
 	}
 
 	function add_row( $row, $attrs = array() ) {
-		$this->attr_rows[count( $this->rows )]	 = $attrs;
-		$this->rows[]							 = $row;
+		$this->attr_rows[ count( $this->rows ) ] = $attrs;
+		$this->rows[]                            = $row;
 	}
 
 	function add_total_row( $row ) {
@@ -199,15 +204,16 @@ class Rcl_Table {
 
 		if ( $this->cols ) {
 
-			$titles	 = array();
-			$search	 = array();
+			$titles = array();
+			$search = array();
 			foreach ( $this->cols as $k => $col ) {
 
-				if ( isset( $col['title'] ) )
-					$titles[$k] = $col['title'];
+				if ( isset( $col['title'] ) ) {
+					$titles[ $k ] = $col['title'];
+				}
 
 				if ( isset( $col['search'] ) && $col['search'] ) {
-					$search[$k] = $col['search'];
+					$search[ $k ] = $col['search'];
 				}
 			}
 
@@ -226,12 +232,13 @@ class Rcl_Table {
 
 				$attrs = array( 'class' => array( 'rcl-table__row-must-sort' ) );
 
-				if ( isset( $this->attr_rows[$k] ) ) {
-					foreach ( $this->attr_rows[$k] as $attr => $value ) {
-						if ( isset( $attrs[$attr] ) )
-							$attrs[$attr]	 = array_merge( $attrs[$attr], $value );
-						else
-							$attrs[$attr]	 = $value;
+				if ( isset( $this->attr_rows[ $k ] ) ) {
+					foreach ( $this->attr_rows[ $k ] as $attr => $value ) {
+						if ( isset( $attrs[ $attr ] ) ) {
+							$attrs[ $attr ] = array_merge( $attrs[ $attr ], $value );
+						} else {
+							$attrs[ $attr ] = $value;
+						}
 					}
 				}
 
@@ -255,23 +262,24 @@ class Rcl_Table {
 
 	function get_total_row() {
 
-		$total = ($this->total && is_array( $this->total )) ? $this->total : array();
+		$total = ( $this->total && is_array( $this->total ) ) ? $this->total : array();
 
 		if ( ! $total ) {
 
 			foreach ( $this->cols as $k => $col ) {
-				if ( isset( $col['total'] ) )
+				if ( isset( $col['total'] ) ) {
 					$total[] = $col['total'];
-				else if ( isset( $col['totalsum'] ) )
+				} else if ( isset( $col['totalsum'] ) ) {
 					$total[] = 0;
-				else
+				} else {
 					$total[] = '-';
+				}
 			}
 
 			foreach ( $this->rows as $row ) {
 				foreach ( $row as $k => $value ) {
-					if ( isset( $this->cols[$k]['totalsum'] ) ) {
-						$total[$k] += strip_tags( $value );
+					if ( isset( $this->cols[ $k ]['totalsum'] ) ) {
+						$total[ $k ] += strip_tags( $value );
 					}
 				}
 			}
@@ -284,38 +292,40 @@ class Rcl_Table {
 
 	function search_row() {
 
-		$attrs				 = array();
-		$attrs['class'][]	 = 'rcl-table__row';
-		$attrs['class'][]	 = 'rcl-table__row-search';
+		$attrs            = array();
+		$attrs['class'][] = 'rcl-table__row';
+		$attrs['class'][] = 'rcl-table__row-search';
 
 		$content = '<div ' . $this->setup_string_attrs( $attrs ) . '>';
 
 		foreach ( $this->cols as $idcol => $col ) {
 
-			if ( ! isset( $col['search'] ) || ! $col['search'] )
+			if ( ! isset( $col['search'] ) || ! $col['search'] ) {
 				$contentCell = '';
-			else {
+			} else {
 
-				$name	 = isset( $col['search']['name'] ) ? $col['search']['name'] : $idcol;
-				$value	 = isset( $col['search']['value'] ) ? $col['search']['value'] : '';
+				$name  = isset( $col['search']['name'] ) ? $col['search']['name'] : $idcol;
+				$value = isset( $col['search']['value'] ) ? $col['search']['value'] : '';
 
-				if ( ! $value && isset( $_REQUEST[$name] ) && $_REQUEST[$name] ) {
-					$value = $_REQUEST[$name];
+				if ( ! $value && isset( $_REQUEST[ $name ] ) && $_REQUEST[ $name ] ) {
+					$value = $_REQUEST[ $name ];
 				}
 
 				$submit = isset( $col['search']['submit'] ) ? $col['search']['submit'] : 0;
 
-				if ( is_string( $submit ) )
+				if ( is_string( $submit ) ) {
 					$submit = '\'' . $submit . '\'';
+				}
 
 				$onkeyup = 'onkeyup="rcl_table_search(this, event.key, ' . $submit . ');"';
 
 				if ( isset( $col['search']['onkeyup'] ) ) {
 
-					if ( ! $col['search']['onkeyup'] )
+					if ( ! $col['search']['onkeyup'] ) {
 						$onkeyup = '';
-					else
+					} else {
 						$onkeyup = 'onkeyup="' . $col['search']['onkeyup'] . '"';
+					}
 				}
 
 				$datescript = '';
@@ -364,8 +374,8 @@ class Rcl_Table {
 
 			$cellProps = false;
 
-			if ( $this->cols && isset( $this->cols[$idcol] ) ) {
-				$cellProps = $this->cols[$idcol];
+			if ( $this->cols && isset( $this->cols[ $idcol ] ) ) {
+				$cellProps = $this->cols[ $idcol ];
 			}
 
 			$content .= $this->cell( $idcol, $contentCell, $cellProps, $place );

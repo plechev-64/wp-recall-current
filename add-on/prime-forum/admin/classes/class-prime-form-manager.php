@@ -7,28 +7,29 @@ class Prime_Form_Manager extends Rcl_Fields_Manager {
 
 	function __construct( $args ) {
 
-		$this->group_id	 = $args['group_id'];
-		$this->forum_id	 = $args['forum_id'];
+		$this->group_id = $args['group_id'];
+		$this->forum_id = $args['forum_id'];
 
-		if ( $this->forum_id )
-			$form_slug	 = 'pfm_forum_' . $this->forum_id;
-		else
-			$form_slug	 = 'pfm_group_' . $this->group_id;
+		if ( $this->forum_id ) {
+			$form_slug = 'pfm_forum_' . $this->forum_id;
+		} else {
+			$form_slug = 'pfm_group_' . $this->group_id;
+		}
 
 		parent::__construct( $form_slug, array(
-			'meta_delete'	 => array(
+			'meta_delete'   => array(
 				RCL_PREF . "pforum_meta" => 'meta_key'
 			),
-			'field_options'	 => array(
+			'field_options' => array(
 				array(
-					'type'	 => 'textarea',
-					'slug'	 => 'notice',
-					'title'	 => __( 'field description', 'wp-recall' )
+					'type'  => 'textarea',
+					'slug'  => 'notice',
+					'title' => __( 'field description', 'wp-recall' )
 				),
 				array(
-					'type'	 => 'radio',
-					'slug'	 => 'required',
-					'title'	 => __( 'required field', 'wp-recall' ),
+					'type'   => 'radio',
+					'slug'   => 'required',
+					'title'  => __( 'required field', 'wp-recall' ),
 					'values' => array(
 						__( 'No', 'wp-recall' ),
 						__( 'Yes', 'wp-recall' )
@@ -41,34 +42,34 @@ class Prime_Form_Manager extends Rcl_Fields_Manager {
 	function form_navi() {
 
 		$groups = pfm_get_groups( array(
-			'order'		 => 'ASC',
-			'orderby'	 => 'group_seq',
-			'number'	 => -1,
-			'fields'	 => array(
+			'order'   => 'ASC',
+			'orderby' => 'group_seq',
+			'number'  => - 1,
+			'fields'  => array(
 				'group_id',
 				'group_name'
 			)
-			) );
+		) );
 
 		$groupsList = array();
 		foreach ( $groups as $group ) {
-			$groupsList[$group->group_id] = $group->group_name;
+			$groupsList[ $group->group_id ] = $group->group_name;
 		}
 
 		$forums = pfm_get_forums( array(
-			'order'		 => 'ASC',
-			'orderby'	 => 'forum_name',
-			'group_id'	 => $this->group_id,
-			'number'	 => -1,
-			'fields'	 => array(
+			'order'    => 'ASC',
+			'orderby'  => 'forum_name',
+			'group_id' => $this->group_id,
+			'number'   => - 1,
+			'fields'   => array(
 				'forum_id',
 				'forum_name'
 			)
-			) );
+		) );
 
 		$forumsList = array();
 		foreach ( $forums as $forum ) {
-			$forumsList[$forum->forum_id] = $forum->forum_name;
+			$forumsList[ $forum->forum_id ] = $forum->forum_name;
 		}
 
 		$content = '<div class="rcl-custom-fields-navi">';
@@ -77,7 +78,7 @@ class Prime_Form_Manager extends Rcl_Fields_Manager {
 
 		foreach ( $groupsList as $group_id => $name ) {
 
-			$class = ($this->group_id == $group_id) ? 'class="current-item"' : '';
+			$class = ( $this->group_id == $group_id ) ? 'class="current-item"' : '';
 
 			$content .= '<li ' . $class . '><a href="' . admin_url( 'admin.php?page=manage-topic-form&group-id=' . $group_id ) . '">' . $name . '</a></li>';
 		}

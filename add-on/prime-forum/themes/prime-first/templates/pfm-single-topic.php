@@ -4,7 +4,9 @@
 		<?php pfm_the_icon( 'fa-circle' ); ?>
     </div>
     <div class="prime-forum-title">
-        <div class="prime-general-title"><a class="" title="<?php _e( 'Go to topic', 'wp-recall' ); ?>" href="<?php pfm_the_topic_permalink(); ?>"><?php pfm_the_topic_name(); ?></a></div>
+        <div class="prime-general-title"><a class="" title="<?php _e( 'Go to topic', 'wp-recall' ); ?>"
+                                            href="<?php pfm_the_topic_permalink(); ?>"><?php pfm_the_topic_name(); ?></a>
+        </div>
 		<?php pfm_page_navi( array( 'type' => 'topic' ) ); ?>
     </div>
 	<?php pfm_the_forum_icons(); ?>

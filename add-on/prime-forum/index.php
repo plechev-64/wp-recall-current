@@ -33,8 +33,9 @@ require_once 'functions-shortcodes.php';
 
 rcl_init_beat( "pfm_topic_beat" );
 
-if ( is_admin() )
+if ( is_admin() ) {
 	require_once 'admin/index.php';
+}
 
 if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'pfm_scripts', 10 );
@@ -54,26 +55,26 @@ function pfm_init_tab() {
 
 	rcl_tab(
 		array(
-			'id'		 => 'prime-forum',
-			'supports'	 => array( 'ajax' ),
-			'name'		 => __( 'Forum', 'wp-recall' ),
-			'public'	 => 0,
-			'icon'		 => 'fa-sitemap',
-			'output'	 => 'menu',
-			'content'	 => array(
+			'id'       => 'prime-forum',
+			'supports' => array( 'ajax' ),
+			'name'     => __( 'Forum', 'wp-recall' ),
+			'public'   => 0,
+			'icon'     => 'fa-sitemap',
+			'output'   => 'menu',
+			'content'  => array(
 				array(
-					'id'		 => 'my-topics',
-					'icon'		 => 'fa-folder',
-					'name'		 => __( 'Started topics', 'wp-recall' ),
-					'callback'	 => array(
+					'id'       => 'my-topics',
+					'icon'     => 'fa-folder',
+					'name'     => __( 'Started topics', 'wp-recall' ),
+					'callback' => array(
 						'name' => 'pfm_get_user_topics_list'
 					)
 				),
 				array(
-					'id'		 => 'my-posts',
-					'icon'		 => 'fa-folder',
-					'name'		 => __( 'Messages in topics created by other users', 'wp-recall' ),
-					'callback'	 => array(
+					'id'       => 'my-posts',
+					'icon'     => 'fa-folder',
+					'name'     => __( 'Messages in topics created by other users', 'wp-recall' ),
+					'callback' => array(
 						'name' => 'pfm_user_posts_other_topics'
 					)
 				)
@@ -88,30 +89,31 @@ function pfm_user_posts_other_topics( $master_id ) {
 	$PrimeQuery = new PrimeQuery();
 
 	$TopicsQuery = $PrimeQuery->topics_query;
-	$PostsQuery	 = $PrimeQuery->posts_query;
+	$PostsQuery  = $PrimeQuery->posts_query;
 
 	$args = array(
-		'user_id__not_in'	 => array( $master_id ),
-		'join_query'		 => array(
+		'user_id__not_in' => array( $master_id ),
+		'join_query'      => array(
 			array(
-				'table'			 => $PostsQuery->query['table'],
-				'on_topic_id'	 => 'topic_id',
-				'fields'		 => false,
-				'user_id'		 => $master_id
+				'table'       => $PostsQuery->query['table'],
+				'on_topic_id' => 'topic_id',
+				'fields'      => false,
+				'user_id'     => $master_id
 			)
 		),
-		'groupby'			 => $TopicsQuery->query['table']['as'] . '.topic_id'
+		'groupby'         => $TopicsQuery->query['table']['as'] . '.topic_id'
 	);
 
 	$countTopics = $TopicsQuery->count( $args );
 
-	if ( ! $countTopics )
+	if ( ! $countTopics ) {
 		return pfm_get_notice( __( 'There are no messages in topics created by other users.', 'wp-recall' ) );
+	}
 
 	$pageNavi = new Rcl_PageNavi( 'forum', $countTopics, array( 'in_page' => 20 ) );
 
-	$args['offset']	 = $pageNavi->offset;
-	$args['number']	 = $pageNavi->in_page;
+	$args['offset'] = $pageNavi->offset;
+	$args['number'] = $pageNavi->in_page;
 
 	$TopicsQuery->reset_query();
 	$TopicsQuery->set_query( $args );
@@ -154,29 +156,31 @@ function pfm_get_user_topics_list( $master_id, $navi = true ) {
 	$PrimeQuery = new PrimeQuery();
 
 	$TopicsQuery = $PrimeQuery->topics_query;
-	$PostsQuery	 = $PrimeQuery->posts_query;
+	$PostsQuery  = $PrimeQuery->posts_query;
 
 	$countTopics = $TopicsQuery->count( array(
 		'user_id' => $master_id
-		) );
+	) );
 
-	if ( ! $countTopics )
+	if ( ! $countTopics ) {
 		return pfm_get_notice( __( 'There are no started topics on the forum yet.', 'wp-recall' ) );
+	}
 
-	if ( $navi )
+	if ( $navi ) {
 		$pageNavi = new Rcl_PageNavi( 'forum', $countTopics, array( 'in_page' => 20 ) );
+	}
 
 	$args = array(
-		'offset'	 => $navi ? $pageNavi->offset : 0,
-		'number'	 => $navi ? $pageNavi->in_page : 50,
+		'offset'     => $navi ? $pageNavi->offset : 0,
+		'number'     => $navi ? $pageNavi->in_page : 50,
 		'join_query' => array(
 			array(
-				'table'			 => $PostsQuery->query['table'],
-				'on_topic_id'	 => 'topic_id',
-				'fields'		 => false
+				'table'       => $PostsQuery->query['table'],
+				'on_topic_id' => 'topic_id',
+				'fields'      => false
 			)
 		),
-		'groupby'	 => $TopicsQuery->query['table']['as'] . '.topic_id'
+		'groupby'    => $TopicsQuery->query['table']['as'] . '.topic_id'
 	);
 
 	$TopicsQuery->set_query( $args );
@@ -198,8 +202,9 @@ function pfm_get_user_topics_list( $master_id, $navi = true ) {
 
 	$content .= '<div id="prime-forum">';
 
-	if ( $navi )
+	if ( $navi ) {
 		$content .= $pageNavi->pagenavi();
+	}
 
 	$content .= '<div class="prime-topics-list prime-loop-list">';
 	foreach ( wp_unslash( $topics ) as $PrimeTopic ) {
@@ -207,8 +212,9 @@ function pfm_get_user_topics_list( $master_id, $navi = true ) {
 	}
 	$content .= '</div>';
 
-	if ( $navi )
+	if ( $navi ) {
 		$content .= $pageNavi->pagenavi();
+	}
 
 	$content .= '</div>';
 
@@ -218,15 +224,18 @@ function pfm_get_user_topics_list( $master_id, $navi = true ) {
 add_action( 'pre_get_posts', 'pfm_init', 10 );
 function pfm_init( $wp_query ) {
 
-	if ( ! $wp_query->is_main_query() )
+	if ( ! $wp_query->is_main_query() ) {
 		return;
+	}
 
 	if ( isset( $wp_query->queried_object ) ) {
-		if ( $wp_query->queried_object->ID != pfm_get_option( 'home-page' ) )
+		if ( $wp_query->queried_object->ID != pfm_get_option( 'home-page' ) ) {
 			return;
-	}else if ( isset( $wp_query->query ) ) {
-		if ( ! isset( $wp_query->query['page_id'] ) || $wp_query->query['page_id'] != pfm_get_option( 'home-page' ) )
+		}
+	} else if ( isset( $wp_query->query ) ) {
+		if ( ! isset( $wp_query->query['page_id'] ) || $wp_query->query['page_id'] != pfm_get_option( 'home-page' ) ) {
 			return;
+		}
 	}
 
 	pfm_init_forum();
@@ -239,8 +248,9 @@ function pfm_init_forum( $vars = false ) {
 
 	$PrimeQuery = new PrimeQuery();
 
-	if ( $vars )
+	if ( $vars ) {
 		$PrimeQuery->setup_vars( $vars );
+	}
 
 	$PrimeQuery->init_query();
 
@@ -266,11 +276,13 @@ add_action( 'pfm_init', 'pfm_redirect_short_url' );
 function pfm_redirect_short_url() {
 	global $PrimeQuery;
 
-	if ( '' == get_site_option( 'permalink_structure' ) )
+	if ( '' == get_site_option( 'permalink_structure' ) ) {
 		return false;
+	}
 
-	if ( $PrimeQuery->is_search )
+	if ( $PrimeQuery->is_search ) {
 		return false;
+	}
 
 	if ( $PrimeQuery->is_group && isset( $_GET['pfm-group'] ) ) {
 		if ( $group_id = pfm_get_group_field( $PrimeQuery->vars['pfm-group'], 'group_id' ) ) {
@@ -298,8 +310,9 @@ add_action( 'pfm_init', 'pfm_update_current_visitor', 10 );
 function pfm_update_current_visitor() {
 	global $user_ID, $PrimeQuery;
 
-	if ( ! $user_ID )
+	if ( ! $user_ID ) {
 		return false;
+	}
 
 	$args = array(
 		'user_id' => $user_ID
@@ -308,12 +321,12 @@ function pfm_update_current_visitor() {
 	if ( $PrimeQuery->is_group ) {
 		$args['group_id'] = $PrimeQuery->object->group_id;
 	} else if ( $PrimeQuery->is_forum ) {
-		$args['group_id']	 = $PrimeQuery->object->group_id;
-		$args['forum_id']	 = $PrimeQuery->object->forum_id;
+		$args['group_id'] = $PrimeQuery->object->group_id;
+		$args['forum_id'] = $PrimeQuery->object->forum_id;
 	} else if ( $PrimeQuery->is_topic ) {
-		$args['group_id']	 = $PrimeQuery->object->group_id;
-		$args['forum_id']	 = $PrimeQuery->object->forum_id;
-		$args['topic_id']	 = $PrimeQuery->object->topic_id;
+		$args['group_id'] = $PrimeQuery->object->group_id;
+		$args['forum_id'] = $PrimeQuery->object->forum_id;
+		$args['topic_id'] = $PrimeQuery->object->topic_id;
 	}
 
 	pfm_update_visit( $args );
@@ -323,33 +336,52 @@ add_filter( 'rcl_init_js_variables', 'pfm_init_js_variables', 10 );
 function pfm_init_js_variables( $data ) {
 	global $PrimeQuery;
 
-	if ( ! $PrimeQuery )
+	if ( ! $PrimeQuery ) {
 		return $data;
+	}
 
-	if ( ! $PrimeQuery->is_forum && ! $PrimeQuery->is_topic )
+	if ( ! $PrimeQuery->is_forum && ! $PrimeQuery->is_topic ) {
 		return $data;
+	}
 
 	$pfm = array(
-		'group_id'		 => $PrimeQuery->object->group_id,
-		'forum_id'		 => $PrimeQuery->object->forum_id,
-		'topic_id'		 => isset( $PrimeQuery->object->topic_id ) ? $PrimeQuery->object->topic_id : 0,
-		'current_page'	 => $PrimeQuery->current_page,
-		'beat_time'		 => pfm_get_option( 'beat-time', 30 ),
-		'beat_inactive'	 => pfm_get_option( 'beat-inactive', 100 )
+		'group_id'      => $PrimeQuery->object->group_id,
+		'forum_id'      => $PrimeQuery->object->forum_id,
+		'topic_id'      => isset( $PrimeQuery->object->topic_id ) ? $PrimeQuery->object->topic_id : 0,
+		'current_page'  => $PrimeQuery->current_page,
+		'beat_time'     => pfm_get_option( 'beat-time', 30 ),
+		'beat_inactive' => pfm_get_option( 'beat-inactive', 100 )
 	);
 
 	$data['PForum'] = $pfm;
 
 	$tags = array(
 		array( 'pfm_pre', __( 'pre', 'wp-recall' ), '<pre>', '</pre>', 'h', __( 'Multiline code', 'wp-recall' ), 100 ),
-		array( 'pfm_spoiler', __( 'Spoiler', 'wp-recall' ), '[spoiler]', '[/spoiler]', 'h', __( 'Spoiler', 'wp-recall' ), 120 ),
-		array( 'pfm_offtop', __( 'Off-topic', 'wp-recall' ), '[offtop]', '[/offtop]', 'h', __( 'Off-topic', 'wp-recall' ), 110 ),
+		array(
+			'pfm_spoiler',
+			__( 'Spoiler', 'wp-recall' ),
+			'[spoiler]',
+			'[/spoiler]',
+			'h',
+			__( 'Spoiler', 'wp-recall' ),
+			120
+		),
+		array(
+			'pfm_offtop',
+			__( 'Off-topic', 'wp-recall' ),
+			'[offtop]',
+			'[/offtop]',
+			'h',
+			__( 'Off-topic', 'wp-recall' ),
+			110
+		),
 	);
 
 	$tags = apply_filters( 'pfm_gtags', $tags );
 
-	if ( ! $tags )
+	if ( ! $tags ) {
 		return $data;
+	}
 
 	$data['QTags'] = $tags;
 
@@ -360,23 +392,25 @@ function pfm_get_option( $name, $default = false ) {
 
 	$PfmOptions = get_site_option( 'rcl_pforum_options' );
 
-	if ( ! isset( $PfmOptions[$name] ) || $PfmOptions[$name] == '' ) {
+	if ( ! isset( $PfmOptions[ $name ] ) || $PfmOptions[ $name ] == '' ) {
 		return $default;
 	}
 
-	return $PfmOptions[$name];
+	return $PfmOptions[ $name ];
 }
 
 function pfm_get_title_tag() {
 	global $PrimeQuery;
 
-	if ( ! $PrimeQuery )
+	if ( ! $PrimeQuery ) {
 		return false;
+	}
 
 	$object = $PrimeQuery->object;
 
-	if ( ! $object )
+	if ( ! $object ) {
 		return false;
+	}
 
 	if ( $PrimeQuery->is_topic ) {
 		$title = pfm_replace_mask_title( pfm_get_option( 'mask-tag-topic', $object->topic_name . ' | ' . __( 'Forum', 'wp-recall' ) . ' ' . $object->forum_name ) );
@@ -396,13 +430,15 @@ function pfm_get_title_tag() {
 function pfm_get_title_page() {
 	global $PrimeQuery;
 
-	if ( ! $PrimeQuery || ! in_the_loop() )
+	if ( ! $PrimeQuery || ! in_the_loop() ) {
 		return false;
+	}
 
 	$object = $PrimeQuery->object;
 
-	if ( ! $object )
+	if ( ! $object ) {
 		return false;
+	}
 
 	if ( $PrimeQuery->is_topic ) {
 		$title = pfm_replace_mask_title( pfm_get_option( 'mask-page-topic', $object->topic_name ) );
@@ -424,26 +460,27 @@ function pfm_replace_mask_title( $string ) {
 
 	$object = $PrimeQuery->object;
 
-	$mask	 = array();
+	$mask    = array();
 	$replace = array();
 
 	if ( isset( $object->group_name ) ) {
-		$mask[]		 = '%GROUPNAME%';
-		$replace[]	 = $object->group_name;
+		$mask[]    = '%GROUPNAME%';
+		$replace[] = $object->group_name;
 	}
 
 	if ( isset( $object->forum_name ) ) {
-		$mask[]		 = '%FORUMNAME%';
-		$replace[]	 = $object->forum_name;
+		$mask[]    = '%FORUMNAME%';
+		$replace[] = $object->forum_name;
 	}
 
 	if ( isset( $object->topic_name ) ) {
-		$mask[]		 = '%TOPICNAME%';
-		$replace[]	 = $object->topic_name;
+		$mask[]    = '%TOPICNAME%';
+		$replace[] = $object->topic_name;
 	}
 
-	if ( ! $mask || ! $replace )
+	if ( ! $mask || ! $replace ) {
 		return $string;
+	}
 
 	return str_replace( $mask, $replace, $string );
 }
@@ -456,21 +493,21 @@ function pfm_topic_beat( $beat ) {
 	global $user_ID;
 
 	pfm_update_visit( array(
-		'user_id'	 => $user_ID,
-		'topic_id'	 => $beat->topic_id,
-		'forum_id'	 => $beat->forum_id,
-		'group_id'	 => $beat->group_id
+		'user_id'  => $user_ID,
+		'topic_id' => $beat->topic_id,
+		'forum_id' => $beat->forum_id,
+		'group_id' => $beat->group_id
 	) );
 
 	$lastPosts = RQ::tbl( new PrimePosts() )
-		->select( ['post_id' ] )
-		->where( [
-			'topic_id'			 => $beat->topic_id,
-			'user_id__not_in'	 => array( $user_ID )
-		] )
-		->date( 'post_date', '>', $beat->last_beat )
-		->orderby( 'post_id', 'ASC' )
-		->get_col();
+	               ->select( [ 'post_id' ] )
+	               ->where( [
+		               'topic_id'        => $beat->topic_id,
+		               'user_id__not_in' => array( $user_ID )
+	               ] )
+	               ->date( 'post_date', '>', $beat->last_beat )
+	               ->orderby( 'post_id', 'ASC' )
+	               ->get_col();
 
 	$lastPosts = array_unique( $lastPosts );
 
@@ -480,7 +517,7 @@ function pfm_topic_beat( $beat ) {
 			$result['content'][] = pfm_get_post_box( $lastPost );
 		}
 
-		$result['current_url'] = pfm_get_post_permalink( $lastPosts[count( $lastPosts ) - 1] );
+		$result['current_url'] = pfm_get_post_permalink( $lastPosts[ count( $lastPosts ) - 1 ] );
 	}
 
 	$visitors = pfm_get_visitors_data( array( 'topic_id' => $beat->topic_id ), 1 );
@@ -496,20 +533,22 @@ function pfm_topic_beat( $beat ) {
 	}
 
 	$result['last_beat'] = current_time( 'mysql' );
-	$result['visitors']	 = $visitsList;
+	$result['visitors']  = $visitsList;
 
 	return $result;
 }
 
 function is_prime_forum() {
 	global $PrimeQuery;
-	return ($PrimeQuery) ? true : false;
+
+	return ( $PrimeQuery ) ? true : false;
 }
 
 function pfm_get_user_name( $user_id ) {
 
-	if ( ! $user_id )
+	if ( ! $user_id ) {
 		return __( 'Guest', 'wp-recall' );
+	}
 
 	if ( $name = pfm_get_user_data( $user_id, 'display_name' ) ) {
 		return $name;
@@ -520,5 +559,6 @@ function pfm_get_user_name( $user_id ) {
 
 function pfm_get_user_data( $user_id, $dataName ) {
 	global $PrimeQuery;
-	return ($PrimeQuery) ? $PrimeQuery->get_user_data( $user_id, $dataName ) : false;
+
+	return ( $PrimeQuery ) ? $PrimeQuery->get_user_data( $user_id, $dataName ) : false;
 }

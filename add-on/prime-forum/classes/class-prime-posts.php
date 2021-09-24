@@ -2,14 +2,14 @@
 
 class PrimePosts extends Rcl_Query {
 
-	public $serialize = ['post_edit' ];
+	public $serialize = [ 'post_edit' ];
 
 	function __construct( $as = false ) {
 
 		$table = array(
-			'name'	 => RCL_PREF . "pforum_posts",
-			'as'	 => $as ? $as : 'pfm_posts',
-			'cols'	 => array(
+			'name' => RCL_PREF . "pforum_posts",
+			'as'   => $as ? $as : 'pfm_posts',
+			'cols' => array(
 				'post_id',
 				'post_content',
 				'user_id',
@@ -25,7 +25,7 @@ class PrimePosts extends Rcl_Query {
 
 		parent::__construct( $table );
 
-		$this->number = (pfm_get_option( 'posts-per-page' )) ? pfm_get_option( 'posts-per-page' ) : 20;
+		$this->number = ( pfm_get_option( 'posts-per-page' ) ) ? pfm_get_option( 'posts-per-page' ) : 20;
 	}
 
 }

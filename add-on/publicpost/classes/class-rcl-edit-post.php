@@ -58,12 +58,16 @@ class Rcl_EditPost {
 			'form_id' => isset( $_POST['form_id'] ) ? $_POST['form_id'] : 1
 		) );
 
-		foreach([
-			'post_title', 'post_content', 'post_thumbnail'
-		] as $field_name){
+		foreach (
+			[
+				'post_title',
+				'post_content',
+				'post_thumbnail'
+			] as $field_name
+		) {
 			if ( $formFields->is_active_field( $field_name ) ) {
 				$field = $formFields->get_field( $field_name );
-				if ( $field->get_prop( 'required' ) && empty($_POST[$field_name]) ) {
+				if ( $field->get_prop( 'required' ) && empty( $_POST[ $field_name ] ) ) {
 					return false;
 				}
 			}
@@ -82,7 +86,7 @@ class Rcl_EditPost {
 
 				if ( in_array( $field->type, array( 'runner' ) ) ) {
 
-					$value = $value?: 0;
+					$value = $value ?: 0;
 					$min   = $field->value_min;
 					$max   = $field->value_max;
 

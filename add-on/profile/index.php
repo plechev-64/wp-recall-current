@@ -2,8 +2,9 @@
 
 require_once 'classes/class-rcl-profile-fields.php';
 
-if ( is_admin() )
+if ( is_admin() ) {
 	require_once 'admin/index.php';
+}
 
 if ( ! is_admin() ):
 	add_action( 'rcl_enqueue_scripts', 'rcl_profile_scripts', 10 );
@@ -19,6 +20,7 @@ function rcl_profile_scripts() {
 add_filter( 'rcl_init_js_variables', 'rcl_init_js_profile_variables', 10 );
 function rcl_init_js_profile_variables( $data ) {
 	$data['local']['no_repeat_pass'] = __( 'Repeated password not correct!', 'wp-recall' );
+
 	return $data;
 }
 
@@ -27,12 +29,12 @@ function rcl_tab_profile() {
 
 	rcl_tab(
 		array(
-			'id'		 => 'profile',
-			'name'		 => __( 'Profile', 'wp-recall' ),
-			'supports'	 => array( 'ajax' ),
-			'public'	 => 0,
-			'icon'		 => 'fa-user',
-			'content'	 => array(
+			'id'       => 'profile',
+			'name'     => __( 'Profile', 'wp-recall' ),
+			'supports' => array( 'ajax' ),
+			'public'   => 0,
+			'icon'     => 'fa-user',
+			'content'  => array(
 				array(
 					'callback' => array(
 						'name' => 'rcl_tab_profile_content'
@@ -47,13 +49,14 @@ add_action( 'rcl_bar_setup', 'rcl_bar_add_profile_link', 10 );
 function rcl_bar_add_profile_link() {
 	global $user_ID;
 
-	if ( ! is_user_logged_in() )
+	if ( ! is_user_logged_in() ) {
 		return false;
+	}
 
 	rcl_bar_add_menu_item( 'profile-link', array(
-		'url'	 => rcl_get_tab_permalink( $user_ID, 'profile' ),
-		'icon'	 => 'fa-user-secret',
-		'label'	 => __( 'Profile settings', 'wp-recall' )
+			'url'   => rcl_get_tab_permalink( $user_ID, 'profile' ),
+			'icon'  => 'fa-user-secret',
+			'label' => __( 'Profile settings', 'wp-recall' )
 		)
 	);
 }
@@ -72,10 +75,11 @@ function rcl_show_custom_fields_profile( $master_id ) {
 	if ( $get_fields ) {
 
 		foreach ( ( array ) stripslashes_deep( $get_fields ) as $field ) {
-			$field	 = apply_filters( 'custom_field_profile', $field );
-			if ( ! $field )
+			$field = apply_filters( 'custom_field_profile', $field );
+			if ( ! $field ) {
 				continue;
-			$slug	 = isset( $field['name'] ) ? $field['name'] : $field['slug'];
+			}
+			$slug = isset( $field['name'] ) ? $field['name'] : $field['slug'];
 
 			if ( isset( $field['req'] ) && $field['req'] ) {
 				$field['public_value'] = $field['req'];
@@ -83,24 +87,30 @@ function rcl_show_custom_fields_profile( $master_id ) {
 
 			if ( isset( $field['public_value'] ) && $field['public_value'] == 1 ) {
 				$field['value'] = get_the_author_meta( $slug, $master_id );
-				$content .= Rcl_Field::setup( $field )->get_field_value( true );
+				$content        .= Rcl_Field::setup( $field )->get_field_value( true );
 			}
 		}
 	}
 
-	if ( ! $content )
+	if ( ! $content ) {
 		return false;
+	}
 
 	return '<div class="show-profile-fields">' . $content . '</div>';
 }
 
-if ( ! is_admin() )
+if ( ! is_admin() ) {
 	add_action( 'wp', 'rcl_update_profile_notice' );
+}
 function rcl_update_profile_notice() {
-	if ( isset( $_GET['updated'] ) )
-		add_action( 'rcl_area_notice', function() {
-			echo rcl_get_notice( ['type' => 'success', 'text' => __( 'Your profile has been updated', 'wp-recall' ) ] );
+	if ( isset( $_GET['updated'] ) ) {
+		add_action( 'rcl_area_notice', function () {
+			echo rcl_get_notice( [
+				'type' => 'success',
+				'text' => __( 'Your profile has been updated', 'wp-recall' )
+			] );
 		} );
+	}
 }
 
 //Обновляем профиль пользователя
@@ -108,11 +118,13 @@ add_action( 'wp', 'rcl_edit_profile', 10 );
 function rcl_edit_profile() {
 	global $user_ID;
 
-	if ( ! isset( $_POST['submit_user_profile'] ) )
+	if ( ! isset( $_POST['submit_user_profile'] ) ) {
 		return false;
+	}
 
-	if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'update-profile_' . $user_ID ) )
+	if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'update-profile_' . $user_ID ) ) {
 		return false;
+	}
 
 	rcl_update_profile_fields( $user_ID );
 
@@ -133,40 +145,40 @@ function rcl_add_office_profile_fields( $fields ) {
 
 	if ( isset( $userdata ) && $userdata->user_level >= rcl_get_option( 'consol_access_rcl', 7 ) ) {
 		$profileFields[] = array(
-			'slug'	 => 'show_admin_bar_front',
-			'title'	 => __( 'Admin toolbar', 'wp-recall' ),
-			'type'	 => 'select',
+			'slug'   => 'show_admin_bar_front',
+			'title'  => __( 'Admin toolbar', 'wp-recall' ),
+			'type'   => 'select',
 			'values' => array(
-				'false'	 => __( 'Disabled', 'wp-recall' ),
-				'true'	 => __( 'Enabled', 'wp-recall' )
+				'false' => __( 'Disabled', 'wp-recall' ),
+				'true'  => __( 'Enabled', 'wp-recall' )
 			)
 		);
 	}
 
 	$profileFields[] = array(
-		'slug'		 => 'user_email',
-		'title'		 => __( 'E-mail', 'wp-recall' ),
-		'type'		 => 'email',
-		'required'	 => 1
+		'slug'     => 'user_email',
+		'title'    => __( 'E-mail', 'wp-recall' ),
+		'type'     => 'email',
+		'required' => 1
 	);
 
 	$profileFields[] = array(
-		'slug'		 => 'primary_pass',
-		'title'		 => __( 'New password', 'wp-recall' ),
-		'type'		 => 'password',
-		'required'	 => 0,
-		'notice'	 => __( 'If you want to change your password - enter a new one', 'wp-recall' )
+		'slug'     => 'primary_pass',
+		'title'    => __( 'New password', 'wp-recall' ),
+		'type'     => 'password',
+		'required' => 0,
+		'notice'   => __( 'If you want to change your password - enter a new one', 'wp-recall' )
 	);
 
 	$profileFields[] = array(
-		'slug'		 => 'repeat_pass',
-		'title'		 => __( 'Repeat password', 'wp-recall' ),
-		'type'		 => 'password',
-		'required'	 => 0,
-		'notice'	 => __( 'Repeat the new password', 'wp-recall' )
+		'slug'     => 'repeat_pass',
+		'title'    => __( 'Repeat password', 'wp-recall' ),
+		'type'     => 'password',
+		'required' => 0,
+		'notice'   => __( 'Repeat the new password', 'wp-recall' )
 	);
 
-	$fields = ($fields) ? array_merge( $profileFields, $fields ) : $profileFields;
+	$fields = ( $fields ) ? array_merge( $profileFields, $fields ) : $profileFields;
 
 	return $fields;
 }
@@ -177,7 +189,7 @@ function rcl_tab_profile_content( $master_id ) {
 	$profileFields = rcl_get_profile_fields( array( 'user_id' => $master_id ) );
 
 	$Table = new Rcl_Table( array(
-		'cols'	 => array(
+		'cols'  => array(
 			array(
 				'width' => 30
 			),
@@ -185,9 +197,9 @@ function rcl_tab_profile_content( $master_id ) {
 				'width' => 70
 			)
 		),
-		'zebra'	 => true,
+		'zebra' => true,
 		//'border' => array('table', 'rows')
-		) );
+	) );
 
 	$content = '<h3>' . __( 'User profile', 'wp-recall' ) . ' ' . $userdata->display_name . '</h3>
 	<form name="profile" id="your-profile" action="" method="post"  enctype="multipart/form-data">';
@@ -201,8 +213,9 @@ function rcl_tab_profile_content( $master_id ) {
 
 		$slug = isset( $field['name'] ) ? $field['name'] : $field['slug'];
 
-		if ( ! $field || ! $slug )
+		if ( ! $field || ! $slug ) {
 			continue;
+		}
 
 		if ( $field['type'] == 'hidden' ) {
 			$hiddens[] = $field;
@@ -211,13 +224,15 @@ function rcl_tab_profile_content( $master_id ) {
 
 		$fieldObject = Rcl_Field::setup( $field );
 
-		$fieldObject->set_prop( 'value', (isset( $userdata->$slug )) ? $userdata->$slug : false  );
+		$fieldObject->set_prop( 'value', ( isset( $userdata->$slug ) ) ? $userdata->$slug : false );
 
-		if ( $slug == 'email' )
+		if ( $slug == 'email' ) {
 			$fieldObject->set_prop( 'value', get_the_author_meta( 'email', $user_ID ) );
+		}
 
-		if ( $field['slug'] != 'show_admin_bar_front' && ! isset( $field['value_in_key'] ) )
+		if ( $field['slug'] != 'show_admin_bar_front' && ! isset( $field['value_in_key'] ) ) {
 			$fieldObject->set_prop( 'value_in_key', true );
+		}
 
 		$fieldInput = $fieldObject->get_field_input();
 
@@ -230,7 +245,7 @@ function rcl_tab_profile_content( $master_id ) {
 		$Table->add_row( array(
 			$fieldObject->get_title(),
 			$fieldInput
-			), apply_filters( 'rcl_profile_row_attrs', array( 'id' => 'profile-field-' . $slug ), $field ) );
+		), apply_filters( 'rcl_profile_row_attrs', array( 'id' => 'profile-field-' . $slug ), $field ) );
 	}
 
 	$content .= $Table->get_table();
@@ -239,7 +254,7 @@ function rcl_tab_profile_content( $master_id ) {
 
 		$fieldObject = Rcl_Field::setup( $field );
 
-		$fieldObject->set_prop( 'value', (isset( $userdata->$slug )) ? $userdata->$slug : false  );
+		$fieldObject->set_prop( 'value', ( isset( $userdata->$slug ) ) ? $userdata->$slug : false );
 
 		$content .= $fieldObject->get_field_input();
 	}
@@ -252,20 +267,20 @@ function rcl_tab_profile_content( $master_id ) {
 						if(chekval) jQuery('#your-profile input[name=\"'+name+'\"]').attr('required',false);
 						else jQuery('#your-profile input[name=\"'+name+'\"]').attr('required',true);
 					});"
-		. "});"
-		. "</script>";
+	            . "});"
+	            . "</script>";
 
 	$content = apply_filters( 'profile_options_rcl', $content, $userdata );
 
 	$content .= wp_nonce_field( 'update-profile_' . $user_ID, '_wpnonce', true, false ) . '
 		<div style="text-align:right;">'
-		. rcl_get_button( array(
-			'label'		 => __( 'Update profile', 'wp-recall' ),
-			'id'		 => 'cpsubmit',
-			'icon'		 => 'fa-check-circle',
-			'onclick'	 => 'return rcl_check_profile_form()? rcl_submit_form(this): false;'
+	            . rcl_get_button( array(
+			'label'   => __( 'Update profile', 'wp-recall' ),
+			'id'      => 'cpsubmit',
+			'icon'    => 'fa-check-circle',
+			'onclick' => 'return rcl_check_profile_form()? rcl_submit_form(this): false;'
 		) )
-		. '<input type="hidden" value="1" name="submit_user_profile" />
+	            . '<input type="hidden" value="1" name="submit_user_profile" />
 		</div>
 	</form>';
 
@@ -273,13 +288,13 @@ function rcl_tab_profile_content( $master_id ) {
 		$content .= '
 		<form method="post" action="" name="delete_account">
 		' . wp_nonce_field( 'delete-user-' . $user_ID, '_wpnonce', true, false )
-			. rcl_get_button( array(
-				'label'		 => __( 'Delete your profile', 'wp-recall' ),
-				'id'		 => 'delete_acc',
-				'icon'		 => 'fa-eraser',
-				'onclick'	 => 'return confirm("' . __( 'Are you sure? It can’t be restaured!', 'wp-recall' ) . '")? rcl_submit_form(this): false;'
+		            . rcl_get_button( array(
+				'label'   => __( 'Delete your profile', 'wp-recall' ),
+				'id'      => 'delete_acc',
+				'icon'    => 'fa-eraser',
+				'onclick' => 'return confirm("' . __( 'Are you sure? It can’t be restaured!', 'wp-recall' ) . '")? rcl_submit_form(this): false;'
 			) )
-			. '<input type="hidden" value="1" name="rcl_delete_user_account"/>
+		            . '<input type="hidden" value="1" name="rcl_delete_user_account"/>
 		</form>';
 	}
 
@@ -294,6 +309,7 @@ if ( function_exists( 'ulogin_profile_personal_options' ) ) {
 		ulogin_profile_personal_options( $userdata );
 		$profile_block .= ob_get_contents();
 		ob_end_clean();
+
 		return $profile_block;
 	}
 
@@ -310,10 +326,11 @@ function rcl_delete_user_account_activate() {
 //Удаляем аккаунт пользователя
 function rcl_delete_user_account() {
 	global $user_ID, $wpdb;
-	if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'delete-user-' . $user_ID ) )
+	if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'delete-user-' . $user_ID ) ) {
 		return false;
+	}
 
-	require_once(ABSPATH . 'wp-admin/includes/user.php' );
+	require_once( ABSPATH . 'wp-admin/includes/user.php' );
 
 	$wpdb->query( $wpdb->prepare( "DELETE FROM " . RCL_PREF . "user_action WHERE user ='%d'", $user_ID ) );
 

@@ -12,10 +12,10 @@ class PrimeManager extends Rcl_Fields_Manager {
 		rcl_sortable_scripts();
 
 		$this->forum_groups = pfm_get_groups( array(
-			'order'		 => 'ASC',
-			'orderby'	 => 'group_seq',
-			'number'	 => -1
-			) );
+			'order'   => 'ASC',
+			'orderby' => 'group_seq',
+			'number'  => - 1
+		) );
 
 		$this->group_id = isset( $_GET['group-id'] ) ? intval( $_GET['group-id'] ) : 0;
 
@@ -26,11 +26,11 @@ class PrimeManager extends Rcl_Fields_Manager {
 		if ( $this->group_id ) {
 
 			$this->forums = pfm_get_forums( array(
-				'order'		 => 'ASC',
-				'orderby'	 => 'forum_seq',
-				'group_id'	 => $this->group_id,
-				'number'	 => -1
-				) );
+				'order'    => 'ASC',
+				'orderby'  => 'forum_seq',
+				'group_id' => $this->group_id,
+				'number'   => - 1
+			) );
 
 			$this->current_group = pfm_get_group( $this->group_id );
 		}
@@ -51,8 +51,9 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 		$fields = $this->get_options_forum();
 
-		if ( ! $fields )
+		if ( ! $fields ) {
 			return false;
+		}
 
 		$content = $this->get_form_box( $fields, 'forum_create', __( 'Create forum', 'wp-recall' ) );
 
@@ -96,23 +97,23 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 		$options = array(
 			array(
-				'type'		 => 'text',
-				'slug'		 => 'group_name',
+				'type'       => 'text',
+				'slug'       => 'group_name',
 				'input_name' => 'group_name',
-				'title'		 => __( 'Name of the group of forums', 'wp-recall' ),
-				'required'	 => 1
+				'title'      => __( 'Name of the group of forums', 'wp-recall' ),
+				'required'   => 1
 			),
 			array(
-				'type'		 => 'text',
-				'slug'		 => 'group_slug',
+				'type'       => 'text',
+				'slug'       => 'group_slug',
 				'input_name' => 'group_slug',
-				'title'		 => __( 'Slug of the group', 'wp-recall' )
+				'title'      => __( 'Slug of the group', 'wp-recall' )
 			),
 			array(
-				'type'		 => 'textarea',
-				'slug'		 => 'group_desc',
+				'type'       => 'textarea',
+				'slug'       => 'group_desc',
 				'input_name' => 'group_desc',
-				'title'		 => __( 'Description of the group', 'wp-recall' )
+				'title'      => __( 'Description of the group', 'wp-recall' )
 			)
 		);
 
@@ -123,39 +124,40 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 	function get_options_forum( $forum = false ) {
 
-		if ( ! $this->forum_groups )
+		if ( ! $this->forum_groups ) {
 			return false;
+		}
 
 		$groups = array( '' => __( 'Select the group forum', 'wp-recall' ) );
 
 		foreach ( $this->forum_groups as $group ) {
-			$groups[$group->group_id] = $group->group_name;
+			$groups[ $group->group_id ] = $group->group_name;
 		}
 
 		$options = array(
 			array(
-				'type'		 => 'select',
-				'slug'		 => 'group_id',
-				'title'		 => __( 'Forum group', 'wp-recall' ),
-				'required'	 => 1,
-				'default'	 => $this->group_id,
-				'values'	 => $groups
+				'type'     => 'select',
+				'slug'     => 'group_id',
+				'title'    => __( 'Forum group', 'wp-recall' ),
+				'required' => 1,
+				'default'  => $this->group_id,
+				'values'   => $groups
 			),
 			array(
-				'type'		 => 'text',
-				'slug'		 => 'forum_name',
-				'title'		 => __( 'Name of the forum', 'wp-recall' ),
-				'required'	 => 1
+				'type'     => 'text',
+				'slug'     => 'forum_name',
+				'title'    => __( 'Name of the forum', 'wp-recall' ),
+				'required' => 1
 			),
 			array(
-				'type'	 => 'text',
-				'slug'	 => 'forum_slug',
-				'title'	 => __( 'Slug of the forum', 'wp-recall' )
+				'type'  => 'text',
+				'slug'  => 'forum_slug',
+				'title' => __( 'Slug of the forum', 'wp-recall' )
 			),
 			array(
-				'type'	 => 'select',
-				'slug'	 => 'forum_closed',
-				'title'	 => __( 'Forum status', 'wp-recall' ),
+				'type'   => 'select',
+				'slug'   => 'forum_closed',
+				'title'  => __( 'Forum status', 'wp-recall' ),
 				'values' => array(
 					__( 'Open forum', 'wp-recall' ),
 					__( 'Closed forum', 'wp-recall' )
@@ -163,9 +165,9 @@ class PrimeManager extends Rcl_Fields_Manager {
 				'notice' => __( 'It is impossible to publish new topics and messages in a closed forum', 'wp-recall' )
 			),
 			array(
-				'type'	 => 'textarea',
-				'slug'	 => 'forum_desc',
-				'title'	 => __( 'Description of the forum', 'wp-recall' )
+				'type'  => 'textarea',
+				'slug'  => 'forum_desc',
+				'title' => __( 'Description of the forum', 'wp-recall' )
 			)
 		);
 
@@ -173,9 +175,10 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 		if ( $options ) {
 			foreach ( $options as $k => $option ) {
-				if ( isset( $option['input_name'] ) )
+				if ( isset( $option['input_name'] ) ) {
 					continue;
-				$options[$k]['input_name'] = $option['slug'];
+				}
+				$options[ $k ]['input_name'] = $option['slug'];
 			}
 		}
 
@@ -199,23 +202,24 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 	function get_groups_list() {
 
-		if ( ! $this->forum_groups )
+		if ( ! $this->forum_groups ) {
 			return '<p>' . __( 'No groups are created yet', 'wp-recall' ) . '</p>';
+		}
 
 		$content = '<div class="groups-list">';
 
 		foreach ( $this->forum_groups as $group ) {
 
 			$this->add_field( array(
-				'type'		 => 'custom',
-				'item'		 => 'groups',
-				'type_id'	 => 'group_id',
-				'slug'		 => $group->group_id,
+				'type'       => 'custom',
+				'item'       => 'groups',
+				'type_id'    => 'group_id',
+				'slug'       => $group->group_id,
 				'group_name' => $group->group_name,
-				'title'		 => $group->group_name,
+				'title'      => $group->group_name,
 				'group_slug' => $group->group_slug,
 				'group_desc' => $group->group_desc,
-				'options'	 => $this->get_options_group( $group )
+				'options'    => $this->get_options_group( $group )
 			) );
 		}
 
@@ -237,8 +241,9 @@ class PrimeManager extends Rcl_Fields_Manager {
 		$content = '';
 
 		foreach ( $this->fields as $field_id => $field ) {
-			if ( isset( $field_ids ) && ! in_array( $field_id, $field_ids ) )
+			if ( isset( $field_ids ) && ! in_array( $field_id, $field_ids ) ) {
 				continue;
+			}
 			$content .= $this->get_field_manager( $field_id );
 		}
 
@@ -247,12 +252,13 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 	function get_forums_list() {
 
-		if ( ! $this->forums )
+		if ( ! $this->forums ) {
 			return '<p>' . __( 'Forums were not created yet', 'wp-recall' ) . '</p>';
+		}
 
 		$groups = array();
 		foreach ( $this->forum_groups as $group ) {
-			$groups[$group->group_id] = $group->group_name;
+			$groups[ $group->group_id ] = $group->group_name;
 		}
 
 		$content = '<div class="forums-list">';
@@ -262,18 +268,18 @@ class PrimeManager extends Rcl_Fields_Manager {
 		foreach ( $this->forums as $forum ) {
 
 			$this->add_field( array(
-				'type'			 => 'custom',
-				'item'			 => 'forums',
-				'type_id'		 => 'forum_id',
-				'slug'			 => $forum->forum_id,
-				'title'			 => $forum->forum_name,
-				'forum_name'	 => $forum->forum_name,
-				'forum_desc'	 => $forum->forum_desc,
-				'forum_slug'	 => $forum->forum_slug,
-				'forum_closed'	 => $forum->forum_closed,
-				'group_id'		 => $forum->group_id,
-				'parent_id'		 => $forum->parent_id,
-				'options'		 => $this->get_options_forum( $forum )
+				'type'         => 'custom',
+				'item'         => 'forums',
+				'type_id'      => 'forum_id',
+				'slug'         => $forum->forum_id,
+				'title'        => $forum->forum_name,
+				'forum_name'   => $forum->forum_name,
+				'forum_desc'   => $forum->forum_desc,
+				'forum_slug'   => $forum->forum_slug,
+				'forum_closed' => $forum->forum_closed,
+				'group_id'     => $forum->group_id,
+				'parent_id'    => $forum->parent_id,
+				'options'      => $this->get_options_forum( $forum )
 			) );
 		}
 
@@ -294,8 +300,9 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 		$childrens = array();
 		foreach ( $this->fields as $field_id => $field ) {
-			if ( $field->parent_id != $parent_id )
+			if ( $field->parent_id != $parent_id ) {
 				continue;
+			}
 			$childrens[] = $field_id;
 		}
 
@@ -334,7 +341,7 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 	function get_input_option( $option, $value = false ) {
 
-		$value = (isset( $this->field[$option['slug']] )) ? $this->field[$option['slug']] : $value;
+		$value = ( isset( $this->field[ $option['slug'] ] ) ) ? $this->field[ $option['slug'] ] : $value;
 
 		$option['name'] = $option['slug'];
 
@@ -353,12 +360,13 @@ class PrimeManager extends Rcl_Fields_Manager {
 			$classes[] = 'active-group';
 		}
 
-		if ( isset( $field->class ) )
+		if ( isset( $field->class ) ) {
 			$classes[] = $field->class;
+		}
 
-		$title = ($field->item == 'groups') ? $field->id . ': ' . $field->title : $field->title;
+		$title = ( $field->item == 'groups' ) ? $field->id . ': ' . $field->title : $field->title;
 
-		$content = '<li id="field-' . $field->id . '" ' . (isset( $field->parent_id ) ? 'data-parent="' . $field->parent_id . '"' : '') . ' data-slug="' . $field->id . '" data-type="' . $field->item . '" class="' . implode( ' ', $classes ) . '">
+		$content = '<li id="field-' . $field->id . '" ' . ( isset( $field->parent_id ) ? 'data-parent="' . $field->parent_id . '"' : '' ) . ' data-slug="' . $field->id . '" data-type="' . $field->item . '" class="' . implode( ' ', $classes ) . '">
 			<div class="field-header">
 				<span class="field-type type-' . $field->item . '"></span>
 				<span class="field-title">' . $title . '</span>
@@ -366,8 +374,9 @@ class PrimeManager extends Rcl_Fields_Manager {
 					<a class="field-trash field-control" href="#" title="' . __( 'Delete', 'wp-recall' ) . '" onclick="pfm_delete_manager_item(\'' . __( 'Are you sure?', 'wp-recall' ) . '\',this); return false;"></a>
 					<a class="field-edit field-control" href="#" title="' . __( 'Edit', 'wp-recall' ) . '"></a>';
 
-		if ( $field->item == 'groups' )
+		if ( $field->item == 'groups' ) {
 			$content .= '<a class="get-forums field-control" href="' . admin_url( 'admin.php?page=pfm-forums&group-id=' . $field->id ) . '" title="' . __( 'Get forums', 'wp-recall' ) . '"></a>';
+		}
 
 		$content .= '</span>
 			</div>

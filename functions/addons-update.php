@@ -2,8 +2,9 @@
 
 add_action( 'wp', 'rcl_hand_addon_update' );
 function rcl_hand_addon_update() {
-	if ( ! isset( $_GET['rcl-addon-update'] ) || $_GET['rcl-addon-update'] != 'now' )
+	if ( ! isset( $_GET['rcl-addon-update'] ) || $_GET['rcl-addon-update'] != 'now' ) {
 		return false;
+	}
 	rcl_check_addon_update();
 }
 
@@ -15,20 +16,22 @@ function rcl_check_addon_update() {
 
 	foreach ( $paths as $path ) {
 		if ( file_exists( $path ) ) {
-			$addons	 = scandir( $path, 1 );
-			$a		 = 0;
+			$addons = scandir( $path, 1 );
+			$a      = 0;
 			foreach ( ( array ) $addons as $namedir ) {
-				$addon_dir	 = $path . '/' . $namedir;
-				if ( ! is_dir( $addon_dir ) )
+				$addon_dir = $path . '/' . $namedir;
+				if ( ! is_dir( $addon_dir ) ) {
 					continue;
-				$index_src	 = $addon_dir . '/index.php';
-				if ( ! file_exists( $index_src ) )
+				}
+				$index_src = $addon_dir . '/index.php';
+				if ( ! file_exists( $index_src ) ) {
 					continue;
-				$info_src	 = $addon_dir . '/info.txt';
+				}
+				$info_src = $addon_dir . '/info.txt';
 				if ( file_exists( $info_src ) ) {
-					$info							 = file( $info_src );
-					$addons_data[$namedir]			 = rcl_parse_addon_info( $info );
-					$addons_data[$namedir]['src']	 = $index_src;
+					$info                           = file( $info_src );
+					$addons_data[ $namedir ]        = rcl_parse_addon_info( $info );
+					$addons_data[ $namedir ]['src'] = $index_src;
 					$a ++;
 					flush();
 				}
@@ -36,8 +39,9 @@ function rcl_check_addon_update() {
 		}
 	}
 
-	if ( ! $addons_data )
+	if ( ! $addons_data ) {
 		return false;
+	}
 
 	rcl_add_log( __( 'Sending request to the update server to get the latest versions of the installed add-ons', 'wp-recall' ) );
 
@@ -53,25 +57,27 @@ function rcl_check_addon_update() {
 	}
 
 	$need_update = array();
-	$ver		 = 0;
+	$ver         = 0;
 
 	foreach ( $xml_array as $xml_data ) {
 
-		if ( ! $xml_data )
+		if ( ! $xml_data ) {
 			continue;
+		}
 
 		$key = ( string ) $xml_data->slug;
 
-		if ( ! isset( $addons_data[$key] ) )
+		if ( ! isset( $addons_data[ $key ] ) ) {
 			continue;
+		}
 
 		$last_ver = ( string ) $xml_data->version;
 
-		$ver = version_compare( $last_ver, $addons_data[$key]['version'] );
+		$ver = version_compare( $last_ver, $addons_data[ $key ]['version'] );
 
 		if ( $ver > 0 ) {
-			$addons_data[$key]['new-version']	 = $last_ver;
-			$need_update[$key]					 = $addons_data[$key];
+			$addons_data[ $key ]['new-version'] = $last_ver;
+			$need_update[ $key ]                = $addons_data[ $key ];
 		}
 	}
 
@@ -86,20 +92,22 @@ function rcl_send_addons_data() {
 
 	foreach ( $paths as $path ) {
 		if ( file_exists( $path ) ) {
-			$addons	 = scandir( $path, 1 );
-			$a		 = 0;
+			$addons = scandir( $path, 1 );
+			$a      = 0;
 			foreach ( ( array ) $addons as $namedir ) {
-				$addon_dir	 = $path . '/' . $namedir;
-				if ( ! is_dir( $addon_dir ) )
+				$addon_dir = $path . '/' . $namedir;
+				if ( ! is_dir( $addon_dir ) ) {
 					continue;
-				$index_src	 = $addon_dir . '/index.php';
-				if ( ! file_exists( $index_src ) )
+				}
+				$index_src = $addon_dir . '/index.php';
+				if ( ! file_exists( $index_src ) ) {
 					continue;
-				$info_src	 = $addon_dir . '/info.txt';
+				}
+				$info_src = $addon_dir . '/info.txt';
 				if ( file_exists( $info_src ) ) {
-					$info							 = file( $info_src );
-					$addons_data[$namedir]			 = rcl_parse_addon_info( $info );
-					$addons_data[$namedir]['src']	 = $index_src;
+					$info                           = file( $info_src );
+					$addons_data[ $namedir ]        = rcl_parse_addon_info( $info );
+					$addons_data[ $namedir ]['src'] = $index_src;
 					$a ++;
 					flush();
 				}
@@ -107,29 +115,30 @@ function rcl_send_addons_data() {
 		}
 	}
 
-	if ( ! $addons_data )
+	if ( ! $addons_data ) {
 		return false;
+	}
 
 	$need_update = array();
-	$get		 = array();
+	$get         = array();
 
 	foreach ( $addons_data as $key => $addon ) {
-		$status	 = (isset( $active_addons[$key] )) ? 1 : 0;
-		$get[]	 = $key . ':' . $addon['version'] . ':' . $status;
+		$status = ( isset( $active_addons[ $key ] ) ) ? 1 : 0;
+		$get[]  = $key . ':' . $addon['version'] . ':' . $status;
 	}
 
 	$addonlist = implode( ';', $get );
 
 	$url = RCL_SERVICE_HOST . "/products-files/api/update.php"
-		. "?rcl-addon-action=version-check-list&compress=1&noreply=1";
+	       . "?rcl-addon-action=version-check-list&compress=1&noreply=1";
 
-	$addonlist	 = gzencode( $addonlist );
-	$addonlist	 = strtr( base64_encode( $addonlist ), '+/=', '-_,' );
+	$addonlist = gzencode( $addonlist );
+	$addonlist = strtr( base64_encode( $addonlist ), '+/=', '-_,' );
 
 	$data = array(
-		'rcl-version'	 => VER_RCL,
-		'addons'		 => $addonlist,
-		'host'			 => $_SERVER['SERVER_NAME']
+		'rcl-version' => VER_RCL,
+		'addons'      => $addonlist,
+		'host'        => $_SERVER['SERVER_NAME']
 	);
 
 	wp_remote_post( $url, array( 'body' => $data ) );
@@ -141,13 +150,13 @@ function rcl_get_details_addon() {
 	$slug = $_POST['slug'];
 
 	$url = RCL_SERVICE_HOST . '/products-files/api/add-ons.php'
-		. '?rcl-addon-info=get-details';
+	       . '?rcl-addon-info=get-details';
 
 	$data = array(
-		'addon'			 => $slug,
-		'rcl-key'		 => get_site_option( 'rcl-key' ),
-		'rcl-version'	 => VER_RCL,
-		'host'			 => $_SERVER['SERVER_NAME']
+		'addon'       => $slug,
+		'rcl-key'     => get_site_option( 'rcl-key' ),
+		'rcl-version' => VER_RCL,
+		'host'        => $_SERVER['SERVER_NAME']
 	);
 
 	$response = wp_remote_post( $url, array( 'body' => $data ) );
@@ -169,8 +178,8 @@ function rcl_get_details_addon() {
 	);
 
 	wp_send_json( array(
-		'title'		 => $result['title'],
-		'content'	 => $content
+		'title'   => $result['title'],
+		'content' => $content
 	) );
 }
 
@@ -187,8 +196,8 @@ function rcl_update_addon() {
 
 	$activeaddons = get_site_option( 'rcl_active_addons' );
 
-	$pathdir	 = RCL_TAKEPATH . 'update/';
-	$new_addon	 = $pathdir . $addonID . '.zip';
+	$pathdir   = RCL_TAKEPATH . 'update/';
+	$new_addon = $pathdir . $addonID . '.zip';
 
 	if ( ! file_exists( $pathdir ) ) {
 		mkdir( $pathdir );
@@ -196,13 +205,13 @@ function rcl_update_addon() {
 	}
 
 	$url = RCL_SERVICE_HOST . '/products-files/api/update.php'
-		. '?rcl-addon-action=update';
+	       . '?rcl-addon-action=update';
 
 	$data = array(
-		'addon'			 => $addonID,
-		'rcl-key'		 => get_site_option( 'rcl-key' ),
-		'rcl-version'	 => VER_RCL,
-		'host'			 => $_SERVER['SERVER_NAME']
+		'addon'       => $addonID,
+		'rcl-key'     => get_site_option( 'rcl-key' ),
+		'rcl-version' => VER_RCL,
+		'host'        => $_SERVER['SERVER_NAME']
 	);
 
 	$response = wp_remote_post( $url, array( 'body' => $data ) );
@@ -229,11 +238,12 @@ function rcl_update_addon() {
 
 	$res = $zip->open( $new_addon );
 
-	if ( $res === TRUE ) {
+	if ( $res === true ) {
 
 		for ( $i = 0; $i < $zip->numFiles; $i ++ ) {
-			if ( $i == 0 )
+			if ( $i == 0 ) {
 				$dirzip = $zip->getNameIndex( $i );
+			}
 			if ( $zip->getNameIndex( $i ) == $dirzip . 'info.txt' ) {
 				$info = true;
 				break;
@@ -256,28 +266,30 @@ function rcl_update_addon() {
 
 		if ( file_exists( $dirpath . '/' ) ) {
 
-			if ( isset( $activeaddons[$addonID] ) )
+			if ( isset( $activeaddons[ $addonID ] ) ) {
 				rcl_deactivate_addon( $addonID );
+			}
 
 			rcl_delete_addon( $addonID, false );
 
 			$rs = $zip->extractTo( $dirpath . '/' );
 
-			if ( isset( $activeaddons[$addonID] ) )
+			if ( isset( $activeaddons[ $addonID ] ) ) {
 				rcl_activate_addon( $addonID, true, $dirpath );
+			}
 		}
 
 		$zip->close();
 		unlink( $new_addon );
 
-		if ( isset( $need_update[$addonID] ) ) {
-			unset( $need_update[$addonID] );
+		if ( isset( $need_update[ $addonID ] ) ) {
+			unset( $need_update[ $addonID ] );
 			update_site_option( 'rcl_addons_need_update', $need_update );
 		}
 
 		wp_send_json( array(
-			'addon_id'	 => $addonID,
-			'success'	 => __( 'Successfully updated', 'wp-recall' )
+			'addon_id' => $addonID,
+			'success'  => __( 'Successfully updated', 'wp-recall' )
 		) );
 	} else {
 

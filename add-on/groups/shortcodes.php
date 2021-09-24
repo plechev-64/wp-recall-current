@@ -26,8 +26,9 @@ function rcl_get_grouplist( $atts = false ) {
 	global $post, $rcl_group;
 
 	if ( rcl_get_option( 'group-output' ) && $post && $post->ID == rcl_get_option( 'group-page' ) ) {
-		if ( $rcl_group )
+		if ( $rcl_group ) {
 			return rcl_get_single_group();
+		}
 	}
 
 	include_once 'classes/class-rcl-groups-list.php';
@@ -38,8 +39,8 @@ function rcl_get_grouplist( $atts = false ) {
 
 	if ( ! isset( $atts['number'] ) ) {
 
-		$rclnavi				 = new Rcl_PageNavi( 'rcl-groups', $count, array( 'in_page' => $list->query['number'] ) );
-		$list->query['offset']	 = $rclnavi->offset;
+		$rclnavi               = new Rcl_PageNavi( 'rcl-groups', $count, array( 'in_page' => $list->query['number'] ) );
+		$list->query['offset'] = $rclnavi->offset;
 	}
 
 	$groupsdata = $list->get_data();
@@ -47,7 +48,7 @@ function rcl_get_grouplist( $atts = false ) {
 	$content = $list->get_filters( $count );
 
 	if ( ! $groupsdata ) {
-		return $content . rcl_get_notice( ['text' => __( 'Groups not found', 'wp-recall' ) ] );
+		return $content . rcl_get_notice( [ 'text' => __( 'Groups not found', 'wp-recall' ) ] );
 	}
 
 	$content .= '<div class="rcl-grouplist">';
@@ -59,8 +60,9 @@ function rcl_get_grouplist( $atts = false ) {
 
 	$content .= '</div>';
 
-	if ( ! isset( $atts['number'] ) && $rclnavi->in_page )
+	if ( ! isset( $atts['number'] ) && $rclnavi->in_page ) {
 		$content .= $rclnavi->pagenavi();
+	}
 
 	$list->remove_data();
 

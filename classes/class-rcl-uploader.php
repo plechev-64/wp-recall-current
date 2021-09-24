@@ -13,32 +13,32 @@
  */
 class Rcl_Uploader {
 
-	public $uploader_id		 = '';
-	public $fix_editor		 = false;
-	public $action			 = 'rcl_upload';
-	public $temp_media		 = false;
-	public $input_attach	 = false;
-	public $auto_upload		 = true;
-	public $user_id			 = 0;
-	public $post_parent		 = 0;
-	public $input_name		 = 'rcl-upload';
-	public $dropzone		 = false;
-	public $max_files		 = 10;
-	public $max_size		 = 512;
-	public $min_width		 = false;
-	public $min_height		 = false;
-	public $resize			 = array();
-	public $file_types		 = array( 'jpg', 'png', 'jpeg' );
-	public $multiple		 = false;
-	public $crop			 = false;
-	public $image_sizes		 = true;
-	public $mode_output		 = 'grid';
-	public $manager_balloon	 = false;
-	public $class_name		 = '';
-	public $filename		 = '';
-	public $filetitle		 = '';
-	public $dir				 = '';
-	protected $accept		 = array( 'image/*' );
+	public $uploader_id = '';
+	public $fix_editor = false;
+	public $action = 'rcl_upload';
+	public $temp_media = false;
+	public $input_attach = false;
+	public $auto_upload = true;
+	public $user_id = 0;
+	public $post_parent = 0;
+	public $input_name = 'rcl-upload';
+	public $dropzone = false;
+	public $max_files = 10;
+	public $max_size = 512;
+	public $min_width = false;
+	public $min_height = false;
+	public $resize = array();
+	public $file_types = array( 'jpg', 'png', 'jpeg' );
+	public $multiple = false;
+	public $crop = false;
+	public $image_sizes = true;
+	public $mode_output = 'grid';
+	public $manager_balloon = false;
+	public $class_name = '';
+	public $filename = '';
+	public $filetitle = '';
+	public $dir = '';
+	protected $accept = array( 'image/*' );
 
 	function __construct( $uploader_id, $args = false ) {
 
@@ -56,15 +56,17 @@ class Rcl_Uploader {
 
 		$this->uploader_id = $uploader_id;
 
-		if ( $args )
+		if ( $args ) {
 			$this->init_properties( $args );
+		}
 
 		if ( ! is_array( $this->file_types ) ) {
 			$this->file_types = array_map( 'trim', explode( ',', $this->file_types ) );
 		}
 
-		if ( ! $this->file_types )
+		if ( ! $this->file_types ) {
 			$this->file_types = array( 'jpg', 'png', 'jpeg' );
+		}
 
 		if ( $this->resize && ! is_array( $this->resize ) ) {
 			$this->resize = array_map( 'trim', explode( ',', $this->resize ) );
@@ -98,11 +100,12 @@ class Rcl_Uploader {
 			if ( is_array( $value ) ) {
 
 				foreach ( $value as $k => $v ) {
-					if ( is_object( $v ) )
-						$value[$k] = ( array ) $v;
+					if ( is_object( $v ) ) {
+						$value[ $k ] = ( array ) $v;
+					}
 				}
 				$value = ( array ) $value;
-			}else if ( is_object( $value ) ) {
+			} else if ( is_object( $value ) ) {
 				$value = ( array ) $value;
 			}
 
@@ -137,8 +140,9 @@ class Rcl_Uploader {
 
 		$content = '<div id="rcl-uploader-' . $this->uploader_id . '" class="rcl-uploader">';
 
-		if ( $this->dropzone )
+		if ( $this->dropzone ) {
 			$content .= $this->get_dropzone();
+		}
 
 		$content .= '<div class="rcl-uploader-button-box">';
 
@@ -146,8 +150,9 @@ class Rcl_Uploader {
 
 		$content .= $this->get_button( $args );
 
-		if ( $args['allowed_types'] )
+		if ( $args['allowed_types'] ) {
 			$content .= '<small class="notice">' . __( 'Types of files', 'wp-recall' ) . ': ' . implode( ', ', $this->file_types ) . '</small>';
+		}
 
 		$content .= '</div>';
 
@@ -161,9 +166,9 @@ class Rcl_Uploader {
 		$json = json_encode( $this );
 
 		$content = '<input id="rcl-uploader-input-' . $this->uploader_id . '" class="uploader-input" '
-			. 'data-uploader_id="' . $this->uploader_id . '" name="' . ($this->multiple ? $this->input_name . '[]' : $this->input_name) . '" '
-			. 'type="file" accept="' . implode( ', ', $this->accept ) . '" ' . ($this->multiple ? 'multiple' : '') . '>'
-			. '<script>rcl_init_uploader(' . $json . ', "' . md5( $json . rcl_get_option( 'security-key' ) ) . '");</script>';
+		           . 'data-uploader_id="' . $this->uploader_id . '" name="' . ( $this->multiple ? $this->input_name . '[]' : $this->input_name ) . '" '
+		           . 'type="file" accept="' . implode( ', ', $this->accept ) . '" ' . ( $this->multiple ? 'multiple' : '' ) . '>'
+		           . '<script>rcl_init_uploader(' . $json . ', "' . md5( $json . rcl_get_option( 'security-key' ) ) . '");</script>';
 
 		if ( rcl_is_ajax() ) {
 			$content .= '<script>RclUploaders.init();</script>';
@@ -175,19 +180,19 @@ class Rcl_Uploader {
 	function get_button( $args ) {
 
 		$defaults = array(
-			'button_label'	 => __( 'Upload file', 'wp-recall' ),
-			'button_icon'	 => 'fa-upload',
-			'button_type'	 => 'simple'
+			'button_label' => __( 'Upload file', 'wp-recall' ),
+			'button_icon'  => 'fa-upload',
+			'button_type'  => 'simple'
 		);
 
 		$args = wp_parse_args( $args, $defaults );
 
 		$bttnArgs = array(
-			'icon'		 => $args['button_icon'],
-			'type'		 => $args['button_type'],
-			'label'		 => $args['button_label'],
-			'class'		 => array( 'rcl-uploader-button', 'rcl-uploader-button-' . $this->uploader_id ),
-			'content'	 => $this->get_input()
+			'icon'    => $args['button_icon'],
+			'type'    => $args['button_type'],
+			'label'   => $args['button_label'],
+			'class'   => array( 'rcl-uploader-button', 'rcl-uploader-button-' . $this->uploader_id ),
+			'content' => $this->get_input()
 		);
 
 		return rcl_get_button( $bttnArgs );
@@ -206,8 +211,9 @@ class Rcl_Uploader {
 
 	private function get_mime_type_by_ext( $file_ext ) {
 
-		if ( ! $file_ext )
+		if ( ! $file_ext ) {
 			return false;
+		}
 
 		$mimes = get_allowed_mime_types();
 
@@ -222,14 +228,16 @@ class Rcl_Uploader {
 
 	private function get_accept() {
 
-		if ( ! $this->file_types )
+		if ( ! $this->file_types ) {
 			return false;
+		}
 
 		$accept = array();
 
 		foreach ( $this->file_types as $type ) {
-			if ( ! $type )
+			if ( ! $type ) {
 				continue;
+			}
 			$accept[] = $this->get_mime_type_by_ext( $type );
 		}
 
@@ -240,16 +248,16 @@ class Rcl_Uploader {
 
 		if ( ! $imagIds && $getTemps ) {
 
-			$imagIds = RQ::tbl( new Rcl_Temp_Media() )->select( ['media_id' ] )
-				->where( [
-					'uploader_id'	 => $this->uploader_id,
-					'user_id'		 => $this->user_id ? $this->user_id : 0,
-					'session_id'	 => $this->user_id ? '' : $_COOKIE['PHPSESSID'],
-				] )
-				->get_col();
+			$imagIds = RQ::tbl( new Rcl_Temp_Media() )->select( [ 'media_id' ] )
+			             ->where( [
+				             'uploader_id' => $this->uploader_id,
+				             'user_id'     => $this->user_id ? $this->user_id : 0,
+				             'session_id'  => $this->user_id ? '' : $_COOKIE['PHPSESSID'],
+			             ] )
+			             ->get_col();
 		}
 
-		$content = '<div id="rcl-upload-gallery-' . $this->uploader_id . '" class="rcl-upload-gallery mode-' . $this->mode_output . ' ' . ($this->manager_balloon ? 'balloon-manager' : 'simple-manager') . '">';
+		$content = '<div id="rcl-upload-gallery-' . $this->uploader_id . '" class="rcl-upload-gallery mode-' . $this->mode_output . ' ' . ( $this->manager_balloon ? 'balloon-manager' : 'simple-manager' ) . '">';
 
 		if ( $imagIds ) {
 			//$content .= '<div class="ui-sortable-placeholder"></div>';
@@ -271,8 +279,9 @@ class Rcl_Uploader {
 
 		$attach = get_post( $attach_id );
 
-		if ( ! $attach )
+		if ( ! $attach ) {
 			return false;
+		}
 
 		$is_image = wp_attachment_is( 'image', $attach ) ? true : false;
 
@@ -284,10 +293,11 @@ class Rcl_Uploader {
 			$image = wp_get_attachment_image( $attach_id, array( 100, 100 ), true );
 		}
 
-		if ( ! $image )
+		if ( ! $image ) {
 			return false;
+		}
 
-		$content = '<div class="gallery-attachment gallery-attachment-' . $attach_id . ' ' . ($is_image ? 'type-image' : 'type-file') . '" id="gallery-' . $this->uploader_id . '-attachment-' . $attach_id . '">';
+		$content = '<div class="gallery-attachment gallery-attachment-' . $attach_id . ' ' . ( $is_image ? 'type-image' : 'type-file' ) . '" id="gallery-' . $this->uploader_id . '-attachment-' . $attach_id . '">';
 
 		$content .= $image;
 
@@ -299,7 +309,7 @@ class Rcl_Uploader {
 
 		if ( $this->input_attach ) {
 			$input_attach = $this->multiple ? $this->input_attach . '[]' : $this->input_attach;
-			$content .= '<input type="hidden" name="' . $input_attach . '" value="' . $attach_id . '">';
+			$content      .= '<input type="hidden" name="' . $input_attach . '" value="' . $attach_id . '">';
 		}
 
 		$content .= '</div>';
@@ -333,7 +343,7 @@ class Rcl_Uploader {
 
 		if ( $isImage ) {
 
-			$size	 = ($default = rcl_get_option( 'public_form_thumb' )) ? $default : 'large';
+			$size = ( $default = rcl_get_option( 'public_form_thumb' ) ) ? $default : 'large';
 
 			$fileHtml = wp_get_attachment_image( $attachment_id, $size, false, array( 'srcset' => ' ' ) );
 
@@ -349,12 +359,12 @@ class Rcl_Uploader {
 		}
 
 		$items[] = array(
-			'icon'		 => 'fa-newspaper-o',
-			'title'		 => __( 'Add to the editor', 'wp-recall' ),
-			'onclick'	 => 'rcl_add_attachment_in_editor(' . $attachment_id . ',"' . $this->fix_editor . '",this);return false;',
-			'data'		 => array(
-				'html'	 => $fileHtml,
-				'src'	 => $fileSrc
+			'icon'    => 'fa-newspaper-o',
+			'title'   => __( 'Add to the editor', 'wp-recall' ),
+			'onclick' => 'rcl_add_attachment_in_editor(' . $attachment_id . ',"' . $this->fix_editor . '",this);return false;',
+			'data'    => array(
+				'html' => $fileHtml,
+				'src'  => $fileSrc
 			)
 		);
 
@@ -369,9 +379,9 @@ class Rcl_Uploader {
 
 		$items = array(
 			array(
-				'icon'		 => 'fa-trash',
-				'title'		 => __( 'Delete the file', 'wp-recall' ),
-				'onclick'	 => 'rcl_delete_attachment(' . $attach_id . ',' . $this->post_parent . ',this);return false;'
+				'icon'    => 'fa-trash',
+				'title'   => __( 'Delete the file', 'wp-recall' ),
+				'onclick' => 'rcl_delete_attachment(' . $attach_id . ',' . $this->post_parent . ',this);return false;'
 			)
 		);
 
@@ -385,14 +395,15 @@ class Rcl_Uploader {
 
 		$manager_items = $this->filter_manager_items( $manager_items, $attach_id );
 
-		if ( ! $manager_items )
+		if ( ! $manager_items ) {
 			return false;
+		}
 
-		$content = '<div class="attachment-manager ' . ($this->manager_balloon ? 'rcl-balloon' : '') . '">';
+		$content = '<div class="attachment-manager ' . ( $this->manager_balloon ? 'rcl-balloon' : '' ) . '">';
 
 		foreach ( $manager_items as $item ) {
 			$item['type'] = 'simple';
-			$content .= rcl_get_button( $item );
+			$content      .= rcl_get_button( $item );
 		}
 
 		$content .= '</div>';
@@ -408,7 +419,7 @@ class Rcl_Uploader {
 
 		rcl_verify_ajax_nonce();
 
-		if ( ! $_FILES[$this->input_name] ) {
+		if ( ! $_FILES[ $this->input_name ] ) {
 			return false;
 		}
 
@@ -417,15 +428,15 @@ class Rcl_Uploader {
 		do_action( 'rcl_pre_upload', $this );
 
 		if ( $this->dir ) {
-			add_filter( 'upload_dir', [$this, 'edit_upload_dir' ], 10 );
+			add_filter( 'upload_dir', [ $this, 'edit_upload_dir' ], 10 );
 		}
 
 		if ( $this->multiple ) {
 
 			$files = array();
-			foreach ( $_FILES[$this->input_name] as $nameProp => $values ) {
+			foreach ( $_FILES[ $this->input_name ] as $nameProp => $values ) {
 				foreach ( $values as $k => $value ) {
-					$files[$k][$nameProp] = $value;
+					$files[ $k ][ $nameProp ] = $value;
 				}
 			}
 
@@ -435,7 +446,7 @@ class Rcl_Uploader {
 			}
 		} else {
 
-			$uploads = $this->file_upload_process( $_FILES[$this->input_name] );
+			$uploads = $this->file_upload_process( $_FILES[ $this->input_name ] );
 		}
 
 		$this->after_upload( $uploads );
@@ -461,10 +472,11 @@ class Rcl_Uploader {
 
 		$file = apply_filters( 'rcl_pre_upload_file_data', $file );
 
-		$image = wp_handle_upload( $file, array( 'test_form' => FALSE ) );
+		$image = wp_handle_upload( $file, array( 'test_form' => false ) );
 
-		if ( ! $image['file'] )
+		if ( ! $image['file'] ) {
 			return false;
+		}
 
 		$this->setup_image_sizes( $image['file'] );
 
@@ -480,13 +492,13 @@ class Rcl_Uploader {
 
 		$attachment = array(
 			'post_mime_type' => $image['type'],
-			'post_title'	 => $this->filetitle ? $this->filetitle : $pathInfo['filename'],
-			'post_content'	 => '',
-			'post_excerpt'	 => 'rcl-uploader:' . $this->uploader_id,
-			'guid'			 => $image['url'],
-			'post_parent'	 => $this->post_parent,
-			'post_author'	 => $this->user_id,
-			'post_status'	 => 'inherit'
+			'post_title'     => $this->filetitle ? $this->filetitle : $pathInfo['filename'],
+			'post_content'   => '',
+			'post_excerpt'   => 'rcl-uploader:' . $this->uploader_id,
+			'guid'           => $image['url'],
+			'post_parent'    => $this->post_parent,
+			'post_author'    => $this->user_id,
+			'post_status'    => 'inherit'
 		);
 
 		if ( ! $this->user_id ) {
@@ -501,18 +513,18 @@ class Rcl_Uploader {
 
 		if ( $this->temp_media ) {
 			rcl_add_temp_media( array(
-				'media_id'		 => $attach_id,
-				'uploader_id'	 => $this->uploader_id
+				'media_id'    => $attach_id,
+				'uploader_id' => $this->uploader_id
 			) );
 		}
 
 		return array(
-			'id'	 => $attach_id,
-			'src'	 => [
-				'full'		 => $this->get_src( $attach_id, 'full' ) . '?ver=' . current_time( 'timestamp' ),
-				'thumbnail'	 => $this->get_src( $attach_id, 'thumbnail' ) . '?ver=' . current_time( 'timestamp' ),
+			'id'   => $attach_id,
+			'src'  => [
+				'full'      => $this->get_src( $attach_id, 'full' ) . '?ver=' . current_time( 'timestamp' ),
+				'thumbnail' => $this->get_src( $attach_id, 'thumbnail' ) . '?ver=' . current_time( 'timestamp' ),
 			],
-			'html'	 => $this->gallery_attachment( $attach_id )
+			'html' => $this->gallery_attachment( $attach_id )
 		);
 	}
 
@@ -528,15 +540,15 @@ class Rcl_Uploader {
 
 			if ( is_array( $this->image_sizes ) ) {
 
-				list($width, $height) = getimagesize( $image_src );
+				list( $width, $height ) = getimagesize( $image_src );
 
 				foreach ( $this->image_sizes as $k => $thumbData ) {
 
 					$thumbData = wp_parse_args( $thumbData, array(
-						'width'	 => $width,
+						'width'  => $width,
 						'height' => $height,
-						'crop'	 => 1
-						) );
+						'crop'   => 1
+					) );
 
 					add_image_size( $k . '-' . current_time( 'mysql' ), $thumbData['width'], $thumbData['height'], $thumbData['crop'] );
 				}
@@ -546,16 +558,17 @@ class Rcl_Uploader {
 
 	function crop_image( $image_src ) {
 
-		list($width, $height) = getimagesize( $image_src );
+		list( $width, $height ) = getimagesize( $image_src );
 
-		$crop	 = isset( $_POST['crop_data'] ) ? $_POST['crop_data'] : false;
-		$size	 = isset( $_POST['image_size'] ) ? $_POST['image_size'] : false;
+		$crop = isset( $_POST['crop_data'] ) ? $_POST['crop_data'] : false;
+		$size = isset( $_POST['image_size'] ) ? $_POST['image_size'] : false;
 
-		if ( ! $crop )
+		if ( ! $crop ) {
 			return false;
+		}
 
-		list($crop_x, $crop_y, $crop_w, $crop_h) = explode( ',', $crop );
-		list($viewWidth, $viewHeight) = explode( ',', $size );
+		list( $crop_x, $crop_y, $crop_w, $crop_h ) = explode( ',', $crop );
+		list( $viewWidth, $viewHeight ) = explode( ',', $size );
 
 		$cf = 1;
 		if ( $viewWidth < $width ) {
@@ -578,8 +591,9 @@ class Rcl_Uploader {
 
 	function resize_image( $image_src ) {
 
-		if ( ! $this->resize )
+		if ( ! $this->resize ) {
 			return false;
+		}
 
 		$image = wp_get_image_editor( $image_src );
 
@@ -590,8 +604,9 @@ class Rcl_Uploader {
 	}
 
 	function edit_upload_dir( $param ) {
-		$param['path']	 = WP_CONTENT_DIR . untrailingslashit( $this->dir );
-		$param['url']	 = WP_CONTENT_URL . untrailingslashit( $this->dir );
+		$param['path'] = WP_CONTENT_DIR . untrailingslashit( $this->dir );
+		$param['url']  = WP_CONTENT_URL . untrailingslashit( $this->dir );
+
 		return $param;
 	}
 

@@ -173,18 +173,19 @@ function rcl_feed_callback() {
 
 	rcl_verify_ajax_nonce();
 
-	$allowedCallbacks = apply_filters('rcl_feed_allowed_callbacks', [
+	$allowedCallbacks = apply_filters( 'rcl_feed_allowed_callbacks', [
 		'rcl_ignored_feed_author',
 		'rcl_update_feed_current_user'
-	]);
+	] );
 
 	$callback = $_POST['callback'];
 
-	if(!in_array($callback, $allowedCallbacks))
+	if ( ! in_array( $callback, $allowedCallbacks ) ) {
 		exit;
+	}
 
-	$data     = $_POST['data'];
-	$content  = $callback( $data );
+	$data    = $_POST['data'];
+	$content = $callback( $data );
 
 	wp_send_json( $content );
 }

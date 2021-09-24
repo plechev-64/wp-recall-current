@@ -2,16 +2,16 @@
 
 class Rcl_Create_Order {
 
-	public $order_price		 = 0;
-	public $order_id		 = 0;
-	public $user_id			 = 0;
-	public $register_data	 = array();
-	public $product_amount	 = 0;
-	public $order_details	 = array();
-	public $order_status	 = 1;
-	public $products		 = array();
+	public $order_price = 0;
+	public $order_id = 0;
+	public $user_id = 0;
+	public $register_data = array();
+	public $product_amount = 0;
+	public $order_details = array();
+	public $order_status = 1;
+	public $products = array();
 	public $buyer_register;
-	public $is_error		 = 0;
+	public $is_error = 0;
 
 	function __construct() {
 
@@ -25,8 +25,9 @@ class Rcl_Create_Order {
 
 		$Cart = new Rcl_Cart();
 
-		if ( ! $Cart->products )
+		if ( ! $Cart->products ) {
 			return false;
+		}
 
 		foreach ( $Cart->products as $product ) {
 
@@ -37,22 +38,23 @@ class Rcl_Create_Order {
 			$this->order_price += $product_price * $product->product_amount;
 
 			$this->products[] = array(
-				'product_id'	 => intval($product->product_id),
-				'product_price'	 => intval($product_price),
-				'product_amount' => intval($product->product_amount),
-				'variations'	 => $product->variations
+				'product_id'     => intval( $product->product_id ),
+				'product_price'  => intval( $product_price ),
+				'product_amount' => intval( $product->product_amount ),
+				'variations'     => $product->variations
 			);
 		}
 
-		$this->user_id		 = $user_ID;
-		$this->order_status	 = 1;
+		$this->user_id       = $user_ID;
+		$this->order_status  = 1;
 		$this->order_details = $this->get_details();
 	}
 
 	function error( $code, $error ) {
-		$this->is_error	 = $code;
-		$wp_errors		 = new WP_Error();
+		$this->is_error = $code;
+		$wp_errors      = new WP_Error();
 		$wp_errors->add( $code, $error );
+
 		return $wp_errors;
 	}
 
@@ -60,8 +62,9 @@ class Rcl_Create_Order {
 
 		if ( ! $this->user_id ) {
 			$result = $this->register_user();
-			if ( $this->is_error )
+			if ( $this->is_error ) {
 				return $result;
+			}
 		}
 
 		if ( $this->order_price < 0 ) {
@@ -69,10 +72,10 @@ class Rcl_Create_Order {
 		}
 
 		$args = array(
-			'user_id'		 => intval($this->user_id),
-			'order_details'	 => $this->order_details,
-			'order_status'	 => intval($this->order_status),
-			'order_price'	 => intval($this->order_price)
+			'user_id'       => intval( $this->user_id ),
+			'order_details' => $this->order_details,
+			'order_status'  => intval( $this->order_status ),
+			'order_price'   => intval( $this->order_price )
 		);
 
 		$this->order_id = rcl_insert_order( $args, $this->products );
@@ -89,8 +92,9 @@ class Rcl_Create_Order {
 
 		$Cart = new Rcl_Cart_Constructor();
 
-		if ( ! $Cart->fields )
+		if ( ! $Cart->fields ) {
 			return false;
+		}
 
 		$order_details = array();
 
@@ -98,19 +102,20 @@ class Rcl_Create_Order {
 
 			if ( $field['type'] == 'agree' ) {
 
-				$value = (isset( $_POST[$field['slug']] ) && $_POST[$field['slug']]) ? 'Принято' : false;
+				$value = ( isset( $_POST[ $field['slug'] ] ) && $_POST[ $field['slug'] ] ) ? 'Принято' : false;
 			} else {
 
-				$value = (isset( $_POST[$field['slug']] )) ? $_POST[$field['slug']] : false;
+				$value = ( isset( $_POST[ $field['slug'] ] ) ) ? $_POST[ $field['slug'] ] : false;
 			}
 
-			if ( ! $value )
+			if ( ! $value ) {
 				continue;
+			}
 
 			$order_details[] = array(
-				'type'	 => $field['type'],
-				'title'	 => $field['title'],
-				'value'	 => wp_strip_all_tags($value)
+				'type'  => $field['type'],
+				'title' => $field['title'],
+				'value' => wp_strip_all_tags( $value )
 			);
 		}
 
@@ -119,11 +124,11 @@ class Rcl_Create_Order {
 
 	function register_user() {
 
-		$user_email	 = sanitize_text_field( wp_strip_all_tags($_POST['user_email']) );
-		$user_name	 = sanitize_text_field( wp_strip_all_tags($_POST['first_name']) );
+		$user_email = sanitize_text_field( wp_strip_all_tags( $_POST['user_email'] ) );
+		$user_name  = sanitize_text_field( wp_strip_all_tags( $_POST['first_name'] ) );
 
-		$isEmail	 = is_email( $user_email );
-		$validName	 = validate_username( $user_email );
+		$isEmail   = is_email( $user_email );
+		$validName = validate_username( $user_email );
 
 		//если разрешена регистрация покупателя
 		if ( $this->buyer_register ) {
@@ -141,10 +146,10 @@ class Rcl_Create_Order {
 				$user_password = wp_generate_password( 12, false );
 
 				$this->register_data = array(
-					'user_pass'		 => $user_password,
-					'user_login'	 => $user_email,
-					'user_email'	 => $user_email,
-					'display_name'	 => $user_name
+					'user_pass'    => $user_password,
+					'user_login'   => $user_email,
+					'user_email'   => $user_email,
+					'display_name' => $user_name
 				);
 
 				$this->user_id = rcl_insert_user( $this->register_data );
@@ -172,22 +177,23 @@ class Rcl_Create_Order {
 				$user_password = wp_generate_password( 12, false );
 
 				$data = array(
-					'user_pass'		 => $user_password,
-					'user_login'	 => $user_email,
-					'user_email'	 => $user_email,
-					'display_name'	 => $user_name,
-					'user_nicename'	 => '',
-					'nickname'		 => $user_email,
-					'first_name'	 => $user_name,
-					'rich_editing'	 => 'true'
+					'user_pass'     => $user_password,
+					'user_login'    => $user_email,
+					'user_email'    => $user_email,
+					'display_name'  => $user_name,
+					'user_nicename' => '',
+					'nickname'      => $user_email,
+					'first_name'    => $user_name,
+					'rich_editing'  => 'true'
 				);
 
 				$this->user_id = wp_insert_user( $data );
 			}
 		}
 
-		if ( ! $this->user_id )
+		if ( ! $this->user_id ) {
 			return false;
+		}
 
 		rcl_update_profile_fields( $this->user_id );
 
@@ -195,9 +201,9 @@ class Rcl_Create_Order {
 		if ( $this->buyer_register && ! rcl_get_option( 'confirm_register_recall' ) ) {
 
 			$creds = array(
-				'user_login'	 => $user_email,
-				'user_password'	 => $user_password,
-				'remember'		 => true
+				'user_login'    => $user_email,
+				'user_password' => $user_password,
+				'remember'      => true
 			);
 
 			wp_signon( $creds );

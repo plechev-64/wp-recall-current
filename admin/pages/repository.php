@@ -10,7 +10,7 @@ wp_enqueue_style( 'rcl-admin-style', RCL_URL . 'admin/assets/style.css', false, 
 
 $addonsData = array();
 foreach ( $rcl_addons as $addonID => $addon ) {
-	$addonsData[$addonID] = $addon['version'];
+	$addonsData[ $addonID ] = $addon['version'];
 }
 
 $sort = isset( $_GET['sort'] ) ? $_GET['sort'] : 'update';
@@ -19,10 +19,10 @@ $type = isset( $_GET['type'] ) ? $_GET['type'] : 'term';
 
 $s = isset( $_GET['s'] ) ? $_GET['s'] : '';
 
-$page = (isset( $_GET['paged'] )) ? $_GET['paged'] : 1;
+$page = ( isset( $_GET['paged'] ) ) ? $_GET['paged'] : 1;
 
 $url = RCL_SERVICE_HOST . '/products-files/api/add-ons.php'
-	. '?rcl-addon-info=get-add-ons&page=' . $page;
+       . '?rcl-addon-info=get-add-ons&page=' . $page;
 
 if ( $sort ) {
 	$url .= '&sort=' . $sort;
@@ -36,12 +36,14 @@ if ( $s ) {
 	$url .= '&s=' . $s;
 }
 
-$result = wp_remote_post( $url, array( 'body' => array(
-		'rcl-key'		 => get_site_option( 'rcl-key' ),
-		'rcl-version'	 => VER_RCL,
-		'addons-data'	 => in_array( $sort, array( 'favorites', 'has_updated' ) ) ? $addonsData : false,
-		'host'			 => $_SERVER['SERVER_NAME']
-	) ) );
+$result = wp_remote_post( $url, array(
+	'body' => array(
+		'rcl-key'     => get_site_option( 'rcl-key' ),
+		'rcl-version' => VER_RCL,
+		'addons-data' => in_array( $sort, array( 'favorites', 'has_updated' ) ) ? $addonsData : false,
+		'host'        => $_SERVER['SERVER_NAME']
+	)
+) );
 
 if ( is_wp_error( $result ) ) {
 	$error_message = $result->get_error_message();
@@ -86,10 +88,26 @@ $content .= '</div>';
 
 $content .= '<div class="wp-filter">
     <ul class="filter-links">
-        <li class="plugin-install-featured"><a href="' . admin_url( 'admin.php?' ) . $navi->get_string( array( 'type', 's', 'page' ) ) . '&sort=update" class="' . ($sort == 'update' ? 'current' : '') . '">' . __( 'All', 'wp-recall' ) . '</a></li>
-        <li class="plugin-install-popular"><a href="' . admin_url( 'admin.php?' ) . $navi->get_string( array( 'type', 's', 'page' ) ) . '&sort=popular" class="' . ($sort == 'popular' ? 'current' : '') . '">' . __( 'Popular', 'wp-recall' ) . '</a></li>
-        <li class="plugin-install-favorites"><a href="' . admin_url( 'admin.php?' ) . $navi->get_string( array( 'type', 's', 'page' ) ) . '&sort=favorites" class="' . ($sort == 'favorites' ? 'current' : '') . '">' . __( 'Reference', 'wp-recall' ) . '</a></li>
-        <li class="plugin-install-has-updated"><a href="' . admin_url( 'admin.php?' ) . $navi->get_string( array( 'type', 's', 'page' ) ) . '&sort=has_updated" class="' . ($sort == 'has_updated' ? 'current' : '') . '">' . __( 'Updates', 'wp-recall' ) . '</a></li>
+        <li class="plugin-install-featured"><a href="' . admin_url( 'admin.php?' ) . $navi->get_string( array(
+		'type',
+		's',
+		'page'
+	) ) . '&sort=update" class="' . ( $sort == 'update' ? 'current' : '' ) . '">' . __( 'All', 'wp-recall' ) . '</a></li>
+        <li class="plugin-install-popular"><a href="' . admin_url( 'admin.php?' ) . $navi->get_string( array(
+		'type',
+		's',
+		'page'
+	) ) . '&sort=popular" class="' . ( $sort == 'popular' ? 'current' : '' ) . '">' . __( 'Popular', 'wp-recall' ) . '</a></li>
+        <li class="plugin-install-favorites"><a href="' . admin_url( 'admin.php?' ) . $navi->get_string( array(
+		'type',
+		's',
+		'page'
+	) ) . '&sort=favorites" class="' . ( $sort == 'favorites' ? 'current' : '' ) . '">' . __( 'Reference', 'wp-recall' ) . '</a></li>
+        <li class="plugin-install-has-updated"><a href="' . admin_url( 'admin.php?' ) . $navi->get_string( array(
+		'type',
+		's',
+		'page'
+	) ) . '&sort=has_updated" class="' . ( $sort == 'has_updated' ? 'current' : '' ) . '">' . __( 'Updates', 'wp-recall' ) . '</a></li>
     </ul>
 
     <form class="search-form search-plugins" method="get">
@@ -102,7 +120,7 @@ $content .= '<div class="wp-filter">
             <option value="tag" ' . selected( $type, 'tag', false ) . '>' . __( 'Tag', 'wp-recall' ) . '</option>
         </select>
         <label><span class="screen-reader-text">' . __( 'Search add-ons', 'wp-recall' ) . '</span>
-            <input type="search" name="s" value="' . ($s ? $s : '') . '" class="wp-filter-search" placeholder="' . __( 'Search add-ons', 'wp-recall' ) . '..." aria-describedby="live-search-desc">
+            <input type="search" name="s" value="' . ( $s ? $s : '' ) . '" class="wp-filter-search" placeholder="' . __( 'Search add-ons', 'wp-recall' ) . '..." aria-describedby="live-search-desc">
         </label>
         <input type="submit" id="search-submit" class="button hide-if-js" value="' . __( 'Search add-ons', 'wp-recall' ) . '">
     </form>
@@ -117,19 +135,20 @@ if ( $result->count && $result->addons ) {
 	$content .= '<div class="wp-list-table widefat plugin-install rcl-repository-list">
         <div id="the-list">';
 	foreach ( $result->addons as $add ) {
-		if ( ! $add )
+		if ( ! $add ) {
 			continue;
+		}
 		$addon = array();
 		foreach ( $add as $k => $v ) {
-			$key		 = str_replace( '-', '_', $k );
-			$v			 = (isset( $v )) ? $v : '';
-			$addon[$key] = $v;
+			$key           = str_replace( '-', '_', $k );
+			$v             = ( isset( $v ) ) ? $v : '';
+			$addon[ $key ] = $v;
 		}
-		$addon = ( object ) $addon;
+		$addon   = ( object ) $addon;
 		$content .= rcl_get_include_template( 'add-on-card.php' );
 	}
 	$content .= '</div>'
-		. '</div>';
+	            . '</div>';
 
 	$content .= $navi->pagenavi();
 } else {

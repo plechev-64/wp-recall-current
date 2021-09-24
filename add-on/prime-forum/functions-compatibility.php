@@ -3,14 +3,15 @@
 add_action( 'init', 'pfm_register_rating_type' );
 function pfm_register_rating_type() {
 
-	if ( ! rcl_exist_addon( 'rating-system' ) )
+	if ( ! rcl_exist_addon( 'rating-system' ) ) {
 		return false;
+	}
 
 	rcl_register_rating_type( array(
-		'rating_type'	 => 'forum-post',
-		'type_name'		 => __( 'Forum', 'wp-recall' ),
-		'style'			 => true,
-		'icon'			 => 'fa-weixin'
+		'rating_type' => 'forum-post',
+		'type_name'   => __( 'Forum', 'wp-recall' ),
+		'style'       => true,
+		'icon'        => 'fa-weixin'
 	) );
 }
 
@@ -38,14 +39,14 @@ function pfm_init_feed( $args ) {
 		function setup_forum_data( $array_feed, $data ) {
 
 			$array_feed = array(
-				'feed_ID'		 => $data->post_id,
-				'feed_content'	 => $data->post_content,
-				'feed_author'	 => $data->user_id,
-				'feed_title'	 => $data->topic_name,
-				'feed_date'		 => $data->post_date,
-				'feed_parent'	 => 0,
-				'post_type'		 => '',
-				'feed_excerpt'	 => '',
+				'feed_ID'        => $data->post_id,
+				'feed_content'   => $data->post_content,
+				'feed_author'    => $data->user_id,
+				'feed_title'     => $data->topic_name,
+				'feed_date'      => $data->post_date,
+				'feed_parent'    => 0,
+				'post_type'      => '',
+				'feed_excerpt'   => '',
 				'feed_permalink' => pfm_get_post_permalink( $data->post_id )
 			);
 
@@ -65,13 +66,13 @@ function pfm_init_feed( $args ) {
 				"pfm_forums.forum_slug"
 			];
 
-			$this->query['join'][]	 = "INNER JOIN " . RCL_PREF . "pforum_topics AS pfm_topics ON pfm_posts.topic_id=pfm_topics.topic_id";
-			$this->query['join'][]	 = "INNER JOIN " . RCL_PREF . "pforums AS pfm_forums ON pfm_topics.forum_id=pfm_forums.forum_id";
-			$this->query['where'][]	 = "pfm_topics.user_id = '$user_ID'";
-			$this->query['where'][]	 = "pfm_posts.user_id != '$user_ID'";
+			$this->query['join'][]  = "INNER JOIN " . RCL_PREF . "pforum_topics AS pfm_topics ON pfm_posts.topic_id=pfm_topics.topic_id";
+			$this->query['join'][]  = "INNER JOIN " . RCL_PREF . "pforums AS pfm_forums ON pfm_topics.forum_id=pfm_forums.forum_id";
+			$this->query['where'][] = "pfm_topics.user_id = '$user_ID'";
+			$this->query['where'][] = "pfm_posts.user_id != '$user_ID'";
 
-			$this->query['orderby']	 = "pfm_posts.post_id";
-			$this->query['order']	 = "DESC";
+			$this->query['orderby'] = "pfm_posts.post_id";
+			$this->query['order']   = "DESC";
 
 			return $this->query;
 		}

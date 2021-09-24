@@ -2,17 +2,17 @@
 
 class Rcl_PageNavi {
 
-	public $current_page	 = 1; //текущая страница
+	public $current_page = 1; //текущая страница
 	public $pages_amount; //кол-во страниц
-	public $output_number	 = array( 4, 4 ); //диапазон вывода отображаемых страниц
-	public $in_page			 = 30; //кол-во элементов на странице
-	public $key				 = 'rcl-page'; //ключ передаваемый номер текущей страницы
-	public $data_amount		 = 0; //общее кол-во элементов
-	public $uri				 = array(); //массив параметров из адресной строки
+	public $output_number = array( 4, 4 ); //диапазон вывода отображаемых страниц
+	public $in_page = 30; //кол-во элементов на странице
+	public $key = 'rcl-page'; //ключ передаваемый номер текущей страницы
+	public $data_amount = 0; //общее кол-во элементов
+	public $uri = array(); //массив параметров из адресной строки
 	public $pager_id; //идентификатор навигации
-	public $custom			 = array(); //массив параметров
+	public $custom = array(); //массив параметров
 	public $offset; //отступ выборки элементов
-	public $ajax			 = false; //указание использования ajax
+	public $ajax = false; //указание использования ajax
 
 	function __construct( $pager_id, $data_amount, $custom = array() ) {
 		global $rcl_tab;
@@ -20,13 +20,14 @@ class Rcl_PageNavi {
 		$this->pager_id = $pager_id;
 
 		if ( isset( $_REQUEST['pager-id'] ) && $_REQUEST['pager-id'] == $this->pager_id ) {
-			if ( isset( $_REQUEST[$this->key] ) )
-				$this->current_page = $_REQUEST[$this->key];
+			if ( isset( $_REQUEST[ $this->key ] ) ) {
+				$this->current_page = $_REQUEST[ $this->key ];
+			}
 		}
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_POST['tab_url'] ) ) {
-			$post				 = rcl_decode_post( $_POST['post'] );
-			$this->current_page	 = isset( $post->page ) ? $post->page : false;
+			$post               = rcl_decode_post( $_POST['post'] );
+			$this->current_page = isset( $post->page ) ? $post->page : false;
 		}
 
 		if ( $rcl_tab ) {
@@ -35,34 +36,40 @@ class Rcl_PageNavi {
 			}
 		}
 
-		$this->data_amount	 = $data_amount;
-		$this->custom		 = $custom;
+		$this->data_amount = $data_amount;
+		$this->custom      = $custom;
 
 		if ( $this->custom ) {
-			if ( isset( $this->custom['in_page'] ) )
+			if ( isset( $this->custom['in_page'] ) ) {
 				$this->in_page = $this->custom['in_page'];
-
-			if ( isset( $this->custom['key'] ) ) {
-				$this->key			 = $this->custom['key'];
-				if ( isset( $_REQUEST[$this->key] ) )
-					$this->current_page	 = $_REQUEST[$this->key];
 			}
 
-			if ( isset( $this->custom['current_page'] ) )
+			if ( isset( $this->custom['key'] ) ) {
+				$this->key = $this->custom['key'];
+				if ( isset( $_REQUEST[ $this->key ] ) ) {
+					$this->current_page = $_REQUEST[ $this->key ];
+				}
+			}
+
+			if ( isset( $this->custom['current_page'] ) ) {
 				$this->current_page = $this->custom['current_page'];
+			}
 
-			if ( isset( $this->custom['output_number'] ) )
+			if ( isset( $this->custom['output_number'] ) ) {
 				$this->output_number = $this->custom['output_number'];
+			}
 
-			if ( isset( $this->custom['ajax'] ) )
+			if ( isset( $this->custom['ajax'] ) ) {
 				$this->ajax = $this->custom['ajax'];
+			}
 		}
 
-		if ( $this->current_page == 0 )
+		if ( $this->current_page == 0 ) {
 			$this->current_page = 1;
+		}
 
-		$this->offset		 = ($this->current_page - 1) * $this->in_page;
-		$this->pages_amount	 = ceil( $this->data_amount / $this->in_page );
+		$this->offset       = ( $this->current_page - 1 ) * $this->in_page;
+		$this->pages_amount = ceil( $this->data_amount / $this->in_page );
 
 		$this->uri_data_init();
 	}
@@ -74,27 +81,27 @@ class Rcl_PageNavi {
 	function uri_data_init() {
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_POST['tab_url'] ) ) {
-			$uri					 = $_POST['tab_url'];
-			$uri_string				 = explode( '?', $uri );
-			$query_string			 = $uri_string[1];
-			$this->uri['current']	 = $uri_string[0];
+			$uri                  = $_POST['tab_url'];
+			$uri_string           = explode( '?', $uri );
+			$query_string         = $uri_string[1];
+			$this->uri['current'] = $uri_string[0];
 		} else {
-			$query_string			 = $_SERVER['QUERY_STRING'];
-			$this->uri['current']	 = get_bloginfo( 'wpurl' ) . str_replace( '?' . $query_string, '', $_SERVER['REQUEST_URI'] );
+			$query_string         = $_SERVER['QUERY_STRING'];
+			$this->uri['current'] = get_bloginfo( 'wpurl' ) . str_replace( '?' . $query_string, '', $_SERVER['REQUEST_URI'] );
 		}
 
 		if ( $query_string ) {
 			$strings = explode( '&', $query_string );
 			foreach ( $strings as $string ) {
-				$query							 = explode( '=', $string );
-				$this->uri['args'][$query[0]]	 = $query[1];
+				$query                          = explode( '=', $string );
+				$this->uri['args'][ $query[0] ] = $query[1];
 			}
 		}
 
-		unset( $this->uri['args'][$this->key] );
+		unset( $this->uri['args'][ $this->key ] );
 		unset( $this->uri['args']['pager-id'] );
 
-		$str = ($this->pager_id) ? array( 'pager-id=' . $this->pager_id ) : array();
+		$str = ( $this->pager_id ) ? array( 'pager-id=' . $this->pager_id ) : array();
 
 		if ( isset( $this->uri['args'] ) && $this->uri['args'] ) {
 			foreach ( $this->uri['args'] as $k => $val ) {
@@ -107,13 +114,15 @@ class Rcl_PageNavi {
 
 	function get_string( $params = array() ) {
 
-		if ( ! $params )
+		if ( ! $params ) {
 			return $this->uri['string'];
+		}
 
 		if ( isset( $this->uri['args'] ) && $this->uri['args'] ) {
 			foreach ( $this->uri['args'] as $k => $val ) {
-				if ( ! in_array( $k, $params ) )
+				if ( ! in_array( $k, $params ) ) {
 					continue;
+				}
 				$str[] = $k . '=' . $val;
 			}
 		}
@@ -128,8 +137,8 @@ class Rcl_PageNavi {
 	function pager_query() {
 		$query = array();
 
-		$query['args']['number_left']	 = (($this->current_page - $this->output_number[0]) <= 0) ? $this->current_page - 1 : $this->output_number[0];
-		$query['args']['number_right']	 = (($this->current_page + $this->output_number[1]) > $this->pages_amount) ? $this->pages_amount - $this->current_page : $this->output_number[1];
+		$query['args']['number_left']  = ( ( $this->current_page - $this->output_number[0] ) <= 0 ) ? $this->current_page - 1 : $this->output_number[0];
+		$query['args']['number_right'] = ( ( $this->current_page + $this->output_number[1] ) > $this->pages_amount ) ? $this->pages_amount - $this->current_page : $this->output_number[1];
 
 		if ( $query['args']['number_left'] ) {
 
@@ -157,13 +166,15 @@ class Rcl_PageNavi {
 			}
 		}
 
-		$end = $this->pages_amount - ($this->current_page + $query['args']['number_right']);
+		$end = $this->pages_amount - ( $this->current_page + $query['args']['number_right'] );
 
-		if ( $end > 1 )
+		if ( $end > 1 ) {
 			$query['output'][]['separator'] = '...';
+		}
 
-		if ( $end > 0 )
+		if ( $end > 0 ) {
 			$query['output'][]['page'] = $this->pages_amount;
+		}
 
 
 		return $query;
@@ -176,15 +187,17 @@ class Rcl_PageNavi {
 	function pagenavi( $classes = '' ) {
 		global $rcl_tab, $user_LK;
 
-		if ( ! $this->data_amount || $this->pages_amount == 1 )
+		if ( ! $this->data_amount || $this->pages_amount == 1 ) {
 			return false;
+		}
 
 		$query = $this->pager_query();
 
 		$class = 'rcl-pager';
 
-		if ( $classes )
+		if ( $classes ) {
 			$class .= ' ' . $classes;
+		}
 
 		if ( $this->ajax ) {
 			$class .= ' rcl-ajax-navi';
@@ -197,22 +210,22 @@ class Rcl_PageNavi {
 				if ( $type == 'page' ) {
 
 					$attrs = array(
-						'href'	 => $this->get_url( $data ),
-						'label'	 => $data,
-						'data'	 => array(
-							'page'		 => $data,
-							'pager-id'	 => $this->pager_id
+						'href'  => $this->get_url( $data ),
+						'label' => $data,
+						'data'  => array(
+							'page'     => $data,
+							'pager-id' => $this->pager_id
 						)
 					);
 
 					if ( $this->ajax && rcl_is_office() ) {
 
 						$attrs['data']['post'] = rcl_encode_post( array(
-							'tab_id'	 => $rcl_tab->id,
-							'subtab_id'	 => $rcl_tab->active_subtab,
-							'master_id'	 => $user_LK,
-							'page'		 => $attrs['data']['page'],
-							) );
+							'tab_id'    => $rcl_tab->id,
+							'subtab_id' => $rcl_tab->active_subtab,
+							'master_id' => $user_LK,
+							'page'      => $attrs['data']['page'],
+						) );
 
 						$attrs['class'] = 'rcl-ajax';
 					}
@@ -222,12 +235,12 @@ class Rcl_PageNavi {
 					$html = rcl_get_button( $attrs );
 				} else if ( $type == 'current' ) {
 					$html = rcl_get_button( [
-						'label'	 => $data,
+						'label'  => $data,
 						'status' => 'active',
-						'data'	 => array(
+						'data'   => array(
 							'page' => $data
 						)
-						] );
+					] );
 				} else {
 					$html = '<span>' . $data . '</span>';
 				}

@@ -7,9 +7,9 @@
  */
 class Rcl_Old_Query {
 
-	public $args		 = array();
-	public $return_as	 = false;
-	public $cache		 = false;
+	public $args = array();
+	public $return_as = false;
+	public $cache = false;
 
 	function set_query( $args = false ) {
 
@@ -45,7 +45,7 @@ class Rcl_Old_Query {
 		if ( isset( $this->args['distinct'] ) ) {
 			$this->query['select'][0] = 'DISTINCT ' . $this->query['select'][0];
 		}
-		
+
 		if ( $this->query['table']['cols'] ) {
 
 			if ( isset( $this->args['include'] ) && $this->args['include'] ) {
@@ -60,52 +60,52 @@ class Rcl_Old_Query {
 
 			foreach ( $this->query['table']['cols'] as $col_name ) {
 
-				if ( isset( $this->args[$col_name] ) && $this->args[$col_name] != '' ) {
+				if ( isset( $this->args[ $col_name ] ) && $this->args[ $col_name ] != '' ) {
 
-					if ( $this->args[$col_name] === 'is_null' ) {
+					if ( $this->args[ $col_name ] === 'is_null' ) {
 						$this->query['where'][] = $this->query['table']['as'] . ".$col_name IS NULL";
 					} else {
-						$this->query['where'][] = $this->query['table']['as'] . ".$col_name = '" . $this->args[$col_name] . "'";
+						$this->query['where'][] = $this->query['table']['as'] . ".$col_name = '" . $this->args[ $col_name ] . "'";
 					}
 				}
 
-				if ( isset( $this->args[$col_name . '__is'] ) && $this->args[$col_name . '__is'] ) {
+				if ( isset( $this->args[ $col_name . '__is' ] ) && $this->args[ $col_name . '__is' ] ) {
 
-					$this->query['where'][] = $this->query['table']['as'] . ".$col_name IS " . $this->args[$col_name . '__is'];
+					$this->query['where'][] = $this->query['table']['as'] . ".$col_name IS " . $this->args[ $col_name . '__is' ];
 				}
 
-				if ( isset( $this->args[$col_name . '__in'] ) && ($this->args[$col_name . '__in'] || $this->args[$col_name . '__in'] === 0) ) {
+				if ( isset( $this->args[ $col_name . '__in' ] ) && ( $this->args[ $col_name . '__in' ] || $this->args[ $col_name . '__in' ] === 0 ) ) {
 
-					$this->query['where'][] = $this->query['table']['as'] . ".$col_name IN (" . $this->get_string_in( $this->args[$col_name . '__in'] ) . ")";
+					$this->query['where'][] = $this->query['table']['as'] . ".$col_name IN (" . $this->get_string_in( $this->args[ $col_name . '__in' ] ) . ")";
 				}
 
-				if ( isset( $this->args[$col_name . '__not_in'] ) && ($this->args[$col_name . '__not_in'] || $this->args[$col_name . '__not_in'] === 0) ) {
+				if ( isset( $this->args[ $col_name . '__not_in' ] ) && ( $this->args[ $col_name . '__not_in' ] || $this->args[ $col_name . '__not_in' ] === 0 ) ) {
 
-					$this->query['where'][] = $this->query['table']['as'] . ".$col_name NOT IN (" . $this->get_string_in( $this->args[$col_name . '__not_in'] ) . ")";
+					$this->query['where'][] = $this->query['table']['as'] . ".$col_name NOT IN (" . $this->get_string_in( $this->args[ $col_name . '__not_in' ] ) . ")";
 				}
 
-				if ( isset( $this->args[$col_name . '__from'] ) && ($this->args[$col_name . '__from'] || $this->args[$col_name . '__from'] != '') ) {
+				if ( isset( $this->args[ $col_name . '__from' ] ) && ( $this->args[ $col_name . '__from' ] || $this->args[ $col_name . '__from' ] != '' ) ) {
 
-					$colName = is_numeric( $this->args[$col_name . '__from'] ) ? "CAST(" . $this->query['table']['as'] . ".$col_name AS DECIMAL)" : $this->query['table']['as'] . "." . $col_name;
+					$colName = is_numeric( $this->args[ $col_name . '__from' ] ) ? "CAST(" . $this->query['table']['as'] . ".$col_name AS DECIMAL)" : $this->query['table']['as'] . "." . $col_name;
 
-					$this->query['where'][] = $colName . " >= '" . $this->args[$col_name . '__from'] . "'";
+					$this->query['where'][] = $colName . " >= '" . $this->args[ $col_name . '__from' ] . "'";
 				}
 
-				if ( isset( $this->args[$col_name . '__to'] ) && ($this->args[$col_name . '__to'] || $this->args[$col_name . '__to'] != '') ) {
+				if ( isset( $this->args[ $col_name . '__to' ] ) && ( $this->args[ $col_name . '__to' ] || $this->args[ $col_name . '__to' ] != '' ) ) {
 
-					$colName = is_numeric( $this->args[$col_name . '__to'] ) ? "CAST(" . $this->query['table']['as'] . ".$col_name AS DECIMAL)" : $this->query['table']['as'] . "." . $col_name;
+					$colName = is_numeric( $this->args[ $col_name . '__to' ] ) ? "CAST(" . $this->query['table']['as'] . ".$col_name AS DECIMAL)" : $this->query['table']['as'] . "." . $col_name;
 
-					$this->query['where'][] = $colName . " <= '" . $this->args[$col_name . '__to'] . "'";
+					$this->query['where'][] = $colName . " <= '" . $this->args[ $col_name . '__to' ] . "'";
 				}
 
-				if ( isset( $this->args[$col_name . '__like'] ) && ($this->args[$col_name . '__like'] || $this->args[$col_name . '__like'] === 0) ) {
+				if ( isset( $this->args[ $col_name . '__like' ] ) && ( $this->args[ $col_name . '__like' ] || $this->args[ $col_name . '__like' ] === 0 ) ) {
 
-					$this->query['where'][] = $this->query['table']['as'] . ".$col_name LIKE '%" . $this->args[$col_name . '__like'] . "%'";
+					$this->query['where'][] = $this->query['table']['as'] . ".$col_name LIKE '%" . $this->args[ $col_name . '__like' ] . "%'";
 				}
 
-				if ( isset( $this->args[$col_name . '__between'] ) && $this->args[$col_name . '__between'] && is_array( $this->args[$col_name . '__between'] ) ) {
+				if ( isset( $this->args[ $col_name . '__between' ] ) && $this->args[ $col_name . '__between' ] && is_array( $this->args[ $col_name . '__between' ] ) ) {
 
-					$this->query['where'][] = "(" . $this->query['table']['as'] . '.' . $col_name . " BETWEEN IFNULL(" . $this->args[$col_name . '__between'][0] . ", 0) AND '" . $this->args[$col_name . '__between'][1] . "')";
+					$this->query['where'][] = "(" . $this->query['table']['as'] . '.' . $col_name . " BETWEEN IFNULL(" . $this->args[ $col_name . '__between' ][0] . ", 0) AND '" . $this->args[ $col_name . '__between' ][1] . "')";
 				}
 			}
 
@@ -132,43 +132,48 @@ class Rcl_Old_Query {
 		if ( isset( $this->args['orderby'] ) ) {
 
 			if ( $this->args['orderby'] == 'rand' ) {
-				$this->query['orderby']	 = $preOrderBy . $this->query['table']['cols'][0];
-				$this->query['order']	 = 'RAND()';
+				$this->query['orderby'] = $preOrderBy . $this->query['table']['cols'][0];
+				$this->query['order']   = 'RAND()';
 			} else if ( is_array( $this->args['orderby'] ) ) {
 				foreach ( $this->args['orderby'] as $orderby => $order ) {
-					$this->query['orderby'][$preOrderBy . $orderby] = $order;
+					$this->query['orderby'][ $preOrderBy . $orderby ] = $order;
 				}
 			} else {
-				$this->query['orderby']	 = $preOrderBy . $this->args['orderby'];
-				$this->query['order']	 = (isset( $this->args['order'] ) && $this->args['order']) ? $this->args['order'] : 'DESC';
+				$this->query['orderby'] = $preOrderBy . $this->args['orderby'];
+				$this->query['order']   = ( isset( $this->args['order'] ) && $this->args['order'] ) ? $this->args['order'] : 'DESC';
 			}
 		} else if ( isset( $this->args['orderby_as_decimal'] ) ) {
 
-			$this->query['orderby']	 = 'CAST(' . $preOrderBy . $this->args['orderby_as_decimal'] . ' AS DECIMAL)';
-			$this->query['order']	 = (isset( $this->args['order'] ) && $this->args['order']) ? $this->args['order'] : 'DESC';
+			$this->query['orderby'] = 'CAST(' . $preOrderBy . $this->args['orderby_as_decimal'] . ' AS DECIMAL)';
+			$this->query['order']   = ( isset( $this->args['order'] ) && $this->args['order'] ) ? $this->args['order'] : 'DESC';
 		} else if ( isset( $this->args['order'] ) ) {
 
 			$this->query['order'] = $this->args['order'];
 		} else {
 
-			$this->query['orderby']	 = $preOrderBy . $this->query['table']['cols'][0];
-			$this->query['order']	 = 'DESC';
+			$this->query['orderby'] = $preOrderBy . $this->query['table']['cols'][0];
+			$this->query['order']   = 'DESC';
 		}
 
-		if ( isset( $this->args['number'] ) )
+		if ( isset( $this->args['number'] ) ) {
 			$this->query['number'] = $this->args['number'];
+		}
 
-		if ( isset( $this->args['offset'] ) )
+		if ( isset( $this->args['offset'] ) ) {
 			$this->query['offset'] = $this->args['offset'];
+		}
 
-		if ( isset( $this->args['groupby'] ) )
+		if ( isset( $this->args['groupby'] ) ) {
 			$this->query['groupby'] = $this->args['groupby'];
+		}
 
-		if ( isset( $this->args['having'] ) )
+		if ( isset( $this->args['having'] ) ) {
 			$this->query['having'] = $this->args['having'];
+		}
 
-		if ( isset( $this->args['return_as'] ) )
+		if ( isset( $this->args['return_as'] ) ) {
 			$this->query['return_as'] = $this->args['return_as'];
+		}
 
 		if ( isset( $this->args['unserialize'] ) && $this->args['unserialize'] ) {
 			$this->serialize = array( $this->args['unserialize'] );
@@ -185,8 +190,9 @@ class Rcl_Old_Query {
 
 	function set_fields( $fields ) {
 
-		if ( ! $fields )
+		if ( ! $fields ) {
 			return false;
+		}
 
 		foreach ( $fields as $key => $name ) {
 
@@ -195,8 +201,9 @@ class Rcl_Old_Query {
 			if ( $key === 'custom_query' ) {
 
 				foreach ( $name as $n ) {
-					if ( ! $n )
+					if ( ! $n ) {
 						continue;
+					}
 					$this->query['select'][] = $n;
 				}
 
@@ -219,8 +226,8 @@ class Rcl_Old_Query {
 
 			if ( is_string( $key ) && is_array( $name ) ) {
 
-				$fieldname	 = $key;
-				$as			 = $key;
+				$fieldname = $key;
+				$as        = $key;
 
 				if ( isset( $name['as'] ) ) {
 					$as = $name['as'];
@@ -243,24 +250,29 @@ class Rcl_Old_Query {
 
 		foreach ( $date_query as $date ) {
 
-			if ( ! isset( $date['column'] ) )
+			if ( ! isset( $date['column'] ) ) {
 				continue;
+			}
 
-			if ( ! isset( $date['compare'] ) )
+			if ( ! isset( $date['compare'] ) ) {
 				$date['compare'] = '=';
+			}
 
 			if ( $date['compare'] == '=' ) {
 
 				$datetime = array();
 
-				if ( isset( $date['year'] ) )
+				if ( isset( $date['year'] ) ) {
 					$this->query['where'][] = "YEAR(" . $this->query['table']['as'] . "." . $date['column'] . ") = '" . $date['year'] . "'";
+				}
 
-				if ( isset( $date['month'] ) )
+				if ( isset( $date['month'] ) ) {
 					$this->query['where'][] = "MONTH(" . $this->query['table']['as'] . "." . $date['column'] . ") = '" . $date['month'] . "'";
+				}
 
-				if ( isset( $date['day'] ) )
+				if ( isset( $date['day'] ) ) {
 					$this->query['where'][] = "DAY(" . $this->query['table']['as'] . "." . $date['column'] . ") = '" . $date['day'] . "'";
+				}
 
 				if ( isset( $date['last'] ) ) {
 
@@ -273,8 +285,9 @@ class Rcl_Old_Query {
 				}
 			} else if ( $date['compare'] == 'BETWEEN' ) {
 
-				if ( ! isset( $date['value'] ) || ! $date['value'] || ! $date['value'][0] && ! $date['value'][1] )
+				if ( ! isset( $date['value'] ) || ! $date['value'] || ! $date['value'][0] && ! $date['value'][1] ) {
 					continue;
+				}
 
 				if ( ! $date['value'][1] ) {
 					$date['value'][1] = current_time( 'mysql' );
@@ -298,8 +311,9 @@ class Rcl_Old_Query {
 
 			$unionTable = $union['table'];
 
-			if ( ! $unionTable )
+			if ( ! $unionTable ) {
 				continue;
+			}
 
 			$unionQuery = new Rcl_Query( $union['table'] );
 
@@ -318,8 +332,9 @@ class Rcl_Old_Query {
 
 			$joinTable = $join['table'];
 
-			if ( ! $joinTable )
+			if ( ! $joinTable ) {
 				continue;
+			}
 
 			if ( isset( $join['postfix'] ) ) {
 				$joinTable['as'] .= $join['postfix'];
@@ -328,26 +343,27 @@ class Rcl_Old_Query {
 			$joinOn = false;
 			foreach ( $this->query['table']['cols'] as $col_name ) {
 
-				if ( isset( $join['on_' . $col_name] ) ) {
+				if ( isset( $join[ 'on_' . $col_name ] ) ) {
 					$joinOn = $col_name;
 					break;
 				}
 			}
 
-			if ( ! $joinOn )
+			if ( ! $joinOn ) {
 				continue;
+			}
 
-			$joinType = (isset( $join['join'] )) ? $join['join'] : 'INNER';
+			$joinType = ( isset( $join['join'] ) ) ? $join['join'] : 'INNER';
 
-			$this->query['join'][] = $joinType . " JOIN " . $joinTable['name'] . " AS " . $joinTable['as'] . " ON " . $this->query['table']['as'] . "." . $joinOn . " = " . $joinTable['as'] . "." . $join['on_' . $joinOn];
+			$this->query['join'][] = $joinType . " JOIN " . $joinTable['name'] . " AS " . $joinTable['as'] . " ON " . $this->query['table']['as'] . "." . $joinOn . " = " . $joinTable['as'] . "." . $join[ 'on_' . $joinOn ];
 
 			$joinQuery = new Rcl_Query( $join['table'] );
 
 			$joinQuery->set_query( $join );
 
-			$this->query['select']	 = array_merge( $this->query['select'], $joinQuery->query['select'] );
-			$this->query['where']	 = array_merge( $this->query['where'], $joinQuery->query['where'] );
-			$this->query['join']	 = array_merge( $this->query['join'], $joinQuery->query['join'] );
+			$this->query['select'] = array_merge( $this->query['select'], $joinQuery->query['select'] );
+			$this->query['where']  = array_merge( $this->query['where'], $joinQuery->query['where'] );
+			$this->query['join']   = array_merge( $this->query['join'], $joinQuery->query['join'] );
 		}
 	}
 
@@ -403,8 +419,9 @@ class Rcl_Old_Query {
 
 		$result = $this->get_operator( 'COUNT', $args, $field_name );
 
-		if ( ! $result )
+		if ( ! $result ) {
 			$result = 0;
+		}
 
 		return $result;
 	}
@@ -423,8 +440,9 @@ class Rcl_Old_Query {
 
 		$result = $this->get_operator( 'SUM', $args, $field_name );
 
-		if ( ! $result )
+		if ( ! $result ) {
 			$result = 0;
+		}
 
 		return $result;
 	}
@@ -433,10 +451,11 @@ class Rcl_Old_Query {
 
 		global $wpdb;
 
-		if ( $args )
+		if ( $args ) {
 			$this->set_query( $args );
+		}
 
-		$field_name = ($field_name) ? $field_name : $this->query['table']['cols'][0];
+		$field_name = ( $field_name ) ? $field_name : $this->query['table']['cols'][0];
 
 		$query = $this->get_query();
 
@@ -452,13 +471,13 @@ class Rcl_Old_Query {
 			$query['select'] = array( $operator . '(' . $query['table']['as'] . '.' . $field_name . ') as total' );
 
 			foreach ( $query['union'] as $k => $union ) {
-				unset( $query['union'][$k]['select'] );
-				unset( $query['union'][$k]['offset'] );
-				unset( $query['union'][$k]['orderby'] );
-				unset( $query['union'][$k]['order'] );
-				unset( $query['union'][$k]['number'] );
-				unset( $query['union'][$k]['having'] );
-				$query['union'][$k]['select'] = array( $operator . '(' . $query['union'][$k]['table']['as'] . '.' . $field_name . ') as total' );
+				unset( $query['union'][ $k ]['select'] );
+				unset( $query['union'][ $k ]['offset'] );
+				unset( $query['union'][ $k ]['orderby'] );
+				unset( $query['union'][ $k ]['order'] );
+				unset( $query['union'][ $k ]['number'] );
+				unset( $query['union'][ $k ]['having'] );
+				$query['union'][ $k ]['select'] = array( $operator . '(' . $query['union'][ $k ]['table']['as'] . '.' . $field_name . ') as total' );
 			}
 
 			$sql = 'SELECT SUM(total) FROM (' . $this->get_sql( $query ) . ') x';
@@ -475,10 +494,11 @@ class Rcl_Old_Query {
 			$sql = $this->get_sql( $query );
 		}
 
-		if ( isset( $query['groupby'] ) && $query['groupby'] )
-			$result	 = $wpdb->query( $sql );
-		else
-			$result	 = $wpdb->get_var( $sql );
+		if ( isset( $query['groupby'] ) && $query['groupby'] ) {
+			$result = $wpdb->query( $sql );
+		} else {
+			$result = $wpdb->get_var( $sql );
+		}
 
 		//$this->reset_query();
 

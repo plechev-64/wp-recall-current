@@ -5,7 +5,9 @@
 			<?php pfm_the_icon( 'fa-database' ); ?>
         </div>
         <div class="prime-forum-title">
-            <div class="prime-general-title"><a class="" title="<?php _e( 'Go to group', 'wp-recall' ); ?>" href="<?php pfm_the_group_permalink(); ?>"><?php pfm_the_group_name(); ?></a></div>
+            <div class="prime-general-title"><a class="" title="<?php _e( 'Go to group', 'wp-recall' ); ?>"
+                                                href="<?php pfm_the_group_permalink(); ?>"><?php pfm_the_group_name(); ?></a>
+            </div>
             <div class="prime-forum-description"><?php pfm_the_group_description(); ?></div>
         </div>
         <div class="prime-forum-topics">
@@ -15,7 +17,7 @@
 
 	<?php if ( pfm_get_option( 'view-forums-home' ) ): ?>
 
-		<div class="prime-forums-list prime-loop-list prime-child-forums">
+        <div class="prime-forums-list prime-loop-list prime-child-forums">
 
 			<?php while ( pfm_get_next( 'forum' ) ) : ?>
 
@@ -23,7 +25,7 @@
 
 			<?php endwhile; ?>
 
-		</div>
+        </div>
 
 	<?php endif; ?>
 

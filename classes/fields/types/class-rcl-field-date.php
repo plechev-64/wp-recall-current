@@ -24,10 +24,10 @@ class Rcl_Field_Date extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'		 => 'placeholder',
-				'default'	 => $this->placeholder,
-				'type'		 => 'text',
-				'title'		 => __( 'Placeholder', 'wp-recall' )
+				'slug'    => 'placeholder',
+				'default' => $this->placeholder,
+				'type'    => 'text',
+				'title'   => __( 'Placeholder', 'wp-recall' )
 			)
 		);
 	}

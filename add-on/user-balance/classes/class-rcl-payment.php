@@ -9,11 +9,11 @@ class Rcl_Payment extends Rcl_Gateway_Core {
 	function add_payment( $type, $data ) {
 		global $rclOldGatewaysData;
 
-		$rclOldGatewaysData[$type] = array(
-			'request'	 => $data['request'],
-			'label'		 => $data['name'],
-			'submit'	 => __( 'Pay via', 'wp-recall' ) . ' ' . $data['name'],
-			'icon'		 => $data['image']
+		$rclOldGatewaysData[ $type ] = array(
+			'request' => $data['request'],
+			'label'   => $data['name'],
+			'submit'  => __( 'Pay via', 'wp-recall' ) . ' ' . $data['name'],
+			'icon'    => $data['image']
 		);
 
 		rcl_gateway_register( $type, get_class( $this ) );
@@ -38,10 +38,10 @@ class Rcl_Payment extends Rcl_Gateway_Core {
 	function form( $fields, $data, $formaction ) {
 
 		return $this->construct_form( array(
-				'action' => $formaction,
-				'method' => 'post',
-				'fields' => $fields
-			) );
+			'action' => $formaction,
+			'method' => 'post',
+			'fields' => $fields
+		) );
 	}
 
 }

@@ -24,18 +24,19 @@ class Rcl_Field_Dynamic extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'		 => 'placeholder',
-				'default'	 => $this->placeholder,
-				'type'		 => 'text',
-				'title'		 => __( 'Placeholder', 'wp-recall' )
+				'slug'    => 'placeholder',
+				'default' => $this->placeholder,
+				'type'    => 'text',
+				'title'   => __( 'Placeholder', 'wp-recall' )
 			)
 		);
 	}
 
 	function get_input() {
 
-		if ( ! $this->default )
+		if ( ! $this->default ) {
 			$this->default = '';
+		}
 
 		$content = '<span class="dynamic-values">';
 
@@ -70,8 +71,9 @@ class Rcl_Field_Dynamic extends Rcl_Field_Abstract {
 
 	function get_value() {
 
-		if ( ! $this->value )
+		if ( ! $this->value ) {
 			return false;
+		}
 
 		return implode( ', ', $this->value );
 	}

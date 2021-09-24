@@ -12,19 +12,23 @@ function rcl_create_order() {
 function rcl_insert_order( $args, $products ) {
 	global $wpdb;
 
-	if ( ! isset( $args['order_date'] ) )
+	if ( ! isset( $args['order_date'] ) ) {
 		$args['order_date'] = current_time( 'mysql' );
+	}
 
 	foreach ( $products as $k => $product ) {
 
-		if ( ! isset( $product['product_amount'] ) )
-			$products[$k]['product_amount'] = 1;
+		if ( ! isset( $product['product_amount'] ) ) {
+			$products[ $k ]['product_amount'] = 1;
+		}
 
-		if ( ! isset( $product['product_price'] ) )
-			$products[$k]['product_price'] = get_post_meta( $product['product_id'], 'price-products', 1 );
+		if ( ! isset( $product['product_price'] ) ) {
+			$products[ $k ]['product_price'] = get_post_meta( $product['product_id'], 'price-products', 1 );
+		}
 
-		if ( ! isset( $product['variations'] ) )
-			$products[$k]['variations'] = '';
+		if ( ! isset( $product['variations'] ) ) {
+			$products[ $k ]['variations'] = '';
+		}
 	}
 
 	if ( ! isset( $args['order_price'] ) ) {
@@ -58,8 +62,9 @@ function rcl_insert_order( $args, $products ) {
 	$order_id = $wpdb->insert_id;
 
 	//на случай миграции данных из старой таблицы
-	if ( ! $order_id && isset( $args['order_id'] ) )
+	if ( ! $order_id && isset( $args['order_id'] ) ) {
 		$order_id = $args['order_id'];
+	}
 
 	$products = apply_filters( 'rcl_pre_insert_order_products', $products, $order_id );
 
@@ -89,23 +94,25 @@ function rcl_insert_order( $args, $products ) {
 function rcl_insert_order_item( $order_id, $product ) {
 	global $wpdb;
 
-	if ( ! isset( $product['variations'] ) )
+	if ( ! isset( $product['variations'] ) ) {
 		$product['variations'] = '';
+	}
 
 	$args = array(
-		'order_id'		 => $order_id,
-		'product_id'	 => $product['product_id'],
-		'product_price'	 => $product['product_price'],
+		'order_id'       => $order_id,
+		'product_id'     => $product['product_id'],
+		'product_price'  => $product['product_price'],
 		'product_amount' => $product['product_amount'],
-		'variations'	 => maybe_serialize( $product['variations'] )
+		'variations'     => maybe_serialize( $product['variations'] )
 	);
 
 	$result = $wpdb->insert(
 		RCL_PREF . "order_items", $args
 	);
 
-	if ( ! $result )
+	if ( ! $result ) {
 		return false;
+	}
 
 	do_action( 'rcl_insert_order_item', $order_id, $product );
 
@@ -137,25 +144,27 @@ function rcl_update_status_order( $order_id, $new_status ) {
 	do_action( 'rcl_update_status_order', $order_id, $new_status );
 
 	return $wpdb->update(
-			RCL_PREF . "orders", array(
-			'order_status' => $new_status
-			), array(
+		RCL_PREF . "orders", array(
+		'order_status' => $new_status
+	), array(
 			'order_id' => $order_id
-			)
+		)
 	);
 }
 
 function rcl_get_orders( $args = array() ) {
 
 	if ( isset( $args['fields'] ) ) {
-		if ( ! in_array( 'order_id', $args['fields'] ) )
+		if ( ! in_array( 'order_id', $args['fields'] ) ) {
 			$args['fields'][] = 'order_id';
+		}
 	}
 
 	$orders = RQ::tbl( new Rcl_Orders_Query() )->parse( $args )->get_results();
 
-	if ( ! $orders )
+	if ( ! $orders ) {
 		return array();
+	}
 
 	//указываем для получения товары только из полученных заказов
 	foreach ( $orders as $k => $order ) {
@@ -163,22 +172,24 @@ function rcl_get_orders( $args = array() ) {
 		$args['order_id__in'][] = $order->order_id;
 	}
 
-	$args['order_id__in']	 = array_unique( $args['order_id__in'] );
-	$args['number']			 = -1; //снимаем ограничение выборки товаров
+	$args['order_id__in'] = array_unique( $args['order_id__in'] );
+	$args['number']       = - 1; //снимаем ограничение выборки товаров
 
 	$products = RQ::tbl( new Rcl_Order_Items_Query() )->parse( $args )->get_results();
 
 	$Orders = array();
 	foreach ( $orders as $order ) {
 
-		if ( ! isset( $order->order_id ) || ! $order->order_id )
+		if ( ! isset( $order->order_id ) || ! $order->order_id ) {
 			continue;
+		}
 
 		$Products = array();
 		foreach ( $products as $product ) {
 
-			if ( ! isset( $product->order_id ) || $order->order_id != $product->order_id )
+			if ( ! isset( $product->order_id ) || $order->order_id != $product->order_id ) {
 				continue;
+			}
 
 			unset( $product->order_id );
 
@@ -187,7 +198,7 @@ function rcl_get_orders( $args = array() ) {
 			$Products[] = $product;
 		}
 
-		$order->products = ($Products) ? $Products : array();
+		$order->products = ( $Products ) ? $Products : array();
 
 		$Orders[] = $order;
 	}
@@ -203,10 +214,11 @@ function rcl_get_order( $order_id ) {
 
 	$orders = rcl_get_orders( array(
 		'order_id' => $order_id
-		) );
+	) );
 
-	if ( ! $orders )
+	if ( ! $orders ) {
 		return array();
+	}
 
 	return $orders[0];
 }
@@ -214,12 +226,12 @@ function rcl_get_order( $order_id ) {
 function rcl_order_statuses() {
 
 	$sts = array(
-		1	 => __( 'Not paid', 'wp-recall' ),
-		2	 => __( 'Paid', 'wp-recall' ),
-		3	 => __( 'Sent', 'wp-recall' ),
-		4	 => __( 'Received', 'wp-recall' ),
-		5	 => __( 'Closed', 'wp-recall' ),
-		6	 => __( 'Trash', 'wp-recall' )
+		1 => __( 'Not paid', 'wp-recall' ),
+		2 => __( 'Paid', 'wp-recall' ),
+		3 => __( 'Sent', 'wp-recall' ),
+		4 => __( 'Received', 'wp-recall' ),
+		5 => __( 'Closed', 'wp-recall' ),
+		6 => __( 'Trash', 'wp-recall' )
 	);
 
 	return apply_filters( 'rcl_order_statuses', $sts );
@@ -229,10 +241,11 @@ function rcl_get_status_name_order( $status_id ) {
 
 	$sts = rcl_order_statuses();
 
-	if ( ! isset( $sts[$status_id] ) )
+	if ( ! isset( $sts[ $status_id ] ) ) {
 		return false;
+	}
 
-	return $sts[$status_id];
+	return $sts[ $status_id ];
 }
 
 function rcl_get_price( $product_id ) {
@@ -338,8 +351,8 @@ function rcl_payment_order_send_mail( $order_id ) {
 
 	$orderData = rcl_get_include_template( 'order.php', __FILE__ );
 
-	$userName	 = get_the_author_meta( 'display_name', $rclOrder->user_id );
-	$userEmail	 = get_the_author_meta( 'user_email', $rclOrder->user_id );
+	$userName  = get_the_author_meta( 'display_name', $rclOrder->user_id );
+	$userEmail = get_the_author_meta( 'user_email', $rclOrder->user_id );
 
 	$subject = sprintf( __( 'Order №%d has been paid', 'wp-recall' ), $rclOrder->order_id );
 
@@ -356,8 +369,8 @@ function rcl_payment_order_send_mail( $order_id ) {
 
 	rcl_mail( rcl_get_commerce_option( 'admin_email_magazin_recall', get_site_option( 'admin_email' ) ), $subject, $textmail );
 
-	$email		 = get_the_author_meta( 'user_email', $rclOrder->user_id );
-	$textmail	 = '
+	$email    = get_the_author_meta( 'user_email', $rclOrder->user_id );
+	$textmail = '
     <p>' . sprintf( __( 'You paid for the order on the website "%s"', 'wp-recall' ), get_bloginfo( 'name' ) ) . '</p>
     <h3>' . __( 'Information about the customer', 'wp-recall' ) . ':</h3>
     <p><b>' . __( 'Name', 'wp-recall' ) . '</b>: ' . $userName . '</p>
@@ -375,8 +388,9 @@ function rcl_product_variation_list( $variations ) {
 
 function rcl_get_product_variation_list( $variations ) {
 
-	if ( ! $variations )
+	if ( ! $variations ) {
 		return false;
+	}
 
 	$content = '<div class="product-variations">';
 
@@ -384,7 +398,7 @@ function rcl_get_product_variation_list( $variations ) {
 
 	foreach ( $variations as $variation ) {
 
-		$value = (is_array( $variation[1] )) ? implode( ', ', $variation[1] ) : $variation[1];
+		$value = ( is_array( $variation[1] ) ) ? implode( ', ', $variation[1] ) : $variation[1];
 
 		$content .= '<div class="variation-box">';
 		$content .= '<span class="variation-title">' . $variation[0] . '</span> ';
@@ -405,7 +419,7 @@ function rcl_get_product_excerpt( $post_id ) {
 
 	$post = get_post( $post_id );
 
-	$excerpt = ($post->post_excerpt) ? $post->post_excerpt : wp_trim_words( $post->post_content, 20, '...' );
+	$excerpt = ( $post->post_excerpt ) ? $post->post_excerpt : wp_trim_words( $post->post_content, 20, '...' );
 
 	return '<div class="product-excerpt">' . $excerpt . '</div>';
 }
@@ -421,52 +435,61 @@ function rmag_migration_table_data() {
 	global $wpdb;
 
 	$old_orders = $wpdb->get_results( "SELECT "
-		. "orders.*, "
-		. "details.details_order AS order_details "
-		. "FROM " . RMAG_PREF . "orders_history AS orders "
-		. "INNER JOIN " . RMAG_PREF . "details_orders AS details ON orders.order_id = details.order_id "
-		. "ORDER BY orders.order_id ASC" );
+	                                  . "orders.*, "
+	                                  . "details.details_order AS order_details "
+	                                  . "FROM " . RMAG_PREF . "orders_history AS orders "
+	                                  . "INNER JOIN " . RMAG_PREF . "details_orders AS details ON orders.order_id = details.order_id "
+	                                  . "ORDER BY orders.order_id ASC" );
 
-	if ( ! $old_orders )
+	if ( ! $old_orders ) {
 		return false;
+	}
 
 	$orders = array();
 	foreach ( $old_orders as $product ) {
 
-		if ( ! isset( $orders[$product->order_id]['order_id'] ) )
-			$orders[$product->order_id]['order_id'] = $product->order_id;
+		if ( ! isset( $orders[ $product->order_id ]['order_id'] ) ) {
+			$orders[ $product->order_id ]['order_id'] = $product->order_id;
+		}
 
-		if ( ! isset( $orders[$product->order_id]['order_date'] ) )
-			$orders[$product->order_id]['order_date'] = $product->order_date;
+		if ( ! isset( $orders[ $product->order_id ]['order_date'] ) ) {
+			$orders[ $product->order_id ]['order_date'] = $product->order_date;
+		}
 
-		if ( ! isset( $orders[$product->order_id]['user_id'] ) )
-			$orders[$product->order_id]['user_id'] = $product->user_id;
+		if ( ! isset( $orders[ $product->order_id ]['user_id'] ) ) {
+			$orders[ $product->order_id ]['user_id'] = $product->user_id;
+		}
 
-		if ( ! isset( $orders[$product->order_id]['order_status'] ) )
-			$orders[$product->order_id]['order_status'] = $product->order_status;
+		if ( ! isset( $orders[ $product->order_id ]['order_status'] ) ) {
+			$orders[ $product->order_id ]['order_status'] = $product->order_status;
+		}
 
-		if ( ! isset( $orders[$product->order_id]['details'] ) )
-			$orders[$product->order_id]['order_details'] = $product->order_details;
+		if ( ! isset( $orders[ $product->order_id ]['details'] ) ) {
+			$orders[ $product->order_id ]['order_details'] = $product->order_details;
+		}
 
-		if ( isset( $orders[$product->order_id]['products_amount'] ) )
-			$orders[$product->order_id]['products_amount'] += $product->numberproduct;
-		else
-			$orders[$product->order_id]['products_amount'] = $product->numberproduct;
+		if ( isset( $orders[ $product->order_id ]['products_amount'] ) ) {
+			$orders[ $product->order_id ]['products_amount'] += $product->numberproduct;
+		} else {
+			$orders[ $product->order_id ]['products_amount'] = $product->numberproduct;
+		}
 
-		if ( isset( $orders[$product->order_id]['order_price'] ) )
-			$orders[$product->order_id]['order_price'] += $product->numberproduct * $product->product_price;
-		else
-			$orders[$product->order_id]['order_price'] = $product->numberproduct * $product->product_price;
+		if ( isset( $orders[ $product->order_id ]['order_price'] ) ) {
+			$orders[ $product->order_id ]['order_price'] += $product->numberproduct * $product->product_price;
+		} else {
+			$orders[ $product->order_id ]['order_price'] = $product->numberproduct * $product->product_price;
+		}
 
-		$orders[$product->order_id]['products'][] = array(
-			'product_id'	 => $product->product_id,
-			'product_price'	 => $product->product_price,
+		$orders[ $product->order_id ]['products'][] = array(
+			'product_id'     => $product->product_id,
+			'product_price'  => $product->product_price,
 			'product_amount' => $product->numberproduct,
 		);
 	}
 
-	if ( ! $orders )
+	if ( ! $orders ) {
 		return false;
+	}
 
 	$wpdb->query( "ALTER TABLE `" . RCL_PREF . "orders` CHANGE `order_id` `order_id` BIGINT (20) NOT NULL" );
 

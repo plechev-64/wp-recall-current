@@ -6,15 +6,17 @@ class Rcl_Log {
 
 	function __construct( $args = false ) {
 
-		if ( $args )
+		if ( $args ) {
 			$this->init_properties( $args );
+		}
 
 		if ( ! $this->log_path ) {
 
 			$logDir = RCL_TAKEPATH . 'logs/';
 
-			if ( ! file_exists( $logDir ) )
+			if ( ! file_exists( $logDir ) ) {
 				wp_mkdir_p( $logDir );
+			}
 
 			$this->log_path = $logDir . date( 'Y-m-d' ) . '.log';
 		}
@@ -24,8 +26,9 @@ class Rcl_Log {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( isset( $args[$name] ) )
-				$this->$name = $args[$name];
+			if ( isset( $args[ $name ] ) ) {
+				$this->$name = $args[ $name ];
+			}
 		}
 	}
 

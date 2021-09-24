@@ -18,11 +18,13 @@ class Rcl_Field_Agree extends Rcl_Field_Abstract {
 
 	function __construct( $args ) {
 
-		if ( isset( $args['text-confirm'] ) )
+		if ( isset( $args['text-confirm'] ) ) {
 			$args['text_confirm'] = $args['text-confirm'];
+		}
 
-		if ( isset( $args['url-agreement'] ) )
+		if ( isset( $args['url-agreement'] ) ) {
 			$args['url_agreement'] = $args['url-agreement'];
+		}
 
 		parent::__construct( $args );
 	}
@@ -31,43 +33,46 @@ class Rcl_Field_Agree extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'			 => 'icon',
-				'default'		 => 'fa-check-square-o',
-				'placeholder'	 => 'fa-check-square-o',
-				'class'			 => 'rcl-iconpicker',
-				'type'			 => 'text',
-				'title'			 => __( 'Icon class of  font-awesome', 'wp-recall' )
+				'slug'        => 'icon',
+				'default'     => 'fa-check-square-o',
+				'placeholder' => 'fa-check-square-o',
+				'class'       => 'rcl-iconpicker',
+				'type'        => 'text',
+				'title'       => __( 'Icon class of  font-awesome', 'wp-recall' )
 			),
 			array(
-				'slug'		 => 'url_agreement',
-				'default'	 => $this->url_agreement,
-				'type'		 => 'url',
-				'title'		 => __( 'Agreement URL', 'wp-recall' )
+				'slug'    => 'url_agreement',
+				'default' => $this->url_agreement,
+				'type'    => 'url',
+				'title'   => __( 'Agreement URL', 'wp-recall' )
 			),
 			array(
-				'slug'		 => 'text_confirm',
-				'default'	 => $this->text_confirm,
-				'type'		 => 'textarea',
-				'title'		 => __( 'Consent confirmation text', 'wp-recall' )
+				'slug'    => 'text_confirm',
+				'default' => $this->text_confirm,
+				'type'    => 'textarea',
+				'title'   => __( 'Consent confirmation text', 'wp-recall' )
 			)
 		);
 	}
 
 	function get_title() {
 
-		if ( ! $this->title )
+		if ( ! $this->title ) {
 			$this->title = __( 'Agreement', 'wp-recall' );
+		}
 
-		if ( $this->url_agreement )
-			return '<a href="' . $this->url_agreement . '" target="_blank">' . $this->title . ($this->required ? ' <span class="required">*</span>' : '') . '</a>';
+		if ( $this->url_agreement ) {
+			return '<a href="' . $this->url_agreement . '" target="_blank">' . $this->title . ( $this->required ? ' <span class="required">*</span>' : '' ) . '</a>';
+		}
 
-		return $this->title . ($this->required ? ' <span class="required">*</span>' : '');
+		return $this->title . ( $this->required ? ' <span class="required">*</span>' : '' );
 	}
 
 	function get_value() {
 
-		if ( $this->value )
+		if ( $this->value ) {
 			return __( 'Accepted', 'wp-recall' );
+		}
 
 		return false;
 	}

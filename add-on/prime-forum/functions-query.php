@@ -2,17 +2,20 @@
 
 function pfm_is_search() {
 	global $PrimeQuery;
-	return ($PrimeQuery->is_search) ? true : false;
+
+	return ( $PrimeQuery->is_search ) ? true : false;
 }
 
 function pfm_is_author() {
 	global $PrimeQuery;
-	return ($PrimeQuery->is_author) ? true : false;
+
+	return ( $PrimeQuery->is_author ) ? true : false;
 }
 
 function pfm_is_home() {
 	global $PrimeQuery;
-	return ($PrimeQuery->is_frontpage) ? true : false;
+
+	return ( $PrimeQuery->is_frontpage ) ? true : false;
 }
 
 function pfm_is_group( $group_id = false ) {
@@ -21,54 +24,62 @@ function pfm_is_group( $group_id = false ) {
 	if ( pfm_is_home() ) {
 		global $PrimeGroup;
 
-		if ( ! $group_id )
+		if ( ! $group_id ) {
 			return false;
+		}
 
 		return $PrimeGroup->group_id == $group_id ? true : false;
 	}
 
-	if ( ! $group_id )
-		return ($PrimeQuery->is_group) ? true : false;
+	if ( ! $group_id ) {
+		return ( $PrimeQuery->is_group ) ? true : false;
+	}
 
-	return ($PrimeQuery->is_group && $PrimeQuery->object->group_id == $group_id) ? true : false;
+	return ( $PrimeQuery->is_group && $PrimeQuery->object->group_id == $group_id ) ? true : false;
 }
 
 function pfm_is_forum( $forum_id = false ) {
 	global $PrimeQuery;
 
-	if ( ! $forum_id )
-		return ($PrimeQuery->is_forum) ? true : false;
+	if ( ! $forum_id ) {
+		return ( $PrimeQuery->is_forum ) ? true : false;
+	}
 
-	return ($PrimeQuery->is_forum && $PrimeQuery->object->forum_id == $forum_id) ? true : false;
+	return ( $PrimeQuery->is_forum && $PrimeQuery->object->forum_id == $forum_id ) ? true : false;
 }
 
 function pfm_is_topic( $topic_id = false ) {
 	global $PrimeQuery;
 
-	if ( ! $topic_id )
-		return ($PrimeQuery->is_topic) ? true : false;
+	if ( ! $topic_id ) {
+		return ( $PrimeQuery->is_topic ) ? true : false;
+	}
 
-	return ($PrimeQuery->is_topic && $PrimeQuery->object->topic_id == $topic_id) ? true : false;
+	return ( $PrimeQuery->is_topic && $PrimeQuery->object->topic_id == $topic_id ) ? true : false;
 }
 
 function pfm_have_groups() {
 	global $PrimeQuery;
-	return ( ! $PrimeQuery->groups || $PrimeQuery->errors) ? false : true;
+
+	return ( ! $PrimeQuery->groups || $PrimeQuery->errors ) ? false : true;
 }
 
 function pfm_have_forums() {
 	global $PrimeQuery;
-	return ( ! $PrimeQuery->forums || $PrimeQuery->errors) ? false : true;
+
+	return ( ! $PrimeQuery->forums || $PrimeQuery->errors ) ? false : true;
 }
 
 function pfm_have_topics() {
 	global $PrimeQuery;
-	return ( ! $PrimeQuery->topics || $PrimeQuery->errors) ? false : true;
+
+	return ( ! $PrimeQuery->topics || $PrimeQuery->errors ) ? false : true;
 }
 
 function pfm_have_posts() {
 	global $PrimeQuery;
-	return ( ! $PrimeQuery->posts || $PrimeQuery->errors) ? false : true;
+
+	return ( ! $PrimeQuery->posts || $PrimeQuery->errors ) ? false : true;
 }
 
 function pfm_reset_forumdata() {
@@ -83,8 +94,9 @@ function pfm_have_errors( $errors = false ) {
 		$errors = $PrimeQuery->errors;
 	}
 
-	if ( ! $errors || ! is_array( $errors ) )
+	if ( ! $errors || ! is_array( $errors ) ) {
 		return false;
+	}
 
 	return true;
 }
@@ -92,16 +104,16 @@ function pfm_have_errors( $errors = false ) {
 function pfm_get_next( $type ) {
 	global $PrimeQuery, $PrimeGroup, $PrimeForum, $PrimeTopic, $PrimePost;
 
-	$nextID = $PrimeQuery->next[$type];
+	$nextID = $PrimeQuery->next[ $type ];
 
 	switch ( $type ) {
 		case 'group':
 
-			if ( isset( $PrimeQuery->groups[$nextID] ) ) {
+			if ( isset( $PrimeQuery->groups[ $nextID ] ) ) {
 
-				$PrimeGroup = $PrimeQuery->groups[$nextID];
+				$PrimeGroup = $PrimeQuery->groups[ $nextID ];
 
-				$PrimeQuery->next[$type] += 1;
+				$PrimeQuery->next[ $type ] += 1;
 
 				$PrimeForum = false;
 
@@ -111,20 +123,21 @@ function pfm_get_next( $type ) {
 			break;
 		case 'forum':
 
-			if ( isset( $PrimeQuery->forums[$nextID] ) ) {
+			if ( isset( $PrimeQuery->forums[ $nextID ] ) ) {
 
-				if ( isset( $PrimeQuery->object->group_id ) )
+				if ( isset( $PrimeQuery->object->group_id ) ) {
 					$groupID = $PrimeQuery->object->group_id;
-				else if ( isset( $PrimeGroup->group_id ) )
+				} else if ( isset( $PrimeGroup->group_id ) ) {
 					$groupID = $PrimeGroup->group_id;
-				else
+				} else {
 					return;
+				}
 
-				if ( $PrimeQuery->forums[$nextID]->group_id == $groupID ) {
+				if ( $PrimeQuery->forums[ $nextID ]->group_id == $groupID ) {
 
-					$PrimeForum = $PrimeQuery->forums[$nextID];
+					$PrimeForum = $PrimeQuery->forums[ $nextID ];
 
-					$PrimeQuery->next[$type] += 1;
+					$PrimeQuery->next[ $type ] += 1;
 
 					return $PrimeForum;
 				}
@@ -133,11 +146,11 @@ function pfm_get_next( $type ) {
 			break;
 		case 'topic':
 
-			if ( isset( $PrimeQuery->topics[$nextID] ) ) {
+			if ( isset( $PrimeQuery->topics[ $nextID ] ) ) {
 
-				$PrimeTopic = $PrimeQuery->topics[$nextID];
+				$PrimeTopic = $PrimeQuery->topics[ $nextID ];
 
-				$PrimeQuery->next[$type] += 1;
+				$PrimeQuery->next[ $type ] += 1;
 
 				return $PrimeTopic;
 			}
@@ -145,11 +158,11 @@ function pfm_get_next( $type ) {
 			break;
 		case 'post':
 
-			if ( isset( $PrimeQuery->posts[$nextID] ) ) {
+			if ( isset( $PrimeQuery->posts[ $nextID ] ) ) {
 
-				$PrimePost = $PrimeQuery->posts[$nextID];
+				$PrimePost = $PrimeQuery->posts[ $nextID ];
 
-				$PrimeQuery->next[$type] += 1;
+				$PrimeQuery->next[ $type ] += 1;
 
 				return $PrimePost;
 			}
@@ -167,24 +180,25 @@ function pfm_the_last_topic() {
 
 	if ( ! $lastTopic ) {
 		echo __( 'Topics yet', 'wp-recall' );
+
 		return;
 	}
 
 	$permalink = pfm_get_topic_permalink( $lastTopic->topic_id, array(
-		'forum_id'	 => $PrimeForum->forum_id,
+		'forum_id'   => $PrimeForum->forum_id,
 		'forum_slug' => $PrimeForum->forum_slug,
 		'topic_slug' => $lastTopic->topic_slug
-		) );
+	) );
 
 	echo '<a href="' . $permalink . '">'
-	. $lastTopic->topic_name
-	. '</a>';
+	     . $lastTopic->topic_name
+	     . '</a>';
 }
 
 function pfm_the_last_post() {
 	global $PrimeForum, $PrimeTopic, $PrimeQuery;
 
-	if ( pfm_is_home() || pfm_is_group() || (isset( $PrimeForum->parent_id ) && $PrimeForum->parent_id && ! $PrimeTopic) ) {
+	if ( pfm_is_home() || pfm_is_group() || ( isset( $PrimeForum->parent_id ) && $PrimeForum->parent_id && ! $PrimeTopic ) ) {
 		$lastPost = $PrimeQuery->search_forum_last_post( $PrimeForum->forum_id );
 	} else {
 		$lastPost = $PrimeQuery->search_topic_last_post( $PrimeTopic->topic_id );
@@ -192,20 +206,21 @@ function pfm_the_last_post() {
 
 	if ( ! $lastPost ) {
 		echo __( 'not found', 'wp-recall' );
+
 		return;
 	}
 
 	$name = $lastPost->user_id ? pfm_get_user_name( $lastPost->user_id ) : __( 'Guest', 'wp-recall' );
 
 	$permalink = pfm_get_post_permalink( $lastPost->post_id, array(
-		'topic_id'	 => $lastPost->topic_id,
+		'topic_id'   => $lastPost->topic_id,
 		'topic_slug' => isset( $lastPost->topic_slug ) ? $lastPost->topic_slug : false,
 		'post_count' => $PrimeTopic ? $PrimeTopic->post_count : 0,
 		'post_index' => $lastPost->post_index,
-		'forum_id'	 => isset( $lastPost->forum_id ) ? $lastPost->forum_id : 0
-		) );
+		'forum_id'   => isset( $lastPost->forum_id ) ? $lastPost->forum_id : 0
+	) );
 
 	echo __( 'from', 'wp-recall' ) . ' ' . $name . ': <a href="' . $permalink . '">'
-	. human_time_diff( strtotime( $lastPost->post_date ), current_time( 'timestamp' ) ) . ' ' . __( 'ago', 'wp-recall' )
-	. '</a>';
+	     . human_time_diff( strtotime( $lastPost->post_date ), current_time( 'timestamp' ) ) . ' ' . __( 'ago', 'wp-recall' )
+	     . '</a>';
 }

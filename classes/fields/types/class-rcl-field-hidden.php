@@ -28,23 +28,23 @@ class Rcl_Field_Hidden extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'		 => 'placeholder',
-				'default'	 => $this->placeholder,
-				'type'		 => 'text',
-				'title'		 => __( 'Placeholder', 'wp-recall' )
+				'slug'    => 'placeholder',
+				'default' => $this->placeholder,
+				'type'    => 'text',
+				'title'   => __( 'Placeholder', 'wp-recall' )
 			),
 			array(
-				'slug'		 => 'maxlength',
-				'default'	 => $this->maxlength,
-				'type'		 => 'number',
-				'title'		 => __( 'Maxlength', 'wp-recall' ),
-				'notice'	 => __( 'maximum number of symbols per field', 'wp-recall' )
+				'slug'    => 'maxlength',
+				'default' => $this->maxlength,
+				'type'    => 'number',
+				'title'   => __( 'Maxlength', 'wp-recall' ),
+				'notice'  => __( 'maximum number of symbols per field', 'wp-recall' )
 			),
 			array(
-				'slug'		 => 'pattern',
-				'default'	 => $this->pattern,
-				'type'		 => 'text',
-				'title'		 => __( 'Pattern', 'wp-recall' )
+				'slug'    => 'pattern',
+				'default' => $this->pattern,
+				'type'    => 'text',
+				'title'   => __( 'Pattern', 'wp-recall' )
 			)
 		);
 	}

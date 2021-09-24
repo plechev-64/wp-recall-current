@@ -14,8 +14,8 @@ function rcl_admin_page_publicform() {
 
 function rcl_public_form_manager() {
 
-	$post_type	 = (isset( $_GET['post-type'] )) ? $_GET['post-type'] : 'post';
-	$form_id	 = (isset( $_GET['form-id'] )) ? $_GET['form-id'] : 1;
+	$post_type = ( isset( $_GET['post-type'] ) ) ? $_GET['post-type'] : 'post';
+	$form_id   = ( isset( $_GET['form-id'] ) ) ? $_GET['form-id'] : 1;
 
 	$shortCode = 'public-form post_type="' . $post_type . '"';
 
@@ -25,7 +25,7 @@ function rcl_public_form_manager() {
 
 	$formManager = new Rcl_Public_Form_Manager( $post_type, array(
 		'form_id' => $form_id
-		) );
+	) );
 
 	$content = '<h2>' . __( 'Manage publication forms', 'wp-recall' ) . '</h2>';
 
@@ -35,7 +35,7 @@ function rcl_public_form_manager() {
 
 	$content .= $formManager->form_navi();
 
-	$content .= rcl_get_notice( ['text' => __( 'Use shortcode for publication form', 'wp-recall' ) . ' [' . $shortCode . ']' ] );
+	$content .= rcl_get_notice( [ 'text' => __( 'Use shortcode for publication form', 'wp-recall' ) . ' [' . $shortCode . ']' ] );
 
 	$content .= $formManager->get_manager();
 
@@ -52,13 +52,15 @@ function custom_fields_editor_post_rcl( $post_type, $post ) {
 function custom_fields_list_posteditor_rcl( $post ) {
 	$form_id = 1;
 
-	if ( $post->ID && $post->post_type == 'post' )
+	if ( $post->ID && $post->post_type == 'post' ) {
 		$form_id = get_post_meta( $post->ID, 'publicform-id', 1 );
+	}
 
 	$content = rcl_get_custom_fields_edit_box( $post->ID, $post->post_type, $form_id );
 
-	if ( ! $content )
+	if ( ! $content ) {
 		return false;
+	}
 
 	echo $content;
 
@@ -67,29 +69,33 @@ function custom_fields_list_posteditor_rcl( $post ) {
 
 add_action( 'save_post', 'rcl_custom_fields_update', 0 );
 function rcl_custom_fields_update( $post_id ) {
-	if ( ! isset( $_POST['custom_fields_nonce_rcl'] ) )
+	if ( ! isset( $_POST['custom_fields_nonce_rcl'] ) ) {
 		return false;
-	if ( ! wp_verify_nonce( $_POST['custom_fields_nonce_rcl'], __FILE__ ) )
+	}
+	if ( ! wp_verify_nonce( $_POST['custom_fields_nonce_rcl'], __FILE__ ) ) {
 		return false;
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+	}
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return false;
-	if ( ! current_user_can( 'edit_post', $post_id ) )
+	}
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		return false;
+	}
 
 	rcl_update_post_custom_fields( $post_id );
 
-	if (isset( $_POST['post_uploader'] ) && $_POST['post_uploader'] ) {
+	if ( isset( $_POST['post_uploader'] ) && $_POST['post_uploader'] ) {
 		global $user_ID;
 
-		$editPost = new Rcl_EditPost($post_id);
+		$editPost = new Rcl_EditPost( $post_id );
 
 		$editPost->rcl_add_attachments_in_temps( $user_ID );
 
 		$editPost->update_post_gallery();
 
 		rcl_delete_temp_media_by_args( array(
-			'user_id'			 => $user_ID,
-			'uploader_id__in'	 => array( 'post_uploader', 'post_thumbnail' )
+			'user_id'         => $user_ID,
+			'uploader_id__in' => array( 'post_uploader', 'post_thumbnail' )
 		) );
 	}
 
@@ -99,11 +105,13 @@ function rcl_custom_fields_update( $post_id ) {
 add_action( 'admin_init', 'rcl_public_form_admin_actions', 10 );
 function rcl_public_form_admin_actions() {
 
-	if ( ! isset( $_GET['page'] ) || $_GET['page'] != 'manage-public-form' )
+	if ( ! isset( $_GET['page'] ) || $_GET['page'] != 'manage-public-form' ) {
 		return false;
+	}
 
-	if ( ! isset( $_GET['form-action'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'rcl-form-action' ) )
+	if ( ! isset( $_GET['form-action'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'rcl-form-action' ) ) {
 		return false;
+	}
 
 	switch ( $_GET['form-action'] ) {
 
@@ -111,9 +119,9 @@ function rcl_public_form_admin_actions() {
 
 			$newFormId = $_GET['form-id'];
 
-			add_option( 'rcl_fields_'.$_GET['post-type'].'_' . $newFormId, array() );
+			add_option( 'rcl_fields_' . $_GET['post-type'] . '_' . $newFormId, array() );
 
-			wp_redirect( admin_url( 'admin.php?page=manage-public-form&post-type='.$_GET['post-type'].'&form-id=' . $newFormId ) );
+			wp_redirect( admin_url( 'admin.php?page=manage-public-form&post-type=' . $_GET['post-type'] . '&form-id=' . $newFormId ) );
 			exit;
 
 			break;
@@ -122,9 +130,9 @@ function rcl_public_form_admin_actions() {
 
 			$delFormId = $_GET['form-id'];
 
-			delete_site_option( 'rcl_fields_'.$_GET['post-type'].'_' . $delFormId );
+			delete_site_option( 'rcl_fields_' . $_GET['post-type'] . '_' . $delFormId );
 
-			wp_redirect( admin_url( 'admin.php?page=manage-public-form&post-type='.$_GET['post-type'] ) );
+			wp_redirect( admin_url( 'admin.php?page=manage-public-form&post-type=' . $_GET['post-type'] ) );
 			exit;
 
 			break;
@@ -138,25 +146,26 @@ function rcl_add_publicpost_metabox( $screen ) {
 
 function rcl_publicpost_metabox() {
 
-	$posts = get_posts( array( 'numberposts' => -1, 'post_type' => 'any', 'post_status' => 'pending' ) );
+	$posts = get_posts( array( 'numberposts' => - 1, 'post_type' => 'any', 'post_status' => 'pending' ) );
 
 	if ( ! $posts ) {
 		echo '<p>' . __( 'No posts under moderation', 'wp-recall' ) . '</p>';
+
 		return;
 	}
 
 	echo '<table class="wp-list-table widefat fixed striped">';
 	echo '<tr>'
-	. '<th>' . __( 'Header', 'wp-recall' ) . '</th>'
-	. '<th>' . __( 'Author', 'wp-recall' ) . '</th>'
-	. '<th>' . __( 'Type', 'wp-recall' ) . '</th>'
-	. '</tr>';
+	     . '<th>' . __( 'Header', 'wp-recall' ) . '</th>'
+	     . '<th>' . __( 'Author', 'wp-recall' ) . '</th>'
+	     . '<th>' . __( 'Type', 'wp-recall' ) . '</th>'
+	     . '</tr>';
 	foreach ( $posts as $post ) {
 		echo '<tr>'
-		. '<td><a href="' . get_edit_post_link( $post->ID ) . '" target="_blank">' . $post->post_title . '</a></td>'
-		. '<td>' . $post->post_author . ': ' . get_the_author_meta( 'user_login', $post->post_author ) . '</td>'
-		. '<td>' . $post->post_type . '</td>'
-		. '</tr>';
+		     . '<td><a href="' . get_edit_post_link( $post->ID ) . '" target="_blank">' . $post->post_title . '</a></td>'
+		     . '<td>' . $post->post_author . ': ' . get_the_author_meta( 'user_login', $post->post_author ) . '</td>'
+		     . '<td>' . $post->post_type . '</td>'
+		     . '</tr>';
 	}
 	echo '</table>';
 }

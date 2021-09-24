@@ -14,21 +14,22 @@ add_action( 'rcl_bar_setup', 'rcl_setup_bar_default_data', 10 );
 function rcl_setup_bar_default_data() {
 	global $rcl_user_URL;
 
-	if ( ! is_user_logged_in() )
+	if ( ! is_user_logged_in() ) {
 		return false;
+	}
 
 	rcl_bar_add_menu_item( 'account-link', array(
-		'url'	 => $rcl_user_URL,
-		'icon'	 => 'fa-user',
-		'label'	 => __( 'To personal account', 'wp-recall' )
+			'url'   => $rcl_user_URL,
+			'icon'  => 'fa-user',
+			'label' => __( 'To personal account', 'wp-recall' )
 		)
 	);
 
 	if ( current_user_can( 'activate_plugins' ) ) {
 		rcl_bar_add_menu_item( 'admin-link', array(
-			'url'	 => admin_url(),
-			'icon'	 => 'fa-external-link-square',
-			'label'	 => __( 'To admin area', 'wp-recall' )
+				'url'   => admin_url(),
+				'icon'  => 'fa-external-link-square',
+				'label' => __( 'To admin area', 'wp-recall' )
 			)
 		);
 	}
@@ -37,24 +38,26 @@ function rcl_setup_bar_default_data() {
 add_action( 'rcl_bar_print_icons', 'rcl_print_bar_icons', 10 );
 function rcl_print_bar_icons() {
 	global $rcl_bar;
-	if ( ! isset( $rcl_bar['icons'] ) || ! $rcl_bar['icons'] )
+	if ( ! isset( $rcl_bar['icons'] ) || ! $rcl_bar['icons'] ) {
 		return false;
+	}
 
 	if ( is_array( $rcl_bar['icons'] ) ) {
 
 		$rcl_bar_icons = apply_filters( 'rcl_bar_icons', $rcl_bar['icons'] );
 
 		foreach ( $rcl_bar_icons as $id_icon => $icon ) {
-			if ( ! isset( $icon['icon'] ) )
+			if ( ! isset( $icon['icon'] ) ) {
 				continue;
+			}
 
-			$class = (isset( $icon['class'] )) ? $icon['class'] : '';
+			$class = ( isset( $icon['class'] ) ) ? $icon['class'] : '';
 
 			echo '<div id="' . $id_icon . '" class="rcb_icon ' . $class . '">';
 
 			if ( isset( $icon['url'] ) || isset( $icon['onclick'] ) ):
 
-				$url	 = isset( $icon['url'] ) ? $icon['url'] : '#';
+				$url     = isset( $icon['url'] ) ? $icon['url'] : '#';
 				$onclick = isset( $icon['onclick'] ) ? 'onclick="' . $icon['onclick'] . ';return false;"' : '';
 
 				echo '<a href="' . $url . '" ' . $onclick . '>';
@@ -75,7 +78,7 @@ function rcl_print_bar_icons() {
 			endif;
 
 			if ( isset( $icon['counter'] ) ):
-				echo '<div class="rcb_nmbr ' . ($icon['counter'] > 0 ? 'counter_not_null' : '') . '">' . $icon['counter'] . '</div>';
+				echo '<div class="rcb_nmbr ' . ( $icon['counter'] > 0 ? 'counter_not_null' : '' ) . '">' . $icon['counter'] . '</div>';
 			endif;
 
 			echo '</div>';
@@ -86,16 +89,18 @@ function rcl_print_bar_icons() {
 add_action( 'rcl_bar_print_menu', 'rcl_print_bar_right_menu', 10 );
 function rcl_print_bar_right_menu() {
 	global $rcl_bar;
-	if ( ! isset( $rcl_bar['menu'] ) || ! $rcl_bar['menu'] )
+	if ( ! isset( $rcl_bar['menu'] ) || ! $rcl_bar['menu'] ) {
 		return false;
+	}
 
 	if ( is_array( $rcl_bar['menu'] ) ) {
 
 		$rcl_bar_menu = apply_filters( 'rcl_bar_menu', $rcl_bar['menu'] );
 
 		foreach ( $rcl_bar_menu as $icon ) {
-			if ( ! isset( $icon['url'] ) )
+			if ( ! isset( $icon['url'] ) ) {
 				continue;
+			}
 
 			echo '<div class="rcb_line">';
 			echo '<a href="' . $icon['url'] . '">';
@@ -132,12 +137,12 @@ function rcl_bar_add_inline_styles( $styles, $rgb ) {
 
 	if ( rcl_get_option( 'rcb_color' ) ) {
 
-		list($r, $g, $b) = $rgb;
+		list( $r, $g, $b ) = $rgb;
 
 		// разбиваем строку на нужный нам формат
-		$rs	 = round( $r * 0.45 );
-		$gs	 = round( $g * 0.45 );
-		$bs	 = round( $b * 0.45 );
+		$rs = round( $r * 0.45 );
+		$gs = round( $g * 0.45 );
+		$bs = round( $b * 0.45 );
 
 		// $r $g $b - родные цвета от кнопки
 		// $rs $gs $bs - темный оттенок от кнопки

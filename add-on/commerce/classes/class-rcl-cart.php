@@ -2,25 +2,27 @@
 
 class Rcl_Cart {
 
-	public $products		 = array();
-	public $order_price		 = 0;
-	public $products_amount	 = 0;
-	public $cart_url		 = '#';
+	public $products = array();
+	public $order_price = 0;
+	public $products_amount = 0;
+	public $cart_url = '#';
 
 	function __construct( $args = false ) {
 
-		if ( $page_id		 = rcl_get_commerce_option( 'basket_page_rmag' ) )
-			$this->cart_url	 = get_permalink( $page_id );
+		if ( $page_id = rcl_get_commerce_option( 'basket_page_rmag' ) ) {
+			$this->cart_url = get_permalink( $page_id );
+		}
 
-		$this->products = (isset( $args['cart_products'] ) && $args['cart_products']) ? $args['cart_products'] : $this->get_cookie();
+		$this->products = ( isset( $args['cart_products'] ) && $args['cart_products'] ) ? $args['cart_products'] : $this->get_cookie();
 
 		$this->init_cart_data();
 	}
 
 	function get_cookie() {
 
-		if ( ! isset( $_COOKIE['rcl_cart'] ) )
+		if ( ! isset( $_COOKIE['rcl_cart'] ) ) {
 			return array();
+		}
 
 		return json_decode( wp_unslash( $_COOKIE['rcl_cart'] ) );
 	}
@@ -34,12 +36,12 @@ class Rcl_Cart {
 				$product_amount = $product->product_amount;
 
 				if ( $product_amount < 0 ) {
-					$product_amount						 = absint( $product_amount );
-					$this->products[$k]->product_amount	 = $product_amount;
+					$product_amount                       = absint( $product_amount );
+					$this->products[ $k ]->product_amount = $product_amount;
 				}
 
 				$this->products_amount += $product_amount;
-				$this->order_price += $product_amount * $product->product_price;
+				$this->order_price     += $product_amount * $product->product_price;
 			}
 		}
 	}
@@ -50,7 +52,7 @@ class Rcl_Cart {
 
 		if ( $key !== false ) {
 
-			return $this->products[$key];
+			return $this->products[ $key ];
 		}
 
 		return false;
@@ -58,33 +60,34 @@ class Rcl_Cart {
 
 	function add_product( $product_id, $args ) {
 
-		$qls	 = (isset( $args['quantity'] ) && $args['quantity']) ? $args['quantity'] : 1;
-		$vars	 = (isset( $args['variations'] ) && $args['variations']) ? $this->add_variations_title( $product_id, $args['variations'] ) : false;
+		$qls  = ( isset( $args['quantity'] ) && $args['quantity'] ) ? $args['quantity'] : 1;
+		$vars = ( isset( $args['variations'] ) && $args['variations'] ) ? $this->add_variations_title( $product_id, $args['variations'] ) : false;
 
 		$productPrice = new Rcl_Product_Price( $product_id );
 
 		$product_price = $productPrice->get_price( $vars );
 
-		if ( ! $product_price )
+		if ( ! $product_price ) {
 			$product_price = 0;
+		}
 
 		$key = $this->search_product( $product_id, $vars );
 
 		if ( $key !== false ) {
 
-			$this->products[$key]->product_amount += $qls;
+			$this->products[ $key ]->product_amount += $qls;
 		} else {
 
 			$this->products[] = array(
-				'product_id'	 => intval($product_id),
-				'product_price'	 => intval($product_price),
-				'product_amount' => intval($qls),
-				'variations'	 => $vars
+				'product_id'     => intval( $product_id ),
+				'product_price'  => intval( $product_price ),
+				'product_amount' => intval( $qls ),
+				'variations'     => $vars
 			);
 		}
 
 		$this->products_amount += $qls;
-		$this->order_price += $product_price;
+		$this->order_price     += $product_price;
 
 		$this->update_cart();
 
@@ -95,24 +98,26 @@ class Rcl_Cart {
 
 		$key = $this->search_product( $product_id );
 
-		if ( $key === false )
+		if ( $key === false ) {
 			return false;
+		}
 
-		$amount			 = $this->products[$key]->product_amount;
-		$product_price	 = $this->products[$key]->product_price;
+		$amount        = $this->products[ $key ]->product_amount;
+		$product_price = $this->products[ $key ]->product_price;
 
-		if ( ! $amount )
+		if ( ! $amount ) {
 			return false;
+		}
 
 		$this->products_amount --;
 		$this->order_price -= $product_price;
 
 		if ( $amount > 1 ) {
 
-			$this->products[$key]->product_amount -= 1;
+			$this->products[ $key ]->product_amount -= 1;
 		} else {
 
-			unset( $this->products[$key] );
+			unset( $this->products[ $key ] );
 		}
 
 		$this->update_cart();
@@ -122,33 +127,39 @@ class Rcl_Cart {
 
 	function search_product( $product_id, $vars = false ) {
 
-		if ( ! $this->products )
+		if ( ! $this->products ) {
 			return false;
+		}
 
 		$Vars = new Rcl_Product_Variations( array( 'product_id' => $product_id ) );
 
 		$productVars = $Vars->get_product_variations();
 
-		if ( $productVars )
+		if ( $productVars ) {
 			$varsHash = md5( json_encode( $vars ) );
+		}
 
 		foreach ( $this->products as $key => $product ) {
 
-			if ( ! $product || ! is_object( $product ) )
+			if ( ! $product || ! is_object( $product ) ) {
 				continue;
+			}
 
 			if ( $product->product_id == $product_id ) {
 
-				if ( ! $productVars )
+				if ( ! $productVars ) {
 					return $key;
+				}
 
-				if ( ! $vars )
+				if ( ! $vars ) {
 					return $key;
+				}
 
 				$productHash = md5( json_encode( ( array ) $product->variations ) );
 
-				if ( $productHash == $varsHash )
+				if ( $productHash == $varsHash ) {
 					return $key;
+				}
 			}
 		}
 
@@ -165,12 +176,13 @@ class Rcl_Cart {
 		$newVars = array();
 		foreach ( $productVars as $var ) {
 
-			if ( ! isset( $vars[$var['slug']] ) )
+			if ( ! isset( $vars[ $var['slug'] ] ) ) {
 				continue;
+			}
 
-			$newVars[$var['slug']] = array(
+			$newVars[ $var['slug'] ] = array(
 				$Vars->get_variation_title( $var['slug'] ), //заголовок вариации
-				$vars[$var['slug']] //значение
+				$vars[ $var['slug'] ] //значение
 			);
 		}
 

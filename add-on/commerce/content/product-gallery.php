@@ -2,11 +2,12 @@
 
 function rcl_get_product_gallery( $product_id, $size = 'rcl-product-thumb' ) {
 
-	$oldSlider	 = get_post_meta( $product_id, 'recall_slider', 1 );
-	$gallery	 = get_post_meta( $product_id, 'rcl_post_gallery', 1 );
+	$oldSlider = get_post_meta( $product_id, 'recall_slider', 1 );
+	$gallery   = get_post_meta( $product_id, 'rcl_post_gallery', 1 );
 
-	if ( ! $gallery )
+	if ( ! $gallery ) {
 		$gallery = array();
+	}
 
 	if ( ! $gallery && $oldSlider ) {
 
@@ -19,29 +20,30 @@ function rcl_get_product_gallery( $product_id, $size = 'rcl-product-thumb' ) {
 	}
 
 	if ( has_post_thumbnail( $product_id ) ) {
-		$gallery = array_unique( array_merge( [get_post_thumbnail_id( $product_id ) ], $gallery ) );
+		$gallery = array_unique( array_merge( [ get_post_thumbnail_id( $product_id ) ], $gallery ) );
 	}
 
-	if ( ! $gallery )
+	if ( ! $gallery ) {
 		return false;
+	}
 
 	$content = rcl_get_image_gallery( array(
-		'id'		 => 'rcl-product-gallery-' . $product_id,
+		'id'         => 'rcl-product-gallery-' . $product_id,
 		'attach_ids' => $gallery,
-		'width'		 => 350,
-		'height'	 => 350,
-		'slides'	 => array(
-			'slide'	 => $size,
-			'full'	 => 'large'
+		'width'      => 350,
+		'height'     => 350,
+		'slides'     => array(
+			'slide' => $size,
+			'full'  => 'large'
 		),
-		'navigator'	 => array(
+		'navigator'  => array(
 			'thumbnails' => array(
-				'width'	 => 50,
+				'width'  => 50,
 				'height' => 50,
 				'arrows' => true
 			)
 		)
-		) );
+	) );
 
 	return $content;
 }

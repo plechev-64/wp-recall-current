@@ -40,7 +40,7 @@ class RCL_Install {
 
 	public static function init_global() {
 		$upload_dir = rcl_get_wp_upload_dir();
-		wp_mkdir_p( ($upload_dir['basedir'] ) );
+		wp_mkdir_p( ( $upload_dir['basedir'] ) );
 	}
 
 	public static function create_tables() {
@@ -69,7 +69,8 @@ class RCL_Install {
 			}
 		}
 
-		return array( "
+		return array(
+			"
 			CREATE TABLE IF NOT EXISTS `" . RCL_PREF . "user_action` (
 				ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
 				user BIGINT(20) UNSIGNED NOT NULL,
@@ -93,33 +94,33 @@ class RCL_Install {
 		global $rcl_options;
 
 		$pages = apply_filters( 'wp_recall_pages', array(
-			'lk_page_rcl'	 => array(
-				'name'		 => 'account',
-				'title'		 => __( 'Personal cabinet', 'wp-recall' ),
-				'content'	 => '[wp-recall]'
+			'lk_page_rcl'    => array(
+				'name'    => 'account',
+				'title'   => __( 'Personal cabinet', 'wp-recall' ),
+				'content' => '[wp-recall]'
 			),
-			'feed_page_rcl'	 => array(
-				'name'		 => 'user-feed',
-				'title'		 => __( 'FEED', 'wp-recall' ),
-				'content'	 => '[feed]'
+			'feed_page_rcl'  => array(
+				'name'    => 'user-feed',
+				'title'   => __( 'FEED', 'wp-recall' ),
+				'content' => '[feed]'
 			),
 			'users_page_rcl' => array(
-				'name'		 => 'users',
-				'title'		 => __( 'Users', 'wp-recall' ),
-				'content'	 => '[userlist inpage="30" orderby="time_action" template="rows" data="rating_total,comments_count,posts_count,description" filters="1" order="DESC"]'
+				'name'    => 'users',
+				'title'   => __( 'Users', 'wp-recall' ),
+				'content' => '[userlist inpage="30" orderby="time_action" template="rows" data="rating_total,comments_count,posts_count,description" filters="1" order="DESC"]'
 			),
-			) );
+		) );
 
 		foreach ( $pages as $key => $page ) {
 
 			if ( is_array( $page ) ) {
 
 				if ( ! rcl_isset_plugin_page( $key ) ) {
-					$rcl_options[$key] = rcl_create_plugin_page_if_need( $key, [
-						'post_title'	 => $page['title'],
-						'post_content'	 => $page['content'],
-						'post_name'		 => $page['name'],
-						] );
+					$rcl_options[ $key ] = rcl_create_plugin_page_if_need( $key, [
+						'post_title'   => $page['title'],
+						'post_content' => $page['content'],
+						'post_name'    => $page['name'],
+					] );
 				}
 			}
 		}
@@ -134,7 +135,7 @@ class RCL_Install {
 			'feed',
 			'publicpost',
 			'rcl-chat'
-			) );
+		) );
 
 		foreach ( $def_addons as $addon ) {
 			rcl_activate_addon( $addon );
@@ -146,39 +147,39 @@ class RCL_Install {
 
 		$files = array(
 			array(
-				'base'		 => $upload_dir['basedir'],
-				'file'		 => 'index.html',
-				'content'	 => ''
+				'base'    => $upload_dir['basedir'],
+				'file'    => 'index.html',
+				'content' => ''
 			),
 			array(
-				'base'		 => RCL_TAKEPATH,
-				'file'		 => '.htaccess',
-				'content'	 => 'Options -indexes'
+				'base'    => RCL_TAKEPATH,
+				'file'    => '.htaccess',
+				'content' => 'Options -indexes'
 			),
 			array(
-				'base'		 => RCL_TAKEPATH,
-				'file'		 => 'index.html',
-				'content'	 => ''
+				'base'    => RCL_TAKEPATH,
+				'file'    => 'index.html',
+				'content' => ''
 			),
 			array(
-				'base'		 => RCL_TAKEPATH . 'add-on',
-				'file'		 => 'index.html',
-				'content'	 => ''
+				'base'    => RCL_TAKEPATH . 'add-on',
+				'file'    => 'index.html',
+				'content' => ''
 			),
 			array(
-				'base'		 => RCL_TAKEPATH . 'themes',
-				'file'		 => 'index.html',
-				'content'	 => ''
+				'base'    => RCL_TAKEPATH . 'themes',
+				'file'    => 'index.html',
+				'content' => ''
 			),
 			array(
-				'base'		 => RCL_TAKEPATH . 'templates',
-				'file'		 => 'index.html',
-				'content'	 => ''
+				'base'    => RCL_TAKEPATH . 'templates',
+				'file'    => 'index.html',
+				'content' => ''
 			),
 			array(
-				'base'		 => RCL_UPLOAD_PATH,
-				'file'		 => 'index.html',
-				'content'	 => ''
+				'base'    => RCL_UPLOAD_PATH,
+				'file'    => 'index.html',
+				'content' => ''
 			)
 		);
 
@@ -199,18 +200,18 @@ class RCL_Install {
 		}
 
 		add_role( 'need-confirm', __( 'Unconfirmed', 'wp-recall' ), array(
-			'read'			 => false,
-			'edit_posts'	 => false,
-			'delete_posts'	 => false,
-			'upload_files'	 => false
+				'read'         => false,
+				'edit_posts'   => false,
+				'delete_posts' => false,
+				'upload_files' => false
 			)
 		);
 
 		add_role( 'banned', __( 'Ban', 'wp-recall' ), array(
-			'read'			 => false,
-			'edit_posts'	 => false,
-			'delete_posts'	 => false,
-			'upload_files'	 => false
+				'read'         => false,
+				'edit_posts'   => false,
+				'delete_posts' => false,
+				'upload_files' => false
 			)
 		);
 	}
@@ -226,11 +227,14 @@ class RCL_Install {
 
 	/**
 	 * Удаляем таблицы если удалён блог (для мультисайтов)
-	 * @param  array $tables
+	 *
+	 * @param array $tables
+	 *
 	 * @return array
 	 */
 	public static function wpmu_drop_tables( $tables ) {
 		$tables[] = RCL_PREF . 'user_action';
+
 		return $tables;
 	}
 
@@ -244,7 +248,7 @@ class RCL_Install {
 		if ( ! isset( $rcl_options['view_user_lk_rcl'] ) ) {
 
 			$rcl_options['view_user_lk_rcl'] = 1;
-			$rcl_options['view_recallbar']	 = 1;
+			$rcl_options['view_recallbar']   = 1;
 
 			//подключаем первый попавшийся шаблон ЛК
 			$templates = rcl_search_templates();
@@ -276,8 +280,9 @@ class RCL_Install {
 			}
 		}
 
-		if ( ! get_site_option( 'rtl_standard' ) )
+		if ( ! get_site_option( 'rtl_standard' ) ) {
 			update_site_option( 'rtl_standard', '' );
+		}
 
 		update_site_option( 'rcl_global_options', $rcl_options );
 		update_site_option( 'rcl_version', VER_RCL );

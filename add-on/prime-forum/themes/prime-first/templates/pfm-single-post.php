@@ -5,9 +5,10 @@
 
         <div class="prime-author-avatar">
 			<?php if ( pfm_post_field( 'user_id', 0 ) ): ?>
-				<a href="<?php echo rcl_get_user_url( pfm_post_field( 'user_id', 0 ) ); ?>" title="<?php _e( 'To personal account', 'wp-recall' ); ?>">
+                <a href="<?php echo rcl_get_user_url( pfm_post_field( 'user_id', 0 ) ); ?>"
+                   title="<?php _e( 'To personal account', 'wp-recall' ); ?>">
 					<?php pfm_author_avatar(); ?>
-				</a>
+                </a>
 			<?php else: ?>
 				<?php pfm_author_avatar(); ?>
 			<?php endif; ?>
@@ -21,7 +22,8 @@
         <div class="prime-post-top">
             <div class="prime-count">
                 <span><?php pfm_post_field( 'post_index' ); ?></span>
-                <a href="#topic-post-<?php pfm_post_field( 'post_id' ); ?>" title="<?php _e( 'Link to the message', 'wp-recall' ); ?>">
+                <a href="#topic-post-<?php pfm_post_field( 'post_id' ); ?>"
+                   title="<?php _e( 'Link to the message', 'wp-recall' ); ?>">
                     <i class="rcli fa-link" aria-hidden="true"></i>
                 </a>
             </div>

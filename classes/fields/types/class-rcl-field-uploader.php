@@ -15,17 +15,17 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 
 	public $required;
 	public $fix_editor;
-	public $filename		 = '';
-	public $filetitle		 = '';
-	public $file_types		 = 'jpg, jpeg, png';
-	public $crop			 = 0;
-	public $max_size		 = 512;
-	public $max_files		 = 5;
-	public $multiple		 = 1;
-	public $dropzone		 = 0;
-	public $mode_output		 = 'grid';
-	public $temp_media		 = 1;
-	public $uploader_props	 = array();
+	public $filename = '';
+	public $filetitle = '';
+	public $file_types = 'jpg, jpeg, png';
+	public $crop = 0;
+	public $max_size = 512;
+	public $max_files = 5;
+	public $multiple = 1;
+	public $dropzone = 0;
+	public $mode_output = 'grid';
+	public $temp_media = 1;
+	public $uploader_props = array();
 
 	function __construct( $args ) {
 		parent::__construct( $args );
@@ -35,59 +35,59 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 
 		$options = array(
 			array(
-				'slug'		 => 'max_size',
-				'default'	 => $this->max_size,
-				'type'		 => 'runner',
-				'unit'		 => 'Kb',
-				'value_min'	 => 256,
-				'value_max'	 => 5120,
+				'slug'       => 'max_size',
+				'default'    => $this->max_size,
+				'type'       => 'runner',
+				'unit'       => 'Kb',
+				'value_min'  => 256,
+				'value_max'  => 5120,
 				'value_step' => 256,
-				'title'		 => __( 'File size', 'wp-recall' ),
-				'notice'	 => __( 'maximum size of uploaded file, Kb (Default - 512)', 'wp-recall' )
+				'title'      => __( 'File size', 'wp-recall' ),
+				'notice'     => __( 'maximum size of uploaded file, Kb (Default - 512)', 'wp-recall' )
 			),
 			array(
-				'slug'		 => 'file_types',
-				'default'	 => $this->file_types,
-				'type'		 => 'text',
-				'title'		 => __( 'Allowed file types', 'wp-recall' ),
-				'notice'	 => __( 'allowed types of files are divided by comma, for example: pdf, zip, jpg', 'wp-recall' )
+				'slug'    => 'file_types',
+				'default' => $this->file_types,
+				'type'    => 'text',
+				'title'   => __( 'Allowed file types', 'wp-recall' ),
+				'notice'  => __( 'allowed types of files are divided by comma, for example: pdf, zip, jpg', 'wp-recall' )
 			),
 			array(
-				'slug'		 => 'max_files',
-				'default'	 => $this->max_files,
-				'type'		 => 'runner',
-				'value_min'	 => 1,
-				'value_max'	 => 100,
+				'slug'       => 'max_files',
+				'default'    => $this->max_files,
+				'type'       => 'runner',
+				'value_min'  => 1,
+				'value_max'  => 100,
 				'value_step' => 1,
-				'title'		 => __( 'Max number of files', 'wp-recall' ),
+				'title'      => __( 'Max number of files', 'wp-recall' ),
 			),
 			array(
-				'slug'		 => 'dropzone',
-				'default'	 => $this->dropzone,
-				'type'		 => 'radio',
-				'values'	 => array(
+				'slug'    => 'dropzone',
+				'default' => $this->dropzone,
+				'type'    => 'radio',
+				'values'  => array(
 					__( 'Disabled', 'wp-recall' ),
 					__( 'Enabled', 'wp-recall' )
 				),
-				'title'		 => __( 'Dropzone', 'wp-recall' ),
+				'title'   => __( 'Dropzone', 'wp-recall' ),
 			),
 			array(
-				'slug'		 => 'mode_output',
-				'default'	 => $this->mode_output,
-				'type'		 => 'radio',
-				'values'	 => array(
-					'grid'	 => __( 'Cards', 'wp-recall' ),
-					'list'	 => __( 'List', 'wp-recall' ),
-				//'gallery'	 => __( 'Gallery', 'wp-recall' )
+				'slug'    => 'mode_output',
+				'default' => $this->mode_output,
+				'type'    => 'radio',
+				'values'  => array(
+					'grid' => __( 'Cards', 'wp-recall' ),
+					'list' => __( 'List', 'wp-recall' ),
+					//'gallery'	 => __( 'Gallery', 'wp-recall' )
 				),
-				'title'		 => __( 'Mode of files output', 'wp-recall' ),
+				'title'   => __( 'Mode of files output', 'wp-recall' ),
 			),
 			array(
-				'slug'		 => 'fix_editor',
-				'default'	 => $this->fix_editor,
-				'type'		 => 'text',
-				'title'		 => __( 'ID of an attaching editor', 'wp-recall' ),
-				'notice'	 => __( 'You can attach this uploader for one of text editors, pointing its ID', 'wp-recall' ),
+				'slug'    => 'fix_editor',
+				'default' => $this->fix_editor,
+				'type'    => 'text',
+				'title'   => __( 'ID of an attaching editor', 'wp-recall' ),
+				'notice'  => __( 'You can attach this uploader for one of text editors, pointing its ID', 'wp-recall' ),
 			)
 		);
 
@@ -98,24 +98,24 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 		global $user_ID;
 
 		return wp_parse_args( $this->uploader_props, array(
-			'temp_media'	 => $this->temp_media,
-			'fix_editor'	 => $this->fix_editor,
-			'required'		 => intval( $this->required ),
-			'user_id'		 => $user_ID,
-			'min_width'		 => 200,
-			'min_height'	 => 200,
-			'filename'		 => $this->filename,
-			'filetitle'		 => $this->filetitle,
-			'dropzone'		 => $this->dropzone,
-			'multiple'		 => $this->multiple,
-			'max_size'		 => $this->max_size,
-			'auto_upload'	 => $this->multiple ? 1 : 0,
-			'file_types'	 => array_map( 'trim', explode( ',', $this->file_types ) ),
-			'max_files'		 => $this->max_files,
-			'crop'			 => $this->multiple ? 0 : $this->crop,
-			'input_attach'	 => $this->input_name,
-			'mode_output'	 => $this->mode_output
-			) );
+			'temp_media'   => $this->temp_media,
+			'fix_editor'   => $this->fix_editor,
+			'required'     => intval( $this->required ),
+			'user_id'      => $user_ID,
+			'min_width'    => 200,
+			'min_height'   => 200,
+			'filename'     => $this->filename,
+			'filetitle'    => $this->filetitle,
+			'dropzone'     => $this->dropzone,
+			'multiple'     => $this->multiple,
+			'max_size'     => $this->max_size,
+			'auto_upload'  => $this->multiple ? 1 : 0,
+			'file_types'   => array_map( 'trim', explode( ',', $this->file_types ) ),
+			'max_files'    => $this->max_files,
+			'crop'         => $this->multiple ? 0 : $this->crop,
+			'input_attach' => $this->input_name,
+			'mode_output'  => $this->mode_output
+		) );
 	}
 
 	function get_uploader() {
@@ -165,8 +165,9 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 
 	function get_value() {
 
-		if ( ! $this->value )
+		if ( ! $this->value ) {
 			return false;
+		}
 
 		$attachList = '';
 
@@ -199,44 +200,45 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 			  $content = rcl_get_image_gallery($galArgs); */
 
 			$content = rcl_get_image_gallery( array(
-				'id'			 => 'rcl-gallery-' . $this->id,
-				'center_align'	 => true,
-				'attach_ids'	 => $this->value,
+				'id'           => 'rcl-gallery-' . $this->id,
+				'center_align' => true,
+				'attach_ids'   => $this->value,
 				//'width' => 500,
-				'height'		 => 250,
-				'slides'		 => array(
-					'slide'	 => 'large',
-					'full'	 => 'large'
+				'height'       => 250,
+				'slides'       => array(
+					'slide' => 'large',
+					'full'  => 'large'
 				),
-				'navigator'		 => array(
+				'navigator'    => array(
 					'thumbnails' => array(
-						'width'	 => 50,
+						'width'  => 50,
 						'height' => 50,
 						'arrows' => true
 					)
 				)
-				) );
+			) );
 		} else {
 
 			$attachIDs = is_array( $this->value ) ? $this->value : array( $this->value );
 
 			global $wpdb;
 			$IDs = RQ::tbl( new Rcl_Query( [
-					'name'	 => $wpdb->posts,
-					'cols'	 => ['ID', 'post_type' ]
-				] ) )->select( ['ID' ] )
-				->where( ['post_type' => 'attachment', 'ID__in' => $attachIDs ] )
-				->limit( -1 )
-				->orderby( 'post_title', 'ASC' )
-				->get_col();
+				'name' => $wpdb->posts,
+				'cols' => [ 'ID', 'post_type' ]
+			] ) )->select( [ 'ID' ] )
+			         ->where( [ 'post_type' => 'attachment', 'ID__in' => $attachIDs ] )
+			         ->limit( - 1 )
+			         ->orderby( 'post_title', 'ASC' )
+			         ->get_col();
 
 			foreach ( $IDs as $ID ) {
 				$attachList .= $this->get_single_attachment( $ID );
 			}
 		}
 
-		if ( ! $attachList )
+		if ( ! $attachList ) {
 			return false;
+		}
 
 		$content = '<div id="rcl-gallery-' . $this->id . '" class="rcl-upload-gallery mode-' . $this->mode_output . '">';
 		$content .= $attachList;
@@ -257,12 +259,13 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 			$image = wp_get_attachment_image( $attach_id, array( 100, 100 ), true );
 		}
 
-		if ( ! $image )
+		if ( ! $image ) {
 			return false;
+		}
 
 		$url = wp_get_attachment_url( $attach_id );
 
-		$content = '<div class="gallery-attachment gallery-attachment-' . $attach_id . ' ' . ($is_image ? 'type-image' : 'type-file') . '">';
+		$content = '<div class="gallery-attachment gallery-attachment-' . $attach_id . ' ' . ( $is_image ? 'type-image' : 'type-file' ) . '">';
 
 		$content .= '<a href="' . $url . '" target="_blank">' . $image . '</a>';
 

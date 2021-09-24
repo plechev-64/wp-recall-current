@@ -11,8 +11,8 @@ class Rcl_Postlist {
 
 		$this->post_type = $post_type;
 		$this->type_name = $type_name;
-		$this->user_id	 = $user_id;
-		$this->offset	 = 0;
+		$this->user_id   = $user_id;
+		$this->offset    = 0;
 	}
 
 	function get_postlist_block() {
@@ -31,13 +31,13 @@ class Rcl_Postlist {
 		$postStatus = array( 'publish' );
 
 		if ( $user_ID == $this->user_id ) {
-			$postStatus[]	 = 'private';
-			$postStatus[]	 = 'pending';
-			$postStatus[]	 = 'draft';
+			$postStatus[] = 'private';
+			$postStatus[] = 'pending';
+			$postStatus[] = 'draft';
 		}
 
 		$ratings = array();
-		$posts	 = array();
+		$posts   = array();
 
 		$posts[] = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM " . $wpdb->base_prefix . "posts WHERE post_author='%d' AND post_type='%s' AND post_status IN ('" . implode( "','", $postStatus ) . "') ORDER BY post_date DESC LIMIT $this->offset, " . $this->in_page, $this->user_id, $this->post_type ) );
 
@@ -45,7 +45,7 @@ class Rcl_Postlist {
 			$blog_list = get_blog_list( 0, 'all' );
 
 			foreach ( $blog_list as $blog ) {
-				$pref	 = $wpdb->base_prefix . $blog['blog_id'] . '_posts';
+				$pref    = $wpdb->base_prefix . $blog['blog_id'] . '_posts';
 				$posts[] = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM " . $pref . " WHERE post_author='%d' AND post_type='%s' AND post_status IN ('" . implode( "','", $postStatus ) . "') ORDER BY post_date DESC LIMIT $this->offset, " . $this->in_page, $this->user_id, $this->post_type ) );
 			}
 		}
@@ -65,28 +65,30 @@ class Rcl_Postlist {
 
 				$rayt_p = rcl_get_rating_totals( array(
 					'object_id__in' => $p_list,
-					'number'		 => -1,
-					'rating_type'	 => $this->post_type
-					) );
+					'number'        => - 1,
+					'rating_type'   => $this->post_type
+				) );
 
 				foreach ( ( array ) $rayt_p as $r ) {
-					if ( ! isset( $r->object_id ) )
+					if ( ! isset( $r->object_id ) ) {
 						continue;
-					$ratings[$r->object_id] = $r->rating_total;
+					}
+					$ratings[ $r->object_id ] = $r->rating_total;
 				}
 			}
 
-			if ( rcl_get_template_path( 'posts-list-' . $this->post_type . '.php', __FILE__ ) )
+			if ( rcl_get_template_path( 'posts-list-' . $this->post_type . '.php', __FILE__ ) ) {
 				$posts_block = rcl_get_include_template( 'posts-list-' . $this->post_type . '.php', __FILE__ );
-			else
+			} else {
 				$posts_block = rcl_get_include_template( 'posts-list.php', __FILE__ );
+			}
 
 			wp_reset_postdata();
-		}else {
+		} else {
 			$posts_block = rcl_get_notice( array(
-				'type'	 => 'info',
-				'text'	 => __( 'Here has nothing been published yet', 'wp-recall' )
-				) );
+				'type' => 'info',
+				'text' => __( 'Here has nothing been published yet', 'wp-recall' )
+			) );
 		}
 
 		return $posts_block;
@@ -111,9 +113,9 @@ class Rcl_Postlist {
 		$postStatus = array( 'publish' );
 
 		if ( $user_ID == $this->user_id ) {
-			$postStatus[]	 = 'private';
-			$postStatus[]	 = 'pending';
-			$postStatus[]	 = 'draft';
+			$postStatus[] = 'private';
+			$postStatus[] = 'pending';
+			$postStatus[] = 'draft';
 		}
 
 		$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM " . $wpdb->base_prefix . "posts WHERE post_author='%d' AND post_type='%s' AND post_status IN ('" . implode( "','", $postStatus ) . "')", $this->user_id, $this->post_type ) );
@@ -121,13 +123,14 @@ class Rcl_Postlist {
 			$blog_list = get_blog_list( 0, 'all' );
 
 			foreach ( $blog_list as $blog ) {
-				$pref = $wpdb->base_prefix . $blog['blog_id'] . '_posts';
+				$pref  = $wpdb->base_prefix . $blog['blog_id'] . '_posts';
 				$count += $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM " . $pref . " WHERE post_author='%d' AND post_type='%s' AND post_status IN ('" . implode( "','", $postStatus ) . "')", $this->user_id, $this->post_type ) );
 			}
 		}
 
-		if ( ! $count )
+		if ( ! $count ) {
 			return false;
+		}
 
 		$rclnavi = new Rcl_PageNavi( $this->post_type . '-navi', $count, array( 'in_page' => $this->in_page ) );
 

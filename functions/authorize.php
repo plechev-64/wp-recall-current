@@ -3,8 +3,9 @@
 add_filter( 'login_redirect', 'rcl_edit_default_login_redirect', 10, 3 );
 function rcl_edit_default_login_redirect( $redirect_to, $requested_redirect_to, $user ) {
 
-	if ( is_wp_error( $user ) )
+	if ( is_wp_error( $user ) ) {
 		return $redirect_to;
+	}
 
 	rcl_update_timeaction_user();
 
@@ -23,6 +24,7 @@ function rcl_chek_user_authenticate( $user ) {
 
 			$wp_errors = new WP_Error();
 			$wp_errors->add( 'need-confirm', __( 'Your account is unconfirmed! Confirm your account by clicking on the link in the email', 'wp-recall' ) );
+
 			return $wp_errors;
 		}
 	}
@@ -36,26 +38,28 @@ function rcl_chek_user_authenticate( $user ) {
 function rcl_login_user() {
 	global $wp_errors;
 
-	$pass	 = sanitize_text_field( $_POST['user_pass'] );
-	$login	 = sanitize_user( $_POST['user_login'] );
-	$member	 = (isset( $_POST['rememberme'] )) ? intval( $_POST['rememberme'] ) : 0;
-	$url	 = esc_url( $_POST['redirect_to'] );
+	$pass   = sanitize_text_field( $_POST['user_pass'] );
+	$login  = sanitize_user( $_POST['user_login'] );
+	$member = ( isset( $_POST['rememberme'] ) ) ? intval( $_POST['rememberme'] ) : 0;
+	$url    = esc_url( $_POST['redirect_to'] );
 
 	$wp_errors = new WP_Error();
 
 	if ( ! $pass || ! $login ) {
 		$wp_errors->add( 'rcl_login_empty', __( 'Fill in the required fields!', 'wp-recall' ) );
+
 		return $wp_errors;
 	}
 
-	$creds					 = array();
-	$creds['user_login']	 = $login;
-	$creds['user_password']	 = $pass;
-	$creds['remember']		 = $member;
-	$userdata				 = wp_signon( $creds );
+	$creds                  = array();
+	$creds['user_login']    = $login;
+	$creds['user_password'] = $pass;
+	$creds['remember']      = $member;
+	$userdata               = wp_signon( $creds );
 
 	if ( is_wp_error( $userdata ) ) {
 		$wp_errors = $userdata;
+
 		return $wp_errors;
 	}
 
@@ -67,8 +71,9 @@ function rcl_login_user() {
 add_action( 'init', 'rcl_get_login_user_activate' );
 function rcl_get_login_user_activate() {
 	if ( isset( $_POST['login_wpnonce'] ) ) {
-		if ( ! wp_verify_nonce( $_POST['login_wpnonce'], 'login-key-rcl' ) )
+		if ( ! wp_verify_nonce( $_POST['login_wpnonce'], 'login-key-rcl' ) ) {
 			return false;
+		}
 		add_action( 'wp', 'rcl_login_user', 10 );
 	}
 }
@@ -84,20 +89,23 @@ function rcl_get_authorize_url( $user_id ) {
 
 	if ( $autPage = rcl_get_option( 'authorize_page' ) ) {
 
-		if ( $autPage == 1 )
-			$redirect	 = $_POST['redirect_to'] ?? $_POST['redirect_to'];
-		else if ( $autPage == 2 )
-			$redirect	 = rcl_get_option( 'custom_authorize_page' );
+		if ( $autPage == 1 ) {
+			$redirect = $_POST['redirect_to'] ?? $_POST['redirect_to'];
+		} else if ( $autPage == 2 ) {
+			$redirect = rcl_get_option( 'custom_authorize_page' );
+		}
 	}
 
-	if ( ! $redirect )
+	if ( ! $redirect ) {
 		$redirect = rcl_get_user_url( $user_id );
+	}
 
 	return $redirect;
 }
 
-if ( function_exists( 'limit_login_add_error_message' ) )
+if ( function_exists( 'limit_login_add_error_message' ) ) {
 	add_action( 'rcl_login_form_head', 'rcl_limit_login_add_error_message' );
+}
 function rcl_limit_login_add_error_message() {
 	global $wp_errors, $limit_login_my_error_shown;
 
@@ -108,8 +116,8 @@ function rcl_limit_login_add_error_message() {
 	$msg = limit_login_get_message();
 
 	if ( $msg != '' ) {
-		$limit_login_my_error_shown				 = true;
-		$wp_errors->errors['rcl_limit_login'][]	 = $msg;
+		$limit_login_my_error_shown             = true;
+		$wp_errors->errors['rcl_limit_login'][] = $msg;
 	}
 
 	return;

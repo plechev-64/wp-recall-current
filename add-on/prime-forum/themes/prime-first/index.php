@@ -10,13 +10,15 @@ function ftf_scripts() {
 add_filter( 'rcl_inline_styles', 'pfm_color_from_elements', 10, 2 );
 function pfm_color_from_elements( $styles, $rgb ) {
 
-	if ( ! pfm_get_option( 'forum-colors' ) )
+	if ( ! pfm_get_option( 'forum-colors' ) ) {
 		return $styles;
+	}
 
-	if ( ! is_prime_forum() )
-		return $styles; // не нужны за пределами форума
+	if ( ! is_prime_forum() ) {
+		return $styles;
+	} // не нужны за пределами форума
 
-	list($r, $g, $b) = $rgb;
+	list( $r, $g, $b ) = $rgb;
 	$color = $r . ',' . $g . ',' . $b;
 
 	$styles .= '

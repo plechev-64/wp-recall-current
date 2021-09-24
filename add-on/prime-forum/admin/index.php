@@ -14,7 +14,7 @@ function pfm_init_admin_menu() {
 
 	$cnt = isset( $rcl_update_notice['prime-forum'] ) ? count( $rcl_update_notice['prime-forum'] ) : 0;
 
-	$notice = ($cnt) ? ' <span class="update-plugins count-' . $cnt . '"><span class="plugin-count">' . $cnt . '</span></span>' : '';
+	$notice = ( $cnt ) ? ' <span class="update-plugins count-' . $cnt . '"><span class="plugin-count">' . $cnt . '</span></span>' : '';
 
 	add_menu_page( 'PrimeForum', 'PrimeForum', 'manage_options', 'pfm-menu', 'pfm_page_options' );
 	add_submenu_page( 'pfm-menu', __( 'Settings', 'wp-recall' ), __( 'Settings', 'wp-recall' ), 'manage_options', 'pfm-menu', 'pfm_page_options' );
@@ -29,11 +29,11 @@ function pfm_add_options_themes_manager() {
 
 	require_once 'themes-manager.php';
 
-	$option	 = 'per_page';
-	$args	 = array(
-		'label'		 => __( 'Templates', 'wp-recall' ),
-		'default'	 => 100,
-		'option'	 => 'templates_per_page'
+	$option = 'per_page';
+	$args   = array(
+		'label'   => __( 'Templates', 'wp-recall' ),
+		'default' => 100,
+		'option'  => 'templates_per_page'
 	);
 
 	add_screen_option( $option, $args );
@@ -44,31 +44,32 @@ function pfm_add_options_themes_manager() {
 
 function pfm_page_topic_form() {
 
-	$group_id	 = (isset( $_GET['group-id'] )) ? intval( $_GET['group-id'] ) : 0;
-	$forum_id	 = (isset( $_GET['forum-id'] )) ? intval( $_GET['forum-id'] ) : 0;
+	$group_id = ( isset( $_GET['group-id'] ) ) ? intval( $_GET['group-id'] ) : 0;
+	$forum_id = ( isset( $_GET['forum-id'] ) ) ? intval( $_GET['forum-id'] ) : 0;
 
 	if ( ! $group_id ) {
 
 		$group_id = RQ::tbl( new PrimeGroups() )
-				->select( ['group_id' ] )
-				->orderby( 'group_id', 'ASC' )->get_var();
+		              ->select( [ 'group_id' ] )
+		              ->orderby( 'group_id', 'ASC' )->get_var();
 	}
 
 	if ( ! $group_id ) {
 		echo '<p>' . __( 'The forum is not yet created any groups of forums', 'wp-recall' ) . '.</p>'
-		. '<p>' . __( 'Create a group of forums for managing the form fields of the publication of a topic', 'wp-recall' ) . '.</p>';
+		     . '<p>' . __( 'Create a group of forums for managing the form fields of the publication of a topic', 'wp-recall' ) . '.</p>';
+
 		return;
 	}
 
 	rcl_sortable_scripts();
 
 	$formManager = new Prime_Form_Manager( array(
-		'forum_id'	 => $forum_id,
-		'group_id'	 => $group_id
-		) );
+		'forum_id' => $forum_id,
+		'group_id' => $group_id
+	) );
 
 	$content = '<h2>' . __( 'Manage topic form', 'wp-recall' ) . '</h2>'
-		. '<p>' . __( 'Select a forum group and manage custom fields form of publication of a topic within this group', 'wp-recall' ) . '</p>';
+	           . '<p>' . __( 'Select a forum group and manage custom fields form of publication of a topic within this group', 'wp-recall' ) . '</p>';
 
 	$content .= $formManager->form_navi();
 
@@ -85,34 +86,34 @@ function pfm_page_options() {
 	$pages = rcl_get_pages_ids();
 
 	$Manager = new Rcl_Options_Manager( array(
-		'option_name'	 => 'rcl_pforum_options',
-		'page_options'	 => 'pfm-menu',
-		) );
+		'option_name'  => 'rcl_pforum_options',
+		'page_options' => 'pfm-menu',
+	) );
 
 	$Manager->add_box( 'primary', array(
-		'title'	 => __( 'General settings', 'wp-recall' ),
-		'icon'	 => 'fa-cogs'
+		'title' => __( 'General settings', 'wp-recall' ),
+		'icon'  => 'fa-cogs'
 	) )->add_group( 'primary' )->add_options( array(
 		array(
-			'type'	 => 'select',
-			'slug'	 => 'home-page',
-			'title'	 => __( 'Forum page', 'wp-recall' ),
+			'type'   => 'select',
+			'slug'   => 'home-page',
+			'title'  => __( 'Forum page', 'wp-recall' ),
 			'notice' => __( 'Select the needed page from the list and place the [prime-forum] shortcode on it', 'wp-recall' ),
 			'values' => $pages
 		),
 		array(
-			'type'	 => 'select',
-			'slug'	 => 'forum-colors',
-			'title'	 => __( 'Forum colours', 'wp-recall' ),
+			'type'   => 'select',
+			'slug'   => 'forum-colors',
+			'title'  => __( 'Forum colours', 'wp-recall' ),
 			'values' => array(
 				__( 'By default', 'wp-recall' ),
 				__( 'Primary colours of WP-Recall', 'wp-recall' )
 			)
 		),
 		array(
-			'type'	 => 'select',
-			'slug'	 => 'view-forums-home',
-			'title'	 => __( 'Output all forums of the group on the homepage', 'wp-recall' ),
+			'type'   => 'select',
+			'slug'   => 'view-forums-home',
+			'title'  => __( 'Output all forums of the group on the homepage', 'wp-recall' ),
 			'notice' => __( 'If selected, all forums will be displayed on the homepage', 'wp-recall' ),
 			'values' => array(
 				__( 'Do not output', 'wp-recall' ),
@@ -120,77 +121,77 @@ function pfm_page_options() {
 			)
 		),
 		array(
-			'type'		 => 'text',
-			'slug'		 => 'forums-home-list',
-			'pattern'	 => '([0-9,\s]+)',
-			'title'		 => __( 'Output forums only for the specified groups', 'wp-recall' ),
-			'notice'	 => __( 'If output of forums on the homepage is turned on, you may specify IDs of the groups, whose forums should be output, space separated', 'wp-recall' )
+			'type'    => 'text',
+			'slug'    => 'forums-home-list',
+			'pattern' => '([0-9,\s]+)',
+			'title'   => __( 'Output forums only for the specified groups', 'wp-recall' ),
+			'notice'  => __( 'If output of forums on the homepage is turned on, you may specify IDs of the groups, whose forums should be output, space separated', 'wp-recall' )
 		),
 		array(
-			'type'		 => 'runner',
-			'slug'		 => 'forums-per-page',
-			'title'		 => __( 'Forums on the group page', 'wp-recall' ),
-			'value_min'	 => 5,
-			'value_max'	 => 50,
+			'type'       => 'runner',
+			'slug'       => 'forums-per-page',
+			'title'      => __( 'Forums on the group page', 'wp-recall' ),
+			'value_min'  => 5,
+			'value_max'  => 50,
 			'value_step' => 1,
-			'default'	 => 20
+			'default'    => 20
 		),
 		array(
-			'type'		 => 'runner',
-			'slug'		 => 'topics-per-page',
-			'title'		 => __( 'Topics on the forum page', 'wp-recall' ),
-			'value_min'	 => 5,
-			'value_max'	 => 70,
+			'type'       => 'runner',
+			'slug'       => 'topics-per-page',
+			'title'      => __( 'Topics on the forum page', 'wp-recall' ),
+			'value_min'  => 5,
+			'value_max'  => 70,
 			'value_step' => 1,
-			'default'	 => 20
+			'default'    => 20
 		),
 		array(
-			'type'		 => 'runner',
-			'slug'		 => 'posts-per-page',
-			'title'		 => __( 'Messages on the topic page', 'wp-recall' ),
-			'value_min'	 => 5,
-			'value_max'	 => 100,
+			'type'       => 'runner',
+			'slug'       => 'posts-per-page',
+			'title'      => __( 'Messages on the topic page', 'wp-recall' ),
+			'value_min'  => 5,
+			'value_max'  => 100,
 			'value_step' => 1,
-			'default'	 => 20
+			'default'    => 20
 		),
 		array(
-			'type'	 => 'select',
-			'slug'	 => 'guest-post-create',
-			'title'	 => __( 'Publishing of messages in the topic by guests', 'wp-recall' ),
+			'type'   => 'select',
+			'slug'   => 'guest-post-create',
+			'title'  => __( 'Publishing of messages in the topic by guests', 'wp-recall' ),
 			'values' => array(
 				__( 'Forbidden', 'wp-recall' ),
 				__( 'Allowed', 'wp-recall' )
 			)
 		),
 		array(
-			'type'		 => 'select',
-			'slug'		 => 'reason-edit',
-			'title'		 => __( 'Reason for editing a message', 'wp-recall' ),
-			'default'	 => 1,
-			'values'	 => array(
+			'type'    => 'select',
+			'slug'    => 'reason-edit',
+			'title'   => __( 'Reason for editing a message', 'wp-recall' ),
+			'default' => 1,
+			'values'  => array(
 				__( 'Forbidden', 'wp-recall' ),
 				__( 'Allowed', 'wp-recall' )
 			)
 		),
 		array(
-			'type'		 => 'runner',
-			'slug'		 => 'beat-time',
-			'title'		 => __( 'Delay on receiving a new message via AJAX', 'wp-recall' ),
-			'value_min'	 => 0,
-			'value_max'	 => 120,
+			'type'       => 'runner',
+			'slug'       => 'beat-time',
+			'title'      => __( 'Delay on receiving a new message via AJAX', 'wp-recall' ),
+			'value_min'  => 0,
+			'value_max'  => 120,
 			'value_step' => 1,
-			'default'	 => 30,
-			'notice'	 => __( 'In seconds. New messages in the forum topic are loaded from AJAX only for those who have already left a message in this topic. If 0 is specified, the AJAX loading is disabled', 'wp-recall' )
+			'default'    => 30,
+			'notice'     => __( 'In seconds. New messages in the forum topic are loaded from AJAX only for those who have already left a message in this topic. If 0 is specified, the AJAX loading is disabled', 'wp-recall' )
 		),
 		array(
-			'type'		 => 'runner',
-			'slug'		 => 'beat-inactive',
-			'title'		 => __( 'Limit of requests to receive new messages', 'wp-recall' ),
-			'value_min'	 => 10,
-			'value_max'	 => 200,
+			'type'       => 'runner',
+			'slug'       => 'beat-inactive',
+			'title'      => __( 'Limit of requests to receive new messages', 'wp-recall' ),
+			'value_min'  => 10,
+			'value_max'  => 200,
 			'value_step' => 1,
-			'default'	 => 100,
-			'notice'	 => __( 'If the loading of new messages via AJAX is enabled, here we set the maximum number of requests from one user, after which they are terminated, after the publication of a new message requests are resumed', 'wp-recall' )
+			'default'    => 100,
+			'notice'     => __( 'If the loading of new messages via AJAX is enabled, here we set the maximum number of requests from one user, after which they are terminated, after the publication of a new message requests are resumed', 'wp-recall' )
 		),
 	) );
 
@@ -198,24 +199,24 @@ function pfm_page_options() {
 		'title' => __( 'Content of topic`s', 'wp-recall' )
 	) )->add_group( 'content' )->add_options( array(
 		array(
-			'type'	 => 'select',
-			'slug'	 => 'view-links',
-			'title'	 => __( 'The display of links in messages', 'wp-recall' ),
+			'type'   => 'select',
+			'slug'   => 'view-links',
+			'title'  => __( 'The display of links in messages', 'wp-recall' ),
 			'values' => array(
 				__( 'Hiding for guests', 'wp-recall' ),
 				__( 'Show for all', 'wp-recall' )
 			)
 		),
 		array(
-			'type'	 => 'textarea',
-			'slug'	 => 'support-shortcodes',
-			'title'	 => __( 'Supported shortcodes', 'wp-recall' ),
+			'type'   => 'textarea',
+			'slug'   => 'support-shortcodes',
+			'title'  => __( 'Supported shortcodes', 'wp-recall' ),
 			'notice' => __( 'Specify the necessary shortcodes to support them in forum messages, each should start from a new line. Specify without brackets, for example: custom-shortcode', 'wp-recall' )
 		),
 		array(
-			'type'	 => 'select',
-			'slug'	 => 'support-oembed',
-			'title'	 => __( 'Support of OEMBED in messages', 'wp-recall' ),
+			'type'   => 'select',
+			'slug'   => 'support-oembed',
+			'title'  => __( 'Support of OEMBED in messages', 'wp-recall' ),
 			'values' => array(
 				__( 'Forbidden', 'wp-recall' ),
 				__( 'Allowed', 'wp-recall' )
@@ -227,9 +228,9 @@ function pfm_page_options() {
 		'title' => __( 'Names of templates', 'wp-recall' )
 	) )->add_group( 'templates' )->add_options( array(
 		array(
-			'type'		 => 'custom',
-			'title'		 => __( 'Templates to form the title tag and name of the page', 'wp-recall' ),
-			'content'	 => __(
+			'type'    => 'custom',
+			'title'   => __( 'Templates to form the title tag and name of the page', 'wp-recall' ),
+			'content' => __(
 				'<p>The following masks may be specified in templates:<br>'
 				. '%GROUPNAME% - name of the current group of forums<br>'
 				. '%FORUMNAME% - name of the current forum<br>'
@@ -238,40 +239,40 @@ function pfm_page_options() {
 			)
 		),
 		array(
-			'type'		 => 'text',
-			'slug'		 => 'mask-tag-group',
-			'title'		 => __( 'Title tag in the group of forums', 'wp-recall' ),
-			'default'	 => __( 'Group of forums', 'wp-recall' ) . ' %GROUPNAME%'
+			'type'    => 'text',
+			'slug'    => 'mask-tag-group',
+			'title'   => __( 'Title tag in the group of forums', 'wp-recall' ),
+			'default' => __( 'Group of forums', 'wp-recall' ) . ' %GROUPNAME%'
 		),
 		array(
-			'type'		 => 'text',
-			'slug'		 => 'mask-page-group',
-			'title'		 => __( 'Name of the page in the group of forums', 'wp-recall' ),
-			'default'	 => __( 'Group of forums', 'wp-recall' ) . ' %GROUPNAME%'
+			'type'    => 'text',
+			'slug'    => 'mask-page-group',
+			'title'   => __( 'Name of the page in the group of forums', 'wp-recall' ),
+			'default' => __( 'Group of forums', 'wp-recall' ) . ' %GROUPNAME%'
 		),
 		array(
-			'type'		 => 'text',
-			'slug'		 => 'mask-tag-forum',
-			'title'		 => __( 'Title tag on the forum page', 'wp-recall' ),
-			'default'	 => __( 'Forum', 'wp-recall' ) . ' %FORUMNAME%'
+			'type'    => 'text',
+			'slug'    => 'mask-tag-forum',
+			'title'   => __( 'Title tag on the forum page', 'wp-recall' ),
+			'default' => __( 'Forum', 'wp-recall' ) . ' %FORUMNAME%'
 		),
 		array(
-			'type'		 => 'text',
-			'slug'		 => 'mask-page-forum',
-			'title'		 => __( 'Name of the page of the separate forum', 'wp-recall' ),
-			'default'	 => __( 'Forum', 'wp-recall' ) . ' %FORUMNAME%'
+			'type'    => 'text',
+			'slug'    => 'mask-page-forum',
+			'title'   => __( 'Name of the page of the separate forum', 'wp-recall' ),
+			'default' => __( 'Forum', 'wp-recall' ) . ' %FORUMNAME%'
 		),
 		array(
-			'type'		 => 'text',
-			'slug'		 => 'mask-tag-topic',
-			'title'		 => __( 'Title tag on the topic page', 'wp-recall' ),
-			'default'	 => '%TOPICNAME% | ' . __( 'Forum', 'wp-recall' ) . ' %FORUMNAME%'
+			'type'    => 'text',
+			'slug'    => 'mask-tag-topic',
+			'title'   => __( 'Title tag on the topic page', 'wp-recall' ),
+			'default' => '%TOPICNAME% | ' . __( 'Forum', 'wp-recall' ) . ' %FORUMNAME%'
 		),
 		array(
-			'type'		 => 'text',
-			'slug'		 => 'mask-page-topic',
-			'title'		 => __( 'Name of the page of the separate topic', 'wp-recall' ),
-			'default'	 => '%TOPICNAME%'
+			'type'    => 'text',
+			'slug'    => 'mask-page-topic',
+			'title'   => __( 'Name of the page of the separate topic', 'wp-recall' ),
+			'default' => '%TOPICNAME%'
 		),
 	) );
 
@@ -279,18 +280,18 @@ function pfm_page_options() {
 		'title' => __( 'Notifications', 'wp-recall' )
 	) )->add_group( 'notices' )->add_options( array(
 		array(
-			'type'	 => 'select',
-			'slug'	 => 'admin-notes',
-			'title'	 => __( 'Notification to the administrator about new topics', 'wp-recall' ),
+			'type'   => 'select',
+			'slug'   => 'admin-notes',
+			'title'  => __( 'Notification to the administrator about new topics', 'wp-recall' ),
 			'values' => array(
 				__( 'Disabled', 'wp-recall' ),
 				__( 'Enabled', 'wp-recall' )
 			)
 		),
 		array(
-			'type'	 => 'select',
-			'slug'	 => 'author-notes',
-			'title'	 => __( 'Notice the author of the theme about new answers', 'wp-recall' ),
+			'type'   => 'select',
+			'slug'   => 'author-notes',
+			'title'  => __( 'Notice the author of the theme about new answers', 'wp-recall' ),
 			'values' => array(
 				__( 'Disabled', 'wp-recall' ),
 				__( 'Enabled', 'wp-recall' )
@@ -318,8 +319,9 @@ function pfm_page_options() {
 add_action( 'admin_init', 'pfm_flush_rewrite_rules' );
 function pfm_flush_rewrite_rules() {
 
-	if ( isset( $_POST['rcl_pforum_options'] ) )
+	if ( isset( $_POST['rcl_pforum_options'] ) ) {
 		flush_rewrite_rules();
+	}
 }
 
 function pfm_page_forums() {
@@ -329,7 +331,7 @@ function pfm_page_forums() {
 	wp_enqueue_style( 'wp-jquery-ui-dialog' );
 	?>
 
-	<h2><?php _e( 'Manage forums', 'wp-recall' ); ?></h2>
+    <h2><?php _e( 'Manage forums', 'wp-recall' ); ?></h2>
 
 	<?php
 	$manager = new PrimeManager();
@@ -391,14 +393,14 @@ function pfm_page_themes() {
 	$Prime_Themes_Manager->prepare_items();
 	?>
 
-	<form method="post">
-		<input type="hidden" name="page" value="pfm-themes">
+    <form method="post">
+        <input type="hidden" name="page" value="pfm-themes">
 		<?php
 		$Prime_Themes_Manager->search_box( 'Search by name', 'search_id' );
 		$Prime_Themes_Manager->display();
 		?>
-	</form>
-	</div>
+    </form>
+    </div>
 	<?php
 }
 
@@ -412,16 +414,16 @@ function pfm_admin_role_field( $user ) {
 
 	$values = array();
 	foreach ( $PrimeUser->roles as $role => $prop ) {
-		$values[$role] = $prop['name'];
+		$values[ $role ] = $prop['name'];
 	}
 
 	$fields = array(
 		array(
-			'type'		 => 'select',
-			'title'		 => __( 'Current role', 'wp-recall' ),
-			'slug'		 => 'pfm_role',
-			'default'	 => $PrimeUser->user_role,
-			'values'	 => $values
+			'type'    => 'select',
+			'title'   => __( 'Current role', 'wp-recall' ),
+			'slug'    => 'pfm_role',
+			'default' => $PrimeUser->user_role,
+			'values'  => $values
 		)
 	);
 
@@ -449,11 +451,13 @@ add_action( 'personal_options_update', 'pfm_update_user_role' );
 add_action( 'edit_user_profile_update', 'pfm_update_user_role' );
 function pfm_update_user_role( $user_id ) {
 
-	if ( ! current_user_can( 'edit_user', $user_id ) )
+	if ( ! current_user_can( 'edit_user', $user_id ) ) {
 		return false;
+	}
 
-	if ( ! isset( $_POST['pfm_role'] ) )
+	if ( ! isset( $_POST['pfm_role'] ) ) {
 		return false;
+	}
 
 	update_user_meta( $user_id, 'pfm_role', $_POST['pfm_role'] );
 }
@@ -465,10 +469,11 @@ function pfm_ajax_manager_update_data() {
 
 	if ( isset( $post['group_id'] ) ) {
 
-		if ( isset( $post['forum_id'] ) )
-			$result	 = pfm_manager_update_forum( $post );
-		else
-			$result	 = pfm_manager_update_group( $post );
+		if ( isset( $post['forum_id'] ) ) {
+			$result = pfm_manager_update_forum( $post );
+		} else {
+			$result = pfm_manager_update_group( $post );
+		}
 
 		wp_send_json( $result );
 	}
@@ -479,16 +484,16 @@ function pfm_ajax_manager_update_data() {
 function pfm_manager_update_group( $options ) {
 
 	pfm_update_group( array(
-		'group_id'	 => $options['group_id'],
+		'group_id'   => $options['group_id'],
 		'group_name' => $options['group_name'],
 		'group_slug' => $options['group_slug'],
 		'group_desc' => $options['group_desc']
 	) );
 
 	return array(
-		'success'	 => __( 'Changes saved!', 'wp-recall' ),
-		'title'		 => $options['group_name'],
-		'id'		 => $options['group_id']
+		'success' => __( 'Changes saved!', 'wp-recall' ),
+		'title'   => $options['group_name'],
+		'id'      => $options['group_id']
 	);
 }
 
@@ -497,24 +502,24 @@ function pfm_manager_update_forum( $options ) {
 	$forum = pfm_get_forum( $options['forum_id'] );
 
 	pfm_update_forum( array(
-		'forum_id'		 => $options['forum_id'],
-		'forum_name'	 => $options['forum_name'],
-		'forum_desc'	 => $options['forum_desc'],
-		'forum_slug'	 => $options['forum_slug'],
-		'forum_closed'	 => $options['forum_closed'],
-		'group_id'		 => $options['group_id'],
+		'forum_id'     => $options['forum_id'],
+		'forum_name'   => $options['forum_name'],
+		'forum_desc'   => $options['forum_desc'],
+		'forum_slug'   => $options['forum_slug'],
+		'forum_closed' => $options['forum_closed'],
+		'group_id'     => $options['group_id'],
 	) );
 
 	$result = array(
-		'success'	 => __( 'Changes saved!', 'wp-recall' ),
-		'title'		 => $options['forum_name'],
-		'id'		 => $options['forum_id']
+		'success' => __( 'Changes saved!', 'wp-recall' ),
+		'title'   => $options['forum_name'],
+		'id'      => $options['forum_id']
 	);
 
 	if ( isset( $options['group_id'] ) && $forum->group_id != $options['group_id'] ) {
 
-		$result['update-page']		 = 1;
-		$result['preloader_live']	 = 1;
+		$result['update-page']    = 1;
+		$result['preloader_live'] = 1;
 	}
 
 	return $result;
@@ -532,8 +537,8 @@ function pfm_ajax_update_sort_groups() {
 		$wpdb->update(
 			RCL_PREF . 'pforum_groups', array(
 			'group_seq' => $s + 1
-			), array(
-			'group_id' => $group->id
+		), array(
+				'group_id' => $group->id
 			)
 		);
 	}
@@ -554,10 +559,10 @@ function pfm_ajax_update_sort_forums() {
 		//ибо срабатывают хуки, а тут они ни к чему
 		$wpdb->update(
 			RCL_PREF . 'pforums', array(
-			'parent_id'	 => $forum->parent,
-			'forum_seq'	 => $s + 1
-			), array(
-			'forum_id' => $forum->id
+			'parent_id' => $forum->parent,
+			'forum_seq' => $s + 1
+		), array(
+				'forum_id' => $forum->id
 			)
 		);
 	}
@@ -570,81 +575,81 @@ function pfm_ajax_update_sort_forums() {
 rcl_ajax_action( 'pfm_ajax_get_manager_item_delete_form', false );
 function pfm_ajax_get_manager_item_delete_form() {
 
-	$itemType	 = $_POST['item-type'];
-	$itemID		 = $_POST['item-id'];
+	$itemType = $_POST['item-type'];
+	$itemID   = $_POST['item-id'];
 
 	if ( $itemType == 'groups' ) {
 
 		$groups = pfm_get_groups( array(
-			'order'				 => 'ASC',
-			'orderby'			 => 'group_seq',
-			'group_id__not_in'	 => array( $itemID )
-			) );
+			'order'            => 'ASC',
+			'orderby'          => 'group_seq',
+			'group_id__not_in' => array( $itemID )
+		) );
 
 		$values = array( '' => __( 'Delete all forums inside the group', 'wp-recall' ) );
 
 		if ( $groups ) {
 
 			foreach ( $groups as $group ) {
-				$values[$group->group_id] = $group->group_name;
+				$values[ $group->group_id ] = $group->group_name;
 			}
 		}
 
 		$fields = array(
 			array(
-				'type'	 => 'select',
-				'slug'	 => 'migrate_group',
-				'title'	 => __( 'New group for child forums', 'wp-recall' ),
+				'type'   => 'select',
+				'slug'   => 'migrate_group',
+				'title'  => __( 'New group for child forums', 'wp-recall' ),
 				'notice' => __( 'If new group is not assigned for child forums, when deleting the selected '
-					. 'group, the forums will also be deleted', 'wp-recall' ),
+				                . 'group, the forums will also be deleted', 'wp-recall' ),
 				'values' => $values
 			),
 			array(
-				'type'	 => 'hidden',
-				'slug'	 => 'group_id',
-				'value'	 => $itemID
+				'type'  => 'hidden',
+				'slug'  => 'group_id',
+				'value' => $itemID
 			),
 			array(
-				'type'	 => 'hidden',
-				'slug'	 => 'pfm-action',
-				'value'	 => 'group_delete'
+				'type'  => 'hidden',
+				'slug'  => 'pfm-action',
+				'value' => 'group_delete'
 			)
 		);
 	} else if ( $itemType == 'forums' ) {
 
 		$forums = pfm_get_forums( array(
-			'order'				 => 'ASC',
-			'orderby'			 => 'forum_seq',
-			'forum_id__not_in'	 => array( $itemID )
-			) );
+			'order'            => 'ASC',
+			'orderby'          => 'forum_seq',
+			'forum_id__not_in' => array( $itemID )
+		) );
 
 		$values = array( '' => __( 'Delete all topic inside the forum', 'wp-recall' ) );
 
 		if ( $forums ) {
 
 			foreach ( $forums as $forum ) {
-				$values[$forum->forum_id] = $forum->forum_name;
+				$values[ $forum->forum_id ] = $forum->forum_name;
 			}
 		}
 
 		$fields = array(
 			array(
-				'type'	 => 'select',
-				'slug'	 => 'migrate_forum',
-				'title'	 => __( 'New forum for child topics', 'wp-recall' ),
+				'type'   => 'select',
+				'slug'   => 'migrate_forum',
+				'title'  => __( 'New forum for child topics', 'wp-recall' ),
 				'notice' => __( 'If new forum is not assigned for child forums, when deleting the selected '
-					. 'forum, the topics will also be deleted', 'wp-recall' ),
+				                . 'forum, the topics will also be deleted', 'wp-recall' ),
 				'values' => $values
 			),
 			array(
-				'type'	 => 'hidden',
-				'slug'	 => 'forum_id',
-				'value'	 => $itemID
+				'type'  => 'hidden',
+				'slug'  => 'forum_id',
+				'value' => $itemID
 			),
 			array(
-				'type'	 => 'hidden',
-				'slug'	 => 'pfm-action',
-				'value'	 => 'forum_delete'
+				'type'  => 'hidden',
+				'slug'  => 'pfm-action',
+				'value' => 'forum_delete'
 			)
 		);
 	}
@@ -702,20 +707,22 @@ function pfm_get_templates() {
 			$addons = scandir( $path, 1 );
 
 			foreach ( ( array ) $addons as $namedir ) {
-				$addon_dir	 = $path . '/' . $namedir;
-				$index_src	 = $addon_dir . '/index.php';
-				if ( ! is_dir( $addon_dir ) || ! file_exists( $index_src ) )
+				$addon_dir = $path . '/' . $namedir;
+				$index_src = $addon_dir . '/index.php';
+				if ( ! is_dir( $addon_dir ) || ! file_exists( $index_src ) ) {
 					continue;
-				$info_src	 = $addon_dir . '/info.txt';
+				}
+				$info_src = $addon_dir . '/info.txt';
 				if ( file_exists( $info_src ) ) {
-					$info	 = file( $info_src );
-					$data	 = rcl_parse_addon_info( $info );
+					$info = file( $info_src );
+					$data = rcl_parse_addon_info( $info );
 
-					if ( ! isset( $data['custom-manager'] ) || $data['custom-manager'] != 'prime-forum' )
+					if ( ! isset( $data['custom-manager'] ) || $data['custom-manager'] != 'prime-forum' ) {
 						continue;
+					}
 
-					$add_ons[$namedir]			 = $data;
-					$add_ons[$namedir]['path']	 = $addon_dir;
+					$add_ons[ $namedir ]         = $data;
+					$add_ons[ $namedir ]['path'] = $addon_dir;
 				}
 			}
 		}
@@ -745,36 +752,40 @@ function rcl_forum_metabox() {
 
 	if ( ! $topics ) {
 		echo '<p>' . __( 'No topics on the forum yet', 'wp-recall' ) . '</p>';
+
 		return;
 	}
 
 	echo '<table class="wp-list-table widefat fixed striped">';
 	echo '<tr>'
-	. '<th>' . __( 'Topic', 'wp-recall' ) . '</th>'
-	. '<th>' . __( 'Messages', 'wp-recall' ) . '</th>'
-	. '<th>' . __( 'Author', 'wp-recall' ) . '</th>'
-	. '</tr>';
+	     . '<th>' . __( 'Topic', 'wp-recall' ) . '</th>'
+	     . '<th>' . __( 'Messages', 'wp-recall' ) . '</th>'
+	     . '<th>' . __( 'Author', 'wp-recall' ) . '</th>'
+	     . '</tr>';
 	foreach ( $topics as $topic ) {
 		echo '<tr>'
-		. '<td><a href="' . pfm_get_topic_permalink( $topic->topic_id ) . '" target="_blank">' . $topic->topic_name . '</a></td>'
-		. '<td>' . $topic->post_count . '</td>'
-		. '<td>' . get_the_author_meta( 'user_login', $topic->user_id ) . '</td>'
-		. '</tr>';
+		     . '<td><a href="' . pfm_get_topic_permalink( $topic->topic_id ) . '" target="_blank">' . $topic->topic_name . '</a></td>'
+		     . '<td>' . $topic->post_count . '</td>'
+		     . '<td>' . get_the_author_meta( 'user_login', $topic->user_id ) . '</td>'
+		     . '</tr>';
 	}
 	echo '</table>';
 	echo '<p><a href="' . pfm_get_home_url() . '" target="_blank">' . __( 'Go to forum', 'wp-recall' ) . '</a></p>';
 }
 
-if ( ! wp_doing_ajax() )
+if ( ! wp_doing_ajax() ) {
 	add_action( 'admin_init', 'pfm_init_admin_actions' );
+}
 function pfm_init_admin_actions() {
 	global $user_ID;
 
-	if ( ! isset( $_REQUEST['pfm-action'] ) || ! isset( $_REQUEST['_wpnonce'] ) )
+	if ( ! isset( $_REQUEST['pfm-action'] ) || ! isset( $_REQUEST['_wpnonce'] ) ) {
 		return;
+	}
 
-	if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'pfm-nonce' ) )
+	if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'pfm-nonce' ) ) {
 		return;
+	}
 
 	$action = $_REQUEST['pfm-action'];
 
@@ -794,14 +805,15 @@ function pfm_init_admin_actions() {
 				'forum_name' => $_REQUEST['forum_name'],
 				'forum_desc' => $_REQUEST['forum_desc'],
 				'forum_slug' => $_REQUEST['forum_slug'],
-				'group_id'	 => $_REQUEST['group_id']
+				'group_id'   => $_REQUEST['group_id']
 			) );
 
 			break;
 		case 'group_delete': //удаление группы
 
-			if ( ! $_REQUEST['group_id'] )
+			if ( ! $_REQUEST['group_id'] ) {
 				return false;
+			}
 
 			pfm_delete_group( $_REQUEST['group_id'], $_REQUEST['migrate_group'] );
 
@@ -811,8 +823,9 @@ function pfm_init_admin_actions() {
 			break;
 		case 'forum_delete': //удаление форума
 
-			if ( ! $_REQUEST['forum_id'] )
+			if ( ! $_REQUEST['forum_id'] ) {
 				return false;
+			}
 
 			$group = pfm_get_forum( $_REQUEST['forum_id'] );
 
@@ -831,19 +844,21 @@ function pfm_init_admin_actions() {
 add_action( 'rcl_addons_included', 'pfm_template_update_status' );
 function pfm_template_update_status() {
 
-	if ( wp_doing_ajax() )
+	if ( wp_doing_ajax() ) {
 		return false;
+	}
 
 	$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
-	if ( 'pfm-themes' != $page )
+	if ( 'pfm-themes' != $page ) {
 		return;
+	}
 
 	if ( isset( $_GET['template'] ) && isset( $_GET['action'] ) ) {
 
 		global $wpdb, $user_ID, $active_addons;
 
-		$addon	 = $_GET['template'];
-		$action	 = rcl_wp_list_current_action();
+		$addon  = $_GET['template'];
+		$action = rcl_wp_list_current_action();
 
 		if ( $action == 'connect' ) {
 
@@ -855,10 +870,11 @@ function pfm_template_update_status() {
 
 			$templates = pfm_get_templates();
 
-			if ( ! isset( $templates[$addon] ) )
+			if ( ! isset( $templates[ $addon ] ) ) {
 				return false;
+			}
 
-			$template = $templates[$addon];
+			$template = $templates[ $addon ];
 
 			rcl_activate_addon( $addon, true, dirname( $template['path'] ) );
 

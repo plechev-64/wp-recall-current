@@ -37,28 +37,28 @@ function rcl_commerce_page_options( $options ) {
 		'title' => __( 'General settings', 'wp-recall' )
 	) )->add_options( array(
 		array(
-			'type'	 => 'email',
-			'title'	 => __( 'Email for notifications', 'wp-recall' ),
-			'slug'	 => 'admin_email_magazin_recall',
+			'type'   => 'email',
+			'title'  => __( 'Email for notifications', 'wp-recall' ),
+			'slug'   => 'admin_email_magazin_recall',
 			'notice' => __( 'If email is not specified, a notification will be sent to all users of the website with "Administrator" rights', 'wp-recall' )
 		),
 		array(
-			'type'	 => 'select',
-			'title'	 => __( 'Basis currency', 'wp-recall' ),
-			'slug'	 => 'primary_cur',
+			'type'   => 'select',
+			'title'  => __( 'Basis currency', 'wp-recall' ),
+			'slug'   => 'primary_cur',
 			'values' => rcl_get_currency()
 		),
 		array(
-			'type'	 => 'select',
-			'title'	 => __( 'Checkout page', 'wp-recall' ),
-			'slug'	 => 'basket_page_rmag',
+			'type'   => 'select',
+			'title'  => __( 'Checkout page', 'wp-recall' ),
+			'slug'   => 'basket_page_rmag',
 			'values' => rcl_get_pages_ids(),
 			'notice' => __( 'Specify the page with the shortcode [basket]', 'wp-recall' )
 		),
 		array(
-			'type'	 => 'select',
-			'title'	 => __( 'Register at check-out', 'wp-recall' ),
-			'slug'	 => 'buyer_register',
+			'type'   => 'select',
+			'title'  => __( 'Register at check-out', 'wp-recall' ),
+			'slug'   => 'buyer_register',
 			'values' => array(
 				__( 'Disabled', 'wp-recall' ),
 				__( 'Enabled', 'wp-recall' )
@@ -71,21 +71,21 @@ function rcl_commerce_page_options( $options ) {
 		'title' => __( 'The output of the button "Add to cart"', 'wp-recall' )
 	) )->add_options( array(
 		array(
-			'type'		 => 'checkbox',
-			'title'		 => __( 'On the product page', 'wp-recall' ),
-			'slug'		 => 'cart_button_single_page',
-			'values'	 => array(
-				'top'	 => __( 'On the description', 'wp-recall' ),
+			'type'    => 'checkbox',
+			'title'   => __( 'On the product page', 'wp-recall' ),
+			'slug'    => 'cart_button_single_page',
+			'values'  => array(
+				'top'    => __( 'On the description', 'wp-recall' ),
 				'bottom' => __( 'Under the description', 'wp-recall' )
 			),
-			'default'	 => array( 'top', 'bottom' )
+			'default' => array( 'top', 'bottom' )
 		),
 		array(
-			'type'		 => 'select',
-			'title'		 => __( 'On the archive page', 'wp-recall' ),
-			'slug'		 => 'cart_button_archive_page',
-			'values'	 => array( __( 'Disabled', 'wp-recall' ), __( 'Enabled', 'wp-recall' ) ),
-			'default'	 => 1
+			'type'    => 'select',
+			'title'   => __( 'On the archive page', 'wp-recall' ),
+			'slug'    => 'cart_button_archive_page',
+			'values'  => array( __( 'Disabled', 'wp-recall' ), __( 'Enabled', 'wp-recall' ) ),
+			'default' => 1
 		)
 	) );
 
@@ -93,21 +93,21 @@ function rcl_commerce_page_options( $options ) {
 		'title' => __( 'Similar or recommended goods', 'wp-recall' )
 	) )->add_options( array(
 		array(
-			'type'		 => 'select',
-			'title'		 => __( 'Output order', 'wp-recall' ),
-			'slug'		 => 'sistem_related_products',
-			'values'	 => array( __( 'Disabled', 'wp-recall' ), __( 'Enabled', 'wp-recall' ) ),
-			'childrens'	 => array(
+			'type'      => 'select',
+			'title'     => __( 'Output order', 'wp-recall' ),
+			'slug'      => 'sistem_related_products',
+			'values'    => array( __( 'Disabled', 'wp-recall' ), __( 'Enabled', 'wp-recall' ) ),
+			'childrens' => array(
 				1 => array(
 					array(
-						'type'	 => 'text',
-						'title'	 => __( 'Block title for featured products', 'wp-recall' ),
-						'slug'	 => 'title_related_products_recall'
+						'type'  => 'text',
+						'title' => __( 'Block title for featured products', 'wp-recall' ),
+						'slug'  => 'title_related_products_recall'
 					),
 					array(
-						'type'	 => 'number',
-						'title'	 => __( 'Number of featured products', 'wp-recall' ),
-						'slug'	 => 'size_related_products'
+						'type'  => 'number',
+						'title' => __( 'Number of featured products', 'wp-recall' ),
+						'slug'  => 'size_related_products'
 					)
 				)
 			)
@@ -140,21 +140,21 @@ function rcl_commerce_export() {
 
 function rcl_commerce_options_orders() {
 	global $Rcl_History_Orders;
-	$option				 = 'per_page';
-	$args				 = array(
-		'label'		 => __( 'Orders', 'wp-recall' ),
-		'default'	 => 50,
-		'option'	 => 'rcl_orders_per_page'
+	$option = 'per_page';
+	$args   = array(
+		'label'   => __( 'Orders', 'wp-recall' ),
+		'default' => 50,
+		'option'  => 'rcl_orders_per_page'
 	);
 	add_screen_option( $option, $args );
-	$Rcl_History_Orders	 = new Rcl_History_Orders();
+	$Rcl_History_Orders = new Rcl_History_Orders();
 }
 
 rcl_ajax_action( 'rcl_edit_admin_price_product', false );
 function rcl_edit_admin_price_product() {
 
 	$id_post = intval( $_POST['id_post'] );
-	$price	 = floatval( $_POST['price'] );
+	$price   = floatval( $_POST['price'] );
 
 	if ( isset( $price ) ) {
 
@@ -173,11 +173,12 @@ add_action( 'admin_init', 'rcl_read_exportfile' );
 function rcl_read_exportfile() {
 	global $wpdb;
 
-	if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'get-csv-file' ) )
+	if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'get-csv-file' ) ) {
 		return false;
+	}
 
 	$importData = array(
-		'fields'	 => array(
+		'fields'     => array(
 			'ID',
 			'post_status'
 		),
@@ -185,7 +186,7 @@ function rcl_read_exportfile() {
 			'prodcat',
 			'product_tag'
 		),
-		'meta'		 => array()
+		'meta'       => array()
 	);
 
 	if ( isset( $_POST['product']['fields'] ) ) {
@@ -200,17 +201,18 @@ function rcl_read_exportfile() {
 
 	$posts = $wpdb->get_results( "SELECT " . implode( ',', $importData['fields'] ) . " FROM $wpdb->posts WHERE post_type = 'products' AND post_status!='draft'" );
 
-	if ( ! $posts )
+	if ( ! $posts ) {
 		return false;
+	}
 
-	$xml		 = new DomDocument( '1.0', 'utf-8' );
-	$products	 = $xml->appendChild( $xml->createElement( 'products' ) );
+	$xml      = new DomDocument( '1.0', 'utf-8' );
+	$products = $xml->appendChild( $xml->createElement( 'products' ) );
 
 	foreach ( $posts as $post ) {
 
 		$termData = array();
 		foreach ( $importData['taxonomies'] as $taxonomy ) {
-			$termData[$taxonomy] = get_the_terms( $post->ID, $taxonomy );
+			$termData[ $taxonomy ] = get_the_terms( $post->ID, $taxonomy );
 		}
 
 		if ( $importData['meta'] ) {
@@ -218,7 +220,7 @@ function rcl_read_exportfile() {
 
 			$metas = array();
 			foreach ( $postmeta as $meta ) {
-				$metas[$meta->meta_key] = maybe_unserialize( $meta->meta_value );
+				$metas[ $meta->meta_key ] = maybe_unserialize( $meta->meta_value );
 			}
 		}
 
@@ -241,20 +243,23 @@ function rcl_read_exportfile() {
 			if ( $k == 'taxonomies' ) {
 				$data = $product->appendChild( $xml->createElement( $k ) );
 				foreach ( $termData as $taxonomy => $terms ) {
-					if ( ! $terms )
+					if ( ! $terms ) {
 						continue;
-					$values		 = array();
-					foreach ( $terms as $term )
-						$values[]	 = ($taxonomy == 'prodcat') ? $term->term_id : $term->name;
-					$tax		 = $data->appendChild( $xml->createElement( $taxonomy ) );
+					}
+					$values = array();
+					foreach ( $terms as $term ) {
+						$values[] = ( $taxonomy == 'prodcat' ) ? $term->term_id : $term->name;
+					}
+					$tax = $data->appendChild( $xml->createElement( $taxonomy ) );
 					$tax->appendChild( $xml->createTextNode( implode( ',', $values ) ) );
 				}
 			}
 
 			if ( $k == 'meta' ) {
 
-				if ( ! $fields )
+				if ( ! $fields ) {
 					continue;
+				}
 
 				$meta = $product->appendChild( $xml->createElement( 'meta' ) );
 
@@ -262,7 +267,7 @@ function rcl_read_exportfile() {
 
 					if ( is_numeric( $i ) ) {
 						$data = $meta->appendChild( $xml->createElement( $metadata ) );
-						$data->appendChild( $xml->createTextNode( (isset( $metas[$metadata] ) ? $metas[$metadata] : '' ) ) );
+						$data->appendChild( $xml->createTextNode( ( isset( $metas[ $metadata ] ) ? $metas[ $metadata ] : '' ) ) );
 						continue;
 					}
 
@@ -270,15 +275,15 @@ function rcl_read_exportfile() {
 
 					foreach ( $metadata as $metaKey ) {
 						$child = $parent->appendChild( $xml->createElement( $metaKey ) );
-						$child->appendChild( $xml->createTextNode( (isset( $metas[$i][$metaKey] ) ? $metas[$i][$metaKey] : '' ) ) );
+						$child->appendChild( $xml->createTextNode( ( isset( $metas[ $i ][ $metaKey ] ) ? $metas[ $i ][ $metaKey ] : '' ) ) );
 					}
 				}
 			}
 		}
 	}
 
-	$filename	 = 'products.xml';
-	$filepath	 = wp_normalize_path( plugin_dir_path( __FILE__ ) . 'xml/' . $filename );
+	$filename = 'products.xml';
+	$filepath = wp_normalize_path( plugin_dir_path( __FILE__ ) . 'xml/' . $filename );
 
 	$xml->formatOutput = true;
 	$xml->save( $filepath );
@@ -296,7 +301,7 @@ function rcl_import_product( $product ) {
 
 	$postData = array();
 	foreach ( $fields as $fieldName => $val ) {
-		$postData[$fieldName] = $val;
+		$postData[ $fieldName ] = $val;
 	}
 
 	$postData['post_type'] = 'products';
@@ -305,11 +310,12 @@ function rcl_import_product( $product ) {
 		$postID = wp_update_post( $postData );
 	} else {
 		$postData['post_author'] = 1;
-		$postID					 = wp_insert_post( $postData );
+		$postID                  = wp_insert_post( $postData );
 	}
 
-	if ( ! $postID )
+	if ( ! $postID ) {
 		return false;
+	}
 
 	if ( $product->taxonomies ) {
 		$taxonomies = ( array ) $product->taxonomies;
@@ -322,21 +328,25 @@ function rcl_import_product( $product ) {
 
 	foreach ( $meta as $metaKey => $metaValue ) {
 
-		if ( is_object( $metaValue ) )
+		if ( is_object( $metaValue ) ) {
 			$metaValue = ( array ) $metaValue;
+		}
 
 		if ( $metaValue ) {
 
 			if ( is_array( $metaValue ) ) {
 
-				foreach ( $metaValue as $k => $value )
-					if ( is_object( $value ) )
-						$metaValue[$k] = array();
+				foreach ( $metaValue as $k => $value ) {
+					if ( is_object( $value ) ) {
+						$metaValue[ $k ] = array();
+					}
+				}
 			}
 
 			update_post_meta( $postID, $metaKey, $metaValue );
-		} else
+		} else {
 			delete_post_meta( $postID, $metaKey );
+		}
 	}
 
 	return $postData['ID'] ? $postData['post_title'] : true;
@@ -358,13 +368,13 @@ function rcl_ajax_import_products() {
 		) );
 	}
 
-	$status		 = $_POST['status'];
-	$page		 = $_POST['page'];
-	$number		 = $_POST['number'];
-	$count		 = $_POST['count'] ? $_POST['count'] : count( $xml->product ); //$_POST['count'];
-	$progress	 = $_POST['progress'];
+	$status   = $_POST['status'];
+	$page     = $_POST['page'];
+	$number   = $_POST['number'];
+	$count    = $_POST['count'] ? $_POST['count'] : count( $xml->product ); //$_POST['count'];
+	$progress = $_POST['progress'];
 
-	$offset = ($page - 1) * $number;
+	$offset = ( $page - 1 ) * $number;
 
 	$result = array(
 		'status' => 'work'
@@ -378,8 +388,9 @@ function rcl_ajax_import_products() {
 
 				$i ++;
 
-				if ( $offset && $i <= $offset )
+				if ( $offset && $i <= $offset ) {
 					continue;
+				}
 
 				$postData = rcl_import_product( $product );
 
@@ -387,8 +398,9 @@ function rcl_ajax_import_products() {
 
 				$log[] = '<div>' . $i . ' ' . $logText . '</div>';
 
-				if ( $i >= $offset + $number )
+				if ( $i >= $offset + $number ) {
 					break;
+				}
 			}
 
 			$stepName = 'Импортировано ' . $i . ' из ' . $count;
@@ -401,25 +413,28 @@ function rcl_ajax_import_products() {
 	}
 
 	if ( $i >= $count ) {
-		$stepName	 = 'Процесс импорта завершен ' . 'Импортировано ' . $i . ' из ' . $count;
-		$status		 = 'end';
+		$stepName = 'Процесс импорта завершен ' . 'Импортировано ' . $i . ' из ' . $count;
+		$status   = 'end';
 		unlink( $path );
 	}
 
-	$result['status']	 = $status;
-	$result['page']		 = $page;
-	$result['count']	 = $count;
-	$result['number']	 = $number;
-	$result['path']		 = $path;
+	$result['status'] = $status;
+	$result['page']   = $page;
+	$result['count']  = $count;
+	$result['number'] = $number;
+	$result['path']   = $path;
 
-	if ( isset( $progress ) && $progress )
+	if ( isset( $progress ) && $progress ) {
 		$result['progress'] = $progress;
+	}
 
-	if ( isset( $stepName ) && $stepName )
+	if ( isset( $stepName ) && $stepName ) {
 		$result['name'] = $stepName;
+	}
 
-	if ( isset( $log ) && $log )
+	if ( isset( $log ) && $log ) {
 		$result['log'] = $log;
+	}
 
 	echo json_encode( $result );
 	exit;
@@ -428,15 +443,20 @@ function rcl_ajax_import_products() {
 function rcl_get_chart_orders( $orders ) {
 	global $order, $chartData, $chartArgs;
 
-	if ( ! $orders )
+	if ( ! $orders ) {
 		return false;
+	}
 
-	$chartArgs	 = array();
-	$chartData	 = array(
-		'title'		 => __( 'Finance', 'wp-recall' ),
-		'title-x'	 => __( 'Period of time', 'wp-recall' ),
-		'data'		 => array(
-			array( '"' . __( 'Days/Months', 'wp-recall' ) . '"', '"' . __( 'Payments (pcs.)', 'wp-recall' ) . '"', '"' . __( 'Income (tsd.)', 'wp-recall' ) . '"' )
+	$chartArgs = array();
+	$chartData = array(
+		'title'   => __( 'Finance', 'wp-recall' ),
+		'title-x' => __( 'Period of time', 'wp-recall' ),
+		'data'    => array(
+			array(
+				'"' . __( 'Days/Months', 'wp-recall' ) . '"',
+				'"' . __( 'Payments (pcs.)', 'wp-recall' ) . '"',
+				'"' . __( 'Income (tsd.)', 'wp-recall' ) . '"'
+			)
 		)
 	);
 
@@ -450,13 +470,14 @@ function rcl_get_chart_orders( $orders ) {
 add_filter( 'rcl_field_options', 'rcl_add_cart_profile_field_option', 10, 3 );
 function rcl_add_cart_profile_field_option( $options, $field, $manager_id ) {
 
-	if ( $manager_id != 'profile' )
+	if ( $manager_id != 'profile' ) {
 		return $options;
+	}
 
 	$options[] = array(
-		'type'	 => 'radio',
-		'slug'	 => 'order',
-		'title'	 => __( 'display at checkout for guests', 'wp-recall' ),
+		'type'   => 'radio',
+		'slug'   => 'order',
+		'title'  => __( 'display at checkout for guests', 'wp-recall' ),
 		'values' => array( __( 'No', 'wp-recall' ), __( 'Yes', 'wp-recall' ) )
 	);
 
@@ -474,25 +495,26 @@ function rcl_commerce_metabox() {
 
 	if ( ! $orders ) {
 		echo '<p>' . __( 'No orders yet', 'wp-recall' ) . '</p>';
+
 		return;
 	}
 
 	echo '<table class="wp-list-table widefat fixed striped">';
 	echo '<tr>'
-	. '<th>' . __( 'Order', 'wp-recall' ) . '</th>'
-	. '<th>' . __( 'Buyer', 'wp-recall' ) . '</th>'
-	. '<th>' . __( 'Q-ty', 'wp-recall' ) . '</th>'
-	. '<th>' . __( 'Sum', 'wp-recall' ) . '</th>'
-	. '<th>' . __( 'Status', 'wp-recall' ) . '</th>'
-	. '</tr>';
+	     . '<th>' . __( 'Order', 'wp-recall' ) . '</th>'
+	     . '<th>' . __( 'Buyer', 'wp-recall' ) . '</th>'
+	     . '<th>' . __( 'Q-ty', 'wp-recall' ) . '</th>'
+	     . '<th>' . __( 'Sum', 'wp-recall' ) . '</th>'
+	     . '<th>' . __( 'Status', 'wp-recall' ) . '</th>'
+	     . '</tr>';
 	foreach ( $orders as $order ) {
 		echo '<tr>'
-		. '<td><a href="' . admin_url( 'admin.php?page=manage-rmag&action=order-details&order-id=' . $order->order_id ) . '" target="_blank">' . $order->order_id . '</a></td>'
-		. '<td>' . get_the_author_meta( 'user_login', $order->user_id ) . '</td>'
-		. '<td>' . $order->products_amount . '</td>'
-		. '<td>' . $order->order_price . ' ' . rcl_get_primary_currency( 2 ) . '</td>'
-		. '<td>' . rcl_get_status_name_order( $order->order_status ) . '</td>'
-		. '</tr>';
+		     . '<td><a href="' . admin_url( 'admin.php?page=manage-rmag&action=order-details&order-id=' . $order->order_id ) . '" target="_blank">' . $order->order_id . '</a></td>'
+		     . '<td>' . get_the_author_meta( 'user_login', $order->user_id ) . '</td>'
+		     . '<td>' . $order->products_amount . '</td>'
+		     . '<td>' . $order->order_price . ' ' . rcl_get_primary_currency( 2 ) . '</td>'
+		     . '<td>' . rcl_get_status_name_order( $order->order_status ) . '</td>'
+		     . '</tr>';
 	}
 	echo '</table>';
 	echo '<p><a href="' . admin_url( 'admin.php?page=manage-rmag' ) . '" target="_blank">' . __( 'Go to orders manager', 'wp-recall' ) . '</a></p>';

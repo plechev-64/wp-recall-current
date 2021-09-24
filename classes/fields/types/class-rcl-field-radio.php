@@ -23,11 +23,13 @@ class Rcl_Field_Radio extends Rcl_Field_Abstract {
 
 	function __construct( $args ) {
 
-		if ( isset( $args['empty-first'] ) )
+		if ( isset( $args['empty-first'] ) ) {
 			$args['empty_first'] = $args['empty-first'];
+		}
 
-		if ( isset( $args['empty-value'] ) )
+		if ( isset( $args['empty-value'] ) ) {
 			$args['empty_value'] = $args['empty-value'];
+		}
 
 		parent::__construct( $args );
 	}
@@ -36,26 +38,27 @@ class Rcl_Field_Radio extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'		 => 'empty_first',
-				'default'	 => $this->empty_first,
-				'type'		 => 'text',
-				'title'		 => __( 'First value', 'wp-recall' ),
-				'notice'	 => __( 'Name of the first blank value, for example: "Not selected"', 'wp-recall' )
+				'slug'    => 'empty_first',
+				'default' => $this->empty_first,
+				'type'    => 'text',
+				'title'   => __( 'First value', 'wp-recall' ),
+				'notice'  => __( 'Name of the first blank value, for example: "Not selected"', 'wp-recall' )
 			),
 			array(
-				'slug'		 => 'values',
-				'default'	 => $this->values,
-				'type'		 => 'dynamic',
-				'title'		 => __( 'Specify options', 'wp-recall' ),
-				'notice'	 => __( 'specify each option in a separate field', 'wp-recall' )
+				'slug'    => 'values',
+				'default' => $this->values,
+				'type'    => 'dynamic',
+				'title'   => __( 'Specify options', 'wp-recall' ),
+				'notice'  => __( 'specify each option in a separate field', 'wp-recall' )
 			)
 		);
 	}
 
 	function get_input() {
 
-		if ( ! $this->values )
+		if ( ! $this->values ) {
 			return false;
+		}
 
 		$content = '';
 
@@ -68,13 +71,15 @@ class Rcl_Field_Radio extends Rcl_Field_Abstract {
 
 		$a = 0;
 
-		if ( ! $this->empty_first && ! $this->value )
-			$this->value = ($this->value_in_key) ? $this->values[0] : 0;
+		if ( ! $this->empty_first && ! $this->value ) {
+			$this->value = ( $this->value_in_key ) ? $this->values[0] : 0;
+		}
 
 		foreach ( $this->values as $k => $value ) {
 
-			if ( $this->value_in_key )
+			if ( $this->value_in_key ) {
 				$k = $value;
+			}
 
 			$k = trim( $k );
 

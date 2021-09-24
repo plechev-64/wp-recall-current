@@ -9,18 +9,20 @@ class PrimeForm extends Rcl_Fields {
 	public $action;
 	public $submit;
 	public $custom_fields;
-	public $forum_list		 = false;
-	public $values			 = array();
-	public $exclude_fields	 = array();
+	public $forum_list = false;
+	public $values = array();
+	public $exclude_fields = array();
 
 	function __construct( $args = false ) {
 
 		$this->init_properties( $args );
 
-		if ( ! $this->action )
-			$this->action	 = 'topic_create';
-		if ( ! $this->submit )
-			$this->submit	 = __( 'Create topic', 'wp-recall' );
+		if ( ! $this->action ) {
+			$this->action = 'topic_create';
+		}
+		if ( ! $this->submit ) {
+			$this->submit = __( 'Create topic', 'wp-recall' );
+		}
 
 		if ( $this->forum_id ) {
 			add_filter( 'pfm_form_fields', array( $this, 'add_forum_field' ) );
@@ -28,11 +30,13 @@ class PrimeForm extends Rcl_Fields {
 			add_filter( 'pfm_form_fields', array( $this, 'add_forum_custom_fields' ), 11 );
 		}
 
-		if ( $this->topic_id )
+		if ( $this->topic_id ) {
 			add_filter( 'pfm_form_fields', array( $this, 'add_topic_field' ) );
+		}
 
-		if ( $this->post_id )
+		if ( $this->post_id ) {
 			add_filter( 'pfm_form_fields', array( $this, 'add_post_field' ) );
+		}
 
 		$fields = $this->get_form_fields();
 
@@ -44,8 +48,9 @@ class PrimeForm extends Rcl_Fields {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $properties as $name => $val ) {
-			if ( isset( $args[$name] ) )
-				$this->$name = $args[$name];
+			if ( isset( $args[ $name ] ) ) {
+				$this->$name = $args[ $name ];
+			}
 		}
 	}
 
@@ -56,7 +61,7 @@ class PrimeForm extends Rcl_Fields {
 		if ( $customFields ) {
 
 			foreach ( $customFields as $k => $field ) {
-				$customFields[$k]['value_in_key'] = true;
+				$customFields[ $k ]['value_in_key'] = true;
 			}
 
 			$fields = array_merge( $fields, $customFields );
@@ -74,7 +79,7 @@ class PrimeForm extends Rcl_Fields {
 		if ( $customFields ) {
 
 			foreach ( $customFields as $k => $field ) {
-				$customFields[$k]['value_in_key'] = true;
+				$customFields[ $k ]['value_in_key'] = true;
 			}
 
 			$fields = array_merge( $fields, $customFields );
@@ -91,61 +96,62 @@ class PrimeForm extends Rcl_Fields {
 		if ( $this->forum_list ) {
 
 			$fields[] = array(
-				'type'		 => 'custom',
-				'slug'		 => 'forum_list',
-				'title'		 => __( 'Choose forum', 'wp-recall' ),
-				'content'	 => pfm_get_forums_list()
+				'type'    => 'custom',
+				'slug'    => 'forum_list',
+				'title'   => __( 'Choose forum', 'wp-recall' ),
+				'content' => pfm_get_forums_list()
 			);
 		}
 
 		if ( $this->forum_id || $this->forum_list ) {
 
 			$fields[] = array(
-				'type'		 => 'text',
-				'slug'		 => 'topic_name',
-				'title'		 => __( 'Heading of the topic', 'wp-recall' ),
-				'required'	 => 1
+				'type'     => 'text',
+				'slug'     => 'topic_name',
+				'title'    => __( 'Heading of the topic', 'wp-recall' ),
+				'required' => 1
 			);
 		}
 
 		if ( ! $user_ID ) {
 			if ( $this->action == 'post_create' ) {
-				$fields[]	 = array(
-					'type'		 => 'text',
-					'slug'		 => 'guest_name',
-					'title'		 => __( 'Your name', 'wp-recall' ),
-					'required'	 => 1
+				$fields[] = array(
+					'type'     => 'text',
+					'slug'     => 'guest_name',
+					'title'    => __( 'Your name', 'wp-recall' ),
+					'required' => 1
 				);
-				$fields[]	 = array(
-					'type'		 => 'email',
-					'slug'		 => 'guest_email',
-					'title'		 => __( 'Your E-mail', 'wp-recall' ),
-					'notice'	 => __( 'not published', 'wp-recall' ),
-					'required'	 => 1
+				$fields[] = array(
+					'type'     => 'email',
+					'slug'     => 'guest_email',
+					'title'    => __( 'Your E-mail', 'wp-recall' ),
+					'notice'   => __( 'not published', 'wp-recall' ),
+					'required' => 1
 				);
 			}
 		}
 
 		$fields = apply_filters( 'pfm_form_fields', $fields, $this->action );
 
-		if ( $this->custom_fields )
+		if ( $this->custom_fields ) {
 			$fields = array_merge( $fields, $this->custom_fields );
+		}
 
 		$fields[] = apply_filters( 'pfm_form_content_field', array(
-			'type'		 => 'editor',
-			'editor_id'	 => 'editor-action_' . $this->action,
+			'type'      => 'editor',
+			'editor_id' => 'editor-action_' . $this->action,
 			//'tinymce' => true,
-			'slug'		 => 'post_content',
-			'title'		 => __( 'Message text', 'wp-recall' ),
-			'required'	 => 1,
-			'quicktags'	 => 'strong,img,em,link,code,close,block,del'
-			), $this->action );
+			'slug'      => 'post_content',
+			'title'     => __( 'Message text', 'wp-recall' ),
+			'required'  => 1,
+			'quicktags' => 'strong,img,em,link,code,close,block,del'
+		), $this->action );
 
 		if ( $this->exclude_fields ) {
 
 			foreach ( $fields as $k => $field ) {
 				if ( in_array( $field['slug'], $this->exclude_fields ) ) {
-					unset( $fields[$k] );
+					unset( $fields[ $k ] );
 				}
 			}
 		}
@@ -160,9 +166,9 @@ class PrimeForm extends Rcl_Fields {
 	function add_forum_field( $fields ) {
 
 		$fields[] = array(
-			'type'	 => 'hidden',
-			'slug'	 => 'forum_id',
-			'value'	 => $this->forum_id
+			'type'  => 'hidden',
+			'slug'  => 'forum_id',
+			'value' => $this->forum_id
 		);
 
 		return $fields;
@@ -171,9 +177,9 @@ class PrimeForm extends Rcl_Fields {
 	function add_topic_field( $fields ) {
 
 		$fields[] = array(
-			'type'	 => 'hidden',
-			'slug'	 => 'topic_id',
-			'value'	 => $this->topic_id
+			'type'  => 'hidden',
+			'slug'  => 'topic_id',
+			'value' => $this->topic_id
 		);
 
 		return $fields;
@@ -182,9 +188,9 @@ class PrimeForm extends Rcl_Fields {
 	function add_post_field( $fields ) {
 
 		$fields[] = array(
-			'type'	 => 'hidden',
-			'slug'	 => 'post_id',
-			'value'	 => $this->post_id
+			'type'  => 'hidden',
+			'slug'  => 'post_id',
+			'value' => $this->post_id
 		);
 
 		return $fields;
@@ -200,14 +206,15 @@ class PrimeForm extends Rcl_Fields {
 
 		foreach ( $this->fields as $field_id => $field ) {
 
-			if ( ! $field->value )
-				$field->value = (isset( $this->values[$field->slug] )) ? wp_unslash( $this->values[$field->slug] ) : false;
+			if ( ! $field->value ) {
+				$field->value = ( isset( $this->values[ $field->slug ] ) ) ? wp_unslash( $this->values[ $field->slug ] ) : false;
+			}
 
 			$content .= '<div id="field-' . $field->slug . '" class="form-field rcl-option">';
 
 			if ( $field->title ) {
 				$content .= '<h3 class="field-title">';
-				$content .= $field->title . ($field->required ? ' <span class="required">*</span>' : '');
+				$content .= $field->title . ( $field->required ? ' <span class="required">*</span>' : '' );
 				$content .= '</h3>';
 			}
 
@@ -217,37 +224,40 @@ class PrimeForm extends Rcl_Fields {
 		}
 
 		$content .= '<div class="post-form-bottom">';
-		$content .= apply_filters( 'pfm_form_bottom', '', $this->action, array( 'topic_id' => $this->topic_id, 'post_id' => $this->post_id ) );
+		$content .= apply_filters( 'pfm_form_bottom', '', $this->action, array(
+			'topic_id' => $this->topic_id,
+			'post_id'  => $this->post_id
+		) );
 		$content .= '</div>';
 
 		$args = array(
-			'method'		 => 'get_preview',
+			'method'         => 'get_preview',
 			'serialize_form' => 'prime-topic-form',
-			'item_id'		 => $this->action
+			'item_id'        => $this->action
 		);
 
 		$content .= '<div class="submit-box">';
 
 		if ( ! defined( 'DOING_AJAX' ) ) {
 			$content .= rcl_get_button( array(
-				'label'		 => __( 'Preview', 'wp-recall' ),
-				'icon'		 => 'fa-eye',
-				'onclick'	 => 'pfm_ajax_action(' . json_encode( $args ) . ',this);return false;'
-				) );
+				'label'   => __( 'Preview', 'wp-recall' ),
+				'icon'    => 'fa-eye',
+				'onclick' => 'pfm_ajax_action(' . json_encode( $args ) . ',this);return false;'
+			) );
 		}
 
 		if ( $this->onclick ) {
 			$content .= rcl_get_button( array(
-				'label'		 => $this->submit,
-				'icon'		 => 'fa-check-circle',
-				'onclick'	 => $this->onclick
-				) );
+				'label'   => $this->submit,
+				'icon'    => 'fa-check-circle',
+				'onclick' => $this->onclick
+			) );
 		} else {
 			$content .= rcl_get_button( array(
-				'label'	 => $this->submit,
-				'icon'	 => 'fa-check-circle',
+				'label'  => $this->submit,
+				'icon'   => 'fa-check-circle',
 				'submit' => true
-				) );
+			) );
 		}
 
 		$content .= '</div>';
@@ -276,13 +286,15 @@ class PrimeForm extends Rcl_Fields {
 
 		$styles = $this->get_ajax_styles();
 
-		if ( $styles )
+		if ( $styles ) {
 			$content .= $styles;
+		}
 
 		$scripts = $this->get_ajax_scripts();
 
-		if ( $scripts )
+		if ( $scripts ) {
 			$content .= $scripts;
+		}
 
 		return $content;
 	}
@@ -292,24 +304,28 @@ class PrimeForm extends Rcl_Fields {
 		$wp_scripts = wp_scripts();
 
 		$remove = array(
-			'jquery', 'jquery-core'
+			'jquery',
+			'jquery-core'
 		);
 
 		$scriptsArray = array();
 
 		foreach ( $wp_scripts->queue as $k => $script_id ) {
 
-			if ( in_array( $script_id, $remove ) )
+			if ( in_array( $script_id, $remove ) ) {
 				continue;
+			}
 
-			if ( strpos( $script_id, 'admin' ) !== false )
+			if ( strpos( $script_id, 'admin' ) !== false ) {
 				continue;
+			}
 
 			$scriptsArray[] = $script_id;
 		}
 
-		if ( ! $scriptsArray )
+		if ( ! $scriptsArray ) {
 			return false;
+		}
 
 		ob_start();
 
@@ -329,14 +345,16 @@ class PrimeForm extends Rcl_Fields {
 		$scriptsArray = array();
 		foreach ( $wp_scripts->queue as $k => $script_id ) {
 
-			if ( strpos( $script_id, 'admin' ) !== false )
+			if ( strpos( $script_id, 'admin' ) !== false ) {
 				continue;
+			}
 
 			$scriptsArray[] = $script_id;
 		}
 
-		if ( ! $scriptsArray )
+		if ( ! $scriptsArray ) {
 			return false;
+		}
 
 		ob_start();
 

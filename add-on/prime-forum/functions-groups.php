@@ -39,10 +39,11 @@ function pfm_group_field( $field_name, $echo = 1 ) {
 	global $PrimeGroup;
 
 	if ( isset( $PrimeGroup->$field_name ) ) {
-		if ( $echo )
+		if ( $echo ) {
 			echo $PrimeGroup->$field_name;
-		else
+		} else {
 			return $PrimeGroup->$field_name;
+		}
 	}
 
 	return false;

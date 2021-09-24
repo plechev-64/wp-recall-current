@@ -4,8 +4,9 @@ add_action( 'rcl_order_before', 'rcl_add_order_manager', 10 );
 function rcl_add_order_manager() {
 	global $user_ID;
 
-	if ( ! rcl_is_office( $user_ID ) )
+	if ( ! rcl_is_office( $user_ID ) ) {
 		return false;
+	}
 
 	echo rcl_get_order_manager();
 }
@@ -14,8 +15,9 @@ add_action( 'rcl_order_before', 'rcl_add_order_notices', 10 );
 function rcl_add_order_notices() {
 	global $rclOrder, $user_ID, $rcl_user_URL;
 
-	if ( ! isset( $_GET['order-status'] ) )
+	if ( ! isset( $_GET['order-status'] ) ) {
 		return false;
+	}
 
 	$buyer_register = rcl_get_commerce_option( 'buyer_register', 1 );
 
@@ -119,32 +121,35 @@ function rcl_add_order_details() {
 	echo $content;
 }
 
-if ( ! is_admin() )
+if ( ! is_admin() ) {
 	add_action( 'rcl_order_before', 'rcl_add_order_pay_form', 30 );
+}
 function rcl_add_order_pay_form() {
 	global $user_ID, $rclOrder;
 
-	if ( ! isset( $_GET['order-status'] ) && ! rcl_is_office() )
+	if ( ! isset( $_GET['order-status'] ) && ! rcl_is_office() ) {
 		return false;
+	}
 
-	if ( ! $user_ID || ! $rclOrder->order_price || $rclOrder->order_status != 1 )
+	if ( ! $user_ID || ! $rclOrder->order_price || $rclOrder->order_status != 1 ) {
 		return false;
+	}
 
 	if ( function_exists( 'rcl_get_pay_form' ) ) {
 
 		$type_pay = rcl_get_commerce_option( 'type_order_payment' );
 
 		$dataPay = array(
-			'baggage_data'	 => array(
+			'baggage_data'  => array(
 				'order_id' => $rclOrder->order_id
 			),
-			'pay_type'		 => 'order-payment',
+			'pay_type'      => 'order-payment',
 			//'return_url'	 => rcl_get_tab_permalink( $user_ID, 'orders' ) . '&order-id' . $rclOrder->order_id,
-			'pay_id'		 => $rclOrder->order_id,
-			'user_id'		 => $rclOrder->user_id,
-			'pay_summ'		 => $rclOrder->order_price,
-			'description'	 => sprintf( __( 'Payment order №%s dated %s', 'wp-recall' ), $rclOrder->order_id, get_the_author_meta( 'user_email', $rclOrder->user_id ) ),
-			'merchant_icon'	 => 1
+			'pay_id'        => $rclOrder->order_id,
+			'user_id'       => $rclOrder->user_id,
+			'pay_summ'      => $rclOrder->order_price,
+			'description'   => sprintf( __( 'Payment order №%s dated %s', 'wp-recall' ), $rclOrder->order_id, get_the_author_meta( 'user_email', $rclOrder->user_id ) ),
+			'merchant_icon' => 1
 		);
 
 		if ( ! $type_pay ) {

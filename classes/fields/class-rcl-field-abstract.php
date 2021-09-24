@@ -18,8 +18,8 @@ class Rcl_Field_Abstract {
 	public $type;
 	public $icon;
 	public $title;
-	public $value		 = null;
-	public $default		 = null;
+	public $value = null;
+	public $default = null;
 	public $notice;
 	public $filter;
 	public $input_id;
@@ -31,15 +31,16 @@ class Rcl_Field_Abstract {
 	public $required;
 	public $maxlength;
 	public $childrens;
-	public $unique_id	 = false;
+	public $unique_id = false;
 	public $value_in_key = null;
-	public $must_delete	 = true;
+	public $must_delete = true;
 	public $_new;
 
 	function __construct( $args ) {
 
-		if ( ! isset( $args['type'] ) )
+		if ( ! isset( $args['type'] ) ) {
 			$args['type'] = 'custom';
+		}
 
 		if ( ! isset( $args['slug'] ) ) {
 			if ( $args['type'] == 'custom' ) {
@@ -49,11 +50,13 @@ class Rcl_Field_Abstract {
 			}
 		}
 
-		if ( isset( $args['name'] ) )
+		if ( isset( $args['name'] ) ) {
 			$args['input_name'] = $args['name'];
+		}
 
-		if ( isset( $args['req'] ) )
+		if ( isset( $args['req'] ) ) {
 			$args['public_value'] = $args['req'];
+		}
 
 		$this->id = $args['slug'];
 
@@ -61,11 +64,13 @@ class Rcl_Field_Abstract {
 
 		$this->rand = rand( 0, 1000 );
 
-		if ( ! $this->input_name )
+		if ( ! $this->input_name ) {
 			$this->input_name = $this->id;
+		}
 
-		if ( ! $this->input_id )
+		if ( ! $this->input_id ) {
 			$this->input_id = $this->id;
+		}
 
 		if ( $this->unique_id ) {
 			$this->input_id .= $this->rand;
@@ -101,18 +106,20 @@ class Rcl_Field_Abstract {
 
 	function get_title() {
 
-		if ( ! $this->title )
+		if ( ! $this->title ) {
 			return false;
+		}
 
 		return '<span class="rcl-field-title">'
-			. $this->title . ($this->required ? ' <span class="required">*</span>' : '')
-			. '</span>';
+		       . $this->title . ( $this->required ? ' <span class="required">*</span>' : '' )
+		       . '</span>';
 	}
 
 	function get_icon() {
 
-		if ( ! $this->icon )
+		if ( ! $this->icon ) {
 			return false;
+		}
 
 		$content = '<span class="rcl-field-icon">';
 		$content .= '<i class="rcli ' . $this->icon . '" aria-hidden="true"></i> ';
@@ -123,13 +130,14 @@ class Rcl_Field_Abstract {
 
 	function get_notice() {
 
-		if ( ! $this->notice )
+		if ( ! $this->notice ) {
 			return false;
+		}
 
 		return '<span class="rcl-field-notice">'
-			. '<i class="rcli fa-info" aria-hidden="true"></i>'
-			. $this->notice
-			. '</span>';
+		       . '<i class="rcli fa-info" aria-hidden="true"></i>'
+		       . $this->notice
+		       . '</span>';
 	}
 
 	function is_new() {
@@ -138,8 +146,9 @@ class Rcl_Field_Abstract {
 
 	function get_field_input() {
 
-		if ( ! $this->type )
+		if ( ! $this->type ) {
 			return false;
+		}
 
 		$classes = array( 'type-' . $this->type . '-input' );
 
@@ -156,11 +165,11 @@ class Rcl_Field_Abstract {
 		}
 
 		$content = '<div id="rcl-field-' . $this->id . '" class="' . implode( ' ', $classes ) . '">'
-			. '<div class="rcl-field-core">'
-			. $inputField
-			. '</div>'
-			. $this->get_notice()
-			. '</div>';
+		           . '<div class="rcl-field-core">'
+		           . $inputField
+		           . '</div>'
+		           . $this->get_notice()
+		           . '</div>';
 
 		return $content;
 	}
@@ -185,7 +194,7 @@ class Rcl_Field_Abstract {
 			$classes[] = 'rcl-children-field';
 		}
 
-		$content = '<div class="' . implode( ' ', $classes ) . '" ' . ($this->parent ? 'data-parent="' . $this->parent['id'] . '" data-parent-value="' . $this->parent['value'] . '"' : '') . '>';
+		$content = '<div class="' . implode( ' ', $classes ) . '" ' . ( $this->parent ? 'data-parent="' . $this->parent['id'] . '" data-parent-value="' . $this->parent['value'] . '"' : '' ) . '>';
 
 		$content .= $this->get_title();
 
@@ -200,8 +209,9 @@ class Rcl_Field_Abstract {
 
 	function get_help() {
 
-		if ( ! $this->help )
+		if ( ! $this->help ) {
 			return;
+		}
 
 		return '<span class="help-option" onclick="return rcl_get_option_help(this);"><i class="dashicons dashicons-editor-help"></i><span class="help-content">' . $this->help . '</span></span>';
 
@@ -256,16 +266,18 @@ class Rcl_Field_Abstract {
 
 		$class = array( $this->type . '-field' );
 
-		if ( $this->class )
+		if ( $this->class ) {
 			$class[] = $this->class;
+		}
 
 		return 'class="' . implode( ' ', $class ) . '"';
 	}
 
 	function get_value() {
 
-		if ( ! isset( $this->value ) || $this->value == '' )
+		if ( ! isset( $this->value ) || $this->value == '' ) {
 			return false;
+		}
 
 		return $this->value;
 	}
@@ -274,18 +286,20 @@ class Rcl_Field_Abstract {
 
 		$value = $this->get_value();
 
-		if ( ! $value || ! $this->type )
+		if ( ! $value || ! $this->type ) {
 			return false;
+		}
 
 		$content = '<div class="rcl-field type-' . $this->type . '-value">';
 
 		//$content .= $this->get_icon();
 
-		if ( $title )
+		if ( $title ) {
 			$content .= '<span class="rcl-field-title">'
-				. $this->title
-				. '</span>'
-				. '<span class="title-colon">: </span>';
+			            . $this->title
+			            . '</span>'
+			            . '<span class="title-colon">: </span>';
+		}
 
 		$content .= '<span class="rcl-field-value">';
 
@@ -304,11 +318,13 @@ class Rcl_Field_Abstract {
 
 	function get_filter_url( $val = false ) {
 
-		if ( ! rcl_get_option( 'users_page_rcl' ) )
+		if ( ! rcl_get_option( 'users_page_rcl' ) ) {
 			return false;
+		}
 
-		if ( ! $val )
+		if ( ! $val ) {
 			$val = $this->value;
+		}
 
 		return rcl_format_url( get_permalink( rcl_get_option( 'users_page_rcl' ) ) ) . 'usergroup=' . $this->slug . ':' . urlencode( $val );
 	}

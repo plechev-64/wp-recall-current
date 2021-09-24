@@ -27,22 +27,22 @@ class Rcl_Field_Number extends Rcl_Field_Abstract {
 
 		return array(
 			array(
-				'slug'		 => 'placeholder',
-				'default'	 => $this->placeholder,
-				'type'		 => 'text',
-				'title'		 => __( 'Placeholder', 'wp-recall' )
+				'slug'    => 'placeholder',
+				'default' => $this->placeholder,
+				'type'    => 'text',
+				'title'   => __( 'Placeholder', 'wp-recall' )
 			),
 			array(
-				'slug'		 => 'value_min',
-				'default'	 => $this->value_min,
-				'type'		 => 'number',
-				'title'		 => __( 'Min', 'wp-recall' ),
+				'slug'    => 'value_min',
+				'default' => $this->value_min,
+				'type'    => 'number',
+				'title'   => __( 'Min', 'wp-recall' ),
 			),
 			array(
-				'slug'		 => 'value_max',
-				'default'	 => $this->value_max,
-				'type'		 => 'number',
-				'title'		 => __( 'Max', 'wp-recall' ),
+				'slug'    => 'value_max',
+				'default' => $this->value_max,
+				'type'    => 'number',
+				'title'   => __( 'Max', 'wp-recall' ),
 			),
 		);
 	}

@@ -3,15 +3,16 @@
 function rcl_get_wp_upload_dir() {
 	if ( defined( 'MULTISITE' ) ) {
 		$upload_dir = array(
-			'basedir'	 => WP_CONTENT_DIR . '/uploads',
-			'baseurl'	 => WP_CONTENT_URL . '/uploads'
+			'basedir' => WP_CONTENT_DIR . '/uploads',
+			'baseurl' => WP_CONTENT_URL . '/uploads'
 		);
 	} else {
 		$upload_dir = wp_upload_dir();
 	}
 
-	if ( is_ssl() )
+	if ( is_ssl() ) {
 		$upload_dir['baseurl'] = str_replace( 'http://', 'https://', $upload_dir['baseurl'] );
+	}
 
 	return $upload_dir;
 }
@@ -19,17 +20,19 @@ function rcl_get_wp_upload_dir() {
 //получение абсолютного пути до указанного файла шаблона
 function rcl_get_template_path( $temp_name, $path = false ) {
 
-	if ( file_exists( RCL_TAKEPATH . 'templates/' . $temp_name ) )
+	if ( file_exists( RCL_TAKEPATH . 'templates/' . $temp_name ) ) {
 		return RCL_TAKEPATH . 'templates/' . $temp_name;
+	}
 
-	$path = ($path) ? rcl_addon_path( $path ) . 'templates/' : RCL_PATH . 'templates/';
+	$path = ( $path ) ? rcl_addon_path( $path ) . 'templates/' : RCL_PATH . 'templates/';
 
 	$filepath = $path . $temp_name;
 
 	$filepath = apply_filters( 'rcl_template_path', $filepath, $temp_name );
 
-	if ( ! file_exists( $filepath ) )
+	if ( ! file_exists( $filepath ) ) {
 		return false;
+	}
 
 	return $filepath;
 }
@@ -43,8 +46,9 @@ function rcl_include_template( $temp_name, $path = false, $data = false ) {
 
 	$pathfile = rcl_get_template_path( $temp_name, $path );
 
-	if ( ! $pathfile )
+	if ( ! $pathfile ) {
 		return false;
+	}
 
 	do_action( 'rcl_include_template_before', $temp_name, $path );
 
@@ -59,20 +63,23 @@ function rcl_get_include_template( $temp_name, $path = false, $data = false ) {
 	rcl_include_template( $temp_name, $path, $data );
 	$content = ob_get_contents();
 	ob_end_clean();
+
 	return $content;
 }
 
 //форматирование абсолютного пути в урл
 function rcl_path_to_url( $path ) {
 	$siteUrl = is_ssl() ? str_replace( 'http://', 'https://', get_site_option( 'siteurl' ) ) : get_site_option( 'siteurl' );
+
 	return untrailingslashit( untrailingslashit( $siteUrl ) . '/' . stristr( $path, basename( content_url() ) ) );
 }
 
 //получение абсолютного пути из указанного урла
 function rcl_path_by_url( $url ) {
 
-	if ( function_exists( 'wp_normalize_path' ) )
+	if ( function_exists( 'wp_normalize_path' ) ) {
 		$url = wp_normalize_path( $url );
+	}
 
 	$string = stristr( $url, basename( content_url() ) );
 
@@ -83,37 +90,44 @@ function rcl_path_by_url( $url ) {
 
 function rcl_format_url( $url, $tab_id = false, $subtab_id = false ) {
 	$ar_perm = explode( '?', $url );
-	$cnt	 = count( $ar_perm );
-	if ( $cnt > 1 )
-		$a		 = '&';
-	else
-		$a		 = '?';
-	$url	 = $url . $a;
-	if ( $tab_id )
+	$cnt     = count( $ar_perm );
+	if ( $cnt > 1 ) {
+		$a = '&';
+	} else {
+		$a = '?';
+	}
+	$url = $url . $a;
+	if ( $tab_id ) {
 		$url .= 'tab=' . $tab_id;
-	if ( $subtab_id )
+	}
+	if ( $subtab_id ) {
 		$url .= '&subtab=' . $subtab_id;
+	}
+
 	return $url;
 }
 
 function rcl_check_jpeg( $f, $fix = false ) {
 # [070203]
 # check for jpeg file header and footer - also try to fix it
-	if ( false !== (@$fd = fopen( $f, 'r+b' )) ) {
+	if ( false !== ( @$fd = fopen( $f, 'r+b' ) ) ) {
 		if ( fread( $fd, 2 ) == chr( 255 ) . chr( 216 ) ) {
-			fseek( $fd, -2, SEEK_END );
+			fseek( $fd, - 2, SEEK_END );
 			if ( fread( $fd, 2 ) == chr( 255 ) . chr( 217 ) ) {
 				fclose( $fd );
+
 				return true;
 			} else {
 				if ( $fix && fwrite( $fd, chr( 255 ) . chr( 217 ) ) ) {
 					return true;
 				}
 				fclose( $fd );
+
 				return false;
 			}
 		} else {
 			fclose( $fd );
+
 			return false;
 		}
 	} else {
@@ -123,8 +137,9 @@ function rcl_check_jpeg( $f, $fix = false ) {
 
 function rcl_get_mime_type_by_ext( $file_ext ) {
 
-	if ( ! $file_ext )
+	if ( ! $file_ext ) {
 		return false;
+	}
 
 	$mimes = get_allowed_mime_types();
 
@@ -139,14 +154,16 @@ function rcl_get_mime_type_by_ext( $file_ext ) {
 
 function rcl_get_mime_types( $ext_array ) {
 
-	if ( ! $ext_array )
+	if ( ! $ext_array ) {
 		return false;
+	}
 
 	$mTypes = array();
 
 	foreach ( $ext_array as $ext ) {
-		if ( ! $ext )
+		if ( ! $ext ) {
 			continue;
+		}
 		$mTypes[] = rcl_get_mime_type_by_ext( $ext );
 	}
 
@@ -155,10 +172,11 @@ function rcl_get_mime_types( $ext_array ) {
 
 /* 22-06-2015 Удаление папки с содержимым */
 function rcl_remove_dir( $dir ) {
-	$dir	 = untrailingslashit( $dir );
-	if ( ! is_dir( $dir ) )
+	$dir = untrailingslashit( $dir );
+	if ( ! is_dir( $dir ) ) {
 		return false;
-	if ( $objs	 = glob( $dir . "/*" ) ) {
+	}
+	if ( $objs = glob( $dir . "/*" ) ) {
 		foreach ( $objs as $obj ) {
 			is_dir( $obj ) ? rcl_remove_dir( $obj ) : unlink( $obj );
 		}
