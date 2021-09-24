@@ -84,7 +84,7 @@ add_action( 'delete_user', 'rcl_remove_user_feed', 10 );
 function rcl_remove_user_feed( $user_id ) {
 	global $wpdb;
 
-	return $wpdb->query( "DELETE FROM " . RCL_PREF . "feeds WHERE user_id='$user_id' OR object_id='absint($user_id)'" );
+	return $wpdb->query( "DELETE FROM " . RCL_PREF . "feeds WHERE user_id='absint($user_id)' OR object_id='absint($user_id)'" );
 }
 
 //получаем данные фида по ИД
