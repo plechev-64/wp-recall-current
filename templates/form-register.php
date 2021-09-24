@@ -44,7 +44,7 @@ $f_reg = ( $typeform == 'register' ) ? 'style="display:block;"' : '';
 			?>
 
 			<?php echo wp_nonce_field( 'register-key-rcl', 'register_wpnonce', true, false ); ?>
-            <input type="hidden" name="redirect_to" value="<?php rcl_referer_url( 'register' ); ?>">
+            <input type="hidden" name="redirect_to" value="<?php esc_url( rcl_referer_url( 'register' ) ); ?>">
         </div>
     </form>
 </div>

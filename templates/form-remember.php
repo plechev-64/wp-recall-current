@@ -32,7 +32,7 @@
 				) );
 				?>
 				<?php echo wp_nonce_field( 'remember-key-rcl', '_wpnonce', true, false ); ?>
-                <input type="hidden" name="redirect_to" value="<?php rcl_referer_url( 'remember' ); ?>">
+                <input type="hidden" name="redirect_to" value="<?php esc_url( rcl_referer_url( 'remember' ) ); ?>">
             </div>
         </form>
 	<?php } ?>

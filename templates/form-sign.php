@@ -58,7 +58,7 @@ if ( ! $typeform || $typeform == 'sign' ) {
                class="link-remember-rcl link-tab-rcl "><?php _e( 'Lost your Password', 'wp-recall' ); // Забыли пароль            ?>
                 ?</a>
 			<?php echo wp_nonce_field( 'login-key-rcl', 'login_wpnonce', true, false ); ?>
-            <input type="hidden" name="redirect_to" value="<?php rcl_referer_url( 'login' ); ?>">
+            <input type="hidden" name="redirect_to" value="<?php esc_url( rcl_referer_url( 'login' ) ); ?>">
         </div>
     </form>
 </div>
