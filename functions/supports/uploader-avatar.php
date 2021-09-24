@@ -121,7 +121,7 @@ function rcl_avatar_upload( $uploads, $uploader ) {
 		return;
 	}
 
-	update_user_meta( $user_ID, 'rcl_avatar', $uploads['id'] );
+	update_user_meta( $user_ID, 'rcl_avatar', intval( $uploads['id'] ) );
 
 	do_action( 'rcl_avatar_upload' );
 }

@@ -70,7 +70,7 @@ function rcl_cover_upload( $upload, $class ) {
 
 	wp_delete_attachment( $oldCoverId );
 
-	update_user_meta( $user_ID, 'rcl_cover', $upload['id'] );
+	update_user_meta( $user_ID, 'rcl_cover', intval( $upload['id'] ) );
 
 	do_action( 'rcl_cover_upload' );
 }

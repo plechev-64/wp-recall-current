@@ -168,8 +168,12 @@ function rcl_upload() {
 
 	if ( $className == 'Rcl_Uploader' ) {
 		$uploader = new $className( $options['uploader_id'], $options );
-	} else {
+	} else if ( is_subclass_of( $className, 'Rcl_Uploader' ) ) {
 		$uploader = new $className( $options );
+	} else {
+		wp_send_json( [
+			'error' => __( 'Error', 'wp-recall' )
+		] );
 	}
 
 	if ( md5( json_encode( $uploader ) . rcl_get_option( 'security-key' ) ) != $_POST['sk'] ) {

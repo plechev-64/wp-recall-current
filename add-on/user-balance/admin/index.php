@@ -76,6 +76,12 @@ function rcl_get_chart_payments( $pays ) {
 rcl_ajax_action( 'rcl_edit_balance_user', false );
 function rcl_edit_balance_user() {
 
+	if ( ! current_user_can( 'administrator' ) ) {
+		wp_send_json( array(
+			'error' => __( 'Error', 'wp-recall' )
+		) );
+	}
+
 	$user_id = intval( $_POST['user'] );
 	$balance = floatval( str_replace( ',', '.', $_POST['balance'] ) );
 

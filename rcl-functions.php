@@ -397,7 +397,7 @@ function rcl_is_office( $user_id = null ) {
 		$post = rcl_decode_post( $_POST['post'] );
 
 		if ( $post->master_id ) {
-			$rcl_office = $post->master_id;
+			$rcl_office = intval( $post->master_id );
 		}
 	}
 
