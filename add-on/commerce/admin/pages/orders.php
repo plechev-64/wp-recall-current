@@ -22,11 +22,11 @@ echo rcl_get_chart_orders( $Rcl_History_Orders->items );
 		?>
 	</select>
 	<span class="rcl-datepicker-box">
-		<input type="text" name="date-start" id="orders-date-start" onclick="rcl_show_datepicker( this );" class="rcl-datepicker" value="<?php echo (isset( $_GET['date-start'] )) ? $_GET['date-start'] : ''; ?>">
+		<input type="text" name="date-start" id="orders-date-start" onclick="rcl_show_datepicker( this );" class="rcl-datepicker" value="<?php echo (isset( $_GET['date-start'] )) ? esc_attr($_GET['date-start']) : ''; ?>">
 	</span>
 	<span class="date-separator">-</span>
 	<span class="rcl-datepicker-box">
-		<input type="text" name="date-end" id="orders-date-end" onclick="rcl_show_datepicker( this );" class="rcl-datepicker" value="<?php echo (isset( $_GET['date-end'] )) ? $_GET['date-end'] : ''; ?>">
+		<input type="text" name="date-end" id="orders-date-end" onclick="rcl_show_datepicker( this );" class="rcl-datepicker" value="<?php echo (isset( $_GET['date-end'] )) ? esc_attr($_GET['date-end']) : ''; ?>">
 	</span>
 	<input type="hidden" name="page" value="manage-rmag">
 	<?php submit_button( __( 'Filter', 'wp-recall' ), 'button', '', false, array( 'id' => 'search-submit' ) ); ?>

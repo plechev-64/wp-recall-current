@@ -171,27 +171,27 @@ class Rcl_History_Orders extends WP_List_Table {
 
 		$args = array();
 
-		if ( isset( $_GET['date-start'] ) && $_GET['date-start'] ) {
+		if ( !empty( $_GET['date-start'] ) ) {
 
 			$args['date_query'][] = array(
-				'value'		 => array( $_GET['date-start'], $_GET['date-end'] ),
+				'value'		 => array( sanitize_text_field($_GET['date-start']), sanitize_text_field($_GET['date-end']) ),
 				'compare'	 => 'BETWEEN',
 				'column'	 => 'order_date'
 			);
 
-			if ( isset( $_GET['sts'] ) && $_GET['sts'] )
+			if ( !empty( $_GET['sts'] ) )
 				$args['order_status'] = intval( $_GET['sts'] );
 		}else {
-			if ( isset( $_GET['sts'] ) && $_GET['sts'] ) {
+			if ( !empty( $_GET['sts'] ) ) {
 				$args['order_status'] = intval( $_GET['sts'] );
-			} elseif ( isset( $_GET['user'] ) && $_GET['user'] ) {
+			} elseif ( !empty( $_GET['user'] ) ) {
 				$args['user_id'] = intval( $_GET['user'] );
 			} else {
 				$args['order_status__not_in'] = 6;
 			}
 		}
 
-		if ( isset( $_POST['s'] ) && $_POST['s'] ) {
+		if ( !empty( $_POST['s'] ) ) {
 			$args['order_id'] = intval( $_POST['s'] );
 		}
 
