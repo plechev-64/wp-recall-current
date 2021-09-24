@@ -14,7 +14,7 @@
     </div>
     <div class="feed-author-name">
         <a href="<?php echo rcl_get_user_url( $rcl_feed->feed_author ); ?>">
-			<?php echo get_the_author_meta( 'display_name', $rcl_feed->feed_author ); ?>
+			<?php echo esc_html( get_the_author_meta( 'display_name', $rcl_feed->feed_author ) ); ?>
         </a>
     </div>
     <div class="feed-date">

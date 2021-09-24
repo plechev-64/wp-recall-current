@@ -229,7 +229,7 @@ function rcl_feed_progress() {
 
 	rcl_verify_ajax_nonce();
 
-	$customData = json_decode( base64_decode( $_POST['custom'] ) );
+	$customData = array_map( 'sanitize_text_field', json_decode( base64_decode( $_POST['custom'] ) ) );
 
 	$customData = ( array ) $customData;
 

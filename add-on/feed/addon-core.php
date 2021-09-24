@@ -178,13 +178,13 @@ function rcl_feed_callback() {
 		'rcl_update_feed_current_user'
 	] );
 
-	$callback = $_POST['callback'];
+	$callback = sanitize_key( $_POST['callback'] );
 
 	if ( ! in_array( $callback, $allowedCallbacks ) ) {
 		exit;
 	}
 
-	$data    = $_POST['data'];
+	$data    = intval( $_POST['data'] );
 	$content = $callback( $data );
 
 	wp_send_json( $content );
@@ -192,7 +192,8 @@ function rcl_feed_callback() {
 
 function rcl_feed_content() {
 	global $rcl_feed;
-	echo apply_filters( 'rcl_feed_content', $rcl_feed->feed_content );
+
+	echo wp_kses_post( apply_filters( 'rcl_feed_content', $rcl_feed->feed_content ) );
 }
 
 add_filter( 'rcl_feed_content', 'rcl_add_feed_content_meta', 10 );
@@ -346,7 +347,7 @@ function rcl_ignored_feed_author( $author_id ) {
 }
 
 function rcl_get_feed_array( $user_id, $type_feed = 'author' ) {
-	global $wpdb;
+	global $user_ID;
 
 	$cachekey = json_encode( array( 'rcl_get_feed_array', $user_id, $type_feed ) );
 	$cache    = wp_cache_get( $cachekey );
@@ -356,7 +357,7 @@ function rcl_get_feed_array( $user_id, $type_feed = 'author' ) {
 
 	$users = RQ::tbl( new Rcl_Feed_Query() )->select( [ 'object_id' ] )->where( [
 		'user_id'   => $user_ID,
-		'object_id' => $author_id,
+		'object_id' => $user_id,
 		'feed_type' => 'author'
 	] )->get_col();
 
@@ -380,7 +381,8 @@ function rcl_get_feed_array( $user_id, $type_feed = 'author' ) {
 
 function rcl_feed_title() {
 	global $rcl_feed;
-	echo apply_filters( 'rcl_feed_title', $rcl_feed->feed_title );
+
+	echo wp_kses_post( apply_filters( 'rcl_feed_title', $rcl_feed->feed_title ) );
 }
 
 add_filter( 'rcl_feed_title', 'rcl_add_link_feed_title', 10 );
