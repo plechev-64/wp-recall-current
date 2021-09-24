@@ -362,7 +362,7 @@ class Rcl_Feed_List extends Rcl_Query {
 		$rqst = ( $s_array ) ? implode( '&', $s_array ) . '&' : '';
 
 		if ( $user_LK ) {
-			$url = ( isset( $_POST['tab_url'] ) ) ? $_POST['tab_url'] : rcl_get_user_url( $user_LK );
+			$url = ( isset( $_POST['tab_url'] ) ) ? esc_url( $_POST['tab_url'] ) : rcl_get_user_url( $user_LK );
 		} else {
 			$url = get_permalink( $post->ID );
 		}

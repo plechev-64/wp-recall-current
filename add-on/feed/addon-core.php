@@ -84,7 +84,7 @@ add_action( 'delete_user', 'rcl_remove_user_feed', 10 );
 function rcl_remove_user_feed( $user_id ) {
 	global $wpdb;
 
-	return $wpdb->query( "DELETE FROM " . RCL_PREF . "feeds WHERE user_id='$user_id' OR object_id='$user_id'" );
+	return $wpdb->query( "DELETE FROM " . RCL_PREF . "feeds WHERE user_id='absint($user_id)' OR object_id='absint($user_id)'" );
 }
 
 //получаем данные фида по ИД
@@ -388,7 +388,6 @@ function rcl_feed_title() {
 add_filter( 'rcl_feed_title', 'rcl_add_link_feed_title', 10 );
 function rcl_add_link_feed_title( $feed_title ) {
 	global $rcl_feed;
-	$feed_title = ( $rcl_feed->feed_permalink ) ? sprintf( '<a href="%s">%s</a>', $rcl_feed->feed_permalink, $feed_title ) : $feed_title;
 
-	return $feed_title;
+	return ( $rcl_feed->feed_permalink ) ? sprintf( '<a href="%s">%s</a>', esc_url( $rcl_feed->feed_permalink ), $feed_title ) : $feed_title;
 }
