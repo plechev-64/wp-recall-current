@@ -23,14 +23,14 @@ function pfm_get_forum_name( $forum_id ) {
 
 function pfm_the_forum_description() {
 	global $PrimeForum;
-	echo $PrimeForum->forum_desc;
+	echo esc_html( $PrimeForum->forum_desc );
 }
 
 function pfm_get_forum_description( $forum_id ) {
 	global $PrimeForum;
 
 	if ( $PrimeForum && $PrimeForum->forum_id == $forum_id ) {
-		return $PrimeForum->forum_desc;
+		return esc_html( $PrimeForum->forum_desc );
 	}
 
 	return pfm_get_forum_field( $forum_id, 'forum_desc' );
