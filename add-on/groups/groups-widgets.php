@@ -22,7 +22,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 		$instance = wp_parse_args( ( array ) $instance, $defaults );
 
 		echo '<label>' . __( 'Title', 'wp-recall' ) . '</label>'
-		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . $instance['title'] . '">';
+		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . esc_html( $instance['title'] ) . '">';
 	}
 
 	function widget( $args ) {
@@ -37,7 +37,9 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 		//if($rcl_group->current_user=='banned') return false;
 
 		if ( rcl_is_group_can( 'reader' ) ) {
-
+			/**
+			 * @var $before string additional info
+			 */
 			echo $before;
 
 			echo '<form method="post">'
@@ -50,12 +52,16 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 			     . '<input type="hidden" name="group-action" value="leave">'
 			     . wp_nonce_field( 'group-action-' . $user_ID, '_wpnonce', true, false )
 			     . '</form>';
-
+			/**
+			 * @var $after string additional info
+			 */
 			echo $after;
 		} else {
 
 			if ( rcl_get_group_option( $rcl_group->term_id, 'can_register' ) ) {
-
+				/**
+				 * @var $before string additional info
+				 */
 				echo $before;
 				if ( $rcl_group->current_user == 'banned' ) {
 					echo rcl_get_notice( [
@@ -98,7 +104,9 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 						}
 					}
 				}
-
+				/**
+				 * @var $after string additional info
+				 */
 				echo $after;
 			}
 		}
@@ -133,11 +141,15 @@ class Group_Users_Widget extends Rcl_Group_Widget {
 
 		$user_count = ( isset( $instance['count'] ) ) ? $instance['count'] : 12;
 		$template   = ( isset( $instance['template'] ) ) ? $instance['template'] : 'mini';
-
+		/**
+		 * @var $before string additional info
+		 */
 		echo $before;
 		echo rcl_group_users( $user_count, $template );
 		echo rcl_get_group_link( 'rcl_get_group_users', __( 'All users', 'wp-recall' ) );
-
+		/**
+		 * @var $after string additional info
+		 */
 		echo $after;
 	}
 
@@ -147,9 +159,9 @@ class Group_Users_Widget extends Rcl_Group_Widget {
 		$instance = wp_parse_args( ( array ) $instance, $defaults );
 
 		echo '<label>' . __( 'Title', 'wp-recall' ) . '</label>'
-		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . $instance['title'] . '">';
+		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . esc_html( $instance['title'] ) . '">';
 		echo '<label>' . __( 'Amount', 'wp-recall' ) . '</label>'
-		     . '<input type="number" name="' . $this->field_name( 'count' ) . '" value="' . $instance['count'] . '">';
+		     . '<input type="number" name="' . $this->field_name( 'count' ) . '" value="' . absint( $instance['count'] ) . '">';
 		echo '<label>' . __( 'Template', 'wp-recall' ) . '</label>'
 		     . '<select name="' . $this->field_name( 'template' ) . '">'
 		     . '<option value="mini" ' . selected( 'mini', $instance['template'], false ) . '>Mini</option>'
@@ -185,11 +197,15 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
 		extract( $args );
 
 		global $rcl_group;
-
+		/**
+		 * @var $before string additional info
+		 */
 		echo $before;
 
 		echo do_shortcode( '[public-form post_type="post-group" select_type="select" select_amount="1" group_id="' . $rcl_group->term_id . '"]' );
-
+		/**
+		 * @var $after string additional info
+		 */
 		echo $after;
 	}
 
@@ -199,7 +215,7 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
 		$instance = wp_parse_args( ( array ) $instance, $defaults );
 
 		echo '<label>' . __( 'Title', 'wp-recall' ) . '</label>'
-		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . $instance['title'] . '">';
+		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . esc_html( $instance['title'] ) . '">';
 	}
 
 }
@@ -225,7 +241,7 @@ class Group_CategoryList_Widget extends Rcl_Group_Widget {
 		$instance = wp_parse_args( ( array ) $instance, $defaults );
 
 		echo '<label>' . __( 'Title', 'wp-recall' ) . '</label>'
-		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . $instance['title'] . '">';
+		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . esc_html( $instance['title'] ) . '">';
 	}
 
 	function widget( $args ) {
@@ -242,10 +258,15 @@ class Group_CategoryList_Widget extends Rcl_Group_Widget {
 		if ( ! $category ) {
 			return false;
 		}
-
+		/**
+		 * @var $before string additional info
+		 */
 		echo $before;
 
 		echo $category;
+		/**
+		 * @var $after string additional info
+		 */
 		echo $after;
 	}
 
@@ -274,9 +295,14 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 
 		$user_count = ( isset( $instance['count'] ) ) ? $instance['count'] : 12;
 		$template   = ( isset( $instance['template'] ) ) ? $instance['template'] : 'mini';
-
+		/**
+		 * @var $before string additional info
+		 */
 		echo $before;
 		echo $this->get_group_administrators( $user_count, $template );
+		/**
+		 * @var $after string additional info
+		 */
 		echo $after;
 	}
 
@@ -318,7 +344,7 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 		$instance = wp_parse_args( ( array ) $instance, $defaults );
 
 		echo '<label>' . __( 'Title', 'wp-recall' ) . '</label>'
-		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . $instance['title'] . '">';
+		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . esc_html( $instance['title'] ) . '">';
 		echo '<label>' . __( 'Template', 'wp-recall' ) . '</label>'
 		     . '<select name="' . $this->field_name( 'template' ) . '">'
 		     . '<option value="mini" ' . selected( 'mini', $instance['template'], false ) . '>Mini</option>'
@@ -356,6 +382,9 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 		extract( $args );
 
 		if ( ! rcl_get_member_group_access_status() ) {
+			/**
+			 * @var $before string additional info
+			 */
 			echo $before;
 			echo rcl_close_group_post_content();
 
@@ -364,7 +393,9 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 					'text' => __( 'Login and send a request to receive an access of the group', 'wp-recall' ),
 				] );
 			}
-
+			/**
+			 * @var $after string additional info
+			 */
 			echo $after;
 
 			return;
@@ -378,13 +409,15 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 		);
 
 		$instance = wp_parse_args( ( array ) $instance, $defaults );
-
+		/**
+		 * @var $before string additional info
+		 */
 		echo $before;
 		?>
 
 		<?php
 		if ( rcl_get_option( 'group-output' ) ) { //если вывод через шорткод на странице
-			$term_id = ( isset( $_GET['group-tag'] ) && $_GET['group-tag'] != '' ) ? $_GET['group-tag'] : $rcl_group->term_id;
+			$term_id = ( isset( $_GET['group-tag'] ) && $_GET['group-tag'] != '' ) ? sanitize_text_field( $_GET['group-tag'] ) : $rcl_group->term_id;
 
 			$args = array(
 				'post_type'   => 'post-group',
@@ -488,6 +521,9 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 		<?php } ?>
 
 		<?php
+		/**
+		 * @var $after string additional info
+		 */
 		echo $after;
 	}
 
@@ -502,7 +538,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 		$instance = wp_parse_args( ( array ) $instance, $defaults );
 
 		echo '<label>' . __( 'Title', 'wp-recall' ) . '</label>'
-		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . $instance['title'] . '">';
+		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . esc_html( $instance['title'] ) . '">';
 		echo '<label>' . __( 'Summary', 'wp-recall' ) . '</label>'
 		     . '<select name="' . $this->field_name( 'excerpt' ) . '">'
 		     . '<option value="0" ' . selected( 0, $instance['excerpt'], false ) . '>' . __( 'Do not display', 'wp-recall' ) . '</option>'

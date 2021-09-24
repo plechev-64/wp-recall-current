@@ -97,7 +97,7 @@ function rcl_add_group_id_in_form( $content, $formData ) {
 		return $content;
 	}
 
-	$content .= '<input type="hidden" name="term_id" value="' . base64_encode( $group_id ) . '">';
+	$content .= '<input type="hidden" name="term_id" value="' . base64_encode( absint( $group_id ) ) . '">';
 
 	return $content;
 }

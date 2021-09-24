@@ -135,16 +135,16 @@ class Rcl_Group_Widget {
 		$widgets_options = rcl_get_group_option( $group_id, 'widgets_options' );
 
 		foreach ( $rcl_group_area as $zone ) {
+			$zone_id = esc_attr( $zone['id'] );
+			$zones[] = '#' . $zone_id . '-widgets';
 
-			$zones[] = '#' . $zone['id'] . '-widgets';
-
-			$content .= '<div id="' . $zone['id'] . '-zone" class="widgets-zone">';
-			$content .= '<input type="hidden" name="data[][content]" value="' . $zone['id'] . '">';
+			$content .= '<div id="' . $zone_id . '-zone" class="widgets-zone">';
+			$content .= '<input type="hidden" name="data[][content]" value="' . $zone_id . '">';
 			$content .= '<span class="zone-name">' . $zone['name'] . '</span>';
-			$content .= '<ul id="' . $zone['id'] . '-widgets" class="sortable-connected">';
+			$content .= '<ul id="' . $zone_id . '-widgets" class="sortable-connected">';
 			foreach ( $rcl_group_widgets as $widget ) {
 
-				if ( $widget->widget_place != $zone['id'] ) {
+				if ( $widget->widget_place != $zone_id ) {
 					continue;
 				}
 
@@ -164,7 +164,7 @@ class Rcl_Group_Widget {
 
 				$content .= '<li id="' . $widget->widget_id . '-widget" class="widget-box">';
 
-				$content .= '<input type="hidden" name="data[][widget][' . $this->widget['widget_id'] . '][id]" value="' . $widget->widget_id . '">';
+				$content .= '<input type="hidden" name="data[][widget][' . $this->widget['widget_id'] . '][id]" value="' . esc_attr( $widget->widget_id ) . '">';
 
 				if ( $options ) {
 					$content .= '<span class="widget-name" onclick="rcl_more_view(this); return false;"><i class="rcli fa-plus-square-o"></i><span class="widget-name-title">' . $widget->widget_title . '</span></span>';
@@ -311,8 +311,6 @@ function rcl_edit_group_widgets( $widgets ) {
 			if ( $key !== false ) {
 				$widget->widget_place              = $zone['id'];
 				$NewWidgets[ $zone['id'] ][ $key ] = $widget;
-			} else {
-
 			}
 		}
 	}

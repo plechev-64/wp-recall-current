@@ -1,4 +1,9 @@
-<?php global $post; ?>
+<?php
+/**
+ * @var string $thumbnail post
+ * @var string $excerpt post
+ */
+global $post; ?>
 <div class="post-group">
     <div class="postdata-header">
         <div class="post-meta">
@@ -10,7 +15,7 @@
             </span>
         </div>
         <h3>
-            <a href="<?php the_permalink(); ?>"><?php echo $post->post_title; ?></a>
+            <a href="<?php the_permalink(); ?>"><?php echo wp_kses_post( $post->post_title ); ?></a>
         </h3>
     </div>
 

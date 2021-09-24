@@ -30,7 +30,7 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 		$this->setup_termdata();
 
 		if ( isset( $_GET['groups-filter'] ) && $this->filters ) {
-			$this->orderby = $_GET['groups-filter'];
+			$this->orderby = sanitize_key( $_GET['groups-filter'] );
 		}
 
 		if ( isset( $_GET['group-name'] ) ) {
@@ -192,7 +192,7 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 		$filters = apply_filters( 'rcl_groups_filter', $filters );
 
 		if ( rcl_is_office() ) {
-			$url = ( isset( $_POST['tab_url'] ) ) ? $_POST['tab_url'] : rcl_get_user_url( $user_LK );
+			$url = ( isset( $_POST['tab_url'] ) ) ? esc_url( $_POST['tab_url'] ) : rcl_get_user_url( $user_LK );
 		} else {
 			$url = get_permalink( $post->ID );
 		}
@@ -207,7 +207,7 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 				);
 
 				if ( isset( $_GET['tab'] ) ) {
-					$args['tab'] = $_GET['tab'];
+					$args['tab'] = sanitize_key( $_GET['tab'] );
 				}
 
 				$content .= rcl_get_button( array(
