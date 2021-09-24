@@ -288,6 +288,9 @@ class Rcl_Query extends Rcl_Old_Query {
 			} else if ( isset( $where[ $col_name . '__like' ] ) && $where[ $col_name . '__like' ] ) {
 
 				$data = $where[ $col_name . '__like' ];
+				//maybe
+				//global $wpdb;
+				//$this->query['where'][] = $wpdb->prepare( $this->table['as'] . ".$col_name LIKE %s", '%' . $wpdb->esc_like( $data ) . '%' );
 
 				$this->query['where'][] = $this->table['as'] . ".$col_name LIKE '%" . esc_sql( $data ) . "%'";
 			} else if ( isset( $where[ $col_name . '__to' ] ) ) {
@@ -307,7 +310,7 @@ class Rcl_Query extends Rcl_Old_Query {
 			} else if ( isset( $where[ $col_name . '__is' ] ) ) {
 
 				$data = $where[ $col_name . '__is' ];
-
+				//esc_sql ?
 				$this->query['where'][] = $this->table['as'] . ".$col_name IS " . $data;
 			}
 		}
@@ -351,7 +354,7 @@ class Rcl_Query extends Rcl_Old_Query {
 			if ( is_numeric( $var ) ) {
 				$array[] = $var;
 			} else {
-				$array[] = "'$var'";
+				$array[] = "'$var'";//esc_sql ?
 			}
 		}
 
@@ -448,7 +451,7 @@ class Rcl_Query extends Rcl_Old_Query {
 	}
 
 	function get_sql( $query = false ) {
-
+//Возможно тут надо все ескейпить, либо делать это в методах groupby, orderby и т.д.
 		$query = $query ? $query : $this->get_query();
 
 		if ( ! isset( $query['select'] ) || ! $query['select'] ) {
@@ -496,7 +499,7 @@ class Rcl_Query extends Rcl_Old_Query {
 		}
 
 		if ( isset( $query['groupby'] ) && $query['groupby'] ) {
-			$sql[] = "GROUP BY " . $query['groupby'];
+			$sql[] = "GROUP BY " . $query['groupby'];//esc_sql ?
 		}
 
 		if ( isset( $query['having'] ) && $query['having'] ) {
@@ -504,7 +507,7 @@ class Rcl_Query extends Rcl_Old_Query {
 		}
 
 		if ( isset( $query['orderby'] ) && $query['orderby'] ) {
-
+			//maybe sanitize_sql_orderby
 			if ( is_array( $query['orderby'] ) ) {
 				$orders = array();
 				foreach ( $query['orderby'] as $orderby => $order ) {
