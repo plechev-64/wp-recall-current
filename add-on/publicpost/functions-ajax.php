@@ -7,16 +7,20 @@ function rcl_ajax_delete_post() {
 
 	rcl_verify_ajax_nonce();
 
-	$user_id = ( $user_ID ) ? $user_ID : $_COOKIE['PHPSESSID'];
+	$user_id = ( $user_ID ) ? $user_ID : sanitize_text_field( $_COOKIE['PHPSESSID'] );
 
 	$temps    = get_site_option( 'rcl_tempgallery' );
 	$temp_gal = $temps[ $user_id ];
+
+	$attach_to_remove = 0;
 
 	if ( $temp_gal ) {
 
 		foreach ( ( array ) $temp_gal as $key => $gal ) {
 			if ( $gal['ID'] == $_POST['post_id'] ) {
 				unset( $temp_gal[ $key ] );
+				//post_id should be in user temp
+				$attach_to_remove = $gal['ID'];
 			}
 		}
 		foreach ( ( array ) $temp_gal as $t ) {
@@ -32,9 +36,9 @@ function rcl_ajax_delete_post() {
 
 	update_site_option( 'rcl_tempgallery', $temps );
 
-	$post = get_post( intval( $_POST['post_id'] ) );
+	$post = get_post( $attach_to_remove );
 
-	if ( ! $post ) {
+	if ( ! $attach_to_remove || ! $post ) {
 		$log['success']   = __( 'Material successfully removed!', 'wp-recall' );
 		$log['post_type'] = 'attachment';
 	} else {
