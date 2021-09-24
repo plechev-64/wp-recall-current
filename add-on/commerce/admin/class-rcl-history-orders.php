@@ -168,7 +168,7 @@ class Rcl_History_Orders extends WP_List_Table {
 			if ( isset( $_GET['action'] ) ) {
 				switch ( $_GET['action'] ) {
 					case 'update_status':
-						return rcl_update_status_order( sanitize_text_field( $_REQUEST['order'] ), sanitize_text_field( $_REQUEST['status'] ) );
+						return rcl_update_status_order( intval( $_REQUEST['order'] ), sanitize_text_field( $_REQUEST['status'] ) );
 					case 'delete':
 						return rcl_delete_order( intval( $_REQUEST['order'] ) );
 				}
