@@ -137,7 +137,7 @@ function rcl_postmeta_update( $post_id ) {
 		return false;
 	}
 
-	$POST = array_map('sanitize_text_field', $_POST['wprecall']);
+	$POST = rcl_recursive_map('sanitize_text_field', $_POST['wprecall']);
 
 	foreach ( $POST as $key => $value ) {
 		if ( ! is_array( $value ) ) {
@@ -258,7 +258,7 @@ function rcl_update_custom_fields() {
 		$table = 'usermeta';
 	}
 
-	$POSTDATA = apply_filters( 'rcl_pre_update_custom_fields_options', array_map('sanitize_text_field', $_POST) );
+	$POSTDATA = apply_filters( 'rcl_pre_update_custom_fields_options', rcl_recursive_map('sanitize_text_field', $_POST) );
 
 	if ( ! $POSTDATA ) {
 		return false;
@@ -490,7 +490,9 @@ function rcl_send_addon_activation_notice( $addon_id, $addon_headers ) {
 rcl_ajax_action( 'rcl_manager_get_new_field', false );
 function rcl_manager_get_new_field() {
 
-	$managerProps = array_map('sanitize_text_field', $_POST['props']);
+	$_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+	$managerProps = $_POST['props'];
 
 	$Manager = new Rcl_Fields_Manager( $managerProps['manager_id'], $managerProps );
 
@@ -510,11 +512,11 @@ function rcl_manager_get_new_field() {
 rcl_ajax_action( 'rcl_manager_get_custom_field_options', false );
 function rcl_manager_get_custom_field_options() {
 
-	$new_type = sanitize_text_field($_POST['newType']);
-	$old_type = sanitize_text_field($_POST['oldType']);
-	$field_id = sanitize_text_field($_POST['fieldId']);
+	$_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-	$managerProps = array_map('sanitize_text_field', $_POST['manager']);
+	$new_type = sanitize_text_field($_POST['newType']);
+	$field_id = sanitize_text_field($_POST['fieldId']);
+	$managerProps = $_POST['manager'];
 
 	$Manager = new Rcl_Fields_Manager( $managerProps['manager_id'], $managerProps );
 
@@ -554,7 +556,9 @@ function rcl_manager_get_custom_field_options() {
 rcl_ajax_action( 'rcl_manager_get_new_area', false );
 function rcl_manager_get_new_area() {
 
-	$managerProps = array_map('sanitize_text_field', $_POST['props']);
+	$_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+	$managerProps = $_POST['props'];
 
 	$Manager = new Rcl_Fields_Manager( 'any', $managerProps );
 
@@ -566,7 +570,9 @@ function rcl_manager_get_new_area() {
 rcl_ajax_action( 'rcl_manager_get_new_group', false );
 function rcl_manager_get_new_group() {
 
-	$managerProps = array_map('sanitize_text_field', $_POST['props']);
+	$_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+	$managerProps = $_POST['props'];
 
 	$Manager = new Rcl_Fields_Manager( 'any', $managerProps );
 
@@ -606,17 +612,20 @@ function rcl_manager_update_fields_by_post() {
 function rcl_manager_update_data_fields() {
 	global $wpdb;
 
+	$_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
 	$copy        = sanitize_text_field($_POST['copy']);
 	$manager_id  = sanitize_text_field($_POST['manager_id']);
 	$option_name = sanitize_text_field($_POST['option_name']);
 
-	$fieldsData = array_map('sanitize_text_field', wp_unslash( $_POST['fields'] ));
-	$structure  = isset( $_POST['structure'] ) ? array_map('sanitize_text_field', $_POST['structure']) : false;
+	$fieldsData = rcl_recursive_map('sanitize_text_field', wp_unslash( $_POST['fields'] ));
+	$structure  = isset( $_POST['structure'] ) ? rcl_recursive_map('sanitize_text_field', $_POST['structure']) : false;
 
 	$fields    = array();
 	$keyFields = array();
 	$changeIds = array();
 	$isset_new = false;
+
 	foreach ( $fieldsData as $field_id => $field ) {
 
 		if ( ! $field['title'] ) {
@@ -680,6 +689,9 @@ function rcl_manager_update_data_fields() {
 					$strArray[ $group_id ]['areas'][ $area_id ]['fields'][] = $value['field_id'];
 				}
 			} else {
+
+				$group_id = 0;
+
 				$area_id ++;
 				$strArray[ $group_id ]['areas'][ $area_id ]['width'] = isset( $_POST['structure-areas'][ $area_id ]['width'] ) ? $_POST['structure-areas'][ $area_id ]['width'] : 0;
 			}
@@ -700,19 +712,21 @@ function rcl_manager_update_data_fields() {
 
 				$fieldsArea = array();
 
-				foreach ( $area['fields'] as $k => $field_id ) {
+				if(!empty($area['fields'])){
+					foreach ( $area['fields'] as $k => $field_id ) {
 
-					if ( isset( $changeIds[ $field_id ] ) ) {
-						$field_id = $changeIds[ $field_id ];
+						if ( isset( $changeIds[ $field_id ] ) ) {
+							$field_id = $changeIds[ $field_id ];
+						}
+
+						if ( ! isset( $keyFields[ $field_id ] ) ) {
+							unset( $area['fields'][ $k ] );
+							continue;
+						}
+
+						$fieldsArea[] = $field_id;
 					}
-
-					if ( ! isset( $keyFields[ $field_id ] ) ) {
-						unset( $area['fields'][ $k ] );
-						continue;
-					}
-
-					$fieldsArea[] = $field_id;
-				}
+                }
 
 				$endStructure[ $group_id ]['areas'][] = array(
 					'width'  => round( $area['width'], 0 ),
@@ -739,10 +753,10 @@ function rcl_manager_update_data_fields() {
 	}
 
 	if ( isset( $_POST['deleted_fields'] ) && $_POST['deleted_fields'] ) {
-		$deleteFields = array_map('sanitize_text_field', $_POST['delete_table_data']);
+		$deleteFields = rcl_recursive_map('sanitize_text_field', $_POST['delete_table_data']);
 		if ( !empty($deleteFields) ) {
 			foreach ( $deleteFields as $table_name => $colname ) {
-				$wpdb->query( "DELETE FROM $table_name WHERE $colname IN ('" . implode( "','", array_map('sanitize_text_field', $_POST['deleted_fields']) ) . "')" );
+				$wpdb->query( "DELETE FROM $table_name WHERE $colname IN ('" . implode( "','", rcl_recursive_map('sanitize_text_field', $_POST['deleted_fields']) ) . "')" );
 			}
 
 			$args['reload'] = true;
@@ -772,3 +786,4 @@ function rcl_manager_update_data_fields() {
 }
 
 /* new fields manager functions end */
+

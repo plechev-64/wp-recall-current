@@ -71,7 +71,7 @@ function rcl_init_custom_tabs() {
 				continue;
 			}
 
-			$supports = ( isset( $tab['supports-tab'] ) ) ? $tab['supports-tab'] : array();
+			$supports = !empty( $tab['supports-tab'] ) && is_array($tab['supports-tab']) ? $tab['supports-tab'] : array();
 
 			$tab_data = array(
 				'id'         => $tab['slug'],
@@ -1262,7 +1262,8 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 			'last_name',
 			'display_name',
 			'primary_pass',
-			'repeat_pass'
+			'repeat_pass',
+			'show_admin_bar_front'
 		);
 
 		foreach ( $profileFields as $field ) {
@@ -1303,12 +1304,9 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 			}
 
 			if ( $field['type'] != 'editor' ) {
-
-				if ( is_array( $value ) ) {
-					$value = array_map( 'esc_html', $value );
-				} else {
-					$value = esc_html( $value );
-				}
+				$value = rcl_recursive_map( 'sanitize_text_field', $value );
+			}else{
+				$value = rcl_recursive_map( 'esc_html', $value );
 			}
 
 			if ( in_array( $slug, $defaultFields ) ) {
@@ -1729,4 +1727,17 @@ function rcl_beat_action_exist( $beatName, $action ) {
 	$beat_actions = $rcl_beats[ $beatName ]['actions'] ?? [];
 
 	return in_array( $action, $beat_actions );
+}
+
+function rcl_recursive_map( $callback, $data){
+
+	if(!is_array($data)){
+		$data = $callback($data);
+	}else{
+		foreach($data as $k => $v){
+			$data[$k] = rcl_recursive_map($callback, $v);
+		}
+	}
+
+	return $data;
 }

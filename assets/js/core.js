@@ -1562,7 +1562,7 @@ function RclUploader(props, sk) {
 
                 var image = jQuery('#rcl-preview img');
 
-                image.load(function () {
+                image.on('load', function () {
 
                     var img = jQuery(this);
                     var cf = 1;

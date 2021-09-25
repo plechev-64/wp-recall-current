@@ -21,7 +21,7 @@ function rcl_add_order_notices() {
 
 	$buyer_register = rcl_get_commerce_option( 'buyer_register', 1 );
 
-	$status = intval( $_GET['order-status'] );
+	$status = sanitize_text_field( $_GET['order-status'] );
 
 	$notice = '<div class="rcl-order-notices order-before-box">';
 

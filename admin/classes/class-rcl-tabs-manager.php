@@ -124,17 +124,23 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 				}
 			}
 
-			foreach ( $defaultTabs as $tab ) {
-				if ( $this->is_active_field( $tab['slug'] ) ) {
-					continue;
+			if(!empty($defaultTabs)){
+				foreach ( $defaultTabs as $tab ) {
+					if ( $this->is_active_field( $tab['slug'] ) ) {
+						continue;
+					}
+					$this->add_field( $tab );
 				}
-				$this->add_field( $tab );
 			}
+
 		} else {
 
-			foreach ( $defaultTabs as $tab ) {
-				$this->add_field( $tab );
+			if(!empty($defaultTabs)){
+				foreach ( $defaultTabs as $tab ) {
+					$this->add_field( $tab );
+				}
 			}
+
 		}
 	}
 

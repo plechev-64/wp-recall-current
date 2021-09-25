@@ -103,7 +103,7 @@ function rcl_add_cover_inline_styles( $styles ) {
 	$dataUrl    = wp_parse_url( $cover_url );
 	$cover_path = untrailingslashit( ABSPATH ) . $dataUrl['path'];
 
-	$styles .= '#lk-conteyner{background-image: url(' . $cover_url . '?vers=' . filemtime( $cover_path ) . ');}';
+	$styles .= '#lk-conteyner{background-image: url(' . $cover_url . '?vers=' . @filemtime( $cover_path ) . ');}';
 
 	return $styles;
 }

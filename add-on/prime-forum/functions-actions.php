@@ -146,7 +146,7 @@ function pfm_the_post_manager() {
 		);
 	}
 
-	if ( pfm_is_can( 'post_create' ) && $PrimeTopic && ! $PrimeTopic->topic_closed && ! $PrimeTopic->forum_closed ) {
+	if ( pfm_is_can( 'post_create' ) && $PrimeTopic && ! empty($PrimeTopic->topic_closed) && ! empty($PrimeTopic->forum_closed) ) {
 
 		$actions['get_post_excerpt'] = array(
 			'name' => __( 'Quote message', 'wp-recall' ),

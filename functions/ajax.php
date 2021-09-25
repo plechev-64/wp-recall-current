@@ -51,7 +51,7 @@ function rcl_ajax_tab() {
 		'post'   => array(
 			'tab_id'    => $post->tab_id,
 			'subtab_id' => isset( $post->subtab_id ) ? $post->subtab_id : '',
-			'tab_url'   => ( isset( $_POST['tab'] ) ) ? esc_url( $_POST['tab_url'] . '&tab=' . $_POST['tab'] ) : esc_url( $_POST['tab_url'] ),
+			'tab_url'   => ( isset( $_POST['tab'] ) ) ? esc_url_raw( $_POST['tab_url'] . '&tab=' . $_POST['tab'] ) : esc_url_raw( $_POST['tab_url'] ),
 			'supports'  => $tab['supports'],
 			'master_id' => intval( $post->master_id )
 		)

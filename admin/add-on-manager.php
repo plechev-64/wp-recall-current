@@ -195,7 +195,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
 
 	function column_cb( $item ) {
 		return sprintf(
-			'<input type="checkbox" name="addons[]" value="%s" />', intval($item['ID'])
+			'<input type="checkbox" name="addons[]" value="%s" />', sanitize_text_field($item['ID'])
 		);
 	}
 
@@ -296,8 +296,6 @@ function rcl_update_status_addon() {
 	}
 
 	if ( isset( $_GET['addon'] ) && isset( $_GET['action'] ) ) {
-
-		global $wpdb, $user_ID, $active_addons;
 
 		if ( ! current_user_can( 'activate_plugins' ) ) {
 			wp_die( __( 'Insufficient rights to install plugins on this site.', 'wp-recall' ) );

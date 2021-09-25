@@ -42,7 +42,7 @@ if ( isset( $_GET['update-addon'] ) ) {
 			break;
 	}
 
-	echo '<div id="message" class="' . $type . '"><p>' . esc_html($text_notice) . '</p></div>';
+	echo '<div id="message" class="' . $type . '"><p>' . $text_notice . '</p></div>';
 }
 
 if ( isset( $_POST['save-rcl-key'] ) ) {
