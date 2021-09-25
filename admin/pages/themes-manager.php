@@ -14,8 +14,8 @@ echo '<div id="icon-plugins" class="icon32"><br></div>
 
 if ( isset( $_POST['save-rcl-key'] ) ) {
 	if ( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ) {
-		update_site_option( 'rcl-key', $_POST['rcl-key'] );
-		echo '<div id="message" class="' . $type . '"><p>' . __( 'Key has been saved', 'wp-recall' ) . '!</p></div>';
+		update_site_option( 'rcl-key', sanitize_text_field($_POST['rcl-key']) );
+		echo '<div id="message"><p>' . __( 'Key has been saved', 'wp-recall' ) . '!</p></div>';
 	}
 }
 

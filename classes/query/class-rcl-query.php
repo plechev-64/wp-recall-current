@@ -506,19 +506,24 @@ class Rcl_Query extends Rcl_Old_Query {
 			$sql[] = "HAVING " . implode( ' AND ', $query['having'] );
 		}
 
+		$orderBy = '';
 		if ( isset( $query['orderby'] ) && $query['orderby'] ) {
-			//maybe sanitize_sql_orderby
+
 			if ( is_array( $query['orderby'] ) ) {
 				$orders = array();
 				foreach ( $query['orderby'] as $orderby => $order ) {
 					$orders[] = $orderby . " " . $order;
 				}
-				$sql[] = "ORDER BY " . implode( ",", $orders );
+				$orderBy = implode( ",", $orders );
 			} else {
-				$sql[] = "ORDER BY " . $query['orderby'] . " " . $query['order'];
+				$orderBy = $query['orderby'] . " " . $query['order'];
 			}
 		} else {
-			$sql[] = "ORDER BY " . $this->table['as'] . "." . $this->table['cols'][0] . " " . ( isset( $query['order'] ) ? $query['order'] : 'DESC' );
+			$orderBy = $this->table['as'] . "." . $this->table['cols'][0] . " " . ( isset( $query['order'] ) ? $query['order'] : 'DESC' );
+		}
+
+		if($orderBy && sanitize_sql_orderby($orderBy)){
+			$sql[] = "ORDER BY " . $orderBy;
 		}
 
 		if ( isset( $query['number'] ) && $query['number'] ) {

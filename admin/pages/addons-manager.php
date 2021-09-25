@@ -37,12 +37,12 @@ if ( isset( $_GET['update-addon'] ) ) {
 			$type        = 'error';
 			break;
 		case 'error-activate':
-			$text_notice = $_GET['error-text'];
+			$text_notice = esc_html($_GET['error-text']);
 			$type        = 'error';
 			break;
 	}
 
-	echo '<div id="message" class="' . $type . '"><p>' . $text_notice . '</p></div>';
+	echo '<div id="message" class="' . $type . '"><p>' . esc_html($text_notice) . '</p></div>';
 }
 
 if ( isset( $_POST['save-rcl-key'] ) ) {

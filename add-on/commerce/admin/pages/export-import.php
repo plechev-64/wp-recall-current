@@ -87,13 +87,13 @@ $content .= '<form method="post" action="" enctype="multipart/form-data">
 
 if ( $_FILES['rcl-import-products'] && wp_verify_nonce( $_POST['_wpnonce'], 'rcl-import-products-nonce' ) ) {
 
-	$file_name = $_FILES['rcl-import-products']['name'];
+	$file_name = sanitize_text_field($_FILES['rcl-import-products']['name']);
 
 	$rest = substr( $file_name, - 4 ); //получаем расширение файла
 
 	if ( $rest == '.xml' ) {
 
-		$filename = $_FILES['rcl-import-products']['tmp_name'];
+		$filename = sanitize_text_field($_FILES['rcl-import-products']['tmp_name']);
 
 		$filepath = wp_normalize_path( current( wp_upload_dir() ) . "/" . basename( $filename ) );
 

@@ -47,7 +47,7 @@ function rcl_stats_metabox() {
 	);
 
 	foreach ( $data as $d ) {
-		echo '<p><b>' . $d['name'] . ':</b> ' . $d['content'] . '</p>';
+		echo '<p><b>' . esc_html($d['name']) . ':</b> ' . esc_html($d['content']) . '</p>';
 	}
 }
 
@@ -65,7 +65,7 @@ function rcl_news_metabox() {
 
 	echo '<ul>';
 	foreach ( $xmlData as $post ) {
-		echo '<li><h4><a href="' . $post->post_url . '" target="_blank">' . $post->post_title . '</a></h4></li>';
+		echo '<li><h4><a href="' . esc_url($post->post_url) . '" target="_blank">' . sanitize_text_field($post->post_title) . '</a></h4></li>';
 	}
 	echo '</ul>';
 }

@@ -122,7 +122,7 @@ function rcl_template_update_status() {
 
 		global $wpdb, $user_ID, $active_addons;
 
-		$addon  = $_GET['template'];
+		$addon  = sanitize_text_field($_GET['template']);
 		$action = rcl_wp_list_current_action();
 
 		if ( $action == 'connect' ) {

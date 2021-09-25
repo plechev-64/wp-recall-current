@@ -150,8 +150,8 @@ class Rcl_Templates_Manager extends WP_List_Table {
 	}
 
 	function usort_reorder( $a, $b ) {
-		$orderby = ( ! empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'addon_name';
-		$order   = ( ! empty( $_GET['order'] ) ) ? $_GET['order'] : 'asc';
+		$orderby = ( ! empty( $_GET['orderby'] ) ) ? sanitize_text_field($_GET['orderby'] ): 'addon_name';
+		$order   = ( ! empty( $_GET['order'] ) ) ? sanitize_text_field($_GET['order']) : 'asc';
 		$result  = strcmp( $a[ $orderby ], $b[ $orderby ] );
 
 		return ( $order === 'asc' ) ? $result : - $result;
@@ -162,8 +162,8 @@ class Rcl_Templates_Manager extends WP_List_Table {
 		$actions = array();
 
 		if ( $item['addon_status'] != 1 ) {
-			$actions['delete']  = sprintf( '<a href="?page=%s&action=%s&template=%s">' . __( 'Delete', 'wp-recall' ) . '</a>', $_REQUEST['page'], 'delete', $item['ID'] );
-			$actions['connect'] = sprintf( '<a href="?page=%s&action=%s&template=%s">' . __( 'connect', 'wp-recall' ) . '</a>', $_REQUEST['page'], 'connect', $item['ID'] );
+			$actions['delete']  = sprintf( '<a href="?page=%s&action=%s&template=%s">' . __( 'Delete', 'wp-recall' ) . '</a>', esc_attr($_REQUEST['page']), 'delete', esc_attr($item['ID']) );
+			$actions['connect'] = sprintf( '<a href="?page=%s&action=%s&template=%s">' . __( 'connect', 'wp-recall' ) . '</a>', esc_attr($_REQUEST['page']), 'connect', esc_attr($item['ID']) );
 		}
 
 		return sprintf( '%1$s %2$s', '<strong>' . $item['addon_name'] . '</strong>', $this->row_actions( $actions ) );
@@ -171,7 +171,7 @@ class Rcl_Templates_Manager extends WP_List_Table {
 
 	function column_cb( $item ) {
 		return sprintf(
-			'<input type="checkbox" name="addons[]" value="%s" />', $item['ID']
+			'<input type="checkbox" name="addons[]" value="%s" />', esc_attr($item['ID'])
 		);
 	}
 
@@ -180,12 +180,12 @@ class Rcl_Templates_Manager extends WP_List_Table {
                 <p>' . $data['description'] . '</p>
             </div>
             <div class="active second plugin-version-author-uri">
-            ' . __( 'Version', 'wp-recall' ) . ' ' . $data['version'];
+            ' . __( 'Version', 'wp-recall' ) . ' ' . esc_attr($data['version']);
 		if ( isset( $data['author-uri'] ) ) {
-			$content .= ' | ' . __( 'Author', 'wp-recall' ) . ': <a title="' . __( 'Visit the author’s page', 'wp-recall' ) . '" href="' . $data['author-uri'] . '" target="_blank">' . $data['author'] . '</a>';
+			$content .= ' | ' . __( 'Author', 'wp-recall' ) . ': <a title="' . __( 'Visit the author’s page', 'wp-recall' ) . '" href="' . esc_attr($data['author-uri']) . '" target="_blank">' . esc_attr($data['author']) . '</a>';
 		}
 		if ( isset( $data['add-on-uri'] ) ) {
-			$content .= ' | <a title="' . __( 'Visit the add-on page', 'wp-recall' ) . '" href="' . $data['add-on-uri'] . '" target="_blank">' . __( 'Add-on page', 'wp-recall' ) . '</a>';
+			$content .= ' | <a title="' . __( 'Visit the add-on page', 'wp-recall' ) . '" href="' . esc_attr($data['add-on-uri']) . '" target="_blank">' . __( 'Add-on page', 'wp-recall' ) . '</a>';
 		}
 		$content .= '</div>';
 
@@ -198,9 +198,9 @@ class Rcl_Templates_Manager extends WP_List_Table {
 
 	function single_row( $item ) {
 
-		$this->addon = $this->addons_data[ $item['ID'] ];
+		$this->addon = $this->addons_data[ esc_attr($item['ID']) ];
 		$status      = ( $item['addon_status'] ) ? 'active' : 'inactive';
-		$ver         = ( isset( $this->need_update[ $item['ID'] ] ) ) ? version_compare( $this->need_update[ $item['ID'] ]['new-version'], $this->addon['version'] ) : 0;
+		$ver         = ( isset( $this->need_update[ esc_attr($item['ID']) ] ) ) ? version_compare( $this->need_update[ esc_attr($item['ID']) ]['new-version'], $this->addon['version'] ) : 0;
 		$class       = $status;
 		$class       .= ( $ver > 0 ) ? ' update' : '';
 
@@ -211,13 +211,13 @@ class Rcl_Templates_Manager extends WP_List_Table {
 		if ( $ver > 0 ) {
 			$colspan = ( $hidden = count( $this->column_info[1] ) ) ? 4 - $hidden : 4;
 
-			echo '<tr class="plugin-update-tr ' . $status . '" id="' . $item['ID'] . '-update" data-slug="' . $item['ID'] . '">'
+			echo '<tr class="plugin-update-tr ' . $status . '" id="' . esc_attr($item['ID']) . '-update" data-slug="' . esc_attr($item['ID']) . '">'
 			     . '<td colspan="' . $colspan . '" class="plugin-update colspanchange">'
 			     . '<div class="update-message notice inline notice-warning notice-alt">'
 			     . '<p>'
-			     . __( 'New version available', 'wp-recall' ) . ' ' . $this->addon['name'] . ' ' . $this->need_update[ $item['ID'] ]['new-version'] . '. ';
-			echo ' <a href="#"  onclick=\'rcl_get_details_addon(' . json_encode( array( 'slug' => $item['ID'] ) ) . ',this);return false;\' title="' . $this->addon['name'] . '">' . __( 'view information about the version', 'wp-recall' ) . '</a> или';
-			echo 'или <a class="update-add-on" data-addon="' . $item['ID'] . '" href="#">' . __( 'update automatically', 'wp-recall' ) . '</a>'
+			     . __( 'New version available', 'wp-recall' ) . ' ' . $this->addon['name'] . ' ' . $this->need_update[ esc_attr($item['ID']) ]['new-version'] . '. ';
+			echo ' <a href="#"  onclick=\'rcl_get_details_addon(' . json_encode( array( 'slug' => esc_attr($item['ID']) ) ) . ',this);return false;\' title="' . $this->addon['name'] . '">' . __( 'view information about the version', 'wp-recall' ) . '</a> или';
+			echo 'или <a class="update-add-on" data-addon="' . esc_attr($item['ID']) . '" href="#">' . __( 'update automatically', 'wp-recall' ) . '</a>'
 			     . '</p>'
 			     . '</div>'
 			     . '</td>'
@@ -265,7 +265,7 @@ function rcl_upload_template() {
 
 	$paths = rcl_get_addon_paths();
 
-	$filename = $_FILES['addonzip']['tmp_name'];
+	$filename = sanitize_text_field($_FILES['addonzip']['tmp_name']);
 	$arch     = current( wp_upload_dir() ) . "/" . basename( $filename );
 	copy( $filename, $arch );
 

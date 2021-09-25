@@ -23,7 +23,7 @@ class Rcl_Options_Manager {
 		}
 
 		if ( $this->extends ) {
-			$this->extend_options = isset( $_COOKIE['rcl_extends'] ) ? $_COOKIE['rcl_extends'] : 0;
+			$this->extend_options = isset( $_COOKIE['rcl_extends'] ) ? intval($_COOKIE['rcl_extends']) : 0;
 		}
 	}
 

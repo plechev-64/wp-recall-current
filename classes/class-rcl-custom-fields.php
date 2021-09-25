@@ -721,7 +721,7 @@ function rcl_upload_meta_file( $field, $user_id, $post_id = 0 ) {
 		return false;
 	}
 
-	if ( $_FILES[ $slug ]["size"] > $maxsize * 1024 * 1024 ) {
+	if ( intval($_FILES[ $slug ]["size"]) > $maxsize * 1024 * 1024 ) {
 		wp_die( __( 'File size exceedes maximum!', 'wp-recall' ) );
 	}
 
@@ -736,7 +736,7 @@ function rcl_upload_meta_file( $field, $user_id, $post_id = 0 ) {
 			$valid_types = $field->file_types;
 		}
 
-		$filetype = wp_check_filetype_and_ext( $_FILES[ $slug ]['tmp_name'], $_FILES[ $slug ]['name'] );
+		$filetype = wp_check_filetype_and_ext( sanitize_text_field($_FILES[ $slug ]['tmp_name']), sanitize_text_field($_FILES[ $slug ]['name']) );
 
 		if ( ! in_array( $filetype['ext'], $valid_types ) ) {
 			wp_die( __( 'Prohibited file type!', 'wp-recall' ) );

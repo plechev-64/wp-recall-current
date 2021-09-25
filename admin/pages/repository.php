@@ -13,13 +13,13 @@ foreach ( $rcl_addons as $addonID => $addon ) {
 	$addonsData[ $addonID ] = $addon['version'];
 }
 
-$sort = isset( $_GET['sort'] ) ? $_GET['sort'] : 'update';
+$sort = isset( $_GET['sort'] ) ? sanitize_text_field($_GET['sort']) : 'update';
 
-$type = isset( $_GET['type'] ) ? $_GET['type'] : 'term';
+$type = isset( $_GET['type'] ) ? sanitize_text_field($_GET['type']) : 'term';
 
-$s = isset( $_GET['s'] ) ? $_GET['s'] : '';
+$s = isset( $_GET['s'] ) ? sanitize_text_field($_GET['s']) : '';
 
-$page = ( isset( $_GET['paged'] ) ) ? $_GET['paged'] : 1;
+$page = ( isset( $_GET['paged'] ) ) ? intval($_GET['paged']) : 1;
 
 $url = RCL_SERVICE_HOST . '/products-files/api/add-ons.php'
        . '?rcl-addon-info=get-add-ons&page=' . $page;
@@ -59,17 +59,17 @@ if ( ! $result ) {
 }
 
 if ( is_array( $result ) && isset( $result['error'] ) ) {
-	echo '<h2>' . __( 'Error', 'wp-recall' ) . '! ' . $result['error'] . '</h2>';
+	echo '<h2>' . __( 'Error', 'wp-recall' ) . '! ' . sanitize_text_field($result['error']) . '</h2>';
 	exit;
 }
 
-$navi = new Rcl_PageNavi( 'rcl-addons', $result->count, array( 'key' => 'paged', 'in_page' => $result->number ) );
+$navi = new Rcl_PageNavi( 'rcl-addons', intval($result->count), array( 'key' => 'paged', 'in_page' => intval($result->number) ) );
 
 $content = '<h2>' . __( 'Repository for WP-Recall add-ons', 'wp-recall' ) . '</h2>';
 
 if ( isset( $_POST['save-rcl-key'] ) ) {
 	if ( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ) {
-		update_site_option( 'rcl-key', $_POST['rcl-key'] );
+		update_site_option( 'rcl-key', sanitize_text_field($_POST['rcl-key']) );
 		$content .= '<div id="message" class="updated"><p>' . __( 'Key has been saved', 'wp-recall' ) . '!</p></div>';
 	}
 }
@@ -128,7 +128,7 @@ $content .= '<div class="wp-filter">
 
 if ( $result->count && $result->addons ) {
 
-	$content .= '<p class="rcl-search-results">' . __( 'Results found', 'wp-recall' ) . ': ' . $result->count . '</p>';
+	$content .= '<p class="rcl-search-results">' . __( 'Results found', 'wp-recall' ) . ': ' . intval($result->count) . '</p>';
 
 	$content .= $navi->pagenavi();
 
