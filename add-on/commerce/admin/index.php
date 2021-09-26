@@ -153,6 +153,10 @@ function rcl_commerce_options_orders() {
 rcl_ajax_action( 'rcl_edit_admin_price_product', false );
 function rcl_edit_admin_price_product() {
 
+	if ( ! current_user_can( 'administrator' ) ) {
+		wp_send_json( array( 'error' => __( 'Error', 'wp-recall' ) ) );
+	}
+
 	$id_post = intval( $_POST['id_post'] );
 	$price   = floatval( $_POST['price'] );
 
