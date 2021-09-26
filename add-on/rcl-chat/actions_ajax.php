@@ -47,6 +47,12 @@ function rcl_get_chat_page() {
 	$important = intval( $_POST['important'] );
 	$chat_room = sanitize_text_field( rcl_chat_token_decode( $_POST['token'] ) );
 
+	if ( rcl_chat_is_private_room( $chat_room ) ) {
+		if ( ! rcl_chat_user_in_room( get_current_user_id(), $chat_room ) ) {
+			wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+		}
+	}
+
 	if ( ! rcl_get_chat_by_room( $chat_room ) ) {
 		return false;
 	}
@@ -76,6 +82,12 @@ function rcl_chat_add_message() {
 	$POST = wp_unslash( $_POST['chat'] );
 
 	$chat_room = sanitize_text_field( rcl_chat_token_decode( $POST['token'] ) );
+
+	if ( rcl_chat_is_private_room( $chat_room ) ) {
+		if ( ! rcl_chat_user_in_room( get_current_user_id(), $chat_room ) ) {
+			wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+		}
+	}
 
 	if ( ! rcl_get_chat_by_room( $chat_room ) ) {
 		return false;
@@ -192,13 +204,18 @@ function rcl_chat_message_important() {
 
 rcl_ajax_action( 'rcl_chat_important_manager_shift', false );
 function rcl_chat_important_manager_shift() {
-	global $user_ID;
 
 	rcl_verify_ajax_nonce();
 
 	$chat_token       = wp_slash( $_POST['token'] );
 	$status_important = intval( $_POST['status_important'] );
 	$chat_room        = sanitize_text_field( rcl_chat_token_decode( $chat_token ) );
+
+	if ( rcl_chat_is_private_room( $chat_room ) ) {
+		if ( ! rcl_chat_user_in_room( get_current_user_id(), $chat_room ) ) {
+			wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+		}
+	}
 
 	if ( ! rcl_get_chat_by_room( $chat_room ) ) {
 		return false;
@@ -241,17 +258,22 @@ function rcl_chat_delete_attachment() {
 
 rcl_ajax_action( 'rcl_chat_ajax_delete_message', false );
 function rcl_chat_ajax_delete_message() {
-	global $current_user;
 
 	rcl_verify_ajax_nonce();
 
 	if ( ! $message_id = intval( $_POST['message_id'] ) ) {
-		return false;
+		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
 	}
 
-	if ( $current_user->user_level >= rcl_get_option( 'consol_access_rcl', 7 ) ) {
-		rcl_chat_delete_message( $message_id );
+	if ( ! current_user_can( 'administrator' ) ) {
+		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
 	}
+
+	rcl_chat_delete_message( $message_id );
+
+	/**
+	 * todo возможно надо разрешить удалять сообщение и другим юзерам, но только свои
+	 */
 
 	$result['remove'] = true;
 

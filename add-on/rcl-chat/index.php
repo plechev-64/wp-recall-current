@@ -504,6 +504,23 @@ function rcl_chat_reset_oembed_filter() {
 	remove_filter( 'pre_oembed_result', 'wp_filter_pre_oembed_result', 10 );
 }
 
+/**
+ * @param $room - private:1:3 | custom-room
+ */
+function rcl_chat_is_private_room( $room ) {
+	return strpos( trim( $room ), 'private:' ) === 0;
+}
+
+/**
+ * @param $user_id
+ * @param $room - private:1:3
+ */
+function rcl_chat_user_in_room( $user_id, $room ) {
+	list( $prefix, $user_1, $user_2 ) = explode( ':', trim( $room ) );
+
+	return in_array( $user_id, [ $user_1, $user_2 ] );
+}
+
 include_once 'actions.php';
 include_once 'actions_cron.php';
 include_once 'actions_ajax.php';

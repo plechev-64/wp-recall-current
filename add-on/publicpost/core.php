@@ -248,7 +248,9 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 rcl_ajax_action( 'rcl_save_temp_async_uploaded_thumbnail', true );
 function rcl_save_temp_async_uploaded_thumbnail() {
 	rcl_verify_ajax_nonce();
-
+	/**
+	 * todo fix
+	 */
 	$attachment_id  = intval( $_POST['attachment_id'] );
 	$attachment_url = $_POST['attachment_url'];
 

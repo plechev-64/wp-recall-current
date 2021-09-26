@@ -529,6 +529,10 @@ rcl_ajax_action( 'pfm_ajax_update_sort_groups', false );
 function pfm_ajax_update_sort_groups() {
 	global $wpdb;
 
+	if ( ! current_user_can( 'administrator' ) ) {
+		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+	}
+
 	$sort = json_decode( wp_unslash( $_POST['sort'] ) );
 
 	foreach ( $sort as $s => $group ) {
@@ -552,6 +556,10 @@ rcl_ajax_action( 'pfm_ajax_update_sort_forums', false );
 function pfm_ajax_update_sort_forums() {
 	global $wpdb;
 
+	if ( ! current_user_can( 'administrator' ) ) {
+		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+	}
+
 	$sort = json_decode( wp_unslash( $_POST['sort'] ) );
 
 	foreach ( $sort as $s => $forum ) {
@@ -574,6 +582,10 @@ function pfm_ajax_update_sort_forums() {
 
 rcl_ajax_action( 'pfm_ajax_get_manager_item_delete_form', false );
 function pfm_ajax_get_manager_item_delete_form() {
+
+	/**
+	 * todo любой может получить менеджер?
+	 */
 
 	$itemType = $_POST['item-type'];
 	$itemID   = absint( $_POST['item-id'] );

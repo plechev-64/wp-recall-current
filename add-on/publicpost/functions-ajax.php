@@ -4,7 +4,9 @@
 rcl_ajax_action( 'rcl_ajax_delete_post', true );
 function rcl_ajax_delete_post() {
 	global $user_ID;
-
+	/**
+	 * todo check
+	 */
 	rcl_verify_ajax_nonce();
 
 	$user_id = ( $user_ID ) ? $user_ID : sanitize_text_field( $_COOKIE['PHPSESSID'] );
@@ -59,14 +61,15 @@ function rcl_ajax_delete_post() {
 //вызов быстрой формы редактирования публикации
 rcl_ajax_action( 'rcl_get_edit_postdata', false );
 function rcl_get_edit_postdata() {
-	global $user_ID;
 
 	rcl_verify_ajax_nonce();
 
 	$post_id = intval( $_POST['post_id'] );
-	$post    = get_post( $post_id );
 
-	if ( $user_ID ) {
+	if ( current_user_can( 'edit_post', $post_id ) ) {
+
+		$post = get_post( $post_id );
+
 		$log['result']  = 100;
 		$log['content'] = "
         <form id='rcl-edit-form' method='post'>
@@ -90,14 +93,21 @@ function rcl_edit_postdata() {
 
 	rcl_verify_ajax_nonce();
 
+	$post_id                    = intval( $_POST['post_id'] );
 	$post_array                 = array();
 	$post_array['post_title']   = sanitize_text_field( $_POST['post_title'] );
 	$post_array['post_content'] = esc_textarea( $_POST['post_content'] );
 
-	$post_array = apply_filters( 'rcl_pre_edit_post', $post_array );
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+	}
 
+	$post_array = apply_filters( 'rcl_pre_edit_post', $post_array );
+	/**
+	 * todo wp_update_post
+	 */
 	$result = $wpdb->update(
-		$wpdb->posts, $post_array, array( 'ID' => intval( $_POST['post_id'] ) )
+		$wpdb->posts, $post_array, array( 'ID' => $post_id )
 	);
 
 	if ( ! $result ) {
@@ -145,6 +155,20 @@ function rcl_preview_post() {
 
 	$log      = array();
 	$postdata = $_POST;
+
+	if ( isset( $postdata['post_id'] ) && $postdata['post_id'] ) {
+
+		if ( ! current_user_can( 'administrator' ) ) {
+
+			$post = get_post( $postdata['post_id'] );
+
+			if ( ! $post || $post->post_author != get_current_user_id() ) {
+				wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+			}
+
+		}
+
+	}
 
 	if ( ! rcl_get_option( 'public_access' ) && ! $user_ID ) {
 
@@ -294,6 +318,13 @@ function rcl_set_post_thumbnail() {
 	$parent_id    = intval( $_POST['parent_id'] );
 	$form_id      = intval( $_POST['form_id'] );
 	$post_type    = sanitize_key( $_POST['post_type'] );
+
+	if ( $parent_id && ! current_user_can( 'administrator' ) ) {
+		$post = get_post( $parent_id );
+		if ( ! $post || $post->post_author != get_current_user_id() ) {
+			wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+		}
+	}
 
 	$formFields = new Rcl_Public_Form_Fields( $post_type, array(
 		'form_id' => $form_id ? $form_id : 1

@@ -519,6 +519,10 @@ function rcl_edit_rating_post() {
 
 	$args = rcl_decode_data_rating( sanitize_text_field( $_POST['rating'] ) );
 
+	if ( $args['user_id'] != get_current_user_id() ) {
+		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+	}
+
 	do_action( 'rcl_pre_edit_rating_post', $args );
 
 	$rslrt = isset( $rcl_options[ 'rating_' . $args['rating_status'] . '_limit_' . $args['rating_type'] ] ) ? $rcl_options[ 'rating_' . $args['rating_status'] . '_limit_' . $args['rating_type'] ] : false;
@@ -601,6 +605,14 @@ rcl_ajax_action( 'rcl_view_rating_votes', true );
 function rcl_view_rating_votes() {
 
 	rcl_verify_ajax_nonce();
+
+	$access = rcl_get_option( 'rating_results_can', 10 );
+
+	$user_info = get_userdata( get_current_user_id() );
+
+	if ( ! $user_info || $user_info->user_level < $access ) {
+		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+	}
 
 	$string = sanitize_text_field( $_POST['rating'] );
 
