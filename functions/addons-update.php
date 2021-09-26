@@ -186,6 +186,10 @@ function rcl_get_details_addon() {
 rcl_ajax_action( 'rcl_update_addon', false );
 function rcl_update_addon() {
 
+	if ( ! current_user_can( 'administrator' ) ) {
+		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+	}
+
 	$addonID = $_POST['addon'];
 
 	$need_update = get_site_option( 'rcl_addons_need_update' );
