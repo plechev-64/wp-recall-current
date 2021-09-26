@@ -93,11 +93,11 @@ function rcl_wp_list_current_action() {
 	}
 
 	if ( isset( $_REQUEST['action'] ) && - 1 != $_REQUEST['action'] ) {
-		return sanitize_text_field($_REQUEST['action']);
+		return sanitize_text_field( $_REQUEST['action'] );
 	}
 
 	if ( isset( $_REQUEST['action2'] ) && - 1 != $_REQUEST['action2'] ) {
-		return sanitize_text_field($_REQUEST['action2']);
+		return sanitize_text_field( $_REQUEST['action2'] );
 	}
 
 	return false;
@@ -137,7 +137,7 @@ function rcl_postmeta_update( $post_id ) {
 		return false;
 	}
 
-	$POST = rcl_recursive_map('sanitize_text_field', $_POST['wprecall']);
+	$POST = rcl_recursive_map( 'sanitize_text_field', $_POST['wprecall'] );
 
 	foreach ( $POST as $key => $value ) {
 		if ( ! is_array( $value ) ) {
@@ -156,6 +156,10 @@ function rcl_postmeta_update( $post_id ) {
 rcl_ajax_action( 'rcl_update_options', false );
 function rcl_update_options() {
 
+	if ( ! current_user_can( 'administrator' ) ) {
+		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+	}
+
 	rcl_verify_ajax_nonce();
 
 	$POST = $_POST; //filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
@@ -163,7 +167,7 @@ function rcl_update_options() {
 	array_walk_recursive(
 		$POST, function ( &$v, $k ) {
 		$v = trim( $v );
-		$v = sanitize_text_field($v);
+		$v = sanitize_text_field( $v );
 	} );
 
 	foreach ( $POST as $option_name => $values ) {
@@ -195,11 +199,11 @@ add_action( 'rcl_update_options', 'rcl_delete_temp_default_avatar_cover', 10 );
 function rcl_delete_temp_default_avatar_cover() {
 
 	if ( isset( $_POST['rcl_global_options']['default_avatar'] ) ) {
-		rcl_delete_temp_media( intval($_POST['rcl_global_options']['default_avatar']) );
+		rcl_delete_temp_media( intval( $_POST['rcl_global_options']['default_avatar'] ) );
 	}
 
 	if ( isset( $_POST['rcl_global_options']['default_cover'] ) ) {
-		rcl_delete_temp_media( intval($_POST['rcl_global_options']['default_cover']) );
+		rcl_delete_temp_media( intval( $_POST['rcl_global_options']['default_cover'] ) );
 	}
 }
 
@@ -258,7 +262,7 @@ function rcl_update_custom_fields() {
 		$table = 'usermeta';
 	}
 
-	$POSTDATA = apply_filters( 'rcl_pre_update_custom_fields_options', rcl_recursive_map('sanitize_text_field', $_POST) );
+	$POSTDATA = apply_filters( 'rcl_pre_update_custom_fields_options', rcl_recursive_map( 'sanitize_text_field', $_POST ) );
 
 	if ( ! $POSTDATA ) {
 		return false;
@@ -381,10 +385,10 @@ function rcl_get_new_custom_field() {
 rcl_ajax_action( 'rcl_get_custom_field_options', false );
 function rcl_get_custom_field_options() {
 
-	$type_field = sanitize_text_field($_POST['type_field']);
-	$old_type   = sanitize_text_field($_POST['old_type']);
-	$post_type  = sanitize_text_field($_POST['post_type']);
-	$slug_field = sanitize_text_field($_POST['slug']);
+	$type_field = sanitize_text_field( $_POST['type_field'] );
+	$old_type   = sanitize_text_field( $_POST['old_type'] );
+	$post_type  = sanitize_text_field( $_POST['post_type'] );
+	$slug_field = sanitize_text_field( $_POST['slug'] );
 
 	$primary = ( array ) json_decode( wp_unslash( $_POST['primary_options'] ) );
 	$default = ( array ) json_decode( wp_unslash( $_POST['default_options'] ) );
@@ -490,7 +494,7 @@ function rcl_send_addon_activation_notice( $addon_id, $addon_headers ) {
 rcl_ajax_action( 'rcl_manager_get_new_field', false );
 function rcl_manager_get_new_field() {
 
-	$_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+	$_POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
 
 	$managerProps = $_POST['props'];
 
@@ -512,10 +516,10 @@ function rcl_manager_get_new_field() {
 rcl_ajax_action( 'rcl_manager_get_custom_field_options', false );
 function rcl_manager_get_custom_field_options() {
 
-	$_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+	$_POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
 
-	$new_type = sanitize_text_field($_POST['newType']);
-	$field_id = sanitize_text_field($_POST['fieldId']);
+	$new_type     = sanitize_text_field( $_POST['newType'] );
+	$field_id     = sanitize_text_field( $_POST['fieldId'] );
 	$managerProps = $_POST['manager'];
 
 	$Manager = new Rcl_Fields_Manager( $managerProps['manager_id'], $managerProps );
@@ -556,7 +560,7 @@ function rcl_manager_get_custom_field_options() {
 rcl_ajax_action( 'rcl_manager_get_new_area', false );
 function rcl_manager_get_new_area() {
 
-	$_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+	$_POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
 
 	$managerProps = $_POST['props'];
 
@@ -570,7 +574,7 @@ function rcl_manager_get_new_area() {
 rcl_ajax_action( 'rcl_manager_get_new_group', false );
 function rcl_manager_get_new_group() {
 
-	$_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+	$_POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
 
 	$managerProps = $_POST['props'];
 
@@ -583,6 +587,10 @@ function rcl_manager_get_new_group() {
 
 rcl_ajax_action( 'rcl_manager_update_fields_by_ajax', false );
 function rcl_manager_update_fields_by_ajax() {
+
+    if ( ! current_user_can( 'administrator' ) ) {
+		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+	}
 
 	rcl_verify_ajax_nonce();
 
@@ -605,21 +613,21 @@ function rcl_manager_update_fields_by_post() {
 
 	rcl_manager_update_data_fields();
 
-	wp_redirect( sanitize_text_field($_POST['_wp_http_referer']) );
+	wp_redirect( sanitize_text_field( $_POST['_wp_http_referer'] ) );
 	exit;
 }
 
 function rcl_manager_update_data_fields() {
 	global $wpdb;
 
-	$_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+	$_POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
 
-	$copy        = sanitize_text_field($_POST['copy']);
-	$manager_id  = sanitize_text_field($_POST['manager_id']);
-	$option_name = sanitize_text_field($_POST['option_name']);
+	$copy        = sanitize_text_field( $_POST['copy'] );
+	$manager_id  = sanitize_text_field( $_POST['manager_id'] );
+	$option_name = sanitize_text_field( $_POST['option_name'] );
 
-	$fieldsData = rcl_recursive_map('sanitize_text_field', wp_unslash( $_POST['fields'] ));
-	$structure  = isset( $_POST['structure'] ) ? rcl_recursive_map('sanitize_text_field', $_POST['structure']) : false;
+	$fieldsData = rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['fields'] ) );
+	$structure  = isset( $_POST['structure'] ) ? rcl_recursive_map( 'sanitize_text_field', $_POST['structure'] ) : false;
 
 	$fields    = array();
 	$keyFields = array();
@@ -712,7 +720,7 @@ function rcl_manager_update_data_fields() {
 
 				$fieldsArea = array();
 
-				if(!empty($area['fields'])){
+				if ( ! empty( $area['fields'] ) ) {
 					foreach ( $area['fields'] as $k => $field_id ) {
 
 						if ( isset( $changeIds[ $field_id ] ) ) {
@@ -726,7 +734,7 @@ function rcl_manager_update_data_fields() {
 
 						$fieldsArea[] = $field_id;
 					}
-                }
+				}
 
 				$endStructure[ $group_id ]['areas'][] = array(
 					'width'  => round( $area['width'], 0 ),
@@ -753,10 +761,10 @@ function rcl_manager_update_data_fields() {
 	}
 
 	if ( isset( $_POST['deleted_fields'] ) && $_POST['deleted_fields'] ) {
-		$deleteFields = rcl_recursive_map('sanitize_text_field', $_POST['delete_table_data']);
-		if ( !empty($deleteFields) ) {
+		$deleteFields = rcl_recursive_map( 'sanitize_text_field', $_POST['delete_table_data'] );
+		if ( ! empty( $deleteFields ) ) {
 			foreach ( $deleteFields as $table_name => $colname ) {
-				$wpdb->query( "DELETE FROM $table_name WHERE $colname IN ('" . implode( "','", rcl_recursive_map('sanitize_text_field', $_POST['deleted_fields']) ) . "')" );
+				$wpdb->query( "DELETE FROM $table_name WHERE $colname IN ('" . implode( "','", rcl_recursive_map( 'sanitize_text_field', $_POST['deleted_fields'] ) ) . "')" );
 			}
 
 			$args['reload'] = true;
