@@ -13,14 +13,15 @@
 			foreach ( $chartData['data'] as $chrt ) {
 				$strings[] = '[' . implode( ',', $chrt ) . ']';
 			}
+	        //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo implode( ',', $strings );
 			?>
         ]);
 
         var options = {
-            title: "<?php echo $chartData['title']; ?>",
+            title: "<?php echo esc_js( $chartData['title'] ); ?>",
             hAxis: {
-                title: "<?php echo $chartData['title-x']; ?>",
+                title: "<?php echo esc_js( $chartData['title-x'] ); ?>",
                 titleTextStyle: {
                     color: "#333"
                 }
