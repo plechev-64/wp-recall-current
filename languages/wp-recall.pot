@@ -5689,7 +5689,7 @@ msgid "Your email is not confirmed!"
 msgstr ""
 
 #: functions/register.php:388
-msgid "Your password has been sent!<br>Check your email."
+msgid "Your password has been sent! Check your email."
 msgstr ""
 
 #: functions/register.php:451

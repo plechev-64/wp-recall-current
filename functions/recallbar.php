@@ -53,22 +53,23 @@ function rcl_print_bar_icons() {
 
 			$class = ( isset( $icon['class'] ) ) ? $icon['class'] : '';
 
-			echo '<div id="' . $id_icon . '" class="rcb_icon ' . $class . '">';
+			echo '<div id="' . esc_attr( $id_icon ) . '" class="rcb_icon ' . esc_attr( $class ) . '">';
 
 			if ( isset( $icon['url'] ) || isset( $icon['onclick'] ) ):
 
 				$url     = isset( $icon['url'] ) ? $icon['url'] : '#';
 				$onclick = isset( $icon['onclick'] ) ? 'onclick="' . $icon['onclick'] . ';return false;"' : '';
 
-				echo '<a href="' . $url . '" ' . $onclick . '>';
+				//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo '<a href="' . esc_url( $url ) . '" ' . $onclick . '>';
 
 			endif;
 
-			echo '<i class="rcli ' . $icon['icon'] . '" aria-hidden="true"></i>';
+			echo '<i class="rcli ' . esc_attr( $icon['icon'] ) . '" aria-hidden="true"></i>';
 			echo '<div class="rcb_hiden"><span>';
 
 			if ( isset( $icon['label'] ) ):
-				echo $icon['label'];
+				echo esc_html( $icon['label'] );
 			endif;
 
 			echo '</span></div>';
@@ -76,8 +77,8 @@ function rcl_print_bar_icons() {
 			if ( isset( $icon['url'] ) || isset( $icon['onclick'] ) ):
 				echo '</a>';
 			endif;
-
 			if ( isset( $icon['counter'] ) ):
+				//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '<div class="rcb_nmbr ' . ( $icon['counter'] > 0 ? 'counter_not_null' : '' ) . '">' . $icon['counter'] . '</div>';
 			endif;
 
@@ -103,13 +104,13 @@ function rcl_print_bar_right_menu() {
 			}
 
 			echo '<div class="rcb_line">';
-			echo '<a href="' . $icon['url'] . '">';
+			echo '<a href="' . esc_url( $icon['url'] ) . '">';
 
 			if ( isset( $icon['icon'] ) ):
-				echo '<i class="rcli ' . $icon['icon'] . '" aria-hidden="true"></i>';
+				echo '<i class="rcli ' . esc_attr( $icon['icon'] ) . '" aria-hidden="true"></i>';
 			endif;
 
-			echo '<span>' . $icon['label'] . '</span>';
+			echo '<span>' . esc_html( $icon['label'] ) . '</span>';
 			echo '</a>';
 			echo '</div>';
 		}

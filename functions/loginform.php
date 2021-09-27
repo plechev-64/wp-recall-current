@@ -1,6 +1,7 @@
 <?php
 
 function rcl_login_form() {
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo rcl_get_authorize_form( 'floatform' );
 }
 
@@ -19,15 +20,17 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 
 	ob_start();
 
-	echo '<div class="rcl-loginform rcl-loginform-' . ( $form ? $form : 'full' ) . ' panel_lk_recall ' . $type . '">';
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo '<div class="rcl-loginform rcl-loginform-' . ( $form ? esc_attr( $form ) : 'full' ) . ' panel_lk_recall ' . esc_attr( $type ) . '">';
 
 	if ( $user_ID ) {
 
-		echo '<div class="username"><b>' . __( 'Hi', 'wp-recall' ) . ', ' . get_the_author_meta( 'display_name', $user_ID ) . '!</b></div>
+		echo '<div class="username"><b>' . esc_html__( 'Hi', 'wp-recall' ) . ', ' . esc_html( get_the_author_meta( 'display_name', $user_ID ) ) . '!</b></div>
             <div class="author-avatar">';
-		echo '<a href="' . $rcl_user_URL . '" title="' . __( 'To personal account', 'wp-recall' ) . '">' . get_avatar( $user_ID, 60 ) . '</a>';
+		echo '<a href="' . esc_url( $rcl_user_URL ) . '" title="' . esc_html__( 'To personal account', 'wp-recall' ) . '">' . get_avatar( $user_ID, 60 ) . '</a>';
 
 		if ( function_exists( 'rcl_rating_block' ) ):
+			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo rcl_rating_block( array( 'ID' => $user_ID, 'type' => 'user' ) );
 		endif;
 
@@ -36,16 +39,16 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 		$buttons = array(
 			rcl_get_button( [
 				'href'  => $rcl_user_URL,
-				'label' => __( 'To personal account', 'wp-recall' ),
+				'label' => esc_html__( 'To personal account', 'wp-recall' ),
 				'icon'  => 'fa-home'
 			] ),
 			rcl_get_button( [
 				'href'  => wp_logout_url( home_url() ),
-				'label' => __( 'Exit', 'wp-recall' ),
+				'label' => esc_html__( 'Exit', 'wp-recall' ),
 				'icon'  => 'fa-external-link'
 			] )
 		);
-
+		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo rcl_get_primary_widget_buttons( $buttons );
 	} else {
 
@@ -58,7 +61,7 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 			$buttons = array(
 				rcl_get_button( [
 					'href'  => $redirect_url . 'action-rcl=login',
-					'label' => __( 'Entry', 'wp-recall' ),
+					'label' => esc_html__( 'Entry', 'wp-recall' ),
 					'icon'  => 'fa-sign-in'
 				] )
 			);
@@ -66,18 +69,18 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 			if ( $can_register ) {
 				$buttons[] = rcl_get_button( [
 					'href'  => $redirect_url . 'action-rcl=register',
-					'label' => __( 'Registration', 'wp-recall' ),
+					'label' => esc_html__( 'Registration', 'wp-recall' ),
 					'icon'  => 'fa-book'
 				] );
 			}
-
+			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo rcl_get_primary_widget_buttons( $buttons );
 		} else if ( $login_form == 2 ) {
 
 			$buttons = array(
 				rcl_get_button( [
 					'href'  => esc_url( wp_login_url( '/' ) ),
-					'label' => __( 'Entry', 'wp-recall' ),
+					'label' => esc_html__( 'Entry', 'wp-recall' ),
 					'icon'  => 'fa-sign-in'
 				] )
 			);
@@ -85,11 +88,11 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 			if ( $can_register ) {
 				$buttons[] = rcl_get_button( [
 					'href'  => esc_url( wp_registration_url() ),
-					'label' => __( 'Registration', 'wp-recall' ),
+					'label' => esc_html__( 'Registration', 'wp-recall' ),
 					'icon'  => 'fa-book'
 				] );
 			}
-
+			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo rcl_get_primary_widget_buttons( $buttons );
 		} else if ( $login_form == 3 || $type ) {
 
@@ -107,7 +110,7 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 			$buttons = array(
 				rcl_get_button( [
 					'class' => 'rcl-login',
-					'label' => __( 'Entry', 'wp-recall' ),
+					'label' => esc_html__( 'Entry', 'wp-recall' ),
 					'icon'  => 'fa-sign-in'
 				] )
 			);
@@ -115,11 +118,11 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 			if ( $can_register ) {
 				$buttons[] = rcl_get_button( [
 					'class' => 'rcl-register',
-					'label' => __( 'Registration', 'wp-recall' ),
+					'label' => esc_html__( 'Registration', 'wp-recall' ),
 					'icon'  => 'fa-book'
 				] );
 			}
-
+			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo rcl_get_primary_widget_buttons( $buttons );
 		}
 	}
@@ -127,7 +130,7 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 	echo '</div>';
 
 	if ( ! $user_ID && $type ) {
-		echo '<script>rcl_do_action("rcl_login_form","' . $type . '")</script>';
+		echo '<script>rcl_do_action("rcl_login_form","' . esc_js( $type ) . '")</script>';
 	}
 
 	$html = ob_get_contents();

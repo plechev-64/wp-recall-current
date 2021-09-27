@@ -48,6 +48,7 @@ function rcl_type_currency_list( $post_id ) {
 	} else {
 		$conts = rcl_get_commerce_option( 'primary_cur' );
 	}
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo $conts;
 }
 
@@ -80,5 +81,6 @@ function rcl_get_primary_currency( $type = 0 ) {
 }
 
 function rcl_primary_currency( $type = 0 ) {
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo rcl_get_primary_currency( $type );
 }

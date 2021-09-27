@@ -138,7 +138,7 @@ function rcl_send_addons_data() {
 	$data = array(
 		'rcl-version' => VER_RCL,
 		'addons'      => $addonlist,
-		'host'        => $_SERVER['SERVER_NAME']
+		'host'        => filter_var( INPUT_SERVER, 'SERVER_NAME' )
 	);
 
 	wp_remote_post( $url, array( 'body' => $data ) );
@@ -147,7 +147,11 @@ function rcl_send_addons_data() {
 rcl_ajax_action( 'rcl_get_details_addon', false );
 function rcl_get_details_addon() {
 
-	$slug = $_POST['slug'];
+	$slug = isset( $_POST['slug'] ) ? sanitize_key( $_POST['slug'] ) : '';
+
+	if ( ! $slug ) {
+		wp_send_json( array( 'error' => esc_html__( 'Error', 'wp-recall' ) ) );
+	}
 
 	$url = RCL_SERVICE_HOST . '/products-files/api/add-ons.php'
 	       . '?rcl-addon-info=get-details';
@@ -156,14 +160,14 @@ function rcl_get_details_addon() {
 		'addon'       => $slug,
 		'rcl-key'     => get_site_option( 'rcl-key' ),
 		'rcl-version' => VER_RCL,
-		'host'        => $_SERVER['SERVER_NAME']
+		'host'        => filter_var( INPUT_SERVER, 'SERVER_NAME' )
 	);
 
 	$response = wp_remote_post( $url, array( 'body' => $data ) );
 
 	if ( is_wp_error( $response ) ) {
 		$error_message = $response->get_error_message();
-		echo __( 'Error' ) . ': ' . $error_message;
+		echo esc_html__( 'Error' ) . ': ' . esc_html( $error_message );
 		exit;
 	}
 
@@ -190,12 +194,16 @@ function rcl_update_addon() {
 		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
 	}
 
-	$addonID = $_POST['addon'];
+	$addonID = isset( $_POST['addon'] ) ? sanitize_key( $_POST['addon'] ) : '';
+
+	if ( ! $addonID ) {
+		wp_send_json( array( 'error' => esc_html__( 'Error', 'wp-recall' ) ) );
+	}
 
 	$need_update = get_site_option( 'rcl_addons_need_update' );
 
 	if ( ! class_exists( 'ZipArchive' ) ) {
-		wp_send_json( array( 'error' => __( 'Update is impossible! ZipArchive class is not defined.', 'wp-recall' ) ) );
+		wp_send_json( array( 'error' => esc_html__( 'Update is impossible! ZipArchive class is not defined.', 'wp-recall' ) ) );
 	}
 
 	$activeaddons = get_site_option( 'rcl_active_addons' );
@@ -215,14 +223,14 @@ function rcl_update_addon() {
 		'addon'       => $addonID,
 		'rcl-key'     => get_site_option( 'rcl-key' ),
 		'rcl-version' => VER_RCL,
-		'host'        => $_SERVER['SERVER_NAME']
+		'host'        => filter_var( INPUT_SERVER, 'SERVER_NAME' )
 	);
 
 	$response = wp_remote_post( $url, array( 'body' => $data ) );
 
 	if ( is_wp_error( $response ) ) {
 		$error_message = $response->get_error_message();
-		echo __( 'Error' ) . ': ' . $error_message;
+		echo esc_html__( 'Error', 'wp-recall' ) . ': ' . esc_html( $error_message );
 		exit;
 	}
 
@@ -235,10 +243,10 @@ function rcl_update_addon() {
 	$put = file_put_contents( $new_addon, $response['body'] );
 
 	if ( $put === false ) {
-		wp_send_json( array( 'error' => __( 'The files failed to be uploaded!', 'wp-recall' ) ) );
+		wp_send_json( array( 'error' => esc_html__( 'The files failed to be uploaded!', 'wp-recall' ) ) );
 	}
 
-	$zip = new ZipArchive;
+	$zip = new ZipArchive();
 
 	$res = $zip->open( $new_addon );
 
@@ -256,7 +264,7 @@ function rcl_update_addon() {
 
 		if ( ! $info ) {
 			$zip->close();
-			wp_send_json( array( 'error' => __( 'Update has incorrect title!', 'wp-recall' ) ) );
+			wp_send_json( array( 'error' => esc_html__( 'Update has incorrect title!', 'wp-recall' ) ) );
 		}
 
 		$paths = rcl_get_addon_paths();
@@ -293,12 +301,12 @@ function rcl_update_addon() {
 
 		wp_send_json( array(
 			'addon_id' => $addonID,
-			'success'  => __( 'Successfully updated', 'wp-recall' )
+			'success'  => esc_html__( 'Successfully updated', 'wp-recall' )
 		) );
 	} else {
 
 		wp_send_json( array(
-			'error' => __( 'Unable to open update archive!', 'wp-recall' )
+			'error' => esc_html__( 'Unable to open update archive!', 'wp-recall' )
 		) );
 	}
 }

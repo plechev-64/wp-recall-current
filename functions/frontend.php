@@ -14,7 +14,7 @@ function rcl_apply_filters_area_tabs() {
 	$content = '<div id="lk-content" class="rcl-content">';
 	$content .= apply_filters( 'rcl_content_area_tabs', '' );
 	$content .= '</div>';
-
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo $content;
 }
 
@@ -24,38 +24,42 @@ function rcl_apply_filters_area_menu() {
 	$content = '<div id="lk-menu" class="rcl-menu">';
 	$content .= apply_filters( 'rcl_content_area_menu', '' );
 	$content .= '</div>';
-
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo $content;
 }
 
 add_action( 'rcl_area_top', 'rcl_apply_filters_area_top', 10 );
 function rcl_apply_filters_area_top() {
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo apply_filters( 'rcl_content_area_top', '' );
 }
 
 add_action( 'rcl_area_details', 'rcl_apply_filters_area_details', 10 );
 function rcl_apply_filters_area_details() {
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo apply_filters( 'rcl_content_area_details', '' );
 }
 
 add_action( 'rcl_area_actions', 'rcl_apply_filters_area_actions', 10 );
 function rcl_apply_filters_area_actions() {
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo apply_filters( 'rcl_content_area_actions', '' );
 }
 
 add_action( 'rcl_area_counters', 'rcl_apply_filters_area_counters', 10 );
 function rcl_apply_filters_area_counters() {
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo apply_filters( 'rcl_content_area_counters', '' );
 }
 
 function rcl_user_name() {
 	global $rcl_user;
-	echo $rcl_user->display_name;
+	echo esc_html( $rcl_user->display_name );
 }
 
 function rcl_user_url() {
 	global $rcl_user;
-	echo rcl_get_user_url( $rcl_user->ID );
+	echo esc_url( rcl_get_user_url( $rcl_user->ID ) );
 }
 
 function rcl_user_avatar( $size = 50 ) {
@@ -72,6 +76,7 @@ function rcl_user_rayting() {
 		if ( ! isset( $rcl_user->rating_total ) ) {
 			$rcl_user->rating_total = 0;
 		}
+		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo rcl_rating_block( array( 'value' => $rcl_user->rating_total ) );
 	}
 }
@@ -88,6 +93,7 @@ function rcl_user_meta() {
 		if ( $rcl_user->profile_fields ) {
 			echo '<div class="user-profile-fields">';
 			foreach ( $rcl_user->profile_fields as $k => $field ) {
+				//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo Rcl_Field::setup( $field )->get_field_value( 'title' );
 			}
 			echo '</div>';
@@ -102,7 +108,7 @@ function rcl_user_comments() {
 		if ( ! isset( $rcl_user->comments_count ) ) {
 			$rcl_user->comments_count = 0;
 		}
-		echo '<span class="filter-data"><i class="rcli fa-comment"></i>' . __( 'Comments', 'wp-recall' ) . ': ' . $rcl_user->comments_count . '</span>';
+		echo '<span class="filter-data"><i class="rcli fa-comment"></i>' . esc_html__( 'Comments', 'wp-recall' ) . ': ' . esc_html( $rcl_user->comments_count ) . '</span>';
 	}
 }
 
@@ -113,7 +119,7 @@ function rcl_user_posts() {
 		if ( ! isset( $rcl_user->posts_count ) ) {
 			$rcl_user->posts_count = 0;
 		}
-		echo '<span class="filter-data"><i class="rcli fa-file-text-o"></i>' . __( 'Publics', 'wp-recall' ) . ': ' . $rcl_user->posts_count . '</span>';
+		echo '<span class="filter-data"><i class="rcli fa-file-text-o"></i>' . esc_html__( 'Publics', 'wp-recall' ) . ': ' . esc_html( $rcl_user->posts_count ) . '</span>';
 	}
 }
 
@@ -128,10 +134,11 @@ function rcl_user_action( $type = 1 ) {
 			if ( ! $last_action ) {
 				echo '<span class="status_user online"><i class="rcli fa-circle"></i></span>';
 			} else {
-				echo '<span class="status_user offline" title="' . __( 'offline', 'wp-recall' ) . ' ' . $last_action . '"><i class="rcli fa-circle"></i></span>';
+				echo '<span class="status_user offline" title="' . esc_html__( 'offline', 'wp-recall' ) . ' ' . esc_attr( $last_action ) . '"><i class="rcli fa-circle"></i></span>';
 			}
 			break;
 		case 2:
+			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo rcl_get_miniaction( $action );
 			break;
 	}
@@ -156,31 +163,31 @@ function rcl_user_register() {
 		if ( ! isset( $rcl_user->user_registered ) ) {
 			return false;
 		}
-		echo '<span class="filter-data"><i class="rcli fa-calendar-check-o"></i>' . __( 'Registration', 'wp-recall' ) . ': ' . mysql2date( 'd-m-Y', $rcl_user->user_registered ) . '</span>';
+		echo '<span class="filter-data"><i class="rcli fa-calendar-check-o"></i>' . esc_html__( 'Registration', 'wp-recall' ) . ': ' . esc_html( mysql2date( 'd-m-Y', $rcl_user->user_registered ) ) . '</span>';
 	}
 }
 
 add_action( 'rcl_user_description', 'rcl_filter_user_description', 10 );
 function rcl_filter_user_description() {
 	global $rcl_user;
-	$cont = '';
-	echo $cont = apply_filters( 'rcl_description_user', $cont, $rcl_user->ID );
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo apply_filters( 'rcl_description_user', '', $rcl_user->ID );
 }
 
 add_filter( 'users_search_form_rcl', 'rcl_default_search_form' );
 function rcl_default_search_form( $form ) {
 	global $user_LK, $rcl_tab;
 
-	$search_text  = ( ( isset( $_GET['search_text'] ) ) ) ? wp_slash( strip_tags( $_GET['search_text'] ) ) : '';
+	$search_text  = ( ( isset( $_GET['search_text'] ) ) ) ? sanitize_text_field( wp_unslash( $_GET['search_text'] ) ) : '';
 	$search_field = ( isset( $_GET['search_field'] ) ) ? sanitize_key( $_GET['search_field'] ) : '';
 
 	$form .= '<div class="rcl-search-form">
             <form method="get">
                 <div class="rcl-search-form-title">' . __( 'Search users', 'wp-recall' ) . '</div>
-                <input type="text" name="search_text" value="' . esc_textarea( $search_text ) . '">
+                <input type="text" name="search_text" value="' . esc_attr( $search_text ) . '">
                 <select name="search_field">
-                    <option ' . selected( $search_field, 'display_name', false ) . ' value="display_name">' . __( 'by name', 'wp-recall' ) . '</option>
-                    <option ' . selected( $search_field, 'user_login', false ) . ' value="user_login">' . __( 'by login', 'wp-recall' ) . '</option>
+                    <option ' . selected( $search_field, 'display_name', false ) . ' value="display_name">' . esc_html__( 'by name', 'wp-recall' ) . '</option>
+                    <option ' . selected( $search_field, 'user_login', false ) . ' value="user_login">' . esc_html__( 'by login', 'wp-recall' ) . '</option>
                 </select>'
 	         . rcl_get_button( array(
 			'label'  => __( 'Search', 'wp-recall' ),
@@ -208,12 +215,12 @@ function rcl_action() {
 	$class       = ( ! $last_action ) ? 'online' : 'offline';
 
 	if ( $last_action ) {
-		$status = __( 'offline', 'wp-recall' ) . ' ' . $last_action;
+		$status = esc_html__( 'offline', 'wp-recall' ) . ' ' . $last_action;
 	} else {
-		$status = __( 'online', 'wp-recall' );
+		$status = esc_html__( 'online', 'wp-recall' );
 	}
 
-	echo sprintf( '<span class="user-status %s">%s</span>', $class, $status );
+	echo sprintf( '<span class="user-status %s">%s</span>', esc_attr( $class ), esc_html( $status ) );
 }
 
 function rcl_avatar( $avatar_size = 120, $attr = false ) {
@@ -264,7 +271,7 @@ function rcl_setup_avatar_icons() {
 
 		$html[] = '<span class="rcl-avatar-icon icon-' . $icon_id . '">' . $string . '</span>';
 	}
-
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo '<span class="avatar-icons">' . implode( '', $html ) . '</span>';
 }
 
@@ -277,18 +284,19 @@ function rcl_status_desc() {
 	$desc = get_the_author_meta( 'description', $user_LK );
 	if ( $desc ) {
 		echo '<div class="ballun-status">'
-		     . '<div class="status-user-rcl">' . nl2br( wp_strip_all_tags( $desc ) ) . '</div>'
+		     . '<div class="status-user-rcl">' . esc_html( $desc ) . '</div>'
 		     . '</div>';
 	}
 }
 
 function rcl_username() {
 	global $user_LK;
-	echo get_the_author_meta( 'display_name', $user_LK );
+	echo esc_html( get_the_author_meta( 'display_name', $user_LK ) );
 }
 
 function rcl_notice() {
 	if ( $notify = apply_filters( 'notify_lk', '' ) ) {
+		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo rcl_get_notice( [ 'text' => $notify ] );
 	}
 }
@@ -311,7 +319,7 @@ function rcl_inline_styles() {
 
 	// удаляем пробелы, переносы, табуляцию
 	$styles = preg_replace( '/ {2,}/', '', str_replace( array( "\r\n", "\r", "\n", "\t" ), '', $styles ) );
-
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo "<style>" . $styles . "</style>\r\n";
 }
 
@@ -590,7 +598,7 @@ function rcl_banned_user_redirect() {
 		return false;
 	}
 	if ( rcl_is_user_role( $user_ID, 'banned' ) ) {
-		wp_die( __( 'Congratulations! You have been banned.', 'wp-recall' ) );
+		wp_die( esc_html__( 'Congratulations! You have been banned.', 'wp-recall' ) );
 	}
 }
 
@@ -713,8 +721,9 @@ function rcl_check_user_blocked( $rcl_tabs ) {
 }
 
 function rcl_add_user_blocked_notice() {
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo rcl_get_notice( [
-		'text' => __( 'The user has restricted access to their page', 'wp-recall' ),
+		'text' => esc_html__( 'The user has restricted access to their page', 'wp-recall' ),
 		'type' => 'error'
 	] );
 }

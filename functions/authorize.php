@@ -38,10 +38,12 @@ function rcl_chek_user_authenticate( $user ) {
 function rcl_login_user() {
 	global $wp_errors;
 
-	$pass   = sanitize_text_field( $_POST['user_pass'] );
-	$login  = sanitize_user( $_POST['user_login'] );
+	//Dont unslash password
+	//phpcs:ignore
+	$pass   = $_POST['user_pass'];
+	$login  = isset( $_POST['user_login'] ) ? sanitize_user( wp_unslash( $_POST['user_login'] ) ) : '';
 	$member = ( isset( $_POST['rememberme'] ) ) ? intval( $_POST['rememberme'] ) : 0;
-	$url    = esc_url( $_POST['redirect_to'] );
+	$url    = isset( $_POST['redirect_to'] ) ? sanitize_text_field( wp_unslash( $_POST['redirect_to'] ) ) : '';
 
 	$wp_errors = new WP_Error();
 
@@ -63,7 +65,7 @@ function rcl_login_user() {
 		return $wp_errors;
 	}
 
-	wp_redirect( apply_filters( 'login_redirect', $url, '', $userdata ) );
+	wp_safe_redirect( apply_filters( 'login_redirect', $url, '', $userdata ) );
 	exit;
 }
 
@@ -71,7 +73,7 @@ function rcl_login_user() {
 add_action( 'init', 'rcl_get_login_user_activate' );
 function rcl_get_login_user_activate() {
 	if ( isset( $_POST['login_wpnonce'] ) ) {
-		if ( ! wp_verify_nonce( $_POST['login_wpnonce'], 'login-key-rcl' ) ) {
+		if ( ! wp_verify_nonce( sanitize_key( $_POST['login_wpnonce'] ), 'login-key-rcl' ) ) {
 			return false;
 		}
 		add_action( 'wp', 'rcl_login_user', 10 );
@@ -90,7 +92,7 @@ function rcl_get_authorize_url( $user_id ) {
 	if ( $autPage = rcl_get_option( 'authorize_page' ) ) {
 
 		if ( $autPage == 1 ) {
-			$redirect = isset( $_POST['redirect_to'] ) ? esc_url( $_POST['redirect_to'] ) : '';
+			$redirect = isset( $_POST['redirect_to'] ) ? sanitize_text_field( wp_unslash( $_POST['redirect_to'] ) ) : '';
 		} else if ( $autPage == 2 ) {
 			$redirect = rcl_get_option( 'custom_authorize_page' );
 		}

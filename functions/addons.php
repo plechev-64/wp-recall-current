@@ -185,7 +185,7 @@ function rcl_register_shutdown() {
 
 		$rcl_error .= sprintf( "Add-on %s has caused an error and was disabled. The error text: %s", "<b>" . strtoupper( $addon ) . "</b>", "<br>Fatal Error: " . $error['message'] . " in " . str_replace( '\\', '/', $error['file'] ) . ":" . $error['line'] . "<br>" );
 		echo '<script type="text/javascript">';
-		echo 'window.location.href="' . admin_url( 'admin.php?page=manage-addon-recall&update-addon=error-activate&error-text=' . $rcl_error ) . '";';
+		echo 'window.location.href="' . esc_js( admin_url( 'admin.php?page=manage-addon-recall&update-addon=error-activate&error-text=' . $rcl_error ) ) . '";';
 		echo '</script>';
 		exit();
 	}
@@ -278,7 +278,7 @@ function rcl_check_active_template() {
 			//Если найденный шаблон указан как используемый, то активируем его
 			if ( isset( $templates[ $rcl_template ] ) ) {
 				rcl_activate_addon( $rcl_template );
-				$rcl_template                   = $addon_id;
+				$rcl_template                   = $addon_id;//todo ?? $addon_id
 				$active_addons[ $rcl_template ] = $templates[ $rcl_template ];
 
 				return true;
@@ -306,7 +306,7 @@ function rcl_include_template_office() {
 	//Если ни один шаблон не активен
 	if ( ! $rcl_template ) {
 		//если опять ничего не найдено
-		echo '<h3>' . __( 'Office templates not found!', 'wp-recall' ) . '</h3>';
+		echo '<h3>' . esc_html__( 'Office templates not found!', 'wp-recall' ) . '</h3>';
 	} else {
 		//Если шаблон найден и активирован, то подключаем
 		rcl_include_template( 'office.php', $active_addons[ $rcl_template ]['path'] );

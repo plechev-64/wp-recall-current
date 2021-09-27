@@ -8,7 +8,7 @@ class Rcl_Notify {
 	}
 
 	function add_notify( $text ) {
-		$text .= '<div class="' . $this->type . '">' . $this->text . '</div>';
+		$text .= '<div class="' . esc_attr( $this->type ) . '">' . $this->text . '</div>';
 
 		return $text;
 	}

@@ -79,8 +79,8 @@ class RCL_navi {
 
 		if ( $group_id ) {
 			$prm = get_term_link( ( int ) $group_id, 'groups' );
-			if ( $_GET['group-page'] ) {
-				$prm = rcl_format_url( $prm ) . 'group-page=' . sanitize_text_field( $_GET['group-page'] );
+			if ( isset( $_GET['group-page'] ) ) {
+				$prm = rcl_format_url( $prm ) . 'group-page=' . sanitize_text_field( wp_unslash( $_GET['group-page'] ) );
 			}
 		} else if ( $user_LK ) {
 			$prm = rcl_get_user_url( $user_LK );
@@ -136,7 +136,7 @@ class RCL_navi {
 
 function rcl_navi_admin( $inpage, $cnt_data, $page, $page_id, $get_data ) {
 
-	$page = ( isset( $_GET['paged'] ) ) ? $_GET['paged'] : 1;
+	$page = ( isset( $_GET['paged'] ) ) ? intval( $_GET['paged'] ) : 1;
 
 	$num_page = ceil( $cnt_data / $inpage );
 
@@ -148,19 +148,19 @@ function rcl_navi_admin( $inpage, $cnt_data, $page, $page_id, $get_data ) {
             <span class="pagination-links">';
 
 	if ( $page != 1 ) {
-		$pagination .= '<a class="first-page" href="' . admin_url( 'admin.php?page=' . $page_id . '' . $get_data ) . '" title="' . __( 'Go to the first page', 'wp-recall' ) . '">«</a>
-            <a class="prev-page" href="' . admin_url( 'admin.php?page=' . $page_id . '' . $get_data . '&paged=' . $prev ) . '" title="' . __( 'Go to the previous page', 'wp-recall' ) . '">‹</a>';
+		$pagination .= '<a class="first-page" href="' . admin_url( 'admin.php?page=' . $page_id . '' . $get_data ) . '" title="' . esc_html__( 'Go to the first page', 'wp-recall' ) . '">«</a>
+            <a class="prev-page" href="' . admin_url( 'admin.php?page=' . $page_id . '' . $get_data . '&paged=' . $prev ) . '" title="' . esc_html__( 'Go to the previous page', 'wp-recall' ) . '">‹</a>';
 	}
 	$pagination .= '<span class="paging-input">
-                    ' . $page . ' ' . __( 'of', 'wp-recall' ) . ' <span class="total-pages">' . $num_page . '</span>
+                    ' . $page . ' ' . esc_html__( 'of', 'wp-recall' ) . ' <span class="total-pages">' . $num_page . '</span>
             </span>';
 	if ( $page != $num_page ) {
-		$pagination .= '<a class="next-page" href="' . admin_url( 'admin.php?page=' . $page_id . '' . $get_data . '&paged=' . $next ) . '" title="' . __( 'Go to the next page', 'wp-recall' ) . '">›</a>
-            <a class="last-page" href="' . admin_url( 'admin.php?page=' . $page_id . '' . $get_data . '&paged=' . $num_page ) . '" title="' . __( 'Go to the last page', 'wp-recall' ) . '">»</a>
+		$pagination .= '<a class="next-page" href="' . admin_url( 'admin.php?page=' . $page_id . '' . $get_data . '&paged=' . $next ) . '" title="' . esc_html__( 'Go to the next page', 'wp-recall' ) . '">›</a>
+            <a class="last-page" href="' . admin_url( 'admin.php?page=' . $page_id . '' . $get_data . '&paged=' . $num_page ) . '" title="' . esc_html__( 'Go to the last page', 'wp-recall' ) . '">»</a>
 
             </span>
         </div>
-        <input type="button" value="' . __( 'Go back', 'wp-recall' ) . '" onClick="history.back()">
+        <input type="button" value="' . esc_html__( 'Go back', 'wp-recall' ) . '" onClick="history.back()">
     </div>';
 	}
 

@@ -5,7 +5,7 @@ function rcl_get_shortcode_wp_recall() {
 	global $user_LK;
 
 	if ( ! $user_LK ) {
-		return '<h4 class="rcl_cab_guest_message">' . __( 'To use your personal account, please log in or register on this site', 'wp-recall' ) . '</h4>
+		return '<h4 class="rcl_cab_guest_message">' . esc_html__( 'To use your personal account, please log in or register on this site', 'wp-recall' ) . '</h4>
         <div class="authorize-form-rcl">' . rcl_get_authorize_form() . '</div>';
 	}
 
@@ -68,7 +68,7 @@ function rcl_get_userlist( $atts ) {
 	$userlist .= '<div class="rcl-userlist">';
 
 	if ( ! $usersdata ) {
-		$userlist .= rcl_get_notice( [ 'text' => __( 'Users not found', 'wp-recall' ) ] );
+		$userlist .= rcl_get_notice( [ 'text' => esc_html__( 'Users not found', 'wp-recall' ) ] );
 	} else {
 
 		if ( ! isset( $atts['number'] ) && $pagenavi->in_page ) {
@@ -156,14 +156,14 @@ function rcl_tab_shortcode( $atts ) {
 	), $atts ) );
 
 	if ( ! $user_ID ) {
-		return '<h4 class="rcl_cab_guest_message">' . __( 'To use your personal account, please log in or register on this site', 'wp-recall' ) . '</h4>
+		return '<h4 class="rcl_cab_guest_message">' . esc_html__( 'To use your personal account, please log in or register on this site', 'wp-recall' ) . '</h4>
         <div class="authorize-form-rcl">' . rcl_get_authorize_form() . '</div>';
 	}
 
 	$tab = rcl_get_tab( $tab_id );
 
 	if ( ! $tab_id || ! $tab ) {
-		return '<p>' . __( 'Such tab was not found!', 'wp-recall' ) . '</p>';
+		return '<p>' . esc_html__( 'Such tab was not found!', 'wp-recall' ) . '</p>';
 	}
 
 	if ( ! class_exists( 'Rcl_Tab' ) ) {

@@ -17,12 +17,9 @@ function rcl_insert_user( $data ) {
 	}
 
 	$userdata = array_merge( $data, array(
-		'user_nicename' => ''
-	,
-		'nickname'      => $data['user_email']
-	,
-		'first_name'    => $data['display_name']
-	,
+		'user_nicename' => '',
+		'nickname'      => $data['user_email'],
+		'first_name'    => $data['display_name'],
 		'rich_editing'  => 'true'  // false - выключить визуальный редактор для пользователя.
 	) );
 
@@ -62,7 +59,9 @@ function rcl_insert_user( $data ) {
 function rcl_confirm_user_registration() {
 	global $wpdb;
 
-	if ( $confirmdata = urldecode( $_GET['rcl-confirmdata'] ) ) {
+	if ( ! empty( $_GET['rcl-confirmdata'] ) ) {
+
+		$confirmdata = urldecode( sanitize_text_field( wp_unslash( $_GET['rcl-confirmdata'] ) ) );
 
 		$confirmdata = json_decode( base64_decode( $confirmdata ) );
 
@@ -101,7 +100,7 @@ function rcl_confirm_user_registration() {
 				if ( rcl_get_option( 'login_form_recall', 0 ) == 1 ) {
 					$place = rcl_format_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) );
 				}
-				wp_redirect( add_query_arg( array(
+				wp_safe_redirect( add_query_arg( array(
 					'action-rcl' => 'login',
 					'success'    => 'checkemail'
 				), $place ) );
@@ -113,7 +112,7 @@ function rcl_confirm_user_registration() {
 	if ( rcl_get_option( 'login_form_recall' ) == 2 ) {
 		wp_safe_redirect( wp_login_url() . '?checkemail=confirm' );
 	} else {
-		wp_redirect( add_query_arg( array(
+		wp_safe_redirect( add_query_arg( array(
 			'action-rcl' => 'login',
 			'login'      => 'checkemail'
 		), home_url() ) );
@@ -159,11 +158,17 @@ function rcl_get_register_user( $errors ) {
 		return $wp_errors;
 	}
 
-	$pass  = sanitize_text_field( $_POST['user_pass'] );
-	$email = $_POST['user_email'];
-	$login = sanitize_user( $_POST['user_login'] );
+	//Dont unslash password
+	//phpcs:ignore
+	$pass  = isset( $_POST['user_pass'] ) ? $_POST['user_pass'] : '';
+	$email = isset( $_POST['user_email'] ) ? sanitize_email( wp_unslash( $_POST['user_email'] ) ) : '';
+	$login = isset( $_POST['user_login'] ) ? sanitize_user( wp_unslash( $_POST['user_login'] ) ) : '';
 
-	$ref = ( $_POST['redirect_to'] ) ? apply_filters( 'url_after_register_rcl', $_POST['redirect_to'] ) : wp_registration_url();
+	if ( ! empty( $_POST['redirect_to'] ) ) {
+		$ref = apply_filters( 'url_after_register_rcl', sanitize_text_field( wp_unslash( $_POST['redirect_to'] ) ) );
+	} else {
+		$ref = wp_registration_url();
+	}
 
 	$get_fields = rcl_get_profile_fields();
 	$required   = true;
@@ -191,7 +196,7 @@ function rcl_get_register_user( $errors ) {
 						}
 					}
 				} else {
-					if ( ! $_POST[ $slug ] ) {
+					if ( ! isset( $_POST[ $slug ] ) ) {
 						$required = false;
 					}
 				}
@@ -219,8 +224,9 @@ function rcl_get_register_user( $errors ) {
 		'user_pass'    => $pass,
 		'user_login'   => $login,
 		'user_email'   => $email,
-		'display_name' => isset( $_POST['display_name'] ) && $_POST['display_name'] ? $_POST['display_name'] : ''
+		'display_name' => isset( $_POST['display_name'] ) ? sanitize_user( wp_unslash( $_POST['display_name'] ) ) : ''
 	);
+
 
 	$user_id = rcl_insert_user( $userdata );
 
@@ -228,7 +234,7 @@ function rcl_get_register_user( $errors ) {
 
 		if ( rcl_get_option( 'login_form_recall' ) == 2 || false !== strpos( $ref, wp_login_url() ) ) {
 			//если форма ВП, то возвращаем на login с нужными GET-параметрами
-			if ( $rcl_options['confirm_register_recall'] == 1 ) {
+			if ( rcl_get_option( 'confirm_register_recall' ) == 1 ) {
 				wp_safe_redirect( wp_login_url() . '?checkemail=confirm' );
 			} else {
 				wp_safe_redirect( wp_login_url() . '?checkemail=registered' );
@@ -237,9 +243,9 @@ function rcl_get_register_user( $errors ) {
 
 			//иначе возвращаем на ту же страницу
 			if ( rcl_get_option( 'confirm_register_recall' ) ) {
-				wp_redirect( rcl_format_url( $ref ) . 'action-rcl=login&register=checkemail' );
+				wp_safe_redirect( rcl_format_url( $ref ) . 'action-rcl=login&register=checkemail' );
 			} else {
-				wp_redirect( rcl_format_url( $ref ) . 'action-rcl=login&register=success' );
+				wp_safe_redirect( rcl_format_url( $ref ) . 'action-rcl=login&register=success' );
 			}
 		}
 
@@ -251,11 +257,14 @@ function rcl_get_register_user( $errors ) {
 add_action( 'wp', 'rcl_get_register_user_activate', 10 );
 function rcl_get_register_user_activate() {
 	if ( isset( $_POST['register_wpnonce'] ) ) { //если данные пришли с формы wp-recall
-		if ( ! wp_verify_nonce( $_POST['register_wpnonce'], 'register-key-rcl' ) ) {
+
+		if ( ! wp_verify_nonce( sanitize_key( $_POST['register_wpnonce'] ), 'register-key-rcl' ) ) {
 			return false;
 		}
-		$email = $_POST['user_email'];
-		$login = sanitize_user( $_POST['user_login'] );
+
+		$email = isset( $_POST['user_email'] ) ? sanitize_email( wp_unslash( $_POST['user_email'] ) ) : '';
+		$login = isset( $_POST['user_login'] ) ? sanitize_user( wp_unslash( $_POST['user_login'] ) ) : '';
+
 		register_new_user( $login, $email );
 	}
 }
@@ -269,19 +278,19 @@ function rcl_register_mail( $userdata ) {
 	$userdata = apply_filters( 'rcl_register_mail_data', $userdata );
 
 	$textmail = '
-    <p>' . __( 'You or someone else signed up on our website', 'wp-recall' ) . ' "' . get_bloginfo( 'name' ) . '" ' . __( 'with the following data:', 'wp-recall' ) . '</p>
-    <p>' . __( 'Login', 'wp-recall' ) . ': ' . $userdata['user_login'] . '</p>
-    <p>' . __( 'Password', 'wp-recall' ) . ': ' . $userdata['user_pass'] . '</p>';
+    <p>' . esc_html__( 'You or someone else signed up on our website', 'wp-recall' ) . ' "' . get_bloginfo( 'name' ) . '" ' . esc_html__( 'with the following data:', 'wp-recall' ) . '</p>
+    <p>' . esc_html__( 'Login', 'wp-recall' ) . ': ' . $userdata['user_login'] . '</p>
+    <p>' . esc_html__( 'Password', 'wp-recall' ) . ': ' . $userdata['user_pass'] . '</p>';
 
 	if ( rcl_get_option( 'confirm_register_recall' ) ) {
 
-		$subject = __( 'Confirm your registration!', 'wp-recall' );
+		$subject = esc_html__( 'Confirm your registration!', 'wp-recall' );
 
 		$confirmstr = base64_encode(
 			json_encode(
 				array(
 					$user_login,
-					md5( $user_id )
+					md5( $user_id ) //todo rework
 				)
 			)
 		);
@@ -290,16 +299,16 @@ function rcl_register_mail( $userdata ) {
 			'rcl-confirmdata' => urlencode( $confirmstr )
 		), home_url() );
 
-		$textmail .= '<p>' . __( 'If it was you, then confirm your registration by clicking on the link below', 'wp-recall' ) . ':</p>
+		$textmail .= '<p>' . esc_html__( 'If it was you, then confirm your registration by clicking on the link below', 'wp-recall' ) . ':</p>
         <p><a href="' . $url . '">' . $url . '</a></p>
-        <p>' . __( 'Unable to activate the account?', 'wp-recall' ) . '</p>
-        <p>' . __( 'Copy the link below, paste it into the address bar of your browser and hit Enter', 'wp-recall' ) . '</p>';
+        <p>' . esc_html__( 'Unable to activate the account?', 'wp-recall' ) . '</p>
+        <p>' . esc_html__( 'Copy the link below, paste it into the address bar of your browser and hit Enter', 'wp-recall' ) . '</p>';
 	} else {
 
-		$subject = __( 'Registration completed', 'wp-recall' );
+		$subject = esc_html__( 'Registration completed', 'wp-recall' );
 	}
 
-	$textmail .= '<p>' . __( 'If it wasn’t you, then just ignore this email', 'wp-recall' ) . '</p>';
+	$textmail .= '<p>' . esc_html__( 'If it wasn’t you, then just ignore this email', 'wp-recall' ) . '</p>';
 
 	$textmail = apply_filters( 'rcl_register_mail_text', $textmail, $userdata );
 
@@ -337,17 +346,19 @@ function rcl_notice_form( $form = 'login' ) {
 			foreach ( $wp_error->get_error_messages( $code ) as $error_message ) {
 
 				if ( 'message' == $severity ) {
-					$messages .= ' ' . $error_message . "<br />\n";
+					$messages .= ' ' . esc_html( $error_message ) . "<br />\n";
 				} else {
-					$errors .= ' ' . $error_message . "<br />\n";
+					$errors .= ' ' . esc_html( $error_message ) . "<br />\n";
 				}
 			}
 		}
 
 		if ( ! empty( $errors ) ) {
+			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '<div class="login-error">' . apply_filters( 'login_errors', $errors ) . "</div>\n";
 		}
 		if ( ! empty( $messages ) ) {
+			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '<span class="login-message">' . apply_filters( 'login_messages', $messages ) . "</span>\n";
 		}
 	}
@@ -361,9 +372,9 @@ function rcl_chek_repeat_pass( $errors ) {
 		return false;
 	}
 
-	if ( $_POST['user_secondary_pass'] != $_POST['user_pass'] ) {
+	if ( isset( $_POST['user_secondary_pass'], $_POST['user_pass'] ) && $_POST['user_secondary_pass'] !== $_POST['user_pass'] ) {
 		$errors = new WP_Error();
-		$errors->add( 'rcl_register_repeat_pass', __( 'Repeated password not correct!', 'wp-recall' ) );
+		$errors->add( 'rcl_register_repeat_pass', esc_html__( 'Repeated password not correct!', 'wp-recall' ) );
 	}
 
 	return $errors;
@@ -376,7 +387,7 @@ function rcl_checkemail_success( $errors ) {
 	if ( isset( $_GET['success'] ) && $_GET['success'] == 'checkemail' ) {
 
 		$errors = new WP_Error();
-		$errors->add( 'checkemail', __( 'Your email has been successfully confirmed! Log in using your username and password', 'wp-recall' ), 'message' );
+		$errors->add( 'checkemail', esc_html__( 'Your email has been successfully confirmed! Log in using your username and password', 'wp-recall' ), 'message' );
 	}
 
 	if ( isset( $_GET['register'] ) ) {
@@ -385,12 +396,12 @@ function rcl_checkemail_success( $errors ) {
 
 		if ( $_GET['register'] == 'success' ) {
 
-			$errors->add( 'register', __( 'Registration completed!', 'wp-recall' ), 'message' );
+			$errors->add( 'register', esc_html__( 'Registration completed!', 'wp-recall' ), 'message' );
 		}
 
 		if ( $_GET['register'] == 'checkemail' ) {
 
-			$errors->add( 'register', __( 'Registration is completed! Check your email for the confirmation link.', 'wp-recall' ), 'message' );
+			$errors->add( 'register', esc_html__( 'Registration is completed! Check your email for the confirmation link.', 'wp-recall' ), 'message' );
 		}
 	}
 
@@ -400,7 +411,7 @@ function rcl_checkemail_success( $errors ) {
 
 		if ( $_GET['login'] == 'checkemail' ) {
 
-			$errors->add( 'register', __( 'Your email is not confirmed!', 'wp-recall' ), 'error' );
+			$errors->add( 'register', esc_html__( 'Your email is not confirmed!', 'wp-recall' ), 'error' );
 		}
 	}
 
@@ -410,12 +421,13 @@ function rcl_checkemail_success( $errors ) {
 
 		if ( $_GET['remember'] == 'success' ) {
 
-			$errors->add( 'register', __( 'Your password has been sent!<br>Check your email.', 'wp-recall' ), 'message' );
+			$errors->add( 'register', esc_html__( 'Your password has been sent! Check your email.', 'wp-recall' ), 'message' );
 		}
 	}
 
 	return $errors;
 }
+
 
 function rcl_get_current_url( $typeform = false, $unset = false ) {
 
@@ -437,25 +449,25 @@ function rcl_get_current_url( $typeform = false, $unset = false ) {
 }
 
 function rcl_referer_url( $typeform = false ) {
-	echo rcl_get_current_url( $typeform );
+	echo esc_url( rcl_get_current_url( $typeform ) );
 }
 
 function rcl_form_action( $typeform ) {
-	echo rcl_get_current_url( $typeform, true );
+	echo esc_url( rcl_get_current_url( $typeform, true ) );
 }
 
 //Добавляем фильтр для формы авторизации
 add_action( 'login_form', 'rcl_filters_signform', 1 );
 function rcl_filters_signform() {
-	$signfields = '';
-	echo apply_filters( 'signform_fields_rcl', $signfields );
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo apply_filters( 'signform_fields_rcl', '' );
 }
 
 //Добавляем фильтр для формы регистрации
 add_action( 'register_form', 'rcl_filters_regform', 1 );
 function rcl_filters_regform() {
-	$regfields = '';
-	echo apply_filters( 'regform_fields_rcl', $regfields );
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo apply_filters( 'regform_fields_rcl', '' );
 }
 
 add_filter( 'regform_fields_rcl', 'rcl_password_regform', 5 );
@@ -465,7 +477,7 @@ function rcl_password_regform( $content ) {
 
 	$content .= '<div class="form-block-rcl default-field">';
 
-	$content .= '<input placeholder="' . __( 'Password', 'wp-recall' ) . '" required id="primary-pass-user" type="password" ' . ( $difficulty == 1 ? 'onkeyup="passwordStrength(this.value)"' : '' ) . ' name="user_pass">';
+	$content .= '<input placeholder="' . esc_html__( 'Password', 'wp-recall' ) . '" required id="primary-pass-user" type="password" ' . ( $difficulty == 1 ? 'onkeyup="passwordStrength(this.value)"' : '' ) . ' name="user_pass">';
 
 	$content .= '<i class="rcli fa-lock"></i>';
 	$content .= '<span class="required">*</span>';
@@ -473,9 +485,9 @@ function rcl_password_regform( $content ) {
 
 	if ( $difficulty == 1 ) {
 		$content .= '<div class="form-block-rcl">
-                <label>' . __( 'Password strength indicator', 'wp-recall' ) . ':</label>
+                <label>' . esc_html__( 'Password strength indicator', 'wp-recall' ) . ':</label>
                 <div id="passwordStrength" class="strength0">
-                    <div id="passwordDescription">' . __( 'A password has not been entered', 'wp-recall' ) . '</div>
+                    <div id="passwordDescription">' . esc_html__( 'A password has not been entered', 'wp-recall' ) . '</div>
                 </div>
             </div>';
 	}
@@ -492,7 +504,7 @@ function rcl_secondary_password( $fields ) {
 	}
 
 	$fields .= '<div class="form-block-rcl default-field">
-                    <input placeholder="' . __( 'Repeat the password', 'wp-recall' ) . '" required id="secondary-pass-user" type="password" name="user_secondary_pass">
+                    <input placeholder="' . esc_html__( 'Repeat the password', 'wp-recall' ) . '" required id="secondary-pass-user" type="password" name="user_secondary_pass">
                     <i class="rcli fa-lock"></i>
                     <span class="required">*</span>
                 <div id="notice-chek-password"></div>
@@ -502,8 +514,8 @@ function rcl_secondary_password( $fields ) {
                 var pr = jQuery("#primary-pass-user").val();
                 var sc = jQuery(this).val();
                 var notice;
-                if(pr!=sc) notice = "<span class=login-error>' . __( 'The passwords do not match!', 'wp-recall' ) . '</span>";
-                else notice = "<span class=login-message>' . __( 'The passwords match', 'wp-recall' ) . '</span>";
+                if(pr!=sc) notice = "<span class=login-error>' . esc_html__( 'The passwords do not match!', 'wp-recall' ) . '</span>";
+                else notice = "<span class=login-message>' . esc_html__( 'The passwords match', 'wp-recall' ) . '</span>";
                 jQuery("#notice-chek-password").html(notice);
             });});
         </script>';
@@ -551,10 +563,12 @@ function rcl_custom_fields_regform( $content ) {
 			continue;
 		}
 
-		$class          = ( isset( $field['class'] ) ) ? $field['class'] : '';
-		$id             = ( isset( $field['id'] ) ) ? 'id=' . $field['id'] : '';
-		$attr           = ( isset( $field['attr'] ) ) ? '' . $field['attr'] : '';
-		$field['value'] = isset( $_POST[ $field['slug'] ] ) ? esc_html( wp_unslash($_POST[ $field['slug'] ]) ) : false;
+		$class = ( isset( $field['class'] ) ) ? $field['class'] : '';
+		$id    = ( isset( $field['id'] ) ) ? 'id=' . $field['id'] : '';
+		$attr  = ( isset( $field['attr'] ) ) ? '' . $field['attr'] : '';
+
+		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$field['value'] = isset( $_POST[ $field['slug'] ] ) ? rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST[ $field['slug'] ] ) ) : false;
 
 		unset( $field['class'] );
 		unset( $field['attr'] );
@@ -578,7 +592,8 @@ function rcl_custom_fields_regform( $content ) {
 	}
 
 	foreach ( $hiddens as $field ) {
-		$field['value'] = isset( $_POST[ $field['slug'] ] ) ? esc_html( wp_unslash($_POST[ $field['slug'] ]) ) : false;
+		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$field['value'] = isset( $_POST[ $field['slug'] ] ) ? rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST[ $field['slug'] ] ) ) : false;
 		$fieldObject    = Rcl_Field::setup( $field );
 		$content        .= $fieldObject->get_field_input();
 	}

@@ -14,7 +14,7 @@ if ( ! class_exists( 'reg_core' ) ) {
 				return false;
 			}
 
-			$host   = str_replace( 'www.', '', $_SERVER['HTTP_HOST'] );
+			$host   = str_replace( 'www.', '', filter_var( INPUT_SERVER, 'HTTP_HOST' ) );
 			$dm     = explode( '.', $host );
 			$cnt    = count( $dm );
 			$ignors = array( 'ua', 'es' );

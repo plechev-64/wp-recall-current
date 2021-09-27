@@ -14,7 +14,7 @@ function rcl_add_temp_media( $args ) {
 		'media_id'    => '',
 		'user_id'     => $user_ID,
 		'uploader_id' => '',
-		'session_id'  => $user_ID ? '' : ( $_COOKIE['PHPSESSID'] ? sanitize_text_field( $_COOKIE['PHPSESSID'] ) : 'none' ),
+		'session_id'  => $user_ID ? '' : ( ! empty( $_COOKIE['PHPSESSID'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['PHPSESSID'] ) ) : 'none' ),
 		'upload_date' => current_time( 'mysql' )
 	) );
 
@@ -40,7 +40,7 @@ function rcl_update_temp_media( $update, $where ) {
 function rcl_delete_temp_media( $media_id ) {
 	global $wpdb;
 
-	return $wpdb->query( "DELETE FROM " . RCL_PREF . "temp_media WHERE media_id = '$media_id'" );
+	return $wpdb->delete( RCL_PREF . "temp_media", [ 'media_id' => intval( $media_id ) ] );
 }
 
 function rcl_delete_temp_media_by_args( $args ) {
