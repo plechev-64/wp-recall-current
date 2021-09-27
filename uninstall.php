@@ -40,15 +40,15 @@ rcl_remove_dir( RCL_UPLOAD_PATH );
 //Удаляем таблицы и настройки плагина
 $tables = $wpdb->get_results( "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name like 'rcl_\%'" );
 if ( $tables ) {
-	foreach ( $tables as $tables ) {
-		$wpdb->query( "DROP TABLE IF EXISTS " . $tables->table_name );
+	foreach ( $tables as $table ) {
+		$wpdb->query( "DROP TABLE IF EXISTS " . $table->table_name );
 	}
 }
 
 $tables = $wpdb->get_results( "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name like 'rmag_\%'" );
 if ( $tables ) {
-	foreach ( $tables as $tables ) {
-		$wpdb->query( "DROP TABLE IF EXISTS " . $tables->table_name );
+	foreach ( $tables as $table ) {
+		$wpdb->query( "DROP TABLE IF EXISTS " . $table->table_name );
 	}
 }
 

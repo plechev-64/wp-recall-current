@@ -34,11 +34,11 @@ final class WP_Recall {
 	}
 
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, __( 'Are you cheating, bastard?' ), $this->version );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Are you cheating, bastard?' ), esc_attr( $this->version ) );
 	}
 
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, __( 'Are you cheating, bastard?' ), $this->version );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Are you cheating, bastard?' ), esc_attr( $this->version ) );
 	}
 
 	/*
@@ -289,7 +289,7 @@ final class WP_Recall {
 			$user_LK = ( isset( $_GET[ $get ] ) ) ? intval( $_GET[ $get ] ) : false;
 
 			if ( ! $user_LK ) {
-				$post_id = url_to_postid( $_SERVER['REQUEST_URI'] );
+				$post_id = url_to_postid( filter_input( INPUT_SERVER, 'REQUEST_URI' ) );
 				if ( rcl_get_option( 'lk_page_rcl' ) == $post_id ) {
 					$user_LK = $user_ID;
 				}
@@ -306,7 +306,7 @@ final class WP_Recall {
 
 				$nicename = false;
 
-				$url    = ( isset( $_SERVER['SCRIPT_URL'] ) ) ? $_SERVER['SCRIPT_URL'] : $_SERVER['REQUEST_URI'];
+				$url    = ( isset( $_SERVER['SCRIPT_URL'] ) ) ? filter_input( INPUT_SERVER, 'SCRIPT_URL' ) : filter_input( INPUT_SERVER, 'REQUEST_URI' );
 				$url    = preg_replace( '/\?.*/', '', $url );
 				$url_ar = explode( '/', $url );
 
@@ -322,7 +322,7 @@ final class WP_Recall {
 					return false;
 				}
 
-				$user_LK = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM " . $wpdb->prefix . "users WHERE user_nicename='%s'", $nicename ) );
+				$user_LK = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM " . $wpdb->prefix . "users WHERE user_nicename=%s", $nicename ) );
 			}
 		}
 
@@ -440,7 +440,7 @@ final class WP_Recall {
 
 		if ( is_admin() ) {
 			global $rcl_error;
-			$rcl_error = ( isset( $_GET['error-text'] ) ) ? $_GET['error-text'] : '';
+			$rcl_error = ( isset( $_GET['error-text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['error-text'] ) ) : '';
 			register_shutdown_function( 'rcl_register_shutdown' );
 		}
 
@@ -623,7 +623,7 @@ function wp_recall() {
 	do_action( 'rcl_area_before' );
 	?>
 
-    <div id="rcl-office" <?php rcl_office_class(); ?> data-account="<?php echo $user_LK; ?>">
+    <div id="rcl-office" <?php rcl_office_class(); ?> data-account="<?php echo (int) $user_LK; ?>">
 
 		<?php do_action( 'rcl_area_notice' ); ?>
 

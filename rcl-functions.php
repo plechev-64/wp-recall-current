@@ -71,7 +71,7 @@ function rcl_init_custom_tabs() {
 				continue;
 			}
 
-			$supports = !empty( $tab['supports-tab'] ) && is_array($tab['supports-tab']) ? $tab['supports-tab'] : array();
+			$supports = ! empty( $tab['supports-tab'] ) && is_array( $tab['supports-tab'] ) ? $tab['supports-tab'] : array();
 
 			$tab_data = array(
 				'id'         => $tab['slug'],
@@ -393,8 +393,8 @@ function rcl_setup_blocks() {
 function rcl_is_office( $user_id = null ) {
 	global $rcl_office;
 
-	if ( isset( $_POST['action'] ) && $_POST['action'] == 'rcl_ajax_tab' ) {
-		$post = rcl_decode_post( $_POST['post'] );
+	if ( isset( $_POST['action'], $_POST['post'] ) && $_POST['action'] == 'rcl_ajax_tab' ) {
+		$post = rcl_decode_post( sanitize_text_field( wp_unslash( $_POST['post'] ) ) );
 
 		if ( $post->master_id ) {
 			$rcl_office = intval( $post->master_id );
@@ -552,7 +552,7 @@ function rcl_admin_access() {
 				return true;
 			}
 
-			wp_redirect( '/' );
+			wp_safe_redirect( '/' );
 			exit;
 		}
 	}
@@ -904,14 +904,14 @@ function rcl_format_in( $array ) {
 function rcl_get_postmeta_array( $post_id ) {
 	global $wpdb;
 
-	$cachekey = json_encode( array( 'rcl_get_postmeta_array', $post_id ) );
+	$cachekey = json_encode( array( 'rcl_get_postmeta_array', (int) $post_id ) );
 	$cache    = wp_cache_get( $cachekey );
 	if ( $cache ) {
 		return $cache;
 	}
 
 	$mts   = array();
-	$metas = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM " . $wpdb->prefix . "postmeta WHERE post_id='%d'", $post_id ) );
+	$metas = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM " . $wpdb->prefix . "postmeta WHERE post_id=%d", $post_id ) );
 	if ( ! $metas ) {
 		return false;
 	}
@@ -990,7 +990,7 @@ function rcl_get_smiles( $id_area ) {
 function rcl_mail( $email, $title, $text, $from = false, $attach = false ) {
 
 	$from_name = ( isset( $from['name'] ) ) ? $from['name'] : get_bloginfo( 'name' );
-	$from_mail = ( isset( $from['email'] ) ) ? $from['email'] : 'noreply@' . $_SERVER['HTTP_HOST'];
+	$from_mail = ( isset( $from['email'] ) ) ? $from['email'] : 'noreply@' . filter_var( INPUT_SERVER, 'HTTP_HOST' );
 
 	add_filter( 'wp_mail_content_type', function () {
 		return "text/html";
@@ -1005,6 +1005,7 @@ function rcl_mail( $email, $title, $text, $from = false, $attach = false ) {
 	return wp_mail( $email, $title, $text, $headers, $attach );
 }
 
+/*todo remove ?*/
 function rcl_multisort_array( $array, $key, $type = SORT_ASC, $cmp_func = 'strcmp' ) {
 	$GLOBALS['ARRAY_MULTISORT_KEY_SORT_KEY'] = $key;
 	usort( $array, create_function( '$a, $b', '$k = &$GLOBALS["ARRAY_MULTISORT_KEY_SORT_KEY"];
@@ -1093,7 +1094,7 @@ function rcl_update_timeaction_user() {
 		);
 
 		if ( ! isset( $res ) || $res == 0 ) {
-			$act_user = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(time_action) FROM " . RCL_PREF . "user_action WHERE user ='%d'", $user_ID ) );
+			$act_user = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(time_action) FROM " . RCL_PREF . "user_action WHERE user =%d", $user_ID ) );
 			if ( $act_user == 0 ) {
 				$wpdb->insert(
 					RCL_PREF . 'user_action', array(
@@ -1156,7 +1157,7 @@ function rcl_verify_ajax_nonce() {
 	if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) {
 		return false;
 	}
-	if ( ! wp_verify_nonce( $_POST['ajax_nonce'], 'rcl-post-nonce' ) ) {
+	if ( ! isset( $_POST['ajax_nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['ajax_nonce'] ) ), 'rcl-post-nonce' ) ) {
 		wp_send_json( array( 'error' => __( 'Signature verification failed', 'wp-recall' ) . '!' ) );
 	}
 }
@@ -1182,7 +1183,7 @@ function rcl_office_class() {
 
 	$class[] = ( rcl_get_option( 'buttons_place' ) == 1 ) ? "vertical-menu" : "horizontal-menu";
 
-	echo 'class="' . implode( ' ', $class ) . '"';
+	echo 'class="' . esc_attr( implode( ' ', $class ) ) . '"';
 }
 
 function rcl_template_support( $support ) {
@@ -1276,7 +1277,8 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 
 			$slug = $field['slug'];
 
-			$value = ( isset( $_POST[ $slug ] ) ) ? $_POST[ $slug ] : false;
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$value = ( isset( $_POST[ $slug ] ) ) ? wp_unslash( $_POST[ $slug ] ) : false;
 
 			if ( isset( $field['admin'] ) && $field['admin'] == 1 && ! is_admin() && ! rcl_is_user_role( $user_ID, [ 'administrator' ] ) ) {
 
@@ -1305,7 +1307,7 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 
 			if ( $field['type'] != 'editor' ) {
 				$value = rcl_recursive_map( 'sanitize_text_field', $value );
-			}else{
+			} else {
 				$value = rcl_recursive_map( 'esc_html', $value );
 			}
 
@@ -1317,7 +1319,7 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 
 				if ( $slug == 'primary_pass' && $value ) {
 
-					if ( $value != $_POST['repeat_pass'] ) {
+					if ( ! isset( $_POST['repeat_pass'] ) || $value != $_POST['repeat_pass'] ) {
 						continue;
 					}
 
@@ -1637,7 +1639,7 @@ add_action( 'delete_user', 'rcl_delete_user_action', 10 );
 function rcl_delete_user_action( $user_id ) {
 	global $wpdb;
 
-	return $wpdb->query( $wpdb->prepare( "DELETE FROM " . RCL_PREF . "user_action WHERE user ='%d'", $user_id ) );
+	return $wpdb->query( $wpdb->prepare( "DELETE FROM " . RCL_PREF . "user_action WHERE user = %d", $user_id ) );
 }
 
 add_action( 'delete_user', 'rcl_delete_user_avatar', 10 );
@@ -1729,13 +1731,13 @@ function rcl_beat_action_exist( $beatName, $action ) {
 	return in_array( $action, $beat_actions );
 }
 
-function rcl_recursive_map( $callback, $data){
+function rcl_recursive_map( $callback, $data ) {
 
-	if(!is_array($data)){
-		$data = $callback($data);
-	}else{
-		foreach($data as $k => $v){
-			$data[$k] = rcl_recursive_map($callback, $v);
+	if ( ! is_array( $data ) ) {
+		$data = $callback( $data );
+	} else {
+		foreach ( $data as $k => $v ) {
+			$data[ $k ] = rcl_recursive_map( $callback, $v );
 		}
 	}
 
