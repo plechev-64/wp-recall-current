@@ -131,7 +131,7 @@ function rcl_admin_statistic_cashe() {
 	$Rcl_Payments_History->prepare_items();
 	$sr = ( $Rcl_Payments_History->total_items ) ? floor( $Rcl_Payments_History->sum / $Rcl_Payments_History->total_items ) : 0;
 
-	echo '</pre><div class="wrap"><h2>' . __( 'Payment history', 'wp-recall' ) . '</h2>';
+	echo '<div class="wrap"><h2>' . __( 'Payment history', 'wp-recall' ) . '</h2>';
 
 	echo '<p>' . __( 'All payments', 'wp-recall' ) . ': ' . $Rcl_Payments_History->total_items . ' ' . __( 'for the amount of', 'wp-recall' ) . ' ' . $Rcl_Payments_History->sum . ' ' . rcl_get_primary_currency( 1 ) . ' (' . __( 'Average check', 'wp-recall' ) . ': ' . $sr . ' ' . rcl_get_primary_currency( 1 ) . ')</p>';
 	echo '<p>' . __( 'Total in the system', 'wp-recall' ) . ': ' . $Rcl_Payments_History->sum_balance . ' ' . rcl_get_primary_currency( 1 ) . '</p>';
@@ -147,11 +147,8 @@ function rcl_admin_statistic_cashe() {
     </form>
     <form method="post">
         <input type="hidden" name="page" value="manage-wpm-cashe">
-		<?php
-		$Rcl_Payments_History->search_box( __( 'Search', 'wp-recall' ), 'search_id' );
-		$Rcl_Payments_History->display();
-		?>
-    </form>
-    </div>
 	<?php
+	$Rcl_Payments_History->search_box( __( 'Search', 'wp-recall' ), 'search_id' );
+	$Rcl_Payments_History->display();
+	echo '</form></div>';
 }

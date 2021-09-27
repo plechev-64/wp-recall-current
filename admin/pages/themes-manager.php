@@ -7,14 +7,14 @@ $Rcl_Templates_Manager->get_templates_data();
 
 $cnt_all = $Rcl_Templates_Manager->template_number;
 
-echo '</pre><div class="wrap">';
+echo '<div class="wrap">';
 
 echo '<div id="icon-plugins" class="icon32"><br></div>
     <h2>' . __( 'Templates', 'wp-recall' ) . ' WP-Recall</h2>';
 
 if ( isset( $_POST['save-rcl-key'] ) ) {
 	if ( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ) {
-		update_site_option( 'rcl-key', sanitize_text_field($_POST['rcl-key']) );
+		update_site_option( 'rcl-key', sanitize_text_field( $_POST['rcl-key'] ) );
 		echo '<div id="message"><p>' . __( 'Key has been saved', 'wp-recall' ) . '!</p></div>';
 	}
 }
@@ -57,4 +57,3 @@ $Rcl_Templates_Manager->prepare_items();
 $Rcl_Templates_Manager->search_box( 'Search by name', 'search_id' );
 $Rcl_Templates_Manager->display();
 echo '</form></div>';
-

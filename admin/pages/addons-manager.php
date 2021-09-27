@@ -9,7 +9,7 @@ $cnt_all   = count( $Rcl_Addons_Manager->addons_data );
 $cnt_act   = count( $active_addons );
 $cnt_inact = $cnt_all - $cnt_act;
 
-echo '</pre><div class="wrap">';
+echo '<div class="wrap">';
 
 echo '<div id="icon-plugins" class="icon32"><br></div>
     <h2>' . __( 'WP-Recall Add-ons', 'wp-recall' ) . '</h2>';
@@ -37,7 +37,7 @@ if ( isset( $_GET['update-addon'] ) ) {
 			$type        = 'error';
 			break;
 		case 'error-activate':
-			$text_notice = esc_html($_GET['error-text']);
+			$text_notice = esc_html( $_GET['error-text'] );
 			$type        = 'error';
 			break;
 	}
@@ -85,17 +85,14 @@ echo '<h4>' . __( 'Install the add-on to WP-Recall format .ZIP', 'wp-recall' ) .
 
 $Rcl_Addons_Manager->prepare_items();
 ?>
-<form method="get" class="rcl-repository-list">
-    <input type="hidden" name="page" value="manage-addon-recall">
-	<?php echo $Rcl_Addons_Manager->search_box( __( 'Search by name', 'wp-recall' ), 'search_id' ); ?>
-</form>
+    <form method="get" class="rcl-repository-list">
+        <input type="hidden" name="page" value="manage-addon-recall">
+		<?php echo $Rcl_Addons_Manager->search_box( __( 'Search by name', 'wp-recall' ), 'search_id' ); ?>
+    </form>
 
-<form method="post" class="rcl-repository-list">
-    <input type="hidden" name="page" value="manage-addon-recall">
-	<?php
-	//$Rcl_Addons_Manager->search_box( __( 'Search by name', 'wp-recall' ), 'search_id' );
-	$Rcl_Addons_Manager->display();
-	?>
-</form>
-</div>
-
+    <form method="post" class="rcl-repository-list">
+        <input type="hidden" name="page" value="manage-addon-recall">
+<?php
+//$Rcl_Addons_Manager->search_box( __( 'Search by name', 'wp-recall' ), 'search_id' );
+$Rcl_Addons_Manager->display();
+echo '</form></div>';

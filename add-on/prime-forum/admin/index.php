@@ -349,7 +349,7 @@ function pfm_page_themes() {
 
 	$cnt_all = $Prime_Themes_Manager->template_number;
 
-	echo '</pre><div class="wrap">';
+	echo '<div class="wrap">';
 
 	echo '<div id="icon-plugins" class="icon32"><br></div>
         <h2>' . __( 'Templates', 'wp-recall' ) . ' PrimeForum</h2>';
@@ -395,13 +395,10 @@ function pfm_page_themes() {
 
     <form method="post">
         <input type="hidden" name="page" value="pfm-themes">
-		<?php
-		$Prime_Themes_Manager->search_box( 'Search by name', 'search_id' );
-		$Prime_Themes_Manager->display();
-		?>
-    </form>
-    </div>
 	<?php
+	$Prime_Themes_Manager->search_box( 'Search by name', 'search_id' );
+	$Prime_Themes_Manager->display();
+	echo '</form></div>';
 }
 
 if ( is_admin() ):
