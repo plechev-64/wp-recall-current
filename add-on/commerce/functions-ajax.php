@@ -101,13 +101,13 @@ function rcl_check_cart_data() {
 
 	if ( ! $user_ID ) {
 
-		if ( ! isset( $_POST['user_email'] ) || ! $_POST['user_email'] ) {
+		if ( ! isset( $_POST['user_email'] ) || ! sanitize_email( wp_unslash( $_POST['user_email'] ) ) ) {
 			wp_send_json( array( 'error' => __( 'Please fill in required fields!', 'wp-recall' ) ) );
 		}
 
 		if ( rcl_get_commerce_option( 'buyer_register', 1 ) ) {
 
-			$user_email = sanitize_text_field( $_POST['user_email'] );
+			$user_email = sanitize_email( wp_unslash( $_POST['user_email'] ) );
 
 			$isEmail   = is_email( $user_email );
 			$validName = validate_username( $user_email );

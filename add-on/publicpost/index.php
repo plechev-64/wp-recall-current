@@ -413,7 +413,7 @@ function rcl_register_author_post( $postdata ) {
 
 	if ( ! $postdata['post_author'] ) {
 
-		$email_new_user = sanitize_email( $_POST['email-user'] );
+		$email_new_user = sanitize_email( wp_unslash( $_POST['email-user'] ) );
 
 		if ( $email_new_user ) {
 

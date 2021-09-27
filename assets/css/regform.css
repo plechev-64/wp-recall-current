@@ -136,7 +136,7 @@ div.panel_lk_recall a {
     -webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important; /*chrome banana fix*/
 }
 
-.panel_lk_recall form-tab-rcl .block-label {
+.panel_lk_recall .form-tab-rcl .block-label {
     font-weight: normal;
     text-align: left;
 }

@@ -172,7 +172,7 @@ function rcl_preview_post() {
 
 	if ( ! rcl_get_option( 'public_access' ) && ! $user_ID ) {
 
-		$email_new_user = sanitize_email( $postdata['email-user'] );
+		$email_new_user = sanitize_email( wp_unslash( $postdata['email-user'] ) );
 		$name_new_user  = sanitize_user( $postdata['name-user'] );
 
 		if ( ! $email_new_user ) {

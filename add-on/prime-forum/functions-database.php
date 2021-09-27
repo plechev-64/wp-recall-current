@@ -427,7 +427,7 @@ function pfm_add_topic( $args, $postdata = array() ) {
 		$postdata['user_id']     = $args['user_id'];
 		$postdata['post_date']   = isset( $postdata['post_date'] ) ? $postdata['post_date'] : current_time( 'mysql' );
 		$postdata['guest_name']  = isset( $postdata['guest_name'] ) ? $postdata['guest_name'] : '';
-		$postdata['guest_email'] = isset( $postdata['guest_email'] ) ? $postdata['guest_email'] : '';
+		$postdata['guest_email'] = isset( $postdata['guest_email'] ) ? sanitize_email( wp_unslash( $postdata['guest_email'] ) ) : '';
 
 		pfm_add_post( $postdata );
 	}

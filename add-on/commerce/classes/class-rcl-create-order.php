@@ -124,7 +124,7 @@ class Rcl_Create_Order {
 
 	function register_user() {
 
-		$user_email = sanitize_text_field( wp_strip_all_tags( $_POST['user_email'] ) );
+		$user_email = sanitize_email( wp_unslash( $_POST['user_email'] ) );
 		$user_name  = sanitize_text_field( wp_strip_all_tags( $_POST['first_name'] ) );
 
 		$isEmail   = is_email( $user_email );

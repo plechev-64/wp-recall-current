@@ -50,7 +50,7 @@ final class WP_Recall {
 		/*
 		 * Пока что только метод для отправки писем
 		 */
-		if ( in_array( $key, array( 'mailer' ) ) ) {
+		if ( $key == 'mailer' ) {
 			return $this->$key();
 		}
 	}

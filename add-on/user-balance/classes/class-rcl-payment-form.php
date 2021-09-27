@@ -197,9 +197,10 @@ class Rcl_Payment_Form extends Rcl_Payment_Core {
 			)
 		);
 
+		$styles = '';
 		if ( $this->gateways ) {
 			$values = array();
-			$styles = '';
+
 			foreach ( $this->gateways as $id => $gateway ) {
 
 				if ( $gateway->handle_forms ) {

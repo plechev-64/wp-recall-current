@@ -458,15 +458,15 @@ function rcl_css_variable( $styles, $rgb ) {
 	$bf = round( 0.75 * ( 255 - $b ) );
 
 	// https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color
-	$text_color = '#fff';
+	$text_color = '';
 	$threshold  = apply_filters( 'rcl_text_color_threshold', 150 );
 	if ( ( $r * 0.299 + $g * 0.587 + $b * 0.114 ) > $threshold ) {
-		$text_color = '#000';
+		$text_color = '--rclText:#000;';
 	}
 
 	$styles .= '
 :root{
---rclText: ' . $text_color . ';
+' . $text_color . ';
 --rclHex:' . $rcl_color . ';
 --rclRgb:' . $r . ',' . $g . ',' . $b . ';
 --rclRgbDark:' . $rd . ',' . $gd . ',' . $bd . ';

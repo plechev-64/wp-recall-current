@@ -146,7 +146,7 @@ function pfm_the_post_manager() {
 		);
 	}
 
-	if ( pfm_is_can( 'post_create' ) && $PrimeTopic && ! empty($PrimeTopic->topic_closed) && ! empty($PrimeTopic->forum_closed) ) {
+	if ( pfm_is_can( 'post_create' ) && $PrimeTopic && ! empty( $PrimeTopic->topic_closed ) && ! empty( $PrimeTopic->forum_closed ) ) {
 
 		$actions['get_post_excerpt'] = array(
 			'name' => __( 'Quote message', 'wp-recall' ),
@@ -1118,7 +1118,7 @@ function pfm_action_get_preview( $action ) {
 		'post_date'       => current_time( 'mysql' ),
 		'display_name'    => $user_ID ? get_the_author_meta( 'display_name', $user_ID ) : '',
 		'guest_name'      => ! $user_ID ? sanitize_text_field( $formdata['guest_name'] ) : '',
-		'guest_email'     => ! $user_ID ? sanitize_email( $formdata['guest_email'] ) : '',
+		'guest_email'     => ! $user_ID ? sanitize_email( wp_unslash( $formdata['guest_email'] ) ) : '',
 		'user_registered' => $user_ID ? get_the_author_meta( 'user_registered', $user_ID ) : ''
 	);
 
@@ -1176,11 +1176,11 @@ function pfm_action_post_create() {
 
 	if ( ! $user_ID ) {
 
-		if ( ! $formdata['guest_email'] || ! $formdata['guest_name'] ) {
+		if ( ! sanitize_email( wp_unslash( $formdata['guest_email'] ) ) || ! $formdata['guest_name'] ) {
 			return array( 'error' => __( 'Error', 'wp-recall' ) );
 		}
 
-		$args['guest_email'] = sanitize_email( $formdata['guest_email'] );
+		$args['guest_email'] = sanitize_email( wp_unslash( $formdata['guest_email'] ) );
 		$args['guest_name']  = sanitize_text_field( $formdata['guest_name'] );
 	}
 
