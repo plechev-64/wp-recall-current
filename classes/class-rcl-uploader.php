@@ -250,7 +250,7 @@ class Rcl_Uploader {
 			             ->where( [
 				             'uploader_id' => $this->uploader_id,
 				             'user_id'     => $this->user_id ? $this->user_id : 0,
-				             'session_id'  => ! $this->user_id && isset( $_COOKIE['PHPSESSID'] ) ? '' : sanitize_text_field( wp_unslash( $_COOKIE['PHPSESSID'] ) ),
+				             'session_id'  => ! $this->user_id && isset( $_COOKIE['PHPSESSID'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['PHPSESSID'] ) ) : '',
 			             ] )
 			             ->get_col();
 		}
