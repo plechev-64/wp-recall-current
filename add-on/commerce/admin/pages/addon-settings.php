@@ -40,9 +40,9 @@ function rcl_commerce_options() {
 						'title'   => __( 'Checkout page', 'wp-recall' ),
 						'slug'    => 'checkout_page',
 						'content' => wp_dropdown_pages( array(
-							'selected'         => $rcl_options['basket_page_rmag'],
+							'selected'         => sanitize_key( $rcl_options['basket_page_rmag'] ),
 							'name'             => 'global[basket_page_rmag]',
-							'show_option_none' => __( 'Not selected', 'wp-recall' ),
+							'show_option_none' => esc_html__( 'Not selected', 'wp-recall' ),
 							'echo'             => 0
 						) ),
 						'notice'  => __( 'Specify the page with the shortcode [basket]', 'wp-recall' )

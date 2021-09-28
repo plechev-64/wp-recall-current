@@ -56,7 +56,7 @@ function rcl_insert_order( $args, $products ) {
 	);
 
 	if ( ! $result ) {
-		wp_die( __( 'Error creating order' ) );
+		wp_die( esc_html__( 'Error creating order' ) );
 	}
 
 	$order_id = $wpdb->insert_id;
@@ -383,7 +383,7 @@ function rcl_payment_order_send_mail( $order_id ) {
 }
 
 function rcl_product_variation_list( $variations ) {
-	echo rcl_get_product_variation_list( $variations );
+	echo rcl_get_product_variation_list( $variations );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 function rcl_get_product_variation_list( $variations ) {
@@ -394,7 +394,7 @@ function rcl_get_product_variation_list( $variations ) {
 
 	$content = '<div class="product-variations">';
 
-	$content .= '<div class="variations-title"><strong>' . __( 'Product variation', 'wp-recall' ) . '</strong></div>';
+	$content .= '<div class="variations-title"><strong>' . esc_html__( 'Product variation', 'wp-recall' ) . '</strong></div>';
 
 	foreach ( $variations as $variation ) {
 
@@ -412,7 +412,7 @@ function rcl_get_product_variation_list( $variations ) {
 }
 
 function rcl_product_excerpt( $post_id ) {
-	echo rcl_get_product_excerpt( $post_id );
+	echo rcl_get_product_excerpt( $post_id );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 function rcl_get_product_excerpt( $post_id ) {

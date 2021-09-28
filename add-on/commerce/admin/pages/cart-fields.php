@@ -22,9 +22,9 @@ $Manager = new Rcl_Fields_Manager( 'orderform', array(
 	)
 ) );
 
-$content = '<h2>' . __( 'Fields Manager of order form', 'wp-recall' ) . '</h2>';
+$content = '<h2>' . esc_html__( 'Fields Manager of order form', 'wp-recall' ) . '</h2>';
 
 $content .= $Manager->get_manager();
-
+//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 echo $content;
 

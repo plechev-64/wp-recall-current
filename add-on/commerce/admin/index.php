@@ -154,20 +154,20 @@ rcl_ajax_action( 'rcl_edit_admin_price_product', false );
 function rcl_edit_admin_price_product() {
 
 	if ( ! current_user_can( 'administrator' ) ) {
-		wp_send_json( array( 'error' => __( 'Error', 'wp-recall' ) ) );
+		wp_send_json( array( 'error' => esc_html__( 'Error', 'wp-recall' ) ) );
 	}
 
-	$id_post = intval( $_POST['id_post'] );
-	$price   = floatval( $_POST['price'] );
+	$id_post = isset( $_POST['id_post'] ) ? intval( $_POST['id_post'] ) : 0;
+	$price   = isset( $_POST['price'] ) ? floatval( $_POST['price'] ) : 0;
 
 	if ( isset( $price ) ) {
 
 		update_post_meta( $id_post, 'price-products', $price );
 
-		$log['success'] = __( 'The data stored', 'wp-recall' );
+		$log['success'] = esc_html__( 'The data stored', 'wp-recall' );
 	} else {
 
-		$log['error'] = __( 'Error', 'wp-recall' );
+		$log['error'] = esc_html__( 'Error', 'wp-recall' );
 	}
 
 	wp_send_json( $log );
@@ -177,7 +177,7 @@ add_action( 'admin_init', 'rcl_read_exportfile' );
 function rcl_read_exportfile() {
 	global $wpdb;
 
-	if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'get-csv-file' ) ) {
+	if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'get-csv-file' ) ) {
 		return false;
 	}
 
@@ -194,13 +194,13 @@ function rcl_read_exportfile() {
 	);
 
 	if ( isset( $_POST['product']['fields'] ) ) {
-
-		$importData['fields'] = array_merge( $importData['fields'], $_POST['product']['fields'] );
+		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$importData['fields'] = array_merge( $importData['fields'], rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['product']['fields'] ) ) );
 	}
 
 	if ( isset( $_POST['product']['meta'] ) ) {
-
-		$importData['meta'] = $_POST['product']['meta'];
+		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$importData['meta'] = rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['product']['meta'] ) );
 	}
 
 	$posts = $wpdb->get_results( "SELECT " . implode( ',', $importData['fields'] ) . " FROM $wpdb->posts WHERE post_type = 'products' AND post_status!='draft'" );
@@ -362,7 +362,13 @@ function rcl_ajax_import_products() {
 
 	rcl_verify_ajax_nonce();
 
-	$path = $_POST['path'];
+	if ( ! current_user_can( 'administrator' ) ) {
+		wp_send_json( array(
+			'error' => esc_html__( 'Error', 'wp-recall' )
+		) );
+	}
+
+	$path = isset( $_POST['path'] ) ? sanitize_text_field( wp_unslash( $_POST['path'] ) ) : '';
 
 	$xml = simplexml_load_file( $path );
 
@@ -372,11 +378,11 @@ function rcl_ajax_import_products() {
 		) );
 	}
 
-	$status   = $_POST['status'];
-	$page     = $_POST['page'];
-	$number   = $_POST['number'];
-	$count    = $_POST['count'] ? $_POST['count'] : count( $xml->product ); //$_POST['count'];
-	$progress = $_POST['progress'];
+	$status   = isset( $_POST['status'] ) ? sanitize_text_field( wp_unslash( $_POST['status'] ) ) : '';
+	$page     = isset( $_POST['page'] ) ? sanitize_text_field( wp_unslash( $_POST['page'] ) ) : '';
+	$number   = isset( $_POST['number'] ) ? sanitize_text_field( wp_unslash( $_POST['number'] ) ) : '';
+	$count    = ! empty( $_POST['count'] ) ? sanitize_text_field( wp_unslash( $_POST['count'] ) ) : count( $xml->product ); //$_POST['count'];
+	$progress = isset( $_POST['progress'] ) ? sanitize_text_field( wp_unslash( $_POST['progress'] ) ) : '';
 
 	$offset = ( $page - 1 ) * $number;
 
@@ -498,28 +504,30 @@ function rcl_commerce_metabox() {
 	$orders = rcl_get_orders( array( 'number' => 5 ) );
 
 	if ( ! $orders ) {
-		echo '<p>' . __( 'No orders yet', 'wp-recall' ) . '</p>';
+		echo '<p>' . esc_html__( 'No orders yet', 'wp-recall' ) . '</p>';
 
 		return;
 	}
 
 	echo '<table class="wp-list-table widefat fixed striped">';
 	echo '<tr>'
-	     . '<th>' . __( 'Order', 'wp-recall' ) . '</th>'
-	     . '<th>' . __( 'Buyer', 'wp-recall' ) . '</th>'
-	     . '<th>' . __( 'Q-ty', 'wp-recall' ) . '</th>'
-	     . '<th>' . __( 'Sum', 'wp-recall' ) . '</th>'
-	     . '<th>' . __( 'Status', 'wp-recall' ) . '</th>'
+	     . '<th>' . esc_html__( 'Order', 'wp-recall' ) . '</th>'
+	     . '<th>' . esc_html__( 'Buyer', 'wp-recall' ) . '</th>'
+	     . '<th>' . esc_html__( 'Q-ty', 'wp-recall' ) . '</th>'
+	     . '<th>' . esc_html__( 'Sum', 'wp-recall' ) . '</th>'
+	     . '<th>' . esc_html__( 'Status', 'wp-recall' ) . '</th>'
 	     . '</tr>';
 	foreach ( $orders as $order ) {
 		echo '<tr>'
-		     . '<td><a href="' . admin_url( 'admin.php?page=manage-rmag&action=order-details&order-id=' . $order->order_id ) . '" target="_blank">' . $order->order_id . '</a></td>'
-		     . '<td>' . get_the_author_meta( 'user_login', $order->user_id ) . '</td>'
-		     . '<td>' . $order->products_amount . '</td>'
-		     . '<td>' . $order->order_price . ' ' . rcl_get_primary_currency( 2 ) . '</td>'
+		     . '<td><a href="' . esc_url( admin_url( 'admin.php?page=manage-rmag&action=order-details&order-id=' . $order->order_id ) ) . '" target="_blank">' . esc_html( $order->order_id ) . '</a></td>'
+		     . '<td>' . esc_html( get_the_author_meta( 'user_login', $order->user_id ) ) . '</td>'
+		     . '<td>' . esc_html( $order->products_amount ) . '</td>'
+		     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		     . '<td>' . esc_html( $order->order_price ) . ' ' . rcl_get_primary_currency( 2 ) . '</td>'
+		     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		     . '<td>' . rcl_get_status_name_order( $order->order_status ) . '</td>'
 		     . '</tr>';
 	}
 	echo '</table>';
-	echo '<p><a href="' . admin_url( 'admin.php?page=manage-rmag' ) . '" target="_blank">' . __( 'Go to orders manager', 'wp-recall' ) . '</a></p>';
+	echo '<p><a href="' . esc_url( admin_url( 'admin.php?page=manage-rmag' ) ) . '" target="_blank">' . esc_html__( 'Go to orders manager', 'wp-recall' ) . '</a></p>';
 }

@@ -117,7 +117,7 @@ function rcl_commerce_actions() {
 		return false;
 	}
 
-	$action = $_POST['rcl-commerce-action'];
+	$action = isset( $_POST['rcl-commerce-action'] ) ? sanitize_key( $_POST['rcl-commerce-action'] ) : '';
 
 	switch ( $action ) {
 
@@ -130,7 +130,7 @@ function rcl_commerce_actions() {
 			$order_id = rcl_create_order();
 
 			if ( is_wp_error( $order_id ) ) {
-				wp_die( print_r( $order_id ) );
+				wp_die( esc_html( $order_id ) );
 			}
 
 			wp_safe_redirect( rcl_format_url( $cart_url ) . 'order-id=' . $order_id . '&order-status=new' );

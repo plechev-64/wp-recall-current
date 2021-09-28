@@ -102,10 +102,10 @@ class Rcl_Create_Order {
 
 			if ( $field['type'] == 'agree' ) {
 
-				$value = ( isset( $_POST[ $field['slug'] ] ) && $_POST[ $field['slug'] ] ) ? 'Принято' : false;
+				$value = ( ! empty( $_POST[ $field['slug'] ] ) ) ? 'Принято' : false;
 			} else {
 
-				$value = ( isset( $_POST[ $field['slug'] ] ) ) ? $_POST[ $field['slug'] ] : false;
+				$value = ( isset( $_POST[ $field['slug'] ] ) ) ? sanitize_text_field( wp_unslash( $_POST[ $field['slug'] ] ) ) : false;
 			}
 
 			if ( ! $value ) {
@@ -124,8 +124,8 @@ class Rcl_Create_Order {
 
 	function register_user() {
 
-		$user_email = sanitize_email( wp_unslash( $_POST['user_email'] ) );
-		$user_name  = sanitize_text_field( wp_strip_all_tags( $_POST['first_name'] ) );
+		$user_email = isset( $_POST['user_email'] ) ? sanitize_email( wp_unslash( $_POST['user_email'] ) ) : '';
+		$user_name  = isset( $_POST['first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['first_name'] ) ) : '';
 
 		$isEmail   = is_email( $user_email );
 		$validName = validate_username( $user_email );

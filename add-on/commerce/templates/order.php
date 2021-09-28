@@ -11,16 +11,16 @@
     <table bordercolor="сссссс" border="1" cellpadding="5" class="order-table rcl-form">
         <tr>
             <th class="column-product-name">
-				<?php _e( 'Product', 'wp-recall' ); ?>
+				<?php esc_html_e( 'Product', 'wp-recall' ); ?>
             </th>
             <th class="column-product-price">
-				<?php _e( 'Price', 'wp-recall' ); ?>
+				<?php esc_html_e( 'Price', 'wp-recall' ); ?>
             </th>
             <th class="column-product-amount">
-				<?php _e( 'Amount', 'wp-recall' ); ?>
+				<?php esc_html_e( 'Amount', 'wp-recall' ); ?>
             </th>
             <th class="column-product-sumprice">
-				<?php _e( 'Sum', 'wp-recall' ); ?>
+				<?php esc_html_e( 'Sum', 'wp-recall' ); ?>
             </th>
         </tr>
 		<?php foreach ( $rclOrder->products as $product ): setup_postdata( $post = get_post( $product->product_id ) ); ?>
@@ -31,22 +31,26 @@
 					<?php rcl_product_variation_list( $product->variations ); ?>
                 </td>
                 <td class="column-product-price">
-                    <div class="rcl-cart-subtitle" style="display:none;"><?php _e( 'Price', 'wp-recall' ); ?>:</div>
-                    <span><?php echo $product->product_price; ?></span>
-					<?php echo rcl_get_primary_currency( 0 ); ?>
+                    <div class="rcl-cart-subtitle" style="display:none;"><?php esc_html_e( 'Price', 'wp-recall' ); ?>:
+                    </div>
+                    <span><?php echo esc_html( $product->product_price ); ?></span>
+					<?php echo rcl_get_primary_currency( 0 );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                 </td>
                 <td class="column-product-amount">
-                    <div class="rcl-cart-subtitle" style="display:none;"><?php _e( 'Amount', 'wp-recall' ); ?>:</div>
+                    <div class="rcl-cart-subtitle" style="display:none;"><?php esc_html_e( 'Amount', 'wp-recall' ); ?>
+                        :
+                    </div>
                     <span class="product-amount">
-					<?php echo $product->product_amount; ?>
+					<?php echo esc_html( $product->product_amount ); ?>
 				</span>
                 </td>
                 <td class="column-product-sumprice">
-                    <div class="rcl-cart-subtitle" style="display:none;"><?php _e( 'Sum', 'wp-recall' ); ?>:</div>
+                    <div class="rcl-cart-subtitle" style="display:none;"><?php esc_html_e( 'Sum', 'wp-recall' ); ?>:
+                    </div>
                     <span class="product-sumprice">
-					<?php echo $product->product_price * $product->product_amount; ?>
+					<?php echo esc_html( $product->product_price * $product->product_amount ); ?>
 				</span>
-					<?php echo rcl_get_primary_currency( 0 ); ?>
+					<?php echo rcl_get_primary_currency( 0 );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                 </td>
             </tr>
 		<?php
@@ -54,17 +58,17 @@
 		wp_reset_postdata();
 		?>
         <tr>
-            <th colspan="2"><?php _e( 'Total', 'wp-recall' ); ?></th>
+            <th colspan="2"><?php esc_html_e( 'Total', 'wp-recall' ); ?></th>
             <th class="column-product-amount total-amount">
             <span class="rcl-order-amount">
-				<?php echo $rclOrder->products_amount; ?>
+				<?php echo esc_html( $rclOrder->products_amount ); ?>
             </span>
             </th>
             <th class="column-product-sumprice total-sumprice">
             <span class="rcl-order-price">
-				<?php echo $rclOrder->order_price; ?>
+				<?php echo esc_html( $rclOrder->order_price ); ?>
             </span>
-				<?php echo rcl_get_primary_currency( 0 ); ?>
+				<?php echo rcl_get_primary_currency( 0 );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
             </th>
         </tr>
     </table>

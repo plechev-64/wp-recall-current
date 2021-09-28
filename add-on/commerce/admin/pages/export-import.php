@@ -5,7 +5,7 @@ global $wpdb;
 $postmeta = $wpdb->get_results( "SELECT meta_key FROM " . $wpdb->prefix . "postmeta GROUP BY meta_key ORDER BY meta_key" );
 
 $fields = array(
-	'price-products' => __( 'The price of the product in the main currency', 'wp-recall' ),
+	'price-products' => esc_html__( 'The price of the product in the main currency', 'wp-recall' ),
 	'outsale'        => '1 - ' . __( 'the item is no longer available', 'wp-recall' )
 );
 
@@ -85,15 +85,15 @@ $content .= '<form method="post" action="" enctype="multipart/form-data">
 </p>
 </form>';
 
-if ( $_FILES['rcl-import-products'] && wp_verify_nonce( $_POST['_wpnonce'], 'rcl-import-products-nonce' ) ) {
+if ( isset( $_FILES['rcl-import-products'], $_POST['_wpnonce'] ) && wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'rcl-import-products-nonce' ) ) {
 
-	$file_name = sanitize_text_field($_FILES['rcl-import-products']['name']);
+	$file_name = isset( $_FILES['rcl-import-products']['name'] ) ? sanitize_text_field( wp_unslash( $_FILES['rcl-import-products']['name'] ) ) : '';
 
 	$rest = substr( $file_name, - 4 ); //получаем расширение файла
 
 	if ( $rest == '.xml' ) {
 
-		$filename = sanitize_text_field($_FILES['rcl-import-products']['tmp_name']);
+		$filename = isset( $_FILES['rcl-import-products']['tmp_name'] ) ? sanitize_text_field( wp_unslash( $_FILES['rcl-import-products']['tmp_name'] ) ) : '';
 
 		$filepath = wp_normalize_path( current( wp_upload_dir() ) . "/" . basename( $filename ) );
 
@@ -108,9 +108,9 @@ if ( $_FILES['rcl-import-products'] && wp_verify_nonce( $_POST['_wpnonce'], 'rcl
 		$content .= '<div id="migration-log"></div>';
 		$content .= '</div>';
 	} else {
-		echo '<div class="error">' . __( 'Incorrect extension of the downloaded file. XML format expected!', 'wp-recall' ) . '</div>';
+		echo '<div class="error">' . esc_html__( 'Incorrect extension of the downloaded file. XML format expected!', 'wp-recall' ) . '</div>';
 	}
 }
 
-
+//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 echo $content;

@@ -247,7 +247,7 @@ function rcl_metabox_products( $post ) {
 
 	$metaBox .= '<input type="hidden" name="rcl_commerce_fields_nonce" value="' . wp_create_nonce( __FILE__ ) . '" />';
 
-	echo $metaBox;
+	echo $metaBox;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 add_action( 'save_post_products', 'rcl_commerce_fields_update', 10, 3 );
@@ -261,7 +261,7 @@ function rcl_commerce_fields_update( $post_id, $post, $update ) {
 		return false;
 	}
 
-	if ( ! wp_verify_nonce( $_POST['rcl_commerce_fields_nonce'], __FILE__ ) ) {
+	if ( ! isset( $_POST['rcl_commerce_fields_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['rcl_commerce_fields_nonce'] ), __FILE__ ) ) {
 		return false;
 	}
 

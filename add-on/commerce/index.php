@@ -343,12 +343,12 @@ function rcl_commerce_setup_order_actions() {
 		return false;
 	}
 
-	if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'order-action' ) ) {
+	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), 'order-action' ) ) {
 		return false;
 	}
 
 	$order_id     = intval( $_GET['order-id'] );
-	$order_action = $_GET['order-action'];
+	$order_action = isset( $_GET['order-action'] ) ? sanitize_key( $_GET['order-action'] ) : '';
 
 	switch ( $order_action ) {
 

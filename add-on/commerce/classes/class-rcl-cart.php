@@ -24,7 +24,7 @@ class Rcl_Cart {
 			return array();
 		}
 
-		return json_decode( wp_unslash( $_COOKIE['rcl_cart'] ) );
+		return json_decode( sanitize_text_field( wp_unslash( $_COOKIE['rcl_cart'] ) ) );
 	}
 
 	function init_cart_data() {

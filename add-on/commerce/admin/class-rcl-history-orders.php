@@ -30,7 +30,7 @@ class Rcl_History_Orders extends WP_List_Table {
 	}
 
 	function admin_header() {
-		$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
+		$page = ( isset( $_GET['page'] ) ) ? sanitize_key( $_GET['page'] ) : false;
 		if ( 'manage-rmag' != $page ) {
 			return;
 		}
@@ -45,7 +45,7 @@ class Rcl_History_Orders extends WP_List_Table {
 	}
 
 	function no_items() {
-		_e( 'No orders found.', 'wp-recall' );
+		esc_html_e( 'No orders found.', 'wp-recall' );
 	}
 
 	function column_default( $item, $column_name ) {
@@ -83,8 +83,9 @@ class Rcl_History_Orders extends WP_List_Table {
 	}
 
 	function column_order_id( $item ) {
+		$page    = ( isset( $_REQUEST['page'] ) ) ? sanitize_key( $_REQUEST['page'] ) : false;
 		$actions = array(
-			'order-details' => sprintf( '<a href="?page=%s&action=%s&order-id=%s">' . __( 'Details', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'order-details', $item->order_id ),
+			'order-details' => sprintf( '<a href="?page=%s&action=%s&order-id=%s">' . esc_html__( 'Details', 'wp-recall' ) . '</a>', esc_attr( $page ), 'order-details', $item->order_id ),
 		);
 
 		return sprintf( '%1$s %2$s', $item->order_id, $this->row_actions( $actions ) );
@@ -92,7 +93,7 @@ class Rcl_History_Orders extends WP_List_Table {
 
 	function column_order_status( $item ) {
 
-		$status = array(
+		$status  = array(
 			1 => 'not paid',
 			2 => 'paid',
 			3 => 'sent',
@@ -100,15 +101,15 @@ class Rcl_History_Orders extends WP_List_Table {
 			5 => 'closed',
 			6 => 'trash'
 		);
-
+		$page    = ( isset( $_REQUEST['page'] ) ) ? sanitize_key( $_REQUEST['page'] ) : false;
 		$actions = array(
-			'not paid' => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Not paid', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'update_status', 1, $item->order_id ),
-			'paid'     => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Paid', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'update_status', 2, $item->order_id ),
-			'sent'     => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Sent', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'update_status', 3, $item->order_id ),
-			'received' => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Received', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'update_status', 4, $item->order_id ),
-			'closed'   => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Closed', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'update_status', 5, $item->order_id ),
-			'trash'    => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . __( 'Trash', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'update_status', 6, $item->order_id ),
-			'delete'   => sprintf( '<a href="?page=%s&action=%s&order=%s">' . __( 'Delete', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'delete', $item->order_id ),
+			'not paid' => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . esc_html__( 'Not paid', 'wp-recall' ) . '</a>', esc_attr( $page ), 'update_status', 1, $item->order_id ),
+			'paid'     => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . esc_html__( 'Paid', 'wp-recall' ) . '</a>', esc_attr( $page ), 'update_status', 2, $item->order_id ),
+			'sent'     => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . esc_html__( 'Sent', 'wp-recall' ) . '</a>', esc_attr( $page ), 'update_status', 3, $item->order_id ),
+			'received' => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . esc_html__( 'Received', 'wp-recall' ) . '</a>', esc_attr( $page ), 'update_status', 4, $item->order_id ),
+			'closed'   => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . esc_html__( 'Closed', 'wp-recall' ) . '</a>', esc_attr( $page ), 'update_status', 5, $item->order_id ),
+			'trash'    => sprintf( '<a href="?page=%s&action=%s&status=%s&order=%s">' . esc_html__( 'Trash', 'wp-recall' ) . '</a>', esc_attr( $page ), 'update_status', 6, $item->order_id ),
+			'delete'   => sprintf( '<a href="?page=%s&action=%s&order=%s">' . esc_html__( 'Delete', 'wp-recall' ) . '</a>', esc_attr( $page ), 'delete', $item->order_id ),
 		);
 
 		unset( $actions[ $status[ $item->order_status ] ] );
@@ -119,8 +120,9 @@ class Rcl_History_Orders extends WP_List_Table {
 	}
 
 	function column_user_id( $item ) {
+		$page    = ( isset( $_REQUEST['page'] ) ) ? sanitize_key( $_REQUEST['page'] ) : false;
 		$actions = array(
-			'all-orders' => sprintf( '<a href="?page=%s&action=%s&user=%s">' . __( 'All user orders', 'wp-recall' ) . '</a>', esc_attr( $_REQUEST['page'] ), 'all-orders', $item->user_id ),
+			'all-orders' => sprintf( '<a href="?page=%s&action=%s&user=%s">' . esc_html__( 'All user orders', 'wp-recall' ) . '</a>', esc_attr( $page ), 'all-orders', $item->user_id ),
 		);
 
 		return sprintf( '%1$s %2$s', $item->user_id . ': ' . get_the_author_meta( 'user_login', $item->user_id ), $this->row_actions( $actions ) );
@@ -141,8 +143,7 @@ class Rcl_History_Orders extends WP_List_Table {
 
 	static function update_status_order() {
 		global $wpdb;
-
-		$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
+		$page = ( isset( $_GET['page'] ) ) ? sanitize_key( $_GET['page'] ) : false;
 		if ( 'manage-rmag' != $page ) {
 			return;
 		}
@@ -152,8 +153,8 @@ class Rcl_History_Orders extends WP_List_Table {
 				if ( ! isset( $_POST['orders'] ) ) {
 					return;
 				}
-				$action = sanitize_text_field( $_POST['action'] );
-				foreach ( $_POST['orders'] as $order_id ) {
+				$action = sanitize_text_field( wp_unslash( $_POST['action'] ) );
+				foreach ( $_POST['orders'] as $order_id ) {//phpcs:ignore
 					switch ( $action ) {
 						case 'delete':
 							rcl_delete_order( intval( $order_id ) );
@@ -162,13 +163,18 @@ class Rcl_History_Orders extends WP_List_Table {
 							rcl_update_status_order( intval( $order_id ), $action );
 					}
 				}
-				wp_safe_redirect( $_POST['_wp_http_referer'] );
+				if ( isset( $_POST['_wp_http_referer'] ) ) {
+					wp_safe_redirect( sanitize_text_field( wp_unslash( $_POST['_wp_http_referer'] ) ) );
+				}
 				exit;
 			}
 			if ( isset( $_GET['action'] ) ) {
 				switch ( $_GET['action'] ) {
 					case 'update_status':
-						return rcl_update_status_order( intval( $_REQUEST['order'] ), sanitize_text_field( $_REQUEST['status'] ) );
+						$order_id     = isset( $_REQUEST['order'] ) ? intval( $_REQUEST['order'] ) : 0;
+						$order_status = isset( $_REQUEST['status'] ) ? sanitize_key( $_REQUEST['status'] ) : '';
+
+						return rcl_update_status_order( $order_id, $order_status );
 					case 'delete':
 						return rcl_delete_order( intval( $_REQUEST['order'] ) );
 				}
@@ -182,12 +188,12 @@ class Rcl_History_Orders extends WP_List_Table {
 
 		$args = array();
 
-		if ( ! empty( $_GET['date-start'] ) ) {
+		if ( ! empty( $_GET['date-start'] ) && ! empty( $_GET['date-end'] ) ) {
 
 			$args['date_query'][] = array(
 				'value'   => array(
-					sanitize_text_field( $_GET['date-start'] ),
-					sanitize_text_field( $_GET['date-end'] )
+					sanitize_text_field( wp_unslash( $_GET['date-start'] ) ),
+					sanitize_text_field( wp_unslash( $_GET['date-end'] ) )
 				),
 				'compare' => 'BETWEEN',
 				'column'  => 'order_date'

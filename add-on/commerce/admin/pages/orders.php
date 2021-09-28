@@ -3,8 +3,8 @@ global $Rcl_History_Orders;
 
 $Rcl_History_Orders->prepare_items();
 
-echo '<div class="wrap"><h2>' . __( 'Order history', 'wp-recall' ) . '</h2>';
-
+echo '<div class="wrap"><h2>' . esc_html__( 'Order history', 'wp-recall' ) . '</h2>';
+//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 echo rcl_get_chart_orders( $Rcl_History_Orders->items );
 ?>
     <form method="get">
@@ -13,10 +13,11 @@ echo rcl_get_chart_orders( $Rcl_History_Orders->items );
 		$sts           = rcl_order_statuses();
 		?>
         <select name="sts" id="filter-by-status">
-            <option<?php selected( $currentStatus, 0 ); ?> value="0"><?php _e( 'All statuses', 'wp-recall' ); ?></option>
+            <option<?php selected( $currentStatus, 0 ); ?>
+                    value="0"><?php esc_html_e( 'All statuses', 'wp-recall' ); ?></option>
 			<?php
 			foreach ( $sts as $id => $name ) {
-				printf( "<option %s value='%s'>%s</option>\n", selected( $id, $currentStatus, false ), $id, $name
+				printf( "<option %s value='%s'>%s</option>\n", selected( $id, $currentStatus, false ), esc_attr( $id ), esc_attr( $name )
 				);
 			}
 			?>
@@ -24,13 +25,13 @@ echo rcl_get_chart_orders( $Rcl_History_Orders->items );
         <span class="rcl-datepicker-box">
 		<input type="text" name="date-start" id="orders-date-start" onclick="rcl_show_datepicker( this );"
                class="rcl-datepicker"
-               value="<?php echo ( isset( $_GET['date-start'] ) ) ? esc_attr( $_GET['date-start'] ) : ''; ?>">
+               value="<?php echo ( isset( $_GET['date-start'] ) ) ? esc_attr( sanitize_text_field( wp_unslash( $_GET['date-start'] ) ) ) : ''; ?>">
 	</span>
         <span class="date-separator">-</span>
         <span class="rcl-datepicker-box">
 		<input type="text" name="date-end" id="orders-date-end" onclick="rcl_show_datepicker( this );"
                class="rcl-datepicker"
-               value="<?php echo ( isset( $_GET['date-end'] ) ) ? esc_attr( $_GET['date-end'] ) : ''; ?>">
+               value="<?php echo ( isset( $_GET['date-end'] ) ) ? esc_attr( sanitize_text_field( wp_unslash( $_GET['date-end'] ) ) ) : ''; ?>">
 	</span>
         <input type="hidden" name="page" value="manage-rmag">
 		<?php submit_button( __( 'Filter', 'wp-recall' ), 'button', '', false, array( 'id' => 'search-submit' ) ); ?>
