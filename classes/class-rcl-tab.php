@@ -243,7 +243,7 @@ class Rcl_Tab {
 			if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 				$string = rcl_get_tab_permalink( $master_id, $this->id, $subtab_id );
 			} else {
-				$string = $protocol . filter_var( INPUT_SERVER, 'SERVER_NAME' ) . filter_var( INPUT_SERVER, 'REQUEST_URI' );
+				$string = $protocol . ( isset( $_SERVER['SERVER_NAME'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) : '' ) . ( isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '' );
 			}
 
 			$file = $rcl_cache->get_file( $string );

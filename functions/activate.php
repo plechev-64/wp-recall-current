@@ -14,7 +14,7 @@ if ( ! class_exists( 'reg_core' ) ) {
 				return false;
 			}
 
-			$host   = str_replace( 'www.', '', filter_var( wp_unslash( $_SERVER['HTTP_HOST'] ), FILTER_SANITIZE_URL ) );
+			$host   = str_replace( 'www.', '', sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) );
 			$dm     = explode( '.', $host );
 			$cnt    = count( $dm );
 			$ignors = array( 'ua', 'es' );

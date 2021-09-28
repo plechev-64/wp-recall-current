@@ -113,7 +113,7 @@ function rcl_template_update_status() {
 		return false;
 	}
 
-	$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
+	$page = ( isset( $_GET['page'] ) ) ? sanitize_key( $_GET['page'] ) : false;
 	if ( 'manage-templates-recall' != $page ) {
 		return;
 	}
@@ -122,7 +122,7 @@ function rcl_template_update_status() {
 
 		global $wpdb, $user_ID, $active_addons;
 
-		$addon  = sanitize_text_field($_GET['template']);
+		$addon  = sanitize_key( $_GET['template'] );
 		$action = rcl_wp_list_current_action();
 
 		if ( $action == 'connect' ) {

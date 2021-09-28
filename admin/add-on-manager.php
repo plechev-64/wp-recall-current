@@ -59,8 +59,8 @@ class Rcl_Addons_Manager extends WP_List_Table {
 						if ( isset( $data['custom-manager'] ) ) {
 							continue;
 						}
-						if ( isset( $_GET['s'] ) && $_GET['s'] ) {
-							if ( strpos( strtolower( trim( $data['name'] ) ), strtolower( trim( $_GET['s'] ) ) ) !== false ) {
+						if ( ! empty( $_GET['s'] ) ) {
+							if ( strpos( strtolower( trim( $data['name'] ) ), strtolower( trim( sanitize_text_field( wp_unslash( $_GET['s'] ) ) ) ) ) !== false ) {
 								$this->addons_data[ $namedir ]         = $data;
 								$this->addons_data[ $namedir ]['path'] = $addon_dir;
 							}
@@ -95,7 +95,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
 
 	function admin_header() {
 
-		$page = ( isset( $_GET['page'] ) ) ? sanitize_text_field( $_GET['page'] ) : false;
+		$page = ( isset( $_GET['page'] ) ) ? sanitize_key( $_GET['page'] ) : false;
 		if ( 'manage-addon-recall' != $page ) {
 			return;
 		}
@@ -110,7 +110,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
 	}
 
 	function no_items() {
-		_e( 'No addons found.', 'wp-recall' );
+		esc_html_e( 'No addons found.', 'wp-recall' );
 	}
 
 	function column_default( $item, $column_name ) {
@@ -160,8 +160,8 @@ class Rcl_Addons_Manager extends WP_List_Table {
 	}
 
 	function usort_reorder( $a, $b ) {
-		$orderby = ( ! empty( $_GET['orderby'] ) ) ? sanitize_text_field($_GET['orderby']) : 'addon_name';
-		$order   = ( ! empty( $_GET['order'] ) ) ? sanitize_text_field($_GET['order']) : 'asc';
+		$orderby = ( ! empty( $_GET['orderby'] ) ) ? sanitize_key( $_GET['orderby'] ) : 'addon_name';
+		$order   = ( ! empty( $_GET['order'] ) ) ? sanitize_key( $_GET['order'] ) : 'asc';
 		$result  = strcmp( $a[ $orderby ], $b[ $orderby ] );
 
 		return ( $order === 'asc' ) ? $result : - $result;
@@ -169,25 +169,27 @@ class Rcl_Addons_Manager extends WP_List_Table {
 
 	function column_addon_name( $item ) {
 
+		$page = ( isset( $_REQUEST['page'] ) ) ? sanitize_key( $_REQUEST['page'] ) : '';
+
 		$actions = array(
-			'delete' => sprintf( '<a href="?page=%s&action=%s&addon=%s">' . __( 'Delete', 'wp-recall' ) . '</a>', sanitize_text_field($_REQUEST['page']), 'delete', sanitize_text_field($item['ID']) )
+			'delete' => sprintf( '<a href="?page=%s&action=%s&addon=%s">' . esc_html__( 'Delete', 'wp-recall' ) . '</a>', $page, 'delete', sanitize_text_field( $item['ID'] ) )
 		);
 
 		if ( $item['addon_status'] == 1 ) {
-			$actions['deactivate'] = sprintf( '<a href="?page=%s&action=%s&addon=%s">' . __( 'Deactivate', 'wp-recall' ) . '</a>', sanitize_text_field($_REQUEST['page']), 'deactivate', sanitize_text_field($item['ID']) );
+			$actions['deactivate'] = sprintf( '<a href="?page=%s&action=%s&addon=%s">' . esc_html__( 'Deactivate', 'wp-recall' ) . '</a>', $page, 'deactivate', sanitize_text_field( $item['ID'] ) );
 		} else {
-			$actions['activate'] = sprintf( '<a href="?page=%s&action=%s&addon=%s">' . __( 'Activate', 'wp-recall' ) . '</a>', sanitize_text_field($_REQUEST['page']), 'activate', sanitize_text_field($item['ID']) );
+			$actions['activate'] = sprintf( '<a href="?page=%s&action=%s&addon=%s">' . esc_html__( 'Activate', 'wp-recall' ) . '</a>', $page, 'activate', sanitize_text_field( $item['ID'] ) );
 		}
-		$name = ( isset( $item['template'] ) ) ? $item['addon_name'] . ' (' . __( 'Template', 'wp-recall' ) . ')' : $item['addon_name'];
+		$name = ( isset( $item['template'] ) ) ? $item['addon_name'] . ' (' . esc_html__( 'Template', 'wp-recall' ) . ')' : $item['addon_name'];
 
 		return sprintf( '%1$s %2$s', '<strong>' . $name . '</strong>', $this->row_actions( $actions ) );
 	}
 
 	function get_bulk_actions() {
 		$actions = array(
-			'delete'     => __( 'Delete', 'wp-recall' ),
-			'activate'   => __( 'Activate', 'wp-recall' ),
-			'deactivate' => __( 'Deactivate', 'wp-recall' ),
+			'delete'     => esc_html__( 'Delete', 'wp-recall' ),
+			'activate'   => esc_html__( 'Activate', 'wp-recall' ),
+			'deactivate' => esc_html__( 'Deactivate', 'wp-recall' ),
 		);
 
 		return $actions;
@@ -195,7 +197,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
 
 	function column_cb( $item ) {
 		return sprintf(
-			'<input type="checkbox" name="addons[]" value="%s" />', sanitize_text_field($item['ID'])
+			'<input type="checkbox" name="addons[]" value="%s" />', esc_attr( $item['ID'] )
 		);
 	}
 
@@ -228,20 +230,20 @@ class Rcl_Addons_Manager extends WP_List_Table {
 		$class       = $status;
 		$class       .= ( $ver > 0 ) ? ' update' : '';
 
-		echo '<tr id="addon-' . $item['ID'] . '" class="' . $class . '">';
+		echo '<tr id="addon-' . esc_attr( $item['ID'] ) . '" class="' . esc_attr( $class ) . '">';
 		$this->single_row_columns( $item );
 		echo '</tr>';
 
 		if ( $ver > 0 ) {
 			$colspan = ( $hidden = count( $this->column_info[1] ) ) ? 5 - $hidden : 5;
 
-			echo '<tr class="addon-box plugin-update-tr ' . $status . '" id="' . $item['ID'] . '-update" data-slug="' . $item['ID'] . '">'
-			     . '<td colspan="' . $colspan . '" class="plugin-update colspanchange">'
+			echo '<tr class="addon-box plugin-update-tr ' . esc_attr( $status ) . '" id="' . esc_attr( $item['ID'] ) . '-update" data-slug="' . esc_attr( $item['ID'] ) . '">'
+			     . '<td colspan="' . esc_attr( $colspan ) . '" class="plugin-update colspanchange">'
 			     . '<div class="update-message notice inline notice-warning notice-alt">'
 			     . '<p>'
-			     . __( 'New version available', 'wp-recall' ) . ' ' . $this->addon['name'] . ' ' . $this->need_update[ $item['ID'] ]['new-version'] . '. ';
-			echo ' <a href="#"  onclick=\'rcl_get_details_addon(' . json_encode( array( 'slug' => $item['ID'] ) ) . ',this);return false;\' title="' . $this->addon['name'] . '">' . __( 'view information about the version', 'wp-recall' ) . '</a> или';
-			echo ' <a class="update-add-on" data-addon="' . $item['ID'] . '" href="#">' . __( 'update automatically', 'wp-recall' ) . '</a></div>'
+			     . esc_html__( 'New version available', 'wp-recall' ) . ' ' . esc_html( $this->addon['name'] ) . ' ' . esc_html( $this->need_update[ $item['ID'] ]['new-version'] ) . '. ';
+			echo ' <a href="#"  onclick=\'rcl_get_details_addon(' . json_encode( array( 'slug' => $item['ID'] ) ) . ',this);return false;\' title="' . esc_attr( $this->addon['name'] ) . '">' . esc_html__( 'view information about the version', 'wp-recall' ) . '</a> или';
+			echo ' <a class="update-add-on" data-addon="' . esc_attr( $item['ID'] ) . '" href="#">' . esc_html__( 'update automatically', 'wp-recall' ) . '</a></div>'
 			     . '</p>'
 			     . '</td>'
 			     . '</tr>';
@@ -276,8 +278,8 @@ function rcl_init_upload_addon() {
 		return false;
 	}
 
-	if ( isset( $_POST['install-addon-submit'] ) ) {
-		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'install-addons-rcl' ) ) {
+	if ( isset( $_POST['install-addon-submit'], $_POST['_wpnonce'] ) ) {
+		if ( ! wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'install-addons-rcl' ) ) {
 			return false;
 		}
 		rcl_upload_addon();
@@ -290,7 +292,7 @@ function rcl_update_status_addon() {
 		return false;
 	}
 
-	$page = ( isset( $_GET['page'] ) ) ? sanitize_text_field( $_GET['page'] ) : false;
+	$page = ( isset( $_GET['page'] ) ) ? sanitize_key( $_GET['page'] ) : false;
 	if ( 'manage-addon-recall' != $page ) {
 		return;
 	}
@@ -298,23 +300,23 @@ function rcl_update_status_addon() {
 	if ( isset( $_GET['addon'] ) && isset( $_GET['action'] ) ) {
 
 		if ( ! current_user_can( 'activate_plugins' ) ) {
-			wp_die( __( 'Insufficient rights to install plugins on this site.', 'wp-recall' ) );
+			wp_die( esc_html__( 'Insufficient rights to install plugins on this site.', 'wp-recall' ) );
 		}
 
-		$addon  = sanitize_text_field($_GET['addon']);
+		$addon  = sanitize_key( $_GET['addon'] );
 		$action = rcl_wp_list_current_action();
 
 		if ( $action == 'activate' ) {
 			rcl_activate_addon( $addon );
-			wp_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=activate' ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=activate' ) );
 			exit;
 		} else if ( $action == 'deactivate' ) {
 			rcl_deactivate_addon( $addon );
-			wp_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=deactivate' ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=deactivate' ) );
 			exit;
 		} else if ( $action == 'delete' ) {
 			rcl_delete_addon( $addon );
-			wp_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=delete' ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=delete' ) );
 			exit;
 		}
 	}
@@ -326,7 +328,7 @@ function rcl_update_status_group_addon() {
 		return false;
 	}
 
-	$page = ( isset( $_GET['page'] ) ) ? sanitize_text_field( $_GET['page'] ) : false;
+	$page = ( isset( $_GET['page'] ) ) ? sanitize_key( $_GET['page'] ) : false;
 	if ( 'manage-addon-recall' != $page ) {
 		return;
 	}
@@ -340,10 +342,11 @@ function rcl_update_status_group_addon() {
 		$paths = rcl_get_addon_paths();
 
 		if ( $action == 'activate' ) {
+			//phpcs:ignore
 			foreach ( $_POST['addons'] as $addon ) {
-				rcl_activate_addon( sanitize_text_field($addon) );
+				rcl_activate_addon( sanitize_key( $addon ) );
 			}
-			wp_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=activate' ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=activate' ) );
 			exit;
 		}
 
@@ -367,17 +370,18 @@ function rcl_update_status_group_addon() {
 			}
 
 			update_site_option( 'rcl_active_addons', $active_addons );
-			wp_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=deactivate' ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=deactivate' ) );
 			exit;
 		}
 
 		if ( $action == 'delete' ) {
+			//phpcs:ignore
 			foreach ( $_POST['addons'] as $addon ) {
 				foreach ( ( array ) $active_addons as $name => $data ) {
 					if ( $name != $addon ) {
 						$new_active_list[ $name ] = $data;
 					} else {
-						rcl_delete_addon( sanitize_text_field($addon) );
+						rcl_delete_addon( sanitize_key( $addon ) );
 					}
 				}
 
@@ -386,7 +390,7 @@ function rcl_update_status_group_addon() {
 				$new_active_list = '';
 			}
 
-			wp_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=deactivate' ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=deactivate' ) );
 			exit;
 		}
 	}
@@ -395,19 +399,23 @@ function rcl_update_status_group_addon() {
 function rcl_upload_addon() {
 
 	if ( ! class_exists( 'ZipArchive' ) ) {
-		wp_die( __( 'ZipArchive class is not defined.', 'wp-recall' ) );
+		wp_die( esc_html__( 'ZipArchive class is not defined.', 'wp-recall' ) );
+	}
+
+	if ( empty( $_FILES['addonzip']['tmp_name'] ) ) {
+		wp_die( esc_html__( 'Error', 'wp-recall' ) );
 	}
 
 	$paths = rcl_get_addon_paths();
 
-	$filename = sanitize_text_field($_FILES['addonzip']['tmp_name']);
+	$filename = sanitize_key( $_FILES['addonzip']['tmp_name'] );
 	$arch     = current( wp_upload_dir() ) . "/" . basename( $filename );
 
 	if ( ! copy( $filename, $arch ) ) {
-		wp_die( __( 'Error copying file.', 'wp-recall' ) );
+		wp_die( esc_html__( 'Error copying file.', 'wp-recall' ) );
 	}
 
-	$zip = new ZipArchive;
+	$zip = new ZipArchive();
 
 	$res = $zip->open( $arch );
 
@@ -426,7 +434,7 @@ function rcl_upload_addon() {
 
 		if ( ! $info ) {
 			$zip->close();
-			wp_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=error-info' ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=error-info' ) );
 			exit;
 		}
 
@@ -440,13 +448,13 @@ function rcl_upload_addon() {
 		$zip->close();
 		unlink( $arch );
 		if ( $rs ) {
-			wp_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=upload' ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=manage-addon-recall&update-addon=upload' ) );
 			exit;
 		} else {
-			wp_die( __( 'Unpacking of archive failed.', 'wp-recall' ) );
+			wp_die( esc_html__( 'Unpacking of archive failed.', 'wp-recall' ) );
 		}
 	} else {
-		wp_die( __( 'ZIP archive not found.', 'wp-recall' ) );
+		wp_die( esc_html__( 'ZIP archive not found.', 'wp-recall' ) );
 	}
 }
 

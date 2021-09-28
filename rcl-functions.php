@@ -990,7 +990,7 @@ function rcl_get_smiles( $id_area ) {
 function rcl_mail( $email, $title, $text, $from = false, $attach = false ) {
 
 	$from_name = ( isset( $from['name'] ) ) ? $from['name'] : get_bloginfo( 'name' );
-	$from_mail = ( isset( $from['email'] ) ) ? $from['email'] : 'noreply@' . filter_var( INPUT_SERVER, 'HTTP_HOST' );
+	$from_mail = ( isset( $from['email'] ) ) ? $from['email'] : 'noreply@' . ( isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '' );
 
 	add_filter( 'wp_mail_content_type', function () {
 		return "text/html";

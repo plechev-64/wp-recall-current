@@ -138,7 +138,7 @@ function rcl_send_addons_data() {
 	$data = array(
 		'rcl-version' => VER_RCL,
 		'addons'      => $addonlist,
-		'host'        => filter_var( INPUT_SERVER, 'SERVER_NAME' )
+		'host'        => ( isset( $_SERVER['SERVER_NAME'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) : '' )
 	);
 
 	wp_remote_post( $url, array( 'body' => $data ) );
@@ -160,7 +160,7 @@ function rcl_get_details_addon() {
 		'addon'       => $slug,
 		'rcl-key'     => get_site_option( 'rcl-key' ),
 		'rcl-version' => VER_RCL,
-		'host'        => filter_var( INPUT_SERVER, 'SERVER_NAME' )
+		'host'        => ( isset( $_SERVER['SERVER_NAME'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) : '' )
 	);
 
 	$response = wp_remote_post( $url, array( 'body' => $data ) );
@@ -223,7 +223,7 @@ function rcl_update_addon() {
 		'addon'       => $addonID,
 		'rcl-key'     => get_site_option( 'rcl-key' ),
 		'rcl-version' => VER_RCL,
-		'host'        => filter_var( INPUT_SERVER, 'SERVER_NAME' )
+		'host'        => ( isset( $_SERVER['SERVER_NAME'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) : '' )
 	);
 
 	$response = wp_remote_post( $url, array( 'body' => $data ) );

@@ -47,7 +47,7 @@ function rcl_stats_metabox() {
 	);
 
 	foreach ( $data as $d ) {
-		echo '<p><b>' . esc_html($d['name']) . ':</b> ' . esc_html($d['content']) . '</p>';
+		echo '<p><b>' . esc_html( $d['name'] ) . ':</b> ' . esc_html( $d['content'] ) . '</p>';
 	}
 }
 
@@ -58,14 +58,14 @@ function rcl_news_metabox() {
 	$xmlData = @simplexml_load_file( $url );
 
 	if ( ! $xmlData ) {
-		echo __( 'Unable to retrieve news', 'wp-recall' );
+		echo esc_html__( 'Unable to retrieve news', 'wp-recall' );
 
 		return;
 	}
 
 	echo '<ul>';
 	foreach ( $xmlData as $post ) {
-		echo '<li><h4><a href="' . esc_url($post->post_url) . '" target="_blank">' . sanitize_text_field($post->post_title) . '</a></h4></li>';
+		echo '<li><h4><a href="' . esc_url( $post->post_url ) . '" target="_blank">' . esc_html( $post->post_title ) . '</a></h4></li>';
 	}
 	echo '</ul>';
 }

@@ -1,5 +1,5 @@
 <?php $screen = get_current_screen(); ?>
-    <h2><?php _e( 'Dashboard WP-Recall', 'wp-recall' ); ?></h2>
+    <h2><?php esc_html_e( 'Dashboard WP-Recall', 'wp-recall' ); ?></h2>
     <div id="dashboard-widgets" class="metabox-holder">
         <div id="postbox-container-1" class="postbox-container">
 			<?php do_meta_boxes( $screen->id, 'normal', '' ); ?>

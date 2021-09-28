@@ -18,7 +18,7 @@ class Rcl_Options_Box {
 		$this->init_properties( $args );
 
 		if ( isset( $_GET['rcl-options-box'] ) ) {
-			$this->active = $this->box_id == sanitize_text_field($_GET['rcl-options-box']) ? true : false;
+			$this->active = $this->box_id == $_GET['rcl-options-box'] ? true : false;
 		}
 	}
 
