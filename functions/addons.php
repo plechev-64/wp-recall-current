@@ -110,8 +110,6 @@ function rcl_activate_addon( $addon, $activate = true, $dirpath = false ) {
 			do_action( 'rcl_activate_' . $addon, $active_addons[ $addon ] );
 
 			return true;
-
-			exit;
 		}
 	}
 
@@ -160,7 +158,7 @@ function rcl_delete_addon( $addon, $delete = true ) {
 	do_action( 'rcl_delete_' . $addon );
 }
 
-function rcl_include_addon( $path, $addon = false ) {
+function rcl_include_addon( $path ) {
 	include_once( $path );
 }
 
@@ -278,7 +276,6 @@ function rcl_check_active_template() {
 			//Если найденный шаблон указан как используемый, то активируем его
 			if ( isset( $templates[ $rcl_template ] ) ) {
 				rcl_activate_addon( $rcl_template );
-				$rcl_template                   = $addon_id;//todo ?? $addon_id
 				$active_addons[ $rcl_template ] = $templates[ $rcl_template ];
 
 				return true;
