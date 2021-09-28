@@ -13,7 +13,7 @@ function rcl_add_order_manager() {
 
 add_action( 'rcl_order_before', 'rcl_add_order_notices', 10 );
 function rcl_add_order_notices() {
-	global $rclOrder, $user_ID, $rcl_user_URL;
+	global $rclOrder, $user_ID;
 
 	if ( ! isset( $_GET['order-status'] ) ) {
 		return false;

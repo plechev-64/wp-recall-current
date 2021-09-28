@@ -316,9 +316,6 @@ body .rcl-product-gallery ul.images-list {
 }
 
 .products-box.type-slab .products-list .product .product-content .product-meta .meta-content-box:before {
-    border-color: rgba(255, 255, 255, 0);
-    border-top-color: #2EABDB;
-    border-width: 10px;
     border: solid transparent;
     bottom: -20px;
     content: " ";
@@ -789,7 +786,7 @@ body .rcl-product-gallery ul.images-list {
     }
 
     #rcl-order .order-table td {
-        border: none;
+        border: 0;
         min-width: 110px;
         text-align: left;
     }
@@ -804,7 +801,7 @@ body .rcl-product-gallery ul.images-list {
 
     #rcl-order .order-table th {
         align-self: center;
-        border: none;
+        border: 0;
         font-size: 16px;
     }
 

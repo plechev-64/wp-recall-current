@@ -4,9 +4,7 @@ function rcl_create_order() {
 
 	$Order = new Rcl_Create_Order();
 
-	$order_id = $Order->insert_order();
-
-	return $order_id;
+	return $Order->insert_order();
 }
 
 function rcl_insert_order( $args, $products ) {
@@ -125,6 +123,7 @@ function rcl_delete_order( $order_id ) {
 
 	do_action( 'rcl_delete_order', $order_id );
 
+	// phpcs:ignore
 	return $wpdb->query( $wpdb->prepare( "DELETE FROM " . RCL_PREF . "orders WHERE order_id = '%d'", $order_id ) );
 }
 
@@ -134,6 +133,7 @@ function rcl_delete_order_items( $order_id ) {
 
 	do_action( 'rcl_delete_order_items', $order_id );
 
+	// phpcs:ignore
 	return $wpdb->query( $wpdb->prepare( "DELETE FROM " . RCL_PREF . "order_items WHERE order_id = '%d'", $order_id ) );
 }
 
@@ -434,12 +434,14 @@ function rcl_get_cart_box( $product_id, $args = false ) {
 function rmag_migration_table_data() {
 	global $wpdb;
 
+	// phpcs:disable
 	$old_orders = $wpdb->get_results( "SELECT "
 	                                  . "orders.*, "
 	                                  . "details.details_order AS order_details "
 	                                  . "FROM " . RMAG_PREF . "orders_history AS orders "
 	                                  . "INNER JOIN " . RMAG_PREF . "details_orders AS details ON orders.order_id = details.order_id "
 	                                  . "ORDER BY orders.order_id ASC" );
+	// phpcs:enable
 
 	if ( ! $old_orders ) {
 		return false;
@@ -491,7 +493,7 @@ function rmag_migration_table_data() {
 		return false;
 	}
 
-	$wpdb->query( "ALTER TABLE `" . RCL_PREF . "orders` CHANGE `order_id` `order_id` BIGINT (20) NOT NULL" );
+	$wpdb->query( "ALTER TABLE `" . RCL_PREF . "orders` CHANGE `order_id` `order_id` BIGINT (20) NOT NULL" ); // phpcs:ignore
 
 	foreach ( $orders as $order ) {
 
@@ -502,5 +504,5 @@ function rmag_migration_table_data() {
 		rcl_insert_order( $order, $products );
 	}
 
-	$wpdb->query( "ALTER TABLE `" . RCL_PREF . "orders` CHANGE `order_id` `order_id` BIGINT (20) NOT NULL AUTO_INCREMENT" );
+	$wpdb->query( "ALTER TABLE `" . RCL_PREF . "orders` CHANGE `order_id` `order_id` BIGINT (20) NOT NULL AUTO_INCREMENT" ); // phpcs:ignore
 }

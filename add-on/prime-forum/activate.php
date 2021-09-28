@@ -122,7 +122,7 @@ $sql = "CREATE TABLE IF NOT EXISTS " . $table . " (
 dbDelta( $sql );
 
 add_action( 'rcl_activate_prime-forum', 'pfm_activate_theme' );
-function pfm_activate_theme( $addonData ) {
+function pfm_activate_theme() {
 
 	$defaultTheme = 'prime-first';
 

@@ -38,7 +38,7 @@ function pfm_init_feed( $args ) {
 
 		function setup_forum_data( $array_feed, $data ) {
 
-			$array_feed = array(
+			return array(
 				'feed_ID'        => $data->post_id,
 				'feed_content'   => $data->post_content,
 				'feed_author'    => $data->user_id,
@@ -49,12 +49,10 @@ function pfm_init_feed( $args ) {
 				'feed_excerpt'   => '',
 				'feed_permalink' => pfm_get_post_permalink( $data->post_id )
 			);
-
-			return $array_feed;
 		}
 
-		function setup_forum_query( $query ) {
-			global $wpdb, $user_ID;
+		function setup_forum_query() {
+			global $user_ID;
 
 			$this->query['select'] = [
 				'pfm_posts.post_id',

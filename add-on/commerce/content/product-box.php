@@ -17,9 +17,7 @@ function rcl_add_product_box( $content ) {
 		}
 	}
 
-	$content = rcl_get_product_box( $post->ID ) . $content;
-
-	return $content;
+	return rcl_get_product_box( $post->ID ) . $content;
 }
 
 function rcl_get_product_box( $product_id ) {

@@ -27,7 +27,7 @@ function rcl_get_product_gallery( $product_id, $size = 'rcl-product-thumb' ) {
 		return false;
 	}
 
-	$content = rcl_get_image_gallery( array(
+	return rcl_get_image_gallery( array(
 		'id'         => 'rcl-product-gallery-' . $product_id,
 		'attach_ids' => $gallery,
 		'width'      => 350,
@@ -44,6 +44,4 @@ function rcl_get_product_gallery( $product_id, $size = 'rcl-product-thumb' ) {
 			)
 		)
 	) );
-
-	return $content;
 }

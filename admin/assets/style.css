@@ -77,7 +77,7 @@ div.rcl_preloader i.rcli::before {
 }
 
 .wp-admin .ssi-modalWindow {
-    border: none;
+    border: 0;
     border-radius: 0;
     padding: 0;
 }
@@ -309,7 +309,7 @@ div.rcl_preloader i.rcli::before {
 #recall .rcl-save-button {
     background-color: rgb(76, 140, 189);
     border-radius: 0;
-    border: none;
+    border: 0;
     box-shadow: none;
     color: #fff;
     cursor: pointer;
@@ -830,7 +830,7 @@ div.rcl_preloader i.rcli::before {
 .rcl-custom-fields-box .fields-submit .button-primary {
     background-color: rgb(76, 140, 189);
     border-radius: 0;
-    border: none;
+    border: 0;
     box-shadow: none;
     font-size: 16px;
     height: auto;
@@ -1121,7 +1121,7 @@ span.ruble-symbol {
 
 .rcl-addon-details #ssi-modalWindow {
     border-radius: 0;
-    border: none;
+    border: 0;
     box-sizing: border-box;
     padding: 8px;
 }

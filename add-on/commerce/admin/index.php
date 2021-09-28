@@ -150,7 +150,7 @@ function rcl_commerce_options_orders() {
 	$Rcl_History_Orders = new Rcl_History_Orders();
 }
 
-rcl_ajax_action( 'rcl_edit_admin_price_product', false );
+rcl_ajax_action( 'rcl_edit_admin_price_product' );
 function rcl_edit_admin_price_product() {
 
 	if ( ! current_user_can( 'administrator' ) ) {
@@ -203,6 +203,7 @@ function rcl_read_exportfile() {
 		$importData['meta'] = rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['product']['meta'] ) );
 	}
 
+	// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	$posts = $wpdb->get_results( "SELECT " . implode( ',', $importData['fields'] ) . " FROM $wpdb->posts WHERE post_type = 'products' AND post_status!='draft'" );
 
 	if ( ! $posts ) {
@@ -220,10 +221,12 @@ function rcl_read_exportfile() {
 		}
 
 		if ( $importData['meta'] ) {
+			// phpcs:ignore
 			$postmeta = $wpdb->get_results( "SELECT meta_key,meta_value FROM $wpdb->postmeta WHERE post_id='$post->ID' AND meta_key IN ('" . implode( "','", $importData['meta'] ) . "')" );
 
 			$metas = array();
 			foreach ( $postmeta as $meta ) {
+				// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 				$metas[ $meta->meta_key ] = maybe_unserialize( $meta->meta_value );
 			}
 		}
@@ -358,8 +361,6 @@ function rcl_import_product( $product ) {
 
 rcl_ajax_action( 'rcl_ajax_import_products' );
 function rcl_ajax_import_products() {
-	global $wpdb;
-
 	rcl_verify_ajax_nonce();
 
 	if ( ! current_user_can( 'administrator' ) ) {

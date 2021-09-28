@@ -100,9 +100,7 @@ function pfm_get_primary_manager() {
 		'icon' => 'fa-rocket'
 	);
 
-	$content = pfm_get_manager( $actions, 'primary' );
-
-	return $content;
+	return pfm_get_manager( $actions, 'primary' );
 }
 
 function pfm_the_post_manager() {
@@ -300,8 +298,6 @@ function pfm_init_actions() {
 
 			wp_safe_redirect( pfm_get_topic_permalink( $topic_id ) );
 			exit;
-
-			break;
 		case 'post_edit': //редактирование поста
 
 			if ( empty( $_REQUEST['topic_id'] ) || empty( $_REQUEST['post_id'] ) || ! pfm_is_can_post_edit( intval( $_REQUEST['post_id'] ) ) ) {
@@ -335,8 +331,6 @@ function pfm_init_actions() {
 
 			wp_safe_redirect( pfm_get_post_permalink( absint( $_REQUEST['post_id'] ) ) );
 			exit;
-
-			break;
 
 		case 'topic_from_post_create': //создание топика из поста
 
@@ -381,7 +375,6 @@ function pfm_init_actions() {
 			wp_safe_redirect( pfm_get_topic_permalink( $topic_id ) );
 			exit;
 
-			break;
 		case 'topic_migrate': //перенос топика в другой форум
 
 			if ( ! pfm_is_can( 'topic_migrate' ) || empty( $_REQUEST['forum_id'] ) ) {
@@ -403,14 +396,13 @@ function pfm_init_actions() {
 			wp_safe_redirect( pfm_get_topic_permalink( absint( $_REQUEST['topic_id'] ) ) );
 			exit;
 
-			break;
 		case 'topic_edit': //изменение заголовка топика
 
 			if ( ! pfm_is_can_topic_edit( intval( $_REQUEST['topic_id'] ) ) ) {
 				return false;
 			}
 
-			$topic_id = pfm_update_topic( array(
+			pfm_update_topic( array(
 				'topic_id'   => absint( $_REQUEST['topic_id'] ),
 				'topic_name' => sanitize_text_field( wp_unslash( $_REQUEST['topic_name'] ) )
 			) );
@@ -423,13 +415,10 @@ function pfm_init_actions() {
 			wp_safe_redirect( pfm_get_topic_permalink( absint( $_REQUEST['topic_id'] ) ) );
 			exit;
 
-			break;
 		case 'member_go':
 
 			wp_safe_redirect( pfm_get_forum_permalink( absint( $_REQUEST['forum_id'] ) ) );
 			exit;
-
-			break;
 	}
 	if ( isset( $_POST['_wp_http_referer'] ) ) {
 		wp_safe_redirect( wp_unslash( $_POST['_wp_http_referer'] ) );
@@ -571,7 +560,7 @@ function pfm_action_start_post_migrate( $post_id ) {
 }
 
 pfm_add_ajax_action( 'cancel_post_migrate', 'pfm_action_cancel_post_migrate' );
-function pfm_action_cancel_post_migrate( $topic_id ) {
+function pfm_action_cancel_post_migrate() {
 	setcookie( 'pfm_migrate_post', '', time() + 3600, '/', isset( $_SERVER['HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HOST'] ) ) : '' );
 
 	return array(
@@ -867,8 +856,8 @@ function pfm_action_get_form_topic_edit( $topic_id ) {
 		'object_id'   => $topic_id,
 		'object_type' => 'topic',
 	] )->get_results() ) {
-		$metadata = array();
 		foreach ( $metas as $meta ) {
+			//phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			$args['values'][ $meta->meta_key ] = $meta->meta_value;
 		}
 	}
@@ -1028,6 +1017,7 @@ function pfm_action_get_last_updated_topics() {
 
 	$theme = pfm_get_current_theme();
 
+	//phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
 	$topics = $wpdb->get_results(
 		"SELECT "
 		. "ptopics.*, "
@@ -1040,6 +1030,7 @@ function pfm_action_get_last_updated_topics() {
 		. "ORDER BY MAX(pfm_posts.post_date) DESC "
 		. "LIMIT 20"
 	);
+	//phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
 
 	$PrimeQuery->last['posts'] = $PrimeQuery->get_topics_last_post( $topics );
 
@@ -1094,10 +1085,9 @@ function pfm_action_get_author_info( $user_id ) {
 
 //предпросмотр сообщения
 pfm_add_ajax_action( 'get_preview', 'pfm_action_get_preview' );
-function pfm_action_get_preview( $action ) {
-
+function pfm_action_get_preview() {
+	$formdata = array();
 	if ( isset( $_POST['formdata'] ) ) {
-		$formdata = array();
 		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		parse_str( rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['formdata'] ) ), $formdata );
 	}
@@ -1109,7 +1099,7 @@ function pfm_action_get_preview( $action ) {
 		return array( 'error' => __( 'Empty message!', 'wp-recall' ) );
 	}
 
-	global $PrimeShorts, $PrimePost, $PrimeUser, $user_ID;
+	global $PrimeShorts, $PrimePost, $user_ID;
 
 	$PrimeShorts = pfm_get_shortcodes();
 
@@ -1148,8 +1138,8 @@ pfm_add_ajax_action( 'post_create', 'pfm_action_post_create' );
 function pfm_action_post_create() {
 	global $user_ID;
 
+	$formdata = array();
 	if ( isset( $_POST['formdata'] ) ) {
-		$formdata = array();
 		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		parse_str( rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['formdata'] ) ), $formdata );
 	}

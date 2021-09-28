@@ -156,7 +156,7 @@ div p.post-group-meta {
 }
 
 #group-avatar-upload .rcli input {
-    border: none;
+    border: 0;
     cursor: pointer;
     max-width: none;
     opacity: 0;
@@ -519,10 +519,10 @@ div p.post-group-meta {
 
 #create-group input[type="text"] {
     background-color: #f5f5f5;
-    border: none; /*++Twenty16++*/
+    border: 0; /*++Twenty16++*/
     max-width: 300px;
     min-width: 170px;
-    padding: 0px 10px;
+    padding: 0 10px;
     width: 58%;
     margin-right: 5px; /*++Twenty16++*/
 }
@@ -569,7 +569,7 @@ div p.post-group-meta {
 
 #widgets-options .widgets-zone ul {
     background-color: transparent;
-    border: none;
+    border: 0;
     float: none;
     list-style: none;
     margin: 0;

@@ -88,7 +88,7 @@ class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager {
 
 	function get_manager_options_form_fields() {
 
-		$fields = array(
+		return array(
 			'users_page_rcl' => array(
 				'type'    => 'custom',
 				'title'   => esc_html__( 'Users page', 'wp-recall' ),
@@ -102,8 +102,7 @@ class Rcl_Profile_Fields_Manager extends Rcl_Fields_Manager {
 				)
 			)
 		);
-
-		return $fields;
+		
 	}
 
 }

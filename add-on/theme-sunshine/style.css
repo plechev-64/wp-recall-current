@@ -85,6 +85,8 @@
     max-width: 100%;
     padding: 0;
     width: 100%;
+    float: none;
+    background-size: cover;
 }
 
 #rcl-avatar .avatar-icons {
@@ -414,7 +416,7 @@
 
     .cab_sidebar,
     .rcl-content {
-        border: none;
+        border: 0;
         max-width: none;
     }
 
@@ -486,7 +488,7 @@
         margin: 15px auto 10px;
         width: 210px;
     }
-    
+
     .lk-sidebar .lk-avatar {
         box-shadow: 0 0 0 5px #fff;
     }

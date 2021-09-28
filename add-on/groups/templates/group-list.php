@@ -12,4 +12,3 @@
         <span class="group-posts-counter group-meta"><?php esc_html_e( 'Posts', 'wp-recall' ) ?>: <?php rcl_group_post_counter(); ?></span>
     </div>
 </div>
-

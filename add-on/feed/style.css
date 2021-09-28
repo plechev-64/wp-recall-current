@@ -17,7 +17,7 @@
 }
 
 #rcl-feed .feed-box a {
-    border: none; /*++Twenty15++*/
+    border: 0; /*++Twenty15++*/
     box-shadow: none; /*++Twenty16++*/
 }
 

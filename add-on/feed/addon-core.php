@@ -61,20 +61,16 @@ function rcl_update_feed_data( $args ) {
 function rcl_add_feed_author( $author_id ) {
 	global $user_ID;
 
-	$result = rcl_insert_feed_data( array(
+	return rcl_insert_feed_data( array(
 		'user_id'     => $user_ID,
 		'object_id'   => $author_id,
 		'feed_type'   => 'author',
 		'feed_status' => 1
 	) );
-
-	return $result;
 }
 
 //удаляем подписку текущему пользователю на указанного пользователя
 function rcl_remove_feed_author( $author_id ) {
-	global $user_ID, $wpdb;
-
 	$feed_id = rcl_get_feed_author_current_user( $author_id );
 
 	return rcl_remove_feed( $feed_id );
@@ -84,7 +80,7 @@ add_action( 'delete_user', 'rcl_remove_user_feed', 10 );
 function rcl_remove_user_feed( $user_id ) {
 	global $wpdb;
 
-	return $wpdb->query( "DELETE FROM " . RCL_PREF . "feeds WHERE user_id='absint($user_id)' OR object_id='absint($user_id)'" );
+	return $wpdb->query( "DELETE FROM " . RCL_PREF . "feeds WHERE user_id='absint($user_id)' OR object_id='absint($user_id)'" ); //phpcs:ignore
 }
 
 //получаем данные фида по ИД
@@ -104,11 +100,9 @@ function rcl_remove_feed( $feed_id ) {
 
 	do_action( 'rcl_pre_remove_feed', $feed );
 
-	$result = $wpdb->query(
-		$wpdb->prepare( "DELETE FROM " . RCL_PREF . "feeds WHERE feed_id='%d'", $feed_id )
+	return $wpdb->query(
+		$wpdb->prepare( "DELETE FROM " . RCL_PREF . "feeds WHERE feed_id='%d'", $feed_id ) //phpcs:ignore
 	);
-
-	return $result;
 }
 
 function rcl_is_ignored_feed_author( $author_id ) {
@@ -168,7 +162,7 @@ function rcl_feed_count_subscribers( $user_id ) {
 	] )->get_count( 'feed_id', 'cache' );
 }
 
-rcl_ajax_action( 'rcl_feed_callback', false );
+rcl_ajax_action( 'rcl_feed_callback' );
 function rcl_feed_callback() {
 
 	rcl_verify_ajax_nonce();
@@ -203,7 +197,6 @@ function rcl_add_feed_content_meta( $content ) {
 	switch ( $rcl_feed->feed_type ) {
 		case 'posts':
 			return $content;
-			break;
 		case 'comments':
 			$content .= '<div class="feed-content-meta">' . esc_html__( 'For publication', 'wp-recall' ) . ' <a href="' . get_permalink( $rcl_feed->feed_parent ) . '">' . get_the_title( $rcl_feed->feed_parent ) . '</a></div>';
 			break;
@@ -280,9 +273,7 @@ function rcl_get_feed_attachment( $content ) {
 
 	$src = wp_get_attachment_image_src( $rcl_feed->feed_ID, 'medium' );
 
-	$content = '<a href="' . $rcl_feed->feed_permalink . '"><img class="aligncenter" src="' . $src[0] . '" alt="" /></a>' . $content;
-
-	return $content;
+	return '<a href="' . $rcl_feed->feed_permalink . '"><img class="aligncenter" src="' . $src[0] . '" alt="" /></a>' . $content;
 }
 
 function rcl_feed_options() {

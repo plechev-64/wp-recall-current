@@ -35,8 +35,8 @@ function rcl_get_grouplist( $atts = false ) {
 
 	$list = new Rcl_Groups_List( $atts );
 
-	$count = $list->count();
-
+	$count   = $list->count();
+	$rclnavi = false;
 	if ( ! isset( $atts['number'] ) ) {
 
 		$rclnavi               = new Rcl_PageNavi( 'rcl-groups', $count, array( 'in_page' => $list->query['number'] ) );

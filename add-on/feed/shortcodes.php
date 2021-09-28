@@ -34,8 +34,8 @@ function rcl_get_feed_list( $atts = array() ) {
 
 	include_once 'classes/class-rcl-feed-list.php';
 
-	$list = new Rcl_Feed_List( $atts );
-
+	$list    = new Rcl_Feed_List( $atts );
+	$rclnavi = false;
 	if ( ! isset( $atts['number'] ) ) {
 
 		$rclnavi = new Rcl_PageNavi(

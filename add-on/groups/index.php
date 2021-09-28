@@ -67,9 +67,7 @@ function rcl_group_set_query_vars( $vars ) {
 
 	$vars[] = 'group-id';
 
-	$vars = apply_filters( 'rcl_group_query_vars', $vars );
-
-	return $vars;
+	return apply_filters( 'rcl_group_query_vars', $vars );
 }
 
 add_action( 'parse_query', 'rcl_group_add_seo_filters', 10 );
@@ -140,11 +138,9 @@ function rcl_group_setup_page_title( $title, $post_id ) {
 
 	$groupName = $rcl_group->name;
 
-	if ( $rcl_group->name ) {
-		$title = $rcl_group->name;
+	if ( $groupName ) {
+		return $rcl_group->name;
 	}
-
-	return $title;
 }
 
 function rcl_group_replace_shortlink( $url ) {
@@ -221,8 +217,7 @@ function rcl_tab_groups_remove_cache( $groupdata ) {
 	if ( rcl_get_option( 'use_cache' ) ) {
 
 		if ( is_array( $groupdata ) ) {
-			$group_id = $groupdata['group_id'];
-			$user_id  = $groupdata['user_id'];
+			$user_id = $groupdata['user_id'];
 		} else {
 			$group_id = $groupdata;
 			$group    = rcl_get_group( $group_id );
@@ -355,7 +350,7 @@ function rcl_get_link_group_tag( $content ) {
 	}
 
 	$group_data = get_the_terms( $post->ID, 'groups' );
-
+	$group_id   = false;
 	foreach ( ( array ) $group_data as $data ) {
 		if ( $data->parent == 0 ) {
 			$group_id = $data->term_id;
@@ -424,9 +419,7 @@ function rcl_add_namegroup( $content ) {
 
 	$group_link = '<p class="post-group-meta"><i class="rcli fa-users rcl-icon"></i><span>' . __( 'Published in group', 'wp-recall' ) . '</span>: <a href="' . rcl_get_group_permalink( $group->term_id ) . '">' . $group->name . '</a></p>';
 
-	$content = $group_link . $content;
-
-	return $content;
+	return $group_link . $content;
 }
 
 //Создаем новую группу
@@ -534,8 +527,6 @@ function rcl_group_add_thumb_buttons( $content ) {
 
 add_action( 'rcl_upload', 'rcl_group_avatar_upload', 10, 2 );
 function rcl_group_avatar_upload( $uploads, $class ) {
-	global $user_ID;
-
 	if ( $class->uploader_id != 'rcl_group_avatar' ) {
 		return;
 	}
@@ -578,7 +569,7 @@ function rcl_group_actions() {
 			break;
 		case 'update-widgets':
 			//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			$data = isset( $_POST['data'] ) ? rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['data'] ) ) : [];;
+			$data = isset( $_POST['data'] ) ? rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['data'] ) ) : [];
 			rcl_update_group_widgets( $rcl_group->term_id, $data );
 			break;
 	}
@@ -760,9 +751,9 @@ function rcl_add_group_user_options() {
 	echo '</div>';
 }
 
-rcl_ajax_action( 'rcl_apply_group_request', false );
+rcl_ajax_action( 'rcl_apply_group_request' );
 function rcl_apply_group_request() {
-	global $rcl_group, $user_ID;
+	global $rcl_group;
 
 	rcl_verify_ajax_nonce();
 
@@ -866,11 +857,13 @@ add_filter( 'rcl_feed_posts_query', 'rcl_add_feed_group_query', 10, 2 );
 function rcl_add_feed_group_query( $query, int $user_id ) {
 	global $wpdb;
 
+	// phpcs:disable
 	$groups = $wpdb->get_col( "SELECT groups_users.group_id, groups.ID "
 	                          . "FROM " . RCL_PREF . "groups_users AS groups_users "
 	                          . "INNER JOIN " . RCL_PREF . "groups AS groups ON groups_users.user_id=groups.admin_id "
 	                          . "WHERE (groups_users.user_id='$user_id' OR groups.admin_id='$user_id') "
 	                          . "GROUP BY groups_users.group_id, groups.ID" );
+	// phpcs:enable
 
 	if ( $groups ) {
 
@@ -887,12 +880,14 @@ function rcl_add_feed_group_query( $query, int $user_id ) {
 
 		$authors_ignor[] = $user_id;
 
+		// phpcs:disable
 		$objects = $wpdb->get_col( "SELECT term_relationships.object_id "
 		                           . "FROM $wpdb->term_relationships AS term_relationships "
 		                           . "INNER JOIN $wpdb->term_taxonomy AS term_taxonomy ON term_relationships.term_taxonomy_id=term_taxonomy.term_taxonomy_id "
 		                           . "INNER JOIN $wpdb->posts AS posts ON term_relationships.object_id=posts.ID "
 		                           . "WHERE term_taxonomy.term_id IN (" . implode( ',', $groups ) . ") "
 		                           . "AND posts.post_status = 'publish'" );
+		// phpcs:enable
 
 		if ( $objects ) {
 			$query['where_or'][] = "(wp_posts.ID IN (" . implode( ',', $objects ) . ") AND wp_posts.post_author NOT IN (" . implode( ',', $authors_ignor ) . "))";

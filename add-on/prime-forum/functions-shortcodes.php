@@ -33,9 +33,8 @@ function pfm_add_admin_support_shortcodes( $whiteList ) {
 	if ( ! $adminShorts ) {
 		return $whiteList;
 	}
-	$whiteList = array_merge( $whiteList, $adminShorts );
 
-	return $whiteList;
+	return array_merge( $whiteList, $adminShorts );
 }
 
 function pfm_do_shortcode( $content, $ignore_html = false ) {
@@ -63,9 +62,7 @@ function pfm_do_shortcode( $content, $ignore_html = false ) {
 	$content = preg_replace_callback( "/$pattern/", 'do_shortcode_tag', $content );
 
 	// Always restore square braces so we don't break things like <!--[if IE ]>
-	$content = unescape_invalid_shortcodes( $content );
-
-	return $content;
+	return unescape_invalid_shortcodes( $content );
 }
 
 add_shortcode( 'spoiler', 'pfm_get_spoiler_content' );
@@ -109,7 +106,5 @@ function pfm_get_posts_shortcode( $attrs ) {
 		return '<p>' . __( 'Not found', 'wp-recall' ) . '</p>';
 	}
 
-	$content = $LastPosts->get_content();
-
-	return $content;
+	return $LastPosts->get_content();
 }

@@ -101,9 +101,7 @@ function pfm_filter_allowed_tags( $content ) {
 		)
 	) );
 
-	$content = force_balance_tags( wp_kses( $content, $allowed_tags ) );
-
-	return $content;
+	return force_balance_tags( wp_kses( $content, $allowed_tags ) );
 }
 
 add_filter( 'pfm_content_without_code', 'pfm_filter_urls', 11 );
@@ -222,9 +220,7 @@ function pfm_add_topic_meta_box( $content ) {
 		return $content;
 	}
 
-	$content = pfm_get_topic_meta_box( $PrimeTopic->topic_id ) . $content;
-
-	return $content;
+	return pfm_get_topic_meta_box( $PrimeTopic->topic_id ) . $content;
 }
 
 add_filter( 'pfm_the_post_content', 'pfm_add_post_edition', 25 );

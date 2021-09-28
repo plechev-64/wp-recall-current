@@ -8,7 +8,7 @@ function pfm_get_form( $args = false ) {
 }
 
 function pfm_the_topic_form() {
-	global $PrimeForum, $PrimeQuery, $user_ID;
+	global $PrimeForum, $PrimeQuery;
 
 	if ( ! $PrimeForum || ! $PrimeForum->forum_id || $PrimeQuery->errors ) {
 		return;
@@ -36,7 +36,7 @@ function pfm_the_topic_form() {
 }
 
 function pfm_the_post_form() {
-	global $PrimeTopic, $PrimeQuery, $user_ID;
+	global $PrimeTopic, $PrimeQuery;
 
 	if ( ! $PrimeTopic || ! $PrimeTopic->topic_id || $PrimeQuery->errors ) {
 		return;
@@ -90,8 +90,6 @@ function pfm_the_post_form() {
 
 add_filter( 'pfm_form_bottom', 'pfm_add_manager_fields_post_form', 10, 2 );
 function pfm_add_manager_fields_post_form( $content, $action ) {
-	global $PrimeTopic;
-
 	if ( $action != 'post_create' ) {
 		return $content;
 	}

@@ -433,7 +433,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 				'post_type'   => 'post-group',
 				'numberposts' => - 1,
 				'fields'      => 'ids',
-				'tax_query'   => array(
+				'tax_query'   => array( //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 					array(
 						'taxonomy' => 'groups',
 						'field'    => ( $term_id == $rcl_group->term_id ) ? 'id' : 'slug',
@@ -452,7 +452,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 				'post_type'   => 'post-group',
 				'numberposts' => $instance['count'],
 				'offset'      => $pagenavi->offset,
-				'tax_query'   => array(
+				'tax_query'   => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 					array(
 						'taxonomy' => 'groups',
 						'field'    => ( $term_id == $rcl_group->term_id ) ? 'id' : 'slug',

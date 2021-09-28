@@ -375,7 +375,7 @@ span i.rcli.fa-circle {
 }
 
 #rcl-office a:link {
-    border: none; /*++Twenty15++*/
+    border: 0; /*++Twenty15++*/
     box-shadow: none; /*++Twenty16++*/
     text-decoration: none;
 }
@@ -575,7 +575,7 @@ input[type="submit"] .recall-button,
 input[type="button"].recall-button,
 input[type="button"] .recall-button {
     border-radius: 0; /*++hueman++*/
-    border: none;
+    border: 0;
     box-shadow: none !important;
     box-sizing: border-box;
     color: #fff;
@@ -717,7 +717,7 @@ a.data-filter.filter-active:hover {
 }
 
 .rcl-data-filters a:link { /*++Twenty15++*/
-    border: none;
+    border: 0;
     text-decoration: none; /*++Twenty14++*/
 }
 
@@ -1103,7 +1103,7 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
 
 .rcl-field-input.type-agree-input .block-label {
     background-color: transparent;
-    border: none;
+    border: 0;
     padding: 0;
 }
 
@@ -1144,7 +1144,7 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
 }
 
 .rcl-field-input .checkbox-display-block .block-label {
-    border: none;
+    border: 0;
     display: block;
 }
 
@@ -1254,7 +1254,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 
 .ssi-modalOuter .ssi-modalWindow {
     border-radius: 0;
-    border: none;
+    border: 0;
     margin: 0 auto;
     max-width: 99%;
     min-width: 315px;
@@ -1663,7 +1663,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 .rcl-form {
     border-collapse: collapse;
     border-spacing: 0;
-    border: none;
+    border: 0;
     box-sizing: border-box;
     font-size: 14px;
     line-height: normal;
@@ -1974,7 +1974,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 
 @media screen and (max-width: 768px) {
     .rcl-table__border {
-        border: none;
+        border: 0;
     }
 
     .rcl-table__row-header {
@@ -1985,7 +1985,7 @@ body .ssi-modalOuter .ssi-modalTitle {
         display: block;
         background-color: transparent;
         border-radius: 3px;
-        border: none;
+        border: 0;
         box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.1);
         margin: 0 5px 25px 5px;
         padding: 8px;
@@ -1993,7 +1993,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 
     .rcl-table__row-header ~ .rcl-table__row .rcl-table__cell {
         align-items: flex-start;
-        border: none;
+        border: 0;
         flex-basis: auto;
         justify-content: flex-start;
         max-width: none !important;

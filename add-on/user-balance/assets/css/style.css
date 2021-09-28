@@ -70,7 +70,7 @@
 .rcl-payment-form .rcl-field-gateway_id .rcl-radio-box label {
     display: block;
     background: none;
-    border: none;
+    border: 0;
 }
 
 /****/
@@ -97,7 +97,7 @@
 
 .rcl-balance-widget .update-link {
     text-decoration: none;
-    border: none;
+    border: 0;
     font-size: 13px;
     vertical-align: middle;
     margin-left: 15px;

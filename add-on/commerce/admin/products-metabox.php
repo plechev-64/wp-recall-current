@@ -250,8 +250,8 @@ function rcl_metabox_products( $post ) {
 	echo $metaBox;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
-add_action( 'save_post_products', 'rcl_commerce_fields_update', 10, 3 );
-function rcl_commerce_fields_update( $post_id, $post, $update ) {
+add_action( 'save_post_products', 'rcl_commerce_fields_update', 10 );
+function rcl_commerce_fields_update( $post_id ) {
 
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return false;

@@ -50,6 +50,7 @@ function pfm_delete_group( $group_id, $group_new = false ) {
 
 	do_action( 'pfm_pre_delete_group', $group_id );
 
+	//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	$result = $wpdb->query( "DELETE FROM " . RCL_PREF . "pforum_groups WHERE group_id='$group_id'" );
 
 	if ( $result ) {
@@ -266,6 +267,7 @@ function pfm_delete_forum( $forum_id, $forum_new = false ) {
 
 	do_action( 'pfm_pre_delete_forum', $forum_id );
 
+	//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	$result = $wpdb->query( "DELETE FROM " . RCL_PREF . "pforums WHERE forum_id='$forum_id'" );
 
 	if ( $result ) {
@@ -330,6 +332,7 @@ function pfm_subforums_topic_count( $forum_id ) {
 	       . "FROM " . RCL_PREF . "pforums "
 	       . "WHERE parent_id='$forum_id'";
 
+	//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	return $wpdb->get_var( $sql );
 }
 
@@ -448,6 +451,7 @@ function pfm_delete_topic( $topic_id ) {
 
 	do_action( 'pfm_pre_delete_topic', $topic_id );
 
+	//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	$result = $wpdb->query( "DELETE FROM " . RCL_PREF . "pforum_topics WHERE topic_id='$topic_id'" );
 
 	if ( $result ) {
@@ -567,6 +571,7 @@ function pfm_topic_unclose( $topic_id ) {
 function pfm_update_topic_indexes( $topic_id ) {
 	global $wpdb;
 
+	//phpcs:disable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	$wpdb->query(
 		"UPDATE
 			" . RCL_PREF . "pforum_posts
@@ -577,6 +582,7 @@ function pfm_update_topic_indexes( $topic_id ) {
 		ORDER BY
 			post_date ASC"
 	);
+	//phpcs:enable WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 }
 
 function pfm_get_topic_field( $topic_id, $fieldName ) {
@@ -618,6 +624,7 @@ function pfm_delete_post( $post_id ) {
 
 	do_action( 'pfm_pre_delete_post', $post_id );
 
+	//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	$result = $wpdb->query( "DELETE FROM " . RCL_PREF . "pforum_posts WHERE post_id='$post_id'" );
 
 	if ( $result ) {
@@ -744,7 +751,7 @@ function pfm_update_post( $args ) {
 	          ->where( array( 'post_id' => $post_id ) )
 	          ->get_row();
 
-	$cache = wp_cache_replace( json_encode( array( 'pfm_get_post', $post_id ) ), $post );
+	wp_cache_replace( json_encode( array( 'pfm_get_post', $post_id ) ), $post );
 
 	do_action( 'pfm_update_post', $post_id );
 
@@ -766,11 +773,10 @@ function pfm_get_meta( $object_id, $object_type, $meta_key ) {
 	$value = pfm_get_query_meta_value( $object_id, $object_type, $meta_key );
 
 	if ( ! $value ) {
-
 		$value = RQ::tbl( new PrimeMeta() )->select( [ 'meta_value' ] )->where( [
 			'object_id'   => $object_id,
 			'object_type' => $object_type,
-			'meta_key'    => $meta_key,
+			'meta_key'    => $meta_key,//phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 		] )->get_var();
 	}
 
@@ -785,13 +791,11 @@ function pfm_add_meta( $object_id, $object_type, $meta_key, $meta_value ) {
 	$args = array(
 		'object_id'   => $object_id,
 		'object_type' => $object_type,
-		'meta_key'    => $meta_key,
-		'meta_value'  => maybe_serialize( $meta_value )
+		'meta_key'    => $meta_key,//phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+		'meta_value'  => maybe_serialize( $meta_value ) //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 	);
 
-	$result = $wpdb->insert( RCL_PREF . "pforum_meta", $args );
-
-	return $result;
+	return $wpdb->insert( RCL_PREF . "pforum_meta", $args );
 }
 
 function pfm_update_meta( $object_id, $object_type, $meta_key, $meta_value ) {
@@ -800,11 +804,11 @@ function pfm_update_meta( $object_id, $object_type, $meta_key, $meta_value ) {
 	if ( pfm_get_meta( $object_id, $object_type, $meta_key ) ) {
 
 		$result = $wpdb->update( RCL_PREF . "pforum_meta", array(
-			'meta_value' => maybe_serialize( $meta_value )
+			'meta_value' => maybe_serialize( $meta_value ) //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
 		), array(
 				'object_id'   => $object_id,
 				'object_type' => $object_type,
-				'meta_key'    => $meta_key
+				'meta_key'    => $meta_key //phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 			)
 		);
 	} else {
@@ -828,9 +832,8 @@ function pfm_delete_meta( $object_id, $object_type, $meta_key, $meta_value = fal
 		$sql .= " AND meta_value='$meta_value'";
 	}
 
-	$result = $wpdb->query( $sql );
-
-	return $result;
+	//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	return $wpdb->query( $sql );
 }
 
 function pfm_get_visits( $args = false ) {
@@ -854,9 +857,7 @@ function pfm_add_visit( $args ) {
 		'visit_date' => current_time( 'mysql' )
 	);
 
-	$result = $wpdb->insert( RCL_PREF . "pforum_visits", $args );
-
-	return $result;
+	return $wpdb->insert( RCL_PREF . "pforum_visits", $args );
 }
 
 function pfm_update_visit( $args ) {
@@ -888,10 +889,9 @@ function pfm_update_visit( $args ) {
 function pfm_delete_visit( $user_id ) {
 	global $wpdb;
 
-	$result = $wpdb->query( "DELETE FROM " . RCL_PREF . "pforum_visits "
-	                        . "WHERE user_id='$user_id'" );
-
-	return $result;
+	//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	return $wpdb->query( "DELETE FROM " . RCL_PREF . "pforum_visits "
+	                     . "WHERE user_id='$user_id'" ); //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 }
 
 function pfm_get_visitors_data( $args, $timeout = false ) {
@@ -938,7 +938,5 @@ function pfm_get_visitors() {
 		$args['topic_id'] = $PrimeQuery->object->topic_id;
 	}
 
-	$visitors = pfm_get_visitors_data( $args );
-
-	return $visitors;
+	return pfm_get_visitors_data( $args );
 }

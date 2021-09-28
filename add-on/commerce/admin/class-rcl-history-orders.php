@@ -34,7 +34,7 @@ class Rcl_History_Orders extends WP_List_Table {
 		if ( 'manage-rmag' != $page ) {
 			return;
 		}
-		echo '<style type="text/css">';
+		echo '<style>';
 		echo '.wp-list-table .column-order_id { width: 10%; }';
 		echo '.wp-list-table .column-user_id { width: 25%; }';
 		echo '.wp-list-table .column-products_amount { width: 10%; }';
@@ -69,7 +69,7 @@ class Rcl_History_Orders extends WP_List_Table {
 	}
 
 	function get_columns() {
-		$columns = array(
+		return array(
 			'cb'              => '<input type="checkbox" />',
 			'order_id'        => __( 'Order ID', 'wp-recall' ),
 			'user_id'         => __( 'Users', 'wp-recall' ),
@@ -78,8 +78,6 @@ class Rcl_History_Orders extends WP_List_Table {
 			'order_status'    => __( 'Status', 'wp-recall' ),
 			'order_date'      => __( 'Date', 'wp-recall' )
 		);
-
-		return $columns;
 	}
 
 	function column_order_id( $item ) {
@@ -142,7 +140,6 @@ class Rcl_History_Orders extends WP_List_Table {
 	}
 
 	static function update_status_order() {
-		global $wpdb;
 		$page = ( isset( $_GET['page'] ) ) ? sanitize_key( $_GET['page'] ) : false;
 		if ( 'manage-rmag' != $page ) {
 			return;
@@ -225,9 +222,7 @@ class Rcl_History_Orders extends WP_List_Table {
 			return false;
 		}
 
-		$items = rcl_get_orders( $args );
-
-		return $items;
+		return rcl_get_orders( $args );
 	}
 
 	function prepare_items() {

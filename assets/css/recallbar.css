@@ -222,7 +222,7 @@
 
 #recallbar .rcb_right_menu img {
     border-radius: 0;
-    border: none;
+    border: 0;
     height: 36px;
     max-width: 36px;
     width: 36px;

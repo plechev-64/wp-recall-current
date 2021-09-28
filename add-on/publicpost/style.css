@@ -81,7 +81,7 @@
 
 .rcl-public-box .rcl-service-button {
     background-color: rgba(30, 56, 75, 0.7);
-    border: none;
+    border: 0;
     box-shadow: none;
     color: rgb(229, 57, 53);
     cursor: pointer;
@@ -215,7 +215,7 @@
 
 .rcl-form-field.maybe-gallery-box .block-label {
     background-color: transparent;
-    border: none;
+    border: 0;
     padding: 0;
 }
 

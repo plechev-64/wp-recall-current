@@ -12,7 +12,7 @@ function pfm_get_post_content( $post_id ) {
 }
 
 function pfm_the_post_content() {
-	global $PrimePost, $PrimeQuery;
+	global $PrimePost;
 
 	$content = pfm_get_post_content( $PrimePost->post_id );
 
@@ -75,7 +75,6 @@ function pfm_get_post_edition( $post_id = false ) {
 }
 
 function pfm_the_post_bottom() {
-	global $PrimePost;
 	echo apply_filters( 'pfm_the_post_bottom', '' );//phpcs:ignore
 }
 
@@ -281,9 +280,7 @@ function pfm_get_post_box( $post_id ) {
 
 	$PrimePost = ( object ) $PrimePost;
 
-	$content = rcl_get_include_template( 'pfm-single-post.php', $theme['path'] );
-
-	return $content;
+	return rcl_get_include_template( 'pfm-single-post.php', $theme['path'] );
 }
 
 function pfm_the_author_name() {
@@ -299,7 +296,7 @@ function pfm_author_avatar( $size = 50 ) {
 
 add_action( 'pfm_post_author_metabox', 'pfm_add_author_action_status', 10 );
 function pfm_add_author_action_status() {
-	global $PrimePost, $PrimeUser;
+	global $PrimePost;
 	if ( ! $PrimePost->user_id ) {
 		return false;
 	}

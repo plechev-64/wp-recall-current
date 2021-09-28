@@ -17,7 +17,7 @@ function rcl_get_cart( $cartProducts = false ) {
 add_shortcode( 'productlist', 'rcl_shortcode_productlist' );
 function rcl_shortcode_productlist( $atts ) {
 	global $post, $productlist, $user_ID;
-
+	
 	extract( shortcode_atts( array(
 		'num'         => false,
 		'inpage'      => 10,

@@ -30,4 +30,3 @@ global $post; ?>
 	<?php } ?>
 
 </div>
-

@@ -342,7 +342,7 @@ body audio {
 
 #rcl-chat-noread-box .rcl-chat-user img {
     border-radius: 0;
-    border: none;
+    border: 0;
     float: none;
     height: auto;
     margin: 0;
@@ -603,7 +603,7 @@ body audio {
 }
 
 .rcl-chat .message-manager a {
-    border: none;
+    border: 0;
     box-shadow: none;
 }
 

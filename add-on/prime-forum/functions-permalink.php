@@ -12,9 +12,7 @@ function pfm_get_home_url() {
 		return false;
 	}
 
-	$url = user_trailingslashit( get_permalink( pfm_get_option( 'home-page' ) ) );
-
-	return $url;
+	return user_trailingslashit( get_permalink( pfm_get_option( 'home-page' ) ) );
 }
 
 function pfm_get_shortlink( $object_id, $object_type ) {
@@ -23,9 +21,7 @@ function pfm_get_shortlink( $object_id, $object_type ) {
 		return false;
 	}
 
-	$url = home_url( '?p=' . pfm_get_option( 'home-page' ) . '&pfm-' . $object_type . '=' . $object_id );
-
-	return $url;
+	return home_url( '?p=' . pfm_get_option( 'home-page' ) . '&pfm-' . $object_type . '=' . $object_id );
 }
 
 function pfm_the_group_permalink() {

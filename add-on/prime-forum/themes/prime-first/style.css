@@ -535,7 +535,7 @@
 
 #prime-forum .prime-topic-left img {
     border-radius: 0;
-    border: none;
+    border: 0;
     float: none;
     height: auto;
     margin: 0;

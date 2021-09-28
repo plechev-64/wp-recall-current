@@ -50,4 +50,3 @@
 		<?php rcl_group_area( 'footer' ); ?>
     </div>
 <?php endif; ?>
-

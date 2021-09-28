@@ -62,7 +62,7 @@ function rcl_can_user_edit_post_group( $post_id ) {
 add_filter( 'the_content', 'rcl_post_group_edit_button', 999 );
 add_filter( 'the_excerpt', 'rcl_post_group_edit_button', 999 );
 function rcl_post_group_edit_button( $content ) {
-	global $post, $user_ID, $rcl_group;
+	global $post;
 	if ( ! is_tax( 'groups' ) ) {
 		return $content;
 	}
@@ -86,7 +86,7 @@ function rcl_add_group_id_in_form( $content, $formData ) {
 	if ( $formData->post_type != 'post-group' ) {
 		return $content;
 	}
-
+	$group_id = false;
 	if ( $formData->post_id ) {
 		$group_id = rcl_get_group_id_by_post( $formData->post_id );
 	} else if ( $rcl_group->term_id ) {
@@ -118,24 +118,24 @@ function rcl_group_setup_post_status( $postdata ) {
 	return $postdata;
 }
 
-add_action( 'update_post_rcl', 'rcl_update_grouppost_meta', 10, 3 );
-function rcl_update_grouppost_meta( $post_id, $postdata, $action ) {
+add_action( 'update_post_rcl', 'rcl_update_grouppost_meta', 10, 2 );
+function rcl_update_grouppost_meta( $post_id, $postdata ) {
 
 	if ( $postdata['post_type'] != 'post-group' ) {
 		return false;
 	}
-
+	$term_id = false;
 	if ( isset( $_POST['term_id'] ) ) {
 		$term_id = intval( base64_decode( sanitize_text_field( wp_unslash( $_POST['term_id'] ) ) ) );
 	}
 
 	if ( isset( $term_id ) ) {
-		wp_set_object_terms( $post_id, ( int ) $term_id, 'groups' );
+		wp_set_object_terms( $post_id, $term_id, 'groups' );
 	}
 
 	$gr_tag = ( isset( $_POST['group-tag'] ) ) ? sanitize_key( $_POST['group-tag'] ) : false;
 	if ( $gr_tag ) {
-
+		$group_id = false;
 		if ( ! $term_id ) {
 			$groups = get_the_terms( $post_id, 'groups' );
 			foreach ( $groups as $group ) {

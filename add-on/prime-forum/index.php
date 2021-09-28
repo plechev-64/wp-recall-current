@@ -256,7 +256,7 @@ function pfm_init_forum( $vars = false ) {
 
 	do_action( 'pfm_after_init_query' );
 
-	global $PrimeGroup, $PrimeForum, $PrimeTopic, $PrimePost;
+	global $PrimeGroup, $PrimeForum, $PrimeTopic;
 
 	if ( $PrimeQuery->is_group ) {
 
@@ -411,7 +411,7 @@ function pfm_get_title_tag() {
 	if ( ! $object ) {
 		return false;
 	}
-
+	$title = '';
 	if ( $PrimeQuery->is_topic ) {
 		$title = pfm_replace_mask_title( pfm_get_option( 'mask-tag-topic', $object->topic_name . ' | ' . __( 'Forum', 'wp-recall' ) . ' ' . $object->forum_name ) );
 	} else if ( $PrimeQuery->is_forum ) {
@@ -439,7 +439,7 @@ function pfm_get_title_page() {
 	if ( ! $object ) {
 		return false;
 	}
-
+	$title = '';
 	if ( $PrimeQuery->is_topic ) {
 		$title = pfm_replace_mask_title( pfm_get_option( 'mask-page-topic', $object->topic_name ) );
 	} else if ( $PrimeQuery->is_forum ) {

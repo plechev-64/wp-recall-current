@@ -64,9 +64,7 @@ class PrimeRoles {
 			)
 		);
 
-		$defaultRoles = apply_filters( 'pfm_default_roles', $defaultRoles );
-
-		return $defaultRoles;
+		return apply_filters( 'pfm_default_roles', $defaultRoles );
 	}
 
 	function get_capabilities() {
@@ -89,9 +87,7 @@ class PrimeRoles {
 			'post_migrate'       => false
 		);
 
-		$capabilities = apply_filters( 'pfm_capabilities', $capabilities );
-
-		return $capabilities;
+		return apply_filters( 'pfm_capabilities', $capabilities );
 	}
 
 	function setup_roles() {

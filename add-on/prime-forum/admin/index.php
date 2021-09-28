@@ -79,8 +79,6 @@ function pfm_page_topic_form() {
 }
 
 function pfm_page_options() {
-	global $wpdb;
-
 	require_once RCL_PATH . 'admin/classes/class-rcl-options-manager.php';
 
 	$pages = rcl_get_pages_ids();
@@ -341,7 +339,7 @@ function pfm_page_forums() {
 
 function pfm_page_themes() {
 
-	global $active_addons, $Prime_Themes_Manager;
+	global $Prime_Themes_Manager;
 
 	rcl_dialog_scripts();
 
@@ -352,7 +350,7 @@ function pfm_page_themes() {
 	echo '<div class="wrap">';
 
 	echo '<div id="icon-plugins" class="icon32"><br></div>
-        <h2>' . esc_html( 'Templates', 'wp-recall' ) . ' PrimeForum</h2>';
+        <h2>' . esc_html__( 'Templates', 'wp-recall' ) . ' PrimeForum</h2>';
 
 	if ( isset( $_POST['save-rcl-key'], $_POST['_wpnonce'], $_POST['rcl-key'] ) ) {
 		if ( wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'add-rcl-key' ) ) {
@@ -424,6 +422,7 @@ function pfm_admin_role_field( $user ) {
 		)
 	);
 
+	$content = '';
 	if ( $fields ) {
 
 		$content = '<h3>' . esc_html__( 'Role of the user on the forum', 'wp-recall' ) . ':</h3>
@@ -459,7 +458,7 @@ function pfm_update_user_role( $user_id ) {
 	update_user_meta( $user_id, 'pfm_role', sanitize_key( $_POST['pfm_role'] ) );
 }
 
-rcl_ajax_action( 'pfm_ajax_manager_update_data', false );
+rcl_ajax_action( 'pfm_ajax_manager_update_data' );
 function pfm_ajax_manager_update_data() {
 
 	$post = $_POST;
@@ -522,7 +521,7 @@ function pfm_manager_update_forum( $options ) {
 	return $result;
 }
 
-rcl_ajax_action( 'pfm_ajax_update_sort_groups', false );
+rcl_ajax_action( 'pfm_ajax_update_sort_groups' );
 function pfm_ajax_update_sort_groups() {
 	global $wpdb;
 
@@ -549,7 +548,7 @@ function pfm_ajax_update_sort_groups() {
 	) );
 }
 
-rcl_ajax_action( 'pfm_ajax_update_sort_forums', false );
+rcl_ajax_action( 'pfm_ajax_update_sort_forums' );
 function pfm_ajax_update_sort_forums() {
 	global $wpdb;
 
@@ -578,7 +577,7 @@ function pfm_ajax_update_sort_forums() {
 	) );
 }
 
-rcl_ajax_action( 'pfm_ajax_get_manager_item_delete_form', false );
+rcl_ajax_action( 'pfm_ajax_get_manager_item_delete_form' );
 function pfm_ajax_get_manager_item_delete_form() {
 
 	/**
@@ -587,6 +586,8 @@ function pfm_ajax_get_manager_item_delete_form() {
 
 	$itemType = isset( $_POST['item-type'] ) ? sanitize_key( $_POST['item-type'] ) : '';
 	$itemID   = isset( $_POST['item-id'] ) ? absint( $_POST['item-id'] ) : 0;
+
+	$fields = [];
 
 	if ( $itemType == 'groups' ) {
 
@@ -787,8 +788,6 @@ if ( ! wp_doing_ajax() ) {
 	add_action( 'admin_init', 'pfm_init_admin_actions' );
 }
 function pfm_init_admin_actions() {
-	global $user_ID;
-
 	if ( ! current_user_can( 'administrator' ) ) {
 		return;
 	}
@@ -833,8 +832,6 @@ function pfm_init_admin_actions() {
 
 			wp_safe_redirect( admin_url( 'admin.php?page=pfm-forums' ) );
 			exit;
-
-			break;
 		case 'forum_delete': //удаление форума
 
 			if ( empty( $_REQUEST['forum_id'] ) ) {
@@ -847,8 +844,6 @@ function pfm_init_admin_actions() {
 
 			wp_safe_redirect( admin_url( 'admin.php?page=pfm-forums&group-id=' . $group->group_id ) );
 			exit;
-
-			break;
 	}
 
 	if ( isset( $_POST['_wp_http_referer'] ) ) {
@@ -871,9 +866,6 @@ function pfm_template_update_status() {
 	}
 
 	if ( isset( $_GET['template'] ) && isset( $_GET['action'] ) ) {
-
-		global $wpdb, $user_ID, $active_addons;
-
 		$addon  = sanitize_key( $_GET['template'] );
 		$action = rcl_wp_list_current_action();
 

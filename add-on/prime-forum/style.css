@@ -10,7 +10,7 @@
 }
 
 #prime-forum a {
-    border: none;
+    border: 0;
     box-shadow: none;
     text-decoration: none;
 }
@@ -97,9 +97,7 @@
 
 #prime-forum code {
     background-color: rgba(0, 0, 0, .06);
-    border-bottom: 0;
     border-radius: 2px;
-    border-top: 0;
     border: 1px solid rgba(0, 0, 0, .08);
     padding: 0 .3em;
 }
@@ -148,11 +146,11 @@
 
 /* START quicktags editor */
 #prime-topic-form-box .wp-editor-container {
-    border: none;
+    border: 0;
 }
 
 #prime-topic-form-box .quicktags-toolbar {
-    border: none;
+    border: 0;
     padding: 3px 0;
 }
 

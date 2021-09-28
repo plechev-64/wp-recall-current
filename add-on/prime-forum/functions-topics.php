@@ -93,9 +93,7 @@ function pfm_get_topic_meta_box( $topic_id ) {
 		return false;
 	}
 
-	$content = '<div class="prime-topic-metabox">' . $content . '</div>';
-
-	return $content;
+	return '<div class="prime-topic-metabox">' . $content . '</div>';
 }
 
 function pfm_the_last_post_url() {
@@ -127,64 +125,61 @@ function pfm_update_topic_custom_fields( $topic_id ) {
 		return false;
 	}
 
-	if ( $fields ) {
+	$POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
 
-		$POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
+	foreach ( $fields as $field ) {
 
-		foreach ( $fields as $field ) {
+		$slug  = $field['slug'];
+		$value = isset( $POST[ $slug ] ) ? $POST[ $slug ] : false;
 
-			$slug  = $field['slug'];
-			$value = isset( $POST[ $slug ] ) ? $POST[ $slug ] : false;
+		if ( $field['type'] == 'file' ) {
 
-			if ( $field['type'] == 'file' ) {
+			$attach_id = pfm_get_topic_meta( $topic_id, $slug );
 
-				$attach_id = pfm_get_topic_meta( $topic_id, $slug, 1 );
-
-				if ( $value != $attach_id ) {
-					wp_delete_attachment( $attach_id );
-				}
+			if ( $value != $attach_id ) {
+				wp_delete_attachment( $attach_id );
 			}
+		}
 
-			if ( $field['type'] == 'checkbox' ) {
-				$vals = array();
+		if ( $field['type'] == 'checkbox' ) {
+			$vals = array();
 
-				$count_field = count( $field['values'] );
+			$count_field = count( $field['values'] );
 
-				if ( $value && is_array( $value ) ) {
-					foreach ( $value as $val ) {
-						for ( $a = 0; $a < $count_field; $a ++ ) {
-							if ( $field['values'][ $a ] == $val ) {
-								$vals[] = $val;
-							}
+			if ( $value && is_array( $value ) ) {
+				foreach ( $value as $val ) {
+					for ( $a = 0; $a < $count_field; $a ++ ) {
+						if ( $field['values'][ $a ] == $val ) {
+							$vals[] = $val;
 						}
 					}
 				}
-
-				if ( $vals ) {
-					pfm_update_topic_meta( $topic_id, $slug, $vals );
-				} else {
-					pfm_delete_topic_meta( $topic_id, $slug );
-				}
-			} else {
-
-				if ( $value ) {
-					pfm_update_topic_meta( $topic_id, $slug, $value );
-				} else {
-					if ( pfm_get_topic_meta( $topic_id, $slug, 1 ) ) {
-						pfm_delete_topic_meta( $topic_id, $slug );
-					}
-				}
 			}
 
-			if ( $value ) {
+			if ( $vals ) {
+				pfm_update_topic_meta( $topic_id, $slug, $vals );
+			} else {
+				pfm_delete_topic_meta( $topic_id, $slug );
+			}
+		} else {
 
-				if ( $field['type'] == 'uploader' ) {
-					foreach ( $value as $val ) {
-						rcl_delete_temp_media( $val );
-					}
-				} else if ( $field['type'] == 'file' ) {
-					rcl_delete_temp_media( $value );
+			if ( $value ) {
+				pfm_update_topic_meta( $topic_id, $slug, $value );
+			} else {
+				if ( pfm_get_topic_meta( $topic_id, $slug ) ) {
+					pfm_delete_topic_meta( $topic_id, $slug );
 				}
+			}
+		}
+
+		if ( $value ) {
+
+			if ( $field['type'] == 'uploader' ) {
+				foreach ( $value as $val ) {
+					rcl_delete_temp_media( $val );
+				}
+			} else if ( $field['type'] == 'file' ) {
+				rcl_delete_temp_media( $value );
 			}
 		}
 	}

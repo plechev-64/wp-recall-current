@@ -25,6 +25,7 @@ $update_table = false;
 
 $table = RCL_PREF . "orders";
 
+// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 if ( $wpdb->get_var( "show tables like '" . $table . "'" ) != $table ) {
 	$update_table = true;
 }

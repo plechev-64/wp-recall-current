@@ -10,6 +10,7 @@ class Rcl_Old_Query {
 	public $args = array();
 	public $return_as = false;
 	public $cache = false;
+	public $serialize = array();
 
 	function set_query( $args = false ) {
 

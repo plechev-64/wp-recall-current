@@ -107,7 +107,7 @@ function rcl_update_profile_notice() {
 		add_action( 'rcl_area_notice', function () {
 			echo rcl_get_notice( [//phpcs:ignore
 				'type' => 'success',
-				'text' => esc_html( 'Your profile has been updated', 'wp-recall' )
+				'text' => esc_html__( 'Your profile has been updated', 'wp-recall' )
 			] );
 		} );
 	}
@@ -178,9 +178,7 @@ function rcl_add_office_profile_fields( $fields ) {
 		'notice'   => __( 'Repeat the new password', 'wp-recall' )
 	);
 
-	$fields = ( $fields ) ? array_merge( $profileFields, $fields ) : $profileFields;
-
-	return $fields;
+	return ( $fields ) ? array_merge( $profileFields, $fields ) : $profileFields;
 }
 
 function rcl_tab_profile_content( $master_id ) {
@@ -340,7 +338,6 @@ function rcl_delete_user_account() {
 
 	if ( $delete ) {
 		wp_die( esc_html__( 'We are very sorry but your account has been deleted!', 'wp-recall' ) );
-		echo '<a href="/">' . esc_html__( 'Back to main page', 'wp-recall' ) . '</a>';
 	} else {
 		wp_die( esc_html__( 'Account deletion failed! Go back and try again.', 'wp-recall' ) );
 	}

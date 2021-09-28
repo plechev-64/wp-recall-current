@@ -339,13 +339,11 @@ class Rcl_Feed_List extends Rcl_Query {
 			}
 		}
 
-		$rqst = apply_filters( 'rcl_feed_uri', $rqst );
-
-		return $rqst;
+		return apply_filters( 'rcl_feed_uri', $rqst );
 	}
 
 	function get_filters() {
-		global $post, $active_addons, $user_LK;
+		global $post, $user_LK;
 
 		if ( ! $this->filters ) {
 			return false;

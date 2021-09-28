@@ -95,7 +95,7 @@ function rcl_add_products_meta() {
 		}
 
 		if ( $posts ) {
-
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$metaPrices = $wpdb->get_results( "SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key='price-products' AND post_id IN (" . implode( ',', $posts ) . ")" );
 
 			$prices = array();
@@ -122,7 +122,7 @@ function rcl_commerce_actions() {
 	switch ( $action ) {
 
 		case 'new-order':
-
+			$cart_url = false;
 			if ( $page_id = rcl_get_commerce_option( 'basket_page_rmag' ) ) {
 				$cart_url = get_permalink( $page_id );
 			}
@@ -135,7 +135,5 @@ function rcl_commerce_actions() {
 
 			wp_safe_redirect( rcl_format_url( $cart_url ) . 'order-id=' . $order_id . '&order-status=new' );
 			exit;
-
-			break;
 	}
 }

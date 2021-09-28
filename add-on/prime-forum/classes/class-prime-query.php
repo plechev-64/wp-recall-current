@@ -257,7 +257,7 @@ class PrimeQuery {
 		if ( ! $args ) {
 			return false;
 		}
-
+		$object = false;
 		if ( $this->is_group ) {
 			$object = $this->groups_query->parse( $args )->get_results();
 		} else if ( $this->is_forum ) {
@@ -276,7 +276,7 @@ class PrimeQuery {
 	}
 
 	function get_args_child_items() {
-
+		$args = [];
 		if ( $this->is_search ) {
 
 			$args = array(
@@ -362,8 +362,6 @@ class PrimeQuery {
 				'groupby'  => $this->topics_query->get_colname( 'topic_id' )
 			);
 		} else if ( $this->is_topic && $this->object ) {
-			global $wpdb;
-
 			$args = array(
 				'topic_id' => $this->object->topic_id,
 				'number'   => $this->number,
@@ -570,6 +568,7 @@ class PrimeQuery {
 		       . "WHERE t.forum_id IN (" . implode( ',', $forumIDs ) . ") "
 		       . "GROUP BY t.forum_id";
 
+		//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$postIdx = $wpdb->get_col( $sql );
 
 		if ( ! $postIdx ) {
@@ -588,9 +587,8 @@ class PrimeQuery {
 		       . "INNER JOIN  " . RCL_PREF . "pforum_topics AS t ON p.topic_id = t.topic_id "
 		       . "WHERE p.post_id IN (" . implode( ',', $postIdx ) . ")";
 
-		$posts = $wpdb->get_results( $sql );
-
-		return $posts;
+		//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		return $wpdb->get_results( $sql );
 	}
 
 	function get_topics_last_post( $topics ) {
@@ -608,6 +606,7 @@ class PrimeQuery {
 		       . "WHERE topic_id IN (" . implode( ',', $topicIDs ) . ") "
 		       . "GROUP BY topic_id";
 
+		//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$postIdx = $wpdb->get_col( $sql );
 
 		if ( ! $postIdx ) {
@@ -624,14 +623,11 @@ class PrimeQuery {
 		       . "WHERE post_id IN (" . implode( ',', $postIdx ) . ") "
 		       . "ORDER BY post_id DESC";
 
-		$posts = $wpdb->get_results( $sql );
-
-		return $posts;
+		//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		return $wpdb->get_results( $sql );
 	}
 
 	function get_forums_last_topic( $forums ) {
-		global $wpdb;
-
 		$forumIDs = array();
 
 		foreach ( $forums as $forum ) {
@@ -646,15 +642,13 @@ class PrimeQuery {
 			return false;
 		}
 
-		$topics = RQ::tbl( new PrimeTopics() )->select( [
+		return RQ::tbl( new PrimeTopics() )->select( [
 			"topic_id",
 			"topic_name",
 			"forum_id",
 			"topic_slug",
 			"user_id"
 		] )->where( [ 'topic_id__in' => $topicIdx ] )->get_results();
-
-		return $topics;
 	}
 
 	function search_forum_last_topic( $forum_id ) {
@@ -747,7 +741,11 @@ class PrimeQuery {
 		$table = $PrimeMeta->table['name'];
 		$as    = $PrimeMeta->table['as'];
 
-		$childrens = array();
+		$childrens    = [];
+		$authors      = [];
+		$parentType   = '';
+		$childrenType = '';
+		$parentID     = false;
 
 		if ( $this->is_group ) {
 
@@ -772,8 +770,6 @@ class PrimeQuery {
 			$parentType   = 'forum';
 			$childrenType = 'topic';
 		} else if ( $this->is_topic ) {
-
-			$authors = array();
 
 			if ( $this->posts ) {
 
@@ -823,6 +819,7 @@ class PrimeQuery {
 						AND " . $as . "3.object_id IN (" . implode( ',', $authors ) . ")";
 		}
 
+		//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$this->meta = $wpdb->get_results( $sql );
 	}
 

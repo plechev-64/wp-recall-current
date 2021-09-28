@@ -42,9 +42,7 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 		$fields = $this->get_options_group();
 
-		$content = $this->get_form_box( $fields, 'group_create', __( 'Create group', 'wp-recall' ) );
-
-		return $content;
+		return $this->get_form_box( $fields, 'group_create', __( 'Create group', 'wp-recall' ) );
 	}
 
 	function get_form_forum() {
@@ -55,9 +53,7 @@ class PrimeManager extends Rcl_Fields_Manager {
 			return false;
 		}
 
-		$content = $this->get_form_box( $fields, 'forum_create', __( 'Create forum', 'wp-recall' ) );
-
-		return $content;
+		return $this->get_form_box( $fields, 'forum_create', __( 'Create forum', 'wp-recall' ) );
 	}
 
 	function get_form_box( $fields, $action, $submit ) {
@@ -117,9 +113,7 @@ class PrimeManager extends Rcl_Fields_Manager {
 			)
 		);
 
-		$options = apply_filters( 'pfm_options_group', $options, $group );
-
-		return $options;
+		return apply_filters( 'pfm_options_group', $options, $group );
 	}
 
 	function get_options_forum( $forum = false ) {
@@ -443,7 +437,7 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 							var parentID = 0;
 							if(parentUl.hasClass("children-box")){
-								var parentID = parentUl.parent("li").data("slug");
+								parentID = parentUl.parent("li").data("slug");
 							}
 
 							field.attr("data-parent",parentID);

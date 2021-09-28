@@ -34,9 +34,7 @@ function pfm_set_query_vars( $vars ) {
 	$vars[] = 'pfm-topic';
 	$vars[] = 'pfm-page';
 
-	$vars = apply_filters( 'pfm_query_vars', $vars );
-
-	return $vars;
+	return apply_filters( 'pfm_query_vars', $vars );
 }
 
 add_action( 'pfm_init', 'pfm_init_noindex_meta_tag', 10 );
@@ -120,7 +118,8 @@ function pfm_replace_shortlink( $url ) {
 	if ( $PrimeQuery->is_page ) {
 		return false;
 	}
-
+	$object_id   = false;
+	$object_type = '';
 	if ( $PrimeQuery->is_group ) {
 
 		$object_id   = $PrimeQuery->object->group_id;

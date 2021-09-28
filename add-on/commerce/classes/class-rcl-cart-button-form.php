@@ -155,9 +155,7 @@ class Rcl_Cart_Button_Form {
 			) );
 		}
 
-		$content = '<span class="cart-button">' . $content . '</span>';
-
-		return $content;
+		return '<span class="cart-button">' . $content . '</span>';
 	}
 
 	function quantity_selector_box() {

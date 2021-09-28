@@ -100,7 +100,7 @@ class Prime_Themes_Manager extends WP_List_Table {
 			return;
 		}
 
-		echo '<style type="text/css">';
+		echo '<style>';
 		echo '.wp-list-table .column-addon_screen { width: 200px; }';
 		echo '.wp-list-table .column-addon_name { width: 15%; }';
 		echo '.wp-list-table .column-addon_status { width: 10%; }';
@@ -121,7 +121,7 @@ class Prime_Themes_Manager extends WP_List_Table {
 				}
 				break;
 			case 'addon_name':
-				$name = ( isset( $item['template'] ) ) ? $item['addon_name'] : $item['addon_name'];
+				$name = $item['addon_name'];
 
 				return '<strong>' . $name . '</strong>';
 			case 'addon_status':
@@ -138,23 +138,19 @@ class Prime_Themes_Manager extends WP_List_Table {
 	}
 
 	function get_sortable_columns() {
-		$sortable_columns = array(
+		return array(
 			'addon_name'   => array( 'addon_name', false ),
 			'addon_status' => array( 'addon_status', false )
 		);
-
-		return $sortable_columns;
 	}
 
 	function get_columns() {
-		$columns = array(
+		return array(
 			'addon_screen'      => '',
 			'addon_name'        => __( 'Templates', 'wp-recall' ),
 			'addon_status'      => __( 'Status', 'wp-recall' ),
 			'addon_description' => __( 'Description', 'wp-recall' )
 		);
-
-		return $columns;
 	}
 
 	function usort_reorder( $a, $b ) {
@@ -286,8 +282,9 @@ function pfm_upload_template() {
 	$res = $zip->open( $arch );
 
 	if ( $res === true ) {
-
+		$info = false;
 		for ( $i = 0; $i < $zip->numFiles; $i ++ ) {
+			$dirzip = false;
 			//echo $zip->getNameIndex($i).'<br>';
 			if ( $i == 0 ) {
 				$dirzip = $zip->getNameIndex( $i );
@@ -303,7 +300,7 @@ function pfm_upload_template() {
 			wp_safe_redirect( admin_url( 'admin.php?page=pfm-themes&update-template=error-info' ) );
 			exit;
 		}
-
+		$rs = false;
 		foreach ( $paths as $path ) {
 			if ( file_exists( $path . '/' ) ) {
 				$rs = $zip->extractTo( $path . '/' );

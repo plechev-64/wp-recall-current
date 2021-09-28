@@ -31,5 +31,3 @@
 	<?php rcl_feed_content(); ?>
 
 </div>
-
-

@@ -7,7 +7,7 @@
 }
 
 .rcl-box-rating a:link { /*++Twenty16++*/
-    border: none;
+    border: 0;
     box-shadow: none;
 }
 
@@ -98,7 +98,7 @@
 }
 
 .rcl-rating-box .votes-window .votes-list li {
-    border: none;
+    border: 0;
     float: none;
     font-size: 14px;
     font-weight: 400;
@@ -185,7 +185,7 @@
 }
 
 .ratinglist .rating-single .rating-sidebar a {
-    border: none; /*++Twenty15++*/
+    border: 0; /*++Twenty15++*/
     box-shadow: none; /*++Twenty16++*/
     float: left;
 }
@@ -226,7 +226,7 @@
 }
 
 .rating-meta .comm-more a { /*++Twenty16++*/
-    border: none; /*++Twenty15++*/
+    border: 0; /*++Twenty15++*/
     box-shadow: none;
 }
 
@@ -246,7 +246,7 @@
 }
 
 .ratinglist .rating-meta blockquote {
-    border: none;
+    border: 0;
     font-size: 16px;
     font-style: italic;
     font-weight: bold;
@@ -290,7 +290,7 @@
 }
 
 .rating-post .object-title a {
-    border: none; /*++Twenty15++*/
+    border: 0; /*++Twenty15++*/
     box-shadow: none; /*++Twenty16++*/
 }
 

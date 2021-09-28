@@ -6,7 +6,7 @@
 		<?php pfm_the_topic_manager(); ?>
 
         <div class="prime-topics-header">
-            <span class="topic_count"><?php esc_html( pfm_the_post_count() ); ?><?php esc_html_e( 'reply(ies) in the topic', 'wp-recall' ); ?></span>
+            <span class="topic_count"><?php pfm_the_post_count(); ?><?php esc_html_e( 'reply(ies) in the topic', 'wp-recall' ); ?></span>
 			<?php pfm_page_navi(); ?>
         </div>
 
@@ -22,9 +22,9 @@
 			endif;
 			?>
             <div itemid="<?php pfm_the_topic_permalink(); ?>" itemscope
-                 itemtype="http://schema.org/DiscussionForumPosting">
+                 itemtype="https://schema.org/DiscussionForumPosting">
                 <meta itemprop="headline" content="<?php pfm_the_topic_name(); ?>"/>
-                <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <span itemprop="author" itemscope itemtype="https://schema.org/Person">
 					<meta itemprop="name"
                           content="<?php echo esc_attr( pfm_get_user_name( pfm_topic_field( 'user_id' ) ) ); ?>"/>
 				</span>
@@ -34,13 +34,13 @@
                 <meta itemprop="datePublished"
                       content="<?php echo esc_attr( mysql2date( 'c', $PrimeQuery->posts[0]->post_date, false ) ); ?>"/>
                 <div style="display: none;" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-                    <img itemprop="url contentUrl" src="<?php echo esc_url( $thumb[0] ); ?>"/>
+                    <img alt="" itemprop="url contentUrl" src="<?php echo esc_url( $thumb[0] ); ?>"/>
                     <meta itemprop="width" content="<?php echo esc_attr( $thumb[1] ); ?>"/>
                     <meta itemprop="height" content="<?php echo esc_attr( $thumb[2] ); ?>"/>
                 </div>
                 <div style="display: none;" itemprop="interactionStatistic" itemscope
-                     itemtype="http://schema.org/InteractionCounter">
-                    <link itemprop="interactionType" href="http://schema.org/CommentAction"/>
+                     itemtype="https://schema.org/InteractionCounter">
+                    <link itemprop="interactionType" href="https://schema.org/CommentAction"/>
                     <meta itemprop="userInteractionCount" content="<?php pfm_the_post_count(); ?>"/>
                 </div>
 
@@ -67,4 +67,3 @@
 	<?php pfm_the_post_form(); ?>
 
 </div>
-

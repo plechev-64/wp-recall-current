@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var object $Cart_Button
+ * @var object $Product_Variations
+ */
+?>
 <form class="rcl-cart-form" data-product="<?php echo esc_attr( $Cart_Button->product_id ) ?>" method="post">
 
 	<?php
@@ -37,4 +43,3 @@
     <input type="hidden" name="cart[product_id]" value="<?php echo esc_attr( $Cart_Button->product_id ) ?>">
 
 </form>
-
