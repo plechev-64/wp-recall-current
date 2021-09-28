@@ -27,21 +27,21 @@ function rcl_public_form_manager() {
 		'form_id' => $form_id
 	) );
 
-	$content = '<h2>' . __( 'Manage publication forms', 'wp-recall' ) . '</h2>';
+	$content = '<h2>' . esc_html__( 'Manage publication forms', 'wp-recall' ) . '</h2>';
 
-	$content .= '<p>' . __( 'On this page you can manage the creation of publications for registered record types. Create custom fields for the form of publication of various types and manage', 'wp-recall' ) . '</p>';
+	$content .= '<p>' . esc_html__( 'On this page you can manage the creation of publications for registered record types. Create custom fields for the form of publication of various types and manage', 'wp-recall' ) . '</p>';
 
 	$content .= '<div id="rcl-public-form-manager">';
 
 	$content .= $formManager->form_navi();
 
-	$content .= rcl_get_notice( [ 'text' => __( 'Use shortcode for publication form', 'wp-recall' ) . ' [' . $shortCode . ']' ] );
+	$content .= rcl_get_notice( [ 'text' => esc_html__( 'Use shortcode for publication form', 'wp-recall' ) . ' [' . $shortCode . ']' ] );
 
 	$content .= $formManager->get_manager();
 
 	$content .= '</div>';
 
-	echo $content;
+	echo $content;//phpcs:ignore
 }
 
 add_action( 'add_meta_boxes', 'custom_fields_editor_post_rcl', 1, 2 );
@@ -62,9 +62,9 @@ function custom_fields_list_posteditor_rcl( $post ) {
 		return false;
 	}
 
-	echo $content;
+	echo $content;//phpcs:ignore
 
-	echo '<input type="hidden" name="custom_fields_nonce_rcl" value="' . wp_create_nonce( __FILE__ ) . '" />';
+	echo '<input type="hidden" name="custom_fields_nonce_rcl" value="' . esc_attr( wp_create_nonce( __FILE__ ) ) . '" />';
 }
 
 add_action( 'save_post', 'rcl_custom_fields_update', 0 );
@@ -72,7 +72,7 @@ function rcl_custom_fields_update( $post_id ) {
 	if ( ! isset( $_POST['custom_fields_nonce_rcl'] ) ) {
 		return false;
 	}
-	if ( ! wp_verify_nonce( $_POST['custom_fields_nonce_rcl'], __FILE__ ) ) {
+	if ( ! wp_verify_nonce( sanitize_key( $_POST['custom_fields_nonce_rcl'] ), __FILE__ ) ) {
 		return false;
 	}
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
@@ -84,7 +84,7 @@ function rcl_custom_fields_update( $post_id ) {
 
 	rcl_update_post_custom_fields( $post_id );
 
-	if ( isset( $_POST['post_uploader'] ) && $_POST['post_uploader'] ) {
+	if ( ! empty( $_POST['post_uploader'] ) ) {
 		global $user_ID;
 
 		$editPost = new Rcl_EditPost( $post_id );
@@ -109,7 +109,11 @@ function rcl_public_form_admin_actions() {
 		return false;
 	}
 
-	if ( ! isset( $_GET['form-action'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'rcl-form-action' ) ) {
+	if ( ! isset( $_GET['form-action'] ) || ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), 'rcl-form-action' ) ) {
+		return false;
+	}
+
+	if ( ! isset( $_GET['post-type'] ) ) {
 		return false;
 	}
 
@@ -117,7 +121,7 @@ function rcl_public_form_admin_actions() {
 
 		case 'new-form':
 
-			$newFormId = intval( $_GET['form-id'] );
+			$newFormId = isset( $_GET['form-id'] ) ? intval( $_GET['form-id'] ) : 0;
 
 			add_option( 'rcl_fields_' . sanitize_key( $_GET['post-type'] ) . '_' . $newFormId, array() );
 
@@ -149,22 +153,22 @@ function rcl_publicpost_metabox() {
 	$posts = get_posts( array( 'numberposts' => - 1, 'post_type' => 'any', 'post_status' => 'pending' ) );
 
 	if ( ! $posts ) {
-		echo '<p>' . __( 'No posts under moderation', 'wp-recall' ) . '</p>';
+		echo '<p>' . esc_html__( 'No posts under moderation', 'wp-recall' ) . '</p>';
 
 		return;
 	}
 
 	echo '<table class="wp-list-table widefat fixed striped">';
 	echo '<tr>'
-	     . '<th>' . __( 'Header', 'wp-recall' ) . '</th>'
-	     . '<th>' . __( 'Author', 'wp-recall' ) . '</th>'
-	     . '<th>' . __( 'Type', 'wp-recall' ) . '</th>'
+	     . '<th>' . esc_html__( 'Header', 'wp-recall' ) . '</th>'
+	     . '<th>' . esc_html__( 'Author', 'wp-recall' ) . '</th>'
+	     . '<th>' . esc_html__( 'Type', 'wp-recall' ) . '</th>'
 	     . '</tr>';
 	foreach ( $posts as $post ) {
 		echo '<tr>'
-		     . '<td><a href="' . get_edit_post_link( $post->ID ) . '" target="_blank">' . $post->post_title . '</a></td>'
-		     . '<td>' . $post->post_author . ': ' . get_the_author_meta( 'user_login', $post->post_author ) . '</td>'
-		     . '<td>' . $post->post_type . '</td>'
+		     . '<td><a href="' . esc_url( get_edit_post_link( $post->ID ) ) . '" target="_blank">' . esc_html( $post->post_title ) . '</a></td>'
+		     . '<td>' . esc_html( $post->post_author ) . ': ' . esc_html( get_the_author_meta( 'user_login', $post->post_author ) ) . '</td>'
+		     . '<td>' . esc_html( $post->post_type ) . '</td>'
 		     . '</tr>';
 	}
 	echo '</table>';

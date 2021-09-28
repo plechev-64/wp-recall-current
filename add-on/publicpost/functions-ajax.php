@@ -9,7 +9,7 @@ function rcl_ajax_delete_post() {
 	 */
 	rcl_verify_ajax_nonce();
 
-	$user_id = ( $user_ID ) ? $user_ID : sanitize_text_field( $_COOKIE['PHPSESSID'] );
+	$user_id = ( $user_ID ) ? $user_ID : ( ! empty( $_COOKIE['PHPSESSID'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['PHPSESSID'] ) ) : 0 );
 
 	$temps    = get_site_option( 'rcl_tempgallery' );
 	$temp_gal = $temps[ $user_id ];
@@ -64,9 +64,9 @@ function rcl_get_edit_postdata() {
 
 	rcl_verify_ajax_nonce();
 
-	$post_id = intval( $_POST['post_id'] );
+	$post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
 
-	if ( current_user_can( 'edit_post', $post_id ) ) {
+	if ( $post_id && current_user_can( 'edit_post', $post_id ) ) {
 
 		$post = get_post( $post_id );
 
@@ -93,10 +93,10 @@ function rcl_edit_postdata() {
 
 	rcl_verify_ajax_nonce();
 
-	$post_id                    = intval( $_POST['post_id'] );
+	$post_id                    = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
 	$post_array                 = array();
-	$post_array['post_title']   = sanitize_text_field( $_POST['post_title'] );
-	$post_array['post_content'] = esc_textarea( $_POST['post_content'] );
+	$post_array['post_title']   = isset( $_POST['post_title'] ) ? sanitize_text_field( wp_unslash( $_POST['post_title'] ) ) : '';
+	$post_array['post_content'] = isset( $_POST['post_content'] ) ? sanitize_textarea_field( wp_unslash( $_POST['post_content'] ) ) : '';
 
 	if ( ! current_user_can( 'edit_post', $post_id ) ) {
 		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
@@ -127,12 +127,12 @@ function rcl_get_like_tags() {
 
 	rcl_verify_ajax_nonce();
 
-	if ( ! $_POST['query'] ) {
+	if ( empty( $_POST['query'] ) || empty( $_POST['taxonomy'] ) ) {
 		wp_send_json( array( array( 'id' => '' ) ) );
 	};
 
-	$query    = $_POST['query'];
-	$taxonomy = $_POST['taxonomy'];
+	$query    = sanitize_text_field( wp_unslash( $_POST['query'] ) );
+	$taxonomy = sanitize_key( $_POST['taxonomy'] );
 
 	$terms = get_terms( $taxonomy, array( 'hide_empty' => false, 'name__like' => $query ) );
 
@@ -173,7 +173,7 @@ function rcl_preview_post() {
 	if ( ! rcl_get_option( 'public_access' ) && ! $user_ID ) {
 
 		$email_new_user = sanitize_email( wp_unslash( $postdata['email-user'] ) );
-		$name_new_user  = sanitize_user( $postdata['name-user'] );
+		$name_new_user  = sanitize_user( wp_unslash( $postdata['name-user'] ) );
 
 		if ( ! $email_new_user ) {
 			$log['error'] = __( 'Enter your e-mail!', 'wp-recall' );
@@ -264,7 +264,7 @@ function rcl_preview_post() {
 			$fieldsBox = '<div class="rcl-custom-fields">';
 
 			foreach ( $customFields as $field_id => $field ) {
-				$field->set_prop( 'value', isset( $_POST[ $field_id ] ) ? $_POST[ $field_id ] : false );
+				$field->set_prop( 'value', isset( $_POST[ $field_id ] ) ? $_POST[ $field_id ] : false );//phpcs:ignore
 				$fieldsBox .= $field->get_field_value( true );
 			}
 
@@ -278,7 +278,7 @@ function rcl_preview_post() {
 		}
 	}
 
-	if ( isset( $_POST['rcl-post-gallery'] ) && $postGallery = $_POST['rcl-post-gallery'] ) {
+	if ( isset( $_POST['rcl-post-gallery'] ) && $postGallery = $_POST['rcl-post-gallery'] ) {//phpcs:ignore
 
 		$gallery = array();
 
@@ -314,10 +314,10 @@ function rcl_preview_post() {
 rcl_ajax_action( 'rcl_set_post_thumbnail', true );
 function rcl_set_post_thumbnail() {
 
-	$thumbnail_id = intval( $_POST['thumbnail_id'] );
-	$parent_id    = intval( $_POST['parent_id'] );
-	$form_id      = intval( $_POST['form_id'] );
-	$post_type    = sanitize_key( $_POST['post_type'] );
+	$thumbnail_id = isset( $_POST['thumbnail_id'] ) ? intval( $_POST['thumbnail_id'] ) : 0;
+	$parent_id    = isset( $_POST['parent_id'] ) ? intval( $_POST['parent_id'] ) : 0;
+	$form_id      = isset( $_POST['form_id'] ) ? intval( $_POST['form_id'] ) : 0;
+	$post_type    = isset( $_POST['post_type'] ) ? sanitize_key( $_POST['post_type'] ) : '';
 
 	if ( $parent_id && ! current_user_can( 'administrator' ) ) {
 		$post = get_post( $parent_id );
@@ -327,7 +327,7 @@ function rcl_set_post_thumbnail() {
 	}
 
 	$formFields = new Rcl_Public_Form_Fields( $post_type, array(
-		'form_id' => $form_id ? $form_id : 1
+		'form_id' => $form_id ?: 1
 	) );
 
 	if ( ! $formFields->is_active_field( 'post_thumbnail' ) ) {

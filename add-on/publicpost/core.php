@@ -87,7 +87,7 @@ function rcl_add_thumbnail_post( $post_id, $filepath ) {
 
 function rcl_edit_post_button_html( $post_id ) {
 	return '<p class="post-edit-button">'
-	       . '<a title="' . __( 'Edit', 'wp-recall' ) . '" object-id="none" href="' . get_edit_post_link( $post_id ) . '">'
+	       . '<a title="' . esc_html__( 'Edit', 'wp-recall' ) . '" object-id="none" href="' . esc_url( get_edit_post_link( $post_id ) ) . '">'
 	       . '<i class="rcli fa-pencil-square-o"></i>'
 	       . '</a>'
 	       . '</p>';
@@ -251,12 +251,12 @@ function rcl_save_temp_async_uploaded_thumbnail() {
 	/**
 	 * todo fix
 	 */
-	$attachment_id  = intval( $_POST['attachment_id'] );
-	$attachment_url = $_POST['attachment_url'];
+	$attachment_id  = isset( $_POST['attachment_id'] ) ? intval( $_POST['attachment_id'] ) : 0;
+	$attachment_url = isset( $_POST['attachment_url'] ) ? sanitize_text_field( wp_unslash( $_POST['attachment_url'] ) ) : '';
 
 	if ( ! $attachment_id || ! $attachment_url ) {
 		wp_send_json( array(
-			'error' => __( 'Error', 'wp-recall' )
+			'error' => esc_html__( 'Error', 'wp-recall' )
 		) );
 	}
 
@@ -273,7 +273,7 @@ function rcl_save_temp_async_uploaded_thumbnail() {
 function rcl_update_tempgallery( $attach_id, $attach_url ) {
 	global $user_ID;
 
-	$user_id = ( $user_ID ) ? $user_ID : sanitize_text_field( $_COOKIE['PHPSESSID'] );
+	$user_id = ( $user_ID ) ? $user_ID : ( ! empty( $_COOKIE['PHPSESSID'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['PHPSESSID'] ) ) : '' );
 
 	$temp_gal = get_site_option( 'rcl_tempgallery' );
 

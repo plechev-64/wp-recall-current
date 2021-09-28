@@ -4,7 +4,7 @@ add_action( 'wp', 'rcl_deleted_post_notice' );
 function rcl_deleted_post_notice() {
 	if ( isset( $_GET['public'] ) && $_GET['public'] == 'deleted' ) {
 		add_action( 'rcl_area_notice', function () {
-			echo rcl_get_notice( [ 'text' => __( 'The publication has been successfully removed!', 'wp-recall' ) ] );
+			echo rcl_get_notice( [ 'text' => esc_html__( 'The publication has been successfully removed!', 'wp-recall' ) ] );
 		} );
 	}
 }
@@ -28,7 +28,7 @@ function rcl_edit_post_activate() {
 	if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 		return false;
 	}
-	if ( isset( $_POST['rcl-edit-post'] ) && wp_verify_nonce( $_POST['_wpnonce'], 'rcl-edit-post' ) ) {
+	if ( isset( $_POST['rcl-edit-post'], $_POST['_wpnonce'] ) && wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'rcl-edit-post' ) ) {
 		rcl_edit_post();
 	}
 }

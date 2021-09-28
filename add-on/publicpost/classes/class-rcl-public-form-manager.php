@@ -39,7 +39,7 @@ class Rcl_Public_Form_Manager extends Rcl_Public_Form_Fields {
 		global $wpdb;
 
 		$form_id = 1;
-
+		//phpcs:ignore
 		$postForms = $wpdb->get_col( "SELECT option_name FROM " . $wpdb->options . " WHERE option_name LIKE 'rcl_fields_" . $this->post_type . "_%' AND option_name NOT LIKE '%_structure' ORDER BY option_id ASC" );
 
 		if ( $postForms ) {

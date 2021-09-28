@@ -46,7 +46,7 @@ function rcl_restrict_media_library( $wp_query_obj ) {
 		return;
 	}
 
-	if ( 'admin-ajax.php' != $pagenow || $_REQUEST['action'] != 'query-attachments' ) {
+	if ( 'admin-ajax.php' != $pagenow || ! isset( $_REQUEST['action'] ) || $_REQUEST['action'] != 'query-attachments' ) {
 		return;
 	}
 
@@ -66,7 +66,7 @@ function rcl_update_postdata_excerpt( $postdata ) {
 	if ( ! isset( $_POST['post_excerpt'] ) ) {
 		return $postdata;
 	}
-	$postdata['post_excerpt'] = sanitize_text_field( $_POST['post_excerpt'] );
+	$postdata['post_excerpt'] = sanitize_text_field( wp_unslash( $_POST['post_excerpt'] ) );
 
 	return $postdata;
 }
@@ -199,13 +199,17 @@ function rcl_get_post_custom_fields_box( $post_id ) {
 
 add_action( 'init', 'rcl_delete_post_activate' );
 function rcl_delete_post_activate() {
-	if ( isset( $_POST['rcl-delete-post'] ) && wp_verify_nonce( $_POST['_wpnonce'], 'rcl-delete-post' ) ) {
+	if ( isset( $_POST['rcl-delete-post'], $_POST['_wpnonce'] ) && wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'rcl-delete-post' ) ) {
 		add_action( 'wp', 'rcl_delete_post' );
 	}
 }
 
 function rcl_delete_post() {
 	global $user_ID;
+
+	if ( empty( $_POST['post_id'] ) ) {
+		return false;
+	}
 
 	$post_id = intval( $_POST['post_id'] );
 
@@ -237,12 +241,12 @@ function rcl_delete_post() {
 add_action( 'after_delete_post_rcl', 'rcl_delete_notice_author_post' );
 function rcl_delete_notice_author_post( $post_id ) {
 
-	if ( ! isset( $_POST['reason_content'] ) || ! $_POST['reason_content'] ) {
+	if ( empty( $_POST['reason_content'] ) ) {
 		return false;
 	}
 
 	$post          = get_post( $post_id );
-	$delete_reason = sanitize_textarea_field( $_POST['reason_content'] );
+	$delete_reason = sanitize_textarea_field( wp_unslash( $_POST['reason_content'] ) );
 
 	$subject  = __( 'Your post has been deleted', 'wp-recall' );
 	$textmail = '<h3>' . __( 'Post', 'wp-recall' ) . ' "' . $post->post_title . '" ' . __( 'has been deleted', 'wp-recall' ) . '</h3>
@@ -328,18 +332,18 @@ function rcl_add_taxonomy_in_postdata( $postdata, $data ) {
 
 		$post_type['post']->taxonomies = array( 'category' );
 
-		if ( isset( $_POST['tags'] ) && $_POST['tags'] ) {
-			$postdata['tags_input'] = array_map( 'sanitize_text_field', $_POST['tags']['post_tag'] );
+		if ( ! empty( $_POST['tags'] ) ) {
+			$postdata['tags_input'] = rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['tags']['post_tag'] ) );//phpcs:ignore
 		}
 	}
 
-	if ( isset( $_POST['cats'] ) && $_POST['cats'] ) {
+	if ( ! empty( $_POST['cats'] ) && ! empty( $_POST['form_id'] ) ) {
 
 		$FormFields = new Rcl_Public_Form_Fields( $data->post_type, array(
 			'form_id' => intval( $_POST['form_id'] )
 		) );
 
-		foreach ( $_POST['cats'] as $taxonomy => $terms ) {
+		foreach ( $_POST['cats'] as $taxonomy => $terms ) {//phpcs:ignore
 
 			if ( ! isset( $FormFields->taxonomies[ $taxonomy ] ) ) {
 				continue;
@@ -367,7 +371,7 @@ function rcl_update_postdata_product_tags( $post_id, $postdata ) {
 		return false;
 	}
 
-	foreach ( $_POST['tags'] as $taxonomy => $terms ) {
+	foreach ( $_POST['tags'] as $taxonomy => $terms ) {//phpcs:ignore
 		wp_set_object_terms( $post_id, $terms, $taxonomy );
 	}
 }
@@ -413,7 +417,7 @@ function rcl_register_author_post( $postdata ) {
 
 	if ( ! $postdata['post_author'] ) {
 
-		$email_new_user = sanitize_email( wp_unslash( $_POST['email-user'] ) );
+		$email_new_user = isset( $_POST['email-user'] ) ? sanitize_email( wp_unslash( $_POST['email-user'] ) ) : '';
 
 		if ( $email_new_user ) {
 
@@ -423,7 +427,7 @@ function rcl_register_author_post( $postdata ) {
 				'user_pass'    => $random_password,
 				'user_login'   => $email_new_user,
 				'user_email'   => $email_new_user,
-				'display_name' => sanitize_user( $_POST['name-user'] )
+				'display_name' => isset( $_POST['name-user'] ) ? sanitize_user( wp_unslash( $_POST['name-user'] ) ) : ''
 			);
 
 			$user_id = rcl_insert_user( $userdata );
@@ -433,7 +437,7 @@ function rcl_register_author_post( $postdata ) {
 				//переназначаем временный массив изображений от гостя юзеру
 				rcl_update_temp_media( [ 'user_id' => $user_id ], [
 					'user_id'    => 0,
-					'session_id' => isset( $_COOKIE['PHPSESSID'] ) && $_COOKIE['PHPSESSID'] ? sanitize_text_field( $_COOKIE['PHPSESSID'] ) : 'none'
+					'session_id' => ! empty( $_COOKIE['PHPSESSID'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['PHPSESSID'] ) ) : 'none'
 				] );
 
 				//Сразу авторизуем пользователя

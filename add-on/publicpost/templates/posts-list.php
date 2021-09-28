@@ -43,13 +43,13 @@ $Table = new Rcl_Table( array(
 		<?php
 
 		if ( $post->post_status == 'pending' ) {
-			$status = '<span class="status-pending">' . __( 'to be approved', 'wp-recall' ) . '</span>';
+			$status = '<span class="status-pending">' . esc_html__( 'to be approved', 'wp-recall' ) . '</span>';
 		} elseif ( $post->post_status == 'trash' ) {
-			$status = '<span class="status-pending">' . __( 'deleted', 'wp-recall' ) . '</span>';
+			$status = '<span class="status-pending">' . esc_html__( 'deleted', 'wp-recall' ) . '</span>';
 		} elseif ( $post->post_status == 'draft' ) {
-			$status = '<span class="status-draft">' . __( 'draft', 'wp-recall' ) . '</span>';
+			$status = '<span class="status-draft">' . esc_html__( 'draft', 'wp-recall' ) . '</span>';
 		} else {
-			$status = '<span class="status-publish">' . __( 'published', 'wp-recall' ) . '</span>';
+			$status = '<span class="status-publish">' . esc_html__( 'published', 'wp-recall' ) . '</span>';
 		}
 		?>
 
@@ -80,5 +80,5 @@ $Table = new Rcl_Table( array(
 	<?php } ?>
 <?php } ?>
 
-<?php echo $Table->get_table(); ?>
+<?php echo $Table->get_table();//phpcs:ignore ?>
 

@@ -480,7 +480,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 							                  ->select( [ 'media_id' ] )
 							                  ->where( [
 								                  'user_id'         => $uploader->user_id ? $uploader->user_id : 0,
-								                  'session_id'      => $uploader->user_id ? '' : sanitize_text_field( $_COOKIE['PHPSESSID'] ),
+								                  'session_id'      => $uploader->user_id ? '' : ( ! empty( $_COOKIE['PHPSESSID'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['PHPSESSID'] ) ) : '' ),
 								                  'uploader_id__in' => array( 'post_thumbnail' )
 							                  ] )
 							                  ->limit( 1 )
@@ -515,7 +515,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 							             ->select( [ 'media_id' ] )
 							             ->where( [
 								             'user_id'         => $uploader->user_id ? $uploader->user_id : 0,
-								             'session_id'      => $uploader->user_id ? '' : sanitize_text_field( $_COOKIE['PHPSESSID'] ),
+								             'session_id'      => $uploader->user_id ? '' : ( ! empty( $_COOKIE['PHPSESSID'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['PHPSESSID'] ) ) : '' ),
 								             'uploader_id__in' => array( 'post_uploader', 'post_thumbnail' )
 							             ] )
 							             ->limit( - 1 )->order( 'ASC' )->get_col();
@@ -954,10 +954,10 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 		echo '<script type="text/javascript">'
 		     . 'rcl_init_public_form({'
-		     . 'post_type:"' . $obj->post_type . '",'
-		     . 'post_id:"' . $obj->post_id . '",'
-		     . 'post_status:"' . $obj->post_status . '",'
-		     . 'form_id:"' . $this->form_id . '"'
+		     . 'post_type:"' . esc_js( $obj->post_type ) . '",'
+		     . 'post_id:"' . esc_js( $obj->post_id ) . '",'
+		     . 'post_status:"' . esc_js( $obj->post_status ) . '",'
+		     . 'form_id:"' . esc_js( $this->form_id ) . '"'
 		     . '});</script>';
 	}
 

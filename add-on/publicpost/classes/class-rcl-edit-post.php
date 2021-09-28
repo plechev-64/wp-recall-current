@@ -21,12 +21,12 @@ class Rcl_EditPost {
 			require_once( ABSPATH . "wp-admin" . '/includes/media.php' );
 		}
 
-		if ( isset( $_POST['post_type'] ) && $_POST['post_type'] ) {
+		if ( ! empty( $_POST['post_type'] ) ) {
 			$this->post_type = sanitize_key( $_POST['post_type'] );
 		}
 
 		if ( ! $post_id ) {
-			$post_id = isset( $_POST['post_ID'] ) && $_POST['post_ID'] ? intval( $_POST['post_ID'] ) : ( isset( $_POST['post_id'] ) && $_POST['post_id'] ? intval( $_POST['post_id'] ) : 0 );
+			$post_id = ! empty( $_POST['post_ID'] ) ? intval( $_POST['post_ID'] ) : ( ! empty( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0 );
 		}
 
 		if ( $post_id ) {
@@ -54,6 +54,10 @@ class Rcl_EditPost {
 
 	function check_required_post_fields() {
 
+		if ( empty( $_POST['post_type'] ) ) {
+			return false;
+		}
+
 		$formFields = new Rcl_Public_Form_Fields( sanitize_key( $_POST['post_type'] ), array(
 			'form_id' => isset( $_POST['form_id'] ) ? intval( $_POST['form_id'] ) : 1
 		) );
@@ -80,7 +84,7 @@ class Rcl_EditPost {
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			wp_send_json( array( 'error' => $error ) );
 		} else {
-			wp_die( $error );
+			wp_die( esc_html( $error ) );
 		}
 	}
 
@@ -243,9 +247,9 @@ class Rcl_EditPost {
 
 		$postdata = array(
 			'post_type'    => $this->post_type,
-			'post_title'   => ( isset( $_POST['post_title'] ) ) ? sanitize_text_field( $_POST['post_title'] ) : '',
-			'post_excerpt' => ( isset( $_POST['post_excerpt'] ) ) ? $_POST['post_excerpt'] : '',
-			'post_content' => ( isset( $_POST['post_content'] ) ) ? $_POST['post_content'] : ''
+			'post_title'   => ( isset( $_POST['post_title'] ) ) ? sanitize_text_field( wp_unslash( $_POST['post_title'] ) ) : '',
+			'post_excerpt' => ( isset( $_POST['post_excerpt'] ) ) ? sanitize_textarea_field( wp_unslash( $_POST['post_excerpt'] ) ) : '',
+			'post_content' => ( isset( $_POST['post_content'] ) ) ? wp_kses_post( wp_unslash( $_POST['post_content'] ) ) : ''
 		);
 
 		if ( ! $this->post || ! $this->post->post_name ) {
