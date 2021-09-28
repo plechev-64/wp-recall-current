@@ -136,3 +136,7 @@
 #prime-forum-manager .ui-sortable-helper .field-header {
     background: #fff;
 }
+
+#your-profile .rcl-form:not(.rcl-custom-fields-box) {
+    max-width: 710px;
+}

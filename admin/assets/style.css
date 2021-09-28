@@ -522,6 +522,10 @@ div.rcl_preloader i.rcli::before {
     max-width: 700px;
 }
 
+#profile-page .rcl-custom-fields-box .dynamic-value {
+    display: flex;
+}
+
 .rcl-custom-fields-box > h3 {
     font-size: 18px;
     margin: 0;
@@ -894,6 +898,7 @@ div.rcl_preloader i.rcli::before {
     border: 1px solid #e5e5e5;
     display: block;
     padding: 10px;
+    box-sizing: border-box;
 }
 
 .rcl-custom-fields-box .type-file-input .rcl-field-value {
