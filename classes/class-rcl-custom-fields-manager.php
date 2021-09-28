@@ -104,12 +104,12 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$form = '<div id="rcl-custom-fields-editor" data-type="' . $this->post_type . '" class="rcl-custom-fields-box">
 
-            <h3>' . __( 'Active fields', 'wp-recall' ) . '</h3>
+            <h3>' . esc_html__( 'Active fields', 'wp-recall' ) . '</h3>
 
             <form action="" method="post">
             ' . wp_nonce_field( 'rcl-update-custom-fields', '_wpnonce', true, false ) . '
-            <input type="hidden" name="rcl-fields-options[name-option]" value="' . $this->name_option . '">
-            <input type="hidden" name="rcl-fields-options[placeholder]" value="' . $this->exist_placeholder . '">';
+            <input type="hidden" name="rcl-fields-options[name-option]" value="' . esc_attr( $this->name_option ) . '">
+            <input type="hidden" name="rcl-fields-options[placeholder]" value="' . esc_attr( $this->exist_placeholder ) . '">';
 
 		$form .= apply_filters( 'rcl_custom_fields_form', '', $this->name_option );
 
@@ -126,14 +126,14 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 		$form .= "<div class=fields-submit>";
 
 		if ( $this->create_field ) {
-			$form .= "<input type=button onclick='rcl_get_new_custom_field();' class='add-field-button button-secondary right' value='+ " . __( 'Add field', 'wp-recall' ) . "'>";
+			$form .= "<input type=button onclick='rcl_get_new_custom_field();' class='add-field-button button-secondary right' value='+ " . esc_html__( 'Add field', 'wp-recall' ) . "'>";
 		}
 
-		$form .= "<input class='button button-primary' type=submit value='" . __( 'Save', 'wp-recall' ) . "' name='rcl_save_custom_fields'>";
+		$form .= "<input class='button button-primary' type=submit value='" . esc_html__( 'Save', 'wp-recall' ) . "' name='rcl_save_custom_fields'>";
 
 		if ( $this->meta_delete ) {
 			$form .= "<input type=hidden id=rcl-deleted-fields name=rcl_deleted_custom_fields value=''>"
-			         . "<div id='field-delete-confirm' style='display:none;'>" . __( 'To remove the data added to this field?', 'wp-recall' ) . "</div>";
+			         . "<div id='field-delete-confirm' style='display:none;'>" . esc_html__( 'To remove the data added to this field?', 'wp-recall' ) . "</div>";
 		}
 
 		$form .= "</div>
@@ -223,9 +223,9 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 			$options[] = array(
 				'type'        => 'text',
 				'slug'        => 'slug',
-				'title'       => __( 'MetaKey', 'wp-recall' ),
-				'notice'      => __( 'not required, but you can list your own meta_key in this field', 'wp-recall' ),
-				'placeholder' => __( 'Latin letters and numbers', 'wp-recall' )
+				'title'       => esc_html__( 'MetaKey', 'wp-recall' ),
+				'notice'      => esc_html__( 'not required, but you can list your own meta_key in this field', 'wp-recall' ),
+				'placeholder' => esc_html__( 'Latin letters and numbers', 'wp-recall' )
 			);
 		}
 
@@ -233,7 +233,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 			$options[] = array(
 				'type'    => 'text',
 				'slug'    => 'title',
-				'title'   => __( 'Title', 'wp-recall' ),
+				'title'   => esc_html__( 'Title', 'wp-recall' ),
 				'default' => $field['title']
 			);
 		}
@@ -245,7 +245,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 			if ( $typeEdit ) {
 
 				$options[] = array(
-					'title'   => __( 'Field type', 'wp-recall' ),
+					'title'   => esc_html__( 'Field type', 'wp-recall' ),
 					'slug'    => 'type',
 					'type'    => 'select',
 					'classes' => 'select-type-field',
@@ -520,7 +520,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 		$controls = apply_filters( 'rcl_manager_field_controls', $controls, $this->field['slug'], $this->post_type );
 
 		$content = '<div class="field-header">
-                    <span class="field-type type-' . $this->field['type'] . '"></span>
+                    <span class="field-type type-' . esc_attr( $this->field['type'] ) . '"></span>
                     <span class="field-title">' . $this->field['title'] . ( isset( $this->field['required'] ) && $this->field['required'] ? ' <span class="required">*</span>' : '' ) . '</span>
                     <span class="field-controls">
                     ';
@@ -621,12 +621,13 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$field = '<li id="field-' . $this->new_slug . '" data-slug="' . $this->new_slug . '" data-type="' . $this->field['type'] . '" class="rcl-custom-field new-field">
                     <div class="field-header">
-                        <span class="field-title half-width">' . $this->get_option( array( 'type'  => 'text',
-		                                                                                   'slug'  => 'title',
-		                                                                                   'title' => __( 'Name', 'wp-recall' )
+                        <span class="field-title half-width">' . $this->get_option( array(
+				'type'  => 'text',
+				'slug'  => 'title',
+				'title' => __( 'Name', 'wp-recall' )
 			) ) . '</span>
                         <span class="field-controls half-width">
-                            <a class="field-edit field-control" href="#" title="' . __( 'Edit', 'wp-recall' ) . '"></a>
+                            <a class="field-edit field-control" href="#" title="' . esc_attr__( 'Edit', 'wp-recall' ) . '"></a>
                         </span>
                     </div>
                     <div class="field-settings">';
@@ -687,7 +688,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$content = '<div id="rcl-inactive-fields" class="rcl-inactive-fields-box rcl-custom-fields-box">';
 
-		$content .= '<h3>' . __( 'Inactive fields', 'wp-recall' ) . '</h3>';
+		$content .= '<h3>' . esc_html__( 'Inactive fields', 'wp-recall' ) . '</h3>';
 
 		$content .= '<form>';
 
@@ -839,22 +840,22 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 		return false;
 	}
 
-	/* depricated */
+	/* deprecated */
 	function verify() {
 
 	}
 
-	/* depricated */
+	/* deprecated */
 	function update_fields( $table = 'postmeta' ) {
 
 	}
 
-	/* depricated */
+	/* deprecated */
 	function edit_form( $defaultOptions = false ) {
 		return $this->manager_form( $defaultOptions );
 	}
 
-	/* depricated */
+	/* deprecated */
 	function get_types() {
 
 		if ( ! $this->select_type ) {

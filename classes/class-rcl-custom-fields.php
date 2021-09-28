@@ -20,7 +20,7 @@ class Rcl_Custom_Fields {
 	function get_title( $field ) {
 
 		if ( $field['type'] == 'agree' && $field['url-agreement'] ) {
-			return '<a target="_blank" href="' . $field['url-agreement'] . '">' . $field['title'] . '</a>';
+			return '<a target="_blank" href="' . esc_url( $field['url-agreement'] ) . '">' . $field['title'] . '</a>';
 		}
 
 		return $field['title'];
@@ -711,18 +711,18 @@ function rcl_upload_meta_file( $field, $user_id, $post_id = 0 ) {
 	$slug    = $field->slug;
 	$maxsize = $field->max_size;
 
-	if ( ! isset( $_FILES[ $slug ] ) && $post_id ) {
+	if ( ! isset( $_FILES[ $slug ], $_FILES[ $slug ]['tmp_name'], $_FILES[ $slug ]['name'] ) && $post_id ) {
 		delete_post_meta( $post_id, $slug );
 
 		return false;
 	}
 
-	if ( ! $_FILES[ $slug ]['tmp_name'] ) {
+	if ( empty( $_FILES[ $slug ]['tmp_name'] ) ) {
 		return false;
 	}
 
-	if ( intval( $_FILES[ $slug ]["size"] ) > $maxsize * 1024 * 1024 ) {
-		wp_die( __( 'File size exceedes maximum!', 'wp-recall' ) );
+	if ( empty( $_FILES[ $slug ]["size"] ) || intval( $_FILES[ $slug ]["size"] ) > $maxsize * 1024 * 1024 ) {
+		wp_die( esc_html__( 'File size exceedes maximum!', 'wp-recall' ) );
 	}
 
 	$accept     = array();
@@ -736,13 +736,13 @@ function rcl_upload_meta_file( $field, $user_id, $post_id = 0 ) {
 			$valid_types = $field->file_types;
 		}
 
-		$filetype = wp_check_filetype_and_ext( sanitize_text_field( $_FILES[ $slug ]['tmp_name'] ), sanitize_text_field( $_FILES[ $slug ]['name'] ) );
+		$filetype = wp_check_filetype_and_ext( sanitize_text_field( wp_unslash( $_FILES[ $slug ]['tmp_name'] ) ), sanitize_text_field( wp_unslash( $_FILES[ $slug ]['name'] ) ) );
 
 		if ( ! in_array( $filetype['ext'], $valid_types ) ) {
-			wp_die( __( 'Prohibited file type!', 'wp-recall' ) );
+			wp_die( esc_html__( 'Prohibited file type!', 'wp-recall' ) );
 		}
 	}
-
+	//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 	$file = wp_handle_upload( $_FILES[ $slug ], array( 'test_form' => false ) );
 
 	if ( $file['url'] ) {
@@ -806,20 +806,20 @@ add_action( 'wp', 'rcl_download_file' );
 function rcl_download_file() {
 	global $user_ID;
 
-	if ( ! isset( $_GET['rcl-download-file'] ) ) {
+	if ( ! isset( $_GET['rcl-download-file'], $_GET['_wpnonce'] ) ) {
 		return false;
 	}
 
-	$fileID = intval( base64_decode( $_GET['rcl-download-file'] ) );
+	$fileID = intval( base64_decode( sanitize_text_field( wp_unslash( $_GET['rcl-download-file'] ) ) ) );
 
-	if ( ! $fileID || ! wp_verify_nonce( $_GET['_wpnonce'], 'user-' . $user_ID ) ) {
+	if ( ! $fileID || ! wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), 'user-' . $user_ID ) ) {
 		return false;
 	}
 
 	$file = get_post( $fileID );
 
 	if ( ! $file ) {
-		wp_die( __( 'File does not exist on the server!', 'wp-recall' ) );
+		wp_die( esc_html__( 'File does not exist on the server!', 'wp-recall' ) );
 	}
 
 	while ( ob_get_level() ) {
@@ -845,31 +845,31 @@ if ( ! is_admin() ) {
 function rcl_delete_file() {
 	global $user_ID;
 
-	if ( ! isset( $_GET['rcl-delete-file'] ) ) {
+	if ( ! isset( $_GET['rcl-delete-file'], $_GET['_wpnonce'] ) ) {
 		return false;
 	}
-	$id_file = intval( base64_decode( $_GET['rcl-delete-file'] ) );
+	$id_file = intval( base64_decode( sanitize_text_field( wp_unslash( $_GET['rcl-delete-file'] ) ) ) );
 
-	if ( ! $user_ID || ! wp_verify_nonce( $_GET['_wpnonce'], 'user-' . $user_ID ) ) {
+	if ( ! $user_ID || ! wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), 'user-' . $user_ID ) ) {
 		return false;
 	}
 
 	$file = get_post( $id_file );
 
 	if ( ! $file ) {
-		wp_die( __( 'File does not exist on the server!', 'wp-recall' ) );
+		wp_die( esc_html__( 'File does not exist on the server!', 'wp-recall' ) );
 	}
 
 	if ( ! current_user_can( 'edit_post', $file->ID ) ) {
-		wp_die( __( 'Error', 'wp-recall' ) );
+		wp_die( esc_html__( 'Error', 'wp-recall' ) );
 	}
 
 	wp_delete_attachment( $file->ID );
 
 	if ( $file->post_parent ) {
-		wp_redirect( rcl_format_url( get_permalink( rcl_get_option( 'public_form_page_rcl' ) ) ) . 'rcl-post-edit=' . $file->post_parent );
+		wp_safe_redirect( rcl_format_url( get_permalink( rcl_get_option( 'public_form_page_rcl' ) ) ) . 'rcl-post-edit=' . $file->post_parent );
 	} else {
-		wp_redirect( rcl_get_tab_permalink( $user_ID, 'profile' ) . '&file=deleted' );
+		wp_safe_redirect( rcl_get_tab_permalink( $user_ID, 'profile' ) . '&file=deleted' );
 	}
 
 	exit;
@@ -881,12 +881,12 @@ if ( is_admin() ) {
 function rcl_delete_file_admin() {
 	global $user_ID;
 
-	if ( ! isset( $_GET['rcl-delete-file'] ) ) {
+	if ( ! isset( $_GET['rcl-delete-file'], $_GET['_wpnonce'] ) ) {
 		return false;
 	}
-	$id_file = intval( base64_decode( $_GET['rcl-delete-file'] ) );
+	$id_file = intval( base64_decode( sanitize_text_field( wp_unslash( $_GET['rcl-delete-file'] ) ) ) );
 
-	if ( ! $user_ID || ! wp_verify_nonce( $_GET['_wpnonce'], 'user-' . $user_ID ) ) {
+	if ( ! $user_ID || ! wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), 'user-' . $user_ID ) ) {
 		return false;
 	}
 
@@ -896,11 +896,11 @@ function rcl_delete_file_admin() {
 	$file = get_post( $id_file );
 
 	if ( ! $file ) {
-		wp_die( __( 'File does not exist on the server!', 'wp-recall' ) );
+		wp_die( esc_html__( 'File does not exist on the server!', 'wp-recall' ) );
 	}
 
 	if ( ! current_user_can( 'edit_post', $file->ID ) ) {
-		wp_die( __( 'Error', 'wp-recall' ) );
+		wp_die( esc_html__( 'Error', 'wp-recall' ) );
 	}
 
 	wp_delete_attachment( $file->ID );
@@ -913,7 +913,7 @@ function rcl_delete_file_admin() {
 		$url = admin_url( 'profile.php' );
 	}
 
-	wp_redirect( $url );
+	wp_safe_redirect( $url );
 
 	exit;
 }

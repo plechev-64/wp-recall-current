@@ -49,17 +49,17 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		$this->data = ( $this->data ) ? array_map( 'trim', explode( ',', $this->data ) ) : array();
 
 		if ( isset( $_GET['usergroup'] ) ) {
-			$this->usergroup = sanitize_text_field( $_GET['usergroup'] );
+			$this->usergroup = sanitize_key( $_GET['usergroup'] );
 		}
 
 		if ( $this->filters ) {
 
 			if ( isset( $_GET['users-filter'] ) ) {
-				$this->orderby = sanitize_sql_orderby( $_GET['users-filter'] );
+				$this->orderby = sanitize_key( $_GET['users-filter'] );
 			}
 
 			if ( isset( $_GET['users-order'] ) ) {
-				$this->query['order'] = sanitize_sql_orderby( $_GET['users-order'] );
+				$this->query['order'] = sanitize_key( $_GET['users-order'] );
 			}
 
 			add_filter( 'rcl_users_query', array( $this, 'add_query_search' ) );
@@ -207,7 +207,8 @@ class Rcl_Users_List extends Rcl_Users_Query {
 			$search   = sanitize_text_field( $f[1] );
 			$meta_key = sanitize_key( str_replace( '-', '_', $f[0] ) );
 
-			$query['join'][]  = "INNER JOIN $wpdb->usermeta AS $uniq ON wp_users.ID=$uniq.user_id";
+			$query['join'][] = "INNER JOIN $wpdb->usermeta AS $uniq ON wp_users.ID=$uniq.user_id";
+			//phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$query['where'][] = $wpdb->prepare( "($uniq.meta_key=%s AND $uniq.meta_value LIKE %s)", $meta_key, '%' . $wpdb->esc_like( $search ) . '%' );
 		}
 
@@ -266,7 +267,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		$query = "SELECT meta_key,meta_value, user_id AS ID "
 		         . "FROM $wpdb->usermeta "
 		         . "WHERE user_id IN (" . implode( ',', $ids ) . ") AND meta_key IN ('" . implode( "','", $slugs ) . "')";
-
+		//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$metas = $wpdb->get_results( $query );
 
 		$newmetas = array();
@@ -281,7 +282,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 				$newmetas[ $meta->ID ]['profile_fields'][ $k ]['filter'] = $fielddata[ $meta->meta_key ]['filter'];
 			}
 
-			( object ) $newmetas[ $meta->ID ];
+			$newmetas[ $meta->ID ] = ( object ) $newmetas[ $meta->ID ];
 		}
 
 		if ( $newmetas ) {
@@ -325,6 +326,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 			         . "FROM " . RCL_PREF . "user_action "
 			         . "WHERE user IN (" . implode( ',', $ids ) . ")";
 
+			//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$posts = $wpdb->get_results( $query );
 
 			if ( $posts ) {
@@ -365,7 +367,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		         . "FROM $wpdb->posts "
 		         . "WHERE post_status IN ('publish', 'private') AND post_type NOT IN ('page','nav_menu_item') AND post_author IN (" . implode( ',', $ids ) . ") "
 		         . "GROUP BY post_author";
-
+		//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$posts = $wpdb->get_results( $query );
 
 		if ( $posts ) {
@@ -404,7 +406,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		         . "FROM $wpdb->comments "
 		         . "WHERE user_id IN (" . implode( ',', $ids ) . ") "
 		         . "GROUP BY user_id";
-
+		//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$comments = $wpdb->get_results( $query );
 
 		if ( $comments ) {
@@ -427,7 +429,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		$query = "SELECT meta_value AS description, user_id AS ID "
 		         . "FROM $wpdb->usermeta "
 		         . "WHERE user_id IN (" . implode( ',', $ids ) . ") AND meta_key='description'";
-
+		//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$descs = $wpdb->get_results( $query );
 
 		if ( $descs ) {
@@ -449,7 +451,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		$query = "SELECT meta_value AS avatar_data, user_id AS ID "
 		         . "FROM $wpdb->usermeta "
 		         . "WHERE user_id IN (" . implode( ',', $ids ) . ") AND meta_key='rcl_avatar'";
-
+		//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$descs = $wpdb->get_results( $query );
 
 		if ( $descs ) {
@@ -484,7 +486,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		$query = "SELECT rating_total, user_id AS ID "
 		         . "FROM " . RCL_PREF . "rating_users "
 		         . "WHERE user_id IN (" . implode( ',', $ids ) . ")";
-
+		//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$descs = $wpdb->get_results( $query );
 
 		if ( $descs ) {
@@ -506,7 +508,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 			if ( ! isset( $user->ID ) || ! $user->ID ) {
 				continue;
 			}
-			$ids[] = $user->ID;
+			$ids[] = (int) $user->ID;
 		}
 
 		return $ids;
@@ -547,7 +549,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 		$count_users = ( false !== $count_users ) ? $count_users : $this->count();
 
-		$content .= '<h3>' . __( 'Total number of users', 'wp-recall' ) . ': ' . $count_users . '</h3>';
+		$content .= '<h3>' . esc_html__( 'Total number of users', 'wp-recall' ) . ': ' . $count_users . '</h3>';
 
 		if ( isset( $this->add_uri['users-filter'] ) ) {
 			unset( $this->add_uri['users-filter'] );
@@ -558,7 +560,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		$rqst = ( $s_array ) ? implode( '&', $s_array ) . '&' : '';
 
 		if ( rcl_is_office() ) {
-			$url = ( isset( $_POST['tab_url'] ) ) ? esc_url( $_POST['tab_url'] ) : rcl_get_user_url( $user_LK );
+			$url = ( isset( $_POST['tab_url'] ) ) ? sanitize_text_field( wp_unslash( $_POST['tab_url'] ) ) : rcl_get_user_url( $user_LK );
 		} else {
 			$url = get_permalink( $post->ID );
 		}
@@ -568,19 +570,19 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		$current_filter = ( isset( $_GET['users-filter'] ) ) ? sanitize_key( $_GET['users-filter'] ) : 'time_action';
 
 		$filters = array(
-			'time_action'     => __( 'Activity', 'wp-recall' ),
-			'posts_count'     => __( 'Publications', 'wp-recall' ),
-			'comments_count'  => __( 'Comments', 'wp-recall' ),
-			'user_registered' => __( 'Registration', 'wp-recall' ),
+			'time_action'     => esc_html__( 'Activity', 'wp-recall' ),
+			'posts_count'     => esc_html__( 'Publications', 'wp-recall' ),
+			'comments_count'  => esc_html__( 'Comments', 'wp-recall' ),
+			'user_registered' => esc_html__( 'Registration', 'wp-recall' ),
 		);
 
 		if ( isset( $active_addons['rating-system'] ) ) {
-			$filters['rating_total'] = __( 'Rated', 'wp-recall' );
+			$filters['rating_total'] = esc_html__( 'Rated', 'wp-recall' );
 		}
 
 		$filters = apply_filters( 'rcl_users_filter', $filters );
 
-		$content .= '<div class="rcl-data-filters">' . __( 'Filter by', 'wp-recall' ) . ': ';
+		$content .= '<div class="rcl-data-filters">' . esc_html__( 'Filter by', 'wp-recall' ) . ': ';
 
 		foreach ( $filters as $key => $name ) {
 			$content .= rcl_get_button( array(
@@ -600,13 +602,13 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 		global $wpdb;
 
-		$search_text  = ( isset( $_GET['search_text'] ) ) ? sanitize_text_field( $_GET['search_text'] ) : '';
+		$search_text  = ( isset( $_GET['search_text'] ) ) ? sanitize_text_field( wp_unslash( $_GET['search_text'] ) ) : '';
 		$search_field = ( isset( $_GET['search_field'] ) ) ? sanitize_key( $_GET['search_field'] ) : '';
 
 		if ( ! $search_text || ! in_array( $search_field, [ 'display_name', 'user_login' ] ) ) {
 			return $query;
 		}
-
+		//phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$query['where'][] = $wpdb->prepare( "wp_users.$search_field LIKE %s", '%' . $wpdb->esc_like( $search_text ) . '%' );
 
 		return $query;

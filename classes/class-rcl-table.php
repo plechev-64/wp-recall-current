@@ -279,7 +279,7 @@ class Rcl_Table {
 			foreach ( $this->rows as $row ) {
 				foreach ( $row as $k => $value ) {
 					if ( isset( $this->cols[ $k ]['totalsum'] ) ) {
-						$total[ $k ] += strip_tags( $value );
+						$total[ $k ] += intval( $value );
 					}
 				}
 			}
@@ -307,8 +307,8 @@ class Rcl_Table {
 				$name  = isset( $col['search']['name'] ) ? $col['search']['name'] : $idcol;
 				$value = isset( $col['search']['value'] ) ? $col['search']['value'] : '';
 
-				if ( ! $value && isset( $_REQUEST[ $name ] ) && $_REQUEST[ $name ] ) {
-					$value = sanitize_text_field( $_REQUEST[ $name ] );
+				if ( ! $value && ! empty( $_REQUEST[ $name ] ) ) {
+					$value = sanitize_text_field( wp_unslash( $_REQUEST[ $name ] ) );
 				}
 
 				$submit = isset( $col['search']['submit'] ) ? $col['search']['submit'] : 0;
@@ -335,11 +335,11 @@ class Rcl_Table {
 
 						rcl_datepicker_scripts();
 
-						$datescript = 'class="rcl-datepicker" onclick="rcl_show_datepicker(this);" title="' . __( 'Use the format', 'wp-recall' ) . ': yyyy-mm-dd" pattern="(\d{4}-\d{2}-\d{2})"';
+						$datescript = 'class="rcl-datepicker" onclick="rcl_show_datepicker(this);" title="' . esc_attr__( 'Use the format', 'wp-recall' ) . ': yyyy-mm-dd" pattern="(\d{4}-\d{2}-\d{2})"';
 					}
 				}
 
-				$contentCell = '<input style="width:100%" type="text" ' . $datescript . ' name="' . $name . '" placeholder="' . __( 'Search', 'wp-recall' ) . '" ' . $onkeyup . ' value="' . esc_attr( $value ) . '">';
+				$contentCell = '<input style="width:100%" type="text" ' . $datescript . ' name="' . esc_attr( $name ) . '" placeholder="' . esc_html__( 'Search', 'wp-recall' ) . '" ' . $onkeyup . ' value="' . esc_attr( $value ) . '">';
 			}
 
 			$content .= $this->cell( $idcol, $contentCell, $col, 'search' );

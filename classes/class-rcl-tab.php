@@ -238,12 +238,12 @@ class Rcl_Tab {
 
 		if ( $this->use_cache && in_array( 'cache', $this->supports ) && $rcl_cache->is_cache ) {
 
-			$protocol = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://' : 'https://';
+			$protocol = ! is_ssl() ? 'http://' : 'https://';
 
 			if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 				$string = rcl_get_tab_permalink( $master_id, $this->id, $subtab_id );
 			} else {
-				$string = $protocol . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+				$string = $protocol . filter_var( INPUT_SERVER, 'SERVER_NAME' ) . filter_var( INPUT_SERVER, 'REQUEST_URI' );
 			}
 
 			$file = $rcl_cache->get_file( $string );

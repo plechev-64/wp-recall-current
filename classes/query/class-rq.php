@@ -75,11 +75,14 @@ class RQ {
 
 		$sql = array( 'SELECT SUM(total) FROM (' . implode( ' UNION ALL ', $sql ) . ') x' );
 
+		//phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
 		if ( $groupby ) {
 			$result = $wpdb->query( $sql );
 		} else {
 			$result = $wpdb->get_var( $sql );
 		}
+
+		//phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
 
 		return $result;
 	}

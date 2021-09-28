@@ -43,6 +43,7 @@ class Rcl_Blocks {
 
 	function print_block() {
 		global $user_LK;
+		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $this->get_block( $user_LK );
 	}
 

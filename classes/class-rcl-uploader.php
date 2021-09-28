@@ -151,7 +151,7 @@ class Rcl_Uploader {
 		$content .= $this->get_button( $args );
 
 		if ( $args['allowed_types'] ) {
-			$content .= '<small class="notice">' . __( 'Types of files', 'wp-recall' ) . ': ' . implode( ', ', $this->file_types ) . '</small>';
+			$content .= '<small class="notice">' . esc_html__( 'Types of files', 'wp-recall' ) . ': ' . implode( ', ', $this->file_types ) . '</small>';
 		}
 
 		$content .= '</div>';
@@ -165,10 +165,10 @@ class Rcl_Uploader {
 
 		$json = json_encode( $this );
 
-		$content = '<input id="rcl-uploader-input-' . $this->uploader_id . '" class="uploader-input" '
-		           . 'data-uploader_id="' . $this->uploader_id . '" name="' . ( $this->multiple ? $this->input_name . '[]' : $this->input_name ) . '" '
-		           . 'type="file" accept="' . implode( ', ', $this->accept ) . '" ' . ( $this->multiple ? 'multiple' : '' ) . '>'
-		           . '<script>rcl_init_uploader(' . $json . ', "' . md5( $json . rcl_get_option( 'security-key' ) ) . '");</script>';
+		$content = '<input id="rcl-uploader-input-' . esc_attr( $this->uploader_id ) . '" class="uploader-input" '
+		           . 'data-uploader_id="' . esc_attr( $this->uploader_id ) . '" name="' . ( $this->multiple ? esc_attr( $this->input_name ) . '[]' : esc_attr( $this->input_name ) ) . '" '
+		           . 'type="file" accept="' . esc_attr( implode( ', ', $this->accept ) ) . '" ' . ( $this->multiple ? 'multiple' : '' ) . '>'
+		           . '<script>rcl_init_uploader(' . $json . ', "' . esc_js( md5( $json . rcl_get_option( 'security-key' ) ) ) . '");</script>';
 
 		if ( rcl_is_ajax() ) {
 			$content .= '<script>RclUploaders.init();</script>';
@@ -202,7 +202,7 @@ class Rcl_Uploader {
 
 		$content = '<div id="rcl-dropzone-' . $this->uploader_id . '" class="rcl-dropzone">
 				<div class="dropzone-upload-area">
-					' . __( 'Add files in a queue of downloads', 'wp-recall' ) . '
+					' . esc_html__( 'Add files in a queue of downloads', 'wp-recall' ) . '
 				</div>
 			</div>';
 
@@ -252,7 +252,7 @@ class Rcl_Uploader {
 			             ->where( [
 				             'uploader_id' => $this->uploader_id,
 				             'user_id'     => $this->user_id ? $this->user_id : 0,
-				             'session_id'  => $this->user_id ? '' : $_COOKIE['PHPSESSID'],
+				             'session_id'  => ! $this->user_id && isset( $_COOKIE['PHPSESSID'] ) ? '' : sanitize_text_field( wp_unslash( $_COOKIE['PHPSESSID'] ) ),
 			             ] )
 			             ->get_col();
 		}
@@ -419,7 +419,7 @@ class Rcl_Uploader {
 
 		rcl_verify_ajax_nonce();
 
-		if ( ! $_FILES[ $this->input_name ] ) {
+		if ( empty( $_FILES[ $this->input_name ] ) ) {
 			return false;
 		}
 
@@ -434,6 +434,7 @@ class Rcl_Uploader {
 		if ( $this->multiple ) {
 
 			$files = array();
+			//phpcs:ignore
 			foreach ( $_FILES[ $this->input_name ] as $nameProp => $values ) {
 				foreach ( $values as $k => $value ) {
 					$files[ $k ][ $nameProp ] = $value;
@@ -445,7 +446,7 @@ class Rcl_Uploader {
 				$uploads[] = $this->file_upload_process( $file );
 			}
 		} else {
-
+			//phpcs:ignore
 			$uploads = $this->file_upload_process( $_FILES[ $this->input_name ] );
 		}
 
@@ -502,7 +503,7 @@ class Rcl_Uploader {
 		);
 
 		if ( ! $this->user_id ) {
-			$attachment['post_content'] = $_COOKIE['PHPSESSID'];
+			$attachment['post_content'] = isset( $_COOKIE['PHPSESSID'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['PHPSESSID'] ) ) : '';
 		}
 
 		$attach_id = wp_insert_attachment( $attachment, $image['file'], $this->post_parent );
@@ -560,15 +561,17 @@ class Rcl_Uploader {
 
 		list( $width, $height ) = getimagesize( $image_src );
 
-		$crop = isset( $_POST['crop_data'] ) ? $_POST['crop_data'] : false;
-		$size = isset( $_POST['image_size'] ) ? $_POST['image_size'] : false;
+		//phpcs:disable
+		$crop = isset( $_POST['crop_data'] ) ? rcl_recursive_map( 'intval', explode( ',', $_POST['crop_data'] ) ) : false;
+		$size = isset( $_POST['image_size'] ) ? rcl_recursive_map( 'intval', explode( ',', $_POST['image_size'] ) ) : false;
+		//phpcs:enable
 
 		if ( ! $crop ) {
 			return false;
 		}
 
-		list( $crop_x, $crop_y, $crop_w, $crop_h ) = explode( ',', $crop );
-		list( $viewWidth, $viewHeight ) = explode( ',', $size );
+		list( $crop_x, $crop_y, $crop_w, $crop_h ) = $crop;
+		list( $viewWidth, $viewHeight ) = $size;
 
 		$cf = 1;
 		if ( $viewWidth < $width ) {

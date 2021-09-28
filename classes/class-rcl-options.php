@@ -28,7 +28,7 @@ class Rcl_Options extends Rcl_Custom_Fields {
 
 			$return = '<span ';
 
-			if ( $this->key ) {
+			if ( $this->key && isset( $_GET['page'] ) ) {
 				$return .= 'id="title-' . $this->key . '" data-addon="' . $this->key . '" data-url="' . admin_url( 'admin.php?page=' . sanitize_key( $_GET['page'] ) . '&rcl-addon-options=' . $this->key ) . '" ';
 			} else {
 				$return .= 'data-url="' . admin_url( 'admin.php?page=manage-wprecall' ) . '" ';
@@ -110,9 +110,8 @@ class Rcl_Options extends Rcl_Custom_Fields {
 
 	function extend( $content ) {
 
-		$extends   = isset( $_COOKIE['rcl_extends'] ) ? $_COOKIE['rcl_extends'] : 0;
 		$classes   = array( 'extend-options' );
-		$classes[] = $extends ? 'show-option' : 'hidden-option';
+		$classes[] = ! empty( $_COOKIE['rcl_extends'] ) ? 'show-option' : 'hidden-option';
 
 		if ( is_array( $content ) ) {
 			$return = '';

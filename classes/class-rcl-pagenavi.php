@@ -25,8 +25,8 @@ class Rcl_PageNavi {
 			}
 		}
 
-		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_POST['tab_url'] ) ) {
-			$post               = rcl_decode_post( $_POST['post'] );
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_POST['tab_url'], $_POST['post'] ) ) {
+			$post               = rcl_decode_post( sanitize_text_field( wp_unslash( $_POST['post'] ) ) );
 			$this->current_page = isset( $post->page ) ? intval( $post->page ) : false;
 		}
 
@@ -81,13 +81,13 @@ class Rcl_PageNavi {
 	function uri_data_init() {
 
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_POST['tab_url'] ) ) {
-			$uri                  = $_POST['tab_url'];
+			$uri                  = sanitize_text_field( wp_unslash( $_POST['tab_url'] ) );
 			$uri_string           = explode( '?', $uri );
 			$query_string         = $uri_string[1];
 			$this->uri['current'] = $uri_string[0];
 		} else {
-			$query_string         = $_SERVER['QUERY_STRING'];
-			$this->uri['current'] = get_bloginfo( 'wpurl' ) . str_replace( '?' . $query_string, '', $_SERVER['REQUEST_URI'] );
+			$query_string         = filter_var( INPUT_SERVER, 'QUERY_STRING' );
+			$this->uri['current'] = get_bloginfo( 'wpurl' ) . str_replace( '?' . $query_string, '', filter_var( INPUT_SERVER, 'REQUEST_URI' ) );
 		}
 
 		if ( $query_string ) {
@@ -245,7 +245,7 @@ class Rcl_PageNavi {
 					$html = '<span>' . $data . '</span>';
 				}
 
-				$content .= '<span class="pager-item type-' . $type . '">' . $html . '</span>';
+				$content .= '<span class="pager-item type-' . esc_attr( $type ) . '">' . $html . '</span>';
 			}
 		}
 

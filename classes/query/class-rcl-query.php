@@ -135,13 +135,13 @@ class Rcl_Query extends Rcl_Old_Query {
 				return $cache;
 			}
 		}
-
+		//phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
 		if ( isset( $query['groupby'] ) && $query['groupby'] ) {
 			$result = $wpdb->query( $sql );
 		} else {
 			$result = $wpdb->get_var( $sql );
 		}
-
+		//phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
 		if ( $use_cache ) {
 			wp_cache_add( $cachekey, $result );
 		}

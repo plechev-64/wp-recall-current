@@ -262,6 +262,7 @@ class RCL_Install {
 
 			//отключаем все пользователям сайта показ админ панели, если включена
 			$wpdb->update(
+			//phpcs:ignore
 				$wpdb->prefix . 'usermeta', array( 'meta_value' => 'false' ), array( 'meta_key' => 'show_admin_bar_front' )
 			);
 

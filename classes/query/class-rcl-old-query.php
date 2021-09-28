@@ -493,13 +493,13 @@ class Rcl_Old_Query {
 
 			$sql = $this->get_sql( $query );
 		}
-
+		//phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
 		if ( isset( $query['groupby'] ) && $query['groupby'] ) {
 			$result = $wpdb->query( $sql );
 		} else {
 			$result = $wpdb->get_var( $sql );
 		}
-
+		//phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
 		//$this->reset_query();
 
 		return $result;
