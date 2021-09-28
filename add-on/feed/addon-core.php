@@ -178,13 +178,13 @@ function rcl_feed_callback() {
 		'rcl_update_feed_current_user'
 	] );
 
-	$callback = sanitize_key( $_POST['callback'] );
+	$callback = isset( $_POST['callback'] ) ? sanitize_key( $_POST['callback'] ) : '';
 
 	if ( ! in_array( $callback, $allowedCallbacks ) ) {
 		exit;
 	}
 
-	$data    = intval( $_POST['data'] );
+	$data    = isset( $_POST['data'] ) ? intval( $_POST['data'] ) : 0;
 	$content = $callback( $data );
 
 	wp_send_json( $content );
@@ -205,10 +205,10 @@ function rcl_add_feed_content_meta( $content ) {
 			return $content;
 			break;
 		case 'comments':
-			$content .= '<div class="feed-content-meta">' . __( 'For publication', 'wp-recall' ) . ' <a href="' . get_permalink( $rcl_feed->feed_parent ) . '">' . get_the_title( $rcl_feed->feed_parent ) . '</a></div>';
+			$content .= '<div class="feed-content-meta">' . esc_html__( 'For publication', 'wp-recall' ) . ' <a href="' . get_permalink( $rcl_feed->feed_parent ) . '">' . get_the_title( $rcl_feed->feed_parent ) . '</a></div>';
 			break;
 		case 'answers':
-			$content .= '<div class="feed-content-meta">' . __( 'In response to', 'wp-recall' ) . ' <a href="' . get_comment_link( $rcl_feed->feed_parent ) . '">' . __( 'your comment', 'wp-recall' ) . '</a></div>';
+			$content .= '<div class="feed-content-meta">' . esc_html__( 'In response to', 'wp-recall' ) . ' <a href="' . get_comment_link( $rcl_feed->feed_parent ) . '">' . __( 'your comment', 'wp-recall' ) . '</a></div>';
 			break;
 		default:
 			return $content;
@@ -291,11 +291,11 @@ function rcl_feed_options() {
 	$content = '<div class="feed-options">'
 	           . '<i class="rcli fa-times"></i>'
 	           . '<div class="options-box">'
-	           . rcl_get_feed_callback_link( $rcl_feed->feed_author, __( 'Ignore publications', 'wp-recall' ) . ' ' . get_the_author_meta( 'display_name', $rcl_feed->feed_author ), 'rcl_ignored_feed_author' )
+	           . rcl_get_feed_callback_link( $rcl_feed->feed_author, esc_html__( 'Ignore publications', 'wp-recall' ) . ' ' . get_the_author_meta( 'display_name', $rcl_feed->feed_author ), 'rcl_ignored_feed_author' )
 	           . '</div>'
 	           . '</div>';
 
-	echo $content;
+	echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 function rcl_get_author_feed_data( $author_id ) {

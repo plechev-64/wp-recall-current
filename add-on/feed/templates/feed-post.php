@@ -8,17 +8,17 @@
 	?>
 
     <div class="feed-author-avatar">
-        <a href="<?php echo rcl_get_user_url( $rcl_feed->feed_author ); ?>">
+        <a href="<?php echo esc_url( rcl_get_user_url( $rcl_feed->feed_author ) ); ?>">
 			<?php echo get_avatar( $rcl_feed->feed_author, 40 ); ?>
         </a>
     </div>
     <div class="feed-author-name">
-        <a href="<?php echo rcl_get_user_url( $rcl_feed->feed_author ); ?>">
+        <a href="<?php echo esc_url( rcl_get_user_url( $rcl_feed->feed_author ) ); ?>">
 			<?php echo esc_html( get_the_author_meta( 'display_name', $rcl_feed->feed_author ) ); ?>
         </a>
     </div>
     <div class="feed-date">
-		<?php echo mysql2date( 'j F Y H:i', $rcl_feed->feed_date ); ?>
+		<?php echo esc_html( mysql2date( 'j F Y H:i', $rcl_feed->feed_date ) ); ?>
     </div>
 </div>
 
