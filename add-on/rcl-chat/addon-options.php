@@ -100,8 +100,7 @@ function rcl_chat_options( $options ) {
 						'default'    => 2,
 						'title'      => __( 'Maximum file size, MB', 'wp-recall' ),
 						'slug'       => 'file_size',
-						'group'      => 'chat',
-						'default'    => 2
+						'group'      => 'chat'
 					)
 				)
 			)

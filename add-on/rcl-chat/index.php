@@ -235,7 +235,7 @@ function rcl_get_tab_user_contacts() {
 
 function rcl_get_user_contacts( $user_id, $limit ) {
 	global $wpdb;
-
+	//phpcs:disable
 	$messages = $wpdb->get_results(
 		"SELECT t.* FROM ( "
 		. "SELECT chat_messages.* FROM " . RCL_PREF . "chat_messages AS chat_messages "
@@ -253,7 +253,7 @@ function rcl_get_user_contacts( $user_id, $limit ) {
 		. "LIMIT $limit[0],$limit[1]"
 		, ARRAY_A
 	);
-
+	//phpcs:enable
 	$messages = stripslashes_deep( $messages );
 
 	return $messages;
@@ -261,7 +261,7 @@ function rcl_get_user_contacts( $user_id, $limit ) {
 
 function rcl_get_user_contacts_list( $user_id ) {
 	global $wpdb;
-
+	//phpcs:disable
 	$amount = $wpdb->query(
 		"SELECT COUNT(chat_messages.chat_id) FROM " . RCL_PREF . "chat_messages AS chat_messages "
 		. "INNER JOIN " . RCL_PREF . "chat_users AS chat_users ON chat_messages.chat_id=chat_users.chat_id "
@@ -271,7 +271,7 @@ function rcl_get_user_contacts_list( $user_id ) {
 		. "AND chat_users.user_status!='0' "
 		. "GROUP BY chat_messages.chat_id "
 	);
-
+	//phpcs:enable
 	if ( ! $amount ) {
 
 		$notice = __( 'No contacts yet. Start a chat with another user on his page', 'wp-recall' );
@@ -420,7 +420,7 @@ function rcl_get_last_chats_box() {
 
 	$class[] = ( ! isset( $rcl_options['chat']['place_contact_panel'] ) || ! $rcl_options['chat']['place_contact_panel'] ) ? 'right-panel' : 'left-panel';
 
-	$class[] = ( isset( $_COOKIE['rcl_chat_contact_panel'] ) && $_COOKIE['rcl_chat_contact_panel'] ) ? '' : 'hidden-contacts';
+	$class[] = ( ! empty( $_COOKIE['rcl_chat_contact_panel'] ) ) ? '' : 'hidden-contacts';
 
 	echo '<div id="rcl-chat-noread-box" class="' . esc_attr( implode( ' ', $class ) ) . '">';
 
@@ -428,10 +428,11 @@ function rcl_get_last_chats_box() {
 
 	echo '<div class="rcl-noread-users">';
 	echo '<span class="messages-icon">'
-	     . '<a href="' . rcl_get_tab_permalink( $user_ID, 'chat' ) . '" onclick="return rcl_chat_shift_contact_panel();">'
+	     . '<a href="' . esc_url( rcl_get_tab_permalink( $user_ID, 'chat' ) ) . '" onclick="return rcl_chat_shift_contact_panel();">'
 	     . '<i class="rcli fa-envelope" aria-hidden="true"></i>';
 
 	if ( $new_counter ) {
+		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<span class="chat-new-messages">' . $new_counter . '</span>';
 	}
 
@@ -445,9 +446,9 @@ function rcl_get_last_chats_box() {
 			continue;
 		}
 
-		echo '<span class="rcl-chat-user contact-box" data-contact="' . $user_id . '">';
-		echo '<a class="chat-delete-contact" href="#" title="' . __( 'Delete contact', 'wp-recall' ) . '" onclick="rcl_chat_remove_contact(this,' . $data['chat_id'] . ');return false;"><i class="rcli fa-times" aria-hidden="true"></i></a>';
-		echo '<a href="#" onclick="rcl_get_mini_chat(this,' . $user_id . '); return false;">';
+		echo '<span class="rcl-chat-user contact-box" data-contact="' . esc_attr( $user_id ) . '">';
+		echo '<a class="chat-delete-contact" href="#" title="' . esc_html__( 'Delete contact', 'wp-recall' ) . '" onclick="rcl_chat_remove_contact(this,' . esc_js( $data['chat_id'] ) . ');return false;"><i class="rcli fa-times" aria-hidden="true"></i></a>';
+		echo '<a href="#" onclick="rcl_get_mini_chat(this,' . esc_js( $user_id ) . '); return false;">';
 		if ( ! $data['status'] ) {
 			echo '<i class="rcli fa-commenting" aria-hidden="true"></i>';
 		}
@@ -457,7 +458,7 @@ function rcl_get_last_chats_box() {
 	}
 
 	echo '<span class="more-contacts">'
-	     . '<a href="' . rcl_get_tab_permalink( $user_ID, 'chat' ) . '">'
+	     . '<a href="' . esc_url( rcl_get_tab_permalink( $user_ID, 'chat' ) ) . '">'
 	     . '. . .';
 	echo '</a>'
 	     . '</span>';

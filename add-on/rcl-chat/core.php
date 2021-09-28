@@ -40,7 +40,7 @@ function rcl_insert_chat( $chat_room, $chat_status ) {
 function rcl_delete_chat( $chat_id ) {
 	global $wpdb;
 
-	$result = $wpdb->query( "DELETE FROM " . RCL_PREF . "chats WHERE chat_id='$chat_id'" );
+	$result = $wpdb->query( "DELETE FROM " . RCL_PREF . "chats WHERE chat_id='$chat_id'" );//phpcs:ignore
 
 	do_action( 'rcl_delete_chat', $chat_id );
 
@@ -51,7 +51,7 @@ add_action( 'rcl_delete_chat', 'rcl_chat_remove_users', 10 );
 function rcl_chat_remove_users( $chat_id ) {
 	global $wpdb;
 
-	$result = $wpdb->query( "DELETE FROM " . RCL_PREF . "chat_users WHERE chat_id='$chat_id'" );
+	$result = $wpdb->query( "DELETE FROM " . RCL_PREF . "chat_users WHERE chat_id='$chat_id'" );//phpcs:ignore
 
 	do_action( 'rcl_chat_remove_users', $chat_id );
 
@@ -87,7 +87,7 @@ function rcl_chat_remove_messages( $chat_id, $user_id = false ) {
 function rcl_chat_delete_user( $chat_id, $user_id ) {
 	global $wpdb;
 
-	$result = $wpdb->query( "DELETE FROM " . RCL_PREF . "chat_users WHERE chat_id='$chat_id' AND user_id='$user_id'" );
+	$result = $wpdb->query( "DELETE FROM " . RCL_PREF . "chat_users WHERE chat_id='$chat_id' AND user_id='$user_id'" );//phpcs:ignore
 
 	do_action( 'rcl_chat_delete_user', $chat_id, $user_id );
 
@@ -139,7 +139,7 @@ function rcl_chat_delete_message( $message_id ) {
 
 	do_action( 'rcl_chat_pre_delete_message', $message_id );
 
-	$result = $wpdb->query( "DELETE FROM " . RCL_PREF . "chat_messages WHERE message_id='$message_id'" );
+	$result = $wpdb->query( "DELETE FROM " . RCL_PREF . "chat_messages WHERE message_id='$message_id'" );//phpcs:ignore
 
 	do_action( 'rcl_chat_delete_message', $message_id );
 
@@ -163,7 +163,7 @@ function rcl_chat_get_message( $message_id ) {
 function rcl_chat_get_message_meta( $message_id, $meta_key ) {
 	return RQ::tbl( new Rcl_Chat_Messagemeta_Query() )->select( [ 'meta_value' ] )->where( array(
 		'message_id' => $message_id,
-		'meta_key'   => $meta_key
+		'meta_key'   => $meta_key//phpcs:ignore
 	) )->get_var();
 }
 
@@ -172,8 +172,8 @@ function rcl_chat_add_message_meta( $message_id, $meta_key, $meta_value ) {
 
 	$args = array(
 		'message_id' => $message_id,
-		'meta_key'   => $meta_key,
-		'meta_value' => $meta_value
+		'meta_key'   => $meta_key,//phpcs:ignore
+		'meta_value' => $meta_value//phpcs:ignore
 	);
 
 	$result = $wpdb->insert(
@@ -196,19 +196,19 @@ function rcl_chat_delete_message_meta( $message_id, $meta_key = false ) {
 		$sql .= "AND meta_key = '$meta_key'";
 	}
 
-	$result = $wpdb->query( $sql );
+	$result = $wpdb->query( $sql );//phpcs:ignore
 
 	return $result;
 }
 
 function rcl_chat_update_user_status( int $chat_id, int $user_id, int $status ) {
 	global $wpdb;
-
+	//phpcs:disable
 	$result = $wpdb->query( "INSERT INTO " . RCL_PREF . "chat_users "
 	                        . "(`room_place`, `chat_id`, `user_id`, `user_activity`, `user_write`, `user_status`) "
 	                        . "VALUES('$chat_id:$user_id', $chat_id, $user_id, '" . current_time( 'mysql' ) . "', 0, $status) "
 	                        . "ON DUPLICATE KEY UPDATE user_status='$status'" );
-
+	//phpcs:enable
 	if ( ! $result ) {
 		rcl_add_log( 'rcl_chat_update_user_status: ' . __( 'Failed to refresh user status in the chat', 'wp-recall' ), array(
 			$chat_id,
@@ -255,7 +255,7 @@ function rcl_chat_get_important_messages( $user_id, $limit ) {
 
 	$messagesData = RQ::tbl( new Rcl_Chat_Messages_Query() )
 	                  ->join( 'message_id', RQ::tbl( new Rcl_Chat_Messagemeta_Query() )
-	                                          ->where( [ 'meta_key' => 'important:' . $user_id ] )
+	                                          ->where( [ 'meta_key' => 'important:' . $user_id ] )//phpcs:ignore
 	                  )
 	                  ->orderby( 'message_time' )
 	                  ->limit( $limit[1], $limit[0] )
@@ -268,7 +268,7 @@ function rcl_chat_count_important_messages( $user_id ) {
 
 	return RQ::tbl( new Rcl_Chat_Messages_Query() )
 	         ->join( 'message_id', RQ::tbl( new Rcl_Chat_Messagemeta_Query() )
-	                                 ->where( [ 'meta_key' => 'important:' . $user_id ] )
+	                                 ->where( [ 'meta_key' => 'important:' . $user_id ] )//phpcs:ignore
 	         )
 	         ->get_count();
 }

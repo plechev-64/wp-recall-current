@@ -12,7 +12,7 @@ function rcl_chat_messages_add_important_meta( $messages ) {
 	foreach ( $messages as $message ) {
 		$ids[] = $message['message_id'];
 	}
-
+	//phpcs:ignore
 	$metas = $wpdb->get_results( "SELECT * FROM " . RCL_PREF . "chat_messagemeta WHERE message_id IN (" . implode( ',', $ids ) . ") AND meta_key = 'important:$user_ID' AND meta_value = '1'" );
 
 	if ( ! $metas ) {
@@ -43,7 +43,7 @@ function rcl_chat_messages_add_attachments_meta( $messages ) {
 	foreach ( $messages as $message ) {
 		$ids[] = $message['message_id'];
 	}
-
+	//phpcs:ignore
 	$metas = $wpdb->get_results( "SELECT * FROM " . RCL_PREF . "chat_messagemeta WHERE message_id IN (" . implode( ',', $ids ) . ") AND meta_key = 'attachment'" );
 
 	if ( ! $metas ) {
@@ -140,6 +140,7 @@ add_action( 'delete_attachment', 'rcl_chat_delete_message_attachment', 10 );
 function rcl_chat_delete_message_attachment( $attachment_id ) {
 	global $wpdb;
 
+	//phpcs:ignore
 	return $wpdb->query( "DELETE FROM " . RCL_PREF . "chat_messagemeta WHERE meta_value='$attachment_id' AND meta_key = 'attachment'" );
 }
 

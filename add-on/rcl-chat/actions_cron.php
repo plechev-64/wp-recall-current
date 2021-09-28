@@ -9,7 +9,7 @@ function rcl_chat_daily_delete_messages() {
 	if ( ! $max ) {
 		return false;
 	}
-
+	//phpcs:disable
 	$chats = $wpdb->get_results(
 		"SELECT chats.*, COUNT(chat_messages.message_id) AS amount_messages "
 		. "FROM " . RCL_PREF . "chats AS chats "
@@ -22,7 +22,7 @@ function rcl_chat_daily_delete_messages() {
 		. "GROUP BY chats.chat_id "
 		. "HAVING COUNT(chat_messages.message_id) > '$max'"
 	);
-
+	//phpcs:enable
 	if ( ! $chats ) {
 		return false;
 	}
@@ -34,7 +34,7 @@ function rcl_chat_daily_delete_messages() {
 		}
 
 		$amount_delete = $chat->amount_messages - $max;
-
+		//phpcs:disable
 		$messages = $wpdb->get_results( "SELECT message_id,message_status,private_key FROM " . RCL_PREF . "chat_messages "
 		                                . "WHERE message_id NOT IN ("
 		                                . "SELECT message_id FROM " . RCL_PREF . "chat_messagemeta "
@@ -44,7 +44,7 @@ function rcl_chat_daily_delete_messages() {
 		                                . "ORDER BY message_id ASC "
 		                                . "LIMIT $amount_delete"
 		);
-
+		//phpcs:enable
 		if ( ! $messages ) {
 			continue;
 		}
@@ -65,7 +65,7 @@ function rcl_chat_send_notify_messages() {
 	global $wpdb;
 
 	$mailtext = rcl_get_option( 'messages_mail' );
-
+	//phpcs:ignore
 	$mess = $wpdb->get_results( "SELECT * FROM " . RCL_PREF . "chat_messages WHERE message_status='0' && private_key!='0' && message_time  > date_sub('" . current_time( 'mysql' ) . "', interval 1 hour)" );
 
 	if ( ! $mess ) {

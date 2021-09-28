@@ -69,7 +69,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 		$this->chat = $this->get_chat_data( $this->chat_room );
 
 		if ( ! $this->user_write ) {
-			$this->user_write = ( isset( $_POST['chat']['message'] ) && $_POST['chat']['message'] ) ? 1 : 0;
+			$this->user_write = ( ! empty( $_POST['chat']['message'] ) ) ? 1 : 0;
 		}
 
 		if ( ! $this->chat ) {
@@ -139,7 +139,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 		$chat_id = 0;
 
 		if ( $chat_room ) {
-			$chat = $wpdb->get_row( "SELECT * FROM " . RCL_PREF . "chats WHERE chat_room = '$chat_room'", ARRAY_A );
+			$chat = $wpdb->get_row( "SELECT * FROM " . RCL_PREF . "chats WHERE chat_room = '$chat_room'", ARRAY_A );//phpcs:ignore
 		}
 
 		return $chat;
@@ -147,20 +147,22 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 	function read_chat( $chat_id ) {
 		global $wpdb;
-		$wpdb->query( "UPDATE " . RCL_PREF . "chat_messages SET message_status = '1' WHERE chat_id = '$chat_id' AND user_id != '$this->user_id'" );
+		$wpdb->query( "UPDATE " . RCL_PREF . "chat_messages SET message_status = '1' WHERE chat_id = '$chat_id' AND user_id != '$this->user_id'" );//phpcs:ignore
 	}
 
 	function set_activity() {
 		global $wpdb;
-
+		//phpcs:disable
 		$result = $wpdb->query( "INSERT INTO " . RCL_PREF . "chat_users "
 		                        . "(`room_place`, `chat_id`, `user_id`, `user_activity`, `user_write`, `user_status`) "
 		                        . "VALUES('$this->chat_id:$this->user_id', $this->chat_id, $this->user_id, '" . current_time( 'mysql' ) . "', 0, 1) "
 		                        . "ON DUPLICATE KEY UPDATE user_activity = '" . current_time( 'mysql' ) . "', user_write='$this->user_write'" );
+		//phpcs:enable
 	}
 
 	function get_users_activity() {
 		global $wpdb;
+		//phpcs:ignore
 		$actives = $wpdb->get_results( "SELECT user_id,user_write FROM " . RCL_PREF . "chat_users WHERE chat_id='$this->chat_id' AND user_id!='$this->user_id' AND user_activity >= ('" . current_time( 'mysql' ) . "' - interval 1 minute)" );
 
 		return $actives;
