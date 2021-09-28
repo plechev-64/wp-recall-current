@@ -40,6 +40,12 @@ function rcl_add_user_info_button( $icons ) {
 rcl_ajax_action( 'rcl_return_user_details', true );
 function rcl_return_user_details() {
 
+	if ( ! isset( $_POST['user_id'] ) ) {
+		wp_send_json( array(
+			'error' => esc_html__( 'Error', 'wp-recall' )
+		) );
+	}
+
 	wp_send_json( array(
 		'content' => rcl_get_user_details( intval( $_POST['user_id'] ) )
 	) );
@@ -78,7 +84,7 @@ function rcl_get_user_details( $user_id, $args = false ) {
 			} else {
 				$url_avatar = $avatar;
 			}
-			$content .= '<a title="' . __( 'Zoom avatar', 'wp-recall' ) . '" data-zoom="' . $url_avatar . '" onclick="rcl_zoom_avatar(this);return false;" class="rcl-avatar-zoom" href="#"><i class="rcli fa-search-plus"></i></a>';
+			$content .= '<a title="' . esc_attr__( 'Zoom avatar', 'wp-recall' ) . '" data-zoom="' . $url_avatar . '" onclick="rcl_zoom_avatar(this);return false;" class="rcl-avatar-zoom" href="#"><i class="rcli fa-search-plus"></i></a>';
 		}
 	}
 

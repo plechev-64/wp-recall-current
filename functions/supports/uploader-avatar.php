@@ -132,7 +132,7 @@ function rcl_delete_avatar_action() {
 	if ( ! isset( $_GET['rcl-action'] ) || $_GET['rcl-action'] != 'delete_avatar' ) {
 		return false;
 	}
-	if ( ! wp_verify_nonce( $_GET['_wpnonce'], $user_ID ) ) {
+	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_GET['_wpnonce'] ), $user_ID ) ) {
 		wp_die( 'Error' );
 	}
 
@@ -144,7 +144,7 @@ function rcl_delete_avatar_action() {
 
 	do_action( 'rcl_delete_avatar' );
 
-	wp_redirect( rcl_format_url( rcl_get_user_url( $user_ID ) ) . 'rcl-avatar=deleted' );
+	wp_safe_redirect( rcl_format_url( rcl_get_user_url( $user_ID ) ) . 'rcl-avatar=deleted' );
 	exit;
 }
 
@@ -152,7 +152,11 @@ add_action( 'wp', 'rcl_notice_avatar_deleted' );
 function rcl_notice_avatar_deleted() {
 	if ( isset( $_GET['rcl-avatar'] ) && $_GET['rcl-avatar'] == 'deleted' ) {
 		add_action( 'rcl_area_notice', function () {
-			echo rcl_get_notice( [ 'type' => 'success', 'text' => __( 'Your avatar has been deleted', 'wp-recall' ) ] );
+			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo rcl_get_notice( [
+				'type' => 'success',
+				'text' => esc_html__( 'Your avatar has been deleted', 'wp-recall' )
+			] );
 		} );
 	}
 }

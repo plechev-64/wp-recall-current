@@ -51,10 +51,12 @@ function rcl_add_cover_uploader_button() {
 			'max_size'    => rcl_get_option( 'cover_weight', 1024 )
 		) );
 
-		echo '<span class="rcl-cover-icon" title="' . __( 'Upload background', 'wp-recall' ) . '">
+		//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<span class="rcl-cover-icon" title="' . esc_html__( 'Upload background', 'wp-recall' ) . '">
                 <i class="rcli fa-image"></i>
                 ' . $uploder->get_input() . '
             </span>';
+		//phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 
