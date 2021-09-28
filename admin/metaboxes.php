@@ -47,7 +47,7 @@ function rcl_stats_metabox() {
 	);
 
 	foreach ( $data as $d ) {
-		echo '<p><b>' . esc_html( $d['name'] ) . ':</b> ' . esc_html( $d['content'] ) . '</p>';
+		echo '<p><b>' . esc_html( $d['name'] ) . ':</b> ' . wp_kses( $d['content'], [ 'a' => [ 'href' => [] ] ] ) . '</p>';
 	}
 }
 
