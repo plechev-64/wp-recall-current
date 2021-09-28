@@ -485,7 +485,7 @@ class Rcl_Rating_Box {
 			return false;
 		}
 
-		$content = '<span itemscope="" itemtype="http://schema.org/AggregateRating">';
+		$content = '<span itemscope="" itemtype="https://schema.org/AggregateRating">';
 
 		foreach ( $metatags as $itemprop => $value ) {
 			$content .= '<meta itemprop="' . $itemprop . '" content="' . $value . '">';

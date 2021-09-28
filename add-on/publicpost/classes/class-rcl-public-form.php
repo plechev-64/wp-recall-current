@@ -105,9 +105,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		$dataForm['post_excerpt'] = ( $this->post_id ) ? $this->post->post_excerpt : '';
 		$dataForm['post_title']   = ( $this->post_id ) ? $this->post->post_title : '';
 
-		$dataForm = ( object ) $dataForm;
-
-		return $dataForm;
+		return ( object ) $dataForm;
 	}
 
 	function add_guest_fields( $fields ) {
@@ -127,9 +125,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 			)
 		);
 
-		$fields = array_merge( $guestFields, $fields );
-
-		return $fields;
+		return array_merge( $guestFields, $fields );
 	}
 
 	function init_options() {
@@ -170,11 +166,11 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 		if ( $user_ID && $this->post_id ) {
 
-			$this->user_can['edit'] = ( current_user_can( 'edit_post', $this->post_id ) ) ? true : false;
+			$this->user_can['edit'] = current_user_can( 'edit_post', $this->post_id );
 
 			if ( ! $this->user_can['edit'] && $this->post_type == 'post-group' ) {
 
-				$this->user_can['edit'] = ( rcl_can_user_edit_post_group( $this->post_id ) ) ? true : false;
+				$this->user_can['edit'] = rcl_can_user_edit_post_group( $this->post_id );
 			}
 
 			$this->user_can['delete'] = $this->user_can['edit'];
@@ -201,9 +197,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 			$errors[] = __( 'You can not edit this publication :(', 'wp-recall' );
 		}
 
-		$errors = apply_filters( 'rcl_public_form_errors', $errors, $this );
-
-		return $errors;
+		return apply_filters( 'rcl_public_form_errors', $errors, $this );
 	}
 
 	function get_errors_content() {
@@ -428,6 +422,8 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 		}
 
 		$this->current_field = $field;
+
+		$contentField = false;
 
 		if ( $this->taxonomies && in_array( $field_id, $this->tax_fields ) ) {
 
@@ -762,9 +758,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 			return false;
 		}
 
-		$content = '<div class="rcl-tags-list">' . $content . '</div>';
-
-		return $content;
+		return '<div class="rcl-tags-list">' . $content . '</div>';
 	}
 
 	function get_tags_input( $taxonomy = 'post_tag' ) {
@@ -831,9 +825,7 @@ class Rcl_Public_Form extends Rcl_Public_Form_Fields {
 
 		$args = apply_filters( 'rcl_public_form_hierarchical_terms', $args, $taxonomy, $this->get_object_form() );
 
-		$allcats = get_terms( $taxonomy, $args );
-
-		return $allcats;
+		return get_terms( $taxonomy, $args );
 	}
 
 	function get_post_terms( $taxonomy ) {

@@ -22,7 +22,6 @@ function rcl_admin_page_rating( $optionsManager ) {
 
 	foreach ( $rcl_rating_types as $type => $data ) {
 
-		$more   = false;
 		$points = ( isset( $data['points'] ) ) ? $data['points'] : true;
 
 		$notice_temp = __( 'select a template for history output where', 'wp-recall' ) . ' <br>'
@@ -78,7 +77,7 @@ function rcl_admin_page_rating( $optionsManager ) {
 						__( 'Disable', 'wp-recall' ),
 						__( 'Enable', 'wp-recall' )
 					),
-					'notice' => __( 'If enabled, the standard markup on single pages along with the rating is displayed as <a href="http://schema.org" target="_blank">http://schema.org</a>', 'wp-recall' )
+					'notice' => __( 'If enabled, the standard markup on single pages along with the rating is displayed as <a href="https://schema.org" target="_blank">https://schema.org</a>', 'wp-recall' )
 				);
 			}
 		}

@@ -290,9 +290,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 			}
 		}
 
-		$fields = apply_filters( 'rcl_default_public_form_fields', $fields, $this->post_type, $this );
-
-		return $fields;
+		return apply_filters( 'rcl_default_public_form_fields', $fields, $this->post_type, $this );
 	}
 
 	function edit_field_options( $options, $field, $manager_id ) {
@@ -410,7 +408,7 @@ class Rcl_Public_Form_Fields extends Rcl_Fields_Manager {
 	function fix_old_fields( $fields ) {
 
 		if ( ! $fields ) {
-			return $fields;
+			return null;
 		}
 
 		foreach ( $fields as $k => $field ) {

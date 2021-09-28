@@ -272,7 +272,8 @@ class Rcl_EditPost {
 		}
 
 		do_action( 'pre_update_post_rcl', $postdata );
-
+		
+		$formID = false;
 		if ( isset( $_POST['form_id'] ) ) {
 			$formID = intval( $_POST['form_id'] );
 		}

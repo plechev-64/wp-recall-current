@@ -17,9 +17,9 @@ function rcl_ajax_delete_post() {
 	$attach_to_remove = 0;
 
 	if ( $temp_gal ) {
-
+		$new_temp = false;
 		foreach ( ( array ) $temp_gal as $key => $gal ) {
-			if ( $gal['ID'] == $_POST['post_id'] ) {
+			if ( isset( $_POST['post_id'] ) && $gal['ID'] == absint( $_POST['post_id'] ) ) {
 				unset( $temp_gal[ $key ] );
 				//post_id should be in user temp
 				$attach_to_remove = $gal['ID'];
@@ -59,7 +59,7 @@ function rcl_ajax_delete_post() {
 }
 
 //вызов быстрой формы редактирования публикации
-rcl_ajax_action( 'rcl_get_edit_postdata', false );
+rcl_ajax_action( 'rcl_get_edit_postdata' );
 function rcl_get_edit_postdata() {
 
 	rcl_verify_ajax_nonce();
@@ -87,7 +87,7 @@ function rcl_get_edit_postdata() {
 }
 
 //сохранение изменений в быстрой форме редактирования
-rcl_ajax_action( 'rcl_edit_postdata', false );
+rcl_ajax_action( 'rcl_edit_postdata' );
 function rcl_edit_postdata() {
 	global $wpdb;
 
@@ -123,13 +123,11 @@ function rcl_edit_postdata() {
 //выборка меток по введенным значениям
 rcl_ajax_action( 'rcl_get_like_tags', true );
 function rcl_get_like_tags() {
-	global $wpdb;
-
 	rcl_verify_ajax_nonce();
 
 	if ( empty( $_POST['query'] ) || empty( $_POST['taxonomy'] ) ) {
 		wp_send_json( array( array( 'id' => '' ) ) );
-	};
+	}
 
 	$query    = sanitize_text_field( wp_unslash( $_POST['query'] ) );
 	$taxonomy = sanitize_key( $_POST['taxonomy'] );

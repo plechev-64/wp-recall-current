@@ -105,9 +105,7 @@ function rcl_post_gallery( $content ) {
 		return $content;
 	}
 
-	$content = rcl_get_post_gallery( $post->ID, $gallery ) . $content;
-
-	return $content;
+	return rcl_get_post_gallery( $post->ID, $gallery ) . $content;
 }
 
 //Выводим инфу об авторе записи в конце поста

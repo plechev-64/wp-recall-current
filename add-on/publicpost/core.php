@@ -41,7 +41,7 @@ function rcl_get_postslist( $post_type, $type_name ) {
 	return $list->get_postlist_block();
 }
 
-function rcl_tab_postform( $master_id ) {
+function rcl_tab_postform() {
 	return do_shortcode( '[public-form form_id="' . rcl_get_option( 'form-lk', 1 ) . '"]' );
 }
 
@@ -94,15 +94,11 @@ function rcl_edit_post_button_html( $post_id ) {
 }
 
 function rcl_get_editor_content( $post_content ) {
-	global $rcl_box;
-
 	remove_filter( 'the_content', 'add_button_bmk_in_content', 20 );
 	remove_filter( 'the_content', 'get_notifi_bkms', 20 );
 	remove_filter( 'the_content', 'rcl_get_edit_post_button', 999 );
 
-	$content = apply_filters( 'the_content', $post_content );
-
-	return $content;
+	return apply_filters( 'the_content', $post_content );
 }
 
 function rcl_is_limit_editing( $post_date ) {

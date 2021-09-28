@@ -81,10 +81,8 @@ class Rcl_Form_Fields {
 		switch ( $this->type ) {
 			case 'radio':
 				return 'checked=checked';
-				break;
 			case 'checkbox':
 				return 'checked=checked';
-				break;
 		}
 	}
 

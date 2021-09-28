@@ -172,7 +172,7 @@ class Rcl_List_Terms {
 
 				$datalist[ $term_id ] = $term;
 
-				$childrens = $this->get_childrens( $term_id, $newterms );
+				$childrens = $this->get_childrens( $term_id );
 
 				if ( $childrens ) {
 					$datalist[ $term_id ]['childrens'] = $childrens;
@@ -263,7 +263,8 @@ class Rcl_List_Terms {
 	function get_checkbox_list( $term_ids = false ) {
 
 		$terms_data = ( $term_ids ) ? $this->get_terms_data( $term_ids ) : $this->datalist;
-
+		
+		$options = false;
 		foreach ( $terms_data as $term_id => $term ) {
 
 			if ( $term['parent'] ) {

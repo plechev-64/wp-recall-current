@@ -159,14 +159,9 @@ function rcl_insert_user_rating( $user_id, $point = 0 ) {
 
 //Получаем значение рейтинга публикации
 function rcl_get_total_rating( $object_id, $rating_type ) {
-
-	$total = 0;
-
 	if ( ! rcl_get_option( 'rating_overall_' . $rating_type ) ) {
-
 		$total = rcl_get_rating_sum( $object_id, $rating_type );
 	} else {
-
 		$total = rcl_get_votes_sum( $object_id, $rating_type );
 	}
 
@@ -245,8 +240,6 @@ function rcl_rating_navi( $args ) {
 }
 
 function rcl_get_votes_window( $args, $votes, $navi = false ) {
-	global $rcl_rating_types;
-
 	$list_votes = rcl_get_list_votes( $args, $votes );
 
 	if ( isset( $_POST['content'] ) && $_POST['content'] == 'list-votes' ) {
@@ -277,6 +270,9 @@ function rcl_get_usernames( $objects, $name_data ) {
 		return false;
 	}
 
+	$userslst = [];
+	$names    = [];
+
 	foreach ( ( array ) $objects as $object ) {
 		$userslst[] = $object->$name_data;
 	}
@@ -295,7 +291,7 @@ function rcl_get_usernames( $objects, $name_data ) {
 }
 
 function rcl_get_list_votes( $args, $votes ) {
-	global $rcl_rating_types, $rcl_options, $wpdb;
+	global $rcl_options, $wpdb;
 
 	if ( ! $votes ) {
 		return rcl_get_notice( [ 'text' => __( 'The changing of rating have not been yet', 'wp-recall' ) ] );
@@ -454,9 +450,8 @@ function rcl_update_user_rating( $args ) {
 
 function rcl_get_rating_value( $type ) {
 	global $rcl_rating_types;
-	$value = ( isset( $rcl_rating_types[ $type ]['type_point'] ) ) ? $rcl_rating_types[ $type ]['type_point'] : 1;
 
-	return $value;
+	return ( isset( $rcl_rating_types[ $type ]['type_point'] ) ) ? $rcl_rating_types[ $type ]['type_point'] : 1;
 }
 
 //Удаляем голос пользователя за публикацию
@@ -494,7 +489,7 @@ function rcl_delete_rating( $args ) {
 		);
 	}
 	//phpcs:ignore
-	$result = $wpdb->query( $query );
+	$wpdb->query( $query );
 
 	$args['rating_value'] = - 1 * $args['rating_value'];
 
@@ -637,8 +632,7 @@ function rcl_rating_shortcode( $atts ) {
 
 	$template = ( isset( $atts['template'] ) ) ? $atts['template'] : 'post';
 
-	$count_users = false;
-
+	$rclnavi = false;
 	if ( ! isset( $atts['number'] ) ) {
 
 		$count_values                = $rcl_rating->get_count();
@@ -661,10 +655,7 @@ function rcl_rating_shortcode( $atts ) {
 	$ratings = $rcl_rating->get_results();
 
 	if ( ! $ratings ) {
-
-		$content = '<p align="center">' . __( 'Data not found', 'wp-recall' ) . '</p>';
-
-		return $content;
+		return '<p style="text-align:center;">' . __( 'Data not found', 'wp-recall' ) . '</p>';
 	}
 
 	$content = '<div class="ratinglist rating-' . $template . '">';

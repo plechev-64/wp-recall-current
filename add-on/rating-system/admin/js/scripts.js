@@ -1,7 +1,7 @@
 jQuery(function () {
-    jQuery('.wp-list-table .edit_rayting').click(function () {
+    jQuery('.wp-list-table .edit_rayting').on('click', function () {
 
-        var id_user = parseInt(jQuery(this).attr('id').replace(/\D+/g, ''));
+        let id_user = parseInt(jQuery(this).attr('id').replace(/\D+/g, ''));
 
         rcl_ajax({
             data: {

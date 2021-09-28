@@ -26,7 +26,7 @@ class Rcl_Postlist {
 
 	function get_postslist_table() {
 
-		global $wpdb, $post, $posts, $ratings, $user_ID;
+		global $wpdb, $posts, $ratings, $user_ID;
 
 		$postStatus = array( 'publish' );
 

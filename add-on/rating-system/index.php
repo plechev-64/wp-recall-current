@@ -130,10 +130,9 @@ function rcl_add_data_rating_posts() {
 		return false;
 	}
 
-	$users       = array();
-	$posts       = array();
-	$post_types  = array();
-	$ratingsnone = array();
+	$users      = array();
+	$posts      = array();
+	$post_types = array();
 
 	foreach ( $wp_query->posts as $post ) {
 
@@ -399,9 +398,7 @@ function rcl_get_html_post_rating( $object_id, $rating_type, $object_author = fa
 
 	$ratingBox = new Rcl_Rating_Box( $props );
 
-	$content = $ratingBox->get_box();
-
-	return $content;
+	return $ratingBox->get_box();
 }
 
 if ( ! is_admin() ):
@@ -476,9 +473,7 @@ function rcl_rating_window_content( $string ) {
 
 	$votes = rcl_get_vote_values( $args );
 
-	$content = rcl_get_votes_window( $args, $votes, $navi );
-
-	return $content;
+	return rcl_get_votes_window( $args, $votes, $navi );
 }
 
 add_action( 'rcl_edit_rating_post', 'rcl_remove_cashe_rating_post', 10 );
@@ -511,7 +506,7 @@ function rcl_remove_cashe_rating_post( $args ) {
 	}
 }
 
-rcl_ajax_action( 'rcl_edit_rating_post', false );
+rcl_ajax_action( 'rcl_edit_rating_post' );
 function rcl_edit_rating_post() {
 	global $rcl_options, $rcl_rating_types;
 
@@ -547,7 +542,7 @@ function rcl_edit_rating_post() {
 
 		if ( $value > 0 && $args['rating_status'] == 'plus' || $value < 0 && $args['rating_status'] == 'minus' ) {
 
-			$rating = rcl_delete_rating( $args );
+			rcl_delete_rating( $args );
 		}
 
 		if ( $value > 0 && $args['rating_status'] == 'minus' || $value < 0 && $args['rating_status'] == 'plus' ) {

@@ -4,6 +4,7 @@ add_action( 'wp', 'rcl_deleted_post_notice' );
 function rcl_deleted_post_notice() {
 	if ( isset( $_GET['public'] ) && $_GET['public'] == 'deleted' ) {
 		add_action( 'rcl_area_notice', function () {
+			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo rcl_get_notice( [ 'text' => esc_html__( 'The publication has been successfully removed!', 'wp-recall' ) ] );
 		} );
 	}

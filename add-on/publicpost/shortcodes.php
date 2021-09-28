@@ -1,7 +1,7 @@
 <?php
 
 add_shortcode( 'public-form', 'rcl_publicform' );
-function rcl_publicform( $atts, $content = null ) {
+function rcl_publicform( $atts ) {
 
 	if ( rcl_is_gutenberg() ) {
 		return false;
