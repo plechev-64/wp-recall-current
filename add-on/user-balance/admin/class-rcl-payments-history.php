@@ -31,7 +31,7 @@ class Rcl_Payments_History extends WP_List_Table {
 	}
 
 	function admin_header() {
-		$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
+		$page = ( isset( $_GET['page'] ) ) ? sanitize_key( $_GET['page'] ) : false;
 		if ( 'manage-wpm-cashe' != $page ) {
 			return;
 		}
@@ -47,7 +47,7 @@ class Rcl_Payments_History extends WP_List_Table {
 	}
 
 	function no_items() {
-		_e( 'No payments found.', 'wp-recall' );
+		esc_html_e( 'No payments found.', 'wp-recall' );
 	}
 
 	function column_default( $item, $column_name ) {
@@ -96,7 +96,7 @@ class Rcl_Payments_History extends WP_List_Table {
 	}
 
 	function column_payment_user( $item ) {
-		$page    = sanitize_text_field( $_REQUEST['page'] );
+		$page    = isset( $_REQUEST['page'] ) ? sanitize_key( $_REQUEST['page'] ) : '';
 		$actions = array(
 			'delete'       => sprintf( '<a href="?page=%s&action=%s&payment=%s">' . __( 'Delete payment', 'wp-recall' ) . '</a>', $page, 'delete', $item->ID ),
 			'all-payments' => sprintf( '<a href="?page=%s&action=%s&user_id=%s">' . __( 'All user payments', 'wp-recall' ) . '</a>', $page, 'all-payments', $item->user_id ),
@@ -121,13 +121,13 @@ class Rcl_Payments_History extends WP_List_Table {
 
 	function months_dropdown( $post_type ) {
 		global $wpdb, $wp_locale;
-
+		//phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
 		$months = $wpdb->get_results( "
 			SELECT DISTINCT YEAR( time_action ) AS year, MONTH( time_action ) AS month
 			FROM " . RMAG_PREF . "pay_results
 			ORDER BY time_action DESC
 		" );
-
+		//phpcs:enable WordPress.DB.PreparedSQL.NotPrepared
 		$months = apply_filters( 'months_dropdown_results', $months, $post_type );
 
 		$month_count = count( $months );
@@ -136,11 +136,12 @@ class Rcl_Payments_History extends WP_List_Table {
 			return;
 		}
 
-		$m = isset( $_GET['m'] ) ? $_GET['m'] : 0;
+		$m = isset( $_GET['m'] ) ? sanitize_text_field( wp_unslash( $_GET['m'] ) ) : 0;
 		?>
-        <label for="filter-by-date" class="screen-reader-text"><?php _e( 'Filter by date' ); ?></label>
+        <label for="filter-by-date"
+               class="screen-reader-text"><?php esc_html_e( 'Filter by date' ); ?></label>
         <select name="m" id="filter-by-date">
-            <option <?php selected( $m, 0 ); ?> value="0"><?php _e( 'All dates' ); ?></option>
+            <option <?php selected( $m, 0 ); ?> value="0"><?php esc_html_e( 'All dates' ); ?></option>
 			<?php
 			foreach ( $months as $arc_row ) {
 				if ( 0 == $arc_row->year ) {
@@ -149,7 +150,7 @@ class Rcl_Payments_History extends WP_List_Table {
 				$month = zeroise( $arc_row->month, 2 );
 				$year  = $arc_row->year;
 				printf( "<option %s value='%s'>%s</option>\n", selected( $m, $year . '-' . $month, false ), esc_attr( $arc_row->year . '-' . $month ),
-					/* translators: 1: month name, 2: 4-digit year */ sprintf( __( '%1$s %2$d' ), $wp_locale->get_month( $month ), $year )
+					/* translators: 1: month name, 2: 4-digit year */ sprintf( __( '%1$s %2$d' ), $wp_locale->get_month( $month ), $year ) //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				);
 			}
 			?>
@@ -160,7 +161,7 @@ class Rcl_Payments_History extends WP_List_Table {
 	static function delete_payment() {
 		global $wpdb;
 
-		$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
+		$page = ( isset( $_GET['page'] ) ) ? sanitize_key( $_GET['page'] ) : false;
 		if ( 'manage-wpm-cashe' != $page ) {
 			return;
 		}
@@ -169,16 +170,19 @@ class Rcl_Payments_History extends WP_List_Table {
 
 			if ( isset( $_REQUEST['payment'] ) ) {
 				$payment = intval( $_REQUEST['payment'] );
-				$wpdb->query( $wpdb->prepare( "DELETE FROM " . RMAG_PREF . "pay_results WHERE ID = '%d'", $payment ) );
+				//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+				$wpdb->query( $wpdb->prepare( "DELETE FROM " . RMAG_PREF . "pay_results WHERE ID = %d", $payment ) );
 			}
 
 			if ( isset( $_REQUEST['payments'] ) ) {
-				$payments = $_REQUEST['payments'];
+				//phpcs:ignore  WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				$payments = rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_REQUEST['payments'] ) );
 				$cnt      = count( $payments );
 				for ( $a = 0; $a < $cnt; $a ++ ) {
 					$id = intval( $payments[ $a ] );
 					if ( $id ) {
-						$wpdb->query( $wpdb->prepare( "DELETE FROM " . RMAG_PREF . "pay_results WHERE ID = '%d'", $id ) );
+						//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+						$wpdb->query( $wpdb->prepare( "DELETE FROM " . RMAG_PREF . "pay_results WHERE ID = %d", $id ) );
 					}
 				}
 			}
@@ -188,6 +192,7 @@ class Rcl_Payments_History extends WP_List_Table {
 	function get_sum_balance() {
 		global $wpdb;
 
+		//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		return $wpdb->get_var( "SELECT SUM(CAST(user_balance AS DECIMAL)) FROM " . RMAG_PREF . "users_balance WHERE user_balance!='0'" );
 	}
 
@@ -203,11 +208,11 @@ class Rcl_Payments_History extends WP_List_Table {
 
 			$payments->where_string( "($tableAs.user_id = '" . intval( $_POST['s'] ) . "' OR $tableAs.payment_id = '" . intval( $_POST['s'] ) . "')" );
 
-			if ( isset( $_GET['m'] ) && $_GET['m'] ) {
-				$payments->where( [ 'time_action__like' => esc_sql( $_GET['m'] ) . '-' ] );
+			if ( ! empty( $_GET['m'] ) ) {
+				$payments->where( [ 'time_action__like' => sanitize_text_field( wp_unslash( $_GET['m'] ) ) . '-' ] );
 			}
-		} else if ( isset( $_GET['m'] ) && $_GET['m'] ) {
-			$payments->where( [ 'time_action__like' => esc_sql( $_GET['m'] ) . '-' ] );
+		} else if ( ! empty( $_GET['m'] ) ) {
+			$payments->where( [ 'time_action__like' => sanitize_text_field( wp_unslash( $_GET['m'] ) ) . '-' ] );
 		} else if ( isset( $_GET['user_id'] ) ) {
 			$payments->where( [ 'user_id' => intval( $_GET['user_id'] ) ] );
 		}

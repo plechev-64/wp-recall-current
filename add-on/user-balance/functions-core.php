@@ -27,8 +27,8 @@ function rcl_get_user_balance( $user_id = false ) {
 	if ( $user_id == $user_ID && isset( RCL()->User()->balance ) ) {
 		return RCL()->User()->balance;
 	}
-
-	$balance = $wpdb->get_var( $wpdb->prepare( "SELECT user_balance FROM " . RMAG_PREF . "users_balance WHERE user_id='%d'", $user_id ) );
+	//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$balance = $wpdb->get_var( $wpdb->prepare( "SELECT user_balance FROM " . RMAG_PREF . "users_balance WHERE user_id=%d", $user_id ) );
 
 	$userBalance = $balance ? $balance : 0;
 
@@ -43,15 +43,14 @@ function rcl_update_user_balance( $newmoney, $user_id, $comment = '' ) {
 	global $wpdb, $user_ID;
 
 	$newmoney = rcl_commercial_round( str_replace( ',', '.', $newmoney ) );
-
-	$balance = $wpdb->get_var( $wpdb->prepare( "SELECT user_balance FROM " . RMAG_PREF . "users_balance WHERE user_id='%d'", $user_id ) );
+	//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	$balance = $wpdb->get_var( $wpdb->prepare( "SELECT user_balance FROM " . RMAG_PREF . "users_balance WHERE user_id=%d", $user_id ) );
 
 	if ( isset( $balance ) ) {
 
 		do_action( 'rcl_pre_update_user_balance', $newmoney, $user_id, $comment );
 
-		$result = $wpdb->update( RMAG_PREF . 'users_balance', array( 'user_balance' => $newmoney ), array( 'user_id' => $user_id )
-		);
+		$result = $wpdb->update( RMAG_PREF . 'users_balance', array( 'user_balance' => $newmoney ), array( 'user_id' => $user_id ) );
 
 		if ( ! $result ) {
 			rcl_add_log(
@@ -108,16 +107,16 @@ function rcl_get_html_usercount() {
 
 	$content = '<div class="rcl-balance-widget">';
 	$content .= '<div class="balance-amount">';
-	$content .= '<span class="amount-title">' . __( 'Your balance', 'wp-recall' ) . ':</span>';
+	$content .= '<span class="amount-title">' . esc_html__( 'Your balance', 'wp-recall' ) . ':</span>';
 	$content .= '<span class="amount-size">' . apply_filters( 'rcl_html_usercount', $user_count . ' ' . rcl_get_primary_currency( 1 ), $user_count ) . '</span>';
 
 	if ( $rcl_gateways && count( $rcl_gateways->gateways ) > 1 ) {
 		$content .= ' ' . rcl_get_button( [
-				'label' => __( 'replenish', 'wp-recall' ),
+				'label'   => __( 'replenish', 'wp-recall' ),
 				'onclick' => 'rcl_switch_view_balance_form(this);return false;',
-				'icon' => 'fa-plus-circle',
-				'type' => 'clear',
-				'class' => 'update-link'
+				'icon'    => 'fa-plus-circle',
+				'type'    => 'clear',
+				'class'   => 'update-link'
 			] );
 	}
 

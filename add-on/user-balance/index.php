@@ -113,5 +113,6 @@ add_action( 'delete_user', 'rcl_delete_user_balance', 10 );
 function rcl_delete_user_balance( $user_id ) {
 	global $wpdb;
 
-	return $wpdb->query( $wpdb->prepare( "DELETE FROM " . RMAG_PREF . "users_balance WHERE user_id='%d'", $user_id ) );
+	//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	return $wpdb->query( $wpdb->prepare( "DELETE FROM " . RMAG_PREF . "users_balance WHERE user_id=%d", $user_id ) );
 }

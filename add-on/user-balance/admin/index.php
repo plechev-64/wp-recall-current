@@ -78,23 +78,23 @@ function rcl_edit_balance_user() {
 
 	if ( ! current_user_can( 'administrator' ) ) {
 		wp_send_json( array(
-			'error' => __( 'Error', 'wp-recall' )
+			'error' => esc_html__( 'Error', 'wp-recall' )
 		) );
 	}
 
-	$user_id = intval( $_POST['user'] );
-	$balance = floatval( str_replace( ',', '.', $_POST['balance'] ) );
+	$user_id = isset( $_POST['user'] ) ? intval( $_POST['user'] ) : 0;
+	$balance = isset( $_POST['balance'] ) ? floatval( str_replace( ',', '.', sanitize_text_field( wp_unslash( $_POST['balance'] ) ) ) ) : 0;
 
 	do_action( 'rcl_pre_edit_user_balance_by_admin', $user_id, $balance );
 
 	if ( ! $user_id ) {
-		wp_send_json( array( 'error' => __( 'Balance was not changed', 'wp-recall' ) ) );
+		wp_send_json( array( 'error' => esc_html__( 'Balance was not changed', 'wp-recall' ) ) );
 	}
 
 	rcl_update_user_balance( $balance, $user_id, __( 'Balance changed', 'wp-recall' ) );
 
 	wp_send_json( array(
-		'success' => __( 'Balance successfully changed', 'wp-recall' ),
+		'success' => esc_html__( 'Balance successfully changed', 'wp-recall' ),
 		'user_id' => $user_id,
 		'balance' => $balance
 	) );
@@ -131,12 +131,13 @@ function rcl_admin_statistic_cashe() {
 	$Rcl_Payments_History->prepare_items();
 	$sr = ( $Rcl_Payments_History->total_items ) ? floor( $Rcl_Payments_History->sum / $Rcl_Payments_History->total_items ) : 0;
 
-	echo '<div class="wrap"><h2>' . __( 'Payment history', 'wp-recall' ) . '</h2>';
-
-	echo '<p>' . __( 'All payments', 'wp-recall' ) . ': ' . $Rcl_Payments_History->total_items . ' ' . __( 'for the amount of', 'wp-recall' ) . ' ' . $Rcl_Payments_History->sum . ' ' . rcl_get_primary_currency( 1 ) . ' (' . __( 'Average check', 'wp-recall' ) . ': ' . $sr . ' ' . rcl_get_primary_currency( 1 ) . ')</p>';
-	echo '<p>' . __( 'Total in the system', 'wp-recall' ) . ': ' . $Rcl_Payments_History->sum_balance . ' ' . rcl_get_primary_currency( 1 ) . '</p>';
+	echo '<div class="wrap"><h2>' . esc_html__( 'Payment history', 'wp-recall' ) . '</h2>';
+	//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo '<p>' . esc_html__( 'All payments', 'wp-recall' ) . ': ' . $Rcl_Payments_History->total_items . ' ' . esc_html__( 'for the amount of', 'wp-recall' ) . ' ' . $Rcl_Payments_History->sum . ' ' . rcl_get_primary_currency( 1 ) . ' (' . __( 'Average check', 'wp-recall' ) . ': ' . $sr . ' ' . rcl_get_primary_currency( 1 ) . ')</p>';
+	echo '<p>' . esc_html__( 'Total in the system', 'wp-recall' ) . ': ' . $Rcl_Payments_History->sum_balance . ' ' . rcl_get_primary_currency( 1 ) . '</p>';
 	//echo '<p>Средняя выручка за сутки: '.$day_pay.' '.rcl_get_primary_currency(1).'</p>';
 	echo rcl_get_chart_payments( $Rcl_Payments_History->items );
+	//phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	?>
     <form method="get">
         <input type="hidden" name="page" value="manage-wpm-cashe">

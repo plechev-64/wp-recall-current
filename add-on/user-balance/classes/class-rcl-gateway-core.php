@@ -149,8 +149,8 @@ class Rcl_Gateway_Core {
 
 	function get_payment( $pay_id ) {
 		global $wpdb;
-
-		return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM " . RMAG_PREF . "pay_results WHERE payment_id = '%s'", $pay_id ) );
+		//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM " . RMAG_PREF . "pay_results WHERE payment_id = %s", $pay_id ) );
 	}
 
 	function insert_payment( $args ) {

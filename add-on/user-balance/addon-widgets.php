@@ -24,19 +24,23 @@ class Rcl_Widget_user_count extends WP_Widget {
 			/**
 			 * @var string $before_widget
 			 */
-			echo $before_widget; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $before_widget;
 			if ( $instance['title'] ) {
 				/**
 				 * @var string $before_title
 				 * @var string $after_title
 				 */
-				echo $before_title . trim( strip_tags( stripslashes( $instance['title'] ) ) ) . $after_title;
+				echo $before_title;
+				echo esc_html( $instance['title'] );
+				echo $after_title;
 			}
 			echo rcl_get_html_usercount();
 			/**
 			 * @var string $after_widget
 			 */
-			echo $after_widget; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $after_widget;
+			//phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -55,9 +59,10 @@ class Rcl_Widget_user_count extends WP_Widget {
 		$instance = wp_parse_args( ( array ) $instance, $defaults );
 		?>
         <p>
-            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title', 'wp-recall' ); ?></label>
-            <input id="<?php echo $this->get_field_id( 'title' ); ?>"
-                   name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>"
+            <label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title', 'wp-recall' ); ?></label>
+            <input id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"
+                   name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>"
+                   value="<?php echo esc_attr( $instance['title'] ); ?>"
                    style="width:100%;"/>
         </p>
 		<?php
