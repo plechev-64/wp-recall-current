@@ -126,11 +126,6 @@
     left: 0;
 }
 
-#rcl-avatar .icon-webcam-upload {
-    bottom: 0;
-    left: 35px;
-}
-
 #rcl-avatar .icon-user-info {
     left: 0;
     top: 0;
@@ -190,7 +185,6 @@
 
 .cab_title {
     display: inline-block;
-    width: 68%;
     width: calc(100% - 265px);
 }
 
@@ -211,7 +205,6 @@
 .cab_bttn {
     display: inline-block;
     margin: 10px 0 2px;
-    width: 68%;
     width: calc(100% - 265px);
 }
 
@@ -300,7 +293,6 @@
 .horizontal-menu #lk-menu {
     font-family: unset; /* IE edge fix */
     padding: 3px;
-    width: 99%; /* old browsers */
     width: calc(100% - 30px); /* отступ на гамбургер */
 }
 
@@ -402,7 +394,6 @@
 
     .cab_bttn,
     .cab_title {
-        width: 68%;
         width: calc(100% - 205px);
     }
 
@@ -460,14 +451,12 @@
         padding: 5px 6px;
     }
 
-    .office-sunshine .cab_title h2,
-    .lk-avatar .cab_usr_info {
+    .office-sunshine .cab_title h2 {
         font-size: 20px;
     }
 
     .cab_bttn,
     .cab_title {
-        width: 68%;
         width: calc(100% - 155px);
     }
 
@@ -497,11 +486,7 @@
         margin: 15px auto 10px;
         width: 210px;
     }
-
-    .lk-avatar .cab_usr_info {
-        font-size: 32px;
-    }
-
+    
     .lk-sidebar .lk-avatar {
         box-shadow: 0 0 0 5px #fff;
     }

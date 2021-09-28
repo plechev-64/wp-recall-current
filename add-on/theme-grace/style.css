@@ -216,10 +216,6 @@
     width: 190px;
 }
 
-.cab_lt_sidebar .cab_usr_info {
-    color: #333;
-}
-
 .cab_lt_sidebar .recall-button,
 .cab_lt_mobile#lk-menu .recall-button {
     display: flex;

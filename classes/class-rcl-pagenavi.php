@@ -79,15 +79,18 @@ class Rcl_PageNavi {
 	}
 
 	function uri_data_init() {
-
+		$query_string = false;
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_POST['tab_url'] ) ) {
 			$uri                  = sanitize_text_field( wp_unslash( $_POST['tab_url'] ) );
 			$uri_string           = explode( '?', $uri );
 			$query_string         = $uri_string[1];
 			$this->uri['current'] = $uri_string[0];
 		} else {
-			$query_string         = filter_var( INPUT_SERVER, 'QUERY_STRING' );
-			$this->uri['current'] = get_bloginfo( 'wpurl' ) . str_replace( '?' . $query_string, '', filter_var( INPUT_SERVER, 'REQUEST_URI' ) );
+			if ( ! empty( $_SERVER['QUERY_STRING'] && $_SERVER['REQUEST_URI'] ) ) {
+				$query_string         = filter_var( wp_unslash( $_SERVER['QUERY_STRING'] ), FILTER_SANITIZE_URL );
+				$this->uri['current'] = get_bloginfo( 'wpurl' ) . str_replace( '?' . $query_string, '', filter_var( wp_unslash( $_SERVER['REQUEST_URI'] ), FILTER_SANITIZE_URL ) );
+			}
+
 		}
 
 		if ( $query_string ) {
@@ -113,7 +116,7 @@ class Rcl_PageNavi {
 	}
 
 	function get_string( $params = array() ) {
-
+		$str = [];
 		if ( ! $params ) {
 			return $this->uri['string'];
 		}

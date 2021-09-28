@@ -27,7 +27,7 @@
             typeButton.removeClass('vertical-menu').addClass('horizontal-menu');
             alignMenu();
         }
-        $(window).resize(function () {           // действия при ресайзе окна
+        $(window).on('resize', function () {           // действия при ресайзе окна
             if ($(window).width() <= 768) {
                 typeButton.removeClass('vertical-menu').addClass('horizontal-menu');
                 closeExtMenu();
@@ -41,7 +41,7 @@
         });
     } else if (typeButton.hasClass('horizontal-menu')) {
         alignMenu();
-        $(window).resize(function () {
+        $(window).on('resize', function () {
             closeExtMenu();
             moveMenu();
             alignMenu();
@@ -50,8 +50,9 @@
 
 // отступ сверху-справа до наших кнопок
     function menuPosition() {
-        var hUpMenu = LkMenu.offset().top + 2;
-        $('#sunshine_ext_menu').css({
+        let hUpMenu = LkMenu.offset().top + 2;
+        let extMenu = $('#sunshine_ext_menu');
+        extMenu.css({
             'top': hUpMenu
         });
 
@@ -59,7 +60,7 @@
         var wRightMenu = ($(window).width() - (LkMenu.offset().left + LkMenu.outerWidth())) - 100;
 
         if (wRightMenu > 10) { // если у нас есть отступ и он не отрицательный - сдвигаем менюшку
-            $('#sunshine_ext_menu').css({
+            extMenu.css({
                 'right': wRightMenu
             });
         }

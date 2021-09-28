@@ -153,9 +153,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 	function get_users() {
 
-		$users = apply_filters( 'rcl_users', $this->get_data() );
-
-		return $users;
+		return apply_filters( 'rcl_users', $this->get_data() );
 	}
 
 	function search_request() {
@@ -282,7 +280,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 				$newmetas[ $meta->ID ]['profile_fields'][ $k ]['filter'] = $fielddata[ $meta->meta_key ]['filter'];
 			}
 
-			$newmetas[ $meta->ID ] = ( object ) $newmetas[ $meta->ID ];
+			( object ) $newmetas[ $meta->ID ];
 		}
 
 		if ( $newmetas ) {

@@ -38,9 +38,9 @@
 					wp_registration_url()
 				);
 			} else if ( $logIn == 3 ) { // Форма в виджете
-			} else {
 				$urls = array( '#', '#' );
 			}
+            
 			?>
 
 			<?php if ( isset( $urls ) ) { ?>
