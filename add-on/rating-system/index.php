@@ -152,7 +152,7 @@ function rcl_add_data_rating_posts() {
 
 	$users      = array_unique( $users );
 	$post_types = array_unique( $post_types );
-
+	//phpcs:ignore
 	$ratingsnone = $wpdb->get_results( "SELECT post_id,meta_value FROM $wpdb->postmeta WHERE meta_key='rayting-none' AND post_id IN (" . implode( ',', $posts ) . ")" );
 
 	if ( $ratingsnone ) {
@@ -517,7 +517,11 @@ function rcl_edit_rating_post() {
 
 	rcl_verify_ajax_nonce();
 
-	$args = rcl_decode_data_rating( sanitize_text_field( $_POST['rating'] ) );
+	if ( empty( $_POST['rating'] ) ) {
+		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+	}
+
+	$args = rcl_decode_data_rating( sanitize_text_field( wp_unslash( $_POST['rating'] ) ) );
 
 	if ( $args['user_id'] != get_current_user_id() ) {
 		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
@@ -610,11 +614,11 @@ function rcl_view_rating_votes() {
 
 	$user_info = get_userdata( get_current_user_id() );
 
-	if ( ! $user_info || $user_info->user_level < $access ) {
+	if ( empty( $_POST['rating'] ) || ! $user_info || $user_info->user_level < $access ) {
 		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
 	}
 
-	$string = sanitize_text_field( $_POST['rating'] );
+	$string = sanitize_text_field( wp_unslash( $_POST['rating'] ) );
 
 	if ( rcl_get_option( 'use_cache' ) ) {
 

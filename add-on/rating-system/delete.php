@@ -1,5 +1,5 @@
 <?php
-
+//phpcs:ignoreFile
 global $wpdb;
 
 $table = RCL_PREF . "rating_values";

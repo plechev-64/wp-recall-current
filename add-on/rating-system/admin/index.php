@@ -40,7 +40,7 @@ rcl_ajax_action( 'rcl_edit_rating_user', false );
 function rcl_edit_rating_user() {
 	global $user_ID;
 
-	if ( ! current_user_can( 'administrator' ) ) {
+	if ( ! current_user_can( 'administrator' ) || empty( $_POST['user'] ) || ! isset( $_POST['rayting'] ) ) {
 		wp_send_json( array( 'error' => __( 'Error', 'wp-recall' ) ) );
 	}
 

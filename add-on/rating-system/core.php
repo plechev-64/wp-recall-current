@@ -280,7 +280,7 @@ function rcl_get_usernames( $objects, $name_data ) {
 	foreach ( ( array ) $objects as $object ) {
 		$userslst[] = $object->$name_data;
 	}
-
+	//phpcs:ignore
 	$display_names = $wpdb->get_results( $wpdb->prepare( "SELECT ID,display_name FROM " . $wpdb->prefix . "users WHERE ID IN (" . rcl_format_in( $userslst ) . ")", $userslst ) );
 
 	if ( ! $display_names ) {
@@ -308,7 +308,7 @@ function rcl_get_list_votes( $args, $votes ) {
 	foreach ( $votes as $vote ) {
 		$userslst[] = $vote->user_id;
 	}
-
+	//phpcs:ignore
 	$display_names = $wpdb->get_results( $wpdb->prepare( "SELECT ID,display_name FROM " . $wpdb->prefix . "users WHERE ID IN (" . rcl_format_in( $userslst ) . ")", $userslst ) );
 
 	if ( $display_names ) {
@@ -469,7 +469,7 @@ function rcl_delete_rating( $args ) {
 		$data = rcl_get_rating_by_id( $args['ID'] );
 
 		$query = $wpdb->prepare(
-			"DELETE FROM " . RCL_PREF . "rating_values WHERE ID = '%d'", $args['ID']
+			"DELETE FROM " . RCL_PREF . "rating_values WHERE ID = %d", $args['ID']//phpcs:ignore
 		);
 
 		$args = array(
@@ -489,10 +489,11 @@ function rcl_delete_rating( $args ) {
 		$args['rating_value'] = ( isset( $args['rating_value'] ) ) ? $args['rating_value'] : $rating;
 
 		$query = $wpdb->prepare(
-			"DELETE FROM " . RCL_PREF . "rating_values WHERE object_id = '%d' AND rating_type='%s' AND user_id='%s'", $args['object_id'], $args['rating_type'], $args['user_id']
+		//phpcs:ignore
+			"DELETE FROM " . RCL_PREF . "rating_values WHERE object_id = %d AND rating_type='%s' AND user_id='%s'", $args['object_id'], $args['rating_type'], $args['user_id']
 		);
 	}
-
+	//phpcs:ignore
 	$result = $wpdb->query( $query );
 
 	$args['rating_value'] = - 1 * $args['rating_value'];
@@ -506,7 +507,7 @@ function rcl_delete_rating_with_post( $args ) {
 	global $wpdb;
 
 	$args['rating_value'] = rcl_get_rating_sum( $args['object_id'], $args['rating_type'] );
-
+	//phpcs:disable
 	$wpdb->query(
 		$wpdb->prepare(
 			"DELETE FROM " . RCL_PREF . "rating_values "
@@ -518,7 +519,7 @@ function rcl_delete_rating_with_post( $args ) {
 			. "WHERE object_id = '%d' AND rating_type='%s'", $args['object_id'], $args['rating_type'] ) );
 
 	$args['rating_value'] = - 1 * $args['rating_value'];
-
+	//phpcs:enable
 	do_action( 'rcl_delete_rating_with_post', $args );
 }
 
@@ -579,10 +580,11 @@ function rcl_delete_ratingdata_user( $user_id ) {
 			}
 		}
 	}
-
+	//phpcs:disable
 	$wpdb->query( $wpdb->prepare( "DELETE FROM " . RCL_PREF . "rating_values WHERE user_id = '%d' OR object_author='%d'", $user_id, $user_id ) );
 	$wpdb->query( $wpdb->prepare( "DELETE FROM " . RCL_PREF . "rating_totals WHERE object_author='%d'", $user_id ) );
 	$wpdb->query( $wpdb->prepare( "DELETE FROM " . RCL_PREF . "rating_users WHERE user_id = '%d'", $user_id ) );
+	//phpcs:enable
 }
 
 /* $atts

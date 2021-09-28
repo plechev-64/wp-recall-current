@@ -1,4 +1,7 @@
-<?php global $rating; ?>
+<?php
+global $rating;
+//phpcs:ignoreFile
+?>
 <div class="rating-single">
     <div class="object-rating">
         <i class="rcli fa-star"></i>
@@ -8,9 +11,9 @@
 			} ?></span>
     </div>
     <span class="object-title">
-		<a title="<?php echo get_the_title( $rating->object_id ); ?>"
-           href="<?php echo get_permalink( $rating->object_id ); ?>">
-			<?php echo get_the_title( $rating->object_id ); ?>
+		<a title="<?php echo esc_attr( get_the_title( $rating->object_id ) ); ?>"
+           href="<?php echo esc_url( get_permalink( $rating->object_id ) ); ?>">
+			<?php echo esc_html( get_the_title( $rating->object_id ) ); ?>
 		</a>
 	</span>
 </div>
