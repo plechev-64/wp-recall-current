@@ -21,8 +21,8 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 		$defaults = array( 'title' => __( 'Control panel', 'wp-recall' ) );
 		$instance = wp_parse_args( ( array ) $instance, $defaults );
 
-		echo '<label>' . __( 'Title', 'wp-recall' ) . '</label>'
-		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . esc_html( $instance['title'] ) . '">';
+		echo '<label>' . esc_html__( 'Title', 'wp-recall' ) . '</label>'
+		     . '<input type="text" name="' . esc_attr( $this->field_name( 'title' ) ) . '" value="' . esc_attr( $instance['title'] ) . '">';
 	}
 
 	function widget( $args ) {
@@ -40,37 +40,41 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 			/**
 			 * @var $before string additional info
 			 */
-			echo $before;
+			echo $before;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 			echo '<form method="post">'
+			     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			     . rcl_get_button( array(
 					'icon'   => 'fa-sign-out',
-					'label'  => __( 'Leave group', 'wp-recall' ),
+					'label'  => esc_html__( 'Leave group', 'wp-recall' ),
 					'submit' => true
 				) )
 			     . '<input type="hidden" name="group-submit" value="1">'
 			     . '<input type="hidden" name="group-action" value="leave">'
+			     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			     . wp_nonce_field( 'group-action-' . $user_ID, '_wpnonce', true, false )
 			     . '</form>';
 			/**
 			 * @var $after string additional info
 			 */
-			echo $after;
+			echo $after;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} else {
 
 			if ( rcl_get_group_option( $rcl_group->term_id, 'can_register' ) ) {
 				/**
 				 * @var $before string additional info
 				 */
-				echo $before;
+				echo $before;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				if ( $rcl_group->current_user == 'banned' ) {
+					//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo rcl_get_notice( [
-						'text' => __( 'You have been banned from the group', 'wp-recall' ),
+						'text' => esc_html__( 'You have been banned from the group', 'wp-recall' ),
 						'type' => 'error'
 					] );
 				} else {
 					if ( $rcl_group->group_status == 'open' ) {
 						echo '<form method="post">'
+						     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						     . rcl_get_button( array(
 								'icon'   => 'fa-sign-in',
 								'label'  => __( 'Join group', 'wp-recall' ),
@@ -78,6 +82,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 							) )
 						     . '<input type="hidden" name="group-submit" value="1">'
 						     . '<input type="hidden" name="group-action" value="join">'
+						     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						     . wp_nonce_field( 'group-action-' . $user_ID, '_wpnonce', true, false )
 						     . '</form>';
 					}
@@ -87,11 +92,12 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 						$requests = rcl_get_group_option( $rcl_group->term_id, 'requests_group_access' );
 
 						if ( $requests && false !== array_search( $user_ID, $requests ) ) {
-
-							echo rcl_get_notice( [ 'text' => __( 'The access request has been sent', 'wp-recall' ) ] );
+							//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo rcl_get_notice( [ 'text' => esc_html__( 'The access request has been sent', 'wp-recall' ) ] );
 						} else {
 
 							echo '<form method="post">'
+							     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							     . rcl_get_button( array(
 									'icon'   => 'fa-paper-plane',
 									'label'  => __( 'The request of access', 'wp-recall' ),
@@ -99,6 +105,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 								) )
 							     . '<input type="hidden" name="group-submit" value="1">'
 							     . '<input type="hidden" name="group-action" value="ask">'
+							     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							     . wp_nonce_field( 'group-action-' . $user_ID, '_wpnonce', true, false )
 							     . '</form>';
 						}
@@ -107,7 +114,7 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 				/**
 				 * @var $after string additional info
 				 */
-				echo $after;
+				echo $after;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 	}
@@ -144,13 +151,15 @@ class Group_Users_Widget extends Rcl_Group_Widget {
 		/**
 		 * @var $before string additional info
 		 */
+		//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $before;
 		echo rcl_group_users( $user_count, $template );
-		echo rcl_get_group_link( 'rcl_get_group_users', __( 'All users', 'wp-recall' ) );
+		echo rcl_get_group_link( 'rcl_get_group_users', esc_html__( 'All users', 'wp-recall' ) );
 		/**
 		 * @var $after string additional info
 		 */
 		echo $after;
+		//phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	function options( $instance ) {
@@ -158,12 +167,12 @@ class Group_Users_Widget extends Rcl_Group_Widget {
 		$defaults = array( 'title' => __( 'Users', 'wp-recall' ), 'count' => 12, 'template' => 'mini' );
 		$instance = wp_parse_args( ( array ) $instance, $defaults );
 
-		echo '<label>' . __( 'Title', 'wp-recall' ) . '</label>'
-		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . esc_html( $instance['title'] ) . '">';
-		echo '<label>' . __( 'Amount', 'wp-recall' ) . '</label>'
-		     . '<input type="number" name="' . $this->field_name( 'count' ) . '" value="' . absint( $instance['count'] ) . '">';
-		echo '<label>' . __( 'Template', 'wp-recall' ) . '</label>'
-		     . '<select name="' . $this->field_name( 'template' ) . '">'
+		echo '<label>' . esc_html__( 'Title', 'wp-recall' ) . '</label>'
+		     . '<input type="text" name="' . esc_attr( $this->field_name( 'title' ) ) . '" value="' . esc_attr( $instance['title'] ) . '">';
+		echo '<label>' . esc_html__( 'Amount', 'wp-recall' ) . '</label>'
+		     . '<input type="number" name="' . esc_attr( $this->field_name( 'count' ) ) . '" value="' . esc_attr( $instance['count'] ) . '">';
+		echo '<label>' . esc_html__( 'Template', 'wp-recall' ) . '</label>'
+		     . '<select name="' . esc_attr( $this->field_name( 'template' ) ) . '">'
 		     . '<option value="mini" ' . selected( 'mini', $instance['template'], false ) . '>Mini</option>'
 		     . '<option value="avatars" ' . selected( 'avatars', $instance['template'], false ) . '>Avatars</option>'
 		     . '<option value="rows" ' . selected( 'rows', $instance['template'], false ) . '>Rows</option>'
@@ -200,13 +209,13 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
 		/**
 		 * @var $before string additional info
 		 */
-		echo $before;
+		echo $before;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		echo do_shortcode( '[public-form post_type="post-group" select_type="select" select_amount="1" group_id="' . $rcl_group->term_id . '"]' );
 		/**
 		 * @var $after string additional info
 		 */
-		echo $after;
+		echo $after;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	function options( $instance ) {
@@ -214,8 +223,8 @@ class Group_PublicForm_Widget extends Rcl_Group_Widget {
 		$defaults = array( 'title' => __( 'Publication form', 'wp-recall' ), 'type_form' => 0 );
 		$instance = wp_parse_args( ( array ) $instance, $defaults );
 
-		echo '<label>' . __( 'Title', 'wp-recall' ) . '</label>'
-		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . esc_html( $instance['title'] ) . '">';
+		echo '<label>' . esc_html__( 'Title', 'wp-recall' ) . '</label>'
+		     . '<input type="text" name="' . esc_attr( $this->field_name( 'title' ) ) . '" value="' . esc_attr( $instance['title'] ) . '">';
 	}
 
 }
@@ -240,8 +249,8 @@ class Group_CategoryList_Widget extends Rcl_Group_Widget {
 		$defaults = array( 'title' => __( 'Group categories', 'wp-recall' ) );
 		$instance = wp_parse_args( ( array ) $instance, $defaults );
 
-		echo '<label>' . __( 'Title', 'wp-recall' ) . '</label>'
-		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . esc_html( $instance['title'] ) . '">';
+		echo '<label>' . esc_html__( 'Title', 'wp-recall' ) . '</label>'
+		     . '<input type="text" name="' . esc_attr( $this->field_name( 'title' ) ) . '" value="' . esc_attr( $instance['title'] ) . '">';
 	}
 
 	function widget( $args ) {
@@ -261,13 +270,13 @@ class Group_CategoryList_Widget extends Rcl_Group_Widget {
 		/**
 		 * @var $before string additional info
 		 */
-		echo $before;
+		echo $before;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		echo $category;
+		echo $category;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		/**
 		 * @var $after string additional info
 		 */
-		echo $after;
+		echo $after;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 }
@@ -298,12 +307,12 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 		/**
 		 * @var $before string additional info
 		 */
-		echo $before;
-		echo $this->get_group_administrators( $user_count, $template );
+		echo $before;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->get_group_administrators( $user_count, $template );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		/**
 		 * @var $after string additional info
 		 */
-		echo $after;
+		echo $after;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	function add_admins_query( $query ) {
@@ -343,10 +352,10 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 		$defaults = array( 'title' => __( 'Management', 'wp-recall' ), 'count' => 12, 'template' => 'mini' );
 		$instance = wp_parse_args( ( array ) $instance, $defaults );
 
-		echo '<label>' . __( 'Title', 'wp-recall' ) . '</label>'
-		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . esc_html( $instance['title'] ) . '">';
-		echo '<label>' . __( 'Template', 'wp-recall' ) . '</label>'
-		     . '<select name="' . $this->field_name( 'template' ) . '">'
+		echo '<label>' . esc_html__( 'Title', 'wp-recall' ) . '</label>'
+		     . '<input type="text" name="' . esc_attr( $this->field_name( 'title' ) ) . '" value="' . esc_attr( $instance['title'] ) . '">';
+		echo '<label>' . esc_html__( 'Template', 'wp-recall' ) . '</label>'
+		     . '<select name="' . esc_attr( $this->field_name( 'template' ) ) . '">'
 		     . '<option value="mini" ' . selected( 'mini', $instance['template'], false ) . '>Mini</option>'
 		     . '<option value="avatars" ' . selected( 'avatars', $instance['template'], false ) . '>Avatars</option>'
 		     . '<option value="rows" ' . selected( 'rows', $instance['template'], false ) . '>Rows</option>'
@@ -385,18 +394,19 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 			/**
 			 * @var $before string additional info
 			 */
-			echo $before;
-			echo rcl_close_group_post_content();
+			echo $before;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo rcl_close_group_post_content();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 			if ( ! $user_ID ) {
+				//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo rcl_get_notice( [
-					'text' => __( 'Login and send a request to receive an access of the group', 'wp-recall' ),
+					'text' => esc_html__( 'Login and send a request to receive an access of the group', 'wp-recall' ),
 				] );
 			}
 			/**
 			 * @var $after string additional info
 			 */
-			echo $after;
+			echo $after;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 			return;
 		}
@@ -412,12 +422,12 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 		/**
 		 * @var $before string additional info
 		 */
-		echo $before;
+		echo $before;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 
 		<?php
 		if ( rcl_get_option( 'group-output' ) ) { //если вывод через шорткод на странице
-			$term_id = ( isset( $_GET['group-tag'] ) && $_GET['group-tag'] != '' ) ? sanitize_text_field( $_GET['group-tag'] ) : $rcl_group->term_id;
+			$term_id = ( ! empty( $_GET['group-tag'] ) ) ? sanitize_key( $_GET['group-tag'] ) : $rcl_group->term_id;
 
 			$args = array(
 				'post_type'   => 'post-group',
@@ -459,7 +469,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 				?>
 
                 <nav class="rcl-group-pagination">
-					<?php echo $pagenavi->pagenavi(); ?>
+					<?php echo $pagenavi->pagenavi();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                 </nav>
 
 				<?php foreach ( $posts as $post ): setup_postdata( $post ); ?>
@@ -471,12 +481,12 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 				<?php wp_reset_postdata(); ?>
 
                 <nav class="rcl-group-pagination">
-					<?php echo $pagenavi->pagenavi(); ?>
+					<?php echo $pagenavi->pagenavi();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                 </nav>
 
 			<?php } else { ?>
 
-				<?php echo rcl_get_notice( [ 'text' => __( "You do not have any publications", "wp-recall" ) ] ); ?>
+				<?php echo rcl_get_notice( [ 'text' => esc_html__( "You do not have any publications", "wp-recall" ) ] );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 			<?php } ?>
 
@@ -514,7 +524,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 
 			<?php } else { ?>
 
-				<?php echo rcl_get_notice( [ 'text' => __( "You do not have any publications", "wp-recall" ) ] ); ?>
+				<?php echo rcl_get_notice( [ 'text' => esc_html__( "You do not have any publications", "wp-recall" ) ] );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 			<?php } ?>
 
@@ -524,7 +534,7 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 		/**
 		 * @var $after string additional info
 		 */
-		echo $after;
+		echo $after;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	function options( $instance ) {
@@ -537,17 +547,17 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 		);
 		$instance = wp_parse_args( ( array ) $instance, $defaults );
 
-		echo '<label>' . __( 'Title', 'wp-recall' ) . '</label>'
-		     . '<input type="text" name="' . $this->field_name( 'title' ) . '" value="' . esc_html( $instance['title'] ) . '">';
-		echo '<label>' . __( 'Summary', 'wp-recall' ) . '</label>'
-		     . '<select name="' . $this->field_name( 'excerpt' ) . '">'
-		     . '<option value="0" ' . selected( 0, $instance['excerpt'], false ) . '>' . __( 'Do not display', 'wp-recall' ) . '</option>'
-		     . '<option value="1" ' . selected( 1, $instance['excerpt'], false ) . '>' . __( 'Display', 'wp-recall' ) . '</option>'
+		echo '<label>' . esc_html__( 'Title', 'wp-recall' ) . '</label>'
+		     . '<input type="text" name="' . esc_attr( $this->field_name( 'title' ) ) . '" value="' . esc_attr( $instance['title'] ) . '">';
+		echo '<label>' . esc_html__( 'Summary', 'wp-recall' ) . '</label>'
+		     . '<select name="' . esc_attr( $this->field_name( 'excerpt' ) ) . '">'
+		     . '<option value="0" ' . selected( 0, $instance['excerpt'], false ) . '>' . esc_html__( 'Do not display', 'wp-recall' ) . '</option>'
+		     . '<option value="1" ' . selected( 1, $instance['excerpt'], false ) . '>' . esc_html__( 'Display', 'wp-recall' ) . '</option>'
 		     . '</select>';
-		echo '<label>' . __( 'Thumbnail', 'wp-recall' ) . '</label>'
-		     . '<select name="' . $this->field_name( 'thumbnail' ) . '">'
-		     . '<option value="0" ' . selected( 0, $instance['thumbnail'], false ) . '>' . __( 'Do not display', 'wp-recall' ) . '</option>'
-		     . '<option value="1" ' . selected( 1, $instance['thumbnail'], false ) . '>' . __( 'Display', 'wp-recall' ) . '</option>'
+		echo '<label>' . esc_html__( 'Thumbnail', 'wp-recall' ) . '</label>'
+		     . '<select name="' . esc_attr( $this->field_name( 'thumbnail' ) ) . '">'
+		     . '<option value="0" ' . selected( 0, $instance['thumbnail'], false ) . '>' . esc_html__( 'Do not display', 'wp-recall' ) . '</option>'
+		     . '<option value="1" ' . selected( 1, $instance['thumbnail'], false ) . '>' . esc_html__( 'Display', 'wp-recall' ) . '</option>'
 		     . '</select>';
 	}
 

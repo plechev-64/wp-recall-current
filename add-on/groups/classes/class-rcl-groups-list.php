@@ -34,7 +34,7 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 		}
 
 		if ( isset( $_GET['group-name'] ) ) {
-			$this->search_name = wp_slash( strip_tags( $_GET['group-name'] ) );
+			$this->search_name = sanitize_text_field( wp_unslash( $_GET['group-name'] ) );
 		}
 
 		$this->add_uri['groups-filter'] = $this->orderby;
@@ -162,12 +162,12 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 
 		if ( $this->search_form ) {
 
-			$search_text = ( ( isset( $_GET['group-name'] ) ) ) ? wp_slash( strip_tags( $_GET['group-name'] ) ) : '';
+			$search_text = ( ( isset( $_GET['group-name'] ) ) ) ? sanitize_text_field( wp_unslash( $_GET['group-name'] ) ) : '';
 
 			$content = '<div class="rcl-search-form">
 					<form method="get" action="">
-						<div class="rcl-search-form-title">' . __( 'Search groups', 'wp-recall' ) . '</div>
-						<input type="text" name="group-name" value="' . esc_textarea( $search_text ) . '">'
+						<div class="rcl-search-form-title">' . esc_html__( 'Search groups', 'wp-recall' ) . '</div>
+						<input type="text" name="group-name" value="' . esc_attr( $search_text ) . '">'
 			           . rcl_get_button( array(
 					'label'  => __( 'Search', 'wp-recall' ),
 					'submit' => true
@@ -192,7 +192,7 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 		$filters = apply_filters( 'rcl_groups_filter', $filters );
 
 		if ( rcl_is_office() ) {
-			$url = ( isset( $_POST['tab_url'] ) ) ? esc_url( $_POST['tab_url'] ) : rcl_get_user_url( $user_LK );
+			$url = ( isset( $_POST['tab_url'] ) ) ? sanitize_text_field( wp_unslash( $_POST['tab_url'] ) ) : rcl_get_user_url( $user_LK );
 		} else {
 			$url = get_permalink( $post->ID );
 		}

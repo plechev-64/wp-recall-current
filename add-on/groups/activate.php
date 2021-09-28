@@ -1,5 +1,5 @@
 <?php
-
+//phpcs:ignoreFile
 global $rcl_options, $wpdb;
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );

@@ -62,7 +62,7 @@ function add_post_in_group() {
 }
 
 function rcl_single_group() {
-	echo rcl_get_single_group();
+	echo rcl_get_single_group();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 function rcl_get_single_group() {
@@ -336,7 +336,7 @@ function rcl_group_permalink() {
 	if ( ! $rcl_group ) {
 		return false;
 	}
-	echo rcl_get_group_permalink( $rcl_group->term_id );
+	echo esc_url( rcl_get_group_permalink( $rcl_group->term_id ) );
 }
 
 function rcl_group_name() {
@@ -363,10 +363,10 @@ function rcl_group_status() {
 
 	switch ( $rcl_group->group_status ) {
 		case 'open':
-			echo __( 'Open group', 'wp-recall' );
+			echo esc_html__( 'Open group', 'wp-recall' );
 			break;
 		case 'closed':
-			echo __( 'Closed group', 'wp-recall' );
+			echo esc_html__( 'Closed group', 'wp-recall' );
 			break;
 	}
 }
@@ -404,6 +404,7 @@ function rcl_group_thumbnail( $size = 'thumbnail' ) {
 	if ( ! $rcl_group ) {
 		return false;
 	}
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo rcl_get_group_thumbnail( $rcl_group->term_id, $size );
 }
 
@@ -478,6 +479,7 @@ function rcl_group_users( $number, $template = 'mini' ) {
 		default:
 			$data = '';
 	}
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo rcl_get_userlist( array(
 		'number'   => $number,
 		'template' => $template,
@@ -750,7 +752,7 @@ function rcl_get_tags_list_group( $tags, $post_id = null, $first = null ) {
 	} else {
 
 		if ( isset( $_GET['group-tag'] ) ) {
-			$name = sanitize_text_field( $_GET['group-tag'] );
+			$name = sanitize_text_field( wp_unslash( $_GET['group-tag'] ) );
 		}
 	}
 
@@ -831,8 +833,8 @@ function rcl_get_group_link_content() {
 
 	rcl_verify_ajax_nonce();
 
-	$group_id = intval( $_POST['group_id'] );
-	$callback = sanitize_key( $_POST['callback'] );
+	$group_id = isset( $_POST['group_id'] ) ? intval( $_POST['group_id'] ) : 0;
+	$callback = isset( $_POST['callback'] ) ? sanitize_key( $_POST['callback'] ) : '';
 
 	if ( ! rcl_group_is_allowed_callback( $callback ) ) {
 		exit;
@@ -860,9 +862,9 @@ function rcl_get_group_link_content() {
 rcl_ajax_action( 'rcl_group_callback', false );
 function rcl_group_callback() {
 	global $rcl_group;
-	$group_id = intval( $_POST['group_id'] );
-	$user_id  = intval( $_POST['user_id'] );
-	$callback = sanitize_key( $_POST['callback'] );
+	$group_id = isset( $_POST['group_id'] ) ? intval( $_POST['group_id'] ) : 0;
+	$user_id  = isset( $_POST['user_id'] ) ? intval( $_POST['user_id'] ) : 0;
+	$callback = isset( $_POST['callback'] ) ? sanitize_key( $_POST['callback'] ) : '';
 
 	if ( ! rcl_group_is_allowed_callback( $callback ) ) {
 		exit;
@@ -899,7 +901,7 @@ function rcl_group_ajax_update_role( $group_id, $user_id ) {
 		return false;
 	}
 
-	$new_role = sanitize_key( $_POST['user_role'] );
+	$new_role = isset( $_POST['user_role'] ) ? sanitize_key( $_POST['user_role'] ) : '';
 	$result   = rcl_update_group_user_role( $user_id, $group_id, $new_role );
 	if ( $result ) {
 		$log['success'] = __( 'User Status updated', 'wp-recall' );
@@ -990,7 +992,7 @@ function rcl_group_admin_panel() {
 	         . '<ul>' . implode( '', $buttons ) . '</ul>'
 	         . '</div>';
 
-	echo $panel;
+	return $panel;
 }
 
 add_action( 'pre_get_posts', 'rcl_init_group_data', 10 );
@@ -1084,14 +1086,14 @@ function rcl_edit_group_pre_get_posts( $query ) {
 
 		if ( isset( $_GET['group-tag'] ) ) {
 
-			if ( ! $_GET['group-tag'] ) {
+			if ( empty( $_GET['group-tag'] ) ) {
 				wp_safe_redirect( rcl_get_group_permalink( $rcl_group->term_id ) );
 				exit;
 			}
 
-			if ( ! $_GET['group-id'] ) {
+			if ( empty( $_GET['group-id'] ) ) {
 
-				$query->set( 'groups', sanitize_text_field( $_GET['group-tag'] ) );
+				$query->set( 'groups', sanitize_text_field( wp_unslash( $_GET['group-tag'] ) ) );
 
 				return $query;
 			}

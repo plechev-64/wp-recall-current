@@ -126,14 +126,14 @@ function rcl_update_grouppost_meta( $post_id, $postdata, $action ) {
 	}
 
 	if ( isset( $_POST['term_id'] ) ) {
-		$term_id = intval( base64_decode( $_POST['term_id'] ) );
+		$term_id = intval( base64_decode( sanitize_text_field( wp_unslash( $_POST['term_id'] ) ) ) );
 	}
 
 	if ( isset( $term_id ) ) {
 		wp_set_object_terms( $post_id, ( int ) $term_id, 'groups' );
 	}
 
-	$gr_tag = ( isset( $_POST['group-tag'] ) ) ? sanitize_text_field( $_POST['group-tag'] ) : false;
+	$gr_tag = ( isset( $_POST['group-tag'] ) ) ? sanitize_key( $_POST['group-tag'] ) : false;
 	if ( $gr_tag ) {
 
 		if ( ! $term_id ) {

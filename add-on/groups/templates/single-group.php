@@ -34,10 +34,10 @@
 			<?php do_action( 'rcl_group_description_after' ); ?>
 
             <div class="group-meta">
-                <p><b><?php _e( 'Group status', 'wp-recall' ) ?>:</b> <?php rcl_group_status(); ?></p>
+                <p><b><?php esc_html_e( 'Group status', 'wp-recall' ) ?>:</b> <?php rcl_group_status(); ?></p>
             </div>
             <div class="group-meta">
-                <p><b><?php _e( 'Group members', 'wp-recall' ) ?>:</b> <?php rcl_group_count_users(); ?></p>
+                <p><b><?php esc_html_e( 'Group members', 'wp-recall' ) ?>:</b> <?php rcl_group_count_users(); ?></p>
             </div>
         </div>
 		<?php if ( rcl_is_group_area( 'content' ) ) {

@@ -34,9 +34,9 @@ function rcl_admin_groups_page_content( $options ) {
 						'title'   => __( 'Shortcode host page', 'wp-recall' ),
 						'slug'    => 'groups-host-page',
 						'content' => wp_dropdown_pages( array(
-							'selected'         => rcl_get_option( 'group-page' ),
+							'selected'         => sanitize_key( rcl_get_option( 'group-page' ) ),
 							'name'             => 'rcl_global_options[group-page]',
-							'show_option_none' => '<span style="color:red">' . __( 'Not selected', 'wp-recall' ) . '</span>',
+							'show_option_none' => '<span style="color:red">' . esc_html__( 'Not selected', 'wp-recall' ) . '</span>',
 							'echo'             => 0
 						) ),
 						'notice'  => __( 'please specify the page where the [grouplist] shortcode is placed', 'wp-recall' )

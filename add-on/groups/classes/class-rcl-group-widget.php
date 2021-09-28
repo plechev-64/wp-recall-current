@@ -224,7 +224,7 @@ function rcl_group_area( $place = 'sidebar' ) {
 	do_action( 'rcl_group_' . $place . '_area' );
 
 	$widgets = new Rcl_Group_Widget();
-	echo $widgets->loop( $place );
+	echo $widgets->loop( $place );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 function rcl_get_group_widgets( $group_id ) {
