@@ -30,7 +30,7 @@ function pfm_get_shortlink( $object_id, $object_type ) {
 
 function pfm_the_group_permalink() {
 	global $PrimeGroup;
-	echo pfm_get_group_permalink( $PrimeGroup->group_id );
+	echo esc_html( pfm_get_group_permalink( $PrimeGroup->group_id ) );
 }
 
 function pfm_get_group_permalink( $group_id ) {
@@ -70,7 +70,7 @@ function pfm_get_group_permalink( $group_id ) {
 
 function pfm_the_forum_permalink() {
 	global $PrimeForum;
-	echo pfm_get_forum_permalink( $PrimeForum->forum_id );
+	echo esc_html( pfm_get_forum_permalink( $PrimeForum->forum_id ) );
 }
 
 function pfm_get_forum_permalink( $forum_id ) {
@@ -110,7 +110,7 @@ function pfm_get_forum_permalink( $forum_id ) {
 
 function pfm_the_topic_permalink() {
 	global $PrimeTopic;
-	echo pfm_get_topic_permalink( absint( $PrimeTopic->topic_id ) );
+	echo esc_html( pfm_get_topic_permalink( absint( $PrimeTopic->topic_id ) ) );
 }
 
 function pfm_get_topic_permalink( $topic_id, $args = false ) {

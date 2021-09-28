@@ -6,7 +6,7 @@
 		<?php pfm_the_topic_manager(); ?>
 
         <div class="prime-topics-header">
-            <span class="topic_count"><?php pfm_the_post_count(); ?><?php _e( 'reply(ies) in the topic', 'wp-recall' ); ?></span>
+            <span class="topic_count"><?php esc_html( pfm_the_post_count() ); ?><?php esc_html_e( 'reply(ies) in the topic', 'wp-recall' ); ?></span>
 			<?php pfm_page_navi(); ?>
         </div>
 
@@ -25,17 +25,18 @@
                  itemtype="http://schema.org/DiscussionForumPosting">
                 <meta itemprop="headline" content="<?php pfm_the_topic_name(); ?>"/>
                 <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-					<meta itemprop="name" content="<?php echo pfm_get_user_name( pfm_topic_field( 'user_id' ) ); ?>"/>
+					<meta itemprop="name"
+                          content="<?php echo esc_attr( pfm_get_user_name( pfm_topic_field( 'user_id' ) ) ); ?>"/>
 				</span>
 
                 <meta itemprop="description"
-                      content="<?php echo wp_trim_words( esc_html( $PrimeQuery->posts[0]->post_content ), 50 ); ?>"/>
+                      content="<?php echo esc_attr( wp_trim_words( wp_strip_all_tags( $PrimeQuery->posts[0]->post_content ), 50 ) ); ?>"/>
                 <meta itemprop="datePublished"
-                      content="<?php echo mysql2date( 'c', $PrimeQuery->posts[0]->post_date, false ); ?>"/>
+                      content="<?php echo esc_attr( mysql2date( 'c', $PrimeQuery->posts[0]->post_date, false ) ); ?>"/>
                 <div style="display: none;" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-                    <img itemprop="url contentUrl" src="<?php echo $thumb[0]; ?>"/>
-                    <meta itemprop="width" content="<?php echo $thumb[1]; ?>"/>
-                    <meta itemprop="height" content="<?php echo $thumb[2]; ?>"/>
+                    <img itemprop="url contentUrl" src="<?php echo esc_url( $thumb[0] ); ?>"/>
+                    <meta itemprop="width" content="<?php echo esc_attr( $thumb[1] ); ?>"/>
+                    <meta itemprop="height" content="<?php echo esc_attr( $thumb[2] ); ?>"/>
                 </div>
                 <div style="display: none;" itemprop="interactionStatistic" itemscope
                      itemtype="http://schema.org/InteractionCounter">

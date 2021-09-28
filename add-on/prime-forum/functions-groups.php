@@ -2,7 +2,7 @@
 
 function pfm_the_group_name() {
 	global $PrimeGroup;
-	echo $PrimeGroup->group_name;
+	echo esc_html( $PrimeGroup->group_name );
 }
 
 function pfm_get_group_name( $group_id ) {
@@ -17,7 +17,7 @@ function pfm_get_group_name( $group_id ) {
 
 function pfm_the_group_description() {
 	global $PrimeGroup;
-	echo $PrimeGroup->group_desc;
+	echo esc_html( $PrimeGroup->group_desc );
 }
 
 function pfm_get_group_description( $group_id ) {
@@ -32,7 +32,7 @@ function pfm_get_group_description( $group_id ) {
 
 function pfm_the_forum_count() {
 	global $PrimeGroup;
-	echo $PrimeGroup->forum_count;
+	echo esc_html( $PrimeGroup->forum_count );
 }
 
 function pfm_group_field( $field_name, $echo = 1 ) {
@@ -40,7 +40,7 @@ function pfm_group_field( $field_name, $echo = 1 ) {
 
 	if ( isset( $PrimeGroup->$field_name ) ) {
 		if ( $echo ) {
-			echo $PrimeGroup->$field_name;
+			echo esc_html( $PrimeGroup->$field_name );
 		} else {
 			return $PrimeGroup->$field_name;
 		}
@@ -63,5 +63,5 @@ function pfm_the_group_classes() {
 
 	$classes = apply_filters( 'pfm_group_classes', $classes );
 
-	echo implode( ' ', $classes );
+	echo esc_attr( implode( ' ', $classes ) );
 }

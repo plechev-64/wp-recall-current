@@ -55,8 +55,8 @@ function pfm_page_topic_form() {
 	}
 
 	if ( ! $group_id ) {
-		echo '<p>' . __( 'The forum is not yet created any groups of forums', 'wp-recall' ) . '.</p>'
-		     . '<p>' . __( 'Create a group of forums for managing the form fields of the publication of a topic', 'wp-recall' ) . '.</p>';
+		echo '<p>' . esc_html__( 'The forum is not yet created any groups of forums', 'wp-recall' ) . '.</p>'
+		     . '<p>' . esc_html__( 'Create a group of forums for managing the form fields of the publication of a topic', 'wp-recall' ) . '.</p>';
 
 		return;
 	}
@@ -68,13 +68,13 @@ function pfm_page_topic_form() {
 		'group_id' => $group_id
 	) );
 
-	$content = '<h2>' . __( 'Manage topic form', 'wp-recall' ) . '</h2>'
-	           . '<p>' . __( 'Select a forum group and manage custom fields form of publication of a topic within this group', 'wp-recall' ) . '</p>';
+	$content = '<h2>' . esc_html__( 'Manage topic form', 'wp-recall' ) . '</h2>'
+	           . '<p>' . esc_html__( 'Select a forum group and manage custom fields form of publication of a topic within this group', 'wp-recall' ) . '</p>';
 
 	$content .= $formManager->form_navi();
 
 	$content .= $formManager->get_manager();
-
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo $content;
 }
 
@@ -305,15 +305,15 @@ function pfm_page_options() {
 	//support old additional options
 	if ( $moreOptions = apply_filters( 'pfm_options_array', array() ) ) {
 		$Manager->add_box( 'other', array(
-			'title' => __( 'Other settings', 'wp-recall' )
+			'title' => esc_html__( 'Other settings', 'wp-recall' )
 		) )->add_group( 'options' )->add_options( $moreOptions );
 	}
 
-	$content = '<h2>' . __( 'Settings of PrimeForum', 'wp-recall' ) . '</h2>';
+	$content = '<h2>' . esc_html__( 'Settings of PrimeForum', 'wp-recall' ) . '</h2>';
 
 	$content .= $Manager->get_content();
 
-	echo $content;
+	echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 add_action( 'admin_init', 'pfm_flush_rewrite_rules' );
@@ -331,12 +331,12 @@ function pfm_page_forums() {
 	wp_enqueue_style( 'wp-jquery-ui-dialog' );
 	?>
 
-    <h2><?php _e( 'Manage forums', 'wp-recall' ); ?></h2>
+    <h2><?php esc_html_e( 'Manage forums', 'wp-recall' ); ?></h2>
 
 	<?php
 	$manager = new PrimeManager();
 
-	echo $manager->get_manager();
+	echo $manager->get_manager();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 function pfm_page_themes() {
@@ -352,44 +352,44 @@ function pfm_page_themes() {
 	echo '<div class="wrap">';
 
 	echo '<div id="icon-plugins" class="icon32"><br></div>
-        <h2>' . __( 'Templates', 'wp-recall' ) . ' PrimeForum</h2>';
+        <h2>' . esc_html( 'Templates', 'wp-recall' ) . ' PrimeForum</h2>';
 
-	if ( isset( $_POST['save-rcl-key'] ) ) {
-		if ( wp_verify_nonce( $_POST['_wpnonce'], 'add-rcl-key' ) ) {
-			update_site_option( 'rcl-key', $_POST['rcl-key'] );
-			echo '<div id="message"><p>' . __( 'Key has been saved', 'wp-recall' ) . '!</p></div>';
+	if ( isset( $_POST['save-rcl-key'], $_POST['_wpnonce'], $_POST['rcl-key'] ) ) {
+		if ( wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'add-rcl-key' ) ) {
+			update_site_option( 'rcl-key', sanitize_text_field( wp_unslash( $_POST['rcl-key'] ) ) );
+			echo '<div id="message"><p>' . esc_html__( 'Key has been saved', 'wp-recall' ) . '!</p></div>';
 		}
 	}
 
 	echo '<div class="rcl-admin-service-box rcl-key-box">';
-
-	echo '<h4>' . __( 'RCLKEY', 'wp-recall' ) . '</h4>
+	//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo '<h4>' . esc_html__( 'RCLKEY', 'wp-recall' ) . '</h4>
         <form action="" method="post">
-            ' . __( 'Enter RCLKEY', 'wp-recall' ) . ' <input type="text" name="rcl-key" value="' . get_site_option( 'rcl-key' ) . '">
-            <input class="button" type="submit" value="' . __( 'Save', 'wp-recall' ) . '" name="save-rcl-key">
+            ' . esc_html__( 'Enter RCLKEY', 'wp-recall' ) . ' <input type="text" name="rcl-key" value="' . esc_attr( get_site_option( 'rcl-key' ) ) . '">
+            <input class="button" type="submit" value="' . esc_attr__( 'Save', 'wp-recall' ) . '" name="save-rcl-key">
             ' . wp_nonce_field( 'add-rcl-key', '_wpnonce', true, false ) . '
         </form>
-        <p class="install-help">' . __( 'Required to update the templates here. Get it  in  your account online', 'wp-recall' ) . ' <a href="https://codeseller.ru/" target="_blank">https://codeseller.ru</a></p>';
+        <p class="install-help">' . esc_html__( 'Required to update the templates here. Get it  in  your account online', 'wp-recall' ) . ' <a href="https://codeseller.ru/" target="_blank">https://codeseller.ru</a></p>';
 
 	echo '</div>';
 
 	echo '<div class="rcl-admin-service-box rcl-upload-form-box upload-template">';
 
-	echo '<h4>' . __( 'Install the add-on to WP-Recall format .ZIP', 'wp-recall' ) . '</h4>
-        <p class="install-help">' . __( 'If you have an archive template for wp-recall format .zip, here you can upload and install it', 'wp-recall' ) . '</p>
+	echo '<h4>' . esc_html__( 'Install the add-on to WP-Recall format .ZIP', 'wp-recall' ) . '</h4>
+        <p class="install-help">' . esc_html__( 'If you have an archive template for wp-recall format .zip, here you can upload and install it', 'wp-recall' ) . '</p>
         <form class="wp-upload-form" action="" enctype="multipart/form-data" method="post">
-            <label class="screen-reader-text" for="addonzip">' . __( 'Add-on archive', 'wp-recall' ) . '</label>
+            <label class="screen-reader-text" for="addonzip">' . esc_html__( 'Add-on archive', 'wp-recall' ) . '</label>
             <input id="addonzip" type="file" name="addonzip">
-            <input id="install-plugin-submit" class="button" type="submit" value="' . __( 'Install', 'wp-recall' ) . '" name="pfm-install-template-submit">
+            <input id="install-plugin-submit" class="button" type="submit" value="' . esc_attr__( 'Install', 'wp-recall' ) . '" name="pfm-install-template-submit">
             ' . wp_nonce_field( 'install-template-pfm', '_wpnonce', true, false ) . '
         </form>
 
         </div>
 
         <ul class="subsubsub">
-            <li class="all"><b>' . __( 'All', 'wp-recall' ) . '<span class="count">(' . $cnt_all . ')</span></b></li>
+            <li class="all"><b>' . esc_html__( 'All', 'wp-recall' ) . '<span class="count">(' . esc_html( $cnt_all ) . ')</span></b></li>
         </ul>';
-
+	//phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	$Prime_Themes_Manager->prepare_items();
 	?>
 
@@ -426,7 +426,7 @@ function pfm_admin_role_field( $user ) {
 
 	if ( $fields ) {
 
-		$content = '<h3>' . __( 'Role of the user on the forum', 'wp-recall' ) . ':</h3>
+		$content = '<h3>' . esc_html__( 'Role of the user on the forum', 'wp-recall' ) . ':</h3>
         <table class="form-table rcl-form">';
 
 		foreach ( $fields as $field ) {
@@ -441,7 +441,7 @@ function pfm_admin_role_field( $user ) {
 		$content .= '</table>';
 	}
 
-	echo $content;
+	echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 add_action( 'personal_options_update', 'pfm_update_user_role' );
@@ -456,7 +456,7 @@ function pfm_update_user_role( $user_id ) {
 		return false;
 	}
 
-	update_user_meta( $user_id, 'pfm_role', $_POST['pfm_role'] );
+	update_user_meta( $user_id, 'pfm_role', sanitize_key( $_POST['pfm_role'] ) );
 }
 
 rcl_ajax_action( 'pfm_ajax_manager_update_data', false );
@@ -526,11 +526,11 @@ rcl_ajax_action( 'pfm_ajax_update_sort_groups', false );
 function pfm_ajax_update_sort_groups() {
 	global $wpdb;
 
-	if ( ! current_user_can( 'administrator' ) ) {
+	if ( ! isset( $_POST['sort'] ) || ! current_user_can( 'administrator' ) ) {
 		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
 	}
-
-	$sort = json_decode( wp_unslash( $_POST['sort'] ) );
+	//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$sort = json_decode( rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['sort'] ) ) );
 
 	foreach ( $sort as $s => $group ) {
 		//убрал функции допа на апдейт группы,
@@ -545,7 +545,7 @@ function pfm_ajax_update_sort_groups() {
 	}
 
 	wp_send_json( array(
-		'success' => __( 'Changes saved!', 'wp-recall' )
+		'success' => esc_html__( 'Changes saved!', 'wp-recall' )
 	) );
 }
 
@@ -553,11 +553,12 @@ rcl_ajax_action( 'pfm_ajax_update_sort_forums', false );
 function pfm_ajax_update_sort_forums() {
 	global $wpdb;
 
-	if ( ! current_user_can( 'administrator' ) ) {
+	if ( ! isset( $_POST['sort'] ) || ! current_user_can( 'administrator' ) ) {
 		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
 	}
 
-	$sort = json_decode( wp_unslash( $_POST['sort'] ) );
+	//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$sort = json_decode( rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['sort'] ) ) );
 
 	foreach ( $sort as $s => $forum ) {
 		//убрал функции допа на апдейт форума,
@@ -584,8 +585,8 @@ function pfm_ajax_get_manager_item_delete_form() {
 	 * todo любой может получить менеджер?
 	 */
 
-	$itemType = $_POST['item-type'];
-	$itemID   = absint( $_POST['item-id'] );
+	$itemType = isset( $_POST['item-type'] ) ? sanitize_key( $_POST['item-type'] ) : '';
+	$itemID   = isset( $_POST['item-id'] ) ? absint( $_POST['item-id'] ) : 0;
 
 	if ( $itemType == 'groups' ) {
 
@@ -760,26 +761,26 @@ function rcl_forum_metabox() {
 	$topics = pfm_get_topics( array( 'number' => 5 ) );
 
 	if ( ! $topics ) {
-		echo '<p>' . __( 'No topics on the forum yet', 'wp-recall' ) . '</p>';
+		echo '<p>' . esc_html__( 'No topics on the forum yet', 'wp-recall' ) . '</p>';
 
 		return;
 	}
 
 	echo '<table class="wp-list-table widefat fixed striped">';
 	echo '<tr>'
-	     . '<th>' . __( 'Topic', 'wp-recall' ) . '</th>'
-	     . '<th>' . __( 'Messages', 'wp-recall' ) . '</th>'
-	     . '<th>' . __( 'Author', 'wp-recall' ) . '</th>'
+	     . '<th>' . esc_html__( 'Topic', 'wp-recall' ) . '</th>'
+	     . '<th>' . esc_html__( 'Messages', 'wp-recall' ) . '</th>'
+	     . '<th>' . esc_html__( 'Author', 'wp-recall' ) . '</th>'
 	     . '</tr>';
 	foreach ( $topics as $topic ) {
 		echo '<tr>'
-		     . '<td><a href="' . pfm_get_topic_permalink( $topic->topic_id ) . '" target="_blank">' . $topic->topic_name . '</a></td>'
-		     . '<td>' . $topic->post_count . '</td>'
-		     . '<td>' . get_the_author_meta( 'user_login', $topic->user_id ) . '</td>'
+		     . '<td><a href="' . esc_url( pfm_get_topic_permalink( $topic->topic_id ) ) . '" target="_blank">' . esc_html( $topic->topic_name ) . '</a></td>'
+		     . '<td>' . esc_html( $topic->post_count ) . '</td>'
+		     . '<td>' . esc_html( get_the_author_meta( 'user_login', $topic->user_id ) ) . '</td>'
 		     . '</tr>';
 	}
 	echo '</table>';
-	echo '<p><a href="' . pfm_get_home_url() . '" target="_blank">' . __( 'Go to forum', 'wp-recall' ) . '</a></p>';
+	echo '<p><a href="' . esc_url( pfm_get_home_url() ) . '" target="_blank">' . esc_html__( 'Go to forum', 'wp-recall' ) . '</a></p>';
 }
 
 if ( ! wp_doing_ajax() ) {
@@ -788,43 +789,47 @@ if ( ! wp_doing_ajax() ) {
 function pfm_init_admin_actions() {
 	global $user_ID;
 
+	if ( ! current_user_can( 'administrator' ) ) {
+		return;
+	}
+
 	if ( ! isset( $_REQUEST['pfm-action'] ) || ! isset( $_REQUEST['_wpnonce'] ) ) {
 		return;
 	}
 
-	if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'pfm-nonce' ) ) {
+	if ( ! wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'pfm-nonce' ) ) {
 		return;
 	}
 
-	$action = $_REQUEST['pfm-action'];
+	$action = isset( $_REQUEST['pfm-action'] ) ? sanitize_key( $_REQUEST['pfm-action'] ) : '';
 
 	switch ( $action ) {
 		case 'group_create': //добавление группы
 
 			pfm_add_group( array(
-				'group_name' => esc_html( $_REQUEST['group_name'] ),
-				'group_slug' => sanitize_title( $_REQUEST['group_slug'] ),
-				'group_desc' => esc_html( $_REQUEST['group_desc'] )
+				'group_name' => isset( $_REQUEST['group_name'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['group_name'] ) ) : '',
+				'group_slug' => isset( $_REQUEST['group_slug'] ) ? sanitize_title( wp_unslash( $_REQUEST['group_slug'] ) ) : '',
+				'group_desc' => isset( $_REQUEST['group_desc'] ) ? sanitize_textarea_field( wp_unslash( $_REQUEST['group_desc'] ) ) : ''
 			) );
 
 			break;
 		case 'forum_create': //создание форума
 
 			pfm_add_forum( array(
-				'forum_name' => esc_html( $_REQUEST['forum_name'] ),
-				'forum_desc' => esc_html( $_REQUEST['forum_desc'] ),
-				'forum_slug' => sanitize_title( $_REQUEST['forum_slug'] ),
-				'group_id'   => absint( $_REQUEST['group_id'] )
+				'forum_name' => isset( $_REQUEST['forum_name'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['forum_name'] ) ) : '',
+				'forum_desc' => isset( $_REQUEST['forum_desc'] ) ? sanitize_textarea_field( wp_unslash( $_REQUEST['forum_desc'] ) ) : '',
+				'forum_slug' => isset( $_REQUEST['forum_slug'] ) ? sanitize_title( wp_unslash( $_REQUEST['forum_slug'] ) ) : '',
+				'group_id'   => isset( $_REQUEST['group_id'] ) ? absint( $_REQUEST['group_id'] ) : 0
 			) );
 
 			break;
 		case 'group_delete': //удаление группы
 
-			if ( ! $_REQUEST['group_id'] ) {
+			if ( empty( $_REQUEST['group_id'] ) ) {
 				return false;
 			}
 
-			pfm_delete_group( absint( $_REQUEST['group_id'] ), $_REQUEST['migrate_group'] );
+			pfm_delete_group( absint( $_REQUEST['group_id'] ), isset( $_REQUEST['migrate_group'] ) ? sanitize_key( $_REQUEST['migrate_group'] ) : '' );
 
 			wp_safe_redirect( admin_url( 'admin.php?page=pfm-forums' ) );
 			exit;
@@ -832,13 +837,13 @@ function pfm_init_admin_actions() {
 			break;
 		case 'forum_delete': //удаление форума
 
-			if ( ! $_REQUEST['forum_id'] ) {
+			if ( empty( $_REQUEST['forum_id'] ) ) {
 				return false;
 			}
 
 			$group = pfm_get_forum( absint( $_REQUEST['forum_id'] ) );
 
-			pfm_delete_forum( absint( $_REQUEST['forum_id'] ), $_REQUEST['migrate_forum'] );
+			pfm_delete_forum( absint( $_REQUEST['forum_id'] ), isset( $_REQUEST['migrate_group'] ) ? sanitize_key( $_REQUEST['migrate_group'] ) : '' );
 
 			wp_safe_redirect( admin_url( 'admin.php?page=pfm-forums&group-id=' . $group->group_id ) );
 			exit;
@@ -846,7 +851,10 @@ function pfm_init_admin_actions() {
 			break;
 	}
 
-	wp_safe_redirect( $_POST['_wp_http_referer'] );
+	if ( isset( $_POST['_wp_http_referer'] ) ) {
+		wp_safe_redirect( sanitize_text_field( wp_unslash( $_POST['_wp_http_referer'] ) ) );
+	}
+
 	exit;
 }
 
@@ -857,7 +865,7 @@ function pfm_template_update_status() {
 		return false;
 	}
 
-	$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
+	$page = ( isset( $_GET['page'] ) ) ? sanitize_key( $_GET['page'] ) : false;
 	if ( 'pfm-themes' != $page ) {
 		return;
 	}

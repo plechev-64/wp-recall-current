@@ -55,8 +55,8 @@ class Prime_Themes_Manager extends WP_List_Table {
 							continue;
 						}
 
-						if ( isset( $_POST['s'] ) && $_POST['s'] ) {
-							if ( strpos( strtolower( trim( $data['name'] ) ), strtolower( trim( $_POST['s'] ) ) ) !== false ) {
+						if ( ! empty( $_POST['s'] ) ) {
+							if ( strpos( strtolower( trim( $data['name'] ) ), strtolower( trim( sanitize_text_field( wp_unslash( $_POST['s'] ) ) ) ) ) !== false ) {
 								$this->addons_data[ $namedir ]         = $data;
 								$this->addons_data[ $namedir ]['path'] = $addon_dir;
 							}
@@ -95,7 +95,7 @@ class Prime_Themes_Manager extends WP_List_Table {
 
 	function admin_header() {
 
-		$page = ( isset( $_GET['page'] ) ) ? esc_attr( $_GET['page'] ) : false;
+		$page = ( isset( $_GET['page'] ) ) ? sanitize_key( $_GET['page'] ) : false;
 		if ( 'pfm-themes' != $page ) {
 			return;
 		}
@@ -109,7 +109,7 @@ class Prime_Themes_Manager extends WP_List_Table {
 	}
 
 	function no_items() {
-		_e( 'No addons found.', 'wp-recall' );
+		esc_html_e( 'No addons found.', 'wp-recall' );
 	}
 
 	function column_default( $item, $column_name ) {
@@ -168,10 +168,10 @@ class Prime_Themes_Manager extends WP_List_Table {
 	function column_addon_name( $item ) {
 
 		$actions = array();
-
+		$page    = isset( $_REQUEST['page'] ) ? sanitize_key( $_REQUEST['page'] ) : '';
 		if ( $item['addon_status'] != 1 ) {
-			$actions['delete']  = sprintf( '<a href="?page=%s&action=%s&template=%s">' . __( 'Delete', 'wp-recall' ) . '</a>', $_REQUEST['page'], 'delete', $item['ID'] );
-			$actions['connect'] = sprintf( '<a href="?page=%s&action=%s&template=%s">' . __( 'connect', 'wp-recall' ) . '</a>', $_REQUEST['page'], 'connect', $item['ID'] );
+			$actions['delete']  = sprintf( '<a href="?page=%s&action=%s&template=%s">' . esc_html__( 'Delete', 'wp-recall' ) . '</a>', $page, 'delete', $item['ID'] );
+			$actions['connect'] = sprintf( '<a href="?page=%s&action=%s&template=%s">' . esc_html__( 'connect', 'wp-recall' ) . '</a>', $page, 'connect', $item['ID'] );
 		}
 
 		return sprintf( '%1$s %2$s', '<strong>' . $item['addon_name'] . '</strong>', $this->row_actions( $actions ) );
@@ -212,20 +212,20 @@ class Prime_Themes_Manager extends WP_List_Table {
 		$class       = $status;
 		$class       .= ( $ver > 0 ) ? ' update' : '';
 
-		echo '<tr class="' . $class . '">';
+		echo '<tr class="' . esc_attr( $class ) . '">';
 		$this->single_row_columns( $item );
 		echo '</tr>';
 
 		if ( $ver > 0 ) {
 			$colspan = ( $hidden = count( $this->column_info[1] ) ) ? 4 - $hidden : 4;
 
-			echo '<tr class="plugin-update-tr ' . $status . '" id="' . $item['ID'] . '-update" data-slug="' . $item['ID'] . '">'
-			     . '<td colspan="' . $colspan . '" class="plugin-update colspanchange">'
+			echo '<tr class="plugin-update-tr ' . esc_attr( $status ) . '" id="' . esc_attr( $item['ID'] ) . '-update" data-slug="' . esc_attr( $item['ID'] ) . '">'
+			     . '<td colspan="' . esc_attr( $colspan ) . '" class="plugin-update colspanchange">'
 			     . '<div class="update-message notice inline notice-warning notice-alt">'
 			     . '<p>'
-			     . __( 'New version available', 'wp-recall' ) . ' ' . $this->addon['name'] . ' ' . $this->need_update[ $item['ID'] ]['new-version'] . '. ';
-			echo ' <a href="#"  onclick=\'rcl_get_details_addon(' . json_encode( array( 'slug' => $item['ID'] ) ) . ',this);return false;\' title="' . $this->addon['name'] . '">' . __( 'view information about the version', 'wp-recall' ) . '</a> или';
-			echo ' <a class="update-add-on" data-addon="' . $item['ID'] . '" href="#">' . __( 'update automatically', 'wp-recall' ) . '</a>'
+			     . esc_html__( 'New version available', 'wp-recall' ) . ' ' . esc_html( $this->addon['name'] ) . ' ' . esc_html( $this->need_update[ $item['ID'] ]['new-version'] ) . '. ';
+			echo ' <a href="#"  onclick=\'rcl_get_details_addon(' . json_encode( array( 'slug' => $item['ID'] ) ) . ',this);return false;\' title="' . esc_attr( $this->addon['name'] ) . '">' . esc_html__( 'view information about the version', 'wp-recall' ) . '</a> или';
+			echo ' <a class="update-add-on" data-addon="' . esc_attr( $item['ID'] ) . '" href="#">' . esc_html__( 'update automatically', 'wp-recall' ) . '</a>'
 			     . '</p>'
 			     . '</div>'
 			     . '</td>'
@@ -261,8 +261,8 @@ function pfm_init_upload_template() {
 		return false;
 	}
 
-	if ( isset( $_POST['pfm-install-template-submit'] ) ) {
-		if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'install-template-pfm' ) ) {
+	if ( isset( $_POST['pfm-install-template-submit'], $_POST['_wpnonce'] ) ) {
+		if ( ! wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'install-template-pfm' ) ) {
 			return false;
 		}
 		pfm_upload_template();
@@ -273,11 +273,15 @@ function pfm_upload_template() {
 
 	$paths = array( RCL_TAKEPATH . 'add-on', RCL_PATH . 'add-on' );
 
+	if ( ! isset( $_FILES['addonzip']['tmp_name'] ) ) {
+		wp_die( esc_html__( 'Error', 'wp-recall' ) );
+	}
+
 	$filename = sanitize_key( $_FILES['addonzip']['tmp_name'] );
 	$arch     = current( wp_upload_dir() ) . "/" . basename( $filename );
 	copy( $filename, $arch );
 
-	$zip = new ZipArchive;
+	$zip = new ZipArchive();
 
 	$res = $zip->open( $arch );
 
@@ -313,9 +317,9 @@ function pfm_upload_template() {
 			wp_safe_redirect( admin_url( 'admin.php?page=pfm-themes&update-template=upload' ) );
 			exit;
 		} else {
-			wp_die( __( 'Unpacking of archive failed.', 'wp-recall' ) );
+			wp_die( esc_html__( 'Unpacking of archive failed.', 'wp-recall' ) );
 		}
 	} else {
-		wp_die( __( 'ZIP archive not found.', 'wp-recall' ) );
+		wp_die( esc_html__( 'ZIP archive not found.', 'wp-recall' ) );
 	}
 }

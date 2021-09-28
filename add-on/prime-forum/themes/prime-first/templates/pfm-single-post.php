@@ -5,8 +5,8 @@
 
         <div class="prime-author-avatar">
 			<?php if ( pfm_post_field( 'user_id', 0 ) ): ?>
-                <a href="<?php echo rcl_get_user_url( pfm_post_field( 'user_id', 0 ) ); ?>"
-                   title="<?php _e( 'To personal account', 'wp-recall' ); ?>">
+                <a href="<?php echo esc_url( rcl_get_user_url( pfm_post_field( 'user_id', 0 ) ) ); ?>"
+                   title="<?php esc_attr_e( 'To personal account', 'wp-recall' ); ?>">
 					<?php pfm_author_avatar(); ?>
                 </a>
 			<?php else: ?>
@@ -23,13 +23,13 @@
             <div class="prime-count">
                 <span><?php pfm_post_field( 'post_index' ); ?></span>
                 <a href="#topic-post-<?php pfm_post_field( 'post_id' ); ?>"
-                   title="<?php _e( 'Link to the message', 'wp-recall' ); ?>">
+                   title="<?php esc_attr_e( 'Link to the message', 'wp-recall' ); ?>">
                     <i class="rcli fa-link" aria-hidden="true"></i>
                 </a>
             </div>
             <div class="prime-date">
-                <span class="post-date"><?php echo mysql2date( 'F j Y', pfm_post_field( 'post_date', 0 ) ) ?></span>
-                <span class="post-time"><?php echo mysql2date( 'H:i', pfm_post_field( 'post_date', 0 ) ) ?></span>
+                <span class="post-date"><?php echo esc_html( mysql2date( 'F j Y', pfm_post_field( 'post_date', 0 ) ) ) ?></span>
+                <span class="post-time"><?php echo esc_html( mysql2date( 'H:i', pfm_post_field( 'post_date', 0 ) ) ) ?></span>
             </div>
 
 			<?php pfm_the_post_manager(); ?>

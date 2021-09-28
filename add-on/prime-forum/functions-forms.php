@@ -16,22 +16,22 @@ function pfm_the_topic_form() {
 
 	if ( $PrimeForum->forum_closed ) {
 
-		echo pfm_get_notice( __( 'The forum is closed. It is impossible to create new topics.', 'wp-recall' ) );
+		echo pfm_get_notice( esc_html__( 'The forum is closed. It is impossible to create new topics.', 'wp-recall' ) );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		return;
 	}
 
 	if ( ! pfm_is_can( 'topic_create' ) ) {
-
-		echo apply_filters( 'pfm_notice_noaccess_topic_form', pfm_get_notice( __( 'You are not authorised to publish new topics in this forum', 'wp-recall' ), 'warning' ) );
+		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo apply_filters( 'pfm_notice_noaccess_topic_form', pfm_get_notice( esc_html__( 'You are not authorised to publish new topics in this forum', 'wp-recall' ), 'warning' ) );
 
 		return;
 	}
-
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo pfm_get_form( apply_filters( 'pfm_topic_form_args', array(
 		'forum_id' => $PrimeForum->forum_id,
 		'action'   => 'topic_create',
-		'submit'   => __( 'Create topic', 'wp-recall' )
+		'submit'   => esc_html__( 'Create topic', 'wp-recall' )
 	) ) );
 }
 
@@ -43,22 +43,22 @@ function pfm_the_post_form() {
 	}
 
 	if ( $PrimeTopic->forum_closed ) {
-
-		echo pfm_get_notice( __( 'The forum is closed. It is impossible to create new topics.', 'wp-recall' ) );
+		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo pfm_get_notice( esc_html__( 'The forum is closed. It is impossible to create new topics.', 'wp-recall' ) );
 
 		return;
 	}
 
 	if ( $PrimeTopic->topic_closed ) {
-
-		echo pfm_get_notice( __( 'The topic is closed. It is prohibited to publish new topics.', 'wp-recall' ) );
+		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo pfm_get_notice( esc_html__( 'The topic is closed. It is prohibited to publish new topics.', 'wp-recall' ) );
 
 		return;
 	}
 
 	if ( ! pfm_is_can( 'post_create' ) ) {
-
-		echo apply_filters( 'pfm_notice_noaccess_post_form', pfm_get_notice( __( 'You are not authorised to publish messages in this topic', 'wp-recall' ), 'warning' ) );
+		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo apply_filters( 'pfm_notice_noaccess_post_form', pfm_get_notice( esc_html__( 'You are not authorised to publish messages in this topic', 'wp-recall' ), 'warning' ) );
 
 		return;
 	}
@@ -84,7 +84,7 @@ function pfm_the_post_form() {
 			'value' => 'post-url'
 		);
 	}
-
+	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo pfm_get_form( $formArgs );
 }
 

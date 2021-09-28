@@ -179,7 +179,7 @@ function pfm_the_last_topic() {
 	$lastTopic = $PrimeQuery->search_forum_last_topic( $PrimeForum->forum_id );
 
 	if ( ! $lastTopic ) {
-		echo __( 'Topics yet', 'wp-recall' );
+		echo esc_html__( 'Topics yet', 'wp-recall' );
 
 		return;
 	}
@@ -190,8 +190,8 @@ function pfm_the_last_topic() {
 		'topic_slug' => $lastTopic->topic_slug
 	) );
 
-	echo '<a href="' . $permalink . '">'
-	     . $lastTopic->topic_name
+	echo '<a href="' . esc_url( $permalink ) . '">'
+	     . esc_html( $lastTopic->topic_name )
 	     . '</a>';
 }
 
@@ -205,7 +205,7 @@ function pfm_the_last_post() {
 	}
 
 	if ( ! $lastPost ) {
-		echo __( 'not found', 'wp-recall' );
+		echo esc_html__( 'not found', 'wp-recall' );
 
 		return;
 	}
@@ -220,7 +220,7 @@ function pfm_the_last_post() {
 		'forum_id'   => isset( $lastPost->forum_id ) ? $lastPost->forum_id : 0
 	) );
 
-	echo __( 'from', 'wp-recall' ) . ' ' . $name . ': <a href="' . $permalink . '">'
-	     . human_time_diff( strtotime( $lastPost->post_date ), current_time( 'timestamp' ) ) . ' ' . __( 'ago', 'wp-recall' )
+	echo esc_html__( 'from', 'wp-recall' ) . ' ' . esc_html( $name ) . ': <a href="' . esc_url( $permalink ) . '">'
+	     . esc_html( human_time_diff( strtotime( $lastPost->post_date ), current_time( 'timestamp' ) ) ) . ' ' . esc_html__( 'ago', 'wp-recall' )
 	     . '</a>';
 }

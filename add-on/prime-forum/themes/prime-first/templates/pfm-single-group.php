@@ -5,13 +5,13 @@
 			<?php pfm_the_icon( 'fa-database' ); ?>
         </div>
         <div class="prime-forum-title">
-            <div class="prime-general-title"><a class="" title="<?php _e( 'Go to group', 'wp-recall' ); ?>"
+            <div class="prime-general-title"><a class="" title="<?php esc_attr_e( 'Go to group', 'wp-recall' ); ?>"
                                                 href="<?php pfm_the_group_permalink(); ?>"><?php pfm_the_group_name(); ?></a>
             </div>
             <div class="prime-forum-description"><?php pfm_the_group_description(); ?></div>
         </div>
         <div class="prime-forum-topics">
-            <span><?php _e( 'Forums', 'wp-recall' ); ?>:</span><span><?php pfm_the_forum_count(); ?></span>
+            <span><?php esc_html_e( 'Forums', 'wp-recall' ); ?>:</span><span><?php pfm_the_forum_count(); ?></span>
         </div>
     </div>
 

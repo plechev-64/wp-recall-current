@@ -75,7 +75,7 @@ function pfm_the_author_manager() {
 
 	$content = pfm_get_manager( $actions, 'author', $PrimePost->user_id );
 
-	echo $content;
+	echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 function pfm_get_primary_manager() {
@@ -162,7 +162,7 @@ function pfm_the_post_manager() {
 
 	$content = pfm_get_manager( $actions, 'post', $PrimePost->post_id );
 
-	echo $content;
+	echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 function pfm_the_topic_manager() {
@@ -252,7 +252,7 @@ function pfm_the_topic_manager() {
 
 	$content = pfm_get_manager( $actions, 'topic', $PrimeTopic->topic_id );
 
-	echo $content;
+	echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 add_action( 'rcl_init', 'pfm_init_actions_in_office' );
@@ -268,33 +268,33 @@ add_action( 'pfm_after_init_query', 'pfm_init_actions', 30 );
 function pfm_init_actions() {
 	global $user_ID;
 
-	if ( ! isset( $_REQUEST['pfm-action'] ) || ! isset( $_REQUEST['_wpnonce'] ) ) {
+	if ( empty( $_REQUEST['topic_name'] ) || ! isset( $_REQUEST['pfm-action'] ) || ! isset( $_REQUEST['_wpnonce'] ) ) {
 		return;
 	}
 
-	if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'pfm-nonce' ) ) {
+	if ( ! wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'pfm-nonce' ) ) {
 		return;
 	}
 
-	$action = $_REQUEST['pfm-action'];
+	$action = sanitize_key( $_REQUEST['pfm-action'] );
 
 	switch ( $action ) {
 		case 'topic_create': //создание топика
 
-			if ( ! pfm_is_can( 'topic_create' ) || ! $_REQUEST['forum_id'] ) {
+			if ( empty( $_REQUEST['forum_id'] ) || ! pfm_is_can( 'topic_create' ) ) {
 				return false;
 			}
 
-			if ( ! $_REQUEST['post_content'] ) {
-				wp_die( __( 'Empty message! Go back and write something.', 'wp-recall' ) );
+			if ( empty( $_REQUEST['post_content'] ) ) {
+				wp_die( esc_html__( 'Empty message! Go back and write something.', 'wp-recall' ) );
 			}
 
 			$topic_id = pfm_add_topic(
 				array(
-					'topic_name' => esc_html( $_REQUEST['topic_name'] ),
+					'topic_name' => sanitize_text_field( wp_unslash( $_REQUEST['topic_name'] ) ),
 					'forum_id'   => absint( $_REQUEST['forum_id'] )
 				), array(
-					'post_content' => $_REQUEST['post_content']
+					'post_content' => wp_kses_post( wp_unslash( $_REQUEST['post_content'] ) )
 				)
 			);
 
@@ -304,7 +304,7 @@ function pfm_init_actions() {
 			break;
 		case 'post_edit': //редактирование поста
 
-			if ( ! pfm_is_can_post_edit( $_REQUEST['post_id'] ) || ! $_REQUEST['topic_id'] || ! $_REQUEST['post_id'] ) {
+			if ( empty( $_REQUEST['topic_id'] ) || empty( $_REQUEST['post_id'] ) || ! pfm_is_can_post_edit( intval( $_REQUEST['post_id'] ) ) ) {
 				return false;
 			}
 
@@ -315,9 +315,9 @@ function pfm_init_actions() {
 				$post_edit = maybe_unserialize( pfm_get_post_field( absint( $_REQUEST['post_id'] ), 'post_edit' ) );
 
 				$reasonEdit = '';
-				if ( isset( $_POST['reason_edit'] ) && $_POST['reason_edit'] ) {
+				if ( ! empty( $_POST['reason_edit'] ) ) {
 
-					$reasonEdit = esc_html( $_POST['reason_edit'] );
+					$reasonEdit = sanitize_textarea_field( wp_unslash( $_POST['reason_edit'] ) );
 				}
 
 				$post_edit[] = array(
@@ -328,7 +328,7 @@ function pfm_init_actions() {
 			}
 
 			pfm_update_post( array(
-				'post_content' => $_REQUEST['post_content'],
+				'post_content' => wp_kses_post( wp_unslash( $_REQUEST['post_content'] ) ),
 				'post_id'      => absint( $_REQUEST['post_id'] ),
 				'post_edit'    => $post_edit
 			) );
@@ -340,20 +340,20 @@ function pfm_init_actions() {
 
 		case 'topic_from_post_create': //создание топика из поста
 
-			if ( ! pfm_is_can( 'post_migrate' ) || ! $_REQUEST['forum_id'] ) {
+			if ( ! pfm_is_can( 'post_migrate' ) || empty( $_REQUEST['forum_id'] ) ) {
 				return false;
 			}
 
 			$migratedPost = pfm_get_post( absint( $_REQUEST['post_id'] ) );
 
 			$topic_id = pfm_add_topic( array(
-					'topic_name' => esc_html( $_REQUEST['topic_name'] ),
+					'topic_name' => sanitize_text_field( wp_unslash( $_REQUEST['topic_name'] ) ),
 					'forum_id'   => absint( $_REQUEST['forum_id'] ),
 					'user_id'    => $migratedPost->user_id
 				)
 			);
 
-			if ( isset( $_REQUEST['next_posts'] ) && $_REQUEST['next_posts'] ) {
+			if ( ! empty( $_REQUEST['next_posts'] ) ) {
 
 				$posts = pfm_get_posts( array(
 					'topic_id'         => $migratedPost->topic_id,
@@ -384,7 +384,7 @@ function pfm_init_actions() {
 			break;
 		case 'topic_migrate': //перенос топика в другой форум
 
-			if ( ! pfm_is_can( 'topic_migrate' ) || ! $_REQUEST['forum_id'] ) {
+			if ( ! pfm_is_can( 'topic_migrate' ) || empty( $_REQUEST['forum_id'] ) ) {
 				return false;
 			}
 
@@ -406,13 +406,13 @@ function pfm_init_actions() {
 			break;
 		case 'topic_edit': //изменение заголовка топика
 
-			if ( ! pfm_is_can_topic_edit( $_REQUEST['topic_id'] ) ) {
+			if ( ! pfm_is_can_topic_edit( intval( $_REQUEST['topic_id'] ) ) ) {
 				return false;
 			}
 
 			$topic_id = pfm_update_topic( array(
 				'topic_id'   => absint( $_REQUEST['topic_id'] ),
-				'topic_name' => esc_html( $_REQUEST['topic_name'] )
+				'topic_name' => sanitize_text_field( wp_unslash( $_REQUEST['topic_name'] ) )
 			) );
 
 			if ( rcl_is_office( $user_ID ) ) {
@@ -431,8 +431,10 @@ function pfm_init_actions() {
 
 			break;
 	}
+	if ( isset( $_POST['_wp_http_referer'] ) ) {
+		wp_safe_redirect( wp_unslash( $_POST['_wp_http_referer'] ) );
+	}
 
-	wp_safe_redirect( $_POST['_wp_http_referer'] );
 	exit;
 }
 
@@ -442,11 +444,11 @@ function pfm_ajax_action() {
 
 	rcl_verify_ajax_nonce();
 
-	$method = sanitize_key( $_POST['method'] );
+	$method = isset( $_POST['method'] ) ? sanitize_key( $_POST['method'] ) : '';
 
 	$itemID = ( isset( $_POST['item_id'] ) ) ? absint( $_POST['item_id'] ) : null;
 
-	if ( ! isset( $PrimeActions[ $method ] ) ) {
+	if ( ! $method || ! isset( $PrimeActions[ $method ] ) ) {
 		exit;
 	}
 
@@ -483,7 +485,8 @@ function pfm_action_confirm_migrate_post( $post_id ) {
 
 	if ( isset( $_POST['formdata'] ) ) {
 		$formdata = array();
-		parse_str( $_POST['formdata'], $formdata );
+		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		parse_str( rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['formdata'] ) ), $formdata );
 	}
 
 	$migrateData = array(
@@ -496,7 +499,7 @@ function pfm_action_confirm_migrate_post( $post_id ) {
 		$migrateData['next_posts'] = 1;
 	}
 
-	setcookie( 'pfm_migrate_post', json_encode( $migrateData ), time() + 3600, '/', $_SERVER['HOST'] );
+	setcookie( 'pfm_migrate_post', json_encode( $migrateData ), time() + 3600, '/', isset( $_SERVER['HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HOST'] ) ) : '' );
 
 	return array(
 		'content' => pfm_get_notice( __( 'Go to the page of the necessary topic and press the "Transfer to this topic" button to end message transfer', 'wp-recall' ), 'warning' ),
@@ -569,7 +572,7 @@ function pfm_action_start_post_migrate( $post_id ) {
 
 pfm_add_ajax_action( 'cancel_post_migrate', 'pfm_action_cancel_post_migrate' );
 function pfm_action_cancel_post_migrate( $topic_id ) {
-	setcookie( 'pfm_migrate_post', '', time() + 3600, '/', $_SERVER['HOST'] );
+	setcookie( 'pfm_migrate_post', '', time() + 3600, '/', isset( $_SERVER['HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HOST'] ) ) : '' );
 
 	return array(
 		'update-page'    => true,
@@ -581,11 +584,11 @@ function pfm_action_cancel_post_migrate( $topic_id ) {
 pfm_add_ajax_action( 'end_post_migrate', 'pfm_action_end_post_migrate' );
 function pfm_action_end_post_migrate( $topic_id ) {
 
-	if ( ! pfm_is_can( 'post_migrate' ) ) {
+	if ( ! isset( $_COOKIE['pfm_migrate_post'] ) || ! pfm_is_can( 'post_migrate' ) ) {
 		return false;
 	}
 
-	$migrateData = json_decode( wp_unslash( $_COOKIE['pfm_migrate_post'] ) );
+	$migrateData = json_decode( sanitize_text_field( wp_unslash( $_COOKIE['pfm_migrate_post'] ) ) );
 
 	$post_id = intval( $migrateData->post_id );
 
@@ -623,7 +626,7 @@ function pfm_action_end_post_migrate( $topic_id ) {
 		) );
 	}
 
-	setcookie( 'pfm_migrate_post', '', time() + 3600, '/', $_SERVER['HOST'] );
+	setcookie( 'pfm_migrate_post', '', time() + 3600, '/', isset( $_SERVER['HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HOST'] ) ) : '' );
 
 	pfm_update_topic_data( $topicOld );
 	pfm_update_topic_data( $topic_id );
@@ -785,9 +788,9 @@ function pfm_action_topic_delete( $topic_id ) {
 
 	$url = pfm_get_forum_permalink( $topic->forum_id );
 
-	if ( isset( $_POST['topic_id'] ) && $_POST['topic_id'] ) {
+	if ( ! empty( $_POST['topic_id'] ) ) {
 		$result = array( 'url-redirect' => $url );
-	} else {
+	} else if ( isset( $_POST['current_page'] ) ) {
 		$result = array( 'url-redirect' => pfm_add_number_page( $url, absint( $_POST['current_page'] ) ) );
 	}
 
@@ -947,9 +950,9 @@ function pfm_action_get_post_excerpt( $post_id ) {
 
 	$author_name = $post->user_id ? pfm_get_user_name( $post->user_id ) : $post->guest_name;
 
-	if ( isset( $_POST['excerpt'] ) && $_POST['excerpt'] ) {
+	if ( ! empty( $_POST['excerpt'] ) ) {
 
-		$content = wp_unslash( wp_kses_post( $_POST['excerpt'] ) );
+		$content = wp_kses_post( wp_unslash( $_POST['excerpt'] ) );
 
 		if ( strpos( $post->post_content, $content ) !== false ) {
 			$content = '<blockquote><strong>' . $author_name . ' ' . __( 'said', 'wp-recall' ) . ' </strong><br />' . $content . '</blockquote><br />';
@@ -1095,7 +1098,8 @@ function pfm_action_get_preview( $action ) {
 
 	if ( isset( $_POST['formdata'] ) ) {
 		$formdata = array();
-		parse_str( $_POST['formdata'], $formdata );
+		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		parse_str( rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['formdata'] ) ), $formdata );
 	}
 
 	$postContent = wp_unslash( $formdata['post_content'] );
@@ -1146,7 +1150,8 @@ function pfm_action_post_create() {
 
 	if ( isset( $_POST['formdata'] ) ) {
 		$formdata = array();
-		parse_str( $_POST['formdata'], $formdata );
+		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		parse_str( rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['formdata'] ) ), $formdata );
 	}
 
 	if ( ! pfm_is_can( 'post_create' ) || ! $formdata['topic_id'] ) {

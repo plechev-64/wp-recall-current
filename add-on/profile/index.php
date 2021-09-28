@@ -105,9 +105,9 @@ if ( ! is_admin() ) {
 function rcl_update_profile_notice() {
 	if ( isset( $_GET['updated'] ) ) {
 		add_action( 'rcl_area_notice', function () {
-			echo rcl_get_notice( [
+			echo rcl_get_notice( [//phpcs:ignore
 				'type' => 'success',
-				'text' => __( 'Your profile has been updated', 'wp-recall' )
+				'text' => esc_html( 'Your profile has been updated', 'wp-recall' )
 			] );
 		} );
 	}
@@ -118,11 +118,11 @@ add_action( 'wp', 'rcl_edit_profile', 10 );
 function rcl_edit_profile() {
 	global $user_ID;
 
-	if ( ! isset( $_POST['submit_user_profile'] ) ) {
+	if ( ! isset( $_POST['submit_user_profile'] ) || ! isset( $_POST['_wpnonce'] ) ) {
 		return false;
 	}
 
-	if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'update-profile_' . $user_ID ) ) {
+	if ( ! wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'update-profile_' . $user_ID ) ) {
 		return false;
 	}
 
@@ -328,20 +328,20 @@ function rcl_delete_user_account_activate() {
 //Удаляем аккаунт пользователя
 function rcl_delete_user_account() {
 	global $user_ID, $wpdb;
-	if ( ! wp_verify_nonce( $_POST['_wpnonce'], 'delete-user-' . $user_ID ) ) {
+	if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['_wpnonce'] ), 'delete-user-' . $user_ID ) ) {
 		return false;
 	}
 
 	require_once( ABSPATH . 'wp-admin/includes/user.php' );
 
-	$wpdb->query( $wpdb->prepare( "DELETE FROM " . RCL_PREF . "user_action WHERE user ='%d'", $user_ID ) );
+	$wpdb->query( $wpdb->prepare( "DELETE FROM " . RCL_PREF . "user_action WHERE user = %d", $user_ID ) );//phpcs:ignore
 
 	$delete = wp_delete_user( $user_ID );
 
 	if ( $delete ) {
-		wp_die( __( 'We are very sorry but your account has been deleted!', 'wp-recall' ) );
-		echo '<a href="/">' . __( 'Back to main page', 'wp-recall' ) . '</a>';
+		wp_die( esc_html__( 'We are very sorry but your account has been deleted!', 'wp-recall' ) );
+		echo '<a href="/">' . esc_html__( 'Back to main page', 'wp-recall' ) . '</a>';
 	} else {
-		wp_die( __( 'Account deletion failed! Go back and try again.', 'wp-recall' ) );
+		wp_die( esc_html__( 'Account deletion failed! Go back and try again.', 'wp-recall' ) );
 	}
 }

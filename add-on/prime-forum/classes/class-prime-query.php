@@ -65,7 +65,7 @@ class PrimeQuery {
 				'pfm-topic'  => get_site_option( 'permalink_structure' ) != '' ? wp_slash( strip_tags( get_query_var( 'pfm-topic' ) ) ) : intval( get_query_var( 'pfm-topic' ) ),
 				'pfm-page'   => intval( get_query_var( 'pfm-page' ) ),
 				'pfm-author' => isset( $_GET['pfm-author'] ) ? intval( $_GET['pfm-author'] ) : '',
-				'pfm-search' => isset( $_GET['fs'] ) ? wp_slash( strip_tags( $_GET['fs'] ) ) : ''
+				'pfm-search' => isset( $_GET['fs'] ) ? sanitize_text_field( wp_unslash( $_GET['fs'] ) ) : ''
 			);
 		}
 

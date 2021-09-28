@@ -2,7 +2,7 @@
 
 function pfm_the_topic_name() {
 	global $PrimeTopic;
-	echo $PrimeTopic->topic_name;
+	echo esc_html( $PrimeTopic->topic_name );
 }
 
 function pfm_get_topic_name( $topic_id ) {
@@ -17,12 +17,12 @@ function pfm_get_topic_name( $topic_id ) {
 
 function pfm_the_post_count() {
 	global $PrimeTopic;
-	echo $PrimeTopic->post_count;
+	echo wp_kses_post( $PrimeTopic->post_count );
 }
 
 function pfm_time_diff_last_post() {
 	global $PrimeTopic;
-	echo human_time_diff( strtotime( $PrimeTopic->last_post_date ), current_time( 'timestamp' ) );
+	echo esc_html( human_time_diff( strtotime( $PrimeTopic->last_post_date ), current_time( 'timestamp' ) ) );
 }
 
 function pfm_topic_field( $field_name, $echo = 1 ) {
@@ -30,7 +30,7 @@ function pfm_topic_field( $field_name, $echo = 1 ) {
 
 	if ( isset( $PrimeTopic->$field_name ) ) {
 		if ( $echo ) {
-			echo $PrimeTopic->$field_name;
+			echo esc_html( $PrimeTopic->$field_name );
 		} else {
 			return $PrimeTopic->$field_name;
 		}
@@ -57,7 +57,7 @@ function pfm_the_topic_classes() {
 
 	$classes = apply_filters( 'pfm_topic_classes', $classes );
 
-	echo implode( ' ', $classes );
+	echo esc_attr( implode( ' ', $classes ) );
 }
 
 function pfm_get_topic_meta_box( $topic_id ) {
@@ -100,7 +100,7 @@ function pfm_get_topic_meta_box( $topic_id ) {
 
 function pfm_the_last_post_url() {
 	global $PrimeTopic;
-	echo pfm_get_post_permalink( $PrimeTopic->last_post_id );
+	echo esc_url( pfm_get_post_permalink( $PrimeTopic->last_post_id ) );
 }
 
 function pfm_update_topic_custom_fields( $topic_id ) {
@@ -235,7 +235,7 @@ function pfm_add_topic_form_custom_meta( $topic_id ) {
 		}
 	}
 
-	if ( defined( 'DOING_AJAX' ) && DOING_AJAX && $_REQUEST['method'] ) {
+	if ( defined( 'DOING_AJAX' ) && DOING_AJAX && ! empty( $_REQUEST['method'] ) ) {
 
 		$actions = array(
 			'topic_fix',

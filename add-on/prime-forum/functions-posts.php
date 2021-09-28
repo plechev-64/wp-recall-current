@@ -16,7 +16,7 @@ function pfm_the_post_content() {
 
 	$content = pfm_get_post_content( $PrimePost->post_id );
 
-	echo apply_filters( 'pfm_the_post_content', $content );
+	echo apply_filters( 'pfm_the_post_content', $content );//phpcs:ignore
 }
 
 function pfm_post_field( $field_name, $echo = 1 ) {
@@ -24,7 +24,7 @@ function pfm_post_field( $field_name, $echo = 1 ) {
 
 	if ( isset( $PrimePost->$field_name ) ) {
 		if ( $echo ) {
-			echo $PrimePost->$field_name;
+			echo esc_html( $PrimePost->$field_name );
 		} else {
 			return $PrimePost->$field_name;
 		}
@@ -59,7 +59,7 @@ function pfm_the_post_classes() {
 
 	$classes = apply_filters( 'pfm_post_classes', $classes );
 
-	echo implode( ' ', $classes );
+	echo esc_attr( implode( ' ', $classes ) );
 }
 
 function pfm_get_post_edition( $post_id = false ) {
@@ -76,7 +76,7 @@ function pfm_get_post_edition( $post_id = false ) {
 
 function pfm_the_post_bottom() {
 	global $PrimePost;
-	echo apply_filters( 'pfm_the_post_bottom', '' );
+	echo apply_filters( 'pfm_the_post_bottom', '' );//phpcs:ignore
 }
 
 add_filter( 'rcl_rating_user_vote', 'pfm_get_forum_post_user_vote', 10, 2 );
@@ -252,7 +252,7 @@ add_action( 'pfm_delete_post', 'pfm_delete_post_metas', 10 );
 function pfm_delete_post_metas( $post_id ) {
 	global $wpdb;
 
-	return $wpdb->query( "DELETE FROM " . RCL_PREF . "pforum_meta WHERE object_type='post' AND object_id='$post_id'" );
+	return $wpdb->query( "DELETE FROM " . RCL_PREF . "pforum_meta WHERE object_type='post' AND object_id='$post_id'" );//phpcs:ignore
 }
 
 function pfm_get_post_box( $post_id ) {
@@ -288,7 +288,7 @@ function pfm_get_post_box( $post_id ) {
 
 function pfm_the_author_name() {
 	global $PrimePost;
-	echo $PrimePost->user_id ? pfm_get_user_name( $PrimePost->user_id ) : $PrimePost->guest_name;
+	echo $PrimePost->user_id ? esc_html( pfm_get_user_name( $PrimePost->user_id ) ) : esc_html( $PrimePost->guest_name );
 }
 
 function pfm_author_avatar( $size = 50 ) {
@@ -304,7 +304,7 @@ function pfm_add_author_action_status() {
 		return false;
 	}
 	?>
-    <div class="prime-author-meta prime-author-status"><?php echo rcl_get_useraction_html( $PrimePost->user_id, 2 ); ?></div>
+    <div class="prime-author-meta prime-author-status"><?php echo rcl_get_useraction_html( $PrimePost->user_id, 2 );//phpcs:ignore ?></div>
 	<?php
 }
 
@@ -316,7 +316,7 @@ function pfm_add_author_registered_data() {
 	}
 	$user_registered = ( $date = pfm_get_user_data( $PrimePost->user_id, 'user_registered' ) ) ? $date : get_the_author_meta( 'user_registered', $PrimePost->user_id );
 	?>
-    <div class="prime-author-meta prime-author-register"><?php echo __( 'On the website since', 'wp-recall' ) . ' ' . mysql2date( 'd.m.Y', $user_registered ); ?></div>
+    <div class="prime-author-meta prime-author-register"><?php echo esc_html__( 'On the website since', 'wp-recall' ) . ' ' . esc_html( mysql2date( 'd.m.Y', $user_registered ) ); ?></div>
 	<?php
 }
 
@@ -324,7 +324,7 @@ add_action( 'pfm_post_author_metabox', 'pfm_add_author_role_meta', 14 );
 function pfm_add_author_role_meta() {
 	global $PrimePost, $PrimeUser;
 	?>
-    <div class="prime-author-meta prime-author-role"><?php echo $PrimeUser->get_user_rolename( $PrimePost->user_id ); ?></div>
+    <div class="prime-author-meta prime-author-role"><?php echo $PrimeUser->get_user_rolename( $PrimePost->user_id );//phpcs:ignore ?></div>
 	<?php
 }
 
@@ -338,16 +338,16 @@ function pfm_add_author_counters() {
 	if ( $tcount = pfm_get_author_meta( $PrimePost->user_id, 'topic_count' ) ) {
 		?>
         <div class="prime-author-meta prime-author-topics">
-            <span><?php echo __( 'Topics', 'wp-recall' ); ?></span>
-            <span><?php echo $tcount; ?></span>
+            <span><?php echo esc_html__( 'Topics', 'wp-recall' ); ?></span>
+            <span><?php echo esc_html( $tcount ); ?></span>
         </div>
 		<?php
 	}
 	if ( $pcount = pfm_get_author_meta( $PrimePost->user_id, 'post_count' ) ) {
 		?>
         <div class="prime-author-meta prime-author-posts">
-            <span><?php echo __( 'Messages', 'wp-recall' ); ?></span>
-            <span><?php echo $pcount; ?></span>
+            <span><?php echo esc_html__( 'Messages', 'wp-recall' ); ?></span>
+            <span><?php echo esc_html( $pcount ); ?></span>
         </div>
 		<?php
 	}

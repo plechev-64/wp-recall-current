@@ -31,13 +31,13 @@ function rcl_profile_fields_manager() {
 
 	$Manager = new Rcl_Profile_Fields_Manager();
 
-	$content = '<h2>' . __( 'Manage profile fields', 'wp-recall' ) . '</h2>';
+	$content = '<h2>' . esc_html__( 'Manage profile fields', 'wp-recall' ) . '</h2>';
 
-	$content .= '<p>' . __( 'On this page you can create custom fields of the user profile, as well as to manage already created fields', 'wp-recall' ) . '</p>';
+	$content .= '<p>' . esc_html__( 'On this page you can create custom fields of the user profile, as well as to manage already created fields', 'wp-recall' ) . '</p>';
 
 	$content .= $Manager->get_manager();
 
-	echo $content;
+	echo $content;//phpcs:ignore
 }
 
 //Сохраняем изменения в произвольных полях профиля со страницы пользователя
@@ -78,7 +78,7 @@ function rcl_get_custom_fields_profile( $user ) {
 
 	if ( $fields ) {
 
-		$content = '<h3>' . __( 'Custom Profile Fields', 'wp-recall' ) . ':</h3>
+		$content = '<h3>' . esc_html__( 'Custom Profile Fields', 'wp-recall' ) . ':</h3>
         <table class="form-table rcl-form rcl-custom-fields-box">';
 
 		$hiddens = array();
@@ -116,7 +116,7 @@ function rcl_get_custom_fields_profile( $user ) {
 			$content .= Rcl_Field::setup( $field )->get_field_input();
 		}
 
-		echo $content;
+		echo $content;//phpcs:ignore
 	}
 }
 
