@@ -100,7 +100,7 @@ class Rcl_Addons_Manager extends WP_List_Table {
 			return;
 		}
 
-		echo '<style type="text/css">';
+		echo '<style>';
 		echo '.wp-list-table .column-id { width: 5%; }';
 		echo '.wp-list-table .column-addon_icon { width: 35px; }';
 		echo '.wp-list-table .column-addon_name { width: 25%; }';
@@ -139,24 +139,20 @@ class Rcl_Addons_Manager extends WP_List_Table {
 	}
 
 	function get_sortable_columns() {
-		$sortable_columns = array(
+		return array(
 			'addon_name'   => array( 'addon_name', false ),
 			'addon_status' => array( 'addon_status', false )
 		);
-
-		return $sortable_columns;
 	}
 
 	function get_columns() {
-		$columns = array(
+		return array(
 			'cb'                => '<input type="checkbox" />',
 			'addon_icon'        => '',
 			'addon_name'        => __( 'Add-ons', 'wp-recall' ),
 			'addon_status'      => __( 'Status', 'wp-recall' ),
 			'addon_description' => __( 'Description', 'wp-recall' )
 		);
-
-		return $columns;
 	}
 
 	function usort_reorder( $a, $b ) {
@@ -186,13 +182,11 @@ class Rcl_Addons_Manager extends WP_List_Table {
 	}
 
 	function get_bulk_actions() {
-		$actions = array(
+		return array(
 			'delete'     => esc_html__( 'Delete', 'wp-recall' ),
 			'activate'   => esc_html__( 'Activate', 'wp-recall' ),
 			'deactivate' => esc_html__( 'Deactivate', 'wp-recall' ),
 		);
-
-		return $actions;
 	}
 
 	function column_cb( $item ) {

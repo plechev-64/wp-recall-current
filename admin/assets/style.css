@@ -1620,7 +1620,7 @@ span.ruble-symbol {
     border-style: none;
     border-color: initial;
     border-image: initial;
-    border-radius: 0px;
+    border-radius: 0;
     padding: 5px;
 }
 
@@ -1632,7 +1632,7 @@ span.ruble-symbol {
     border-style: solid;
     border-color: rgb(212, 212, 212);
     border-image: initial;
-    border-radius: 0px;
+    border-radius: 0;
     padding: 4px;
 }
 
@@ -1665,7 +1665,7 @@ span.ruble-symbol {
     position: fixed;
     top: 30px;
     z-index: 91;
-    box-shadow: 3px 3px 6px 0px #ccc;
+    box-shadow: 3px 3px 6px 0 #ccc;
 }
 
 .rcl-fields-manager.structure-edit .default-box.fixed {
@@ -1673,7 +1673,7 @@ span.ruble-symbol {
     top: 21px;
     z-index: 91;
     width: calc(100% - 200px);
-    box-shadow: 3px 3px 6px 0px #ccc;
+    box-shadow: 3px 3px 6px 0 #ccc;
 }
 
 .rcl-fields-manager.structure-edit .rcl-default-fields .manager-field {
@@ -1734,7 +1734,7 @@ span.ruble-symbol {
 }
 
 .rcl-fields-manager .rcl-areas-manager {
-    padding: 0px;
+    padding: 0;
     position: relative;
     overflow: hidden;
     font-size: 18px;
@@ -1778,7 +1778,7 @@ span.ruble-symbol {
     width: 450px;
     left: calc(50% - 1225px);
     background: rgba(0, 0, 0, .5);
-    padding: 50px 1000px 0px 1000px;
+    padding: 50px 1000px 0 1000px;
 }
 
 .rcl-fields-manager .manager-field.settings-edit .manager-field-settings {

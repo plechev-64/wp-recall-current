@@ -136,13 +136,10 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 	function get_chat_data( $chat_room ) {
 		global $wpdb;
 
-		$chat_id = 0;
-
 		if ( $chat_room ) {
-			$chat = $wpdb->get_row( "SELECT * FROM " . RCL_PREF . "chats WHERE chat_room = '$chat_room'", ARRAY_A );//phpcs:ignore
+			return $wpdb->get_row( "SELECT * FROM " . RCL_PREF . "chats WHERE chat_room = '$chat_room'", ARRAY_A );//phpcs:ignore
 		}
 
-		return $chat;
 	}
 
 	function read_chat( $chat_id ) {
@@ -153,19 +150,18 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 	function set_activity() {
 		global $wpdb;
 		//phpcs:disable
-		$result = $wpdb->query( "INSERT INTO " . RCL_PREF . "chat_users "
-		                        . "(`room_place`, `chat_id`, `user_id`, `user_activity`, `user_write`, `user_status`) "
-		                        . "VALUES('$this->chat_id:$this->user_id', $this->chat_id, $this->user_id, '" . current_time( 'mysql' ) . "', 0, 1) "
-		                        . "ON DUPLICATE KEY UPDATE user_activity = '" . current_time( 'mysql' ) . "', user_write='$this->user_write'" );
+		$wpdb->query( "INSERT INTO " . RCL_PREF . "chat_users "
+		              . "(`room_place`, `chat_id`, `user_id`, `user_activity`, `user_write`, `user_status`) "
+		              . "VALUES('$this->chat_id:$this->user_id', $this->chat_id, $this->user_id, '" . current_time( 'mysql' ) . "', 0, 1) "
+		              . "ON DUPLICATE KEY UPDATE user_activity = '" . current_time( 'mysql' ) . "', user_write='$this->user_write'" );
 		//phpcs:enable
 	}
 
 	function get_users_activity() {
 		global $wpdb;
-		//phpcs:ignore
-		$actives = $wpdb->get_results( "SELECT user_id,user_write FROM " . RCL_PREF . "chat_users WHERE chat_id='$this->chat_id' AND user_id!='$this->user_id' AND user_activity >= ('" . current_time( 'mysql' ) . "' - interval 1 minute)" );
 
-		return $actives;
+		//phpcs:ignore
+		return $wpdb->get_results( "SELECT user_id,user_write FROM " . RCL_PREF . "chat_users WHERE chat_id='$this->chat_id' AND user_id!='$this->user_id' AND user_activity >= ('" . current_time( 'mysql' ) . "' - interval 1 minute)" );
 	}
 
 	function get_current_activity() {
@@ -307,9 +303,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 		do_action( 'rcl_chat_insert_message', $message, $this );
 
-		$message = wp_unslash( $message );
-
-		return $message;
+		return wp_unslash( $message );
 	}
 
 	function insert_chat( $chat_room, $chat_status ) {
@@ -343,19 +337,19 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 		}
 
 		$rcl_chat = $this;
-
+		$content  = '';
 		if ( $this->beat ) {
 
-			$content = '<script>'
-			           . 'rcl_init_chat({'
-			           . 'token:"' . $this->chat_token . '",'
-			           . 'file_upload:' . $this->file_upload . ','
-			           . 'max_words:' . $this->max_words . ','
-			           . 'delay:' . $this->delay . ','
-			           . 'open_chat:"' . current_time( 'mysql' ) . '",'
-			           . 'timeout:' . $this->timeout
-			           . '});'
-			           . '</script>';
+			$content .= '<script>'
+			            . 'rcl_init_chat({'
+			            . 'token:"' . $this->chat_token . '",'
+			            . 'file_upload:' . $this->file_upload . ','
+			            . 'max_words:' . $this->max_words . ','
+			            . 'delay:' . $this->delay . ','
+			            . 'open_chat:"' . current_time( 'mysql' ) . '",'
+			            . 'timeout:' . $this->timeout
+			            . '});'
+			            . '</script>';
 		}
 
 		$content .= '<div class="rcl-chat chat-' . $this->chat_status . ' chat-room-' . $this->chat_room . '" data-token="' . $this->chat_token . '" data-in_page="' . $this->query['number'] . '">';
@@ -388,8 +382,8 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 			return $content;
 		}
 
-		$content = apply_filters( 'rcl_chat_before_form', '', $this->chat );
-
+		$content  = apply_filters( 'rcl_chat_before_form', '', $this->chat );
+		$uploader = false;
 		if ( $this->file_upload ) {
 
 			$chatOptions = rcl_get_option( 'chat', array() );
@@ -456,12 +450,10 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 	}
 
 	function userslist() {
-		$content = '<div class="chat-users-box">'
-		           . '<span>' . __( 'In chat', 'wp-recall' ) . ':</span>'
-		           . '<div class="chat-users"></div>'
-		           . '</div>';
-
-		return $content;
+		return '<div class="chat-users-box">'
+		       . '<span>' . __( 'In chat', 'wp-recall' ) . ':</span>'
+		       . '<div class="chat-users"></div>'
+		       . '</div>';
 	}
 
 	function get_messages_box() {
@@ -542,9 +534,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 		$messages = $this->get_data();
 
-		$messages = apply_filters( 'rcl_chat_messages', $messages );
-
-		return $messages;
+		return apply_filters( 'rcl_chat_messages', $messages );
 	}
 
 	function count_messages() {
@@ -688,7 +678,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 			$media = '<a target="_blank" rel="fancybox" href="' . $attach_url . '"><img src="' . wp_get_attachment_image_url( $attachment_id, array(
 					300,
 					300
-				) ) . '"></a>';
+				) ) . '" alt=""></a>';
 		} else if ( in_array( $ext, wp_get_audio_extensions() ) ) {
 
 			$type  = 'audio';
@@ -717,15 +707,13 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 		$status = ( $this->important ) ? 0 : 1;
 		$class  = ( $this->important ) ? 'fa-star-half-o' : 'fa-star';
 
-		$content = '<div class="important-manager">'
-		           . rcl_get_button( array(
+		return '<div class="important-manager">'
+		       . rcl_get_button( array(
 				'icon'    => $class,
 				'class'   => 'important-shift',
 				'onclick' => 'rcl_chat_important_manager_shift(this,' . $status . ');return false;'
 			) )
-		           . '</div>';
-
-		return $content;
+		       . '</div>';
 	}
 
 	function add_important_query( $query ) {

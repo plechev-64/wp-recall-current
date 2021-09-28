@@ -105,7 +105,9 @@ function rcl_get_userlist( $atts ) {
 add_shortcode( 'rcl-cache', 'rcl_cache_shortcode' );
 function rcl_cache_shortcode( $atts, $content = null ) {
 	global $post;
-
+	$key        = false;
+	$time       = false;
+	$only_guest = false;
 	extract( shortcode_atts( array(
 		'key'        => '',
 		'only_guest' => false,
@@ -148,8 +150,9 @@ add_shortcode( 'rcl-tab', 'rcl_tab_shortcode' );
 function rcl_tab_shortcode( $atts ) {
 	global $user_ID, $user_LK;
 
-	$user_LK = $user_ID;
-
+	$user_LK   = $user_ID;
+	$tab_id    = false;
+	$subtab_id = false;
 	extract( shortcode_atts( array(
 		'tab_id'    => '',
 		'subtab_id' => ''
@@ -162,7 +165,7 @@ function rcl_tab_shortcode( $atts ) {
 
 	$tab = rcl_get_tab( $tab_id );
 
-	if ( ! $tab_id || ! $tab ) {
+	if ( ! $tab ) {
 		return '<p>' . esc_html__( 'Such tab was not found!', 'wp-recall' ) . '</p>';
 	}
 

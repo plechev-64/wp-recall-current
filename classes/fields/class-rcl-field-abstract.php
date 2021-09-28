@@ -164,14 +164,12 @@ class Rcl_Field_Abstract {
 			$inputField .= '<script>rcl_init_field_maxlength("' . $this->input_id . '");</script>';
 		}
 
-		$content = '<div id="rcl-field-' . $this->id . '" class="' . implode( ' ', $classes ) . '">'
-		           . '<div class="rcl-field-core">'
-		           . $inputField
-		           . '</div>'
-		           . $this->get_notice()
-		           . '</div>';
-
-		return $content;
+		return '<div id="rcl-field-' . $this->id . '" class="' . implode( ' ', $classes ) . '">'
+		       . '<div class="rcl-field-core">'
+		       . $inputField
+		       . '</div>'
+		       . $this->get_notice()
+		       . '</div>';
 	}
 
 	function get_field_html( $args = false ) {

@@ -38,9 +38,7 @@ class Rcl_Field_Date extends Rcl_Field_Abstract {
 
 		$this->classes = 'rcl-datepicker';
 
-		$content = '<input type="text" ' . $this->get_class() . ' autocomplete="off" onclick="rcl_show_datepicker(this);" title="' . __( 'Use the format', 'wp-recall' ) . ': yyyy-mm-dd" pattern="(\d{4}-\d{2}-\d{2})" ' . $this->get_required() . ' ' . $this->get_placeholder() . ' name="' . $this->input_name . '" id="' . $this->input_id . '" value="' . $this->value . '"/>';
-
-		return $content;
+		return '<input type="text" ' . $this->get_class() . ' autocomplete="off" onclick="rcl_show_datepicker(this);" title="' . __( 'Use the format', 'wp-recall' ) . ': yyyy-mm-dd" pattern="(\d{4}-\d{2}-\d{2})" ' . $this->get_required() . ' ' . $this->get_placeholder() . ' name="' . $this->input_name . '" id="' . $this->input_id . '" value="' . $this->value . '"/>';
 	}
 
 	function get_filter_value() {

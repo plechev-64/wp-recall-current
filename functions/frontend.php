@@ -558,9 +558,7 @@ function rcl_get_miniaction( $action ) {
 
 	$content .= ( ! $last_action && $action ) ? '<i class="rcli fa-circle"></i>' : __( 'offline', 'wp-recall' ) . ' ' . $last_action;
 
-	$content = sprintf( '<div class="status_author_mess %s">%s</div>', $class, $content );
-
-	return $content;
+	return sprintf( '<div class="status_author_mess %s">%s</div>', $class, $content );
 }
 
 //заменяем ссылку автора комментария на ссылку его ЛК
@@ -630,6 +628,8 @@ function rcl_sort_gallery( $attaches, $key, $user_id = false ) {
 	if ( ! $attaches ) {
 		return false;
 	}
+	$gallerylist = [];
+	$news        = [];
 	if ( ! $user_id ) {
 		$user_id = $user_ID;
 	}
@@ -696,14 +696,12 @@ function rcl_user_black_list_button( $office_id ) {
 
 	$title = ( $user_block ) ? __( 'Unblock', 'wp-recall' ) : __( 'Blacklist', 'wp-recall' );
 
-	$button = rcl_get_button( [
+	return rcl_get_button( [
 		'label'   => $title,
 		'class'   => 'rcl-manage-blacklist',
 		'icon'    => 'fa-bug',
 		'onclick' => 'rcl_manage_user_black_list(this,' . $office_id . ',"' . __( 'Are you sure?', 'wp-recall' ) . '");return false;'
 	] );
-
-	return $button;
 }
 
 add_filter( 'rcl_tabs', 'rcl_check_user_blocked', 10 );
@@ -773,8 +771,5 @@ function rcl_post_bar( $content ) {
 
 	$bar .= '</div>';
 
-	$content = $bar . $content;
-
-
-	return $content;
+	return $bar . $content;
 }

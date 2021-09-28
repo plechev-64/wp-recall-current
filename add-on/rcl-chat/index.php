@@ -168,7 +168,7 @@ function rcl_chat_tab( $office_id ) {
 	global $user_ID;
 
 	if ( $office_id == $user_ID ) {
-		return rcl_get_tab_user_contacts( $office_id );
+		return rcl_get_tab_user_contacts();
 	}
 
 	if ( $user_ID ) {
@@ -193,7 +193,7 @@ function rcl_get_chat_private( $user_id, $args = array() ) {
 }
 
 function rcl_get_the_chat_by_room( $chat_room, $args = array() ) {
-	global $user_ID, $rcl_options;
+	global $rcl_options;
 
 	$file_upload = ( isset( $rcl_options['chat']['file_upload'] ) ) ? $rcl_options['chat']['file_upload'] : 0;
 
@@ -253,10 +253,9 @@ function rcl_get_user_contacts( $user_id, $limit ) {
 		. "LIMIT $limit[0],$limit[1]"
 		, ARRAY_A
 	);
-	//phpcs:enable
-	$messages = stripslashes_deep( $messages );
 
-	return $messages;
+	//phpcs:enable
+	return stripslashes_deep( $messages );
 }
 
 function rcl_get_user_contacts_list( $user_id ) {
@@ -352,8 +351,6 @@ function rcl_get_tab_user_important( $user_id ) {
 	require_once 'class-rcl-chat.php';
 
 	$chat = new Rcl_Chat();
-
-	$navi = false;
 
 	$content = '<div class="rcl-chat">';
 
@@ -515,6 +512,8 @@ function rcl_chat_is_private_room( $room ) {
 /**
  * @param $user_id
  * @param $room - private:1:3
+ *
+ * @return bool
  */
 function rcl_chat_user_in_room( $user_id, $room ) {
 	list( $prefix, $user_1, $user_2 ) = explode( ':', trim( $room ) );
@@ -523,5 +522,5 @@ function rcl_chat_user_in_room( $user_id, $room ) {
 }
 
 include_once 'actions.php';
-include_once 'actions_cron.php';
-include_once 'actions_ajax.php';
+include_once 'actions-cron.php';
+include_once 'actions-ajax.php';

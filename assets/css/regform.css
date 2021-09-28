@@ -97,7 +97,7 @@ div.panel_lk_recall a {
 
 .panel_lk_recall .rcl-field-input textarea,
 .panel_lk_recall .rcl-field-input input:not([type="checkbox"]):not([type="radio"]) {
-    -webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important;
+    -webkit-box-shadow: 0 0 0 1000px #fafafa inset !important;
 }
 
 .panel_lk_recall .rcl-field-input select:focus,
@@ -133,7 +133,7 @@ div.panel_lk_recall a {
     padding: 6px 12px 6px 32px;
     text-transform: none;
     width: 100%;
-    -webkit-box-shadow: 0 0 0px 1000px #fafafa inset !important; /*chrome banana fix*/
+    -webkit-box-shadow: 0 0 0 1000px #fafafa inset !important; /*chrome banana fix*/
 }
 
 .panel_lk_recall .form-tab-rcl .block-label {

@@ -11,18 +11,16 @@
 .rcl-payment-form .title-form {
     padding: 5px 5px 5px 45px;
     background-size: 38px;
-    background-position: top 0px left 0px;
+    background-position: top 0 left 0;
     background-repeat: no-repeat;
     font-size: 16px;
     background-color: #e7e7e7;
     cursor: pointer;
-    /* color: #fff; */
 }
 
 .rcl-payment-form .title-form .rcli {
     float: right;
     padding: 7px 10px;
-    /* color: #ffffff; */
 }
 
 .rcl-payment-form .title-form .rcli:before {
@@ -46,10 +44,6 @@
     display: block;
 }
 
-.rcl-payment-form .form-field {
-
-}
-
 .rcl-payment-form .rcl-form .submit-box {
     background: none;
 }
@@ -57,14 +51,10 @@
 .rcl-payment-form .rcl-field-core .block-label {
     padding: 10px 10px 10px 50px;
     background-size: 40px;
-    background-position: top 0px left 0px;
+    background-position: top 0 left 0;
     background-repeat: no-repeat;
     border: 1px solid #ccc;
     font-size: 14px;
-}
-
-.rcl-payment-form .rcl-field-gateway_id {
-
 }
 
 .rcl-payment-form .rcl-field-gateway_id .rcl-radio-box {
@@ -82,7 +72,6 @@
     background: none;
     border: none;
 }
-
 
 /****/
 

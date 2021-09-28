@@ -74,7 +74,7 @@ function rcl_rangyinputs_scripts() {
 	rcl_enqueue_script( 'rangyinputs', RCL_URL . 'assets/js/rangyinputs.js' );
 }
 
-function rcl_font_awesome_style( $fontAwesome = true ) {
+function rcl_font_awesome_style() {
 	wp_enqueue_style( 'rcl-awesome', RCL_URL . 'assets/rcl-awesome/rcl-awesome.min.css', false, VER_RCL );
 }
 

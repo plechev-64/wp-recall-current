@@ -24,7 +24,7 @@
             'display': 'table'
         });
     }
-    $(window).resize(function () {									// наш ресайз
+    $(window).on('resize', function () {									// наш ресайз
         if ($(window).width() <= 568) {
             closeMenu();
             if (!LtMenu.hasClass('st_menu_moved')) {					// если не имеет этого класса (чтобы не делать лишних append-ов)
@@ -73,7 +73,7 @@
     if ($(window).width() <= 568) {
         countHeight();
     }
-    $(window).resize(function () {									// при ресайзе пересчитываем высоту
+    $(window).on('resize', function () {									// при ресайзе пересчитываем высоту
         if ($(window).width() <= 568) {
             countHeight();
         } else {

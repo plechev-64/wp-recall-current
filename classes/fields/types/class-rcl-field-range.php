@@ -25,7 +25,7 @@ class Rcl_Field_Range extends Rcl_Field_Abstract {
 
 	function get_options() {
 
-		$options = array(
+		return array(
 			array(
 				'slug'        => 'unit',
 				'default'     => $this->unit,
@@ -65,8 +65,6 @@ class Rcl_Field_Range extends Rcl_Field_Abstract {
 				)
 			)
 		);
-
-		return $options;
 	}
 
 	function get_input() {

@@ -182,9 +182,7 @@ class Rcl_Options extends Rcl_Custom_Fields {
 			$classes[] = 'extend-option';
 		}
 
-		$content = '<span class="' . implode( ' ', $classes ) . ' rcl-custom-field">' . $content . '</span>';
-
-		return $content;
+		return '<span class="' . implode( ' ', $classes ) . ' rcl-custom-field">' . $content . '</span>';
 	}
 
 	function get_value( $args ) {
@@ -226,9 +224,7 @@ class Rcl_Options extends Rcl_Custom_Fields {
 			return isset( $args['default'] ) ? $args['default'] : '';
 		}
 
-		$value = rcl_get_option( $args['slug'], $args['default'] );
-
-		return $value;
+		return rcl_get_option( $args['slug'], $args['default'] );
 	}
 
 	function field_name( $field ) {

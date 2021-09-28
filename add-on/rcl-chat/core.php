@@ -196,9 +196,7 @@ function rcl_chat_delete_message_meta( $message_id, $meta_key = false ) {
 		$sql .= "AND meta_key = '$meta_key'";
 	}
 
-	$result = $wpdb->query( $sql );//phpcs:ignore
-
-	return $result;
+	return $wpdb->query( $sql );//phpcs:ignore
 }
 
 function rcl_chat_update_user_status( int $chat_id, int $user_id, int $status ) {

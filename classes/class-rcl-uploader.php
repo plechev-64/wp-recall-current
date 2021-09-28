@@ -83,10 +83,10 @@ class Rcl_Uploader {
 		rcl_dialog_scripts();
 		rcl_crop_scripts();
 
-		if ( $this->crop ) {
-			//rcl_dialog_scripts();
-			//rcl_crop_scripts();
-		}
+		//if ( $this->crop ) {
+		//rcl_dialog_scripts();
+		//rcl_crop_scripts();
+		//}
 	}
 
 	function init_properties( $args ) {
@@ -200,13 +200,11 @@ class Rcl_Uploader {
 
 	function get_dropzone() {
 
-		$content = '<div id="rcl-dropzone-' . $this->uploader_id . '" class="rcl-dropzone">
+		return '<div id="rcl-dropzone-' . $this->uploader_id . '" class="rcl-dropzone">
 				<div class="dropzone-upload-area">
 					' . esc_html__( 'Add files in a queue of downloads', 'wp-recall' ) . '
 				</div>
 			</div>';
-
-		return $content;
 	}
 
 	private function get_mime_type_by_ext( $file_ext ) {

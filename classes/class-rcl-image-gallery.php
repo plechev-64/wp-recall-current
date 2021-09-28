@@ -151,8 +151,8 @@ class Rcl_Image_Gallery {
 		$content .= '<div id="' . $this->id . '" class="rcl-slider" style="position: relative; top: 0px; left: 0px; width: ' . $this->width . 'px; height: ' . ( isset( $this->navigator['thumbnails'] ) && count( $this->image_urls ) > 1 ? $this->height + $this->navigator['thumbnails']['height'] + 10 : $this->height ) . 'px; max-width: 100%; overflow: hidden;">';
 
 		$content .= '<!-- Loading Screen -->
-		<div data-u="loading" class="jssorl-009-spin" style="z-index:9;position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgb(232, 232, 232);">
-			<img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="' . plugins_url( '/assets/js/jssor.slider/svg/loading/static-svg/spin.svg', dirname( __FILE__ ) ) . '" />
+		<div data-u="loading" class="jssorl-009-spin" style="z-index:9;position:absolute;top:0;left:0;width:100%;height:100%;text-align:center;background-color:rgb(232, 232, 232);">
+			<img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" alt="" src="' . plugins_url( '/assets/js/jssor.slider/svg/loading/static-svg/spin.svg', dirname( __FILE__ ) ) . '" />
 		</div>';
 
 		$content .= $this->get_slides();
@@ -185,7 +185,7 @@ class Rcl_Image_Gallery {
 
 			$content .= '<div>';
 
-			$slide = '<img data-u="image" src="' . $image['slide'] . '" /></a>';
+			$slide = '<img data-u="image" alt="" src="' . $image['slide'] . '" /></a>';
 
 			if ( $this->slides['full'] ) {
 				$content .= sprintf( '<a href="%s">%s</a>', $image['full'], $slide );
@@ -207,7 +207,7 @@ class Rcl_Image_Gallery {
 
 	function get_navigator_thumbnails() {
 
-		$content = '<!-- region Thumbnail Navigator Skin Begin -->
+		return '<!-- region Thumbnail Navigator Skin Begin -->
 			<style>
 				.rcl-gallery-navigator {
 					width: ' . $this->width . 'px;
@@ -240,13 +240,11 @@ class Rcl_Image_Gallery {
 				' . ( isset( $this->navigator['thumbnails']['arrows'] ) ? $this->get_navigator_arrows() : '' ) . '
 			</div>
 			<!-- endregion Thumbnail Navigator Skin End -->';
-
-		return $content;
 	}
 
 	function get_navigator_arrows() {
 
-		$content = '<!-- Arrow Navigator -->
+		return '<!-- Arrow Navigator -->
 		<div data-u="arrowleft" class="rcl-navigator-arrow" style="width:40px;height:40px;top:123px;left:8px;" data-autocenter="2" data-scale="0.75" data-scale-left="0.75">
 			<svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
 				<polyline class="a" points="11040,1920 4960,8000 11040,14080 "></polyline>
@@ -257,8 +255,6 @@ class Rcl_Image_Gallery {
 				<polyline class="a" points="4960,1920 11040,8000 4960,14080 "></polyline>
 			</svg>
 		</div>';
-
-		return $content;
 	}
 
 }

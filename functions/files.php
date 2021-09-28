@@ -83,9 +83,7 @@ function rcl_path_by_url( $url ) {
 
 	$string = stristr( $url, basename( content_url() ) );
 
-	$path = untrailingslashit( dirname( WP_CONTENT_DIR ) . '/' . $string );
-
-	return $path;
+	return untrailingslashit( dirname( WP_CONTENT_DIR ) . '/' . $string );
 }
 
 function rcl_format_url( $url, $tab_id = false, $subtab_id = false ) {

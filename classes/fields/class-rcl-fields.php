@@ -224,9 +224,7 @@ class Rcl_Fields extends Rcl_Field {
 			return false;
 		}
 
-		$content = '<div class="rcl-content preloader-parent">' . $content . '</div>';
-
-		return $content;
+		return '<div class="rcl-content preloader-parent">' . $content . '</div>';
 	}
 
 	function get_loop() {
@@ -304,9 +302,7 @@ class Rcl_Fields extends Rcl_Field {
 			return false;
 		}
 
-		$content .= $field->get_field_html( $field->value );
-
-		return $content;
+		return $field->get_field_html( $field->value );
 	}
 
 	function get_form( $args = array() ) {
@@ -368,9 +364,7 @@ class Rcl_Fields extends Rcl_Field {
 			return false;
 		}
 
-		$content = '<div class="rcl-content preloader-parent">' . $content . '</div>';
-
-		return $content;
+		return '<div class="rcl-content preloader-parent">' . $content . '</div>';
 	}
 
 	function get_group_form( $group, $args = false ) {
@@ -445,9 +439,7 @@ class Rcl_Fields extends Rcl_Field {
 			$field->set_prop( 'unique_id', true );
 		}
 
-		$content = $field->get_field_html();
-
-		return $content;
+		return $field->get_field_html();
 	}
 
 }

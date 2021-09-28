@@ -31,7 +31,7 @@ class Rcl_Field_File extends Rcl_Field_Uploader {
 
 	function get_options() {
 
-		$options = array(
+		return array(
 			array(
 				'slug'       => 'max_size',
 				'default'    => $this->max_size,
@@ -51,8 +51,6 @@ class Rcl_Field_File extends Rcl_Field_Uploader {
 				'notice'  => __( 'allowed types of files are divided by comma, for example: pdf, zip, jpg', 'wp-recall' )
 			)
 		);
-
-		return $options;
 	}
 
 	function get_uploader_props() {

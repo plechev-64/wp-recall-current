@@ -58,26 +58,16 @@ class Rcl_Field_Editor extends Rcl_Field_Abstract {
 		$editor_id = $this->editor_id ? $this->editor_id : 'editor-' . $this->rand;
 
 		$data = array(
-			'wpautop'       => 1
-		,
-			'media_buttons' => $this->media_button
-		,
-			'textarea_name' => $this->input_name
-		,
-			'textarea_rows' => 10
-		,
-			'tabindex'      => null
-		,
-			'editor_css'    => ''
-		,
-			'editor_class'  => 'autosave'
-		,
-			'teeny'         => 0
-		,
-			'dfw'           => 0
-		,
-			'tinymce'       => $this->tinymce ? true : false
-		,
+			'wpautop'       => 1,
+			'media_buttons' => $this->media_button,
+			'textarea_name' => $this->input_name,
+			'textarea_rows' => 10,
+			'tabindex'      => null,
+			'editor_css'    => '',
+			'editor_class'  => 'autosave',
+			'teeny'         => 0,
+			'dfw'           => 0,
+			'tinymce'       => $this->tinymce ? true : false,
 			'quicktags'     => $this->quicktags ? array( 'buttons' => $this->quicktags ) : true
 		);
 
@@ -103,7 +93,7 @@ class Rcl_Field_Editor extends Rcl_Field_Abstract {
 			$content .= '<script>rcl_init_ajax_editor("' . $editor_id . '",' . json_encode( array(
 					'tinymce'    => $this->tinymce,
 					'qt_buttons' => $this->quicktags ? $this->quicktags : false
-				) ) . ');</script>';
+				) ) . ')</script>';
 		}
 
 		ob_end_clean();

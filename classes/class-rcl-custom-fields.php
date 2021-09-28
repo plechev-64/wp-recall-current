@@ -56,9 +56,7 @@ class Rcl_Custom_Fields {
 			if ( isset( $field['admin'] ) && $field['admin'] == 1 && ! rcl_is_user_role( $user_ID, array( 'administrator' ) ) ) {
 				$value = get_user_meta( $user_LK, $this->slug, 1 );
 				if ( $value ) {
-					$html = $this->get_field_value( $field, $value, false );
-
-					return $html;
+					return $this->get_field_value( $field, $value, false );
 				}
 			}
 		}
@@ -75,14 +73,12 @@ class Rcl_Custom_Fields {
 			$fieldHtml .= '<script>rcl_init_field_maxlength("' . $this->field_id . '");</script>';
 		}
 
-		$content = '<div id="rcl-field-' . $this->field_id . '" class="rcl-field-input type-' . $field['type'] . '-input">'
-		           . '<div class="rcl-field-core">'
-		           . $fieldHtml
-		           . '</div>'
-		           . $this->get_notice( $field )
-		           . '</div>';
-
-		return $content;
+		return '<div id="rcl-field-' . $this->field_id . '" class="rcl-field-input type-' . $field['type'] . '-input">'
+		       . '<div class="rcl-field-core">'
+		       . $fieldHtml
+		       . '</div>'
+		       . $this->get_notice( $field )
+		       . '</div>';
 	}
 
 	function get_notice( $field ) {
@@ -566,9 +562,7 @@ class Rcl_Custom_Fields {
 
 		$field['classes'] = 'rcl-datepicker';
 
-		$content = '<input type="text" ' . $this->get_class( $field ) . ' onclick="rcl_show_datepicker(this);" title="' . __( 'Use the format', 'wp-recall' ) . ': yyyy-mm-dd" pattern="(\d{4}-\d{2}-\d{2})" ' . $this->required . ' ' . $this->placeholder . ' class="rcl-datepicker" name="' . $field['name'] . '" id="' . $this->field_id . '" autocomplete="off" value="' . $this->value . '"/>';
-
-		return $content;
+		return '<input type="text" ' . $this->get_class( $field ) . ' onclick="rcl_show_datepicker(this);" title="' . __( 'Use the format', 'wp-recall' ) . ': yyyy-mm-dd" pattern="(\d{4}-\d{2}-\d{2})" ' . $this->required . ' ' . $this->placeholder . ' class="rcl-datepicker" name="' . $field['name'] . '" id="' . $this->field_id . '" autocomplete="off" value="' . $this->value . '"/>';
 	}
 
 	function get_type_time( $field ) {

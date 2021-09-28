@@ -679,9 +679,8 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 		$val     = ( $this->fields['options'] ) ? $this->fields['options'][ $args['name'] ] : '';
 		$ph      = ( isset( $args['placeholder'] ) ) ? $args['placeholder'] : '';
 		$pattern = ( isset( $args['pattern'] ) ) ? 'pattern="' . $args['pattern'] . '"' : '';
-		$field   = '<input type="text" placeholder="' . $ph . '" title="' . $ph . '" ' . $pattern . ' name="options[' . $args['name'] . ']" value="' . $val . '"> ';
 
-		return $field;
+		return '<input type="text" placeholder="' . $ph . '" title="' . $ph . '" ' . $pattern . ' name="options[' . $args['name'] . ']" value="' . $val . '"> ';
 	}
 
 	function inactive_fields_box() {
@@ -864,15 +863,13 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 
 		$fields = $this->get_field_types();
 
-		$content = $this->get_option( array(
+		return $this->get_option( array(
 			'title'   => __( 'Field type', 'wp-recall' ),
 			'slug'    => 'type',
 			'type'    => 'select',
 			'classes' => 'select-type-field',
 			'values'  => $fields
 		) );
-
-		return $content;
 	}
 
 }

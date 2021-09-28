@@ -52,8 +52,8 @@ class Rcl_Tab {
 	}
 
 	function print_tab( $content ) {
-		global $user_LK, $rcl_tabs;
-		//print_r( $rcl_tabs );
+		global $user_LK;
+
 		$content .= $this->get_tab( $user_LK );
 
 		return $content;
@@ -106,9 +106,7 @@ class Rcl_Tab {
 			$content = $subtab->get_subtab( $master_id );
 		}
 
-		$content = apply_filters( 'rcl_tab_' . $this->id, $content );
-
-		return $content;
+		return apply_filters( 'rcl_tab_' . $this->id, $content );
 	}
 
 	function get_class_button() {
@@ -154,8 +152,6 @@ class Rcl_Tab {
 	}
 
 	function get_tab_button( $master_id ) {
-		global $user_ID;
-
 		if ( ! $this->is_user_access( $master_id ) ) {
 			return false;
 		}
@@ -220,8 +216,6 @@ class Rcl_Tab {
 	}
 
 	function get_tab( $master_id, $subtab_id = false ) {
-		global $user_ID;
-
 		if ( ! $this->is_user_access( $master_id ) ) {
 			return false;
 		}

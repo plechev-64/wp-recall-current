@@ -24,7 +24,7 @@ class Rcl_Field_Runner extends Rcl_Field_Abstract {
 
 	function get_options() {
 
-		$options = array(
+		return array(
 			array(
 				'slug'        => 'unit',
 				'default'     => $this->unit,
@@ -51,8 +51,6 @@ class Rcl_Field_Runner extends Rcl_Field_Abstract {
 				'title'   => __( 'Step', 'wp-recall' ),
 			)
 		);
-
-		return $options;
 	}
 
 	function get_input() {

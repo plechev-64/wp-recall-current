@@ -7,6 +7,7 @@ function rcl_login_form() {
 
 add_shortcode( 'loginform', 'rcl_get_login_form' );
 function rcl_get_login_form( $atts ) {
+	$form = false;
 	extract( shortcode_atts( array( 'form' => false ), $atts ) );
 
 	return rcl_get_authorize_form( 'pageform', $form );
@@ -152,9 +153,7 @@ function rcl_get_primary_widget_buttons( $buttons ) {
 		}
 	}
 
-	$content = sprintf( '<div class="rcl-widget-buttons">%s</div>', apply_filters( 'buttons_widget_rcl', $content ) );
-
-	return $content;
+	return sprintf( '<div class="rcl-widget-buttons">%s</div>', apply_filters( 'buttons_widget_rcl', $content ) );
 }
 
 function rcl_get_loginform_url( $type ) {

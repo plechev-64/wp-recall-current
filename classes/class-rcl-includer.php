@@ -210,9 +210,7 @@ class Rcl_Includer {
 			unset( $new_array[ $this->place ]['parents'] );
 		}
 
-		$array = $new_array;
-
-		return $array;
+		return $new_array;
 	}
 
 	function dequeue( $included ) {
@@ -488,9 +486,7 @@ function rcl_add_registered_scripts( $content ) {
 
 	add_filter( 'script_loader_src', 'rcl_ajax_edit_version_scripts' );
 
-	$content = $Rcl_Include->get_ajax_includes() . $content;
-
-	return $content;
+	return $Rcl_Include->get_ajax_includes() . $content;
 }
 
 //добавление массива подключаемых скриптов к возвращаемому результату вызова вкладки через ajax

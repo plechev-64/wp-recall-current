@@ -33,7 +33,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 
 	function get_options() {
 
-		$options = array(
+		return array(
 			array(
 				'slug'       => 'max_size',
 				'default'    => $this->max_size,
@@ -90,8 +90,6 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 				'notice'  => __( 'You can attach this uploader for one of text editors, pointing its ID', 'wp-recall' ),
 			)
 		);
-
-		return $options;
 	}
 
 	function get_uploader_props() {
@@ -249,7 +247,7 @@ class Rcl_Field_Uploader extends Rcl_Field_Abstract {
 
 	function get_single_attachment( $attach_id ) {
 
-		$is_image = wp_attachment_is_image( $attach_id ) ? true : false;
+		$is_image = wp_attachment_is_image( $attach_id );
 
 		if ( $is_image ) {
 

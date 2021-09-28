@@ -130,9 +130,7 @@ class Rcl_Sub_Tabs {
 
 	function url_string( $master_id, $subtab_id ) {
 
-		$url = rcl_format_url( rcl_get_user_url( $master_id ), $this->parent_id, $subtab_id );
-
-		return $url;
+		return rcl_format_url( rcl_get_user_url( $master_id ), $this->parent_id, $subtab_id );
 	}
 
 }

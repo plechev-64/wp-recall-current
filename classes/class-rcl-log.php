@@ -18,7 +18,7 @@ class Rcl_Log {
 				wp_mkdir_p( $logDir );
 			}
 
-			$this->log_path = $logDir . date( 'Y-m-d' ) . '.log';
+			$this->log_path = $logDir . gmdate( 'Y-m-d' ) . '.log';
 		}
 	}
 
@@ -34,7 +34,7 @@ class Rcl_Log {
 
 	function insert_title( $title ) {
 
-		$this->insert_log( date( 'H:i:s' ) . " " . $title );
+		$this->insert_log( gmdate( 'H:i:s' ) . " " . $title );
 	}
 
 	function insert_log( $data ) {

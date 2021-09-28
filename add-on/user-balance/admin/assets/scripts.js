@@ -2,9 +2,9 @@ jQuery(function () {
     /*************************************************
      Пополняем личный счет пользователя в админке
      *************************************************/
-    jQuery('.wp-list-table .edit_balance').click(function () {
+    jQuery('.wp-list-table .edit_balance').on('click', function () {
 
-        var id_user = parseInt(jQuery(this).attr('id').replace(/\D+/g, ''));
+        let id_user = parseInt(jQuery(this).attr('id').replace(/\D+/g, ''));
 
         rcl_ajax({
             data: {

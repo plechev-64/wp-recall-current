@@ -73,7 +73,7 @@ function rcl_get_chart_payments( $pays ) {
 /* * ***********************************************
   Меняем баланс пользователя из админки
  * *********************************************** */
-rcl_ajax_action( 'rcl_edit_balance_user', false );
+rcl_ajax_action( 'rcl_edit_balance_user' );
 function rcl_edit_balance_user() {
 
 	if ( ! current_user_can( 'administrator' ) ) {

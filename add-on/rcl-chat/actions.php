@@ -5,7 +5,7 @@ function rcl_chat_messages_add_important_meta( $messages ) {
 	global $wpdb, $user_ID;
 
 	if ( ! $messages ) {
-		return $messages;
+		return null;
 	}
 
 	$ids = array();
@@ -33,10 +33,10 @@ function rcl_chat_messages_add_important_meta( $messages ) {
 
 add_filter( 'rcl_chat_messages', 'rcl_chat_messages_add_attachments_meta', 10 );
 function rcl_chat_messages_add_attachments_meta( $messages ) {
-	global $wpdb, $user_ID;
+	global $wpdb;
 
 	if ( ! $messages ) {
-		return $messages;
+		return null;
 	}
 
 	$ids = array();
@@ -67,7 +67,7 @@ function rcl_chat_add_user_contact( $message ) {
 	global $wpdb;
 	$chat = rcl_get_chat( $message['chat_id'] );
 	if ( $chat->chat_status == 'private' ) {
-		$result = $wpdb->update(
+		$wpdb->update(
 			RCL_PREF . 'chat_users', array(
 			'user_status' => 1
 		), array(
@@ -111,8 +111,6 @@ function rcl_chat_update_attachment_data( $message ) {
 
 add_action( 'rcl_insert_chat', 'rcl_chat_insert_private_users', 10 );
 function rcl_chat_insert_private_users( $chat_id ) {
-	global $wpdb;
-
 	$chat = rcl_get_chat( $chat_id );
 
 	if ( $chat->chat_status == 'private' ) {

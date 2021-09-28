@@ -650,7 +650,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 	function setup_options( $options, $field_id, $serviceType = false ) {
 
 		if ( ! $options ) {
-			return $options;
+			return null;
 		}
 
 		$field = $this->get_field( $field_id, $serviceType );
@@ -738,9 +738,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			);
 		}
 
-		$buttons = apply_filters( 'rcl_manager_field_controls', $buttons, $field_id, $this->manager_id );
-
-		return $buttons;
+		return apply_filters( 'rcl_manager_field_controls', $buttons, $field_id, $this->manager_id );
 	}
 
 	function get_field_options_box( $field_id, $serviceType = false ) {
@@ -974,9 +972,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			$typesList[ $type ] = $wprecall->fields[ $type ]['label'];
 		}
 
-		$typesList = apply_filters( 'rcl_field_types_manager_' . $this->manager_id, $typesList );
-
-		return $typesList;
+		return apply_filters( 'rcl_field_types_manager_' . $this->manager_id, $typesList );
 	}
 
 }

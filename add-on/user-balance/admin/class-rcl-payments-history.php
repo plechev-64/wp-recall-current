@@ -35,7 +35,7 @@ class Rcl_Payments_History extends WP_List_Table {
 		if ( 'manage-wpm-cashe' != $page ) {
 			return;
 		}
-		echo '<style type="text/css">';
+		echo '<style>';
 		echo '.wp-list-table .column-payment_number { width: 5%; }';
 		echo '.wp-list-table .column-payment_user { width: 30%; }';
 		echo '.wp-list-table .column-payment_id { width: 15%; }';
@@ -81,7 +81,7 @@ class Rcl_Payments_History extends WP_List_Table {
 	}
 
 	function get_columns() {
-		$columns = array(
+		return array(
 			'cb'             => '<input type="checkbox" />',
 			'payment_number' => '№',
 			'payment_user'   => __( 'Users', 'wp-recall' ),
@@ -91,8 +91,6 @@ class Rcl_Payments_History extends WP_List_Table {
 			'pay_system'     => __( 'Payment system', 'wp-recall' ),
 			'pay_type'       => __( 'Payment type', 'wp-recall' )
 		);
-
-		return $columns;
 	}
 
 	function column_payment_user( $item ) {
@@ -106,11 +104,9 @@ class Rcl_Payments_History extends WP_List_Table {
 	}
 
 	function get_bulk_actions() {
-		$actions = array(
+		return array(
 			'delete' => __( 'Delete', 'wp-recall' ),
 		);
-
-		return $actions;
 	}
 
 	function column_cb( $item ) {

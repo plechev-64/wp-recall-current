@@ -136,6 +136,7 @@ function rcl_get_html_usercount() {
 function rcl_mail_payment_error( $hash = false, $other = false ) {
 	global $post;
 
+	$textmail = '';
 	if ( $other ) {
 		foreach ( $other as $k => $v ) {
 			$textmail .= $k . ' - ' . $v . '<br>';

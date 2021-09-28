@@ -177,9 +177,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 			}
 		}
 
-		$rqst = apply_filters( 'rcl_users_uri', $rqst );
-
-		return $rqst;
+		return apply_filters( 'rcl_users_uri', $rqst );
 	}
 
 	function add_query_only_actions_users( $query ) {
@@ -356,7 +354,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		global $wpdb;
 
 		if ( ! $users ) {
-			return $users;
+			return null;
 		}
 
 		$ids = $this->get_users_ids( $users );
@@ -395,7 +393,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		global $wpdb;
 
 		if ( ! $users ) {
-			return $users;
+			return null;
 		}
 
 		$ids = $this->get_users_ids( $users );
@@ -419,7 +417,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		global $wpdb;
 
 		if ( ! $users ) {
-			return $users;
+			return null;
 		}
 
 		$ids = $this->get_users_ids( $users );
@@ -441,7 +439,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		global $wpdb;
 
 		if ( ! $users ) {
-			return $users;
+			return null;
 		}
 
 		$ids = $this->get_users_ids( $users );
@@ -476,7 +474,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		global $wpdb;
 
 		if ( ! $users ) {
-			return $users;
+			return null;
 		}
 
 		$ids = $this->get_users_ids( $users );
@@ -497,7 +495,7 @@ class Rcl_Users_List extends Rcl_Users_Query {
 	function get_users_ids( $users ) {
 
 		if ( ! $users ) {
-			return $users;
+			return null;
 		}
 
 		$ids = array();
