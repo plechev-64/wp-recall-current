@@ -174,9 +174,7 @@ function rcl_get_tab_content( $tab_id, $master_id, $subtab_id = '' ) {
 
 	$Rcl_Tab = new Rcl_Tab( $tab );
 
-	$content = $Rcl_Tab->get_tab( $master_id, $subtab_id );
-
-	return $content;
+	return $Rcl_Tab->get_tab( $master_id, $subtab_id );
 }
 
 //приводим структуру вкладки к окончательному виду
@@ -349,7 +347,7 @@ function rcl_get_order_tabs( $rcl_tabs ) {
 
 //регистрируем контентые блоки
 function rcl_block( $place, $callback, $args = false ) {
-	global $rcl_blocks, $user_LK;
+	global $rcl_blocks;
 
 	$rcl_blocks[ $place ][] = apply_filters( 'block_data_rcl', array(
 		'place'    => $place,
@@ -680,7 +678,6 @@ function rcl_get_url_avatar( $url_image, $user_id, $size ) {
 		return $url_image;
 	}
 
-	$optimal_size = 150;
 	$optimal_path = false;
 	$name         = explode( '.', basename( $url_image ) );
 	foreach ( $rcl_avatar_sizes as $rcl_size ) {
@@ -916,7 +913,7 @@ function rcl_get_postmeta_array( $post_id ) {
 		return false;
 	}
 	foreach ( $metas as $meta ) {
-		$mts[ $meta->meta_key ] = $meta->meta_value;
+		$mts[ $meta->meta_key ] = $meta->meta_value; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
 	}
 
 	wp_cache_add( $cachekey, $mts );
@@ -927,13 +924,13 @@ function rcl_get_postmeta_array( $post_id ) {
 function rcl_setup_chartdata( $mysqltime, $data ) {
 	global $chartArgs;
 
-	$day = date( "Y.m.j", strtotime( $mysqltime ) );
+	$day = date( "Y.m.j", strtotime( $mysqltime ) ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 
 	$price = $data / 1000;
 
 	$chartArgs[ $day ]['summ'] += $price;
 	$chartArgs[ $day ]['cnt']  += 1;
-	$chartArgs[ $day ]['days'] = date( "t", strtotime( $mysqltime ) );
+	$chartArgs[ $day ]['days'] = date( "t", strtotime( $mysqltime ) ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 
 	return $chartArgs;
 }
@@ -973,10 +970,6 @@ function rcl_notice_text( $text, $type = 'warning' ) {
 }
 
 function rcl_get_smiles( $id_area ) {
-	global $wpsmiliestrans;
-
-	//if(!$wpsmiliestrans) return false;
-
 	$smiles = '<div class="rcl-smiles" data-area="' . $id_area . '">';
 	$smiles .= '<i class="rcli fa-smile-o" aria-hidden="true"></i>';
 	$smiles .= '<div class="rcl-smiles-list">
@@ -1094,6 +1087,7 @@ function rcl_update_timeaction_user() {
 		);
 
 		if ( ! isset( $res ) || $res == 0 ) {
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$act_user = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(time_action) FROM " . RCL_PREF . "user_action WHERE user =%d", $user_ID ) );
 			if ( $act_user == 0 ) {
 				$wpdb->insert(
@@ -1236,9 +1230,7 @@ function rcl_is_user_role( $user_id, $role ) {
 }
 
 function rcl_is_register_open() {
-	$users_can = apply_filters( 'rcl_users_can_register', get_site_option( 'users_can_register' ) );
-
-	return $users_can;
+	return apply_filters( 'rcl_users_can_register', get_site_option( 'users_can_register' ) );
 }
 
 /* 16.0.0 */
@@ -1438,13 +1430,11 @@ function rcl_get_profile_field( $field_id ) {
 
 function rcl_get_area_options() {
 
-	$areas = array(
+	return array(
 		'menu'     => get_site_option( 'rcl_fields_area-menu' ),
 		'counters' => get_site_option( 'rcl_fields_area-counters' ),
 		'actions'  => get_site_option( 'rcl_fields_area-actions' ),
 	);
-
-	return $areas;
 }
 
 function rcl_add_log( $title, $data = false, $force = false ) {
@@ -1469,9 +1459,7 @@ function rcl_get_addon_paths() {
 		RCL_PATH . 'add-on'
 	);
 
-	$paths = apply_filters( 'rcl_addon_paths', $paths );
-
-	return $paths;
+	return apply_filters( 'rcl_addon_paths', $paths );
 }
 
 function rcl_get_tab_permalink( $user_id, $tab_id, $subtab_id = false ) {
@@ -1639,6 +1627,7 @@ add_action( 'delete_user', 'rcl_delete_user_action', 10 );
 function rcl_delete_user_action( $user_id ) {
 	global $wpdb;
 
+	// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	return $wpdb->query( $wpdb->prepare( "DELETE FROM " . RCL_PREF . "user_action WHERE user = %d", $user_id ) );
 }
 
@@ -1648,8 +1637,6 @@ function rcl_delete_user_avatar( $user_id ) {
 }
 
 function rcl_is_gutenberg() {
-	global $post;
-
 	if ( ! is_admin() ) {
 		return false;
 	}
@@ -1707,9 +1694,7 @@ function rcl_get_pages_ids() {
 	           ->orderby( 'post_title', 'ASC' )
 	           ->get_walker()->get_index_values( 'ID', 'post_title' );
 
-	$pages = array( __( 'Not selected', 'wp-recall' ) ) + $pages;
-
-	return $pages;
+	return array( __( 'Not selected', 'wp-recall' ) ) + $pages;
 }
 
 /**

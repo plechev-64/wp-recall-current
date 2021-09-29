@@ -34,7 +34,7 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 					'class'       => 'rcl-iconpicker',
 					'title'       => __( 'Icon class of  font-awesome', 'wp-recall' ),
 					'placeholder' => __( 'Example, fa-user', 'wp-recall' ),
-					'notice'      => __( 'Source', 'wp-recall' ) . ' <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">http://fontawesome.com/</a>'
+					'notice'      => __( 'Source', 'wp-recall' ) . ' <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">https://fontawesome.com/</a>'
 				),
 				array(
 					'type'   => 'select',
@@ -124,7 +124,7 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 				}
 			}
 
-			if(!empty($defaultTabs)){
+			if ( ! empty( $defaultTabs ) ) {
 				foreach ( $defaultTabs as $tab ) {
 					if ( $this->is_active_field( $tab['slug'] ) ) {
 						continue;
@@ -135,7 +135,7 @@ class Rcl_Tabs_Manager extends Rcl_Fields_Manager {
 
 		} else {
 
-			if(!empty($defaultTabs)){
+			if ( ! empty( $defaultTabs ) ) {
 				foreach ( $defaultTabs as $tab ) {
 					$this->add_field( $tab );
 				}
