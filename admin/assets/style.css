@@ -1868,6 +1868,10 @@ span.ruble-symbol {
 
 /****/
 
+.rcl-repository-list .column-description {
+    min-height: 90px;
+}
+
 @media screen and (max-width: 800px) {
     .rcl-addon-details #ssi-modalWrapper {
         margin: 46px auto;

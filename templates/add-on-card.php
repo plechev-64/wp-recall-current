@@ -78,7 +78,7 @@
         <div class="vers column-rating">
 			<?php
 			wp_star_rating( array(
-				'rating' => $addon->rating->value,
+				'rating' => ( $addon->rating->value <= 5 ) ? $addon->rating->value : '5',
 				'type'   => 'rating',
 				'number' => $addon->rating->votes
 			) );
