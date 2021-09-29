@@ -522,7 +522,7 @@ class Rcl_Query extends Rcl_Old_Query {
 			$orderBy = $this->table['as'] . "." . $this->table['cols'][0] . " " . ( isset( $query['order'] ) ? $query['order'] : 'DESC' );
 		}
 
-		if ( $orderBy && sanitize_sql_orderby( str_replace( $this->table['as'] . '.', '', $orderBy ) ) ) {
+		if ( $orderBy ) {
 			$sql[] = "ORDER BY " . $orderBy;
 		}
 

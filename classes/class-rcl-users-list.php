@@ -249,6 +249,10 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 		$ids = $this->get_users_ids( $users );
 
+		if ( ! $ids ) {
+			return $users;
+		}
+
 		$fielddata = array();
 		foreach ( $fields as $k => $field ) {
 
@@ -266,6 +270,10 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		//phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$metas = $wpdb->get_results( $query );
 
+		if ( ! $metas ) {
+			return $users;
+		}
+
 		$newmetas = array();
 		foreach ( $metas as $k => $meta ) {
 			$newmetas[ $meta->ID ]['ID']                            = $meta->ID;
@@ -278,7 +286,6 @@ class Rcl_Users_List extends Rcl_Users_Query {
 				$newmetas[ $meta->ID ]['profile_fields'][ $k ]['filter'] = $fielddata[ $meta->meta_key ]['filter'];
 			}
 
-			( object ) $newmetas[ $meta->ID ];
 		}
 
 		if ( $newmetas ) {
@@ -359,6 +366,10 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 		$ids = $this->get_users_ids( $users );
 
+		if ( ! $ids ) {
+			return $users;
+		}
+
 		$query = "SELECT COUNT(post_author) AS posts_count, post_author AS ID "
 		         . "FROM $wpdb->posts "
 		         . "WHERE post_status IN ('publish', 'private') AND post_type NOT IN ('page','nav_menu_item') AND post_author IN (" . implode( ',', $ids ) . ") "
@@ -398,6 +409,10 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 		$ids = $this->get_users_ids( $users );
 
+		if ( ! $ids ) {
+			return $users;
+		}
+
 		$query = "SELECT COUNT(user_id) AS comments_count, user_id AS ID "
 		         . "FROM $wpdb->comments "
 		         . "WHERE user_id IN (" . implode( ',', $ids ) . ") "
@@ -422,6 +437,10 @@ class Rcl_Users_List extends Rcl_Users_Query {
 
 		$ids = $this->get_users_ids( $users );
 
+		if ( ! $ids ) {
+			return $users;
+		}
+
 		$query = "SELECT meta_value AS description, user_id AS ID "
 		         . "FROM $wpdb->usermeta "
 		         . "WHERE user_id IN (" . implode( ',', $ids ) . ") AND meta_key='description'";
@@ -443,6 +462,10 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		}
 
 		$ids = $this->get_users_ids( $users );
+
+		if ( ! $ids ) {
+			return $users;
+		}
 
 		$query = "SELECT meta_value AS avatar_data, user_id AS ID "
 		         . "FROM $wpdb->usermeta "
@@ -478,6 +501,10 @@ class Rcl_Users_List extends Rcl_Users_Query {
 		}
 
 		$ids = $this->get_users_ids( $users );
+
+		if ( ! $ids ) {
+			return $users;
+		}
 
 		$query = "SELECT rating_total, user_id AS ID "
 		         . "FROM " . RCL_PREF . "rating_users "
