@@ -1723,16 +1723,12 @@ function rcl_beat_action_exist( $beatName, $action ) {
 
 function rcl_recursive_map( $callback, $data ) {
 
-	if ( is_object( $data ) ) {
-		foreach ( $data as $k => $v ) {
-			$data->$k = rcl_recursive_map( $callback, $v );
-		}
+	if ( is_scalar( $data ) ) {
+		$data = $callback( $data );
 	} else if ( is_array( $data ) ) {
 		foreach ( $data as $k => $v ) {
 			$data[ $k ] = rcl_recursive_map( $callback, $v );
 		}
-	} else {
-		$data = $callback( $data );
 	}
 
 	return $data;
