@@ -26,7 +26,7 @@ class Rcl_Feed_List extends Rcl_Query {
 
 		$content = isset( $args['content'] ) ? $args['content'] : 'posts';
 
-		$args = apply_filters( 'rcl_feed_' . $args['content'] . '_args', $args );
+		$args = apply_filters( 'rcl_feed_' . $content . '_args', $args );
 
 		$this->init_properties( $args );
 

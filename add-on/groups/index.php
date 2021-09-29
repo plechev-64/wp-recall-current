@@ -858,11 +858,11 @@ function rcl_add_feed_group_query( $query, int $user_id ) {
 	global $wpdb;
 
 	// phpcs:disable
-	$groups = $wpdb->get_col( "SELECT groups_users.group_id, groups.ID "
+	$groups = $wpdb->get_col( "SELECT groups_users.group_id, jgroups.ID "
 	                          . "FROM " . RCL_PREF . "groups_users AS groups_users "
-	                          . "INNER JOIN " . RCL_PREF . "groups AS groups ON groups_users.user_id=groups.admin_id "
-	                          . "WHERE (groups_users.user_id='$user_id' OR groups.admin_id='$user_id') "
-	                          . "GROUP BY groups_users.group_id, groups.ID" );
+	                          . "INNER JOIN " . RCL_PREF . "groups AS jgroups ON groups_users.user_id=jgroups.admin_id "
+	                          . "WHERE (groups_users.user_id='$user_id' OR jgroups.admin_id='$user_id') "
+	                          . "GROUP BY groups_users.group_id, jgroups.ID" );
 	// phpcs:enable
 
 	if ( $groups ) {
