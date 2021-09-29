@@ -23,45 +23,44 @@
             </a>
         </div>
 
-		<?php if ( ! is_user_logged_in() ): $logIn = rcl_get_option( 'login_form_recall' ); ?>
-
+		<?php if ( ! is_user_logged_in() ):
+			$logIn = rcl_get_option( 'login_form_recall' );
+			$urls = array( '#', '#' );
+			?>
 			<?php
-			if ( $logIn == 1 ) {
+			if ( $logIn == 1 ) { // на отдельной странице форма входа
 				$page_in_out = rcl_format_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) );
 				$urls        = array(
 					$page_in_out . 'action-rcl=login',
 					$page_in_out . 'action-rcl=register'
 				);
-			} else if ( $logIn == 2 ) {
+			} else if ( $logIn == 2 ) { // дефолтная страница входа WordPress (wp-login.php)
 				$urls = array(
 					wp_login_url( '/' ),
 					wp_registration_url()
 				);
-			} else if ( $logIn == 3 ) { // Форма в виджете
-				$urls = array( '#', '#' );
+			} else if ( $logIn == 3 ) { // форма в виджете
+				unset( $urls );
 			}
-            
 			?>
-
 			<?php if ( isset( $urls ) ) { ?>
+            <div class="rcb_icon">
+                <a href="<?php echo esc_url( $urls[0] ); ?>" class="rcl-login">
+                    <i class="rcli fa-sign-in"
+                       aria-hidden="true"></i><span><?php esc_html_e( 'Entry', 'wp-recall' ); ?></span>
+                    <div class="rcb_hiden"><span><?php esc_html_e( 'Entry', 'wp-recall' ); ?></span></div>
+                </a>
+            </div>
+			<?php if ( rcl_is_register_open() ): ?>
                 <div class="rcb_icon">
-                    <a href="<?php echo esc_url( $urls[0] ); ?>" class="rcl-login">
-                        <i class="rcli fa-sign-in"
-                           aria-hidden="true"></i><span><?php esc_html_e( 'Entry', 'wp-recall' ); ?></span>
-                        <div class="rcb_hiden"><span><?php esc_html_e( 'Entry', 'wp-recall' ); ?></span></div>
+                    <a href="<?php echo esc_url( $urls[1] ); ?>" class="rcl-register">
+                        <i class="rcli fa-book"
+                           aria-hidden="true"></i><span><?php esc_html_e( 'Register', 'wp-recall' ); ?></span>
+                        <div class="rcb_hiden"><span><?php esc_html_e( 'Register', 'wp-recall' ); ?></span></div>
                     </a>
                 </div>
-				<?php if ( rcl_is_register_open() ): ?>
-                    <div class="rcb_icon">
-                        <a href="<?php echo esc_url( $urls[1] ); ?>" class="rcl-register">
-                            <i class="rcli fa-book"
-                               aria-hidden="true"></i><span><?php esc_html_e( 'Register', 'wp-recall' ); ?></span>
-                            <div class="rcb_hiden"><span><?php esc_html_e( 'Register', 'wp-recall' ); ?></span></div>
-                        </a>
-                    </div>
-				<?php endif; ?>
-			<?php } ?>
-
+			<?php endif; ?>
+		<?php } ?>
 		<?php endif; ?>
 
 		<?php do_action( 'rcl_bar_left_icons' ); ?>
