@@ -181,7 +181,7 @@ function rcl_get_register_user( $errors ) {
 			}
 
 			$slug = $field['slug'];
-			if ( $field['required'] == 1 && isset( $field['register'] ) && $field['register'] == 1 ) {
+			if ( isset( $field['required'] ) && $field['required'] == 1 && isset( $field['register'] ) && $field['register'] == 1 ) {
 
 				if ( $field['type'] == 'checkbox' ) {
 
@@ -212,7 +212,7 @@ function rcl_get_register_user( $errors ) {
 
 	$wp_errors = apply_filters( 'rcl_registration_errors', $wp_errors, $login, $email );
 
-	if ( $wp_errors->errors ) {
+	if ( isset( $wp_errors->errors ) ) {
 		return $wp_errors;
 	}
 
@@ -346,9 +346,9 @@ function rcl_notice_form( $form = 'login' ) {
 			foreach ( $wp_error->get_error_messages( $code ) as $error_message ) {
 
 				if ( 'message' == $severity ) {
-					$messages .= ' ' . esc_html( $error_message ) . "<br />\n";
+					$messages .= ' ' . wp_kses_post( $error_message ) . "<br />\n";
 				} else {
-					$errors .= ' ' . esc_html( $error_message ) . "<br />\n";
+					$errors .= ' ' . wp_kses_post( $error_message ) . "<br />\n";
 				}
 			}
 		}
