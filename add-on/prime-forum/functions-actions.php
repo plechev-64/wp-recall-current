@@ -471,11 +471,21 @@ function pfm_action_confirm_migrate_post( $post_id ) {
 	if ( ! pfm_is_can( 'post_migrate' ) ) {
 		return false;
 	}
+	$formdata = array();
 
 	if ( isset( $_POST['formdata'] ) ) {
-		$formdata = array();
-		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		parse_str( rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['formdata'] ) ), $formdata );
+		if ( isset( $_POST['formdata'] ) ) {
+			//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			parse_str( wp_unslash( $_POST['formdata'] ), $formdata );
+
+			foreach ( $formdata as $k => $v ) {
+				if ( $k == 'post_content' ) {
+					$formdata[ $k ] = wp_kses_post( $v );
+				} else {
+					$formdata[ $k ] = sanitize_text_field( $v );
+				}
+			}
+		}
 	}
 
 	$migrateData = array(
@@ -1086,10 +1096,20 @@ function pfm_action_get_author_info( $user_id ) {
 //предпросмотр сообщения
 pfm_add_ajax_action( 'get_preview', 'pfm_action_get_preview' );
 function pfm_action_get_preview() {
+
 	$formdata = array();
+
 	if ( isset( $_POST['formdata'] ) ) {
 		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		parse_str( rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['formdata'] ) ), $formdata );
+		parse_str( wp_unslash( $_POST['formdata'] ), $formdata );
+
+		foreach ( $formdata as $k => $v ) {
+			if ( $k == 'post_content' ) {
+				$formdata[ $k ] = wp_kses_post( $v );
+			} else {
+				$formdata[ $k ] = sanitize_text_field( $v );
+			}
+		}
 	}
 
 	$postContent = wp_unslash( $formdata['post_content'] );
@@ -1139,9 +1159,18 @@ function pfm_action_post_create() {
 	global $user_ID;
 
 	$formdata = array();
+
 	if ( isset( $_POST['formdata'] ) ) {
 		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		parse_str( rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['formdata'] ) ), $formdata );
+		parse_str( wp_unslash( $_POST['formdata'] ), $formdata );
+
+		foreach ( $formdata as $k => $v ) {
+			if ( $k == 'post_content' ) {
+				$formdata[ $k ] = wp_kses_post( $v );
+			} else {
+				$formdata[ $k ] = sanitize_text_field( $v );
+			}
+		}
 	}
 
 	if ( ! pfm_is_can( 'post_create' ) || ! $formdata['topic_id'] ) {
