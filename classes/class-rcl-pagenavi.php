@@ -86,7 +86,7 @@ class Rcl_PageNavi {
 			$query_string         = $uri_string[1];
 			$this->uri['current'] = $uri_string[0];
 		} else {
-			if ( ! empty( $_SERVER['QUERY_STRING'] && $_SERVER['REQUEST_URI'] ) ) {
+			if ( isset( $_SERVER['REQUEST_URI'] ) ) {
 				$query_string         = sanitize_text_field( wp_unslash( $_SERVER['QUERY_STRING'] ) );
 				$this->uri['current'] = get_bloginfo( 'wpurl' ) . str_replace( '?' . $query_string, '', sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
 			}
