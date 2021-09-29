@@ -16,7 +16,7 @@
             <tr>
                 <td>
                     <a href="<?php echo esc_url( rcl_get_tab_permalink( $order->user_id, 'orders' ) ); ?>&order-id=<?php echo esc_attr( $order->order_id ); ?>">
-						<?php echo esc_html( 'Order', 'wp-recall' ) . ': ' . esc_html( $order->order_id ); ?>
+						<?php esc_html_e( 'Order', 'wp-recall' ); ?>: <?php echo absint( $order->order_id ); ?>
                     </a>
                 </td>
                 <td><?php echo esc_html( $order->order_date ); ?></td>

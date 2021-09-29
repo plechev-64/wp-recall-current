@@ -35,7 +35,7 @@ class Rcl_Create_Order {
 
 			$product_price = $productPrice->get_price( ( array ) $product->variations );
 
-			$this->order_price += $product_price * $product->product_amount;
+			$this->order_price += absint( $product_price ) * absint( $product->product_amount );
 
 			$this->products[] = array(
 				'product_id'     => intval( $product->product_id ),
