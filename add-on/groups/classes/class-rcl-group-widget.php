@@ -246,7 +246,7 @@ function rcl_update_group_widgets( $group_id, $args ) {
 
 		foreach ( $widget['widget'] as $widget_id => $data ) {
 
-			if ( $data['id'] ) {
+			if ( isset( $data['id'] ) ) {
 				$zones[ $key ][] = $widget_id;
 			}
 

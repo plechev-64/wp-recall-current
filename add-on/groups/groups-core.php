@@ -1037,7 +1037,7 @@ function rcl_init_group_data( $query ) {
 
 	if ( $query->is_single ) {
 
-		if ( isset( $query->query['post_type'] ) && $query->query['post_type'] == 'post-group' && $query->query['name'] ) {
+		if ( isset( $query->query['post_type'] ) && $query->query['post_type'] == 'post-group' && isset( $query->query['name'] ) ) {
 
 			if ( ! $post ) {
 				//phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.QuotedSimplePlaceholder
