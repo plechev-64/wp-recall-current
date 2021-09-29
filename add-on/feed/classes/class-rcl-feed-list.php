@@ -8,6 +8,7 @@ class Rcl_Feed_List extends Rcl_Query {
 	public $user_feed;
 	public $paged;
 	public $add_uri;
+	public $number = 30;
 
 	function __construct( $args = array() ) {
 		global $user_ID;
@@ -42,6 +43,7 @@ class Rcl_Feed_List extends Rcl_Query {
 		}
 
 		$this->setup_feed_query( $args );
+		$this->number( $this->number );
 	}
 
 	function setup_feed_query( $args ) {

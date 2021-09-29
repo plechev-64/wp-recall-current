@@ -3,7 +3,8 @@
 rcl_ajax_action( 'rcl_update_cart_content', true );
 function rcl_update_cart_content() {
 
-	$cartProducts = isset( $_POST['cart'] ) ? rcl_recursive_map( 'sanitize_text_field', json_decode( sanitize_text_field( wp_unslash( $_POST['cart'] ) ) ) ) : [];
+	//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$cartProducts = isset( $_POST['cart'] ) ? rcl_recursive_map( 'sanitize_text_field', json_decode( wp_unslash( $_POST['cart'] ) ) ) : [];
 
 	$result = array(
 		'content' => rcl_get_cart( $cartProducts )
@@ -17,8 +18,8 @@ function rcl_add_to_cart() {
 	global $Cart;
 
 	rcl_verify_ajax_nonce();
-
-	$cart = apply_filters( 'rcl_add_to_cart_data', isset( $_POST['cart'] ) ? rcl_recursive_map( 'sanitize_text_field', json_decode( sanitize_text_field( wp_unslash( $_POST['cart'] ) ) ) ) : [] );
+	//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$cart = apply_filters( 'rcl_add_to_cart_data', isset( $_POST['cart'] ) ? rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['cart'] ) ) : [] );
 
 	if ( ! $cart ) {
 		exit;

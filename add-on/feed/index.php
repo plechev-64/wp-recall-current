@@ -240,7 +240,7 @@ function rcl_feed_progress() {
 
 	$customData = ( array ) $customData;
 
-	$customData['paged']   = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 0;
+	$customData['paged']   = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
 	$customData['content'] = isset( $_POST['content'] ) ? sanitize_text_field( wp_unslash( $_POST['content'] ) ) : '';
 	$customData['filters'] = 0;
 

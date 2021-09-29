@@ -928,9 +928,14 @@ function rcl_setup_chartdata( $mysqltime, $data ) {
 
 	$price = $data / 1000;
 
-	$chartArgs[ $day ]['summ'] += $price;
-	$chartArgs[ $day ]['cnt']  += 1;
-	$chartArgs[ $day ]['days'] = date( "t", strtotime( $mysqltime ) ); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+	if ( ! isset( $chartArgs[ $day ] ) ) {
+		$chartArgs[ $day ]['summ'] = $price;
+		$chartArgs[ $day ]['cnt']  = 1;
+	} else {
+		$chartArgs[ $day ]['summ'] += $price;
+		$chartArgs[ $day ]['cnt']  += 1;
+	}
+	$chartArgs[ $day ]['days'] = date( "t", strtotime( $mysqltime ) );// phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 
 	return $chartArgs;
 }
@@ -1718,12 +1723,16 @@ function rcl_beat_action_exist( $beatName, $action ) {
 
 function rcl_recursive_map( $callback, $data ) {
 
-	if ( ! is_array( $data ) ) {
-		$data = $callback( $data );
-	} else {
+	if ( is_object( $data ) ) {
+		foreach ( $data as $k => $v ) {
+			$data->$k = rcl_recursive_map( $callback, $v );
+		}
+	} else if ( is_array( $data ) ) {
 		foreach ( $data as $k => $v ) {
 			$data[ $k ] = rcl_recursive_map( $callback, $v );
 		}
+	} else {
+		$data = $callback( $data );
 	}
 
 	return $data;
