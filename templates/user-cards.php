@@ -24,7 +24,7 @@ $style = ( isset( $rcl_users_set->width ) ) ? 'width:' . $rcl_users_set->width .
         <div class="thumb-user">
             <a title="<?php esc_html_e( 'to go to office of the user', 'wp-recall' ); ?>"
                href="<?php rcl_user_url(); ?>">
-				<?php rcl_user_avatar( 200 ); ?>
+				<?php rcl_user_avatar( 300 ); ?>
             </a>
         </div>
         <div class="u_card_name">
