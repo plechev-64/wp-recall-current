@@ -86,7 +86,7 @@ function rcl_variations_loop(loopData) {
         if (!varVal || currentVal != varVal.name)
             return;
 
-        var varPrice = parseInt(varVal.price);
+        var varPrice = parseFloat(varVal.price);
 
         if (!varPrice)
             varPrice = 0;

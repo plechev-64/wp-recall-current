@@ -24,7 +24,8 @@ class Rcl_Cart {
 			return array();
 		}
 
-		return json_decode( sanitize_text_field( wp_unslash( $_COOKIE['rcl_cart'] ) ) );
+		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		return rcl_recursive_map( 'sanitize_text_field', json_decode( wp_unslash( $_COOKIE['rcl_cart'] ) ) );
 	}
 
 	function init_cart_data() {
@@ -80,7 +81,7 @@ class Rcl_Cart {
 
 			$this->products[] = array(
 				'product_id'     => intval( $product_id ),
-				'product_price'  => intval( $product_price ),
+				'product_price'  => floatval( $product_price ),
 				'product_amount' => intval( $qls ),
 				'variations'     => $vars
 			);

@@ -13,7 +13,7 @@ class Rcl_Product_Price {
 	function __construct( $product_id ) {
 
 		$this->product_id    = $product_id;
-		$this->product_price = get_post_meta( $this->product_id, 'price-products', 1 );
+		$this->product_price = get_post_meta( $this->product_id, 'price-products', 1 ) ?: 0;
 	}
 
 	function get_price( $vars = false ) {

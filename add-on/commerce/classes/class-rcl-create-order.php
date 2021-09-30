@@ -33,13 +33,13 @@ class Rcl_Create_Order {
 
 			$productPrice = new Rcl_Product_Price( $product->product_id );
 
-			$product_price = $productPrice->get_price( ( array ) $product->variations );
+			$product_price = abs( floatval( $productPrice->get_price( ( array ) $product->variations ) ) );
 
-			$this->order_price += absint( $product_price ) * absint( $product->product_amount );
+			$this->order_price += $product_price * absint( $product->product_amount );
 
 			$this->products[] = array(
 				'product_id'     => intval( $product->product_id ),
-				'product_price'  => intval( $product_price ),
+				'product_price'  => floatval( $product_price ),
 				'product_amount' => intval( $product->product_amount ),
 				'variations'     => $product->variations
 			);
@@ -75,7 +75,7 @@ class Rcl_Create_Order {
 			'user_id'       => intval( $this->user_id ),
 			'order_details' => $this->order_details,
 			'order_status'  => intval( $this->order_status ),
-			'order_price'   => intval( $this->order_price )
+			'order_price'   => floatval( $this->order_price )
 		);
 
 		$this->order_id = rcl_insert_order( $args, $this->products );
