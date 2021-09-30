@@ -7,15 +7,15 @@ $Manager = new Rcl_Fields_Manager( 'orderform', array(
 		array(
 			'type'  => 'textarea',
 			'slug'  => 'notice',
-			'title' => __( 'field description', 'wp-recall' )
+			'title' => esc_html__( 'field description', 'wp-recall' )
 		),
 		array(
 			'type'   => 'radio',
 			'slug'   => 'required',
-			'title'  => __( 'required field', 'wp-recall' ),
+			'title'  => esc_html__( 'required field', 'wp-recall' ),
 			'values' => array(
-				__( 'No', 'wp-recall' ),
-				__( 'Yes', 'wp-recall'
+				esc_html__( 'No', 'wp-recall' ),
+				esc_html__( 'Yes', 'wp-recall'
 				)
 			)
 		)

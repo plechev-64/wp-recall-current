@@ -37,8 +37,8 @@ function rcl_add_data_product_columns( $column_name, $post_id ) {
 			if ( get_the_post_thumbnail( $post_id, 'thumbnail' ) ) {
 				$thumbnail = get_the_post_thumbnail( $post_id, array( 70, 70 ) );
 			}
-			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo '<div class="thumbnail">' . $thumbnail . '</div>';
+
+			echo '<div class="thumbnail">' . wp_kses_post( $thumbnail ) . '</div>';
 
 			break;
 
@@ -51,8 +51,8 @@ function rcl_add_data_product_columns( $column_name, $post_id ) {
 				foreach ( $terms as $term ) {
 					$content[] = '<a href="' . esc_url( admin_url( 'edit.php?post_type=products&prodcat=' . $term->slug ) ) . '">' . esc_html( $term->name ) . '</a>';
 				}
-				//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				echo implode( ', ', $content );
+
+				echo wp_kses_post( implode( ', ', $content ) );
 			}
 
 			break;

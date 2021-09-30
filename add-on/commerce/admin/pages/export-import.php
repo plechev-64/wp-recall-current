@@ -6,7 +6,7 @@ $postmeta = $wpdb->get_results( "SELECT meta_key FROM " . $wpdb->prefix . "postm
 
 $fields = array(
 	'price-products' => esc_html__( 'The price of the product in the main currency', 'wp-recall' ),
-	'outsale'        => '1 - ' . __( 'the item is no longer available', 'wp-recall' )
+	'outsale'        => '1 - ' . esc_html__( 'the item is no longer available', 'wp-recall' )
 );
 
 $fields = apply_filters( 'products_field_list', $fields );
@@ -49,12 +49,12 @@ $content .= '</style>';
 
 $content .= '<style>table{min-width:500px;width:50%;margin:20px 0;}table td{border:1px solid #ccc;padding:3px;}</style>';
 
-$content .= '<h2>' . __( 'Export/import data', 'wp-recall' ) . '</h2><form method="post" action="">
+$content .= '<h2>' . esc_html__( 'Export/import data', 'wp-recall' ) . '</h2><form method="post" action="">
 ' . wp_nonce_field( 'get-csv-file', '_wpnonce', true, false ) . '
-<p><input type="checkbox" name="product[fields][]" checked value="post_title"> ' . __( 'Add a title', 'wp-recall' ) . '</p>
-<p><input type="checkbox" name="product[fields][]" checked value="post_content"> ' . __( 'Add a description', 'wp-recall' ) . '</p>
-<p><input type="checkbox" name="product[fields][]" value="post_excerpt"> ' . __( 'Add a short description', 'wp-recall' ) . '</p>
-<h3>' . __( 'Optional fields', 'wp-recall' ) . ':</h3><table><tr>';
+<p><input type="checkbox" name="product[fields][]" checked value="post_title"> ' . esc_html__( 'Add a title', 'wp-recall' ) . '</p>
+<p><input type="checkbox" name="product[fields][]" checked value="post_content"> ' . esc_html__( 'Add a description', 'wp-recall' ) . '</p>
+<p><input type="checkbox" name="product[fields][]" value="post_excerpt"> ' . esc_html__( 'Add a short description', 'wp-recall' ) . '</p>
+<h3>' . esc_html__( 'Optional fields', 'wp-recall' ) . ':</h3><table><tr>';
 
 foreach ( $fields as $key => $name ) {
 	$content .= '<b>' . $key . '</b> - ' . $name . '<br />';
@@ -72,7 +72,7 @@ if ( $fields ) {
 }
 
 $content .= '</tr><tr><td colspan="2" align="right">'
-            . '<input type="submit" name="get_csv_file" value="' . __( 'Upload products to a file', 'wp-recall' ) . '"></td></tr></table>
+            . '<input type="submit" name="get_csv_file" value="' . esc_html__( 'Upload products to a file', 'wp-recall' ) . '"></td></tr></table>
 ' . wp_nonce_field( 'get-csv-file', '_wpnonce', true, false ) . '
 </form>';
 
@@ -80,8 +80,8 @@ $content .= '<form method="post" action="" enctype="multipart/form-data">
 ' . wp_nonce_field( 'rcl-import-products-nonce', '_wpnonce', true, false ) . '
 <p>
 <input type="file" name="rcl-import-products" value="1">
-<input type="submit" value="' . __( 'Import products from a file', 'wp-recall' ) . '"><br>
-<small><span style="color:red;">' . __( 'Attention', 'wp-recall' ) . '!</span> ' . __( 'Empty values of arbitrary fields in the import file remove them from the database', 'wp-recall' ) . '</small>
+<input type="submit" value="' . esc_html__( 'Import products from a file', 'wp-recall' ) . '"><br>
+<small><span style="color:red;">' . esc_html__( 'Attention', 'wp-recall' ) . '!</span> ' . esc_html__( 'Empty values of arbitrary fields in the import file remove them from the database', 'wp-recall' ) . '</small>
 </p>
 </form>';
 
