@@ -288,7 +288,7 @@ function rcl_feed_options() {
 	           . '</div>'
 	           . '</div>';
 
-	echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo filter_var( $content );
 }
 
 function rcl_get_author_feed_data( $author_id ) {

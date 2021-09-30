@@ -416,7 +416,6 @@ function rcl_upload_addon() {
 	if ( $res === true ) {
 
 		for ( $i = 0; $i < $zip->numFiles; $i ++ ) {
-			//echo $zip->getNameIndex($i).'<br>';
 			if ( $i == 0 ) {
 				$dirzip = $zip->getNameIndex( $i );
 			}
