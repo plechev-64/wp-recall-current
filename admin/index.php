@@ -370,10 +370,11 @@ rcl_ajax_action( 'rcl_get_new_custom_field', false );
 function rcl_get_new_custom_field() {
 
 	$post_type = isset( $_POST['post_type'] ) ? sanitize_key( $_POST['post_type'] ) : '';
-	//phpcs:disable
-	$primary = isset( $_POST['primary_options'] ) ? ( array ) json_decode( wp_unslash( $_POST['primary_options'] ) ) : [];
-	$default = isset( $_POST['default_options'] ) ? ( array ) json_decode( wp_unslash( $_POST['default_options'] ) ) : [];
-	//phpcs:enable
+	//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$primary = isset( $_POST['primary_options'] ) ? rcl_recursive_map( 'sanitize_text_field', (array) json_decode( wp_unslash( $_POST['primary_options'] ) ) ) : [];
+	//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$default = isset( $_POST['default_options'] ) ? rcl_recursive_map( 'sanitize_text_field', (array) json_decode( wp_unslash( $_POST['default_options'] ) ) ) : [];
+
 
 	$manageFields = new Rcl_Custom_Fields_Manager( $post_type, $primary );
 
