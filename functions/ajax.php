@@ -76,18 +76,17 @@ function rcl_ajax_tab() {
 rcl_ajax_action( 'rcl_beat', true );
 function rcl_beat() {
 	rcl_verify_ajax_nonce();
-
-	$databeat = isset( $_POST['databeat'] ) ? json_decode( sanitize_text_field( wp_unslash( $_POST['databeat'] ) ) ) : '';
-	$return   = array();
+	//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$databeat = isset( $_POST['databeat'] ) ? rcl_recursive_map( 'sanitize_text_field', json_decode( wp_unslash( $_POST['databeat'] ) ) ) : [];
+	$return   = [];
 
 	if ( $databeat ) {
 		foreach ( $databeat as $data ) {
-
 			if ( ! rcl_beat_action_exist( $data->beat_name, $data->action ) ) {
 				continue;
 			}
 
-			$result = array();
+			$result = [];
 
 			$callback            = $data->action;
 			$result['result']    = $callback( $data->data );
