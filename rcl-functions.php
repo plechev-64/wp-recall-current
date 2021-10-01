@@ -1753,6 +1753,7 @@ function rcl_kses_allowed_html() {
 				'id'          => true,
 				'class'       => true,
 				'value'       => true,
+				'onclick'     => true,
 				'placeholder' => true,
 				'pattern'     => true,
 				'name'        => true,
