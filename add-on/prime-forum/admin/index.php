@@ -529,11 +529,9 @@ function pfm_ajax_update_sort_groups() {
 		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
 	}
 	//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-	$sort = json_decode( rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['sort'] ) ) );
+	$sort = rcl_recursive_map( 'sanitize_text_field', json_decode( wp_unslash( $_POST['sort'] ) ) );
 
 	foreach ( $sort as $s => $group ) {
-		//убрал функции допа на апдейт группы,
-		//ибо срабатывают хуки, а тут они ни к чему
 		$wpdb->update(
 			RCL_PREF . 'pforum_groups', array(
 			'group_seq' => $s + 1
@@ -557,11 +555,9 @@ function pfm_ajax_update_sort_forums() {
 	}
 
 	//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-	$sort = json_decode( rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['sort'] ) ) );
+	$sort = rcl_recursive_map( 'sanitize_text_field', json_decode( wp_unslash( $_POST['sort'] ) ) );
 
 	foreach ( $sort as $s => $forum ) {
-		//убрал функции допа на апдейт форума,
-		//ибо срабатывают хуки, а тут они ни к чему
 		$wpdb->update(
 			RCL_PREF . 'pforums', array(
 			'parent_id' => $forum->parent,

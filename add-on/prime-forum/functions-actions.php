@@ -586,8 +586,8 @@ function pfm_action_end_post_migrate( $topic_id ) {
 	if ( ! isset( $_COOKIE['pfm_migrate_post'] ) || ! pfm_is_can( 'post_migrate' ) ) {
 		return false;
 	}
-
-	$migrateData = json_decode( sanitize_text_field( wp_unslash( $_COOKIE['pfm_migrate_post'] ) ) );
+	//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$migrateData = rcl_recursive_map( 'sanitize_text_field', json_decode( wp_unslash( $_COOKIE['pfm_migrate_post'] ) ) );
 
 	$post_id = intval( $migrateData->post_id );
 

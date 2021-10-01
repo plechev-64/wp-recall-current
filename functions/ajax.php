@@ -166,8 +166,8 @@ rcl_ajax_action( 'rcl_upload', true );
 function rcl_upload() {
 
 	rcl_verify_ajax_nonce();
-
-	$options = isset( $_POST['options'] ) ? ( array ) json_decode( sanitize_text_field( wp_unslash( $_POST['options'] ) ) ) : [];
+	//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$options = isset( $_POST['options'] ) ? rcl_recursive_map( 'sanitize_text_field', ( array ) json_decode( wp_unslash( $_POST['options'] ) ) ) : [];
 
 	if ( ! isset( $options['class_name'] ) || ! $options['class_name'] ) {
 		wp_send_json( [
