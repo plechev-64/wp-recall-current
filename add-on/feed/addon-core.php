@@ -288,7 +288,7 @@ function rcl_feed_options() {
 	           . '</div>'
 	           . '</div>';
 
-	echo filter_var( $content );
+	echo wp_kses( $content, rcl_kses_allowed_html() );
 }
 
 function rcl_get_author_feed_data( $author_id ) {

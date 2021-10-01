@@ -153,8 +153,7 @@ function rcl_metabox_products( $post ) {
 
 	$metaBox .= '<input type="hidden" name="rcl_commerce_fields_nonce" value="' . esc_attr( wp_create_nonce( __FILE__ ) ) . '" />';
 
-	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo $metaBox;
+	echo wp_kses( $metaBox, rcl_kses_allowed_html() );
 }
 
 add_action( 'save_post_products', 'rcl_commerce_fields_update', 10 );

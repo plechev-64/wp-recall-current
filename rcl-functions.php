@@ -1733,3 +1733,72 @@ function rcl_recursive_map( $callback, $data ) {
 
 	return $data;
 }
+
+function rcl_kses_allowed_html() {
+	return array_merge_recursive(
+		wp_kses_allowed_html( 'post' ),
+		[
+			'script'   => [
+				'type'    => [],
+				'src'     => [],
+				'charset' => [],
+				'async'   => [],
+			],
+			'a'        => [ 'onclick' => true ],
+			'style'    => [
+				'type' => []
+			],
+			'input'    => [
+				'type'        => true,
+				'id'          => true,
+				'class'       => true,
+				'value'       => true,
+				'placeholder' => true,
+				'pattern'     => true,
+				'name'        => true,
+				'data-*'      => true,
+				'checked'     => true,
+				'min'         => true,
+				'max'         => true,
+				'step'        => true,
+				'maxlength'   => true,
+				'size'        => true,
+				'required'    => true
+			],
+			'select'   => [
+				'id'       => true,
+				'class'    => true,
+				'name'     => true,
+				'data-*'   => true,
+				'required' => true,
+				'multiple' => true
+			],
+			'option'   => [
+				'selected' => true,
+				'value'    => true
+			],
+			'textarea' => [
+				'required'  => true,
+				'maxlength' => true,
+				'onkeyup'   => true
+			],
+			'form'     => [
+				'method'   => true,
+				'action'   => true,
+				'enctype'  => true,
+				'id'       => true,
+				'class'    => true,
+				'name'     => true,
+				'data-*'   => true,
+				'onsubmit' => true,
+				'target'   => true
+			],
+			'span'     => [
+				'onclick' => true
+			],
+			'div'      => [
+				'onclick' => true
+			]
+		]
+	);
+}

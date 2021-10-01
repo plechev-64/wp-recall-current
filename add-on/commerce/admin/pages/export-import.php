@@ -112,5 +112,4 @@ if ( isset( $_FILES['rcl-import-products'], $_POST['_wpnonce'] ) && wp_verify_no
 	}
 }
 
-//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-echo $content;
+echo wp_kses( $content, rcl_kses_allowed_html() );
