@@ -14,26 +14,26 @@
 class Rcl_Uploader {
 
 	public $uploader_id = '';
-	public $fix_editor = false;
+	public $fix_editor = 0;
 	public $action = 'rcl_upload';
-	public $temp_media = false;
-	public $input_attach = false;
-	public $auto_upload = true;
+	public $temp_media = 0;
+	public $input_attach = 0;
+	public $auto_upload = 1;
 	public $user_id = 0;
 	public $post_parent = 0;
 	public $input_name = 'rcl-upload';
-	public $dropzone = false;
+	public $dropzone = 0;
 	public $max_files = 10;
 	public $max_size = 512;
-	public $min_width = false;
-	public $min_height = false;
+	public $min_width = 0;
+	public $min_height = 0;
 	public $resize = array();
 	public $file_types = array( 'jpg', 'png', 'jpeg' );
-	public $multiple = false;
-	public $crop = false;
-	public $image_sizes = true;
+	public $multiple = 0;
+	public $crop = 0;
+	public $image_sizes = 1;
 	public $mode_output = 'grid';
-	public $manager_balloon = false;
+	public $manager_balloon = 0;
 	public $class_name = '';
 	public $filename = '';
 	public $filetitle = '';
@@ -94,23 +94,23 @@ class Rcl_Uploader {
 		$properties = get_class_vars( get_class( $this ) );
 
 		foreach ( $args as $name => $value ) {
-			//if(isset($args[$name])){
-			//$value = $args[$name];
 
 			if ( is_array( $value ) ) {
 
 				foreach ( $value as $k => $v ) {
 					if ( is_object( $v ) ) {
 						$value[ $k ] = ( array ) $v;
+					} else if ( is_numeric( $v ) ) {
+						$value[ $k ] = intval( $v );
 					}
 				}
-				$value = ( array ) $value;
 			} else if ( is_object( $value ) ) {
 				$value = ( array ) $value;
+			} else if ( is_numeric( $value ) ) {
+				$value = intval( $value );
 			}
 
 			$this->$name = $value;
-			//}
 		}
 	}
 
@@ -176,6 +176,7 @@ class Rcl_Uploader {
 
 		return $content;
 	}
+
 
 	function get_button( $args ) {
 
