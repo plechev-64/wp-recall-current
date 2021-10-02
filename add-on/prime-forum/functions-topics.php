@@ -17,7 +17,7 @@ function pfm_get_topic_name( $topic_id ) {
 
 function pfm_the_post_count() {
 	global $PrimeTopic;
-	echo wp_kses_post( $PrimeTopic->post_count );
+	echo esc_html( $PrimeTopic->post_count );
 }
 
 function pfm_time_diff_last_post() {
