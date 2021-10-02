@@ -74,8 +74,8 @@ function pfm_page_topic_form() {
 	$content .= $formManager->form_navi();
 
 	$content .= $formManager->get_manager();
-	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo $content;
+
+	echo wp_kses( $content, rcl_kses_allowed_html() );
 }
 
 function pfm_page_options() {
@@ -311,7 +311,7 @@ function pfm_page_options() {
 
 	$content .= $Manager->get_content();
 
-	echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo wp_kses( $content, rcl_kses_allowed_html() );
 }
 
 add_action( 'admin_init', 'pfm_flush_rewrite_rules' );
@@ -334,7 +334,7 @@ function pfm_page_forums() {
 	<?php
 	$manager = new PrimeManager();
 
-	echo $manager->get_manager();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo wp_kses( $manager->get_manager(), rcl_kses_allowed_html() );
 }
 
 function pfm_page_themes() {

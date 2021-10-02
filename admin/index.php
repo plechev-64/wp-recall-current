@@ -55,8 +55,8 @@ function rmag_global_options() {
 	$content = '<h2>' . esc_html__( 'Settings of commerce', 'wp-recall' ) . '</h2>';
 
 	$content .= $Manager->get_content();
-	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo $content;
+
+	echo wp_kses($content, rcl_kses_allowed_html());
 }
 
 function rmag_update_options() {

@@ -157,5 +157,5 @@ if ( $result->count && $result->addons ) {
 } else {
 	$content .= '<h3>' . esc_html__( 'Nothing found', 'wp-recall' ) . '</h3>';
 }
-//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-echo $content;
+
+echo wp_kses( $content, rcl_kses_allowed_html() );;

@@ -19,6 +19,6 @@ $Manager = new Rcl_Fields_Manager( 'products-variations', array(
 $content = '<h2>' . esc_html__( 'Products variations management', 'wp-recall' ) . '</h2>';
 
 $content .= $Manager->get_manager();
-//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-echo $content;
+
+echo wp_kses( $content, rcl_kses_allowed_html() );
 

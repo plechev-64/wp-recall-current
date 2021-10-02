@@ -28,5 +28,5 @@ $content .= rcl_get_include_template( 'order.php', __FILE__ );
 $content .= '<form><input type="button" class="button-primary" value="' . esc_html__( 'Back to all orders', 'wp-recall' ) . '" onClick="history.back()"></form>';
 
 $content .= '</div>';
-//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-echo $content;
+
+echo wp_kses( $content, rcl_kses_allowed_html() );

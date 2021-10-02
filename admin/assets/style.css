@@ -9,6 +9,10 @@ body.wp-admin[class*="rcl-commerce_page_manage-"] h2 { /* h2 title on wp-recall 
     padding: 0;
 }
 
+.rcl-hide {
+    display: none;
+}
+
 #rcl-notice {
     position: fixed;
     right: 30px;

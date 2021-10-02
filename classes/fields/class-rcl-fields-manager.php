@@ -270,7 +270,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		$content = '<div class="rcl-fields-manager ' . ( $this->structure_edit ? 'structure-edit' : 'structure-simple' ) . '">';
 
 		if ( $this->meta_delete ) {
-			$content .= '<span style="display:none" id="rcl-manager-confirm-delete">' . __( 'To delete a data adding this field?', 'wp-recall' ) . '</span>';
+			$content .= '<span id="rcl-manager-confirm-delete" class="rcl-hide">' . __( 'To delete a data adding this field?', 'wp-recall' ) . '</span>';
 		}
 
 		if ( $this->template_fields ) {

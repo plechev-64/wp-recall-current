@@ -417,7 +417,7 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 							var field = jQuery(ui.item[0]);
 
-							field.parents("#pfm-' . $typeList . '-list > ul").find(".rcl-custom-field").each(function(a,b){
+							field.parents("#pfm-' . $typeList . '-list .rcl-sortable-fields").find(".rcl-custom-field").each(function(a,b){
 								if(field.attr("id") == jQuery(this).attr("id")) return;
 								jQuery(this).children(".children-box").addClass("must-receive");
 							});
@@ -429,7 +429,7 @@ class PrimeManager extends Rcl_Fields_Manager {
 
 							var field = jQuery(ui.item[0]);
 
-							field.parents("#pfm-' . $typeList . '-list > ul").find(".children-box").removeClass("must-receive");
+							field.parents("#pfm-' . $typeList . '-list .rcl-sortable-fields").find(".children-box").removeClass("must-receive");
 
 							var parentUl = field.parent("ul");
 

@@ -4,8 +4,8 @@ global $Rcl_History_Orders;
 $Rcl_History_Orders->prepare_items();
 
 echo '<div class="wrap"><h2>' . esc_html__( 'Order history', 'wp-recall' ) . '</h2>';
-//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-echo rcl_get_chart_orders( $Rcl_History_Orders->items );
+
+echo wp_kses( rcl_get_chart_orders( $Rcl_History_Orders->items ), rcl_kses_allowed_html() );
 ?>
     <form method="get">
 		<?php

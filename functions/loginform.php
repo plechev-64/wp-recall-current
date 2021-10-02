@@ -1,8 +1,8 @@
 <?php
 
 function rcl_login_form() {
-	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo rcl_get_authorize_form( 'floatform' );
+
+	echo wp_kses( rcl_get_authorize_form( 'floatform' ), rcl_kses_allowed_html() );
 }
 
 add_shortcode( 'loginform', 'rcl_get_login_form' );
@@ -21,8 +21,7 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 
 	ob_start();
 
-	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo '<div class="rcl-loginform rcl-loginform-' . ( $form ? esc_attr( $form ) : 'full' ) . ' panel_lk_recall ' . esc_attr( $type ) . '">';
+	echo '<div class="rcl-loginform rcl-loginform-' . ( ( $form ) ? esc_attr( $form ) : 'full' ) . ' panel_lk_recall ' . esc_attr( $type ) . '">';
 
 	if ( $user_ID ) {
 
@@ -31,8 +30,7 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 		echo '<a href="' . esc_url( $rcl_user_URL ) . '" title="' . esc_html__( 'To personal account', 'wp-recall' ) . '">' . get_avatar( $user_ID, 60 ) . '</a>';
 
 		if ( function_exists( 'rcl_rating_block' ) ):
-			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo rcl_rating_block( array( 'ID' => $user_ID, 'type' => 'user' ) );
+			echo wp_kses( rcl_rating_block( array( 'ID' => $user_ID, 'type' => 'user' ) ), rcl_kses_allowed_html() );
 		endif;
 
 		echo '</div>';
@@ -49,8 +47,7 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 				'icon'  => 'fa-external-link'
 			] )
 		);
-		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo rcl_get_primary_widget_buttons( $buttons );
+		echo wp_kses( rcl_get_primary_widget_buttons( $buttons ), rcl_kses_allowed_html() );
 	} else {
 
 		$login_form = rcl_get_option( 'login_form_recall' );
@@ -74,8 +71,7 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 					'icon'  => 'fa-book'
 				] );
 			}
-			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo rcl_get_primary_widget_buttons( $buttons );
+			echo wp_kses( rcl_get_primary_widget_buttons( $buttons ), rcl_kses_allowed_html() );
 		} else if ( $login_form == 2 ) {
 
 			$buttons = array(
@@ -93,8 +89,7 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 					'icon'  => 'fa-book'
 				] );
 			}
-			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo rcl_get_primary_widget_buttons( $buttons );
+			echo wp_kses( rcl_get_primary_widget_buttons( $buttons ), rcl_kses_allowed_html() );
 		} else if ( $login_form == 3 || $type ) {
 
 			if ( $typeform != 'register' ) {
@@ -123,8 +118,7 @@ function rcl_get_authorize_form( $type = false, $form = false ) {
 					'icon'  => 'fa-book'
 				] );
 			}
-			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo rcl_get_primary_widget_buttons( $buttons );
+			echo wp_kses( rcl_get_primary_widget_buttons( $buttons ), rcl_kses_allowed_html() );
 		}
 	}
 

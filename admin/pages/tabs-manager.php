@@ -13,5 +13,5 @@ $content .= '<p>' . esc_html__( 'On this page you can create new tabs personal a
 $content .= $tabsManager->form_navi();
 
 $content .= $tabsManager->get_manager();
-//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-echo $content;
+
+echo wp_kses( $content, rcl_kses_allowed_html() );;

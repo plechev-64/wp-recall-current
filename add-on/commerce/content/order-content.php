@@ -8,7 +8,8 @@ function rcl_add_order_manager() {
 		return false;
 	}
 
-	echo rcl_get_order_manager();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+	echo wp_kses( rcl_get_order_manager(), rcl_kses_allowed_html() );
 }
 
 add_action( 'rcl_order_before', 'rcl_add_order_notices', 10 );
@@ -73,7 +74,7 @@ function rcl_add_order_notices() {
 
 	$notice .= '</div>';
 
-	echo $notice;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo wp_kses( $notice, rcl_kses_allowed_html() );
 }
 
 add_action( 'rcl_order_before', 'rcl_add_order_details', 20 );
@@ -118,7 +119,7 @@ function rcl_add_order_details() {
 
 	$content .= '</div>';
 
-	echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo wp_kses( $content, rcl_kses_allowed_html() );
 }
 
 if ( ! is_admin() ) {
@@ -167,6 +168,6 @@ function rcl_add_order_pay_form() {
 		$content .= '</div>';
 		$content .= '</div>';
 
-		echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( $content, rcl_kses_allowed_html() );
 	}
 }

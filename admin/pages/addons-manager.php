@@ -87,7 +87,7 @@ $Rcl_Addons_Manager->prepare_items();
 ?>
     <form method="get" class="rcl-repository-list">
         <input type="hidden" name="page" value="manage-addon-recall">
-		<?php echo $Rcl_Addons_Manager->search_box( esc_html__( 'Search by name', 'wp-recall' ), 'search_id' ); ?>
+		<?php echo wp_kses( $Rcl_Addons_Manager->search_box( esc_html__( 'Search by name', 'wp-recall' ), 'search_id' ), rcl_kses_allowed_html() ); ?>
     </form>
 
     <form method="post" class="rcl-repository-list">

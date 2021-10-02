@@ -69,7 +69,6 @@ class Rcl_Cache {
 			return false;
 		}
 
-		//phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 		return file_get_contents( $this->filepath ) . '<!-- Rcl-cache start:' . date( 'd.m.Y H:i', $this->last_update ) . ' time:' . $this->time_cache . ' -->';
 	}
 

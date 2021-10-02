@@ -39,8 +39,7 @@ function rcl_add_feed_button( $user_id ) {
 
 function rcl_add_userlist_follow_button() {
 	global $rcl_user;
-	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo '<div class="follow-button">' . rcl_add_feed_button( $rcl_user->ID ) . '</div>';
+	echo wp_kses( '<div class="follow-button">' . rcl_add_feed_button( $rcl_user->ID ) . '</div>', rcl_kses_allowed_html() );
 }
 
 add_action( 'init', 'rcl_add_followers_tab', 10 );

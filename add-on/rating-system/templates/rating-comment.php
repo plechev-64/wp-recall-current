@@ -1,13 +1,13 @@
 <?php
 global $rating;
-//phpcs:ignoreFile
+
 ?>
 <div class="rating-single">
     <div class="object-rating">
         <i class="rcli fa-star"></i>
-        <span class="rtng-ttl"><?php echo $rating->rating_total; ?></span>
+        <span class="rtng-ttl"><?php echo esc_html( $rating->rating_total ); ?></span>
         <span class="rtng-time"><?php if ( $rating->days_value_sum ) {
-				echo '(' . $rating->days_value_sum . ')';
+				echo '(' . esc_html( $rating->days_value_sum ) . ')';
 			} ?></span>
     </div>
     <div class="rating-sidebar">
