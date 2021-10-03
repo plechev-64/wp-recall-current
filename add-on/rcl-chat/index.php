@@ -429,8 +429,7 @@ function rcl_get_last_chats_box() {
 	     . '<i class="rcli fa-envelope" aria-hidden="true"></i>';
 
 	if ( $new_counter ) {
-		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo '<span class="chat-new-messages">' . $new_counter . '</span>';
+		echo '<span class="chat-new-messages">' . wp_kses_post( $new_counter ) . '</span>';
 	}
 
 	echo '</a>'

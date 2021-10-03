@@ -43,12 +43,11 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 			echo $before;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 			echo '<form method="post">'
-			     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			     . rcl_get_button( array(
+			     . wp_kses( rcl_get_button( array(
 					'icon'   => 'fa-sign-out',
 					'label'  => esc_html__( 'Leave group', 'wp-recall' ),
 					'submit' => true
-				) )
+				) ), rcl_kses_allowed_html() )
 			     . '<input type="hidden" name="group-submit" value="1">'
 			     . '<input type="hidden" name="group-action" value="leave">'
 			     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -66,20 +65,19 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 				 */
 				echo $before;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				if ( $rcl_group->current_user == 'banned' ) {
-					//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					echo rcl_get_notice( [
+
+					echo wp_kses_post( rcl_get_notice( [
 						'text' => esc_html__( 'You have been banned from the group', 'wp-recall' ),
 						'type' => 'error'
-					] );
+					] ) );
 				} else {
 					if ( $rcl_group->group_status == 'open' ) {
 						echo '<form method="post">'
-						     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						     . rcl_get_button( array(
+						     . wp_kses( rcl_get_button( array(
 								'icon'   => 'fa-sign-in',
 								'label'  => __( 'Join group', 'wp-recall' ),
 								'submit' => true
-							) )
+							) ), rcl_kses_allowed_html() )
 						     . '<input type="hidden" name="group-submit" value="1">'
 						     . '<input type="hidden" name="group-action" value="join">'
 						     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -92,17 +90,15 @@ class Group_Primary_Widget extends Rcl_Group_Widget {
 						$requests = rcl_get_group_option( $rcl_group->term_id, 'requests_group_access' );
 
 						if ( $requests && false !== array_search( $user_ID, $requests ) ) {
-							//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							echo rcl_get_notice( [ 'text' => esc_html__( 'The access request has been sent', 'wp-recall' ) ] );
+							echo wp_kses_post( rcl_get_notice( [ 'text' => esc_html__( 'The access request has been sent', 'wp-recall' ) ] ) );
 						} else {
 
 							echo '<form method="post">'
-							     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							     . rcl_get_button( array(
+							     . wp_kses( rcl_get_button( array(
 									'icon'   => 'fa-paper-plane',
 									'label'  => __( 'The request of access', 'wp-recall' ),
 									'submit' => true
-								) )
+								) ), rcl_kses_allowed_html() )
 							     . '<input type="hidden" name="group-submit" value="1">'
 							     . '<input type="hidden" name="group-action" value="ask">'
 							     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -151,15 +147,15 @@ class Group_Users_Widget extends Rcl_Group_Widget {
 		/**
 		 * @var $before string additional info
 		 */
-		//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $before;
-		echo rcl_group_users( $user_count, $template );
-		echo rcl_get_group_link( 'rcl_get_group_users', esc_html__( 'All users', 'wp-recall' ) );
+		echo wp_kses( rcl_group_users( $user_count, $template ), rcl_kses_allowed_html() );
+		echo wp_kses( rcl_get_group_link( 'rcl_get_group_users', esc_html__( 'All users', 'wp-recall' ) ), rcl_kses_allowed_html() );
 		/**
 		 * @var $after string additional info
 		 */
+		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $after;
-		//phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	function options( $instance ) {
@@ -272,7 +268,7 @@ class Group_CategoryList_Widget extends Rcl_Group_Widget {
 		 */
 		echo $before;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-		echo $category;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( $category, rcl_kses_allowed_html() );
 		/**
 		 * @var $after string additional info
 		 */
@@ -308,7 +304,7 @@ class Group_Admins_Widget extends Rcl_Group_Widget {
 		 * @var $before string additional info
 		 */
 		echo $before;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $this->get_group_administrators( $user_count, $template );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( $this->get_group_administrators( $user_count, $template ), rcl_kses_allowed_html() );
 		/**
 		 * @var $after string additional info
 		 */
@@ -395,13 +391,12 @@ class Group_Posts_Widget extends Rcl_Group_Widget {
 			 * @var $before string additional info
 			 */
 			echo $before;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo rcl_close_group_post_content();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses( rcl_close_group_post_content(), rcl_kses_allowed_html() );
 
 			if ( ! $user_ID ) {
-				//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				echo rcl_get_notice( [
+				echo wp_kses_post( rcl_get_notice( [
 					'text' => esc_html__( 'Login and send a request to receive an access of the group', 'wp-recall' ),
-				] );
+				] ) );
 			}
 			/**
 			 * @var $after string additional info

@@ -25,16 +25,16 @@ $imagesize = ( isset( $width ) ) ? array( $width, $width ) : 'thumbnail';
                 </span>
             </div>
 
-			<?php echo rcl_get_product_terms( $post->ID );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<?php echo wp_kses_post( rcl_get_product_terms( $post->ID ) ); ?>
 
         </div>
 
 		<?php
-		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo rcl_get_cart_box( $post->ID, array(
+
+		echo wp_kses( rcl_get_cart_box( $post->ID, array(
 			'variations' => false,
 			'quantity'   => false,
-		) );
+		) ), rcl_kses_allowed_html() );
 		?>
     </div>
 </div>

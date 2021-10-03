@@ -58,8 +58,7 @@ function rcl_add_data_product_columns( $column_name, $post_id ) {
 			break;
 
 		case 'product-price':
-			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo '<input type="text" id="price-product-' . esc_attr( $post_id ) . '" name="price-product" size="4" value="' . esc_attr( get_post_meta( $post_id, 'price-products', 1 ) ) . '"> ' . rcl_get_current_type_currency( $post_id ) . '
+			echo '<input type="text" id="price-product-' . esc_attr( $post_id ) . '" name="price-product" size="4" value="' . esc_attr( get_post_meta( $post_id, 'price-products', 1 ) ) . '"> ' . wp_kses_post( rcl_get_current_type_currency( $post_id ) ) . '
                 <input type="button" class="button edit-price-product" data-product="' . esc_attr( $post_id ) . '" id="product-' . esc_attr( $post_id ) . '" value="' . esc_html__( 'OK', 'wp-recall' ) . '">';
 
 			break;

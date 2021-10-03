@@ -137,8 +137,7 @@ function rcl_user_action( $type = 1 ) {
 			}
 			break;
 		case 2:
-			//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo rcl_get_miniaction( $action );
+			echo wp_kses_post( rcl_get_miniaction( $action ) );
 			break;
 	}
 }
@@ -270,8 +269,8 @@ function rcl_setup_avatar_icons() {
 
 		$html[] = '<span class="rcl-avatar-icon icon-' . $icon_id . '">' . $string . '</span>';
 	}
-	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo '<span class="avatar-icons">' . implode( '', $html ) . '</span>';
+
+	echo '<span class="avatar-icons">' . wp_kses( implode( '', $html ), rcl_kses_allowed_html() ) . '</span>';
 }
 
 function rcl_avatar_icons() {
@@ -295,8 +294,7 @@ function rcl_username() {
 
 function rcl_notice() {
 	if ( $notify = apply_filters( 'notify_lk', '' ) ) {
-		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo rcl_get_notice( [ 'text' => $notify ] );
+		echo wp_kses_post( rcl_get_notice( [ 'text' => $notify ] ) );
 	}
 }
 
@@ -718,11 +716,10 @@ function rcl_check_user_blocked( $rcl_tabs ) {
 }
 
 function rcl_add_user_blocked_notice() {
-	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo rcl_get_notice( [
+	echo wp_kses_post( rcl_get_notice( [
 		'text' => esc_html__( 'The user has restricted access to their page', 'wp-recall' ),
 		'type' => 'error'
-	] );
+	] ) );
 }
 
 add_action( 'wp', 'rcl_post_bar_setup', 10 );

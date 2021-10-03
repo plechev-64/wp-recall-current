@@ -21,8 +21,8 @@
                 </td>
                 <td><?php echo esc_html( $order->order_date ); ?></td>
                 <td><?php echo esc_html( $order->products_amount ); ?></td>
-                <td><?php echo esc_html( $order->order_price ) . ' ' . rcl_get_primary_currency( 1 );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td>
-                <td><?php echo rcl_get_status_name_order( $order->order_status );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td>
+                <td><?php echo esc_html( $order->order_price ) . ' ' . wp_kses_post( rcl_get_primary_currency( 1 ) ); ?></td>
+                <td><?php echo wp_kses_post( rcl_get_status_name_order( $order->order_status ) ); ?></td>
             </tr>
 		<?php } ?>
         <tr>

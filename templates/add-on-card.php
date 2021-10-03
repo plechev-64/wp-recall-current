@@ -61,8 +61,7 @@
 							?>
 
 							<?php
-							//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							echo implode( ', ', $html );
+							echo wp_kses( implode( ', ', $html ), rcl_kses_allowed_html() );
 							?>
 
                         </cite></p>

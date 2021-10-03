@@ -440,7 +440,7 @@ function pfm_admin_role_field( $user ) {
 		$content .= '</table>';
 	}
 
-	echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo wp_kses( $content, rcl_kses_allowed_html() );
 }
 
 add_action( 'personal_options_update', 'pfm_update_user_role' );

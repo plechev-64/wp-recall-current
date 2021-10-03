@@ -8,19 +8,19 @@
 
 	<?php
 	if ( $Cart_Button->output['old_price'] ) {
-		echo $Cart_Button->old_price_box();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( $Cart_Button->old_price_box(), rcl_kses_allowed_html() );
 	}
 	?>
 
 	<?php
 	if ( $Cart_Button->output['price'] ) {
-		echo $Cart_Button->price_box( $Cart_Button->output['variations'] ? $Product_Variations : false );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( $Cart_Button->price_box( $Cart_Button->output['variations'] ? $Product_Variations : false ), rcl_kses_allowed_html() );
 	}
 	?>
 
 	<?php
 	if ( $Cart_Button->output['variations'] ) {
-		echo $Cart_Button->variations_box( $Cart_Button->product_id );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( $Cart_Button->variations_box( $Cart_Button->product_id ), rcl_kses_allowed_html() );
 	}
 	?>
 
@@ -28,13 +28,13 @@
 
 	<?php
 	if ( $Cart_Button->output['quantity'] ) {
-		echo $Cart_Button->quantity_selector_box();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( $Cart_Button->quantity_selector_box(), rcl_kses_allowed_html() );
 	}
 	?>
 
 	<?php
 	if ( $Cart_Button->output['cart_button'] ) {
-		echo $Cart_Button->cart_button();//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses( $Cart_Button->cart_button(), rcl_kses_allowed_html() );
 	}
 	?>
 

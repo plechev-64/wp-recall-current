@@ -75,7 +75,7 @@ function pfm_the_author_manager() {
 
 	$content = pfm_get_manager( $actions, 'author', $PrimePost->user_id );
 
-	echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo wp_kses( $content, rcl_kses_allowed_html() );
 }
 
 function pfm_get_primary_manager() {
@@ -160,7 +160,7 @@ function pfm_the_post_manager() {
 
 	$content = pfm_get_manager( $actions, 'post', $PrimePost->post_id );
 
-	echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo wp_kses( $content, rcl_kses_allowed_html() );
 }
 
 function pfm_the_topic_manager() {
@@ -250,7 +250,7 @@ function pfm_the_topic_manager() {
 
 	$content = pfm_get_manager( $actions, 'topic', $PrimeTopic->topic_id );
 
-	echo $content;//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo wp_kses( $content, rcl_kses_allowed_html() );
 }
 
 add_action( 'rcl_init', 'pfm_init_actions_in_office' );

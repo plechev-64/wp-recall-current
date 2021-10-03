@@ -523,10 +523,8 @@ function rcl_commerce_metabox() {
 		     . '<td><a href="' . esc_url( admin_url( 'admin.php?page=manage-rmag&action=order-details&order-id=' . $order->order_id ) ) . '" target="_blank">' . esc_html( $order->order_id ) . '</a></td>'
 		     . '<td>' . esc_html( get_the_author_meta( 'user_login', $order->user_id ) ) . '</td>'
 		     . '<td>' . esc_html( $order->products_amount ) . '</td>'
-		     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		     . '<td>' . esc_html( $order->order_price ) . ' ' . rcl_get_primary_currency( 2 ) . '</td>'
-		     //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		     . '<td>' . rcl_get_status_name_order( $order->order_status ) . '</td>'
+		     . '<td>' . esc_html( $order->order_price ) . ' ' . wp_kses_post( rcl_get_primary_currency( 2 ) ) . '</td>'
+		     . '<td>' . esc_html( rcl_get_status_name_order( $order->order_status ) ) . '</td>'
 		     . '</tr>';
 	}
 	echo '</table>';

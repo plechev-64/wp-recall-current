@@ -33,8 +33,8 @@ $style = ( isset( $rcl_users_set->width ) ) ? 'width:' . $rcl_users_set->width .
     </div>
     <div class="u_card_bottom">
 		<?php
-		echo $uc_count; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $up_count; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses_post( $uc_count );
+		echo wp_kses_post( $up_count );
 		?>
     </div>
 </div>
