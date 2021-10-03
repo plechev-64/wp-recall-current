@@ -461,14 +461,24 @@ function pfm_update_user_role( $user_id ) {
 rcl_ajax_action( 'pfm_ajax_manager_update_data' );
 function pfm_ajax_manager_update_data() {
 
-	$post = $_POST;
+	if ( isset( $_POST['group_id'] ) ) {
 
-	if ( isset( $post['group_id'] ) ) {
-
-		if ( isset( $post['forum_id'] ) ) {
-			$result = pfm_manager_update_forum( $post );
+		if ( isset( $_POST['forum_id'] ) ) {
+			$result = pfm_manager_update_forum( [
+				'forum_id'     => absint( $_POST['forum_id'] ),
+				'forum_name'   => isset( $_POST['forum_name'] ) ? sanitize_text_field( wp_unslash( $_POST['forum_name'] ) ) : '',
+				'forum_desc'   => isset( $_POST['forum_desc'] ) ? sanitize_text_field( wp_unslash( $_POST['forum_desc'] ) ) : '',
+				'forum_slug'   => isset( $_POST['forum_slug'] ) ? sanitize_key( $_POST['forum_slug'] ) : '',
+				'forum_closed' => isset( $_POST['forum_closed'] ) && intval( $_POST['forum_closed'] ) ? 1 : 0,
+				'group_id'     => absint( $_POST['group_id'] )
+			] );
 		} else {
-			$result = pfm_manager_update_group( $post );
+			$result = pfm_manager_update_group( [
+				'group_id'   => absint( $_POST['group_id'] ),
+				'group_name' => isset( $_POST['group_name'] ) ? sanitize_text_field( wp_unslash( $_POST['group_name'] ) ) : '',
+				'group_slug' => isset( $_POST['group_slug'] ) ? sanitize_key( $_POST['group_slug'] ) : '',
+				'group_desc' => isset( $_POST['group_desc'] ) ? sanitize_textarea_field( wp_unslash( $_POST['group_desc'] ) ) : ''
+			] );
 		}
 
 		wp_send_json( $result );

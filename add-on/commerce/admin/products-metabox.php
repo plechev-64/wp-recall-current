@@ -175,15 +175,14 @@ function rcl_commerce_fields_update( $post_id ) {
 		return false;
 	}
 
-	$POST = $_POST;
-
-	if ( ! isset( $POST['product-variations'] ) ) {
+	if ( ! isset( $_POST['product-variations'] ) ) {
 
 		delete_post_meta( $post_id, 'product-variations' );
 	} else {
-
-		$variations = array();
-		foreach ( $POST['product-variations'] as $varSlug => $var ) {
+		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$new_variations = rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['product-variations'] ) );
+		$variations     = array();
+		foreach ( $new_variations as $varSlug => $var ) {
 
 			if ( ! isset( $var['status'] ) || ! $var['status'] ) {
 				continue;
@@ -202,20 +201,21 @@ function rcl_commerce_fields_update( $post_id ) {
 		}
 	}
 
-	if ( ! isset( $POST['wprecall']['outsale'] ) ) {
+	if ( ! isset( $_POST['wprecall']['outsale'] ) ) {
 		delete_post_meta( $post_id, 'outsale' );
 	}
 
-	if ( ! isset( $POST['wprecall']['availability_product'] ) ) {
+	if ( ! isset( $_POST['wprecall']['availability_product'] ) ) {
 		delete_post_meta( $post_id, 'availability_product' );
 	}
 
-	if ( ! isset( $POST['children_prodimage'] ) || ! $POST['children_prodimage'] ) {
+	if ( empty( $_POST['children_prodimage'] ) ) {
 
 		delete_post_meta( $post_id, 'children_prodimage' );
 	} else {
-
-		update_post_meta( $post_id, 'children_prodimage', implode( ',', array_map( 'trim', $POST['children_prodimage'] ) ) );
+		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$prod_images_ids = rcl_recursive_map( 'absint', wp_unslash( $_POST['children_prodimage'] ) );
+		update_post_meta( $post_id, 'children_prodimage', implode( ',', $prod_images_ids ) );
 	}
 
 	return $post_id;
