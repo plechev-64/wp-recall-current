@@ -59,7 +59,7 @@
                 <span class="product-sumprice">
 					<?php echo esc_html( $product->product_price * $product->product_amount ); ?>
 				</span>
-				<?php echo rcl_get_primary_currency( 1 );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<?php echo wp_kses_post( rcl_get_primary_currency( 1 ) ); ?>
             </td>
         </tr>
 	<?php
@@ -77,7 +77,7 @@
             <span class="rcl-order-price">
 				<?php echo esc_html( $Cart->order_price ); ?>
             </span>
-			<?php echo rcl_get_primary_currency( 1 );//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<?php echo wp_kses_post( rcl_get_primary_currency( 1 ) ); ?>
         </th>
     </tr>
 </table>

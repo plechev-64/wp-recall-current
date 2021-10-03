@@ -132,12 +132,12 @@ function rcl_admin_statistic_cashe() {
 	$sr = ( $Rcl_Payments_History->total_items ) ? floor( $Rcl_Payments_History->sum / $Rcl_Payments_History->total_items ) : 0;
 
 	echo '<div class="wrap"><h2>' . esc_html__( 'Payment history', 'wp-recall' ) . '</h2>';
-	//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo '<p>' . esc_html__( 'All payments', 'wp-recall' ) . ': ' . $Rcl_Payments_History->total_items . ' ' . esc_html__( 'for the amount of', 'wp-recall' ) . ' ' . $Rcl_Payments_History->sum . ' ' . rcl_get_primary_currency( 1 ) . ' (' . __( 'Average check', 'wp-recall' ) . ': ' . $sr . ' ' . rcl_get_primary_currency( 1 ) . ')</p>';
-	echo '<p>' . esc_html__( 'Total in the system', 'wp-recall' ) . ': ' . $Rcl_Payments_History->sum_balance . ' ' . rcl_get_primary_currency( 1 ) . '</p>';
+
+	echo '<p>' . esc_html__( 'All payments', 'wp-recall' ) . ': ' . esc_html( $Rcl_Payments_History->total_items ) . ' ' . esc_html__( 'for the amount of', 'wp-recall' ) . ' ' . esc_html( $Rcl_Payments_History->sum ) . ' ' . wp_kses_post( rcl_get_primary_currency( 1 ) ) . ' (' . esc_html__( 'Average check', 'wp-recall' ) . ': ' . esc_html( $sr ) . ' ' . wp_kses_post( rcl_get_primary_currency( 1 ) ) . ')</p>';
+	echo '<p>' . esc_html__( 'Total in the system', 'wp-recall' ) . ': ' . esc_html( $Rcl_Payments_History->sum_balance ) . ' ' . wp_kses_post( rcl_get_primary_currency( 1 ) ) . '</p>';
 	//echo '<p>Средняя выручка за сутки: '.$day_pay.' '.rcl_get_primary_currency(1).'</p>';
-	echo rcl_get_chart_payments( $Rcl_Payments_History->items );
-	//phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo wp_kses( rcl_get_chart_payments( $Rcl_Payments_History->items ), rcl_kses_allowed_html() );
+
 	?>
     <form method="get">
         <input type="hidden" name="page" value="manage-wpm-cashe">

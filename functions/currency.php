@@ -48,8 +48,8 @@ function rcl_type_currency_list( $post_id ) {
 	} else {
 		$conts = rcl_get_commerce_option( 'primary_cur' );
 	}
-	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo $conts;
+
+	echo wp_kses( $conts, rcl_kses_allowed_html() );
 }
 
 function rcl_get_current_type_currency( $post_id ) {
@@ -81,6 +81,6 @@ function rcl_get_primary_currency( $type = 0 ) {
 }
 
 function rcl_primary_currency( $type = 0 ) {
-	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo rcl_get_primary_currency( $type );
+
+	echo wp_kses_post( rcl_get_primary_currency( $type ) );
 }

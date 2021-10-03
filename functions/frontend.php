@@ -76,8 +76,8 @@ function rcl_user_rayting() {
 		if ( ! isset( $rcl_user->rating_total ) ) {
 			$rcl_user->rating_total = 0;
 		}
-		//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo rcl_rating_block( array( 'value' => $rcl_user->rating_total ) );
+
+		echo wp_kses( rcl_rating_block( array( 'value' => $rcl_user->rating_total ) ), rcl_kses_allowed_html() );
 	}
 }
 
@@ -93,8 +93,7 @@ function rcl_user_meta() {
 		if ( $rcl_user->profile_fields ) {
 			echo '<div class="user-profile-fields">';
 			foreach ( $rcl_user->profile_fields as $k => $field ) {
-				//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				echo Rcl_Field::setup( $field )->get_field_value( 'title' );
+				echo wp_kses( Rcl_Field::setup( $field )->get_field_value( 'title' ), rcl_kses_allowed_html() );
 			}
 			echo '</div>';
 		}

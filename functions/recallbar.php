@@ -57,11 +57,8 @@ function rcl_print_bar_icons() {
 
 			if ( isset( $icon['url'] ) || isset( $icon['onclick'] ) ):
 
-				$url     = isset( $icon['url'] ) ? $icon['url'] : '#';
-				$onclick = isset( $icon['onclick'] ) ? 'onclick="' . $icon['onclick'] . ';return false;"' : '';
-
-				//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				echo '<a href="' . esc_url( $url ) . '" ' . $onclick . '>';
+				$url = isset( $icon['url'] ) ? $icon['url'] : '#';
+				echo '<a href="' . esc_url( $url ) . '" ' . ( isset( $icon['onclick'] ) ? 'onclick="' . esc_attr( $icon['onclick'] ) . ';return false;"' : '' ) . '>';
 
 			endif;
 
@@ -78,8 +75,8 @@ function rcl_print_bar_icons() {
 				echo '</a>';
 			endif;
 			if ( isset( $icon['counter'] ) ):
-				//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				echo '<div class="rcb_nmbr ' . ( $icon['counter'] > 0 ? 'counter_not_null' : '' ) . '">' . $icon['counter'] . '</div>';
+
+				echo '<div class="rcb_nmbr ' . ( $icon['counter'] > 0 ? 'counter_not_null' : '' ) . '">' . wp_kses_post( $icon['counter'] ) . '</div>';
 			endif;
 
 			echo '</div>';
