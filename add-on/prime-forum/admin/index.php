@@ -467,7 +467,7 @@ function pfm_ajax_manager_update_data() {
 			$result = pfm_manager_update_forum( [
 				'forum_id'     => absint( $_POST['forum_id'] ),
 				'forum_name'   => isset( $_POST['forum_name'] ) ? sanitize_text_field( wp_unslash( $_POST['forum_name'] ) ) : '',
-				'forum_desc'   => isset( $_POST['forum_desc'] ) ? sanitize_text_field( wp_unslash( $_POST['forum_desc'] ) ) : '',
+				'forum_desc'   => isset( $_POST['forum_desc'] ) ? sanitize_textarea_field( wp_unslash( $_POST['forum_desc'] ) ) : '',
 				'forum_slug'   => isset( $_POST['forum_slug'] ) ? sanitize_key( $_POST['forum_slug'] ) : '',
 				'forum_closed' => isset( $_POST['forum_closed'] ) && intval( $_POST['forum_closed'] ) ? 1 : 0,
 				'group_id'     => absint( $_POST['group_id'] )
