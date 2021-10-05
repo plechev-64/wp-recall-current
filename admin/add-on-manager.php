@@ -402,7 +402,7 @@ function rcl_upload_addon() {
 
 	$paths = rcl_get_addon_paths();
 
-	$filename = sanitize_key( $_FILES['addonzip']['tmp_name'] );
+	$filename = sanitize_text_field( wp_unslash($_FILES['addonzip']['tmp_name']) );
 	$arch     = current( wp_upload_dir() ) . "/" . basename( $filename );
 
 	if ( ! copy( $filename, $arch ) ) {
