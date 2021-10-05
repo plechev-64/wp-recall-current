@@ -266,7 +266,7 @@ add_action( 'pfm_after_init_query', 'pfm_init_actions', 30 );
 function pfm_init_actions() {
 	global $user_ID;
 
-	if ( empty( $_REQUEST['topic_name'] ) || ! isset( $_REQUEST['pfm-action'] ) || ! isset( $_REQUEST['_wpnonce'] ) ) {
+	if ( ! isset( $_REQUEST['pfm-action'] ) || ! isset( $_REQUEST['_wpnonce'] ) ) {
 		return;
 	}
 
@@ -279,7 +279,7 @@ function pfm_init_actions() {
 	switch ( $action ) {
 		case 'topic_create': //создание топика
 
-			if ( empty( $_REQUEST['forum_id'] ) || ! pfm_is_can( 'topic_create' ) ) {
+			if ( empty( $_REQUEST['topic_name'] ) || empty( $_REQUEST['forum_id'] ) || ! pfm_is_can( 'topic_create' ) ) {
 				return false;
 			}
 
