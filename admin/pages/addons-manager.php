@@ -21,13 +21,13 @@ if ( isset( $_GET['update-addon'] ) ) {
 
 	switch ( $_GET['update-addon'] ) {
 		case 'activate':
-			$text_notice = esc_html__( 'Addition <strong>activated</strong>. New settings may be available on  WP-Recall page', 'wp-recall' );
+			$text_notice = esc_html__( 'Add-on activated. New settings may be available on WP-Recall page', 'wp-recall' );
 			break;
 		case 'deactivate':
-			$text_notice = esc_html__( 'Addition <strong>deactivated</strong>.', 'wp-recall' );
+			$text_notice = esc_html__( 'Add-on deactivated.', 'wp-recall' );
 			break;
 		case 'delete':
-			$text_notice = esc_html__( 'Files and data additions have been <strong>deleted</strong>.', 'wp-recall' );
+			$text_notice = esc_html__( 'Files and data Add-ons have been deleted.', 'wp-recall' );
 			break;
 		case 'upload':
 			$text_notice = esc_html__( 'Add-on has been successfully loaded. You can activate this add-on.', 'wp-recall' );
