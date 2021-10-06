@@ -271,7 +271,7 @@ function rcl_upload_template() {
 		exit;
 	}
 
-	$filename = sanitize_key( $_FILES['addonzip']['tmp_name'] );
+	$filename = sanitize_text_field( wp_unslash( $_FILES['addonzip']['tmp_name'] ) );
 	$arch     = current( wp_upload_dir() ) . "/" . basename( $filename );
 	copy( $filename, $arch );
 
