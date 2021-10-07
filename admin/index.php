@@ -56,7 +56,7 @@ function rmag_global_options() {
 
 	$content .= $Manager->get_content();
 
-	echo wp_kses($content, rcl_kses_allowed_html());
+	echo wp_kses( $content, rcl_kses_allowed_html() );
 }
 
 function rmag_update_options() {
@@ -538,7 +538,7 @@ function rcl_manager_get_custom_field_options() {
 	}
 
 	$new_type = isset( $_POST['newType'] ) ? sanitize_key( $_POST['newType'] ) : '';
-	$field_id = isset( $_POST['fieldId'] ) ? sanitize_key( $_POST['fieldId'] ) : '';
+	$field_id = isset( $_POST['fieldId'] ) ? sanitize_text_field( wp_unslash( $_POST['fieldId'] ) ) : '';
 	//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 	$managerProps = isset( $_POST['manager'] ) ? rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['manager'] ) ) : [];
 
@@ -718,7 +718,7 @@ function rcl_manager_update_data_fields() {
 
 		$strArray = array();
 		$area_id  = - 1;
-
+		$group_id = 0;
 		foreach ( $structure as $value ) {
 
 			if ( is_array( $value ) ) {
@@ -731,9 +731,6 @@ function rcl_manager_update_data_fields() {
 					$strArray[ $group_id ]['areas'][ $area_id ]['fields'][] = $value['field_id'];
 				}
 			} else {
-
-				$group_id = 0;
-
 				$area_id ++;
 				$strArray[ $group_id ]['areas'][ $area_id ]['width'] = isset( $_POST['structure-areas'][ $area_id ]['width'] ) ? intval( $_POST['structure-areas'][ $area_id ]['width'] ) : 0;
 			}

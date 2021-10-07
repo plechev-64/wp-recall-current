@@ -327,6 +327,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 		unset( $props['fields'] );
 		unset( $props['default_fields'] );
+		unset( $props['field_options'] );
 
 		$content .= "<script>rcl_init_manager_fields(" . json_encode( $props ) . ");</script>";
 
