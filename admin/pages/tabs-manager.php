@@ -14,4 +14,4 @@ $content .= $tabsManager->form_navi();
 
 $content .= $tabsManager->get_manager();
 
-echo wp_kses( $content, rcl_kses_allowed_html() );;
+echo wp_kses( $content, rcl_kses_allowed_html() );
