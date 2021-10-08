@@ -212,7 +212,7 @@ function rcl_get_register_user( $errors ) {
 
 	$wp_errors = apply_filters( 'rcl_registration_errors', $wp_errors, $login, $email );
 
-	if ( isset( $wp_errors->errors ) ) {
+	if ( isset( $wp_errors->errors )  && !empty( $wp_errors->errors ) ) {
 		return $wp_errors;
 	}
 
