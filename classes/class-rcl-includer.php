@@ -503,6 +503,7 @@ function rcl_add_src_list_includes( $result ) {
 function rcl_ajax_edit_version_scripts( $src ) {
 
 	$removes = [
+		'wp-includes/js/jquery/jquery.js',
 		'wp-includes/js/jquery/jquery.min.js',
 		'wp-includes/js/jquery/jquery-migrate.min.js',
 		'wp-includes/js/jquery/ui/core.min.js'
