@@ -208,7 +208,8 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 	function is_errors() {
 		global $wp_errors;
-		if ( isset( $wp_errors->errors ) && $wp_errors->errors ) {
+
+		if ( is_wp_error( $wp_errors ) && $wp_errors->has_errors() ) {
 			return true;
 		}
 

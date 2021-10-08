@@ -152,7 +152,7 @@ function rcl_get_register_user( $errors ) {
 
 	$wp_errors = new WP_Error();
 
-	if ( count( $errors->errors ) ) {
+	if ( $errors->has_errors() ) {
 		$wp_errors = $errors;
 
 		return $wp_errors;
@@ -173,7 +173,7 @@ function rcl_get_register_user( $errors ) {
 	$get_fields = rcl_get_profile_fields();
 	$required   = true;
 	if ( $get_fields ) {
-		foreach ( ( array ) $get_fields as $field ) {
+		foreach ( $get_fields as $field ) {
 
 			$field = apply_filters( 'chek_custom_field_regform', $field );
 			if ( ! $field ) {
@@ -212,7 +212,7 @@ function rcl_get_register_user( $errors ) {
 
 	$wp_errors = apply_filters( 'rcl_registration_errors', $wp_errors, $login, $email );
 
-	if ( isset( $wp_errors->errors ) ) {
+	if ( is_wp_error( $wp_errors ) && $wp_errors->has_errors() ) {
 		return $wp_errors;
 	}
 
@@ -332,8 +332,8 @@ function rcl_notice_form( $form = 'login' ) {
 
 	$wp_error = new WP_Error();
 
-	if ( ! empty( $wp_errors ) ) {
-		$wp_error->errors = $wp_errors->errors;
+	if ( is_wp_error( $wp_errors ) && $wp_errors->has_errors() ) {
+		$wp_errors->export_to( $wp_error );
 	}
 
 	$wp_error = apply_filters( 'rcl_login_errors', $wp_error );
