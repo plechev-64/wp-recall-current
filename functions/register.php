@@ -563,9 +563,9 @@ function rcl_custom_fields_regform( $content ) {
 			continue;
 		}
 
-		$class = ( isset( $field['class'] ) ) ? $field['class'] : '';
-		$id    = ( isset( $field['id'] ) ) ? 'id=' . $field['id'] : '';
-		$attr  = ( isset( $field['attr'] ) ) ? '' . $field['attr'] : '';
+		$class = !empty( $field['class'] )  ? $field['class'] : '';
+		$id    = !empty( $field['id'] )  ? 'id=' . $field['id'] : '';
+		$attr  = !empty( $field['attr'] ) ? $field['attr'] : '';
 
 		//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$field['value'] = isset( $_POST[ $field['slug'] ] ) ? rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST[ $field['slug'] ] ) ) : false;

@@ -52,7 +52,7 @@ function rcl_pay_order_user_balance() {
 	$pay_type     = isset( $_POST['pay_type'] ) ? sanitize_key( $_POST['pay_type'] ) : '';
 	$pay_summ     = isset( $_POST['pay_summ'] ) ? abs( floatval( $_POST['pay_summ'] ) ) : 0;
 	$description  = isset( $_POST['description'] ) ? sanitize_textarea_field( wp_unslash( $_POST['description'] ) ) : '';
-	$baggage_data = isset( $_POST['baggage_data'] ) ? rcl_recursive_map( 'sanitize_text_field', (array) json_decode( base64_decode( sanitize_text_field( wp_unslash( $_POST['baggage_data'] ) ) ) ) ) : [];
+	$baggage_data = isset( $_POST['baggage_data'] ) ? (object) rcl_recursive_map( 'sanitize_text_field', (array) json_decode( base64_decode( wp_unslash( $_POST['baggage_data'] ) ) ) ) : [];
 
 	if ( ! $pay_summ ) {
 		wp_send_json( array( 'error' => __( 'Error', 'wp-recall' ) ) );

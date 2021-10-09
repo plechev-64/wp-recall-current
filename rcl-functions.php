@@ -1777,6 +1777,7 @@ function rcl_kses_allowed_html() {
 					'multiple' => true
 				],
 				'option'   => [
+					'data-key' => true,
 					'selected' => true,
 					'value'    => true
 				],
@@ -1797,7 +1798,7 @@ function rcl_kses_allowed_html() {
 					'target'   => true
 				],
 				'span'     => [ 'onclick' => true ],
-				'div'      => [ 'onclick' => true ],
+				'div'      => [ 'onclick' => true, 'account' => true ],
 				'link'     => [
 					'rel'   => true,
 					'id'    => true,
