@@ -71,7 +71,8 @@ function rmag_update_options() {
 				if ( $key == 'primary-rmag-options' ) {
 					continue;
 				}
-				$options[ sanitize_key( $key ) ] = sanitize_text_field( $value );
+				//TODO sanitize options
+				$options[ sanitize_key( $key ) ] = $value;
 			}
 
 			update_site_option( 'primary-rmag-options', $options );
@@ -80,7 +81,8 @@ function rmag_update_options() {
 		if ( isset( $_POST['local'] ) ) {
 			//phpcs:ignore
 			foreach ( ( array ) $_POST['local'] as $key => $value ) {
-				update_site_option( sanitize_key( $key ), sanitize_text_field( $value ) );
+				//TODO sanitize options
+				update_site_option( sanitize_key( $key ), $value );
 			}
 		}
 
@@ -165,12 +167,12 @@ function rcl_update_options() {
 
 	rcl_verify_ajax_nonce();
 
-	$POST = $_POST; //filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
+	$POST = $_POST;
 
 	array_walk_recursive(
 		$POST, function ( &$v, $k ) {
+		//TODO sanitize options
 		$v = trim( $v );
-		$v = sanitize_text_field( $v );
 	} );
 
 	foreach ( $POST as $option_name => $values ) {
