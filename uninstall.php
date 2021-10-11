@@ -38,24 +38,24 @@ rcl_remove_dir( RCL_TAKEPATH );
 rcl_remove_dir( RCL_UPLOAD_PATH );
 
 //Удаляем таблицы и настройки плагина
-$tables = $wpdb->get_results( "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name like 'rcl_\%'" );
+$tables = $wpdb->get_results( "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name like '".$wpdb->prefix."rcl_%'" );
 if ( $tables ) {
 	foreach ( $tables as $table ) {
 		$wpdb->query( "DROP TABLE IF EXISTS " . $table->table_name );
 	}
 }
 
-$tables = $wpdb->get_results( "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name like 'rmag_\%'" );
+$tables = $wpdb->get_results( "SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name like '".$wpdb->prefix."rmag_%'" );
 if ( $tables ) {
 	foreach ( $tables as $table ) {
 		$wpdb->query( "DROP TABLE IF EXISTS " . $table->table_name );
 	}
 }
 
-$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE 'rcl_\%'" );
-$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE 'rmag_\%'" );
+$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE 'rcl_%'" );
+$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE 'rmag_%'" );
 $wpdb->query( "DELETE FROM $wpdb->options WHERE option_name LIKE 'widget_rcl%'" );
-$wpdb->query( "DELETE FROM $wpdb->usermeta WHERE meta_key LIKE 'rcl_\%'" );
+$wpdb->query( "DELETE FROM $wpdb->usermeta WHERE meta_key LIKE 'rcl_%'" );
 
 //включаем всем пользователям сайта показ админ панели
 $wpdb->update(
