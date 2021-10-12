@@ -1706,7 +1706,7 @@ function rcl_get_pages_ids() {
  * @param $beatName
  * @param $actions - array with allowed function callbacks for beat
  */
-function rcl_init_beat( $beatName, $actions ) {
+function rcl_init_beat( $beatName, $actions = [] ) {
 	global $rcl_beats;
 	$rcl_beats[ $beatName ] = [
 		'actions' => $actions
