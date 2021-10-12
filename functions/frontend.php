@@ -747,7 +747,7 @@ function rcl_post_bar( $content ) {
 		return $content;
 	}
 
-	$rcl_bar_items = apply_filters( 'rcl_post_bar_items', $rcl_post_bar['items'] );
+	$rcl_bar_items = apply_filters( 'rcl_post_bar_items', !empty($rcl_post_bar['items'])? $rcl_post_bar['items']: [] );
 
 	if ( ! isset( $rcl_bar_items ) || ! $rcl_bar_items ) {
 		return $content;
