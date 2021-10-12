@@ -16,8 +16,8 @@ function rcl_add_count_user() {
 	if ( $user_ID ) {
 
 		$pay_summ      = abs( floatval( $_POST['pay_summ'] ) );
-		$pay_type      = ( isset( $_POST['pay_type'] ) ) ? sanitize_key( $_POST['pay_type'] ) : 'user-balance';
-		$description   = ( isset( $_POST['description'] ) ) ? sanitize_text_field( wp_unslash( $_POST['description'] ) ) : '';
+		$pay_type      = ( isset( $_POST['pay_type'] ) ) ? sanitize_text_field( wp_unslash( $_POST['pay_type'] ) ) : 'user-balance';
+		$description   = ( isset( $_POST['description'] ) ) ? sanitize_textarea_field( wp_unslash( $_POST['description'] ) ) : '';
 		$merchant_icon = ( isset( $_POST['merchant_icon'] ) ) ? intval( $_POST['merchant_icon'] ) : 1;
 		$submit_value  = ( isset( $_POST['submit_value'] ) ) ? sanitize_text_field( wp_unslash( $_POST['submit_value'] ) ) : esc_html__( 'Make payment', 'wp-recall' );
 
@@ -49,7 +49,7 @@ function rcl_pay_order_user_balance() {
 	rcl_verify_ajax_nonce();
 
 	$pay_id       = isset( $_POST['pay_id'] ) ? intval( $_POST['pay_id'] ) : 0;
-	$pay_type     = isset( $_POST['pay_type'] ) ? sanitize_key( $_POST['pay_type'] ) : '';
+	$pay_type     = isset( $_POST['pay_type'] ) ? sanitize_text_field( wp_unslash( $_POST['pay_type'] ) ) : '';
 	$pay_summ     = isset( $_POST['pay_summ'] ) ? abs( floatval( $_POST['pay_summ'] ) ) : 0;
 	$description  = isset( $_POST['description'] ) ? sanitize_textarea_field( wp_unslash( $_POST['description'] ) ) : '';
 	$baggage_data = isset( $_POST['baggage_data'] ) ? (object) rcl_recursive_map( 'sanitize_text_field', (array) json_decode( base64_decode( wp_unslash( $_POST['baggage_data'] ) ) ) ) : [];
@@ -94,8 +94,8 @@ function rcl_load_payment_form() {
 
 	$form = rcl_get_pay_form( array(
 		'pay_summ'    => isset( $_POST['pay_summ'] ) ? abs( floatval( $_POST['pay_summ'] ) ) : 0,
-		'ids'         => isset( $_POST['gateway_id'] ) ? [ sanitize_key( $_POST['gateway_id'] ) ] : [],
-		'pay_type'    => isset( $_POST['pay_type'] ) ? sanitize_key( $_POST['pay_type'] ) : '',
+		'ids'         => isset( $_POST['gateway_id'] ) ? [ sanitize_text_field( wp_unslash( $_POST['gateway_id'] ) ) ] : [],
+		'pay_type'    => isset( $_POST['pay_type'] ) ? sanitize_text_field( wp_unslash( $_POST['pay_type'] ) ) : '',
 		'description' => isset( $_POST['description'] ) ? sanitize_textarea_field( wp_unslash( $_POST['description'] ) ) : '',
 		'pre_form'    => isset( $_POST['pre_form'] ) ? intval( $_POST['pre_form'] ) : 0,
 	) );
@@ -116,6 +116,6 @@ function rcl_load_payment_form() {
 			'size'    => 'medium',
 			'title'   => isset( $_POST['description'] ) ? sanitize_textarea_field( wp_unslash( $_POST['description'] ) ) : ''
 		),
-		'pay_type' => isset( $_POST['pay_type'] ) ? sanitize_key( $_POST['pay_type'] ) : ''
+		'pay_type' => isset( $_POST['pay_type'] ) ? sanitize_text_field( wp_unslash( $_POST['pay_type'] ) ) : ''
 	) );
 }
