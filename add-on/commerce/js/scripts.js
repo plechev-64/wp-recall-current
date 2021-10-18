@@ -359,7 +359,9 @@ function rcl_add_to_cart(e) {
                 jQuery('.rcl-order-price').html(data.cart.order_price);
                 jQuery('.rcl-order-amount').html(data.cart.products_amount);
 
-                jQuery('#recallbar #rcl-cart').animateCss('shake');
+                if (typeof animateCss !== 'undefined') {
+                    jQuery('#recallbar #rcl-cart').animateCss('shake');
+                }
 
                 Rcl.Cart = data.cart;
 
