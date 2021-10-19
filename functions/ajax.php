@@ -225,7 +225,7 @@ function rcl_ajax_delete_attachment() {
 
 	if ( $post_id ) {
 
-		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		if ( ! current_user_can( 'edit_post', $post_id ) || ! current_user_can( 'edit_post', $attachment_id ) ) {
 			wp_send_json( array(
 				'error' => esc_html__( 'You can`t delete this file!', 'wp-recall' )
 			) );
