@@ -37,7 +37,7 @@ class Widget_new_author extends WP_Widget {
 			 * @var string $after_title
 			 */
 			echo $before_title;// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo esc_html( $title );
+			echo $title ;// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $after_title;// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
@@ -138,7 +138,7 @@ class Widget_online_users extends WP_Widget {
 			 * @var string $after_title
 			 */
 			echo $before_title;// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo esc_html( $title );
+			echo $title;// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $after_title;// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
@@ -231,7 +231,7 @@ class Widget_author_profil extends WP_Widget {
 			 * @var string $after_title
 			 */
 			echo $before_title;// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo esc_html( $title );
+			echo $title;// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $after_title;// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
