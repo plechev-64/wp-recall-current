@@ -602,14 +602,18 @@ function rcl_edit_rating_post() {
 
 rcl_ajax_action( 'rcl_view_rating_votes', true );
 function rcl_view_rating_votes() {
+	global $user_ID;
 
 	rcl_verify_ajax_nonce();
 
-	$access = rcl_get_option( 'rating_results_can', 10 );
+	if($access = rcl_get_option( 'rating_results_can', 10 )){
+		$user_info = get_userdata( get_current_user_id() );
+		if(!$user_ID || $user_info->user_level < $access){
+			wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+		}
+	}
 
-	$user_info = get_userdata( get_current_user_id() );
-
-	if ( empty( $_POST['rating'] ) || ! $user_info || $user_info->user_level < $access ) {
+	if ( empty( $_POST['rating'] ) ) {
 		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
 	}
 

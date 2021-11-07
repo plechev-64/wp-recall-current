@@ -661,7 +661,7 @@ function rcl_manager_update_data_fields() {
 	$manager_id  = isset( $_POST['manager_id'] ) ? sanitize_key( $_POST['manager_id'] ) : '';
 	$option_name = isset( $_POST['option_name'] ) ? sanitize_key( $_POST['option_name'] ) : '';
 	//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-	$fieldsData = isset( $_POST['fields'] ) ? rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['fields'] ) ) : [];
+	$fieldsData = isset( $_POST['fields'] ) ? wp_unslash( $_POST['fields'] ) : [];
 	//phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 	$structure = isset( $_POST['structure'] ) ? rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['structure'] ) ) : false;
 
