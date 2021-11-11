@@ -42,7 +42,10 @@ class Rcl_Feed_List extends Rcl_Query {
 			add_filter( 'rcl_feed_data', array( $this, 'setup_' . $this->content . '_data' ), 10, 2 );
 		}
 
+		$this->per_page = ( isset( $args['per_page'] ) ) ? $args['per_page'] : 30;
+
 		$this->setup_feed_query( $args );
+		$this->number = $this->per_page;
 		$this->number( $this->number );
 	}
 

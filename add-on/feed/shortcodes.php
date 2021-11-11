@@ -34,13 +34,15 @@ function rcl_get_feed_list( $atts = array() ) {
 
 	include_once 'classes/class-rcl-feed-list.php';
 
+	$per_page = ( isset( $atts['per_page'] ) ) ? intval( $atts['per_page'] ) : 30;
+
 	$list    = new Rcl_Feed_List( $atts );
 	$rclnavi = false;
 	if ( ! isset( $atts['number'] ) ) {
 
 		$rclnavi = new Rcl_PageNavi(
 			'rcl-feed', $list->count_feed(), array(
-				'in_page' => 30
+				'in_page' => $per_page
 			)
 		);
 
@@ -57,7 +59,7 @@ function rcl_get_feed_list( $atts = array() ) {
 			] );
 	}
 
-	$load = ( $rclnavi->in_page ) ? 'data-load="' . $list->load . '"' : '';
+	$load = ( isset( $rclnavi->in_page ) ) ? 'data-load="' . $list->load . '"' : '';
 
 	$content .= '<div id="rcl-feed" data-custom="' . base64_encode( json_encode( $atts ) ) . '" data-feed="' . $list->content . '" ' . $load . '>';
 
@@ -75,7 +77,7 @@ function rcl_get_feed_list( $atts = array() ) {
 
 	$content .= '</div>';
 
-	if ( $list->load == 'pagenavi' && $rclnavi->in_page ) {
+	if ( $list->load == 'pagenavi' && isset( $rclnavi->in_page ) ) {
 		$content .= $rclnavi->pagenavi();
 	}
 
