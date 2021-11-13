@@ -322,3 +322,32 @@ function rcl_chat_get_new_messages( $post ) {
 
 	return $res;
 }
+
+function rcl_chat_message_allowed_tags() {
+	return apply_filters( 'rcl_chat_message_allowed_tags', [
+		'a'          => [
+			'href'   => true,
+			'title'  => true,
+			'target' => true
+		],
+		'img'        => [
+			'src'   => true,
+			'alt'   => true,
+			'class' => true,
+		],
+		'p'          => [
+			'class' => true
+		],
+		'blockquote' => [],
+		'del'        => [],
+		'em'         => [],
+		'strong'     => [],
+		'details'    => [],
+		'summary'    => [],
+		'span'       => [
+			'class' => true,
+			'style' => true
+		],
+		'b' => []
+	] );
+}

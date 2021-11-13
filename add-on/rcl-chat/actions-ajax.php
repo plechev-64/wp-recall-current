@@ -82,13 +82,18 @@ function rcl_get_chat_page() {
 
 rcl_ajax_action( 'rcl_chat_add_message' );
 function rcl_chat_add_message() {
-	global $user_ID, $rcl_options;
+
+	if ( ! isset( $_POST['chat'] ) ) {
+		wp_send_json( [ 'error' => esc_html__( 'Error', 'wp-recall' ) ] );
+	}
 
 	rcl_verify_ajax_nonce();
 
-	$POST = isset( $_POST['chat'] ) ? rcl_recursive_map( 'sanitize_text_field', wp_unslash( $_POST['chat'] ) ) : [];//phpcs:ignore
+	$message_text = isset( $_POST['chat']['message'] ) ? wp_kses( wp_unslash( $_POST['chat']['message'] ), rcl_chat_message_allowed_tags() ) : '';
+	$token        = isset( $_POST['chat']['token'] ) ? sanitize_text_field( wp_unslash( $_POST['chat']['token'] ) ) : '';
+	$attachment   = ( isset( $_POST['chat']['attachment'] ) ) ? intval( $_POST['chat']['attachment'] ) : false;
 
-	$chat_room = sanitize_text_field( rcl_chat_token_decode( $POST['token'] ) );
+	$chat_room = sanitize_text_field( rcl_chat_token_decode( $token ) );
 
 	if ( rcl_chat_is_private_room( $chat_room ) ) {
 		if ( ! rcl_chat_user_in_room( get_current_user_id(), $chat_room ) ) {
@@ -100,14 +105,16 @@ function rcl_chat_add_message() {
 		return false;
 	}
 
-	$antispam = isset( $rcl_options['chat']['antispam'] ) ? $rcl_options['chat']['antispam'] : 5;
+	$chat_options = rcl_get_option( 'chat', [] );
+
+	$antispam = $chat_options['antispam'] ?? 5;
 
 	if ( $antispam = apply_filters( 'rcl_chat_antispam_option', $antispam ) ) {
 
 		$query = new Rcl_Chat_Messages_Query();
 
 		$cntLastMess = $query->count( [
-			'user_id'                => $user_ID,
+			'user_id'                => get_current_user_id(),
 			'private_key__not_in'    => [ 0 ],
 			'message_status__not_in' => [ 1 ],
 			'date_query'             => [
@@ -127,13 +134,12 @@ function rcl_chat_add_message() {
 		}
 	}
 
-	$attach = ( isset( $POST['attachment'] ) ) ? intval( $POST['attachment'] ) : false;
 
 	$content = '';
 
 	$newMessages = rcl_chat_get_new_messages( ( object ) array(
 		'last_activity'   => isset( $_POST['last_activity'] ) ? sanitize_text_field( wp_unslash( $_POST['last_activity'] ) ) : null,
-		'token'           => $POST['token'],
+		'token'           => $token,
 		'user_write'      => 0,
 		'update_activity' => 0
 	) );
@@ -146,15 +152,15 @@ function rcl_chat_add_message() {
 	require_once 'class-rcl-chat.php';
 	$chat = new Rcl_Chat( array( 'chat_room' => $chat_room ) );
 
-	$result = $chat->add_message( $POST['message'], $attach );
+	$result = $chat->add_message( $message_text, $attachment );
 
 	if ( isset( $result->errors ) && $result->errors ) {
 		$res['errors'] = $result->errors;
 		wp_send_json( $res );
 	}
 
-	if ( $attach ) {
-		rcl_delete_temp_media( $attach );
+	if ( $attachment ) {
+		rcl_delete_temp_media( $attachment );
 	}
 
 	if ( isset( $result['errors'] ) ) {

@@ -94,31 +94,7 @@ class Rcl_Chat extends Rcl_Chat_Messages_Query {
 
 		$this->query = apply_filters( 'rcl_chat_query', $this->query );
 
-		$this->allowed_tags = apply_filters( 'rcl_chat_message_allowed_tags', array(
-			'a'          => array(
-				'href'   => true,
-				'title'  => true,
-				'target' => true
-			),
-			'img'        => array(
-				'src'   => true,
-				'alt'   => true,
-				'class' => true,
-			),
-			'p'          => array(
-				'class' => true
-			),
-			'blockquote' => array(),
-			'del'        => array(),
-			'em'         => array(),
-			'strong'     => array(),
-			'details'    => array(),
-			'summary'    => array(),
-			'span'       => array(
-				'class' => true,
-				'style' => true
-			)
-		) );
+		$this->allowed_tags = rcl_chat_message_allowed_tags();
 
 		do_action( 'rcl_chat', $this );
 	}
