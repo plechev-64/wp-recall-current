@@ -62,7 +62,7 @@ class Rcl_Field_Abstract {
 
 		$this->init_properties( $args );
 
-		$this->rand = rand( 0, 1000 );
+		$this->rand = uniqid();
 
 		if ( ! $this->input_name ) {
 			$this->input_name = $this->id;

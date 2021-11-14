@@ -185,7 +185,7 @@ class Rcl_Cart_Button_Form {
 			return false;
 		}
 
-		$box_id = rand( 0, 100 );
+		$box_id = uniqid();
 
 		$content = '<div id="cart-box-' . $box_id . '" class="product-variations">';
 

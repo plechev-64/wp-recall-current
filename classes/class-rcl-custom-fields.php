@@ -29,7 +29,7 @@ class Rcl_Custom_Fields {
 	function get_input( $field, $value = false ) {
 		global $user_LK, $user_ID;
 
-		$this->rand = rand( 0, 100 );
+		$this->rand = uniqid();
 
 		if ( isset( $field['requared'] ) ) {
 			$field['required'] = $field['requared'];
@@ -432,7 +432,7 @@ class Rcl_Custom_Fields {
 
 		rcl_slider_scripts();
 
-		$idRunner = rand( 0, 10000 );
+		$idRunner = uniqid();
 
 		$min  = isset( $field['value_min'] ) ? $field['value_min'] : 0;
 		$max  = isset( $field['value_max'] ) ? $field['value_max'] : 100;
@@ -465,7 +465,7 @@ class Rcl_Custom_Fields {
 
 		rcl_slider_scripts();
 
-		$idRunner = rand( 0, 10000 );
+		$idRunner = uniqid();
 
 		$min  = isset( $field['value_min'] ) ? $field['value_min'] : 0;
 		$max  = isset( $field['value_max'] ) ? $field['value_max'] : 100;

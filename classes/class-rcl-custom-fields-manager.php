@@ -610,7 +610,7 @@ class Rcl_Custom_Fields_Manager extends Rcl_Custom_Fields {
 	function empty_field() {
 
 		$this->status            = false;
-		$this->new_slug          = 'CreateNewField' . rand( 10, 100 );
+		$this->new_slug          = 'CreateNewField' . uniqid();
 		$this->field['newField'] = 1;
 
 		if ( $this->select_type ) {
