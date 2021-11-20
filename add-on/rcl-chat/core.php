@@ -40,6 +40,10 @@ function rcl_insert_chat( $chat_room, $chat_status ) {
 function rcl_delete_chat( $chat_id ) {
 	global $wpdb;
 
+	if(empty($chat_id) || !(new Rcl_Chats_Query())->where(['chat_id' => $chat_id])->get_row()){
+		return false;
+	}
+
 	$result = $wpdb->query( "DELETE FROM " . RCL_PREF . "chats WHERE chat_id='$chat_id'" );//phpcs:ignore
 
 	do_action( 'rcl_delete_chat', $chat_id );

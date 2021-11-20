@@ -513,7 +513,7 @@ function rcl_secondary_password( $fields ) {
             jQuery("#registerform,.form-tab-rcl").on("keyup","#secondary-pass-user",function(){
                 var pr = jQuery("#primary-pass-user").val();
                 var sc = jQuery(this).val();
-                var notice;
+                var notice = "";
                 if(pr!=sc) notice = "<span class=login-error>' . esc_html__( 'The passwords do not match!', 'wp-recall' ) . '</span>";
                 else notice = "<span class=login-message>' . esc_html__( 'The passwords match', 'wp-recall' ) . '</span>";
                 jQuery("#notice-chek-password").html(notice);
