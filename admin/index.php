@@ -318,7 +318,7 @@ function rcl_update_custom_fields() {
 				$slug = str_replace( array(
 					'-',
 					' '
-				), '_', rcl_sanitize_string( $newFields[ $nKey ]['title'] ) . '-' . rand( 10, 100 ) );
+				), '_', rcl_sanitize_string( $newFields[ $nKey ]['title'] ) . '-' . uniqid() );
 			}
 
 			$field = $newFields[ $nKey ];
@@ -517,7 +517,7 @@ function rcl_manager_get_new_field() {
 
 	$Manager = new Rcl_Fields_Manager( $managerProps['manager_id'], $managerProps );
 
-	$field_id = 'newField-' . rand( 1, 10000 );
+	$field_id = 'newField-' . uniqid();
 
 	$Manager->add_field( array(
 		'slug' => $field_id,
@@ -699,7 +699,7 @@ function rcl_manager_update_data_fields() {
 				$field_id = str_replace( array(
 					'-',
 					' '
-				), '_', rcl_sanitize_string( $field['title'] ) . '-' . rand( 1, 100 ) );
+				), '_', rcl_sanitize_string( $field['title'] ) . '-' . uniqid() );
 			} else {
 				$field_id = $field['id'];
 			}
