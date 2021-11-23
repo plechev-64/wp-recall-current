@@ -25,7 +25,7 @@ function rcl_get_user_info(element) {
                 ssi_modal.show({
                     title: Rcl.local.title_user_info,
                     sizeClass: 'auto',
-                    className: 'rcl-user-getails',
+                    className: 'rcl-user-details',
                     buttons: [{
                         label: Rcl.local.close,
                         closeAfter: true

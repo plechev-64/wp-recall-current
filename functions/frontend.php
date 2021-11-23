@@ -351,7 +351,7 @@ function rcl_default_inline_styles( $styles, $rgb ) {
     .rcl_preloader i{
         color:rgb(' . $r . ',' . $g . ',' . $b . ');
     }
-    .rcl-user-getails .status-user-rcl::before{
+    .rcl-user-details .status-user-rcl::before{
         border-left-color:rgb(' . $r . ',' . $g . ',' . $b . ');
     }
     .rows-list .status-user-rcl::before{

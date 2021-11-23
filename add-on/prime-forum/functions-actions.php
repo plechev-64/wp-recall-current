@@ -1088,7 +1088,7 @@ function pfm_action_get_author_info( $user_id ) {
 		'content'      => rcl_get_user_details( $user_id, array( 'zoom' => false ) ),
 		'dialog'       => true,
 		'dialog-width' => 'auto',
-		'dialog-class' => 'rcl-user-getails',
+		'dialog-class' => 'rcl-user-details',
 		'title'        => __( 'Detailed information', 'wp-recall' )
 	);
 }
