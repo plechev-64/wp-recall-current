@@ -235,7 +235,7 @@ add_filter( 'rcl_feed_content', 'rcl_get_feed_excerpt', 20 );
 function rcl_get_feed_excerpt( $content ) {
 	global $rcl_feed;
 
-	if ( isset( $rcl_feed->show_full ) ) {
+	if ( !empty( $rcl_feed->show_full ) ) {
 		return $content;
 	}
 
