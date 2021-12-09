@@ -9,20 +9,20 @@ function rcl_tab( $tab_data, $deprecated_callback = false, $deprecated_name = ''
 			_deprecated_argument( __FUNCTION__, '15.2.0' );
 		}
 
-		$args_tab = array(
+		$args_tab = [
 			'id'      => $tab_data,
 			'name'    => $deprecated_name,
-			'content' => array(
-				array(
+			'content' => [
+				[
 					'id'       => $tab_data,
 					'name'     => $deprecated_name,
 					'icon'     => ( isset( $deprecated_args['class'] ) ) ? $deprecated_args['class'] : 'fa-cog',
-					'callback' => array(
+					'callback' => [
 						'name' => $deprecated_callback
-					)
-				)
-			)
-		);
+					]
+				]
+			]
+		];
 
 		if ( isset( $deprecated_args['cache'] ) && $deprecated_args['cache'] ) {
 			$args_tab['supports'][] = 'cache';
@@ -71,27 +71,27 @@ function rcl_init_custom_tabs() {
 				continue;
 			}
 
-			$supports = ! empty( $tab['supports-tab'] ) && is_array( $tab['supports-tab'] ) ? $tab['supports-tab'] : array();
+			$supports = ! empty( $tab['supports-tab'] ) && is_array( $tab['supports-tab'] ) ? $tab['supports-tab'] : [];
 
-			$tab_data = array(
+			$tab_data = [
 				'id'         => $tab['slug'],
 				'name'       => $tab['title'],
 				'public'     => ( isset( $tab['public-tab'] ) && $tab['public-tab'] ) ? 1 : 0,
 				'icon'       => ( $tab['icon'] ) ? $tab['icon'] : 'fa-cog',
 				'output'     => $area_id,
 				'custom-tab' => true,
-				'content'    => array(
-					array(
+				'content'    => [
+					[
 						'id'       => 'subtab-1',
 						'name'     => $tab['title'],
 						'icon'     => ( $tab['icon'] ) ? $tab['icon'] : 'fa-cog',
-						'callback' => array(
+						'callback' => [
 							'name' => 'rcl_custom_tab_content',
-							'args' => array( $tab['content'] )
-						)
-					)
-				)
-			);
+							'args' => [ $tab['content'] ]
+						]
+					]
+				]
+			];
 
 			if ( in_array( 'cache', $supports ) ) {
 				$tab_data['supports'][] = 'cache';
@@ -286,7 +286,7 @@ function rcl_get_order_tabs( $rcl_tabs ) {
 		return $rcl_tabs;
 	}
 
-	$counter = array();
+	$counter = [];
 	$a       = 10;
 	foreach ( $rcl_tabs as $id => $data ) {
 
@@ -349,11 +349,11 @@ function rcl_get_order_tabs( $rcl_tabs ) {
 function rcl_block( $place, $callback, $args = false ) {
 	global $rcl_blocks;
 
-	$rcl_blocks[ $place ][] = apply_filters( 'block_data_rcl', array(
+	$rcl_blocks[ $place ][] = apply_filters( 'block_data_rcl', [
 		'place'    => $place,
 		'callback' => $callback,
 		'args'     => $args
-	) );
+	] );
 
 	$rcl_blocks = apply_filters( 'rcl_blocks', $rcl_blocks );
 }
@@ -423,7 +423,7 @@ function rcl_postlist( $id, $post_type, $name = '', $args = false ) {
 		return false;
 	}
 
-	$rcl_postlist[ $post_type ] = array( 'id' => $id, 'post_type' => $post_type, 'name' => $name, 'args' => $args );
+	$rcl_postlist[ $post_type ] = [ 'id' => $id, 'post_type' => $post_type, 'name' => $name, 'args' => $args ];
 }
 
 //регистрация recalolbar`a
@@ -434,7 +434,7 @@ function rcl_register_recallbar() {
 		return false;
 	}
 
-	register_nav_menus( array( 'recallbar' => __( 'Recallbar', 'wp-recall' ) ) );
+	register_nav_menus( [ 'recallbar' => __( 'Recallbar', 'wp-recall' ) ] );
 }
 
 function rcl_key_addon( $path_parts ) {
@@ -495,7 +495,7 @@ function rcl_cache_add( $string, $content, $force = false ) {
 
 if ( ! function_exists( 'get_called_class' ) ) :
 	function get_called_class() {
-		$arr       = array();
+		$arr       = [];
 		$arrTraces = debug_backtrace();
 		foreach ( $arrTraces as $arrTrace ) {
 			if ( ! array_key_exists( "class", $arrTrace ) ) {
@@ -569,12 +569,12 @@ function rcl_check_access_console() {
 		$access = ( $current_user->allcaps[ 'level_' . $need_access ] == 1 ) ? true : false;
 	} else {
 
-		$roles = array(
+		$roles = [
 			10 => 'administrator',
 			7  => 'editor',
 			2  => 'author',
 			1  => 'contributor'
-		);
+		];
 
 		$access = ( isset( $roles[ $need_access ] ) && current_user_can( $roles[ $need_access ] ) ) ? true : false;
 	}
@@ -585,12 +585,12 @@ function rcl_check_access_console() {
 /* Удаление поста вместе с его вложениями */
 add_action( 'before_delete_post', 'rcl_delete_attachments_with_post' );
 function rcl_delete_attachments_with_post( $postid ) {
-	$attachments = get_posts( array(
+	$attachments = get_posts( [
 		'post_type'      => 'attachment',
 		'posts_per_page' => - 1,
 		'post_status'    => null,
 		'post_parent'    => $postid
-	) );
+	] );
 	if ( $attachments ) {
 		foreach ( ( array ) $attachments as $attachment ) {
 			wp_delete_attachment( $attachment->ID, true );
@@ -603,7 +603,7 @@ add_action( 'init', 'rcl_init_avatar_sizes' );
 function rcl_init_avatar_sizes() {
 	global $rcl_avatar_sizes;
 
-	$sizes = array( 70, 150, 300 );
+	$sizes = [ 70, 150, 300 ];
 
 	$rcl_avatar_sizes = apply_filters( 'rcl_avatar_sizes', $sizes );
 	asort( $rcl_avatar_sizes );
@@ -654,7 +654,7 @@ function rcl_avatar_data_replacement( $args, $id_or_email ) {
 			$url = false;
 
 			if ( is_numeric( $avatar_data ) ) {
-				$image_attributes = wp_get_attachment_image_src( $avatar_data, array( $size, $size ) );
+				$image_attributes = wp_get_attachment_image_src( $avatar_data, [ $size, $size ] );
 				if ( $image_attributes ) {
 					$url = $image_attributes[0];
 				}
@@ -706,7 +706,7 @@ function rcl_sanitize_string( $title, $sanitize = true ) {
 		case 'off':
 			return $title;
 		case 'gost':
-			$title = strtr( $title, apply_filters( 'rcl_sanitize_gost', array(
+			$title = strtr( $title, apply_filters( 'rcl_sanitize_gost', [
 				"Є" => "EH",
 				"І" => "I",
 				"і" => "i",
@@ -782,10 +782,10 @@ function rcl_sanitize_string( $title, $sanitize = true ) {
 				"«" => "",
 				"»" => "",
 				"…" => ""
-			) ) );
+			] ) );
 			break;
 		default:
-			$title = strtr( $title, apply_filters( 'rcl_sanitize_iso', array(
+			$title = strtr( $title, apply_filters( 'rcl_sanitize_iso', [
 				"Є" => "YE",
 				"І" => "I",
 				"Ѓ" => "G",
@@ -863,7 +863,7 @@ function rcl_sanitize_string( $title, $sanitize = true ) {
 				"«" => "",
 				"»" => "",
 				"…" => ""
-			) ) );
+			] ) );
 	}
 
 	return $sanitize ? sanitize_title_with_dashes( $title, '', 'save' ) : $title;
@@ -886,9 +886,9 @@ function rcl_get_user_url( $user_id ) {
 	}
 
 	return add_query_arg(
-		array(
+		[
 			rcl_get_option( 'link_user_lk_rcl', 'user' ) => $user_id
-		), get_permalink( rcl_get_option( 'lk_page_rcl' ) )
+		], get_permalink( rcl_get_option( 'lk_page_rcl' ) )
 	);
 }
 
@@ -901,13 +901,13 @@ function rcl_format_in( $array ) {
 function rcl_get_postmeta_array( $post_id ) {
 	global $wpdb;
 
-	$cachekey = json_encode( array( 'rcl_get_postmeta_array', (int) $post_id ) );
+	$cachekey = json_encode( [ 'rcl_get_postmeta_array', (int) $post_id ] );
 	$cache    = wp_cache_get( $cachekey );
 	if ( $cache ) {
 		return $cache;
 	}
 
-	$mts   = array();
+	$mts   = [];
 	$metas = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM " . $wpdb->prefix . "postmeta WHERE post_id=%d", $post_id ) );
 	if ( ! $metas ) {
 		return false;
@@ -950,7 +950,7 @@ function rcl_get_chart( $arr = false ) {
 	foreach ( $arr as $month => $data ) {
 		$cnt                 = ( isset( $data['cnt'] ) ) ? $data['cnt'] : 0;
 		$summ                = ( isset( $data['summ'] ) ) ? $data['summ'] : 0;
-		$chartData['data'][] = array( '"' . $month . '"', $cnt, $summ );
+		$chartData['data'][] = [ '"' . $month . '"', $cnt, $summ ];
 	}
 
 	if ( ! $chartData ) {
@@ -1088,7 +1088,7 @@ function rcl_update_timeaction_user() {
 		$time = current_time( 'mysql' );
 
 		$res = $wpdb->update(
-			RCL_PREF . 'user_action', array( 'time_action' => $time ), array( 'user' => $user_ID )
+			RCL_PREF . 'user_action', [ 'time_action' => $time ], [ 'user' => $user_ID ]
 		);
 
 		if ( ! isset( $res ) || $res == 0 ) {
@@ -1096,10 +1096,10 @@ function rcl_update_timeaction_user() {
 			$act_user = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(time_action) FROM " . RCL_PREF . "user_action WHERE user =%d", $user_ID ) );
 			if ( $act_user == 0 ) {
 				$wpdb->insert(
-					RCL_PREF . 'user_action', array(
+					RCL_PREF . 'user_action', [
 						'user'        => $user_ID,
 						'time_action' => $time
-					)
+					]
 				);
 			}
 			if ( $act_user > 1 ) {
@@ -1157,14 +1157,14 @@ function rcl_verify_ajax_nonce() {
 		return false;
 	}
 	if ( ! isset( $_POST['ajax_nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['ajax_nonce'] ) ), 'rcl-post-nonce' ) ) {
-		wp_send_json( array( 'error' => __( 'Signature verification failed', 'wp-recall' ) . '!' ) );
+		wp_send_json( [ 'error' => __( 'Signature verification failed', 'wp-recall' ) . '!' ] );
 	}
 }
 
 function rcl_office_class() {
 	global $active_addons, $user_LK, $user_ID;
 
-	$class = array( 'wprecallblock', 'rcl-office' );
+	$class = [ 'wprecallblock', 'rcl-office' ];
 
 	$active_template = get_site_option( 'rcl_active_template' );
 
@@ -1252,7 +1252,7 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 
 	if ( $profileFields ) {
 
-		$defaultFields = array(
+		$defaultFields = [
 			'user_email',
 			'description',
 			'user_url',
@@ -1262,7 +1262,7 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 			'primary_pass',
 			'repeat_pass',
 			'show_admin_bar_front'
-		);
+		];
 
 		foreach ( $profileFields as $field ) {
 
@@ -1279,7 +1279,7 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 
 			if ( isset( $field['admin'] ) && $field['admin'] == 1 && ! is_admin() && ! rcl_is_user_role( $user_ID, [ 'administrator' ] ) ) {
 
-				if ( in_array( $slug, array( 'display_name', 'user_url' ) ) ) {
+				if ( in_array( $slug, [ 'display_name', 'user_url' ] ) ) {
 
 					if ( get_the_author_meta( $slug, $user_id ) ) {
 						continue;
@@ -1336,18 +1336,18 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 					}
 				}
 
-				wp_update_user( array( 'ID' => $user_id, $slug => $value ) );
+				wp_update_user( [ 'ID' => $user_id, $slug => $value ] );
 
 				continue;
 			}
 
 			if ( $field['type'] == 'checkbox' ) {
 
-				$vals = array();
+				$vals = [];
 
 				if ( is_array( $value ) ) {
 
-					$vals = array();
+					$vals = [];
 
 					foreach ( $value as $val ) {
 						if ( in_array( $val, $field['values'] ) ) {
@@ -1403,7 +1403,7 @@ function rcl_get_profile_fields( $args = false ) {
 
 	$fields = apply_filters( 'rcl_profile_fields', $fields, $args );
 
-	$profileFields = array();
+	$profileFields = [];
 
 	if ( $fields ) {
 
@@ -1428,18 +1428,18 @@ function rcl_get_profile_fields( $args = false ) {
 
 function rcl_get_profile_field( $field_id ) {
 
-	$fields = rcl_get_profile_fields( array( 'include' => array( $field_id ) ) );
+	$fields = rcl_get_profile_fields( [ 'include' => [ $field_id ] ] );
 
 	return $fields[0];
 }
 
 function rcl_get_area_options() {
 
-	return array(
+	return [
 		'menu'     => get_site_option( 'rcl_fields_area-menu' ),
 		'counters' => get_site_option( 'rcl_fields_area-counters' ),
 		'actions'  => get_site_option( 'rcl_fields_area-actions' ),
-	);
+	];
 }
 
 function rcl_add_log( $title, $data = false, $force = false ) {
@@ -1459,10 +1459,10 @@ function rcl_add_log( $title, $data = false, $force = false ) {
 
 function rcl_get_addon_paths() {
 
-	$paths = array(
+	$paths = [
 		RCL_TAKEPATH . 'add-on',
 		RCL_PATH . 'add-on'
-	);
+	];
 
 	return apply_filters( 'rcl_addon_paths', $paths );
 }
@@ -1568,10 +1568,10 @@ add_filter( 'rcl_custom_tab_content', 'rcl_filter_custom_tab_vars', 6 );
 function rcl_filter_custom_tab_vars( $content ) {
 	global $user_ID, $user_LK;
 
-	$matchs = array(
+	$matchs = [
 		'{USERID}'   => $user_ID,
 		'{MASTERID}' => $user_LK
-	);
+	];
 
 	$matchs = apply_filters( 'rcl_custom_tab_vars', $matchs );
 
@@ -1601,7 +1601,7 @@ function rcl_filter_custom_tab_usermetas( $content ) {
 		'user_registered'
 	];
 
-	$matchs = array();
+	$matchs = [];
 
 	foreach ( $metas[1] as $meta ) {
 
@@ -1699,12 +1699,12 @@ function rcl_get_pages_ids() {
 	           ->orderby( 'post_title', 'ASC' )
 	           ->get_walker()->get_index_values( 'ID', 'post_title' );
 
-	return array( __( 'Not selected', 'wp-recall' ) ) + $pages;
+	return [ __( 'Not selected', 'wp-recall' ) ] + $pages;
 }
 
 /**
  * @param $beatName
- * @param $actions - array with allowed function callbacks for beat
+ * @param $actions  - array with allowed function callbacks for beat
  */
 function rcl_init_beat( $beatName, $actions = [] ) {
 	global $rcl_beats;
@@ -1751,6 +1751,7 @@ function rcl_kses_allowed_html() {
 				'a'        => [ 'onclick' => true ],
 				'style'    => [ 'type' => [] ],
 				'input'    => [
+					'onkeyup'     => true,
 					'type'        => true,
 					'id'          => true,
 					'class'       => true,

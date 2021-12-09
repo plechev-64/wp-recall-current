@@ -511,12 +511,11 @@ function rcl_secondary_password( $fields ) {
             </div>
             <script>jQuery(function(){
             jQuery("#registerform,.form-tab-rcl").on("keyup","#secondary-pass-user",function(){
-                var pr = jQuery("#primary-pass-user").val();
-                var sc = jQuery(this).val();
-                var notice = "";
-                if(pr!=sc) notice = "<span class=login-error>' . esc_html__( 'The passwords do not match!', 'wp-recall' ) . '</span>";
-                else notice = "<span class=login-message>' . esc_html__( 'The passwords match', 'wp-recall' ) . '</span>";
-                jQuery("#notice-chek-password").html(notice);
+                let notice = "' . esc_html__( 'The passwords match!', 'wp-recall' ) . '";
+                if(jQuery("#primary-pass-user").val() !== jQuery(this).val()){
+					notice = "' . esc_html__( 'The passwords do not match!', 'wp-recall' ) . '";
+                }
+                jQuery("#notice-chek-password").html("<span class=\'login-error\'>" + notice + "</span>");
             });});
         </script>';
 

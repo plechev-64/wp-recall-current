@@ -201,7 +201,7 @@ function rcl_add_dropzone(idzone) {
 }
 
 function passwordStrength(password) {
-    var desc = new Array();
+    var desc = [];
     desc[0] = Rcl.local.pass0;
     desc[1] = Rcl.local.pass1;
     desc[2] = Rcl.local.pass2;
