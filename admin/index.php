@@ -271,7 +271,7 @@ function rcl_update_custom_fields() {
 		$table = 'usermeta';
 	}
 
-	$POSTDATA = apply_filters( 'rcl_pre_update_custom_fields_options', rcl_recursive_map( 'sanitize_text_field', $_POST ) );
+	$POSTDATA = apply_filters( 'rcl_pre_update_custom_fields_options', $_POST );
 
 	if ( ! $POSTDATA ) {
 		return false;

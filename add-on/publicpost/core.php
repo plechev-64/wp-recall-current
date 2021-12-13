@@ -173,13 +173,13 @@ function rcl_update_post_custom_fields( $post_id, $id_form = false ) {
 
 	if ( $fields ) {
 
-		$POST = filter_input_array( INPUT_POST, FILTER_SANITIZE_STRING );
-
 		foreach ( $fields as $field_id => $field ) {
 
-			$value = isset( $POST[ $field_id ] ) ? $POST[ $field_id ] : false;
+			$value = $_POST[ $field_id ] ?? false;
 
 			if ( $field->type == 'file' ) {
+
+				$value = intval($value);
 
 				$attach_id = get_post_meta( $post_id, $field_id, 1 );
 

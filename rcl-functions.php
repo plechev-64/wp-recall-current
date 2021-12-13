@@ -1304,8 +1304,6 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 
 			if ( $field['type'] != 'editor' ) {
 				$value = rcl_recursive_map( 'sanitize_text_field', $value );
-			} else {
-				$value = rcl_recursive_map( 'esc_html', $value );
 			}
 
 			if ( in_array( $slug, $defaultFields ) ) {
