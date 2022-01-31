@@ -1,8 +1,7 @@
 <?php
 
 function rcl_login_form() {
-
-	echo wp_kses( rcl_get_authorize_form( 'floatform' ), rcl_kses_allowed_html() );
+	echo rcl_get_authorize_form( 'floatform' );
 }
 
 add_shortcode( 'loginform', 'rcl_get_login_form' );

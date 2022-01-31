@@ -17,11 +17,11 @@
         </div>
 		<?php pfm_the_forum_icons(); ?>
         <div class="prime-forum-topics">
-            <span><?php esc_html_e( 'Topics', 'wp-recall' ); ?>:</span><span><?php pfm_the_topic_count(); ?></span>
+            <span><?php esc_html_e( 'Topics', 'wp-recall' ); ?>: </span><span><?php pfm_the_topic_count(); ?></span>
         </div>
         <div class="prime-last-items">
             <span><?php esc_html_e( 'Last topic', 'wp-recall' ); ?>: <?php pfm_the_last_topic(); ?></span>
-            <span><?php esc_html_e( 'Last message', 'wp-recall' ); ?><?php pfm_the_last_post(); ?></span>
+            <span><?php esc_html_e( 'Last message', 'wp-recall' ); ?> <?php pfm_the_last_post(); ?></span>
         </div>
     </div>
 </div>

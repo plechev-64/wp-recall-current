@@ -14,7 +14,6 @@
         <span><?php esc_html_e( 'Messages', 'wp-recall' ); ?>:</span><span><?php pfm_the_post_count(); ?></span>
     </div>
     <div class="prime-last-items">
-        <span><?php esc_html_e( 'Last message', 'wp-recall' ); ?></span>
-        <span><?php pfm_the_last_post(); ?></span>
+        <span><?php esc_html_e( 'Last message', 'wp-recall' ); ?></span> <span><?php pfm_the_last_post(); ?></span>
     </div>
 </div>
