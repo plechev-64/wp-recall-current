@@ -133,7 +133,7 @@ function rcl_update_grouppost_meta( $post_id, $postdata ) {
 		wp_set_object_terms( $post_id, $term_id, 'groups' );
 	}
 
-	$gr_tag = ( isset( $_POST['group-tag'] ) ) ? sanitize_key( $_POST['group-tag'] ) : false;
+	$gr_tag = ( isset( $_POST['group-tag'] ) ) ? sanitize_text_field( $_POST['group-tag'] ) : false;
 	if ( $gr_tag ) {
 		$group_id = false;
 		if ( ! $term_id ) {
