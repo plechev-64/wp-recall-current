@@ -1,10 +1,10 @@
 <?php
 //Подключение стилей
-if ( ! is_admin() ):
-	add_action( 'rcl_enqueue_scripts', 'webx_theme_style', 10 );
+if (!is_admin()):
+    add_action( 'rcl_enqueue_scripts', 'webx_theme_style', 10);
 endif;
-function webx_theme_style() {
-	rcl_enqueue_style( 'webx_theme_style', rcl_addon_url( 'assets/css/style.css', __FILE__ ) );
+function webx_theme_style(){   
+    rcl_enqueue_style( 'webx_theme_style', rcl_addon_url( 'assets/css/style.css',  __FILE__ ));
 }
 
 // инициализируем наши скрипты
@@ -34,11 +34,9 @@ function webx_add_cover_inline_styles( $styles ) {
 	}
 	$dataUrl    = wp_parse_url( $cover_url );
 	$cover_path = untrailingslashit( ABSPATH ) . $dataUrl['path'];
-	$styles     .= '#webx-cover{background-image: url(' . $cover_url . '?vers=' . @filemtime( $cover_path ) . ');}';
-
+	$styles .= '#webx-cover{background-image: url(' . $cover_url . '?vers=' . @filemtime( $cover_path ) . ');}';
 	return $styles;
 }
-
 // объявляем поддержку загрузки аватарки, загрузку обложки, модальное окно "Подробная информация"
 add_action( 'rcl_addons_included', 'lt_setup_template_options', 10 );
 function lt_setup_template_options() {
@@ -50,88 +48,88 @@ function lt_setup_template_options() {
 add_filter( 'rcl_options', 'webx_construct_theme' );
 function webx_construct_theme( $options ) {
 	//Настройки цвета
-	$options->box( 'primary' )->add_group( 'design', [
-		'title' => __( 'Оформление' )
-	] )->add_options( [
-		[
-			'type'    => 'color',
-			'slug'    => 'webx-color',
-			'title'   => __( 'Основной цвет' ),
-			'default' => '#000000'
-		],
-		[
-			'type'    => 'color',
-			'slug'    => 'webx-theme-color',
-			'title'   => __( 'Основной цвет кнопок' ),
-			'default' => '#000000'
-		],
-		[
-			'type'    => 'color',
-			'slug'    => 'webx-theme-href-color',
-			'title'   => __( 'Основной цвет кнопок в меню' ),
-			'default' => '#ffffff'
-		],
-		[
-			'type'    => 'color',
-			'slug'    => 'webx-theme-href-background',
-			'title'   => __( 'Основной цвет фона кнопок в меню' ),
-			'default' => '#000000'
-		],
-		[
-			'type'    => 'color',
-			'slug'    => 'webx-theme-href-color-hover',
-			'title'   => __( 'Основной цвет кнопок в меню при hover' ),
-			'default' => '#000000'
-		],
-		[
-			'type'    => 'color',
-			'slug'    => 'webx-theme-href-background-hover',
-			'title'   => __( 'Основной цвет фона кнопок в меню при hover' ),
-			'default' => '#ffffff'
-		],
-		[
-			'type'       => 'runner',
-			'slug'       => 'webx-theme-radius-avatar',
-			'title'      => __( 'Округление автара' ),
+	$options->box('primary')->add_group('design', array(
+		'title' => __('Оформление')
+	))->add_options( array(
+		array(
+			'type'		 => 'color',
+			'slug'		 => 'webx-color',
+			'title'		 => __('Основной цвет'),
+			'default'	 => '#000000'
+		),
+		array(
+			'type'		 => 'color',
+			'slug'		 => 'webx-theme-color',
+			'title'		 => __('Основной цвет кнопок'),
+			'default'	 => '#000000'
+		),
+		array(
+			'type'		 => 'color',
+			'slug'		 => 'webx-theme-href-color',
+			'title'		 => __('Основной цвет кнопок в меню'),
+			'default'	 => '#ffffff'
+		),
+		array(
+			'type'		 => 'color',
+			'slug'		 => 'webx-theme-href-background',
+			'title'		 => __('Основной цвет фона кнопок в меню'),
+			'default'	 => '#000000'
+		),
+		array(
+			'type'		 => 'color',
+			'slug'		 => 'webx-theme-href-color-hover',
+			'title'		 => __('Основной цвет кнопок в меню при hover'),
+			'default'	 => '#000000'
+		),
+		array(
+			'type'		 => 'color',
+			'slug'		 => 'webx-theme-href-background-hover',
+			'title'		 => __('Основной цвет фона кнопок в меню при hover'),
+			'default'	 => '#ffffff'
+		),
+		array(
+			'type'		 => 'runner',
+			'slug'		 => 'webx-theme-radius-avatar',
+			'title' 	 => __('Округление автара'),
 			'value_step' => '1',
-			'default'    => '0'
-		],
-		[
-			'type'       => 'runner',
-			'slug'       => 'webx-theme-radius-cover',
-			'title'      => __( 'Округление Cover' ),
+			'default'	 => '0'
+		),
+		array(
+			'type'		 => 'runner',
+			'slug'		 => 'webx-theme-radius-cover',
+			'title' 	 => __('Округление Cover'),
 			'value_step' => '1',
-			'default'    => '0'
-		],
-		[
-			'type'       => 'runner',
-			'slug'       => 'webx-theme-radius-userinfo',
-			'title'      => __( 'Округление под аватаром линии' ),
+			'default'	 => '0'
+		),
+		array(
+			'type'		 => 'runner',
+			'slug'		 => 'webx-theme-radius-userinfo',
+			'title' 	 => __('Округление под аватаром линии'),
 			'value_step' => '1',
-			'default'    => '0'
-		],
-		[
-			'type'       => 'runner',
-			'slug'       => 'webx-theme-radius-boxcontent',
-			'title'      => __( 'Округление основного блока' ),
+			'default'	 => '0'
+		),
+		array(
+			'type'		 => 'runner',
+			'slug'		 => 'webx-theme-radius-boxcontent',
+			'title' 	 => __('Округление основного блока'),
 			'value_step' => '1',
-			'default'    => '0'
-		],
-		[
-			'type'       => 'runner',
-			'slug'       => 'webx-theme-radius-href',
-			'title'      => __( 'Округление кнопок' ),
+			'default'	 => '0'
+		),
+		array(
+			'type'		 => 'runner',
+			'slug'		 => 'webx-theme-radius-href',
+			'title' 	 => __('Округление кнопок'),
 			'value_step' => '1',
-			'default'    => '0'
-		],
-		[
-			'type'       => 'runner',
-			'slug'       => 'webx-theme-radius-chat',
-			'title'      => __( 'Округление стиля чата' ),
+			'default'	 => '0'
+		),
+		array(
+			'type'		 => 'runner',
+			'slug'		 => 'webx-theme-radius-chat',
+			'title' 	 => __('Округление стиля чата'),
 			'value_step' => '1',
-			'default'    => '0'
-		],
-	] );
+			'default'	 => '0'
+		),
+	));
 
 
 	return $options;
@@ -144,7 +142,7 @@ function webx_add_colors_inline_styles( $styles ) {
 	if ( ! rcl_is_office() ) {
 		return $styles;
 	}
-
+	if(rcl_get_option( 'webx-color' )){
 	$lca_hex = rcl_get_option( 'webx-color' ); // достаем оттуда наш цвет
 	list( $r, $g, $b ) = sscanf( $lca_hex, "#%02x%02x%02x" );
 
@@ -152,11 +150,11 @@ function webx_add_colors_inline_styles( $styles ) {
 	$gp = round( $g * 0.90 );
 	$bp = round( $b * 0.90 );
 
-	$webx_theme_color                 = $rcl_options['webx-theme-color'];
-	$webx_theme_href_background       = $rcl_options['webx-theme-href-background'];
-	$webx_theme_href_color            = $rcl_options['webx-theme-href-color'];
+	$webx_theme_color = $rcl_options['webx-theme-color'];
+	$webx_theme_href_background = $rcl_options['webx-theme-href-background'];
+	$webx_theme_href_color = $rcl_options['webx-theme-href-color'];
 	$webx_theme_href_background_hover = $rcl_options['webx-theme-href-background-hover'];
-	$webx_theme_href_color_hover      = $rcl_options['webx-theme-href-color-hover'];
+	$webx_theme_href_color_hover = $rcl_options['webx-theme-href-color-hover'];
 
 	$styles .= '
 	.rcl-noread-users, .rcl-chat-panel{
@@ -183,54 +181,60 @@ function webx_add_colors_inline_styles( $styles ) {
 	body .rcl-bttn.rcl-bttn__type-primary,
 	body #rcl-office .webx_phone_menu
 	{
-		background: ' . $webx_theme_href_background . ' !important;
-		border-color: ' . $webx_theme_href_background . ' !important;
-		color: ' . $webx_theme_href_color . ' !important;
+		background: '.$webx_theme_href_background.' !important;
+		border-color: '.$webx_theme_href_background.' !important;
+		color: '.$webx_theme_href_color.' !important;
 	}
 	#webx-content .webx-area-menu a,
-	#webx-main .webx-userinfo .webx-area-counters a
+	#webx-main .webx-userinfo .webx-area-counters a,
+	#webx-main .balance-amount a
 	{
-		color: ' . $webx_theme_color . ';
+		color: '.$webx_theme_color.';
 	}
 	#rcl-office #lk-menu a.recall-button:hover,
 	body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover,
-	body #rcl-office .webx_phone_menu:hover
+	body #rcl-office .webx_phone_menu:hover,
+	#webx-main .webx-userinfo .webx-area-counters a:hover,
+	#webx-main .balance-amount a:hover
 	{
 
-		background: ' . $webx_theme_href_background_hover . ' !important;
-		border-color: ' . $webx_theme_href_background_hover . ' !important;
-		color: ' . $webx_theme_href_color_hover . ' !important;
+		background: '.$webx_theme_href_background_hover.' !important;
+		border-color: '.$webx_theme_href_background_hover.' !important;
+		color: '.$webx_theme_href_color_hover.' !important;
 	}
 	';
 
 
 	/*Блок округления блоков*/
-	$webx_theme_radius_avatar     = $rcl_options['webx-theme-radius-avatar'];
-	$webx_theme_radius_cover      = $rcl_options['webx-theme-radius-cover'];
-	$webx_theme_radius_userinfo   = $rcl_options['webx-theme-radius-userinfo'];
+	$webx_theme_radius_avatar = $rcl_options['webx-theme-radius-avatar'];
+	$webx_theme_radius_cover = $rcl_options['webx-theme-radius-cover'];
+	$webx_theme_radius_userinfo = $rcl_options['webx-theme-radius-userinfo'];
 	$webx_theme_radius_boxcontent = $rcl_options['webx-theme-radius-boxcontent'];
-	$webx_theme_radius_href       = $rcl_options['webx-theme-radius-href'];
-	$webx_theme_radius_chat       = $rcl_options['webx-theme-radius-chat'];
-	$styles                       .= '
+	$webx_theme_radius_href = $rcl_options['webx-theme-radius-href'];
+	$webx_theme_radius_chat = $rcl_options['webx-theme-radius-chat'];
+	$styles .= '
 	#webx-main #rcl-avatar img{
-		border-radius: ' . $webx_theme_radius_avatar . 'px;
+		border-radius: '.$webx_theme_radius_avatar.'px;
 	}
 	#webx-cover{
-		border-radius: ' . $webx_theme_radius_cover . 'px;
+		border-radius: '.$webx_theme_radius_cover.'px;
 	}
 	.webx-userinfo{
-		border-radius: ' . $webx_theme_radius_userinfo . 'px;
+		border-radius: '.$webx_theme_radius_userinfo.'px;
 	}
 	#webx-content .webx-area-tabs,
 	#webx-content .rcl-notice{
-		border-radius: ' . $webx_theme_radius_boxcontent . 'px;
+		border-radius: '.$webx_theme_radius_boxcontent.'px;
 	}
 	#webx-content .webx-area-menu a,
 	body #webx-content .rcl-bttn.rcl-bttn__type-primary,
 	#rcl-office .rcl-subtab-menu .rcl-bttn.rcl-bttn__type-primary.rcl-bttn__active, 
 	#rcl-office .rcl-data-filters a.rcl-bttn__disabled,
-	body #webx-content .rcl-bttn.rcl-bttn__type-primary, body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover{
-		border-radius: ' . $webx_theme_radius_href . 'px;
+	body #webx-content .rcl-bttn.rcl-bttn__type-primary, 
+	body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover,
+	#webx-main .webx-userinfo .webx-area-counters a,
+	#webx-main .balance-amount a{
+		border-radius: '.$webx_theme_radius_href.'px;
 	}
 	#rcl-office .rcl-chat-contacts .noread-message, 
 	#rcl-office .rcl-chat-contacts .avatar-contact img, 
@@ -244,9 +248,10 @@ function webx_add_colors_inline_styles( $styles ) {
 	.rcl-noread-users, 
 	.rcl-chat-panel, 
 	#prime-forum .prime-forum-item{
-		border-radius: ' . $webx_theme_radius_chat . 'px;
+		border-radius: '.$webx_theme_radius_chat.'px;
 	}
 	';
 
 	return $styles;
+	}
 }

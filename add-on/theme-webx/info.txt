@@ -1,6 +1,6 @@
 Name: WebX;
-Version: 0.3;
-Support Core: 15.0.0;
+Version: 0.6;
+Support Core: 16.25.0;
 Template: WebX;
 Description: WebX - новый дизайн для Личного кабинета;
 Author: Кормильчик Олег;

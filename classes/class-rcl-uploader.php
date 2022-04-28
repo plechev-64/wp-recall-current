@@ -27,8 +27,8 @@ class Rcl_Uploader {
 	public $max_size = 512;
 	public $min_width = 0;
 	public $min_height = 0;
-	public $resize = array();
-	public $file_types = array( 'jpg', 'png', 'jpeg' );
+	public $resize = [];
+	public $file_types = [ 'jpg', 'png', 'jpeg' ];
 	public $multiple = 0;
 	public $crop = 0;
 	public $image_sizes = 1;
@@ -38,7 +38,7 @@ class Rcl_Uploader {
 	public $filename = '';
 	public $filetitle = '';
 	public $dir = '';
-	protected $accept = array( 'image/*' );
+	protected $accept = [ 'image/*' ];
 
 	function __construct( $uploader_id, $args = false ) {
 
@@ -65,7 +65,7 @@ class Rcl_Uploader {
 		}
 
 		if ( ! $this->file_types ) {
-			$this->file_types = array( 'jpg', 'png', 'jpeg' );
+			$this->file_types = [ 'jpg', 'png', 'jpeg' ];
 		}
 
 		if ( $this->resize && ! is_array( $this->resize ) ) {
@@ -132,9 +132,9 @@ class Rcl_Uploader {
 
 	function get_uploader( $args = false ) {
 
-		$defaults = array(
+		$defaults = [
 			'allowed_types' => true
-		);
+		];
 
 		$args = wp_parse_args( $args, $defaults );
 
@@ -180,21 +180,22 @@ class Rcl_Uploader {
 
 	function get_button( $args ) {
 
-		$defaults = array(
+		$defaults = [
 			'button_label' => __( 'Upload file', 'wp-recall' ),
 			'button_icon'  => 'fa-upload',
 			'button_type'  => 'simple'
-		);
+		];
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$bttnArgs = array(
+		$bttnArgs = [
+			'href'    => '#',
 			'icon'    => $args['button_icon'],
 			'type'    => $args['button_type'],
 			'label'   => $args['button_label'],
-			'class'   => array( 'rcl-uploader-button', 'rcl-uploader-button-' . $this->uploader_id ),
+			'class'   => [ 'rcl-uploader-button', 'rcl-uploader-button-' . $this->uploader_id ],
 			'content' => $this->get_input()
-		);
+		];
 
 		return rcl_get_button( $bttnArgs );
 	}
@@ -231,7 +232,7 @@ class Rcl_Uploader {
 			return false;
 		}
 
-		$accept = array();
+		$accept = [];
 
 		foreach ( $this->file_types as $type ) {
 			if ( ! $type ) {
@@ -289,7 +290,7 @@ class Rcl_Uploader {
 			$image = wp_get_attachment_image( $attach_id, 'thumbnail' );
 		} else {
 
-			$image = wp_get_attachment_image( $attach_id, array( 100, 100 ), true );
+			$image = wp_get_attachment_image( $attach_id, [ 100, 100 ], true );
 		}
 
 		if ( ! $image ) {
@@ -344,7 +345,7 @@ class Rcl_Uploader {
 
 			$size = ( $default = rcl_get_option( 'public_form_thumb' ) ) ? $default : 'large';
 
-			$fileHtml = wp_get_attachment_image( $attachment_id, $size, false, array( 'srcset' => ' ' ) );
+			$fileHtml = wp_get_attachment_image( $attachment_id, $size, false, [ 'srcset' => ' ' ] );
 
 			$fullSrc = wp_get_attachment_image_src( $attachment_id, 'full' );
 			$fileSrc = $fullSrc[0];
@@ -357,15 +358,15 @@ class Rcl_Uploader {
 			$fileSrc = wp_get_attachment_url( $attachment_id );
 		}
 
-		$items[] = array(
+		$items[] = [
 			'icon'    => 'fa-newspaper-o',
 			'title'   => __( 'Add to the editor', 'wp-recall' ),
 			'onclick' => 'rcl_add_attachment_in_editor(' . $attachment_id . ',"' . $this->fix_editor . '",this);return false;',
-			'data'    => array(
+			'data'    => [
 				'html' => $fileHtml,
 				'src'  => $fileSrc
-			)
-		);
+			]
+		];
 
 		return $items;
 	}
@@ -376,13 +377,13 @@ class Rcl_Uploader {
 
 	function get_attachment_manager( $attach_id ) {
 
-		$items = array(
-			array(
+		$items = [
+			[
 				'icon'    => 'fa-trash',
 				'title'   => __( 'Delete the file', 'wp-recall' ),
 				'onclick' => 'rcl_delete_attachment(' . $attach_id . ',' . $this->post_parent . ',this);return false;'
-			)
-		);
+			]
+		];
 
 		$items = $this->filter_attachment_manager_items( $items, $attach_id );
 
@@ -432,7 +433,7 @@ class Rcl_Uploader {
 
 		if ( $this->multiple ) {
 
-			$files = array();
+			$files = [];
 			//phpcs:ignore
 			foreach ( $_FILES[ $this->input_name ] as $nameProp => $values ) {
 				foreach ( $values as $k => $value ) {
@@ -440,7 +441,7 @@ class Rcl_Uploader {
 				}
 			}
 
-			$uploads = array();
+			$uploads = [];
 			foreach ( $files as $file ) {
 				$uploads[] = $this->file_upload_process( $file );
 			}
@@ -463,7 +464,7 @@ class Rcl_Uploader {
 		$ext = strtolower( $filetype['ext'] );
 
 		if ( ! in_array( $ext, $this->file_types ) ) {
-			wp_send_json( array( 'error' => __( 'Forbidden file extension. Allowed:', 'wp-recall' ) . ' ' . implode( ', ', $this->file_types ) ) );
+			wp_send_json( [ 'error' => __( 'Forbidden file extension. Allowed:', 'wp-recall' ) . ' ' . implode( ', ', $this->file_types ) ] );
 		}
 
 		$pathInfo = pathinfo( basename( $file['name'] ) );
@@ -472,7 +473,7 @@ class Rcl_Uploader {
 
 		$file = apply_filters( 'rcl_pre_upload_file_data', $file );
 
-		$image = wp_handle_upload( $file, array( 'test_form' => false ) );
+		$image = wp_handle_upload( $file, [ 'test_form' => false ] );
 
 		if ( ! $image['file'] ) {
 			return false;
@@ -490,7 +491,7 @@ class Rcl_Uploader {
 			$this->resize_image( $image['file'] );
 		}
 
-		$attachment = array(
+		$attachment = [
 			'post_mime_type' => $image['type'],
 			'post_title'     => $this->filetitle ? $this->filetitle : $pathInfo['filename'],
 			'post_content'   => '',
@@ -499,7 +500,7 @@ class Rcl_Uploader {
 			'post_parent'    => $this->post_parent,
 			'post_author'    => $this->user_id,
 			'post_status'    => 'inherit'
-		);
+		];
 
 		if ( ! $this->user_id ) {
 			$attachment['post_content'] = isset( $_COOKIE['PHPSESSID'] ) ? sanitize_text_field( wp_unslash( $_COOKIE['PHPSESSID'] ) ) : '';
@@ -512,20 +513,20 @@ class Rcl_Uploader {
 		wp_update_attachment_metadata( $attach_id, $attach_data );
 
 		if ( $this->temp_media ) {
-			rcl_add_temp_media( array(
+			rcl_add_temp_media( [
 				'media_id'    => $attach_id,
 				'uploader_id' => $this->uploader_id
-			) );
+			] );
 		}
 
-		return array(
+		return [
 			'id'   => $attach_id,
 			'src'  => [
 				'full'      => $this->get_src( $attach_id, 'full' ) . '?ver=' . current_time( 'timestamp' ),
 				'thumbnail' => $this->get_src( $attach_id, 'thumbnail' ) . '?ver=' . current_time( 'timestamp' ),
 			],
 			'html' => $this->gallery_attachment( $attach_id )
-		);
+		];
 	}
 
 	function setup_image_sizes( $image_src ) {
@@ -544,11 +545,11 @@ class Rcl_Uploader {
 
 				foreach ( $this->image_sizes as $k => $thumbData ) {
 
-					$thumbData = wp_parse_args( $thumbData, array(
+					$thumbData = wp_parse_args( $thumbData, [
 						'width'  => $width,
 						'height' => $height,
 						'crop'   => 1
-					) );
+					] );
 
 					add_image_size( $k . '-' . current_time( 'mysql' ), $thumbData['width'], $thumbData['height'], $thumbData['crop'] );
 				}
