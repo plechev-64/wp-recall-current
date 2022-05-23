@@ -129,6 +129,27 @@ function webx_construct_theme( $options ) {
 			'value_step' => '1',
 			'default'	 => '0'
 		),
+		array(
+			'type'       => 'uploader',
+			'temp_media' => 1,
+			'multiple'   => 0,
+			'crop'       => 1,
+			'filetitle'  => 'rcl-default-avatar',
+			'filename'   => 'rcl-default-avatar',
+			'slug'       => 'default_avatar',
+			'title'      => __( 'Default avatar', 'wp-recall' )
+		),
+		array(
+			'type'       => 'runner',
+			'value_min'  => 0,
+			'value_max'  => 5120,
+			'value_step' => 256,
+			'default'    => 1024,
+			'slug'       => 'avatar_weight',
+			'title'      => __( 'Max weight of avatars', 'wp-recall' ) . ', Kb',
+			'notice'     => __( 'Set the image upload limit in kb, by default', 'wp-recall' ) . ' 1024Kb' .
+			                '. ' . __( 'If 0 is specified, download is disallowed.', 'wp-recall' )
+		)
 	));
 
 
