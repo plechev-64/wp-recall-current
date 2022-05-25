@@ -78,9 +78,9 @@ echo '<h4>' . esc_html__( 'Install the add-on to WP-Recall format .ZIP', 'wp-rec
     </div>
 
     <ul class="subsubsub">
-        <li class="all"><b>' . esc_html__( 'All', 'wp-recall' ) . '<span class="count">(' . esc_html( $cnt_all ) . ')</span></b>|</li>
-        <li class="active"><b>' . esc_html__( 'Active', 'wp-recall' ) . '<span class="count">(' . esc_html( $cnt_act ) . ')</span></b>|</li>
-        <li class="inactive"><b>' . esc_html__( 'Inactive', 'wp-recall' ) . '<span class="count">(' . esc_html( $cnt_inact ) . ')</span></b></li>
+        <li class="all"><b>' . esc_html__( 'All', 'wp-recall' ) . ' <span class="count">(' . esc_html( $cnt_all ) . ')</span></b> | </li>
+        <li class="active"><b>' . esc_html__( 'Active', 'wp-recall' ) . ' <span class="count">(' . esc_html( $cnt_act ) . ')</span></b> | </li>
+        <li class="inactive"><b>' . esc_html__( 'Inactive', 'wp-recall' ) . ' <span class="count">(' . esc_html( $cnt_inact ) . ')</span></b></li>
     </ul>';
 
 $Rcl_Addons_Manager->prepare_items();
