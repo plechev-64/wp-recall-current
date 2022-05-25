@@ -97,6 +97,15 @@ function webx_construct_theme( $options ) {
 		],
 		[
 			'type'       => 'runner',
+			'slug'       => 'webx-theme-padding',
+			'title'      => __( 'Padding from the edge in the personal account', 'wp-recall' ),
+			'value_step' => '1',
+			'value_max'  => '100',
+			'value_min'  => '0',
+			'default'    => '12',
+		],
+		[
+			'type'       => 'runner',
 			'slug'       => 'webx-theme-radius-avatar',
 			'title'      => __( 'Rounding up the avatar', 'wp-recall' ),
 			'value_step' => '1',
@@ -216,21 +225,22 @@ function webx_add_colors_inline_styles( $styles ) {
 		color: ' . $webx_theme_href_color . ' !important;
 	}
 	#webx-content .webx-area-menu a,
-	#webx-main .webx-userinfo .webx-area-counters a,
-	#webx-main .balance-amount a {
+	#lk-conteyner .webx-userinfo .webx-area-counters a,
+	#lk-conteyner .balance-amount a {
 		color: ' . $webx_theme_color . ';
 	}
 	#rcl-office #lk-menu a.recall-button:hover,
 	body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover,
 	body #rcl-office .webx_phone_menu:hover,
-	#webx-main .webx-userinfo .webx-area-counters a:hover,
-	#webx-main .balance-amount a:hover {
+	#lk-conteyner .webx-userinfo .webx-area-counters a:hover,
+	#lk-conteyner .balance-amount a:hover {
 
 		background: ' . $webx_theme_href_background_hover . ' !important;
 		border-color: ' . $webx_theme_href_background_hover . ' !important;
 		color: ' . $webx_theme_href_color_hover . ' !important;
 	}';
 
+		$webx_theme_padding = rcl_get_option( 'webx-theme-padding', 12 );
 
 		/*Блок округления блоков*/
 		$webx_theme_radius_avatar     = $rcl_options['webx-theme-radius-avatar'];
@@ -241,7 +251,10 @@ function webx_add_colors_inline_styles( $styles ) {
 		$webx_theme_radius_chat       = $rcl_options['webx-theme-radius-chat'];
 
 		$styles .= '
-	#webx-main #rcl-avatar img {
+	#rcl-office {
+		padding: ' . $webx_theme_padding . 'px;
+	}
+	#lk-conteyner #rcl-avatar img {
 		border-radius: ' . $webx_theme_radius_avatar . 'px;
 	}
 	#webx-cover {
@@ -260,8 +273,8 @@ function webx_add_colors_inline_styles( $styles ) {
 	#rcl-office .rcl-data-filters a.rcl-bttn__disabled,
 	body #webx-content .rcl-bttn.rcl-bttn__type-primary, 
 	body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover,
-	#webx-main .webx-userinfo .webx-area-counters a,
-	#webx-main .balance-amount a {
+	#lk-conteyner .webx-userinfo .webx-area-counters a,
+	#lk-conteyner .balance-amount a {
 		border-radius: ' . $webx_theme_radius_href . 'px;
 	}
 	#rcl-office .rcl-chat-contacts .noread-message, 

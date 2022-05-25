@@ -5,7 +5,7 @@
 
 global $active_addons;
 ?>
-<div id="webx-main">
+<div id="lk-conteyner" class="webx-main">
     <div id="webx-header">
         <div class="row">
             <div class="col-md-3">
