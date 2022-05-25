@@ -1,8 +1,9 @@
 <?php
+
 //Подключение стилей
-if ( ! is_admin() ):
+if ( ! is_admin() ) {
 	add_action( 'rcl_enqueue_scripts', 'webx_theme_style', 10 );
-endif;
+}
 function webx_theme_style() {
 	rcl_enqueue_style( 'webx_theme_style', rcl_addon_url( 'assets/css/style.css', __FILE__ ) );
 }
@@ -10,8 +11,7 @@ function webx_theme_style() {
 // инициализируем наши скрипты
 add_action( 'rcl_enqueue_scripts', 'cab_15_script_load' );
 function cab_15_script_load() {
-	global $user_LK;
-	if ( $user_LK ) {
+	if ( rcl_is_office() ) {
 		rcl_enqueue_script( 'theme-scripts', rcl_addon_url( 'assets/js/main.js', __FILE__ ), false, true );
 	}
 }
@@ -23,15 +23,21 @@ function webx_add_cover_inline_styles( $styles ) {
 	if ( ! rcl_is_office() ) {
 		return $styles;
 	}
+
 	global $user_LK;
+
 	$cover = get_user_meta( $user_LK, 'rcl_cover', 1 );
+
 	if ( ! $cover ) {
 		$cover = rcl_get_option( 'default_cover', 0 );
 	}
+
 	$cover_url = $cover && is_numeric( $cover ) ? wp_get_attachment_image_url( $cover, 'large' ) : $cover;
+
 	if ( ! $cover_url ) {
 		$cover_url = rcl_addon_url( 'assets/image/default-cover.jpg', __FILE__ );
 	}
+
 	$dataUrl    = wp_parse_url( $cover_url );
 	$cover_path = untrailingslashit( ABSPATH ) . $dataUrl['path'];
 	$styles     .= '#webx-cover{background-image: url(' . $cover_url . '?vers=' . @filemtime( $cover_path ) . ');}';
@@ -161,11 +167,13 @@ function webx_construct_theme( $options ) {
 
 add_filter( 'rcl_inline_styles', 'webx_add_colors_inline_styles', 10 );
 function webx_add_colors_inline_styles( $styles ) {
-	global $rcl_options;
 	if ( ! rcl_is_office() ) {
 		return $styles;
 	}
+
 	if ( rcl_get_option( 'webx-color' ) ) {
+		global $rcl_options;
+
 		$lca_hex = rcl_get_option( 'webx-color' ); // достаем оттуда наш цвет
 		[ $r, $g, $b ] = sscanf( $lca_hex, "#%02x%02x%02x" );
 
@@ -180,20 +188,20 @@ function webx_add_colors_inline_styles( $styles ) {
 		$webx_theme_href_color_hover      = $rcl_options['webx-theme-href-color-hover'];
 
 		$styles .= '
-	.rcl-noread-users, .rcl-chat-panel{
-		background: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', 0.85);
+	.rcl-noread-users, .rcl-chat-panel {
+		background: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', .85);
 	}
 	body .rcl_preloader i {
 		color: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', 1);
 	}
 	.rcl-noread-users a.active-chat::before {
-	    border-right-color: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', 0.85);
+	    border-right-color: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', .85);
 	}
-	.rcl-chat .nth .message-box{
-		background: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', 0.35);
+	.rcl-chat .nth .message-box {
+		background: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', .35);
 	}
-	.rcl-chat .nth .message-box::before{
-		border-right-color: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', 0.35);
+	.rcl-chat .nth .message-box::before {
+		border-right-color: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', .35);
 	}
 	';
 
@@ -202,30 +210,26 @@ function webx_add_colors_inline_styles( $styles ) {
 	#rcl-office .rcl-subtab-menu .rcl-bttn.rcl-bttn__type-primary.rcl-bttn__active,
 	body #webx-content .rcl-bttn.rcl-bttn__type-primary, 
 	body .rcl-bttn.rcl-bttn__type-primary,
-	body #rcl-office .webx_phone_menu
-	{
+	body #rcl-office .webx_phone_menu {
 		background: ' . $webx_theme_href_background . ' !important;
 		border-color: ' . $webx_theme_href_background . ' !important;
 		color: ' . $webx_theme_href_color . ' !important;
 	}
 	#webx-content .webx-area-menu a,
 	#webx-main .webx-userinfo .webx-area-counters a,
-	#webx-main .balance-amount a
-	{
+	#webx-main .balance-amount a {
 		color: ' . $webx_theme_color . ';
 	}
 	#rcl-office #lk-menu a.recall-button:hover,
 	body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover,
 	body #rcl-office .webx_phone_menu:hover,
 	#webx-main .webx-userinfo .webx-area-counters a:hover,
-	#webx-main .balance-amount a:hover
-	{
+	#webx-main .balance-amount a:hover {
 
 		background: ' . $webx_theme_href_background_hover . ' !important;
 		border-color: ' . $webx_theme_href_background_hover . ' !important;
 		color: ' . $webx_theme_href_color_hover . ' !important;
-	}
-	';
+	}';
 
 
 		/*Блок округления блоков*/
@@ -235,18 +239,19 @@ function webx_add_colors_inline_styles( $styles ) {
 		$webx_theme_radius_boxcontent = $rcl_options['webx-theme-radius-boxcontent'];
 		$webx_theme_radius_href       = $rcl_options['webx-theme-radius-href'];
 		$webx_theme_radius_chat       = $rcl_options['webx-theme-radius-chat'];
-		$styles                       .= '
-	#webx-main #rcl-avatar img{
+
+		$styles .= '
+	#webx-main #rcl-avatar img {
 		border-radius: ' . $webx_theme_radius_avatar . 'px;
 	}
-	#webx-cover{
+	#webx-cover {
 		border-radius: ' . $webx_theme_radius_cover . 'px;
 	}
-	.webx-userinfo{
+	.webx-userinfo {
 		border-radius: ' . $webx_theme_radius_userinfo . 'px;
 	}
 	#webx-content .webx-area-tabs,
-	#webx-content .rcl-notice{
+	#webx-content .rcl-notice {
 		border-radius: ' . $webx_theme_radius_boxcontent . 'px;
 	}
 	#webx-content .webx-area-menu a,
@@ -256,7 +261,7 @@ function webx_add_colors_inline_styles( $styles ) {
 	body #webx-content .rcl-bttn.rcl-bttn__type-primary, 
 	body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover,
 	#webx-main .webx-userinfo .webx-area-counters a,
-	#webx-main .balance-amount a{
+	#webx-main .balance-amount a {
 		border-radius: ' . $webx_theme_radius_href . 'px;
 	}
 	#rcl-office .rcl-chat-contacts .noread-message, 
@@ -270,11 +275,11 @@ function webx_add_colors_inline_styles( $styles ) {
 	#rcl-office .rcl-chat .chat-form textarea, 
 	.rcl-noread-users, 
 	.rcl-chat-panel, 
-	#prime-forum .prime-forum-item{
+	#prime-forum .prime-forum-item {
 		border-radius: ' . $webx_theme_radius_chat . 'px;
-	}
-	';
+	}';
 
-		return $styles;
 	}
+
+	return $styles;
 }
