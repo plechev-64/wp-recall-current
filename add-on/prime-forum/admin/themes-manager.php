@@ -6,36 +6,36 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 
 class Prime_Themes_Manager extends WP_List_Table {
 
-	var $addon = array();
+	var $addon = [];
 	var $template_number;
-	var $addons_data = array();
-	var $need_update = array();
-	var $column_info = array();
+	var $addons_data = [];
+	var $need_update = [];
+	var $column_info = [];
 
 	function __construct() {
 		global $status, $page, $active_addons;
 
-		parent::__construct( array(
+		parent::__construct( [
 			'singular' => __( 'add-on', 'wp-recall' ),
 			'plural'   => __( 'add-ons', 'wp-recall' ),
-			'ajax'     => false
-		) );
+			'ajax'     => false,
+		] );
 
 		$this->need_update = get_site_option( 'rcl_addons_need_update' );
 		$this->column_info = $this->get_column_info();
 
-		add_action( 'admin_head', array( &$this, 'admin_header' ) );
+		add_action( 'admin_head', [ &$this, 'admin_header' ] );
 	}
 
 	function get_templates_data() {
 
-		$paths = array(
+		$paths = [
 			rcl_addon_path( __FILE__ ) . 'themes',
 			RCL_PATH . 'add-on',
-			RCL_TAKEPATH . 'add-on'
-		);
+			RCL_TAKEPATH . 'add-on',
+		];
 
-		$add_ons = array();
+		$add_ons = [];
 		foreach ( $paths as $path ) {
 			if ( file_exists( $path ) ) {
 				$addons = scandir( $path, 1 );
@@ -75,7 +75,7 @@ class Prime_Themes_Manager extends WP_List_Table {
 
 	function get_addons_content() {
 		global $active_addons;
-		$add_ons = array();
+		$add_ons = [];
 		foreach ( $this->addons_data as $namedir => $data ) {
 			$desc                      = $this->get_description_column( $data );
 			$add_ons[ $namedir ]['ID'] = $namedir;
@@ -138,19 +138,19 @@ class Prime_Themes_Manager extends WP_List_Table {
 	}
 
 	function get_sortable_columns() {
-		return array(
-			'addon_name'   => array( 'addon_name', false ),
-			'addon_status' => array( 'addon_status', false )
-		);
+		return [
+			'addon_name'   => [ 'addon_name', false ],
+			'addon_status' => [ 'addon_status', false ],
+		];
 	}
 
 	function get_columns() {
-		return array(
+		return [
 			'addon_screen'      => '',
 			'addon_name'        => __( 'Templates', 'wp-recall' ),
 			'addon_status'      => __( 'Status', 'wp-recall' ),
-			'addon_description' => __( 'Description', 'wp-recall' )
-		);
+			'addon_description' => __( 'Description', 'wp-recall' ),
+		];
 	}
 
 	function usort_reorder( $a, $b ) {
@@ -163,7 +163,7 @@ class Prime_Themes_Manager extends WP_List_Table {
 
 	function column_addon_name( $item ) {
 
-		$actions = array();
+		$actions = [];
 		$page    = isset( $_REQUEST['page'] ) ? sanitize_key( $_REQUEST['page'] ) : '';
 		if ( $item['addon_status'] != 1 ) {
 			$actions['delete']  = sprintf( '<a href="?page=%s&action=%s&template=%s">' . esc_html__( 'Delete', 'wp-recall' ) . '</a>', $page, 'delete', $item['ID'] );
@@ -197,7 +197,7 @@ class Prime_Themes_Manager extends WP_List_Table {
 	}
 
 	function get_table_classes() {
-		return array( 'widefat', 'fixed', 'striped', 'plugins', $this->_args['plural'] );
+		return [ 'widefat', 'fixed', 'striped', 'plugins', $this->_args['plural'] ];
 	}
 
 	function single_row( $item ) {
@@ -220,7 +220,7 @@ class Prime_Themes_Manager extends WP_List_Table {
 			     . '<div class="update-message notice inline notice-warning notice-alt">'
 			     . '<p>'
 			     . esc_html__( 'New version available', 'wp-recall' ) . ' ' . esc_html( $this->addon['name'] ) . ' ' . esc_html( $this->need_update[ $item['ID'] ]['new-version'] ) . '. ';
-			echo ' <a href="#"  onclick=\'rcl_get_details_addon(' . json_encode( array( 'slug' => $item['ID'] ) ) . ',this);return false;\' title="' . esc_attr( $this->addon['name'] ) . '">' . esc_html__( 'view information about the version', 'wp-recall' ) . '</a> или';
+			echo ' <a href="#"  onclick=\'rcl_get_details_addon(' . json_encode( [ 'slug' => $item['ID'] ] ) . ',this);return false;\' title="' . esc_attr( $this->addon['name'] ) . '">' . esc_html__( 'view information about the version', 'wp-recall' ) . '</a> ' . esc_html__( 'or', 'wp-recall' );
 			echo ' <a class="update-add-on" data-addon="' . esc_attr( $item['ID'] ) . '" href="#">' . esc_html__( 'update automatically', 'wp-recall' ) . '</a>'
 			     . '</p>'
 			     . '</div>'
@@ -234,16 +234,16 @@ class Prime_Themes_Manager extends WP_List_Table {
 		$addons = $this->get_addons_content();
 
 		$this->_column_headers = $this->get_column_info();
-		usort( $addons, array( &$this, 'usort_reorder' ) );
+		usort( $addons, [ &$this, 'usort_reorder' ] );
 
 		$per_page     = $this->get_items_per_page( 'templates_per_page', 20 );
 		$current_page = $this->get_pagenum();
 		$total_items  = count( $addons );
 
-		$this->set_pagination_args( array(
+		$this->set_pagination_args( [
 			'total_items' => $total_items,
-			'per_page'    => $per_page
-		) );
+			'per_page'    => $per_page,
+		] );
 
 		$this->items = array_slice( $addons, ( ( $current_page - 1 ) * $per_page ), $per_page );
 	}
@@ -267,7 +267,7 @@ function pfm_init_upload_template() {
 
 function pfm_upload_template() {
 
-	$paths = array( RCL_TAKEPATH . 'add-on', RCL_PATH . 'add-on' );
+	$paths = [ RCL_TAKEPATH . 'add-on', RCL_PATH . 'add-on' ];
 
 	if ( ! isset( $_FILES['addonzip']['tmp_name'] ) ) {
 		wp_die( esc_html__( 'Error', 'wp-recall' ) );

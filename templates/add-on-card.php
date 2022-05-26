@@ -14,8 +14,8 @@
 				<?php if ( isset( $rcl_addons[ $addon->slug ] ) && version_compare( $addon->version, $rcl_addons[ $addon->slug ]['version'] ) > 0 ): ?>
                     <li><a class="update-now button aria-button-if-js"
                            data-addon="<?php echo esc_attr( $addon->slug ); ?>" href="#"
-                           aria-label="Обновить сейчас" role="button"
-                           onclick='rcl_update_addon(<?php echo json_encode( array( 'slug' => $addon->slug ) ); ?>, this );return false;'>Обновить</a>
+                           role="button"
+                           onclick='rcl_update_addon(<?php echo json_encode( [ 'slug' => $addon->slug ] ); ?>, this );return false;'><?php esc_html_e( 'Update', 'wp-recall' ) ?></a>
                     </li>
 				<?php elseif ( isset( $rcl_addons[ $addon->slug ] ) ): ?>
                     <li><span class="button button-disabled"
@@ -29,9 +29,9 @@
                     </li>
 				<?php endif; ?>
                 <li><a href="#" class="open-addon-details-modal"
-                       onclick='rcl_get_details_addon(<?php echo json_encode( array( 'slug' => $addon->slug ) ); ?>, this );return false;'
+                       onclick='rcl_get_details_addon(<?php echo json_encode( [ 'slug' => $addon->slug ] ); ?>, this );return false;'
                        aria-label="Подробности о <?php echo esc_attr( $addon->name ); ?>"
-                       data-title="<?php echo esc_attr( $addon->name ); ?>">Детали</a>
+                       data-title="<?php echo esc_attr( $addon->name ); ?>"><?php esc_html_e( 'Details', 'wp-recall' ) ?></a>
                 </li>
         </div>
         <div class="desc column-description">
@@ -46,7 +46,7 @@
 			if ( isset( $addon->terms ) && $addon->terms ):
 
 				foreach ( $addon->terms as $taxonomy => $terms ) {
-					$html = array();
+					$html = [];
 					?>
 
                     <p>
@@ -76,11 +76,11 @@
     <div class="plugin-card-bottom">
         <div class="vers column-rating">
 			<?php
-			wp_star_rating( array(
+			wp_star_rating( [
 				'rating' => ( $addon->rating->value <= 5 ) ? $addon->rating->value : '5',
 				'type'   => 'rating',
-				'number' => $addon->rating->votes
-			) );
+				'number' => $addon->rating->votes,
+			] );
 			?>
             <span class="num-ratings">(<?php echo esc_html( $addon->rating->votes ); ?>)</span>
         </div>
@@ -93,7 +93,7 @@
         <div class="column-downloaded"><?php echo esc_html( $addon->downloads ); ?><?php esc_html_e( 'downloads', 'wp-recall' ) ?></div>
         <div class="column-compatibility">
 			<?php if ( isset( $addon->support_core ) ) { ?>
-                <span class="compatibility-compatible"><strong><?php esc_html_e( 'Compatible', 'wp-recall' ) ?></strong> с WP-Recall <?php echo esc_html( $addon->support_core ); ?> и выше</span>
+                <span class="compatibility-compatible"><strong><?php esc_html_e( 'Compatible with', 'wp-recall' ) ?></strong> WP-Recall <?php echo esc_html( $addon->support_core ); ?> <?php esc_html_e( 'and above', 'wp-recall' ) ?></span>
 				<?php if ( version_compare( $addon->support_core, $wprecall->version ) > 0 ) { ?>
                     <span class="compatibility-untested"><?php esc_html_e( 'Operation is not guaranteed with your version of WP-Recall', 'wp-recall' ) ?></span>
 				<?php } ?>

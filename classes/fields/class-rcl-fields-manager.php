@@ -7,7 +7,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 	public $option_name = '';
 	public $structure_edit = false;
 	public $template_fields = false;
-	public $default_fields = array();
+	public $default_fields = [];
 	public $default_is_null = false;
 	public $sortable = true;
 	public $empty_field = true;
@@ -15,15 +15,15 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 	public $switch_id = false;
 	public $switch_type = true;
 	public $fields_delete = true;
-	public $field_options = array();
-	public $new_field_options = array();
+	public $field_options = [];
+	public $new_field_options = [];
 	public $new_field_type = false;
 	public $default_box = true;
 	public $meta_delete = false;
 	public $current_item = 0;
 	public $group_id = 0;
 	public $onsubmit = 'rcl_manager_update_fields';
-	public $types = array(
+	public $types = [
 		'text',
 		'textarea',
 		'select',
@@ -42,8 +42,8 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		'runner',
 		'range',
 		'editor',
-		'uploader'
-	);
+		'uploader',
+	];
 
 	function __construct( $manager_id, $args = false ) {
 
@@ -98,7 +98,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			return false;
 		}
 
-		$template_fields = array();
+		$template_fields = [];
 
 		foreach ( $fields as $field ) {
 
@@ -128,7 +128,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			return false;
 		}
 
-		$default_fields = array();
+		$default_fields = [];
 
 		foreach ( $fields as $field ) {
 
@@ -352,21 +352,21 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 	}
 
 	function get_manager_options_form_fields() {
-		return array();
+		return [];
 	}
 
-	function get_group_areas( $group = array() ) {
+	function get_group_areas( $group = [] ) {
 
-		$group = wp_parse_args( $group, array(
+		$group = wp_parse_args( $group, [
 			'title' => '',
 			'id'    => 'section-' . uniqid(),
 			'type'  => 0,
-			'areas' => array(
-				array(
-					'fields' => array()
-				)
-			)
-		) );
+			'areas' => [
+				[
+					'fields' => [],
+				],
+			],
+		] );
 
 		$content = '<div id="manager-group-' . $this->group_id . '" class="manager-group">';
 
@@ -381,13 +381,13 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			$content .= '<div class="group-primary-settings">';
 
 			$content .= '<div class="group-title-field">';
-			$content .= $this::setup( array(
+			$content .= $this::setup( [
 				'slug'        => 'group-title',
 				'type'        => 'text',
 				'input_name'  => 'structure-groups[' . $this->group_id . '][title]',
 				'placeholder' => __( 'Name of the section', 'wp-recall' ),
-				'value'       => $group['title']
-			) )->get_field_html();
+				'value'       => $group['title'],
+			] )->get_field_html();
 			$content .= '</div>';
 
 			$content .= '<div class="rcl-areas-manager">';
@@ -425,23 +425,23 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 			$content .= '</div>';
 
-			$fields = array(
-				'group-id'     => array(
+			$fields = [
+				'group-id'     => [
 					'slug'       => 'group-id',
 					'type'       => 'text',
 					'input_name' => 'structure-groups[' . $this->group_id . '][id]',
-					'title'      => 'ID секции',
+					'title'      => __( 'Section ID', 'wp-recall' ),
 					'required'   => true,
-					'value'      => $this->group_id
-				),
-				'group-notice' => array(
+					'value'      => $this->group_id,
+				],
+				'group-notice' => [
 					'slug'       => 'group-notice',
 					'type'       => 'text',
 					'input_name' => 'structure-groups[' . $this->group_id . '][notice]',
 					'title'      => __( 'A note of this section', 'wp-recall' ),
-					'value'      => isset( $group['notice'] ) ? $group['notice'] : ''
-				)
-			);
+					'value'      => isset( $group['notice'] ) ? $group['notice'] : '',
+				],
+			];
 
 			$content .= '<div class="manager-group-settings">';
 			foreach ( $fields as $field ) {
@@ -464,15 +464,15 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		return $content;
 	}
 
-	function get_active_area( $area = array() ) {
+	function get_active_area( $area = [] ) {
 
 		if ( $this->empty_field ) {
 
-			$this->add_field( array(
+			$this->add_field( [
 				'slug' => 'newField-' . uniqid(),
 				'type' => $this->types[0],
-				'_new' => true
-			) );
+				'_new' => true,
+			] );
 		}
 
 		$widthArea = isset( $area['width'] ) && $area['width'] ? $area['width'] : 100;
@@ -621,7 +621,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			return false;
 		}
 
-		$classes = array( 'manager-field' );
+		$classes = [ 'manager-field' ];
 
 		if ( $this->is_service_type( $field_id, 'default' ) ) {
 			$classes[] = 'default-field';
@@ -680,20 +680,20 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		$content .= '<span class="field-icon icon-type-' . $field->type . '"></span>';
 
 		if ( $field->is_new() ) {
-			$content .= $this::setup( array(
+			$content .= $this::setup( [
 				'slug'        => 'title',
 				'type'        => 'text',
 				'placeholder' => __( 'Point a title of new field', 'wp-recall' ),
-				'input_name'  => 'fields[' . $field_id . '][title]'
-			) )->get_field_html();
+				'input_name'  => 'fields[' . $field_id . '][title]',
+			] )->get_field_html();
 		} else {
-			$content .= $this::setup( array(
+			$content .= $this::setup( [
 				'slug'        => 'title',
 				'type'        => 'text',
 				'placeholder' => __( 'Point a title of this field', 'wp-recall' ),
 				'input_name'  => 'fields[' . $field_id . '][title]',
-				'value'       => $field->title
-			) )->get_field_html();
+				'value'       => $field->title,
+			] )->get_field_html();
 			//$content .= '<span class="field-title">'.$field->title.'</span>';
 		}
 
@@ -716,27 +716,27 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 	function get_control_buttons( $field_id, $field ) {
 
-		$buttons = array();
+		$buttons = [];
 
 		if ( $field->must_delete && $this->fields_delete && ! $this->is_service_type( $field_id, 'default' ) && ! $field->is_new() ) {
-			$buttons['delete'] = array(
+			$buttons['delete'] = [
 				'icon'    => 'fa-trash',
 				'class'   => 'control-delete',
 				'onclick' => 'rcl_manager_field_delete("' . $field_id . '", ' . ( $this->meta_delete ? 1 : 0 ) . ', this);return false;',
-			);
+			];
 		}
 
-		$buttons['edit'] = array(
+		$buttons['edit'] = [
 			'class'   => 'control-edit',
 			'icon'    => 'fa-sliders',
-			'onclick' => 'rcl_manager_field_switch(this);return false;'
-		);
+			'onclick' => 'rcl_manager_field_switch(this);return false;',
+		];
 
 		if ( $this->sortable ) {
-			$buttons['sortable'] = array(
+			$buttons['sortable'] = [
 				'class' => 'control-move',
-				'icon'  => 'fa-arrows'
-			);
+				'icon'  => 'fa-arrows',
+			];
 		}
 
 		return apply_filters( 'rcl_manager_field_controls', $buttons, $field_id, $this->manager_id );
@@ -800,15 +800,15 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 		$field = $this->get_field( $field_id, $serviceType );
 
 		if ( $field->is_new() || $this->switch_id ) {
-			$options['id'] = array(
+			$options['id'] = [
 				'slug'        => 'id',
 				'type'        => 'text',
 				'pattern'     => '[a-z0-9-_]+',
 				'value'       => $field->is_new() ? '' : $field_id,
 				'title'       => __( 'ID', 'wp-recall' ),
 				'notice'      => __( 'not required, but you can list your own meta_key in this field', 'wp-recall' ),
-				'placeholder' => __( 'Latin letters and numbers', 'wp-recall' )
-			);
+				'placeholder' => __( 'Latin letters and numbers', 'wp-recall' ),
+			];
 		}
 
 		if ( $this->switch_type ) {
@@ -817,27 +817,27 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 				if ( $this->is_service_type( $field_id ) || ! isset( $typeList[ $field->type ] ) ) {
 					//для дефолтных полей устанавливаем фиксированный тип
-					$options['type'] = array(
+					$options['type'] = [
 						'slug'  => 'type',
 						'type'  => 'hidden',
-						'value' => $field->type
-					);
+						'value' => $field->type,
+					];
 				} else {
-					$options['type'] = array(
+					$options['type'] = [
 						'slug'   => 'type',
 						'type'   => 'select',
 						'title'  => __( 'Type of field', 'wp-recall' ),
-						'values' => $typeList
-					);
+						'values' => $typeList,
+					];
 				}
 			}
 		} else {
 
-			$options['type'] = array(
+			$options['type'] = [
 				'slug'  => 'type',
 				'type'  => 'hidden',
-				'value' => ( $field->is_new() && $this->new_field_type ) ? $this->new_field_type : $field->type
-			);
+				'value' => ( $field->is_new() && $this->new_field_type ) ? $this->new_field_type : $field->type,
+			];
 		}
 
 		$options = apply_filters( 'rcl_field_general_options', $options, $field, $this->manager_id );
@@ -847,7 +847,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 
 	function get_field_options( $field_id, $serviceType = false ) {
 
-		$options = array();
+		$options = [];
 
 		$field = $this->get_field( $field_id, $serviceType );
 
@@ -934,7 +934,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 			</script>';
 	}
 
-	function is_service_type( $field_id, $serviceType = array( 'default', 'template' ) ) {
+	function is_service_type( $field_id, $serviceType = [ 'default', 'template' ] ) {
 
 		if ( is_array( $serviceType ) ) {
 
@@ -965,7 +965,7 @@ class Rcl_Fields_Manager extends Rcl_Fields {
 	function get_types_list() {
 		global $wprecall;
 
-		$typesList = array();
+		$typesList = [];
 		foreach ( $this->types as $type ) {
 			if ( ! isset( $wprecall->fields[ $type ] ) ) {
 				continue;

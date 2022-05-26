@@ -5,7 +5,7 @@ jQuery(function ($) {
 
             jQuery('#lk-conteyner').css('background-image', 'url(' + data.result.src.full + ')').animateCss('fadeIn');
 
-            rcl_notice('Изображение загружено', 'success', 10000);
+            rcl_notice(Rcl.local.image_upload_ok, 'success', 10000);
 
             rcl_do_action('rcl_success_upload_cover', data);
 
