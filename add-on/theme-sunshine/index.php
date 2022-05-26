@@ -25,41 +25,41 @@ function rcl_setup_template_options() {
 
 // регистрируем 3 области виджетов
 function cab_15_sidebar() {
-	register_sidebar( array(
-		'name'          => "RCL: Сайдбар контента личного кабинета",
+	register_sidebar( [
+		'name'          => 'RCL: ' . __( 'Sidebar of personal account content', 'wp-recall' ),
 		'id'            => 'cab_15_sidebar',
-		'description'   => 'Выводится только в личном кабинете. Справа от контента (сайдбар)',
+		'description'   => __( 'It is displayed only in the personal account.', 'wp-recall' ) . ' ' . __( 'To the right of the content (sidebar)', 'wp-recall' ),
 		'before_title'  => '<h3 class="cabinet_sidebar_title">',
 		'after_title'   => '</h3>',
 		'before_widget' => '<div class="cabinet_sidebar">',
-		'after_widget'  => '</div>'
-	) );
+		'after_widget'  => '</div>',
+	] );
 }
 
 add_action( 'widgets_init', 'cab_15_sidebar' );
 function cab_15_sidebar_before() {
-	register_sidebar( array(
-		'name'          => "RCL: Сайдбар над личным кабинетом",
+	register_sidebar( [
+		'name'          => 'RCL: ' . __( 'Sidebar above the personal account', 'wp-recall' ),
 		'id'            => 'cab_15_sidebar_before',
-		'description'   => 'Выводится только в личном кабинете',
+		'description'   => __( 'It is displayed only in the personal account.', 'wp-recall' ),
 		'before_title'  => '<h3 class="cab_title_before">',
 		'after_title'   => '</h3>',
 		'before_widget' => '<div class="cabinet_sidebar_before">',
-		'after_widget'  => '</div>'
-	) );
+		'after_widget'  => '</div>',
+	] );
 }
 
 add_action( 'widgets_init', 'cab_15_sidebar_before' );
 function cab_15_sidebar_after() {
-	register_sidebar( array(
-		'name'          => "RCL: Сайдбар под личным кабинетом",
+	register_sidebar( [
+		'name'          => 'RCL: ' . __( 'Sidebar under the personal account', 'wp-recall' ),
 		'id'            => 'cab_15_sidebar_after',
-		'description'   => 'Выводится только в личном кабинете',
+		'description'   => __( 'It is displayed only in the personal account.', 'wp-recall' ),
 		'before_title'  => '<h3 class="cab_title_after">',
 		'after_title'   => '</h3>',
 		'before_widget' => '<div class="cabinet_sidebar_after">',
-		'after_widget'  => '</div>'
-	) );
+		'after_widget'  => '</div>',
+	] );
 }
 
 add_action( 'widgets_init', 'cab_15_sidebar_after' );
@@ -116,7 +116,7 @@ function rcl_add_colors_inline_styles( $styles ) {
 	}
 
 	$lca_hex = rcl_get_option( 'primary-color' ); // достаем оттуда наш цвет
-	list( $r, $g, $b ) = sscanf( $lca_hex, "#%02x%02x%02x" );
+	[ $r, $g, $b ] = sscanf( $lca_hex, "#%02x%02x%02x" );
 
 	$rp = round( $r * 0.90 );
 	$gp = round( $g * 0.90 );

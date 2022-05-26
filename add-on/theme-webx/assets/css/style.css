@@ -4399,25 +4399,34 @@ body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover {
 
 #rcl-office #webx-header .rcl-cover-icon {
     background: #fff;
-    margin: 5px;
+    margin: 0;
     padding: 10px;
-    border-radius: 0.5rem;
-    top: 15px;
-    left: 5px;
+    top: 6px;
+    left: 6px;
+    overflow: hidden;
+    display: inline-flex;
+}
+
+#rcl-avatar .avatar-image {
+    display: flex;
 }
 
 #webx-header #rcl-avatar .avatar-icons {
     position: absolute;
-    bottom: 5px;
+    bottom: 6px;
     width: 100%;
     text-align: center;
 }
 
+#rcl-avatar .avatar-icons .rcl-avatar-icon {
+    display: inline-flex;
+    margin: 3px;
+}
+
 #webx-header #rcl-avatar .avatar-icons .rcl-avatar-icon a {
     background: #fff;
-    margin: 5px;
     padding: 10px;
-    border-radius: 0.5rem;
+    overflow: hidden;
 }
 
 #webx-content .webx-area-menu a {

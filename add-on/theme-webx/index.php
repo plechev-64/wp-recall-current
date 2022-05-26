@@ -2,15 +2,15 @@
 
 //Подключение стилей
 if ( ! is_admin() ) {
-	add_action( 'rcl_enqueue_scripts', 'webx_theme_style', 10 );
+	add_action( 'rcl_enqueue_scripts', 'rcl_webx_theme_style', 10 );
 }
-function webx_theme_style() {
-	rcl_enqueue_style( 'webx_theme_style', rcl_addon_url( 'assets/css/style.css', __FILE__ ) );
+function rcl_webx_theme_style() {
+	rcl_enqueue_style( 'rcl_webx_theme_style', rcl_addon_url( 'assets/css/style.css', __FILE__ ) );
 }
 
 // инициализируем наши скрипты
-add_action( 'rcl_enqueue_scripts', 'cab_15_script_load' );
-function cab_15_script_load() {
+add_action( 'rcl_enqueue_scripts', 'rcl_webx_script_load' );
+function rcl_webx_script_load() {
 	if ( rcl_is_office() ) {
 		rcl_enqueue_script( 'theme-scripts', rcl_addon_url( 'assets/js/main.js', __FILE__ ), false, true );
 	}
@@ -18,8 +18,8 @@ function cab_15_script_load() {
 
 
 // выводим обложку
-add_filter( 'rcl_inline_styles', 'webx_add_cover_inline_styles', 10 );
-function webx_add_cover_inline_styles( $styles ) {
+add_filter( 'rcl_inline_styles', 'rcl_webx_add_cover_inline_styles', 10 );
+function rcl_webx_add_cover_inline_styles( $styles ) {
 	if ( ! rcl_is_office() ) {
 		return $styles;
 	}
@@ -46,15 +46,15 @@ function webx_add_cover_inline_styles( $styles ) {
 }
 
 // объявляем поддержку загрузки аватарки, загрузку обложки, модальное окно "Подробная информация"
-add_action( 'rcl_addons_included', 'lt_setup_template_options', 10 );
-function lt_setup_template_options() {
+add_action( 'rcl_addons_included', 'rcl_webx_setup_template_options', 10 );
+function rcl_webx_setup_template_options() {
 	rcl_template_support( 'avatar-uploader' );
 	rcl_template_support( 'cover-uploader' );
 	rcl_template_support( 'modal-user-details' );
 }
 
-add_filter( 'rcl_options', 'webx_construct_theme' );
-function webx_construct_theme( $options ) {
+add_filter( 'rcl_options', 'rcl_webx_construct_theme' );
+function rcl_webx_construct_theme( $options ) {
 	//Настройки цвета
 	$options->box( 'primary' )->add_group( 'design', [
 		'title' => __( 'Design', 'wp-recall' ),
@@ -174,8 +174,8 @@ function webx_construct_theme( $options ) {
 
 }
 
-add_filter( 'rcl_inline_styles', 'webx_add_colors_inline_styles', 10 );
-function webx_add_colors_inline_styles( $styles ) {
+add_filter( 'rcl_inline_styles', 'rcl_webx_add_colors_inline_styles', 10 );
+function rcl_webx_add_colors_inline_styles( $styles ) {
 	if ( ! rcl_is_office() ) {
 		return $styles;
 	}
@@ -251,8 +251,9 @@ function webx_add_colors_inline_styles( $styles ) {
 		$webx_theme_radius_chat       = $rcl_options['webx-theme-radius-chat'];
 
 		$styles .= '
-	#rcl-office {
-		padding: ' . $webx_theme_padding . 'px;
+	#rcl-office,
+	.rcl_webx_sidebar {
+		margin: ' . $webx_theme_padding . 'px;
 	}
 	#lk-conteyner #rcl-avatar img {
 		border-radius: ' . $webx_theme_radius_avatar . 'px;
@@ -274,7 +275,9 @@ function webx_add_colors_inline_styles( $styles ) {
 	body #webx-content .rcl-bttn.rcl-bttn__type-primary, 
 	body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover,
 	#lk-conteyner .webx-userinfo .webx-area-counters a,
-	#lk-conteyner .balance-amount a {
+	#lk-conteyner .balance-amount a,
+	#rcl-office #webx-header .rcl-cover-icon,
+	#webx-header #rcl-avatar .avatar-icons .rcl-avatar-icon a {
 		border-radius: ' . $webx_theme_radius_href . 'px;
 	}
 	#rcl-office .rcl-chat-contacts .noread-message, 
@@ -295,4 +298,44 @@ function webx_add_colors_inline_styles( $styles ) {
 	}
 
 	return $styles;
+}
+
+add_action( 'widgets_init', 'rcl_webx_sidebar_before' );
+function rcl_webx_sidebar_before() {
+	register_sidebar( [
+		'name'          => 'RCL: ' . __( 'Sidebar above the personal account', 'wp-recall' ),
+		'id'            => 'rcl_webx_sidebar_before',
+		'description'   => __( 'It is displayed only in the personal account.', 'wp-recall' ),
+		'before_title'  => '<h3 class="cab_title_before">',
+		'after_title'   => '</h3>',
+		'before_widget' => '<div class="rcl_webx_sidebar rcl_webx_sidebar-before">',
+		'after_widget'  => '</div>',
+	] );
+}
+
+add_action( 'widgets_init', 'rcl_webx_sidebar_after' );
+function rcl_webx_sidebar_after() {
+	register_sidebar( [
+		'name'          => 'RCL: ' . __( 'Sidebar under the personal account', 'wp-recall' ),
+		'id'            => 'rcl_webx_sidebar_after',
+		'description'   => __( 'It is displayed only in the personal account.', 'wp-recall' ),
+		'before_title'  => '<h3 class="cab_title_after">',
+		'after_title'   => '</h3>',
+		'before_widget' => '<div class="rcl_webx_sidebar rcl_webx_sidebar-after">',
+		'after_widget'  => '</div>',
+	] );
+}
+
+add_action( 'rcl_area_before', 'rcl_webx_add_sidebar_area_before' );
+function rcl_webx_add_sidebar_area_before() {
+	if ( function_exists( 'dynamic_sidebar' ) ) {
+		dynamic_sidebar( 'rcl_webx_sidebar_before' );
+	}
+}
+
+add_action( 'rcl_area_after', 'rcl_webx_add_sidebar_area_after' );
+function rcl_webx_add_sidebar_area_after() {
+	if ( function_exists( 'dynamic_sidebar' ) ) {
+		dynamic_sidebar( 'rcl_webx_sidebar_after' );
+	}
 }

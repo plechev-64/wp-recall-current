@@ -29,15 +29,15 @@ function lt_setup_template_options() {
 
 // регистрируем 2 области виджетов и выводим их
 function lt_sidebar_before() {
-	register_sidebar( array(
-		'name'          => "RCL: Сайдбар над личным кабинетом",
+	register_sidebar( [
+		'name'          => 'RCL: ' . __( 'Sidebar above the personal account', 'wp-recall' ),
 		'id'            => 'lt_sidebar_before',
-		'description'   => 'Выводится только в личном кабинете',
+		'description'   => __( 'It is displayed only in the personal account.', 'wp-recall' ),
 		'before_title'  => '<h3 class="cab_title_before">',
 		'after_title'   => '</h3>',
 		'before_widget' => '<div class="cabinet_sidebar_before">',
-		'after_widget'  => '</div>'
-	) );
+		'after_widget'  => '</div>',
+	] );
 }
 
 add_action( 'widgets_init', 'lt_sidebar_before' );
@@ -50,15 +50,15 @@ function lt_add_sidebar_area_before() {
 }
 
 function lt_sidebar_after() {
-	register_sidebar( array(
-		'name'          => "RCL: Сайдбар под личным кабинетом",
+	register_sidebar( [
+		'name'          => 'RCL: ' . __( 'Sidebar under the personal account', 'wp-recall' ),
 		'id'            => 'lt_sidebar_after',
-		'description'   => 'Выводится только в личном кабинете',
+		'description'   => __( 'It is displayed only in the personal account.', 'wp-recall' ),
 		'before_title'  => '<h3 class="cab_title_after">',
 		'after_title'   => '</h3>',
 		'before_widget' => '<div class="cabinet_sidebar_after">',
-		'after_widget'  => '</div>'
-	) );
+		'after_widget'  => '</div>',
+	] );
 }
 
 add_action( 'widgets_init', 'lt_sidebar_after' );
