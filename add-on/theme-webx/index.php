@@ -40,7 +40,7 @@ function rcl_webx_add_cover_inline_styles( $styles ) {
 
 	$dataUrl    = wp_parse_url( $cover_url );
 	$cover_path = untrailingslashit( ABSPATH ) . $dataUrl['path'];
-	$styles     .= '#webx-cover{background-image: url(' . $cover_url . '?vers=' . @filemtime( $cover_path ) . ');}';
+	$styles     .= '#lk-conteyner{background-image: url(' . $cover_url . '?vers=' . @filemtime( $cover_path ) . ');}';
 
 	return $styles;
 }
@@ -225,15 +225,15 @@ function rcl_webx_add_colors_inline_styles( $styles ) {
 		color: ' . $webx_theme_href_color . ' !important;
 	}
 	#webx-content .webx-area-menu a,
-	#lk-conteyner .webx-userinfo .webx-area-counters a,
-	#lk-conteyner .balance-amount a {
+	#rcl-office .webx-userinfo .webx-area-counters a,
+	#rcl-office .balance-amount a {
 		color: ' . $webx_theme_color . ';
 	}
 	#rcl-office #lk-menu a.recall-button:hover,
 	body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover,
 	body #rcl-office .webx_phone_menu:hover,
-	#lk-conteyner .webx-userinfo .webx-area-counters a:hover,
-	#lk-conteyner .balance-amount a:hover {
+	#rcl-office .webx-userinfo .webx-area-counters a:hover,
+	#rcl-office .balance-amount a:hover {
 
 		background: ' . $webx_theme_href_background_hover . ' !important;
 		border-color: ' . $webx_theme_href_background_hover . ' !important;
@@ -255,10 +255,10 @@ function rcl_webx_add_colors_inline_styles( $styles ) {
 	.rcl_webx_sidebar {
 		margin: ' . $webx_theme_padding . 'px;
 	}
-	#lk-conteyner #rcl-avatar img {
+	#rcl-office #rcl-avatar img {
 		border-radius: ' . $webx_theme_radius_avatar . 'px;
 	}
-	#webx-cover {
+	#lk-conteyner {
 		border-radius: ' . $webx_theme_radius_cover . 'px;
 	}
 	.webx-userinfo {
@@ -274,8 +274,8 @@ function rcl_webx_add_colors_inline_styles( $styles ) {
 	#rcl-office .rcl-data-filters a.rcl-bttn__disabled,
 	body #webx-content .rcl-bttn.rcl-bttn__type-primary, 
 	body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover,
-	#lk-conteyner .webx-userinfo .webx-area-counters a,
-	#lk-conteyner .balance-amount a,
+	#rcl-office .webx-userinfo .webx-area-counters a,
+	#rcl-office .balance-amount a,
 	#rcl-office #webx-header .rcl-cover-icon,
 	#webx-header #rcl-avatar .avatar-icons .rcl-avatar-icon a {
 		border-radius: ' . $webx_theme_radius_href . 'px;

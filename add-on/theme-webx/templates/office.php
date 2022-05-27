@@ -5,14 +5,14 @@
 
 global $active_addons;
 ?>
-<div id="lk-conteyner" class="webx-main">
+<div class="webx-main">
     <div id="webx-header">
         <div class="row">
             <div class="col-md-3">
 				<?php rcl_avatar( 200 ); ?>
             </div>
             <div class="col-md-9">
-                <div id="webx-cover"><?php do_action( 'rcl_area_top' ); ?></div>
+                <div id="lk-conteyner"><?php do_action( 'rcl_area_top' ); ?></div>
             </div>
         </div>
     </div>

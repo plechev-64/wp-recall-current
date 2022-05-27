@@ -4285,7 +4285,7 @@
     margin: auto;
 }
 
-#lk-conteyner #webx-cover {
+#rcl-office #lk-conteyner {
     display: block;
     width: 100%;
     height: 100%;
@@ -4294,11 +4294,11 @@
     position: relative;
 }
 
-#lk-conteyner #rcl-avatar img {
+#rcl-office #rcl-avatar img {
     width: 100%;
 }
 
-#lk-conteyner .webx-userinfo,
+#rcl-office .webx-userinfo,
 #webx-content .webx-area-tabs {
     background: #fff;
     margin-top: 25px;
@@ -4307,25 +4307,25 @@
     margin-bottom: 5px;
 }
 
-#lk-conteyner .webx-userinfo .userName {
+#rcl-office .webx-userinfo .userName {
     text-align: center;
 }
 
-#lk-conteyner .webx-userinfo .rcl-balance-widget .amount-title {
+#rcl-office .webx-userinfo .rcl-balance-widget .amount-title {
     font-weight: inherit;
     display: inline-block;
     margin-right: 10px;
 }
 
-#lk-conteyner .webx-userinfo .rcl-balance-widget .amount-size {
+#rcl-office .webx-userinfo .rcl-balance-widget .amount-size {
     font-size: inherit;
 }
 
-#lk-conteyner .webx-userinfo .webx-area-counters {
+#rcl-office .webx-userinfo .webx-area-counters {
     text-align: right;
 }
 
-#lk-conteyner .webx-userinfo .webx-area-counters a {
+#rcl-office .webx-userinfo .webx-area-counters a {
     color: #000;
     background: inherit;
     font-size: 16px;
@@ -4386,8 +4386,8 @@ body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover {
 }
 
 
-#lk-conteyner #rcl-avatar img,
-#webx-cover,
+#rcl-office #rcl-avatar img,
+#lk-conteyner,
 .webx-userinfo,
 #webx-content .webx-area-menu a,
 #webx-content .webx-area-tabs {
@@ -4523,7 +4523,7 @@ body #rcl-office .webx_phone_menu {
     border-radius: 0.5rem;
 }
 
-#lk-conteyner .balance-amount a {
+#rcl-office .balance-amount a {
     padding: 6px;
     margin-top: -9px;
 }
@@ -4548,7 +4548,7 @@ body #rcl-office .webx_phone_menu {
         display: none;
     }
 
-    #lk-conteyner #webx-cover {
+    #rcl-office #lk-conteyner {
         display: none;
     }
 
@@ -4556,12 +4556,12 @@ body #rcl-office .webx_phone_menu {
         text-align: center;
     }
 
-    #lk-conteyner .webx-userinfo .webx-area-counters {
+    #rcl-office .webx-userinfo .webx-area-counters {
         text-align: center;
         display: block;
     }
 
-    #lk-conteyner .webx-userinfo, #webx-content .webx-area-tabs {
+    #rcl-office .webx-userinfo, #webx-content .webx-area-tabs {
         padding: 0;
     }
 
