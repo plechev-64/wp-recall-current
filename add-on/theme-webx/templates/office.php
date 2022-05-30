@@ -5,13 +5,13 @@
 
 global $active_addons;
 ?>
-<div class="webx-main">
+<div class="webx-main webx--padding">
     <div id="webx-header">
-        <div class="row">
-            <div class="col-md-3">
-				<?php rcl_avatar( 200 ); ?>
+        <div class="webx-row">
+            <div class="webx-col-md-3">
+				<?php rcl_avatar( 450 ); ?>
             </div>
-            <div class="col-md-9">
+            <div class="webx-col-md-9">
                 <div id="lk-conteyner"><?php do_action( 'rcl_area_top' ); ?></div>
             </div>
         </div>
@@ -19,11 +19,11 @@ global $active_addons;
 
     <div id="webx-userinfo">
         <div class="webx-userinfo">
-            <div class="row">
-                <div class="col-md-3 userName"><?php rcl_username(); ?></div>
-                <div class="col-md-9">
-                    <div class="row">
-                        <div class="col-md-6">
+            <div class="webx-row">
+                <div class="webx-col-md-3 userName"><?php rcl_username(); ?></div>
+                <div class="webx-col-md-9">
+                    <div class="webx-row">
+                        <div class="webx-col-md-6">
 							<?php if ( isset( $active_addons['user-balance'] ) ) {
 								global $user_ID;
 								if ( rcl_is_office( $user_ID ) ) {
@@ -31,7 +31,7 @@ global $active_addons;
 								}
 							} ?>
                         </div>
-                        <div class="col-md-6 webx-area-counters">
+                        <div class="webx-col-md-6 webx-area-counters">
 							<?php do_action( 'rcl_area_counters' ); ?>
                         </div>
                     </div>
@@ -41,8 +41,8 @@ global $active_addons;
     </div>
 
     <div id="webx-content">
-        <div class="row">
-            <div class="col-md-3">
+        <div class="webx-row">
+            <div class="webx-col-md-3">
                 <div class="webx-area-menu">
                     <a class="webx_phone_menu" href="#"><i class="rcli fa-bars"></i> <?php esc_html_e( 'Menu', 'wp-recall' ) ?></a>
                     <div class="webx_phone_block">
@@ -50,7 +50,7 @@ global $active_addons;
                     </div>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="webx-col-md-9">
                 <div class="webx-area-tabs">
 					<?php do_action( 'rcl_area_tabs' ); ?>
                 </div>

@@ -61,9 +61,9 @@ function rcl_webx_construct_theme( $options ) {
 	] )->add_options( [
 		[
 			'type'    => 'color',
-			'slug'    => 'webx-color',
+			'slug'    => 'primary-color',
 			'title'   => __( 'Primary color', 'wp-recall' ),
-			'default' => '#000000',
+			'default' => '#4C8CBD',
 		],
 		[
 			'type'    => 'color',
@@ -180,120 +180,168 @@ function rcl_webx_add_colors_inline_styles( $styles ) {
 		return $styles;
 	}
 
-	if ( rcl_get_option( 'webx-color' ) ) {
+	if ( rcl_get_option( 'primary-color' ) ) {
 		global $rcl_options;
 
-		$lca_hex = rcl_get_option( 'webx-color' ); // достаем оттуда наш цвет
+		$lca_hex = rcl_get_option( 'primary-color', '#4C8CBD' ); // достаем оттуда наш цвет
 		[ $r, $g, $b ] = sscanf( $lca_hex, "#%02x%02x%02x" );
 
 		$rp = round( $r * 0.90 );
 		$gp = round( $g * 0.90 );
 		$bp = round( $b * 0.90 );
 
-		$webx_theme_color                 = $rcl_options['webx-theme-color'];
-		$webx_theme_href_background       = $rcl_options['webx-theme-href-background'];
-		$webx_theme_href_color            = $rcl_options['webx-theme-href-color'];
-		$webx_theme_href_background_hover = $rcl_options['webx-theme-href-background-hover'];
-		$webx_theme_href_color_hover      = $rcl_options['webx-theme-href-color-hover'];
-
 		$styles .= '
-	.rcl-noread-users, .rcl-chat-panel {
-		background: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', .85);
-	}
-	body .rcl_preloader i {
-		color: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', 1);
-	}
-	.rcl-noread-users a.active-chat::before {
-	    border-right-color: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', .85);
-	}
-	.rcl-chat .nth .message-box {
-		background: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', .35);
-	}
-	.rcl-chat .nth .message-box::before {
-		border-right-color: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', .35);
-	}
-	';
+			.rcl-noread-users, .rcl-chat-panel {
+				background: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', .85);
+			}
+			body .rcl_preloader i {
+				color: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', 1);
+			}
+			.rcl-noread-users a.active-chat::before {
+			    border-right-color: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', .85);
+			}
+			.rcl-chat .nth .message-box {
+				background: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', .35);
+			}
+			.rcl-chat .nth .message-box::before {
+				border-right-color: rgba(' . $rp . ', ' . $gp . ', ' . $bp . ', .35);
+			}
+		';
 
-		$styles .= '
-	#rcl-office #lk-menu a.recall-button.active,
-	#rcl-office .rcl-subtab-menu .rcl-bttn.rcl-bttn__type-primary.rcl-bttn__active,
-	body #webx-content .rcl-bttn.rcl-bttn__type-primary, 
-	body .rcl-bttn.rcl-bttn__type-primary,
-	body #rcl-office .webx_phone_menu {
-		background: ' . $webx_theme_href_background . ' !important;
-		border-color: ' . $webx_theme_href_background . ' !important;
-		color: ' . $webx_theme_href_color . ' !important;
-	}
-	#webx-content .webx-area-menu a,
-	#rcl-office .webx-userinfo .webx-area-counters a,
-	#rcl-office .balance-amount a {
-		color: ' . $webx_theme_color . ';
-	}
-	#rcl-office #lk-menu a.recall-button:hover,
-	body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover,
-	body #rcl-office .webx_phone_menu:hover,
-	#rcl-office .webx-userinfo .webx-area-counters a:hover,
-	#rcl-office .balance-amount a:hover {
 
-		background: ' . $webx_theme_href_background_hover . ' !important;
-		border-color: ' . $webx_theme_href_background_hover . ' !important;
-		color: ' . $webx_theme_href_color_hover . ' !important;
-	}';
+		$webx_theme_color = rcl_get_option( 'webx-theme-color' );
+		if ( $webx_theme_color ) {
+			$styles .= '
+				#webx-content .webx-area-menu a,
+				#rcl-office .webx-userinfo .webx-area-counters a,
+				#rcl-office .balance-amount a {
+					color: ' . $webx_theme_color . ';
+				}
+			';
+		}
 
-		$webx_theme_padding = rcl_get_option( 'webx-theme-padding', 12 );
+
+		$webx_theme_href_background_hover = rcl_get_option( 'webx-theme-href-background-hover' );
+		$webx_theme_href_color_hover      = rcl_get_option( 'webx-theme-href-color-hover', '#fff' );
+		if ( $webx_theme_href_background_hover ) {
+			$styles .= '
+				#rcl-office #lk-menu a.recall-button:hover,
+				body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover,
+				body #rcl-office .webx_phone_menu:hover,
+				#rcl-office .webx-userinfo .webx-area-counters a:hover,
+				#rcl-office .balance-amount a:hover {
+					background: ' . $webx_theme_href_background_hover . ' !important;
+					border-color: ' . $webx_theme_href_background_hover . ' !important;
+					color: ' . $webx_theme_href_color_hover . ' !important;
+				}
+			';
+		}
+
+
+		$webx_theme_href_background = rcl_get_option( 'webx-theme-href-background' );
+		$webx_theme_href_color      = rcl_get_option( 'webx-theme-href-color', '#000' );
+		if ( $webx_theme_href_background ) {
+			$styles .= '
+				#rcl-office #lk-menu a.recall-button.active,
+				#rcl-office .rcl-subtab-menu .rcl-bttn.rcl-bttn__type-primary.rcl-bttn__active,
+				body #webx-content .rcl-bttn.rcl-bttn__type-primary, 
+				body .rcl-bttn.rcl-bttn__type-primary,
+				body #rcl-office .webx_phone_menu {
+					background: ' . $webx_theme_href_background . ' !important;
+					border-color: ' . $webx_theme_href_background . ' !important;
+					color: ' . $webx_theme_href_color . ' !important;
+				}
+			';
+		}
+
+
+		$webx_padding = rcl_get_option( 'webx-theme-padding', 18 );
+		$styles       .= '
+			.webx--padding {
+				margin: ' . $webx_padding . 'px;
+			}
+		';
 
 		/*Блок округления блоков*/
-		$webx_theme_radius_avatar     = $rcl_options['webx-theme-radius-avatar'];
-		$webx_theme_radius_cover      = $rcl_options['webx-theme-radius-cover'];
-		$webx_theme_radius_userinfo   = $rcl_options['webx-theme-radius-userinfo'];
-		$webx_theme_radius_boxcontent = $rcl_options['webx-theme-radius-boxcontent'];
-		$webx_theme_radius_href       = $rcl_options['webx-theme-radius-href'];
-		$webx_theme_radius_chat       = $rcl_options['webx-theme-radius-chat'];
 
-		$styles .= '
-	#rcl-office,
-	.rcl_webx_sidebar {
-		margin: ' . $webx_theme_padding . 'px;
-	}
-	#rcl-office #rcl-avatar img {
-		border-radius: ' . $webx_theme_radius_avatar . 'px;
-	}
-	#lk-conteyner {
-		border-radius: ' . $webx_theme_radius_cover . 'px;
-	}
-	.webx-userinfo {
-		border-radius: ' . $webx_theme_radius_userinfo . 'px;
-	}
-	#webx-content .webx-area-tabs,
-	#webx-content .rcl-notice {
-		border-radius: ' . $webx_theme_radius_boxcontent . 'px;
-	}
-	#webx-content .webx-area-menu a,
-	body #webx-content .rcl-bttn.rcl-bttn__type-primary,
-	#rcl-office .rcl-subtab-menu .rcl-bttn.rcl-bttn__type-primary.rcl-bttn__active, 
-	#rcl-office .rcl-data-filters a.rcl-bttn__disabled,
-	body #webx-content .rcl-bttn.rcl-bttn__type-primary, 
-	body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover,
-	#rcl-office .webx-userinfo .webx-area-counters a,
-	#rcl-office .balance-amount a,
-	#rcl-office #webx-header .rcl-cover-icon,
-	#webx-header #rcl-avatar .avatar-icons .rcl-avatar-icon a {
-		border-radius: ' . $webx_theme_radius_href . 'px;
-	}
-	#rcl-office .rcl-chat-contacts .noread-message, 
-	#rcl-office .rcl-chat-contacts .avatar-contact img, 
-	#rcl-office .rcl-chat-contacts .master-avatar img, 
-	#rcl-office .rcl-chat .chat-users-box, 
-	#rcl-office .rcl-chat .user-avatar img, 
-	#rcl-office .rcl-chat .message-box, 
-	#rcl-office .rcl-chat .chat-messages, 
-	.rcl-chat .chat-form textarea, 
-	#rcl-office .rcl-chat .chat-form textarea, 
-	.rcl-noread-users, 
-	.rcl-chat-panel, 
-	#prime-forum .prime-forum-item {
-		border-radius: ' . $webx_theme_radius_chat . 'px;
-	}';
+		$webx_theme_radius_href = rcl_get_option( 'webx-theme-radius-href', 0 );
+		if ( $webx_theme_radius_href > 0 ) {
+			$styles .= '
+				#webx-content .webx-area-menu a,
+				body #webx-content .rcl-bttn.rcl-bttn__type-primary,
+				#rcl-office .rcl-subtab-menu .rcl-bttn.rcl-bttn__type-primary.rcl-bttn__active, 
+				#rcl-office .rcl-data-filters a.rcl-bttn__disabled,
+				body #webx-content .rcl-bttn.rcl-bttn__type-primary, 
+				body #webx-content .rcl-bttn.rcl-bttn__type-primary:hover,
+				#rcl-office .webx-userinfo .webx-area-counters a,
+				#rcl-office .balance-amount a,
+				#rcl-office #webx-header .rcl-cover-icon,
+				#webx-header #rcl-avatar .avatar-icons .rcl-avatar-icon a {
+					border-radius: ' . $webx_theme_radius_href . 'px;
+				}
+			';
+		}
+
+
+		$webx_theme_radius_avatar = rcl_get_option( 'webx-theme-radius-avatar', 0 );
+		if ( $webx_theme_radius_avatar > 0 ) {
+			$styles .= '
+				#rcl-office #rcl-avatar img {
+					border-radius: ' . $webx_theme_radius_avatar . 'px;
+				}
+			';
+		}
+
+
+		$webx_theme_radius_cover = rcl_get_option( 'webx-theme-radius-cover', 0 );
+		if ( $webx_theme_radius_cover > 0 ) {
+			$styles .= '
+				#lk-conteyner {
+					border-radius: ' . $webx_theme_radius_cover . 'px;
+				}
+			';
+		}
+
+
+		$webx_theme_radius_userinfo = rcl_get_option( 'webx-theme-radius-userinfo', 0 );
+		if ( $webx_theme_radius_cover > 0 ) {
+			$styles .= '
+				.webx-userinfo {
+					border-radius: ' . $webx_theme_radius_userinfo . 'px;
+				}
+			';
+		}
+
+
+		$webx_theme_radius_boxcontent = rcl_get_option( 'webx-theme-radius-boxcontent', 0 );
+		if ( $webx_theme_radius_cover > 0 ) {
+			$styles .= '
+				#webx-content .webx-area-tabs,
+				#webx-content .rcl-notice {
+					border-radius: ' . $webx_theme_radius_boxcontent . 'px;
+				}
+			';
+		}
+
+		$webx_theme_radius_chat = rcl_get_option( 'webx-theme-radius-chat', 0 );
+		if ( $webx_theme_radius_cover > 0 ) {
+			$styles .= '
+				#rcl-office .rcl-chat-contacts .noread-message, 
+				#rcl-office .rcl-chat-contacts .avatar-contact img, 
+				#rcl-office .rcl-chat-contacts .master-avatar img, 
+				#rcl-office .rcl-chat .chat-users-box, 
+				#rcl-office .rcl-chat .user-avatar img, 
+				#rcl-office .rcl-chat .message-box, 
+				#rcl-office .rcl-chat .chat-messages, 
+				.rcl-chat .chat-form textarea, 
+				#rcl-office .rcl-chat .chat-form textarea, 
+				.rcl-noread-users, 
+				.rcl-chat-panel, 
+				#prime-forum .prime-forum-item {
+					border-radius: ' . $webx_theme_radius_chat . 'px;
+				}
+			';
+		}
 
 	}
 
@@ -308,7 +356,7 @@ function rcl_webx_sidebar_before() {
 		'description'   => __( 'It is displayed only in the personal account.', 'wp-recall' ),
 		'before_title'  => '<h3 class="cab_title_before">',
 		'after_title'   => '</h3>',
-		'before_widget' => '<div class="rcl_webx_sidebar rcl_webx_sidebar-before">',
+		'before_widget' => '<div class="rcl_webx_sidebar rcl_webx_sidebar-before webx--padding">',
 		'after_widget'  => '</div>',
 	] );
 }
@@ -321,7 +369,7 @@ function rcl_webx_sidebar_after() {
 		'description'   => __( 'It is displayed only in the personal account.', 'wp-recall' ),
 		'before_title'  => '<h3 class="cab_title_after">',
 		'after_title'   => '</h3>',
-		'before_widget' => '<div class="rcl_webx_sidebar rcl_webx_sidebar-after">',
+		'before_widget' => '<div class="rcl_webx_sidebar rcl_webx_sidebar-after webx--padding">',
 		'after_widget'  => '</div>',
 	] );
 }

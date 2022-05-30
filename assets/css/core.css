@@ -367,8 +367,6 @@ span i.rcli.fa-circle {
   8. Private office general
 -------------------------------*/
 #rcl-office {
-    background: rgba(236, 240, 241, 0.3);
-    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
     color: #333; /*BlackTheme*/
     overflow: visible;
     position: relative;
