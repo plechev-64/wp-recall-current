@@ -387,3 +387,16 @@ function rcl_webx_add_sidebar_area_after() {
 		dynamic_sidebar( 'rcl_webx_sidebar_after' );
 	}
 }
+
+add_action( 'webx_area_center', 'rcL_webx_balance_out', 50 );
+function rcL_webx_balance_out() {
+	if ( ! rcl_exist_addon( 'user-balance' ) ) {
+		return;
+	}
+
+	global $user_ID;
+	
+	if ( rcl_is_office( $user_ID ) ) {
+		echo do_shortcode( '[rcl-usercount]' );
+	}
+}
