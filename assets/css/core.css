@@ -1238,12 +1238,12 @@ body .rcl-pager > span a.rcl-bttn {
   23. Ssi-modal API
 ---------------------*/
 #ssi-modalWindow {
-    animation-duration: 0.5s;
+    animation-duration: .5s;
     animation-name: slideInDown;
 }
 
 div.ssi-backdrop {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, .7);
 }
 
 body .ssi-modalOuter .ssi-modalTitle {
@@ -1269,26 +1269,34 @@ body .ssi-modalOuter .ssi-modalTitle {
 }
 
 .ssi-modalOuter .ssi-topIcons {
-    top: 2px;
     z-index: 1502;
 }
 
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon,
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon:hover {
     background: none;
-    height: 30px;
-    text-decoration: none;
+    height: auto;
+    text-decoration: none !important;
+    width: auto;
+    margin: 0;
 }
 
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon::after {
-    color: rgb(229, 57, 53);
-    content: "\f00d"; /* fa-times */
-    font: 400 30px/30px rcl-awesome;
-    margin: 0 7px 0 0;
+    content: "×";
+    font-family: Roboto, arial, tahoma, sans-serif;
+    font-size: 48px;
+    font-weight: 500;
+    display: flex;
+    width: 42px;
+    height: 36px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: color .24s ease-in-out;
 }
 
 .ssi-modalOuter .ssi-topIcons .ssi-closeIcon:hover::after {
-    color: rgb(192, 0, 0);
+    color: #f14c4c;
 }
 
 .rcl-user-details .ssi-modalOuter .ssi-modalContent {
