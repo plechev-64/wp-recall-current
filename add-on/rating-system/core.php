@@ -199,11 +199,11 @@ function rcl_get_user_rating( $user_id ) {
 	return ( $value = rcl_get_user_rating_value( $user_id ) ) ? $value : 0;
 }
 
-function rcl_get_user_rating_value( $user_id ) {
+function rcl_get_user_rating_value( $user_id, $use_cache = true ) {
 
 	return RQ::tbl( new Rcl_Rating_Users_Query() )->select( [ 'rating_total' ] )->where( array(
 		'user_id' => $user_id
-	) )->get_var( 'cache' );
+	) )->get_var( $use_cache );
 }
 
 function rcl_rating_navi( $args ) {
@@ -425,9 +425,10 @@ function rcl_post_update_user_rating( $args ) {
 function rcl_update_user_rating( $args ) {
 	global $wpdb;
 
+	//todo: remove?
 	wp_cache_delete( json_encode( array( 'rcl_get_user_rating_value', $args['object_author'] ) ) );
 
-	$total = rcl_get_user_rating_value( $args['object_author'] );
+	$total = rcl_get_user_rating_value( $args['object_author'], false );
 
 	if ( isset( $total ) ) {
 		$total  += $args['rating_value'];
