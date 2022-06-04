@@ -16,20 +16,15 @@
         </div>
     </div>
 
-    <div id="webx-userinfo">
-        <div class="webx-userinfo">
-            <div class="webx-row">
-                <div class="webx-col-md-3 userName"><?php rcl_username(); ?><?php do_action( 'webx_area_name' ); ?></div>
-                <div class="webx-col-md-9">
-                    <div class="webx-row">
-                        <div class="webx-col-md-6">
-							<?php do_action( 'webx_area_center' ); ?>
-                        </div>
-                        <div class="webx-col-md-6 webx-area-counters">
-							<?php do_action( 'rcl_area_counters' ); ?>
-                        </div>
-                    </div>
-                </div>
+    <div class="webx-userinfo">
+        <div class="webx-user-left">
+            <div class="webx-user-name"><?php rcl_username(); ?></div>
+            <div class="webx-in-user-name"><?php do_action( 'webx_area_name' ); ?></div>
+        </div>
+        <div class="webx-user-right">
+            <div class="webx-user-center"><?php do_action( 'webx_area_center' ); ?></div>
+            <div class="webx-user-counters">
+				<?php do_action( 'rcl_area_counters' ); ?>
             </div>
         </div>
     </div>

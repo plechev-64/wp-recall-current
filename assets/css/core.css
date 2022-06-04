@@ -95,7 +95,7 @@ img.aligncenter {
 }
 
 #rcl-overlay {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, .7);
     bottom: 0;
     display: none;
     left: 0;
@@ -155,7 +155,7 @@ span.ruble-symbol {
 }
 
 #rcl-notice .notice-window {
-    animation-duration: 0.3s;
+    animation-duration: .3s;
     font-size: 14px;
     line-height: 1.2;
     margin: 5px 0;
@@ -201,7 +201,7 @@ body .preloader-parent {
 }
 
 body .rcl_preloader {
-    background: rgba(255, 255, 255, 0.6) !important;
+    background: rgba(255, 255, 255, .6) !important;
     display: block !important;
     height: 100% !important;
     left: 0 !important;
@@ -342,7 +342,7 @@ span i.rcli.fa-circle {
     float: left;
     margin: 0 5px 0 0;
     position: relative;
-    width: 67px; /*++Twenty16++*/
+    width: 67px;
 }
 
 .panel_lk_recall .author-avatar a {
@@ -367,14 +367,14 @@ span i.rcli.fa-circle {
   8. Private office general
 -------------------------------*/
 #rcl-office {
-    color: #333; /*BlackTheme*/
+    color: #333;
     overflow: visible;
     position: relative;
 }
 
 #rcl-office a:link {
-    border: 0; /*++Twenty15++*/
-    box-shadow: none; /*++Twenty16++*/
+    border: 0;
+    box-shadow: none;
     text-decoration: none;
 }
 
@@ -422,7 +422,7 @@ span i.rcli.fa-circle {
 }
 
 #rcl-office .recall_content_block {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, .7);
     display: none;
     overflow: hidden;
     padding: 4px 5px;
@@ -459,10 +459,10 @@ span i.rcli.fa-circle {
     border-style: solid;
     border-width: 1px;
     box-sizing: border-box;
-    color: #333; /*++hueman++*/
+    color: #333;
     display: inline-block;
-    font-size: 14px; /*++hueman++*/
-    line-height: normal; /*++hueman++*/
+    font-size: 14px;
+    line-height: normal;
     min-width: 50px;
     padding: 6px 8px;
     position: relative;
@@ -495,7 +495,7 @@ span i.rcli.fa-circle {
     display: flex;
     opacity: 0;
     transform: translate3d(0px, 0px, 0px);
-    transition: all 0.2s ease-in-out 0s;
+    transition: all .2s ease-in-out;
     visibility: hidden;
     border-radius: 3px;
     text-align: left;
@@ -567,24 +567,24 @@ span i.rcli.fa-circle {
 
 body a.recall-button,
 span.recall-button,
-.recall-button.rcl-upload-button, /*input[type="file"]*/
+.recall-button.rcl-upload-button,
 input[type="submit"].recall-button,
 input[type="submit"] .recall-button,
 input[type="button"].recall-button,
 input[type="button"] .recall-button {
-    border-radius: 0; /*++hueman++*/
+    border-radius: 0;
     border: 0;
     box-shadow: none !important;
     box-sizing: border-box;
     color: #fff;
     cursor: pointer;
     font-size: 12px;
-    font-weight: normal; /*++hueman++*/
-    letter-spacing: normal; /*++Twenty16++*/
+    font-weight: normal;
+    letter-spacing: normal;
     line-height: 1;
     padding: 5px 5px;
     text-decoration: none;
-    text-transform: none; /*++Twenty16++*/
+    text-transform: none;
     white-space: nowrap;
 }
 
@@ -603,7 +603,7 @@ input[type="submit"] .recall-button:hover,
 input[type="button"].recall-button:hover,
 input[type="button"] .recall-button:hover {
     color: #fff;
-    opacity: 0.8;
+    opacity: .8;
 }
 
 .rcl-search-form input[type="submit"]:hover,
@@ -617,7 +617,7 @@ a.recall-button.filter-active,
 a.recall-button.filter-active:hover,
 a.data-filter.filter-active,
 a.data-filter.filter-active:hover {
-    box-shadow: none; /*++Twenty16++*/
+    box-shadow: none;
     color: rgb(30, 56, 75);
     cursor: default;
     opacity: 1;
@@ -677,10 +677,6 @@ a.data-filter.filter-active:hover {
     padding: 10px 10px 5px;
 }
 
-.rcl-subtab-menu .rcl-subtab-button {
-
-}
-
 /*end*/
 
 
@@ -714,9 +710,9 @@ a.data-filter.filter-active:hover {
     margin: 10px 0;
 }
 
-.rcl-data-filters a:link { /*++Twenty15++*/
+.rcl-data-filters a:link {
     border: 0;
-    text-decoration: none; /*++Twenty14++*/
+    text-decoration: none;
 }
 
 /*end*/
@@ -840,6 +836,7 @@ a.data-filter.filter-active:hover {
     right: 0;
     top: 0;
     z-index: 9;
+    width: 100%;
 }
 
 /*end*/
@@ -1088,7 +1085,7 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
     border: 1px solid #e2e2e2;
     cursor: pointer;
     display: inline-block;
-    font-family: Verdana, Tahoma, sans-serif; /*если другое семейство - то блоки плывут*/
+    font-family: Verdana, Tahoma, sans-serif;
     font-size: 12px;
     font-weight: normal;
     line-height: 1;
@@ -1170,10 +1167,10 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
 
 .rcl-runner .rcl-runner-box,
 .rcl-range .rcl-range-box {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, .8);
     border-radius: 5px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2) inset,
-    0 0 1px 1px rgba(0, 0, 0, 0.2) inset;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, .2) inset,
+    0 0 1px 1px rgba(0, 0, 0, .2) inset;
     display: inline-block;
     height: 10px;
     margin: 0;
@@ -1189,8 +1186,8 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
     background: -webkit-linear-gradient(top, #fff, #ddd);
     background: linear-gradient(to bottom, #fff, #ddd);
     border-radius: 50%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4),
-    0 8px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .4),
+    0 8px 6px rgba(0, 0, 0, .1);
     cursor: ew-resize;
     height: 18px;
     margin-left: -.6em;
@@ -1204,7 +1201,7 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
 
 .rcl-runner .rcl-runner-box .ui-slider-handle:focus,
 .rcl-range .rcl-range-box .ui-slider-handle:focus {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .6);
     outline: none;
 }
 
@@ -1215,7 +1212,7 @@ div.rcl-custom-fields .rcl-field-value .fa-upload {
   22. RCL pagenavi API
 -------------------------*/
 .rcl-pager {
-    box-shadow: 0 0 1px 1px rgba(219, 219, 219, 0.8);
+    box-shadow: 0 0 1px 1px rgba(219, 219, 219, .8);
     box-sizing: border-box;
     clear: both;
     padding: 6px 5px;
@@ -1329,7 +1326,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 /*-----------------------------------------
   24. TODO: Gallery & Video Gallery core
 -------------------------------------------*/
-#rcl-popup-content label { /*fast editor*/
+#rcl-popup-content label {
     font-weight: bold;
 }
 
@@ -1396,7 +1393,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 }
 
 #rcl-popup #commentlist .comm-attach {
-    background: rgba(237, 237, 237, 0.5);
+    background: rgba(237, 237, 237, .5);
     margin: 10px 0;
     padding: 10px;
 }
@@ -1418,7 +1415,7 @@ body .ssi-modalOuter .ssi-modalTitle {
     height: 50px;
     left: 50%;
     line-height: 50px;
-    opacity: 0.6;
+    opacity: .6;
     position: absolute;
     top: 200px;
     -webkit-transform: translateX(-50%);
@@ -1492,6 +1489,7 @@ body .ssi-modalOuter .ssi-modalTitle {
     right: 0;
     top: 0;
     z-index: 99;
+    width: 100%;
 }
 
 /*end*/
@@ -1520,12 +1518,12 @@ body .ssi-modalOuter .ssi-modalTitle {
 }
 
 .rcl-user-details .rcl-user-avatar .rcl-avatar-zoom {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, .5);
     color: #fff;
     display: none;
     font-size: 150px;
     height: 100%;
-    opacity: 0.7;
+    opacity: .7;
     position: absolute;
     text-decoration: none;
     top: 0;
@@ -1606,7 +1604,7 @@ body .ssi-modalOuter .ssi-modalTitle {
     font-weight: bold;
     height: 100%;
     left: 0;
-    opacity: 0.5;
+    opacity: .5;
     position: absolute;
     text-align: center;
     top: 0;
@@ -1694,13 +1692,13 @@ body .ssi-modalOuter .ssi-modalTitle {
     line-height: normal;
     padding: 8px;
     text-align: left;
-    text-transform: none; /* ++Twenty14++ */
+    text-transform: none;
     vertical-align: middle;
 }
 
 .rcl-form th:first-child,
 .rcl-form td:first-child {
-    padding-left: 8px; /* ++Twenty17++ */
+    padding-left: 8px;
 }
 
 .rcl-form tr th {
@@ -1715,7 +1713,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 
 .rcl-form input[disabled] {
     background-color: #eee;
-    opacity: 0.6;
+    opacity: .6;
 }
 
 .rcl-form .block-label input[type="checkbox"] {
@@ -1776,11 +1774,6 @@ body .ssi-modalOuter .ssi-modalTitle {
     text-align: right;
 }
 
-.rcl-form .submit-box a,
-.rcl-form .submit-box input[type="submit"] {
-
-}
-
 @media screen and (max-width: 375px) {
     .rcl-form tr th {
         -webkit-hyphens: auto;
@@ -1809,7 +1802,7 @@ body .ssi-modalOuter .ssi-modalTitle {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    font-size: 14px; /* start size for em */
+    font-size: 14px;
     line-height: 1.4;
     word-break: break-word;
     word-wrap: break-word;
@@ -1992,7 +1985,7 @@ body .ssi-modalOuter .ssi-modalTitle {
         background-color: transparent;
         border-radius: 3px;
         border: 0;
-        box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 9px 0 rgba(0, 0, 0, .1);
         margin: 0 5px 25px 5px;
         padding: 8px;
     }
@@ -2082,13 +2075,11 @@ body .ssi-modalOuter .ssi-modalTitle {
     border-style: solid;
 }
 
-/* AAA accebillity color > 7 contrast*/
 .rcl-notice__type-info {
     background-color: #fff7da;
     color: #56562a;
 }
 
-/* border is background-color down to 20 point in firefox */
 .rcl-notice__type-info.rcl-notice__border {
     border-color: #ebe3c6;
 }
@@ -2130,7 +2121,7 @@ body .ssi-modalOuter .ssi-modalTitle {
 }
 
 .rcl-notice > .rcli {
-    color: rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, .08);
     font-size: 52px;
     left: -10px;
     position: absolute;
@@ -2190,12 +2181,10 @@ rcl-bttn__type-primary	- реколл-цвет
 body .rcl-bttn {
     align-items: center;
     border-radius: 0;
-    /*border: 0 !important;*/
     box-shadow: none;
     box-sizing: border-box;
     cursor: pointer;
     display: inline-flex;
-    /*	font-size: 12px;		 start size for em - идёт инлайном. т.к. задается через кастомайзер */
     font-weight: normal;
     letter-spacing: normal;
     line-height: 1em;
@@ -2216,7 +2205,7 @@ body .rcl-bttn {
 }
 
 body :not(.rcl-wrap__wiget) > .rcl-bttn:not(.rcl-bttn__active):hover {
-    opacity: 0.8;
+    opacity: .8;
 }
 
 /* END общий стиль */
@@ -2576,10 +2565,6 @@ body .rcl-bttn.rcl-uploader-button {
     margin: 0;
 }
 
-.rcl-upload-gallery .attachment-manager {
-
-}
-
 .rcl-upload-gallery .attachment-manager-balloon {
     position: absolute;
     top: 0;
@@ -2593,10 +2578,6 @@ body .rcl-bttn.rcl-uploader-button {
     margin: 3px;
 }
 
-.rcl-upload-gallery .attachment-manager-balloon .rcl-balloon {
-
-}
-
 .rcl-upload-gallery .rcl-balloon a {
     display: inline;
 }
@@ -2607,10 +2588,6 @@ body .rcl-upload-gallery .attachment-manager > a {
 
 body .rcl-upload-gallery .attachment-manager > .rcl-bttn .rcl-bttn__ico {
     padding: 5px;
-}
-
-.rcl-upload-gallery.mode-list {
-
 }
 
 .rcl-upload-gallery.mode-list .gallery-attachment {
@@ -2644,10 +2621,6 @@ body .rcl-upload-gallery .attachment-manager > .rcl-bttn .rcl-bttn__ico {
     border: 3px dotted #eaeaea;
 }
 
-.rcl-upload-gallery.mode-list .ui-sortable-placeholder {
-
-}
-
 .rcl-upload-gallery.mode-grid .ui-sortable-placeholder {
     width: 110px;
     height: 110px;
@@ -2658,27 +2631,11 @@ body .rcl-upload-gallery .attachment-manager > .rcl-bttn .rcl-bttn__ico {
     z-index: 9999999;
 }
 
-.rcl-upload-gallery.mode-list .ui-sortable-helper {
-
-}
-
-.rcl-upload-gallery.mode-grid .ui-sortable-helper {
-
-}
-
-/* new uploader styles end */
+/* end */
 
 /*
 	Manager Content
 */
-.rcl-content {
-
-}
-
-.rcl-content .rcl-content-group {
-
-}
-
 .rcl-content .rcl-content-group .group-title {
     font-weight: bold;
     font-size: 20px;
