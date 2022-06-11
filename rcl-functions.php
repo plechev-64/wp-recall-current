@@ -18,10 +18,10 @@ function rcl_tab( $tab_data, $deprecated_callback = false, $deprecated_name = ''
 					'name'     => $deprecated_name,
 					'icon'     => ( isset( $deprecated_args['class'] ) ) ? $deprecated_args['class'] : 'fa-cog',
 					'callback' => [
-						'name' => $deprecated_callback
-					]
-				]
-			]
+						'name' => $deprecated_callback,
+					],
+				],
+			],
 		];
 
 		if ( isset( $deprecated_args['cache'] ) && $deprecated_args['cache'] ) {
@@ -87,10 +87,10 @@ function rcl_init_custom_tabs() {
 						'icon'     => ( $tab['icon'] ) ? $tab['icon'] : 'fa-cog',
 						'callback' => [
 							'name' => 'rcl_custom_tab_content',
-							'args' => [ $tab['content'] ]
-						]
-					]
-				]
+							'args' => [ $tab['content'] ],
+						],
+					],
+				],
 			];
 
 			if ( in_array( 'cache', $supports ) ) {
@@ -352,7 +352,7 @@ function rcl_block( $place, $callback, $args = false ) {
 	$rcl_blocks[ $place ][] = apply_filters( 'block_data_rcl', [
 		'place'    => $place,
 		'callback' => $callback,
-		'args'     => $args
+		'args'     => $args,
 	] );
 
 	$rcl_blocks = apply_filters( 'rcl_blocks', $rcl_blocks );
@@ -573,7 +573,7 @@ function rcl_check_access_console() {
 			10 => 'administrator',
 			7  => 'editor',
 			2  => 'author',
-			1  => 'contributor'
+			1  => 'contributor',
 		];
 
 		$access = ( isset( $roles[ $need_access ] ) && current_user_can( $roles[ $need_access ] ) ) ? true : false;
@@ -589,7 +589,7 @@ function rcl_delete_attachments_with_post( $postid ) {
 		'post_type'      => 'attachment',
 		'posts_per_page' => - 1,
 		'post_status'    => null,
-		'post_parent'    => $postid
+		'post_parent'    => $postid,
 	] );
 	if ( $attachments ) {
 		foreach ( ( array ) $attachments as $attachment ) {
@@ -781,7 +781,7 @@ function rcl_sanitize_string( $title, $sanitize = true ) {
 				"—" => "-",
 				"«" => "",
 				"»" => "",
-				"…" => ""
+				"…" => "",
 			] ) );
 			break;
 		default:
@@ -862,7 +862,7 @@ function rcl_sanitize_string( $title, $sanitize = true ) {
 				"—" => "-",
 				"«" => "",
 				"»" => "",
-				"…" => ""
+				"…" => "",
 			] ) );
 	}
 
@@ -887,7 +887,7 @@ function rcl_get_user_url( $user_id ) {
 
 	return add_query_arg(
 		[
-			rcl_get_option( 'link_user_lk_rcl', 'user' ) => $user_id
+			rcl_get_option( 'link_user_lk_rcl', 'user' ) => $user_id,
 		], get_permalink( rcl_get_option( 'lk_page_rcl' ) )
 	);
 }
@@ -1098,7 +1098,7 @@ function rcl_update_timeaction_user() {
 				$wpdb->insert(
 					RCL_PREF . 'user_action', [
 						'user'        => $user_ID,
-						'time_action' => $time
+						'time_action' => $time,
 					]
 				);
 			}
@@ -1261,7 +1261,7 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 			'display_name',
 			'primary_pass',
 			'repeat_pass',
-			'show_admin_bar_front'
+			'show_admin_bar_front',
 		];
 
 		foreach ( $profileFields as $field ) {
@@ -1302,7 +1302,9 @@ function rcl_update_profile_fields( $user_id, $profileFields = false ) {
 				}
 			}
 
-			if ( $field['type'] != 'editor' ) {
+			if ( $field['type'] == 'textarea' ) {
+				$value = rcl_recursive_map( 'sanitize_textarea_field', $value );
+			} else if ( $field['type'] != 'editor' ) {
 				$value = rcl_recursive_map( 'sanitize_text_field', $value );
 			}
 
@@ -1459,7 +1461,7 @@ function rcl_get_addon_paths() {
 
 	$paths = [
 		RCL_TAKEPATH . 'add-on',
-		RCL_PATH . 'add-on'
+		RCL_PATH . 'add-on',
 	];
 
 	return apply_filters( 'rcl_addon_paths', $paths );
@@ -1568,7 +1570,7 @@ function rcl_filter_custom_tab_vars( $content ) {
 
 	$matchs = [
 		'{USERID}'   => $user_ID,
-		'{MASTERID}' => $user_LK
+		'{MASTERID}' => $user_LK,
 	];
 
 	$matchs = apply_filters( 'rcl_custom_tab_vars', $matchs );
@@ -1596,7 +1598,7 @@ function rcl_filter_custom_tab_usermetas( $content ) {
 		'user_login',
 		'user_nicename',
 		'user_email',
-		'user_registered'
+		'user_registered',
 	];
 
 	$matchs = [];
@@ -1702,12 +1704,12 @@ function rcl_get_pages_ids() {
 
 /**
  * @param $beatName
- * @param $actions  - array with allowed function callbacks for beat
+ * @param $actions - array with allowed function callbacks for beat
  */
 function rcl_init_beat( $beatName, $actions = [] ) {
 	global $rcl_beats;
 	$rcl_beats[ $beatName ] = [
-		'actions' => $actions
+		'actions' => $actions,
 	];
 }
 
@@ -1765,7 +1767,7 @@ function rcl_kses_allowed_html() {
 					'step'        => true,
 					'maxlength'   => true,
 					'size'        => true,
-					'required'    => true
+					'required'    => true,
 				],
 				'select'   => [
 					'id'       => true,
@@ -1773,17 +1775,17 @@ function rcl_kses_allowed_html() {
 					'name'     => true,
 					'data-*'   => true,
 					'required' => true,
-					'multiple' => true
+					'multiple' => true,
 				],
 				'option'   => [
 					'data-key' => true,
 					'selected' => true,
-					'value'    => true
+					'value'    => true,
 				],
 				'textarea' => [
 					'required'  => true,
 					'maxlength' => true,
-					'onkeyup'   => true
+					'onkeyup'   => true,
 				],
 				'form'     => [
 					'method'   => true,
@@ -1794,7 +1796,7 @@ function rcl_kses_allowed_html() {
 					'name'     => true,
 					'data-*'   => true,
 					'onsubmit' => true,
-					'target'   => true
+					'target'   => true,
 				],
 				'span'     => [ 'onclick' => true ],
 				'div'      => [ 'onclick' => true, 'account' => true ],
@@ -1802,8 +1804,8 @@ function rcl_kses_allowed_html() {
 					'rel'   => true,
 					'id'    => true,
 					'href'  => true,
-					'media' => true
-				]
+					'media' => true,
+				],
 			]
 		);
 	}
