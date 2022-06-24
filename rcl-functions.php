@@ -1584,7 +1584,7 @@ function rcl_filter_custom_tab_vars( $content ) {
 
 add_filter( 'rcl_custom_tab_content', 'rcl_filter_custom_tab_usermetas', 5 );
 function rcl_filter_custom_tab_usermetas( $content ) {
-	global $rcl_office;
+	global $user_LK;
 
 	preg_match_all( '/{RCL-UM:([^}]+)}/', $content, $metas );
 
@@ -1606,9 +1606,9 @@ function rcl_filter_custom_tab_usermetas( $content ) {
 	foreach ( $metas[1] as $meta ) {
 
 		if ( in_array( $meta, $tblUsers ) ) {
-			$value = get_the_author_meta( $meta, $rcl_office );
+			$value = get_the_author_meta( $meta, $user_LK );
 		} else {
-			$value = get_user_meta( $rcl_office, $meta, 1 );
+			$value = get_user_meta( $user_LK, $meta, 1 );
 		}
 
 		if ( ! $value ) {
