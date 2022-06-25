@@ -644,6 +644,12 @@ body .rcl-product-gallery ul.images-list {
     padding: 10px 35px 10px 14px;
 }
 
+@media screen and (max-width: 480px) {
+    #rcl-product-box .product-title {
+        padding: 10px 10px 10px 66px;
+    }
+}
+
 #rcl-product-box .product-gallery {
     float: left;
     width: 350px;
