@@ -90,7 +90,7 @@
 				<?php echo esc_html( human_time_diff( strtotime( $addon->update ), time() ) ) . ' ' . esc_html__( 'ago', 'wp-recall' ); ?>
             </span>
         </div>
-        <div class="column-downloaded"><?php echo esc_html( $addon->downloads ); ?><?php esc_html_e( 'downloads', 'wp-recall' ) ?></div>
+        <div class="column-downloaded"><?php echo esc_html( $addon->downloads ); ?>&nbsp;<?php esc_html_e( 'downloads', 'wp-recall' ) ?></div>
         <div class="column-compatibility">
 			<?php if ( isset( $addon->support_core ) ) { ?>
                 <span class="compatibility-compatible"><strong><?php esc_html_e( 'Compatible with', 'wp-recall' ) ?></strong> WP-Recall <?php echo esc_html( $addon->support_core ); ?> <?php esc_html_e( 'and above', 'wp-recall' ) ?></span>
