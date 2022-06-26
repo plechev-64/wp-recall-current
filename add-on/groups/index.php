@@ -24,7 +24,9 @@ function rcl_groups_scripts() {
 
 add_filter( 'rcl_init_js_variables', 'rcl_init_js_groups_variables', 10 );
 function rcl_init_js_groups_variables( $data ) {
-	$data['groups']['avatar_size'] = rcl_get_option( 'group_avatar_weight', 1024 );
+	$data_uploader = rcl_group_uploader_data();
+	
+	$data['groups']['avatar_size'] = $data_uploader['max_size'];
 
 	return $data;
 }
@@ -36,11 +38,11 @@ function rcl_register_rating_group_type() {
 		return false;
 	}
 
-	rcl_register_rating_type( array(
+	rcl_register_rating_type( [
 			'post_type' => 'post-group',
 			'type_name' => __( 'Groups records', 'wp-recall' ),
-			'style'     => true
-		)
+			'style'     => true,
+		]
 	);
 }
 
@@ -116,7 +118,7 @@ function rcl_group_replace_title( $title ) {
 	if ( $rcl_group->name ) {
 
 		if ( is_array( $title ) ) {
-			$title = array( 'title' => $rcl_group->name );
+			$title = [ 'title' => $rcl_group->name ];
 		} else {
 			$title = $rcl_group->name;
 		}
@@ -196,7 +198,7 @@ function rcl_group_replace_description( $descr ) {
 add_action( 'delete_user', 'rcl_group_delete_user_in_groups' );
 function rcl_group_delete_user_in_groups( $user_id ) {
 
-	$groups = rcl_get_groups_users( array( 'user_id' => $user_id, 'number' => - 1 ) );
+	$groups = rcl_get_groups_users( [ 'user_id' => $user_id, 'number' => - 1 ] );
 
 	if ( ! $groups ) {
 		return false;
@@ -232,40 +234,40 @@ function rcl_tab_groups_remove_cache( $groupdata ) {
 
 add_action( 'init', 'rcl_add_postlist_group', 10 );
 function rcl_add_postlist_group() {
-	rcl_postlist( 'group', 'post-group', __( 'Groups records', 'wp-recall' ), array( 'order' => 40 ) );
+	rcl_postlist( 'group', 'post-group', __( 'Groups records', 'wp-recall' ), [ 'order' => 40 ] );
 }
 
 add_action( 'init', 'rcl_add_tab_groups' );
 function rcl_add_tab_groups() {
 
 	rcl_tab(
-		array(
+		[
 			'id'       => 'groups',
 			'name'     => __( 'Groups', 'wp-recall' ),
-			'supports' => array( 'ajax', 'cache' ),
+			'supports' => [ 'ajax', 'cache' ],
 			'public'   => 1,
 			'icon'     => 'fa-group',
-			'content'  => array(
-				array(
+			'content'  => [
+				[
 					'id'       => 'all-groups',
 					'name'     => __( 'All groups', 'wp-recall' ),
 					'icon'     => 'fa-group',
-					'callback' => array(
+					'callback' => [
 						'name' => 'rcl_tab_groups',
-						'args' => array( 'user_id' )
-					)
-				),
-				array(
+						'args' => [ 'user_id' ],
+					],
+				],
+				[
 					'id'       => 'admin-groups',
 					'name'     => __( 'Groups created', 'wp-recall' ),
 					'icon'     => 'fa-cogs',
-					'callback' => array(
+					'callback' => [
 						'name' => 'rcl_tab_groups',
-						'args' => array( 'admin_id' )
-					)
-				)
-			)
-		)
+						'args' => [ 'admin_id' ],
+					],
+				],
+			],
+		]
 	);
 }
 
@@ -294,11 +296,11 @@ function rcl_tab_groups( $type_account = 'user_id' ) {
 			           . '<form method="post">'
 			           . '<div class="form-field">'
 			           . '<input type="text" required placeholder="' . __( 'Enter the name of the new group', 'wp-recall' ) . '" name="group_name">'
-			           . rcl_get_button( array(
+			           . rcl_get_button( [
 					'onclick' => 'rcl_send_form_data("rcl_ajax_create_group", this);return false;',
 					'label'   => __( 'Create', 'wp-recall' ),
-					'submit'  => true
-				) )
+					'submit'  => true,
+				] )
 			           . '</div>'
 			           . wp_nonce_field( 'rcl-group-create', '_wpnonce', true, false )
 			           . '</form>'
@@ -306,7 +308,7 @@ function rcl_tab_groups( $type_account = 'user_id' ) {
 		}
 	}
 
-	$content .= rcl_get_grouplist( array( 'filters' => 1, 'search_form' => 0, $type_account => $user_LK ) );
+	$content .= rcl_get_grouplist( [ 'filters' => 1, 'search_form' => 0, $type_account => $user_LK ] );
 
 	return $content;
 }
@@ -315,31 +317,31 @@ add_action( 'init', 'rcl_register_default_group_sidebars', 10 );
 function rcl_register_default_group_sidebars() {
 
 	rcl_register_group_area(
-		array(
+		[
 			'name' => __( 'Header', 'wp-recall' ),
-			'id'   => 'header'
-		)
+			'id'   => 'header',
+		]
 	);
 
 	rcl_register_group_area(
-		array(
+		[
 			'name' => __( 'Sidebar', 'wp-recall' ),
-			'id'   => 'sidebar'
-		)
+			'id'   => 'sidebar',
+		]
 	);
 
 	rcl_register_group_area(
-		array(
+		[
 			'name' => __( 'Main', 'wp-recall' ),
-			'id'   => 'content'
-		)
+			'id'   => 'content',
+		]
 	);
 
 	rcl_register_group_area(
-		array(
+		[
 			'name' => __( 'Footer', 'wp-recall' ),
-			'id'   => 'footer'
-		)
+			'id'   => 'footer',
+		]
 	);
 }
 
@@ -428,7 +430,7 @@ function rcl_new_group() {
 	global $user_ID;
 
 	$name_group = isset( $_POST['rcl_group']['name'] ) ? sanitize_text_field( wp_unslash( $_POST['rcl_group']['name'] ) ) : '';
-	$group_id   = rcl_create_group( array( 'name' => $name_group, 'admin_id' => $user_ID ) );
+	$group_id   = rcl_create_group( [ 'name' => $name_group, 'admin_id' => $user_ID ] );
 
 	if ( ! $group_id ) {
 		rcl_notice_text( __( 'Group creation failed', 'wp-recall' ), 'error' );
@@ -457,64 +459,79 @@ function rcl_ajax_create_group() {
 	$group_name = isset( $_POST['group_name'] ) ? sanitize_text_field( wp_unslash( $_POST['group_name'] ) ) : '';
 
 	if ( ! $group_name ) {
-		wp_send_json( array(
-			'error' => __( 'Enter the name', 'wp-recall' )
-		) );
+		wp_send_json( [
+			'error' => __( 'Enter the name', 'wp-recall' ),
+		] );
 	}
 
 	if ( is_numeric( $group_name ) ) {
-		wp_send_json( array(
-			'error' => __( 'Specify the name of new group as string', 'wp-recall' )
-		) );
+		wp_send_json( [
+			'error' => __( 'Specify the name of new group as string', 'wp-recall' ),
+		] );
 	}
 
 	do_action( 'rcl_pre_create_group' );
 
-	$group_id = rcl_create_group( array(
+	$group_id = rcl_create_group( [
 		'name'     => $group_name,
-		'admin_id' => $user_ID
-	) );
+		'admin_id' => $user_ID,
+	] );
 
 	if ( ! $group_id ) {
-		wp_send_json( array(
-			'error' => __( 'Group creation failed', 'wp-recall' )
-		) );
+		wp_send_json( [
+			'error' => __( 'Group creation failed', 'wp-recall' ),
+		] );
 	}
 
 	do_action( 'rcl_ajax_create_group', $group_id );
 
-	wp_send_json( array(
+	wp_send_json( [
 		'success'  => __( 'New group is successfully created!', 'wp-recall' ),
-		'redirect' => rcl_get_group_permalink( $group_id )
-	) );
+		'redirect' => rcl_get_group_permalink( $group_id ),
+	] );
+}
+
+function rcl_group_uploader_data() {
+	return apply_filters( 'rcl_group_uploader', [
+		'height'     => 300,
+		'width'      => 300,
+		'crop'       => 1,
+		'resize_w'   => 300,
+		'resize_h'   => 300,
+		'min_height' => 300,
+		'min_width'  => 300,
+		'max_size'   => 40000,
+	] );
 }
 
 add_filter( 'rcl_group_thumbnail', 'rcl_group_add_thumb_buttons' );
 function rcl_group_add_thumb_buttons( $content ) {
 	global $rcl_group;
 
-	if ( ! rcl_is_group_can( 'admin' ) || rcl_get_option( 'group_avatar_weight', 1024 ) <= 0 ) {
+	if ( ! rcl_is_group_can( 'admin' ) || rcl_get_option( 'rcl_hide_group_avatar', 0 ) == 1 ) {
 		return $content;
 	}
 
-	$uploder = new Rcl_Uploader( 'rcl_group_avatar', array(
+	$data_uploader = rcl_group_uploader_data();
+
+	$uploder = new Rcl_Uploader( 'rcl_group_avatar', [
 		'multiple'    => 0,
 		'crop'        => 1,
 		'filetitle'   => 'rcl-group-avatar-' . $rcl_group->term_id,
 		'filename'    => 'rcl-group-avatar-' . $rcl_group->term_id,
 		'group_id'    => $rcl_group->term_id,
-		'image_sizes' => array(
-			array(
-				'height' => 300,
-				'width'  => 300,
-				'crop'   => 1
-			)
-		),
-		'resize'      => array( 300, 300 ),
-		'min_height'  => 300,
-		'min_width'   => 300,
-		'max_size'    => rcl_get_option( 'group_avatar_weight', 1024 )
-	) );
+		'image_sizes' => [
+			[
+				'height' => $data_uploader['height'],
+				'width'  => $data_uploader['width'],
+				'crop'   => $data_uploader['crop'],
+			],
+		],
+		'resize'      => [ $data_uploader['resize_w'], $data_uploader['resize_h'] ],
+		'min_height'  => $data_uploader['min_height'],
+		'min_width'   => $data_uploader['min_width'],
+		'max_size'    => $data_uploader['max_size'],
+	] );
 
 	$content .= '<div id="group-avatar-upload">
             <span id="file-upload" class="rcli fa-download">
@@ -592,13 +609,13 @@ function rcl_get_group_options( $group_id ) {
 			'slug'     => 'name',
 			'title'    => __( 'Group name', 'wp-recall' ),
 			'default'  => $rcl_group->name,
-			'required' => 1
+			'required' => 1,
 		],
 		'description'  => [
 			'type'    => 'textarea',
 			'slug'    => 'description',
 			'title'   => __( 'Description', 'wp-recall' ),
-			'default' => esc_html( strip_tags( rcl_get_group_description( $group_id ) ) )
+			'default' => esc_html( strip_tags( rcl_get_group_description( $group_id ) ) ),
 		],
 		'status'       => [
 			'type'    => 'radio',
@@ -606,18 +623,18 @@ function rcl_get_group_options( $group_id ) {
 			'title'   => __( 'Group status', 'wp-recall' ),
 			'values'  => [
 				'open'   => __( 'Open group', 'wp-recall' ),
-				'closed' => __( 'Closed group', 'wp-recall' )
+				'closed' => __( 'Closed group', 'wp-recall' ),
 			],
-			'default' => $rcl_group->group_status
+			'default' => $rcl_group->group_status,
 		],
 		'can_register' => [
 			'type'    => 'checkbox',
 			'slug'    => 'can_register',
 			'title'   => __( 'Membership', 'wp-recall' ),
 			'values'  => [
-				1 => __( 'Registration allowed', 'wp-recall' )
+				1 => __( 'Registration allowed', 'wp-recall' ),
 			],
-			'default' => array( 1 => rcl_get_group_option( $group_id, 'can_register' ) )
+			'default' => [ 1 => rcl_get_group_option( $group_id, 'can_register' ) ],
 		],
 		'default_role' => [
 			'type'    => 'radio',
@@ -625,15 +642,15 @@ function rcl_get_group_options( $group_id ) {
 			'title'   => __( 'New user role', 'wp-recall' ),
 			'values'  => [
 				'reader' => __( 'Visitor', 'wp-recall' ),
-				'author' => __( 'Author', 'wp-recall' )
+				'author' => __( 'Author', 'wp-recall' ),
 			],
-			'default' => $default_role
+			'default' => $default_role,
 		],
 		'category'     => [
 			'type'    => 'textarea',
 			'slug'    => 'category',
 			'title'   => sprintf( '%s <small>(%s)</small>', __( 'Group categories', 'wp-recall' ), __( 'separate by commas', 'wp-recall' ) ),
-			'default' => $category
+			'default' => $category,
 		],
 	];
 
@@ -646,7 +663,7 @@ function rcl_get_group_options( $group_id ) {
 	require_once RCL_PATH . 'classes/class-rcl-form.php';
 
 	$form = new Rcl_Form( [
-		'fields' => $fields
+		'fields' => $fields,
 	] );
 
 	$content = '<div id="group-options">'
@@ -659,7 +676,7 @@ function rcl_get_group_options( $group_id ) {
 	$content .= rcl_get_button( [
 		'icon'   => 'fa-floppy-o',
 		'label'  => __( 'Save settings', 'wp-recall' ),
-		'submit' => true
+		'submit' => true,
 	] );
 	$content .= '<input type="hidden" name="group-action" value="update">'
 	            . '<input type="hidden" name="group-submit" value="1">'
@@ -685,12 +702,12 @@ function rcl_get_group_requests_content( $group_id ) {
 
 	add_action( 'rcl_user_description', 'rcl_add_group_access_button' );
 
-	$content .= rcl_get_userlist( array(
+	$content .= rcl_get_userlist( [
 		'include' => implode( ',', $requests ),
 		'filters' => 0,
 		'orderby' => 'time_action',
-		'data'    => 'rating_total,posts_count,comments_count,description,user_registered'
-	) );
+		'data'    => 'rating_total,posts_count,comments_count,description,user_registered',
+	] );
 
 	return $content;
 }
@@ -699,23 +716,23 @@ function rcl_add_group_access_button() {
 	global $rcl_user;
 	echo '<div class="group-request" data-user="' . esc_attr( $rcl_user->ID ) . '">';
 	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo rcl_get_button( array(
+	echo rcl_get_button( [
 		'label' => esc_html__( 'Approve request', 'wp-recall' ),
 		'icon'  => 'fa-thumbs-up',
-		'class' => array( 'apply-request' ),
-		'data'  => array(
-			'request' => 1
-		)
-	) );
+		'class' => [ 'apply-request' ],
+		'data'  => [
+			'request' => 1,
+		],
+	] );
 	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo rcl_get_button( array(
+	echo rcl_get_button( [
 		'label' => esc_html__( 'Reject request', 'wp-recall' ),
 		'icon'  => 'fa-thumbs-down',
-		'class' => array( 'apply-request' ),
-		'data'  => array(
-			'request' => 0
-		)
-	) );
+		'class' => [ 'apply-request' ],
+		'data'  => [
+			'request' => 0,
+		],
+	] );
 	echo '</div>';
 }
 
@@ -745,7 +762,7 @@ function rcl_add_group_user_options() {
 	}
 	echo '</select>';
 	//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo rcl_get_group_callback( 'rcl_group_ajax_update_role', esc_html__( 'Save', 'wp-recall' ), array( 'user_role' ) );
+	echo rcl_get_group_callback( 'rcl_group_ajax_update_role', esc_html__( 'Save', 'wp-recall' ), [ 'user_role' ] );
 	echo '</div>';
 
 	echo '</div>';
@@ -824,14 +841,14 @@ function rcl_search_filter_closed_posts( $query ) {
 				return $query;
 			}
 
-			$query->set( 'tax_query', array(
-				array(
+			$query->set( 'tax_query', [
+				[
 					'taxonomy' => 'groups',
 					'field'    => 'id',
 					'terms'    => $groups,
-					'operator' => 'NOT IN'
-				)
-			) );
+					'operator' => 'NOT IN',
+				],
+			] );
 		}
 	}
 
@@ -871,12 +888,12 @@ function rcl_add_feed_group_query( $query, int $user_id ) {
 
 		$feeds = new Rcl_Feed_Query();
 
-		$authors_ignor = $feeds->get_col( array(
+		$authors_ignor = $feeds->get_col( [
 			'feed_type'   => 'author',
 			'user_id'     => $user_id,
 			'feed_status' => 0,
-			'fields'      => array( 'object_id' )
-		) );
+			'fields'      => [ 'object_id' ],
+		] );
 
 		$authors_ignor[] = $user_id;
 

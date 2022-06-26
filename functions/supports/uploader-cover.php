@@ -17,8 +17,10 @@ function rcl_init_js_cover_variables( $data ) {
 	global $user_ID;
 
 	if ( rcl_is_office( $user_ID ) ) {
-		$data['cover_size']                  = rcl_get_option( 'cover_weight', 1024 );
-		$data['local']['upload_size_cover']  = sprintf( __( 'Exceeds the maximum image size! Max. %s Kb', 'wp-recall' ), rcl_get_option( 'cover_weight', 1024 ) );
+		$data_uploader = rcl_cover_uploader_data();
+
+		$data['cover_size']                  = $data_uploader['max_size'];
+		$data['local']['upload_size_cover']  = sprintf( __( 'Exceeds the maximum image size! Max. %s Kb', 'wp-recall' ), $data_uploader['max_size'] );
 		$data['local']['title_image_upload'] = __( 'Image being loaded', 'wp-recall' );
 		$data['local']['image_upload_ok']    = __( 'Image uploaded successfully', 'wp-recall' );
 	}
@@ -26,10 +28,25 @@ function rcl_init_js_cover_variables( $data ) {
 	return $data;
 }
 
+function rcl_cover_uploader_data() {
+	return apply_filters( 'rcl_cover_uploader', [
+		'height'     => 9999,
+		'width'      => 9999,
+		'crop'       => 0,
+		'resize_w'   => 1500,
+		'resize_h'   => 1500,
+		'min_height' => 400,
+		'min_width'  => 1000,
+		'max_size'   => 40000,
+	] );
+}
+
 add_action( 'rcl_area_top', 'rcl_add_cover_uploader_button', 10 );
 function rcl_add_cover_uploader_button() {
 	global $user_ID;
 	if ( rcl_is_office( $user_ID ) ) {
+
+		$data_uploader = rcl_cover_uploader_data();
 
 		$uploder = new Rcl_Uploader( 'rcl_cover', [
 			'multiple'    => 0,
@@ -41,15 +58,15 @@ function rcl_add_cover_uploader_button() {
 			],
 			'image_sizes' => [
 				[
-					'height' => 9999,
-					'width'  => 9999,
-					'crop'   => 0,
+					'height' => $data_uploader['height'],
+					'width'  => $data_uploader['width'],
+					'crop'   => $data_uploader['crop'],
 				],
 			],
-			'resize'      => [ 1500, 1500 ],
-			'min_height'  => 300,
-			'min_width'   => 600,
-			'max_size'    => rcl_get_option( 'cover_weight', 1024 ),
+			'resize'      => [ $data_uploader['resize_w'], $data_uploader['resize_h'] ],
+			'min_height'  => $data_uploader['min_height'],
+			'min_width'   => $data_uploader['min_width'],
+			'max_size'    => $data_uploader['max_size'],
 		] );
 
 		//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped

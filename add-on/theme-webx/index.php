@@ -147,25 +147,25 @@ function rcl_webx_construct_theme( $options ) {
 			'default'    => '0',
 		],
 		[
-			'type'       => 'uploader',
-			'temp_media' => 1,
-			'multiple'   => 0,
-			'crop'       => 1,
-			'filetitle'  => 'rcl-default-avatar',
-			'filename'   => 'rcl-default-avatar',
-			'slug'       => 'default_avatar',
-			'title'      => __( 'Default avatar', 'wp-recall' ),
-		],
-		[
-			'type'       => 'runner',
-			'value_min'  => 0,
-			'value_max'  => 5120,
-			'value_step' => 256,
-			'default'    => 1024,
-			'slug'       => 'avatar_weight',
-			'title'      => __( 'Max weight of avatars', 'wp-recall' ) . ', Kb',
-			'notice'     => __( 'Set the image upload limit in kb, by default', 'wp-recall' ) . ' 1024Kb' .
-			                '. ' . __( 'If 0 is specified, download is disallowed.', 'wp-recall' ),
+			'type'      => 'radio',
+			'slug'      => 'rcl_hide_avatar',
+			'title'     => __( 'Disable avatar uploader in personal account?', 'wp-recall' ),
+			'values'    => [ __( 'No', 'wp-recall' ), __( 'Yes', 'wp-recall' ) ],
+			'default'   => 0,
+			'childrens' => [
+				0 => [
+					[
+						'type'       => 'uploader',
+						'temp_media' => 1,
+						'multiple'   => 0,
+						'crop'       => 1,
+						'filetitle'  => 'rcl-default-avatar',
+						'filename'   => 'rcl-default-avatar',
+						'slug'       => 'default_avatar',
+						'title'      => __( 'Default avatar', 'wp-recall' ),
+					],
+				],
+			],
 		],
 	] );
 
@@ -395,7 +395,7 @@ function rcL_webx_balance_out() {
 	}
 
 	global $user_ID;
-	
+
 	if ( rcl_is_office( $user_ID ) ) {
 		echo do_shortcode( '[rcl-usercount]' );
 	}

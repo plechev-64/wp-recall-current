@@ -1190,7 +1190,7 @@ function rcl_template_support( $support ) {
 	switch ( $support ) {
 		case 'avatar-uploader':
 
-			if ( rcl_get_option( 'avatar_weight', 1024 ) > 0 ) {
+			if ( rcl_get_option( 'rcl_hide_avatar', 0 ) == 0 ) {
 				include_once 'functions/supports/uploader-avatar.php';
 			}
 
@@ -1199,7 +1199,7 @@ function rcl_template_support( $support ) {
 
 			add_filter( 'rcl_options', 'rcl_add_cover_options', 10 );
 
-			if ( rcl_get_option( 'cover_weight', 1024 ) > 0 ) {
+			if ( rcl_get_option( 'rcl_hide_cover', 0 ) == 0 ) {
 				include_once 'functions/supports/uploader-cover.php';
 			}
 
