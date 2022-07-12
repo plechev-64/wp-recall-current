@@ -609,6 +609,10 @@ add_shortcode( 'ratinglist', 'rcl_rating_shortcode' );
 function rcl_rating_shortcode( $atts ) {
 	global $rating;
 
+	if(empty($atts)){
+		$atts = [];
+	}
+
 	$atts['select'] = array(
 		'object_id',
 		'object_author',
