@@ -167,6 +167,7 @@ body #rcl-office .webx_phone_menu:hover,
     scrollbar-color: #bdbdbd #eee;
     scrollbar-width: thin;
     text-align: right;
+    align-items: center;
 }
 
 .webx-user-counters::-webkit-scrollbar {
