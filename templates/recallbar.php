@@ -3,12 +3,12 @@
 <div id="recallbar">
     <div class="rcb_left">
 
-		<?php $rcb_menu = wp_nav_menu( array(
+		<?php $rcb_menu = wp_nav_menu( [
 			'echo'            => false,
 			'theme_location'  => 'recallbar',
 			'container_class' => 'rcb_menu',
-			'fallback_cb'     => '__return_empty_string'
-		) ); ?>
+			'fallback_cb'     => '__return_empty_string',
+		] ); ?>
 		<?php if ( $rcb_menu ): ?>
             <div class="rcb_left_menu"><!-- блок rcb_left_menu должен появляться только если есть пункты в меню -->
                 <i class="rcli fa-bars" aria-hidden="true"></i>
@@ -17,7 +17,7 @@
 		<?php endif; ?>
 
         <div class="rcb_icon">
-            <a href="/">
+            <a href="/" title="<?php esc_html_e( 'Homepage', 'wp-recall' ); ?>">
                 <i class="rcli fa-home" aria-hidden="true"></i>
                 <div class="rcb_hiden"><span><?php esc_html_e( 'Homepage', 'wp-recall' ); ?></span></div>
             </a>
@@ -25,20 +25,20 @@
 
 		<?php if ( ! is_user_logged_in() ):
 			$logIn = rcl_get_option( 'login_form_recall' );
-			$urls = array( '#', '#' );
+			$urls = [ '#', '#' ];
 			?>
 			<?php
 			if ( $logIn == 1 ) { // на отдельной странице форма входа
 				$page_in_out = rcl_format_url( get_permalink( rcl_get_option( 'page_login_form_recall' ) ) );
-				$urls        = array(
+				$urls        = [
 					$page_in_out . 'action-rcl=login',
-					$page_in_out . 'action-rcl=register'
-				);
+					$page_in_out . 'action-rcl=register',
+				];
 			} else if ( $logIn == 2 ) { // дефолтная страница входа WordPress (wp-login.php)
-				$urls = array(
+				$urls = [
 					wp_login_url( '/' ),
-					wp_registration_url()
-				);
+					wp_registration_url(),
+				];
 			} else if ( $logIn == 3 ) { // форма в виджете
 				unset( $urls );
 			}
