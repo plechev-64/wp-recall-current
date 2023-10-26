@@ -389,8 +389,8 @@ class PrimeQuery {
 			$this->topics_query->where_string( $wpdb->prepare(
 				"(pfm_topics.topic_name LIKE %s "
 				. "OR pfm_posts.post_content LIKE %s) ",
-				'%' . $this->vars['pfm-search'] . '%',
-				'%' . $this->vars['pfm-search'] . '%'
+				'%' . $wpdb->esc_like($this->vars['pfm-search']) . '%',
+				'%' . $wpdb->esc_like($this->vars['pfm-search']) . '%'
 			) );
 
 			$this->all_items = $this->topics_query->get_count();
