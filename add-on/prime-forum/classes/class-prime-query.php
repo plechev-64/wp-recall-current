@@ -376,6 +376,8 @@ class PrimeQuery {
 
 	function setup_child_items() {
 
+		global $wpdb;
+
 		$args = $this->get_args_child_items();
 
 		if ( $this->is_search ) {
@@ -384,8 +386,12 @@ class PrimeQuery {
 
 			$this->topics_query->parse( $args );
 
-			$this->topics_query->where_string( "(pfm_topics.topic_name LIKE '%" . $this->vars['pfm-search'] . "%' "
-			                                   . "OR pfm_posts.post_content LIKE '%" . $this->vars['pfm-search'] . "%')" );
+			$this->topics_query->where_string( $wpdb->prepare(
+				"(pfm_topics.topic_name LIKE %s "
+				. "OR pfm_posts.post_content LIKE %s) ",
+				'%' . $this->vars['pfm-search'] . '%',
+				'%' . $this->vars['pfm-search'] . '%'
+			) );
 
 			$this->all_items = $this->topics_query->get_count();
 
