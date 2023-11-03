@@ -16,7 +16,7 @@
 
 final class WP_Recall {
 
-	public $version = '16.26.5';
+	public $version = '16.26.6';
 	public $child_addons = array();
 	public $need_update = false;
 	public $fields = array();

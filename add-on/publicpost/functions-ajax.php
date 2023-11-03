@@ -143,6 +143,21 @@ function rcl_get_like_tags() {
 	wp_send_json( $tags );
 }
 
+add_filter('rcl_is_can_preview_post', 'rcl_check_admin_role_before_preview', 10, 2);
+function rcl_check_admin_role_before_preview($isCan, $postId){
+	if ( current_user_can( 'administrator' ) ) {
+		$isCan = true;
+	}else{
+		$post = get_post( $postId );
+		$isCan = true;
+		if ( ! $post || $post->post_author != get_current_user_id() ) {
+			$isCan = false;
+		}
+	}
+
+	return $isCan;
+}
+
 add_filter( 'rcl_preview_post_content', 'rcl_add_registered_scripts' );
 rcl_ajax_action( 'rcl_preview_post', true );
 function rcl_preview_post() {
@@ -157,12 +172,9 @@ function rcl_preview_post() {
 	$data_post_title = ! empty( $_POST['post_title'] ) ? sanitize_text_field( wp_unslash( $_POST['post_title'] ) ) : '';
 	$data_form_id    = ! empty( $_POST['form_id'] ) ? absint( $_POST['form_id'] ) : 1;
 
-	if ( $data_post_id ) {
-		if ( ! current_user_can( 'administrator' ) ) {
-			$post = get_post( $data_post_id );
-			if ( ! $post || $post->post_author != get_current_user_id() ) {
-				wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
-			}
+	if($data_post_id){
+		if(!apply_filters('rcl_is_can_preview_post', false, $data_post_id)){
+			wp_send_json( [ 'error' => __( 'Вы не можете редактировать эту публикацию', 'wp-recall' ) ] );
 		}
 	}
 

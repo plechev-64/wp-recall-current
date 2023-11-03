@@ -51,7 +51,7 @@ function rcl_form_user_balance( $args = array() ) {
 		'description' => __( 'Adding funds to your personal account', 'wp-recall' ) . ' ' . get_the_author_meta( 'user_email', $user_ID )
 	) ) ) );
 
-	if ( ! count( $gateWays->gateways ) ) {
+	if ( $gateWays->gateways instanceof Rcl_Gateways && ! $gateWays->gateways->gateways ) {
 		return rcl_get_notice( [
 			'type' => 'error',
 			'text' => __( 'Perhaps you haven`t configured any connect to a payment system yet', 'wp-recall' )
