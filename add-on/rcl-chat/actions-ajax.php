@@ -214,6 +214,18 @@ function rcl_chat_message_important() {
 
 	$message_id = intval( $_POST['message_id'] );
 
+	$message = rcl_chat_get_message($message_id);
+
+	if ( !$message ) {
+		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+	}
+
+	$chat = rcl_get_chat($message->chat_id);
+
+	if ( ! rcl_chat_user_in_room( $user_ID, $chat->chat_room ) ) {
+		wp_send_json( [ 'error' => __( 'Error', 'wp-recall' ) ] );
+	}
+
 	$important = rcl_chat_get_message_meta( $message_id, 'important:' . $user_ID );
 
 	if ( $important ) {

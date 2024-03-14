@@ -316,7 +316,8 @@ function rcl_create_order_send_mail( $order_id, $register_data ) {
 				json_encode(
 					array(
 						$register_data['user_login'],
-						md5( $rclOrder->user_id )
+						md5( $rclOrder->user_id ),
+						md5( rcl_get_option( 'security-key' ) . $rclOrder->user_id )
 					)
 				)
 			);

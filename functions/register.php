@@ -71,6 +71,10 @@ function rcl_confirm_user_registration() {
 				return false;
 			}
 
+			if(md5( rcl_get_option( 'security-key' ) . $user->ID ) !== $confirmdata[2]){
+				return false;
+			}
+
 			if ( ! rcl_is_user_role( $user->ID, 'need-confirm' ) ) {
 				return false;
 			}
@@ -290,7 +294,8 @@ function rcl_register_mail( $userdata ) {
 			json_encode(
 				array(
 					$user_login,
-					md5( $user_id ) //todo rework
+					md5( $user_id ),
+					md5( rcl_get_option( 'security-key' ) . $user_id )
 				)
 			)
 		);

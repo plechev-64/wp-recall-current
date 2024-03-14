@@ -34,7 +34,7 @@ class Rcl_Groups_List extends Rcl_Groups_Query {
 		}
 
 		if ( isset( $_GET['group-name'] ) ) {
-			$this->search_name = sanitize_text_field( wp_unslash( $_GET['group-name'] ) );
+			$this->search_name = esc_sql(sanitize_text_field( wp_unslash( $_GET['group-name'] ) ));
 		}
 
 		$this->add_uri['groups-filter'] = $this->orderby;

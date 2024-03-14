@@ -629,7 +629,7 @@ function rcl_rating_shortcode( $atts ) {
 		$rcl_rating->query['select'][] = "SUM(rating_values.rating_value) AS days_value_sum";
 		$rcl_rating->query['orderby']  = ( isset( $atts['orderby'] ) ) ? $rcl_rating->query['orderby'] : "days_value_sum";
 		$rcl_rating->query['join'][]   = "INNER JOIN " . RCL_PREF . "rating_values AS rating_values ON $tableAs.object_id = rating_values.object_id";
-		$rcl_rating->query['where'][]  = "rating_values.rating_date > ('" . current_time( 'mysql' ) . "' - INTERVAL " . $atts['days'] . " DAY)";
+		$rcl_rating->query['where'][]  = "rating_values.rating_date > ('" . current_time( 'mysql' ) . "' - INTERVAL " . intval($atts['days']) . " DAY)";
 		$rcl_rating->query['where'][]  = "$tableAs.rating_type = rating_values.rating_type";
 		$rcl_rating->query['where'][]  = "$tableAs.object_author = rating_values.object_author";
 		$rcl_rating->query['groupby']  = "$tableAs.object_id";
