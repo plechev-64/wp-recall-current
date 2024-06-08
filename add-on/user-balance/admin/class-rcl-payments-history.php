@@ -162,6 +162,10 @@ class Rcl_Payments_History extends WP_List_Table {
 			return;
 		}
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
 		if ( isset( $_REQUEST['action'] ) && $_REQUEST['action'] == 'delete' ) {
 
 			if ( isset( $_REQUEST['payment'] ) ) {

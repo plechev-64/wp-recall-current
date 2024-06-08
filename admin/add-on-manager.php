@@ -167,14 +167,18 @@ class Rcl_Addons_Manager extends WP_List_Table {
 
 		$page = ( isset( $_REQUEST['page'] ) ) ? sanitize_key( $_REQUEST['page'] ) : '';
 
+		$deleteUrl = wp_nonce_url(sprintf( '?page=%s&action=%s&addon=%s', $page, 'delete', sanitize_text_field( $item['ID'] ) ), 'delete-addon');
+		$deactivateUrl = wp_nonce_url(sprintf( '?page=%s&action=%s&addon=%s', $page, 'deactivate', sanitize_text_field( $item['ID'] ) ), 'deactivate-addon');
+		$activateUrl = wp_nonce_url(sprintf( '?page=%s&action=%s&addon=%s', $page, 'activate', sanitize_text_field( $item['ID'] ) ), 'activate-addon');
+
 		$actions = [
-			'delete' => sprintf( '<a href="?page=%s&action=%s&addon=%s">' . esc_html__( 'Delete', 'wp-recall' ) . '</a>', $page, 'delete', sanitize_text_field( $item['ID'] ) ),
+			'delete' => '<a href="'.$deleteUrl.'">' . esc_html__( 'Delete', 'wp-recall' ) . '</a>',
 		];
 
 		if ( $item['addon_status'] == 1 ) {
-			$actions['deactivate'] = sprintf( '<a href="?page=%s&action=%s&addon=%s">' . esc_html__( 'Deactivate', 'wp-recall' ) . '</a>', $page, 'deactivate', sanitize_text_field( $item['ID'] ) );
+			$actions['deactivate'] = '<a href="'.$deactivateUrl.'">' . esc_html__( 'Deactivate', 'wp-recall' ) . '</a>';
 		} else {
-			$actions['activate'] = sprintf( '<a href="?page=%s&action=%s&addon=%s">' . esc_html__( 'Activate', 'wp-recall' ) . '</a>', $page, 'activate', sanitize_text_field( $item['ID'] ) );
+			$actions['activate'] = '<a href="'.$activateUrl.'">' . esc_html__( 'Activate', 'wp-recall' ) . '</a>';
 		}
 		$name = ( isset( $item['template'] ) ) ? $item['addon_name'] . ' (' . esc_html__( 'Template', 'wp-recall' ) . ')' : $item['addon_name'];
 
@@ -293,12 +297,13 @@ function rcl_update_status_addon() {
 
 	if ( isset( $_GET['addon'] ) && isset( $_GET['action'] ) ) {
 
-		if ( ! current_user_can( 'activate_plugins' ) ) {
+		$action = rcl_wp_list_current_action();
+
+		if( ! current_user_can( 'activate_plugins' ) || !wp_verify_nonce( $_GET['_wpnonce'], $action . '-addon' ) ){
 			wp_die( esc_html__( 'Insufficient rights to install plugins on this site.', 'wp-recall' ) );
 		}
 
 		$addon  = sanitize_key( $_GET['addon'] );
-		$action = rcl_wp_list_current_action();
 
 		if ( $action == 'activate' ) {
 			rcl_activate_addon( $addon );
