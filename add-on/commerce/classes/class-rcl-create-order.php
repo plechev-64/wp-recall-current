@@ -160,6 +160,9 @@ class Rcl_Create_Order {
 
 				do_action( 'rcl_buyer_register', $this->user_id, $this->register_data );
 			}
+
+			rcl_update_profile_fields( $this->user_id );
+
 		} else {
 
 			if ( ! $isEmail || ! $validName ) {
@@ -194,8 +197,6 @@ class Rcl_Create_Order {
 		if ( ! $this->user_id ) {
 			return false;
 		}
-
-		rcl_update_profile_fields( $this->user_id );
 
 		//Сразу авторизуем пользователя, если не требуется подтверждение почты
 		if ( $this->buyer_register && ! rcl_get_option( 'confirm_register_recall' ) ) {
