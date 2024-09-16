@@ -304,11 +304,11 @@ function rcl_get_order_tabs( $rcl_tabs ) {
 				continue;
 			}
 
-			if ( $data['public'] < 0 && $user_ID == $user_LK ) {
+			if ( isset( $data['public'] ) && $data['public'] < 0 && $user_ID == $user_LK ) {
 				continue;
 			}
 
-			if ( $data['public'] == 0 && $user_ID != $user_LK ) {
+			if ( isset( $data['public'] ) && $data['public'] == 0 && $user_ID != $user_LK ) {
 				continue;
 			}
 		}
