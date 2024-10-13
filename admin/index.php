@@ -200,6 +200,11 @@ function rcl_update_options() {
 	] );
 }
 
+add_filter('link_user_lk_rcl_pre_update', 'rcl_sanitize_link_user_lk_rcl', 10);
+function rcl_sanitize_link_user_lk_rcl(string $value){
+    return esc_url($value);
+}
+
 add_action( 'rcl_update_options', 'rcl_delete_temp_default_avatar_cover', 10 );
 function rcl_delete_temp_default_avatar_cover() {
 

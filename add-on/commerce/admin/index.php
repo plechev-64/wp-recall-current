@@ -22,7 +22,6 @@ function rcl_commerce_menu() {
 	add_menu_page( 'Rcl Commerce', 'Rcl Commerce', 'manage_options', 'manage-rmag', 'rcl_commerce_page_orders' );
 	$hook = add_submenu_page( 'manage-rmag', __( 'Orders', 'wp-recall' ), __( 'Orders', 'wp-recall' ), 'manage_options', 'manage-rmag', 'rcl_commerce_page_orders' );
 	add_action( "load-$hook", 'rcl_commerce_options_orders' );
-	add_submenu_page( 'manage-rmag', __( 'Export/Import', 'wp-recall' ), __( 'Export/Import', 'wp-recall' ), 'manage_options', 'manage-wpm-price', 'rcl_commerce_export' );
 	add_submenu_page( 'manage-rmag', __( 'Variations', 'wp-recall' ), __( 'Variations', 'wp-recall' ), 'manage_options', 'manage-variations', 'rcl_commerce_page_variations' );
 	add_submenu_page( 'manage-rmag', __( 'Order form', 'wp-recall' ), __( 'Order form', 'wp-recall' ), 'manage_options', 'manage-custom-fields', 'rcl_commerce_custom_fields' );
 	add_submenu_page( 'manage-rmag', __( 'Store settings', 'wp-recall' ), __( 'Store settings', 'wp-recall' ), 'manage_options', 'manage-wpm-options', 'rmag_global_options' );
@@ -132,10 +131,6 @@ function rcl_commerce_custom_fields() {
 
 function rcl_commerce_page_variations() {
 	require_once 'pages/variations.php';
-}
-
-function rcl_commerce_export() {
-	require_once 'pages/export-import.php';
 }
 
 function rcl_commerce_options_orders() {
