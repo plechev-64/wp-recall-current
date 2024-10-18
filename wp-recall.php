@@ -285,7 +285,7 @@ final class WP_Recall {
 		//если вывод ЛК через шорткод
 		if ( rcl_get_option( 'view_user_lk_rcl' ) == 1 ) {
 
-			$get     = rcl_get_option( 'link_user_lk_rcl', 'user' );
+			$get     = esc_url(rcl_get_option( 'link_user_lk_rcl', 'user' ));
 			$user_LK = ( isset( $_GET[ $get ] ) ) ? intval( $_GET[ $get ] ) : false;
 
 			if ( ! $user_LK ) {

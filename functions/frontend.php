@@ -195,7 +195,7 @@ function rcl_default_search_form( $form ) {
 
 	if ( $user_LK && $rcl_tab ) {
 
-		$get = rcl_get_option( 'link_user_lk_rcl', 'user' );
+		$get = esc_url(rcl_get_option( 'link_user_lk_rcl', 'user' ));
 
 		$form .= '<input type="hidden" name="' . $get . '" value="' . $user_LK . '">';
 		$form .= '<input type="hidden" name="tab" value="' . $rcl_tab->id . '">';
