@@ -1486,7 +1486,7 @@ function rcl_get_option( $option, $default = false ) {
 
 	if ( isset( $rcl_options[ $option ] ) ) {
 		if ( $rcl_options[ $option ] || is_numeric( $rcl_options[ $option ] ) ) {
-			return $rcl_options[ $option ];
+			return apply_filters( "rcl_option_{$option}", $rcl_options[ $option ] );
 		}
 	}
 
@@ -1811,4 +1811,9 @@ function rcl_kses_allowed_html() {
 	}
 
 	return $html_tags;
+}
+
+add_filter('rcl_option_link_user_lk_rcl', 'rcl_sanitize_link_user_lk_rcl', 10);
+function rcl_sanitize_link_user_lk_rcl(string $value){
+	return esc_url($value);
 }
